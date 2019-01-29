@@ -5252,9 +5252,15 @@ _tx_pkt_desc_add(int unit, bcm_pkt_t *pkt, dv_t *dv, int pkt_idx)
 #endif
 
 
-    pkt->tx_header = NULL;
-
     if (soc_feature(unit, soc_feature_cmicx) && (pkt_hg_hdr != NULL)) {
+        if (NULL != pkt->tx_header) {
+            LOG_ERROR(BSL_LS_BCM_TX,
+                    (BSL_META_U(unit,
+                                "_tx_pkt_desc_add: Cannot re-allocate mem to"
+                                " tx_header as Pkt might me in-flight!!!\n")));
+            return BCM_E_MEMORY;
+        }
+
         if ((pkt->_higig[7] & BCM_TX_EXT_HG_HDR) && !SOC_IS_TOMAHAWK3(unit)) {
             pkt->tx_header = soc_cm_salloc(unit, sizeof(pkt->_higig) + sizeof(pkt->_ext_higig), "tx_header");
             if (pkt->tx_header == NULL) {
@@ -5326,6 +5332,8 @@ _tx_pkt_desc_add(int unit, bcm_pkt_t *pkt, dv_t *dv, int pkt_idx)
         if (bsl_check(bslLayerSoc, bslSourceTx, bslSeverityVerbose, unit)) {
             soc_dma_higig_dump(unit, "TX Header ", (uint8 *)pkt->tx_header, sizeof(pkt->_higig), 0, NULL);
         }
+    } else {
+        pkt->tx_header = NULL;
     }
 
 #ifdef  BCM_XGS_SUPPORT
@@ -5996,6 +6004,22 @@ _bcm_tx_callback_thread(void *param)
 STATIC void
 _bcm_tx_desc_done_cb(int unit, dv_t *dv, dcb_t *dcb)
 {
+    if (soc_feature(unit, soc_feature_cmicx)) {
+        soc_stat_t    *stat = &SOC_CONTROL(unit)->stat;
+        tx_dv_info_t *dv_info;
+        int i;
+
+        dv_info = TX_INFO(dv);
+
+        for (i = 0; i < dv_info->pkt_count; ++i) {
+            if (dv_info->pkt[i] && dv_info->pkt[i]->tx_header) {
+                stat->dma_tbyt -= sizeof(dv_info->pkt[i]->_higig);
+                soc_cm_sfree(unit, dv_info->pkt[i]->tx_header);
+                dv_info->pkt[i]->tx_header = NULL;
+            }
+        }
+    }
+
     if (BCM_SUCCESS(_bcm_tx_cb_intr_enabled())) {
         _bcm_tx_desc_done(unit, dv, dcb);
     } else {
@@ -6047,19 +6071,6 @@ _bcm_tx_desc_done_cb(int unit, dv_t *dv, dcb_t *dcb)
 STATIC void
 _bcm_tx_reload_done_cb(int unit, dv_t *dv)
 {
-    if (soc_feature(unit, soc_feature_cmicx)) {
-        soc_stat_t    *stat = &SOC_CONTROL(unit)->stat;
-        bcm_pkt_t *pkt;
-
-        pkt = (bcm_pkt_t *)TX_INFO_CUR_PKT(dv);
-
-        if (pkt && pkt->tx_header) {
-            stat->dma_tbyt -= sizeof(pkt->_higig);
-            soc_cm_sfree(unit, pkt->tx_header);
-            pkt->tx_header = NULL;
-        }
-    }
-
     if (BCM_SUCCESS(_bcm_tx_cb_intr_enabled())) {
         _bcm_tx_reload_done(unit, dv);
     } else {

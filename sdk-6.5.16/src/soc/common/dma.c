@@ -3712,13 +3712,13 @@ STATIC void
 soc_dma_wait_desc_done(int unit, dv_t *dv_chain, dcb_t *dcb)
 {
     COMPILER_REFERENCE(unit);
-    sal_sem_give((sal_sem_t)dv_chain->dv_sem);
 
     if (SOC_DMA_MODE(unit) == SOC_DMA_MODE_CONTINUOUS) {
         if (dv_chain->dv_done_desc_subs != NULL) {
             dv_chain->dv_done_desc_subs(unit, dv_chain, NULL);
         }
     }
+    sal_sem_give((sal_sem_t)dv_chain->dv_sem);
 }
 
 /*
