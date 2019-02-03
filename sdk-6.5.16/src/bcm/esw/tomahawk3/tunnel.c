@@ -230,7 +230,7 @@ _bcm_th3_l3_tnl_term_entry_init(int unit, bcm_tunnel_terminator_t *tnl_info,
         /* DIP [90-127] */
         ip6_field[1] = (ip6[0] >> 2);
         ip6_field[0] = ((ip6[1] << 24)| (ip6[2] << 16) |
-                        (ip6[3] << 8) | (ip6[4] && 0xfc));
+                        (ip6[3] << 8) | (ip6[4] & 0xfc));
         ip6_field[0] = ((ip6[0] & 3) << 30) | (ip6_field[0] >> 2);
         soc_mem_field_set(unit, mem, (uint32 *)&entry->entry_arr[0], IPV6__DIP_UPR_38f, ip6_field);
 
