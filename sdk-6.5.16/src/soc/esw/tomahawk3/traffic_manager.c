@@ -3202,7 +3202,7 @@ soc_tomahawk3_mmuq_to_schedq_profile_set_reinit(int unit, int profile, int sched
  */
 int
 soc_tomahawk3_sched_update_init(int unit, int profile, int *L0, int *schedq,
-        int *mmuq, int *cos, int *sp_child, int* sp_parent, int* fc_is_uc_only)
+        int *mmuq, int *cos, int *strict_priority, int* fc_is_uc_only)
 {
     int port_in_profile[SOC_TH3_MAX_NUM_PORTS] = {0};
     int port, queue;
@@ -3232,7 +3232,7 @@ soc_tomahawk3_sched_update_init(int unit, int profile, int *L0, int *schedq,
             continue;
         }
         th3_sched_profile_info[unit][profile][cosq_index].cos = cos[queue];
-        th3_sched_profile_info[unit][profile][cosq_index].strict_priority = sp_child[queue];
+        th3_sched_profile_info[unit][profile][cosq_index].strict_priority = strict_priority[queue];
         th3_sched_profile_info[unit][profile][cosq_index].fc_is_uc_only = fc_is_uc_only[queue];
         if (th3_sched_profile_info[unit][profile][cosq_index].mmuq[0] == -1) {
             th3_sched_profile_info[unit][profile][cosq_index].mmuq[0] = mmuq[queue];
@@ -3251,7 +3251,7 @@ soc_tomahawk3_sched_update_init(int unit, int profile, int *L0, int *schedq,
     }
 
     SOC_IF_ERROR_RETURN
-        (soc_cosq_sched_policy_init(unit, profile, sp_child, sp_parent));
+        (soc_cosq_sched_policy_init(unit, profile));
 
     PBMP_ALL_ITER(unit, port) {
         if (port_in_profile[port]) {
@@ -3276,7 +3276,7 @@ soc_tomahawk3_sched_update_init(int unit, int profile, int *L0, int *schedq,
  */
 int
 soc_tomahawk3_sched_update_reinit(int unit, int profile, int *L0, int *schedq,
-        int *mmuq, int *cos, int *sp_child, int* sp_parent, int* fc_is_uc_only)
+        int *mmuq, int *cos, int *strict_priority, int* fc_is_uc_only)
 {
     int port_in_profile[SOC_TH3_MAX_NUM_PORTS] = {0};
     int port, queue;
@@ -3309,7 +3309,7 @@ soc_tomahawk3_sched_update_reinit(int unit, int profile, int *L0, int *schedq,
     }
 
     SOC_IF_ERROR_RETURN
-        (soc_cosq_sched_policy_reinit(unit, profile, sp_child, sp_parent));
+        (soc_cosq_sched_policy_reinit(unit, profile));
 
     PBMP_ALL_ITER(unit, port) {
         if (port_in_profile[port]) {
@@ -3415,8 +3415,7 @@ soc_cosq_hierarchy_init(int unit)
     int schedq[SOC_TH3_NUM_GP_QUEUES];
     int mmuq[SOC_TH3_NUM_GP_QUEUES];
     int cos_list[SOC_TH3_NUM_GP_QUEUES];
-    int sp_child[SOC_TH3_NUM_GP_QUEUES];
-    int sp_parent[SOC_TH3_NUM_GP_QUEUES];
+    int strict_priority[SOC_TH3_NUM_GP_QUEUES];
     int fc_is_uc_only[SOC_TH3_NUM_GP_QUEUES];
     int sched_port_profile_map[SOC_TH3_MAX_NUM_PORTS];
     int port_in_profile[SOC_TH3_MAX_NUM_PORTS] = {0};
@@ -3473,7 +3472,7 @@ soc_cosq_hierarchy_init(int unit)
         }
 
         rv = _soc_scheduler_profile_mapping_setup(unit, sched_profile, profile,
-            L0, schedq, mmuq, cos_list, sp_child, sp_parent, fc_is_uc_only);
+            L0, schedq, mmuq, cos_list, strict_priority, fc_is_uc_only);
         if (rv != SOC_E_NONE) {
             goto exit;
         }
@@ -3486,7 +3485,7 @@ soc_cosq_hierarchy_init(int unit)
                 continue;
             }
             th3_sched_profile_info[unit][profile][cosq_index].cos = cos_list[queue];
-            th3_sched_profile_info[unit][profile][cosq_index].strict_priority = sp_child[queue];
+            th3_sched_profile_info[unit][profile][cosq_index].strict_priority = strict_priority[queue];
             th3_sched_profile_info[unit][profile][cosq_index].fc_is_uc_only = fc_is_uc_only[queue];
             if (th3_sched_profile_info[unit][profile][cosq_index].mmuq[0] == -1) {
                 th3_sched_profile_info[unit][profile][cosq_index].mmuq[0] = mmuq[queue];
@@ -3502,7 +3501,7 @@ soc_cosq_hierarchy_init(int unit)
             }
             L0_TO_COSQ_MAPPING[unit][profile][queue] = cos_list[queue];
         }
-        rv = soc_cosq_sched_policy_init(unit, profile, sp_child, sp_parent);
+        rv = soc_cosq_sched_policy_init(unit, profile);
         if (rv != SOC_E_NONE) {
             goto exit;
         }
@@ -3554,15 +3553,13 @@ exit:
  *Purpose: Initialize scheduling discipline in HW and SW structure based on config bcm
  */
 int
-soc_cosq_sched_policy_init(int unit, int profile, int* sp_child, int* sp_parent)
+soc_cosq_sched_policy_init(int unit, int profile)
 {
     soc_reg_t reg = INVALIDr;
     uint64 rval;
     int queue_num;
     soc_port_t port;
     int port_in_profile[SOC_TH3_MAX_NUM_PORTS] = {0};
-    int sp_l0_child = 0;
-    int sp_l0_parent = 0;
 
     if (profile < 0 || profile >= SOC_TH3_MAX_NUM_SCHED_PROFILE) {
         return SOC_E_PARAM;
@@ -3570,17 +3567,6 @@ soc_cosq_sched_policy_init(int unit, int profile, int* sp_child, int* sp_parent)
 
     /*check which ports is using this profile*/
     soc_profile_port_list_get(unit, profile, port_in_profile);
-
-    if ((sp_child == NULL) ||
-        (sp_parent == NULL)) {
-        return SOC_E_PARAM;
-    }
-
-    for (queue_num = 0; queue_num < SOC_TH3_NUM_GP_QUEUES; queue_num++) {
-        sp_l0_child |= sp_child[queue_num] << queue_num;
-        sp_l0_parent |= sp_parent[queue_num] << queue_num;
-    }
-
 
     PBMP_ALL_ITER(unit, port) {
         /* Max number of device ports in TH3 is 160*/
@@ -3590,25 +3576,15 @@ soc_cosq_sched_policy_init(int unit, int profile, int* sp_child, int* sp_parent)
             reg = MMU_QSCH_PORT_CONFIGr;
             SOC_IF_ERROR_RETURN(soc_reg64_get(unit, reg, port, 0, &rval));
             soc_reg64_field32_set(unit, reg, &rval, ENABLE_WRRf, 1);
-            soc_reg64_field32_set(unit, reg, &rval, SP_L0_CHILDf, sp_l0_child);
-            soc_reg64_field32_set(unit, reg, &rval, SP_L0_PARENTf, sp_l0_parent);
+            soc_reg64_field32_set(unit, reg, &rval, SP_L0_CHILDf, 0);
+            soc_reg64_field32_set(unit, reg, &rval, SP_L0_PARENTf, 0);
             SOC_IF_ERROR_RETURN
                 (soc_reg64_set(unit, reg, port, 0, rval));
             for (queue_num = 0; queue_num < SOC_TH3_NUM_GP_QUEUES; queue_num++) {
-                if ((sp_l0_child & (1 << queue_num)) == 0) {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_WRR;
-                } else {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_STRICT;
-                }
-                if ((sp_l0_parent & (1 << queue_num)) == 0) {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_WRR;
-                } else {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_STRICT;
-                }
+                th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
+                    sched_policy = SOC_TH3_SCHED_MODE_WRR;
+                th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
+                    sched_policy = SOC_TH3_SCHED_MODE_WRR;
             }
         } else {
             reg = MMU_QSCH_CPU_PORT_CONFIGr;
@@ -3636,13 +3612,11 @@ soc_cosq_sched_policy_init(int unit, int profile, int* sp_child, int* sp_parent)
  *Purpose: Initialize scheduling discipline in HW and SW structure based on config bcm
  */
 int
-soc_cosq_sched_policy_reinit(int unit, int profile, int* sp_child, int* sp_parent)
+soc_cosq_sched_policy_reinit(int unit, int profile)
 {
     int queue_num;
     soc_port_t port;
     int port_in_profile[SOC_TH3_MAX_NUM_PORTS] = {0};
-    int sp_l0_child = 0;
-    int sp_l0_parent = 0;
 
     if (profile < 0 || profile >= SOC_TH3_MAX_NUM_SCHED_PROFILE) {
         return SOC_E_PARAM;
@@ -3651,37 +3625,16 @@ soc_cosq_sched_policy_reinit(int unit, int profile, int* sp_child, int* sp_paren
     /*check which ports is using this profile*/
     soc_profile_port_list_get(unit, profile, port_in_profile);
 
-    if ((sp_child == NULL) ||
-        (sp_parent == NULL)) {
-        return SOC_E_PARAM;
-    }
-
-    for (queue_num = 0; queue_num < SOC_TH3_NUM_GP_QUEUES; queue_num++) {
-        sp_l0_child |= sp_child[queue_num] << queue_num;
-        sp_l0_parent |= sp_parent[queue_num] << queue_num;
-    }
-
-
     PBMP_ALL_ITER(unit, port) {
         /* Max number of device ports in TH3 is 160*/
         if (!IS_CPU_PORT(unit, port)) {
             if (port_in_profile[port] == 0)
                 continue;
             for (queue_num = 0; queue_num < SOC_TH3_NUM_GP_QUEUES; queue_num++) {
-                if ((sp_l0_child & (1 << queue_num)) == 0) {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_WRR;
-                } else {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_STRICT;
-                }
-                if ((sp_l0_parent & (1 << queue_num)) == 0) {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_WRR;
-                } else {
-                    th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
-                        sched_policy = SOC_TH3_SCHED_MODE_STRICT;
-                }
+                th3_cosq_mmu_info[unit]->th3_port_info[port].L0[queue_num].
+                    sched_policy = SOC_TH3_SCHED_MODE_WRR;
+                th3_cosq_mmu_info[unit]->th3_port_info[port].L1[queue_num].
+                    sched_policy = SOC_TH3_SCHED_MODE_WRR;
             }
         } else {
             for (queue_num = 0; queue_num < SOC_TH3_NUM_GP_QUEUES; queue_num++) {

@@ -6303,8 +6303,7 @@ bcm_tomahawk3_cosq_schedq_mapping_set(int unit, int profile_index,
     int schedq[_BCM_TH3_COS_MAX];
     int mmuq[_BCM_TH3_COS_MAX];
     int cos_list[_BCM_TH3_COS_MAX];
-    int sp_child[_BCM_TH3_COS_MAX];
-    int sp_parent[_BCM_TH3_COS_MAX];
+    int strict_priority[_BCM_TH3_COS_MAX];
     int fc_is_uc_only[_BCM_TH3_COS_MAX];
     bcm_port_t port;
     int rv = BCM_E_NONE;
@@ -6344,7 +6343,7 @@ bcm_tomahawk3_cosq_schedq_mapping_set(int unit, int profile_index,
 
     rv = _soc_scheduler_profile_mapping_setup(unit,
                         sched_profile, profile_index, L0, schedq, mmuq, cos_list,
-                        sp_child, sp_parent, fc_is_uc_only);
+                        strict_priority, fc_is_uc_only);
     if (rv != BCM_E_NONE) {
         goto exit;
     }
@@ -6353,7 +6352,7 @@ bcm_tomahawk3_cosq_schedq_mapping_set(int unit, int profile_index,
     LOG_INFO(BSL_LS_BCM_COSQ,
         (BSL_META_U(unit, "Profile %d cos %d L0 %d schedq %d mmuq %d cos_list %d\n"),
          profile_index, cosq_idx, L0[cosq_idx], schedq[cosq_idx], mmuq[cosq_idx], cos_list[cosq_idx]));
-    rv = soc_tomahawk3_sched_update_init(unit, profile_index, L0, schedq, mmuq, cos_list, sp_child, sp_parent, fc_is_uc_only);
+    rv = soc_tomahawk3_sched_update_init(unit, profile_index, L0, schedq, mmuq, cos_list, strict_priority, fc_is_uc_only);
     if (rv != BCM_E_NONE) {
         goto exit;
     }
@@ -10890,8 +10889,7 @@ _bcm_th3_cosq_scheduler_reinit(int unit)
     int schedq[_BCM_TH3_COS_MAX];
     int mmuq[_BCM_TH3_COS_MAX];
     int cos_list[_BCM_TH3_COS_MAX];
-    int sp_child[_BCM_TH3_COS_MAX];
-    int sp_parent[_BCM_TH3_COS_MAX];
+    int strict_priority[_BCM_TH3_COS_MAX];
     int fc_is_uc_only[_BCM_TH3_COS_MAX];
     int rv = BCM_E_NONE;
 
@@ -10944,7 +10942,7 @@ _bcm_th3_cosq_scheduler_reinit(int unit)
 
         rv = _soc_scheduler_profile_mapping_setup(unit,
                         sched_profile, profile_idx, L0, schedq, mmuq, cos_list,
-                        sp_child, sp_parent, fc_is_uc_only);
+                        strict_priority, fc_is_uc_only);
 
         if (rv != BCM_E_NONE) {
             goto exit;
@@ -10954,7 +10952,7 @@ _bcm_th3_cosq_scheduler_reinit(int unit)
         LOG_INFO(BSL_LS_BCM_COSQ,
             (BSL_META_U(unit, "Profile %d cos %d L0 %d schedq %d mmuq %d cos_list %d\n"),
              profile_idx, cosq_idx, L0[cosq_idx], schedq[cosq_idx], mmuq[cosq_idx], cos_list[cosq_idx]));
-        rv = soc_tomahawk3_sched_update_reinit(unit, profile_idx, L0, schedq, mmuq, cos_list, sp_child, sp_parent, fc_is_uc_only);
+        rv = soc_tomahawk3_sched_update_reinit(unit, profile_idx, L0, schedq, mmuq, cos_list, strict_priority, fc_is_uc_only);
         if (rv != BCM_E_NONE) {
             goto exit;
         }

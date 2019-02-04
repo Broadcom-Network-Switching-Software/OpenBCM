@@ -292,11 +292,11 @@ _soc_mmu_tomahawk3_scheduler_profile_check(int unit,
 
 int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profile_t *sched_profile,
                                          int profile_index, int *L0, int *schedq, int *mmuq,
-                                         int *cos_list, int *sp_child, int *sp_parent, int *fc_is_uc_only)
+                                         int *cos_list, int *strict_priority, int *fc_is_uc_only)
 {
     int mcq_base, ucq_base;
     int total_numq, num_ucq, num_mcq;
-    int strict_priority, fc_uc;
+    int sp, fc_uc;
     int cosq_idx;
     int current_q_pos = 0;
 
@@ -307,8 +307,7 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
         (L0 == NULL) ||
         (schedq == NULL) ||
         (cos_list == NULL) ||
-        (sp_child == NULL) ||
-        (sp_parent == NULL) ||
+        (strict_priority == NULL) ||
         (fc_is_uc_only == NULL) ||
         (mmuq == NULL)) {
         return SOC_E_MEMORY;
@@ -320,8 +319,7 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
 
     for (cosq_idx = 0; cosq_idx < SOC_TH3_COS_MAX; cosq_idx++) {
         cos_list[cosq_idx] = -1;
-        sp_child[cosq_idx] = 0;
-        sp_parent[cosq_idx] = 0;
+        strict_priority[cosq_idx] = 0;
         fc_is_uc_only[cosq_idx] = 0;
     }
 
@@ -338,7 +336,7 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
                      sched_profile[profile_index].num_multicast_queue[cosq_idx];
         num_ucq = sched_profile[profile_index].num_unicast_queue[cosq_idx];
         num_mcq = sched_profile[profile_index].num_multicast_queue[cosq_idx];
-        strict_priority = sched_profile[profile_index].strict_priority[cosq_idx];
+        sp = sched_profile[profile_index].strict_priority[cosq_idx];
         fc_uc = sched_profile[profile_index].flow_control_only_unicast[cosq_idx];
 
         if (total_numq == 0) {
@@ -356,8 +354,8 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
             schedq[current_q_pos+1] = current_q_pos+1;
             cos_list[current_q_pos] = cosq_idx;
             cos_list[current_q_pos+1] = cosq_idx;
-            sp_child[current_q_pos] = strict_priority;
-            sp_child[current_q_pos+1] = strict_priority;
+            strict_priority[current_q_pos] = sp;
+            strict_priority[current_q_pos+1] = sp;
             fc_is_uc_only[current_q_pos] = fc_uc;
             fc_is_uc_only[current_q_pos+1] = fc_uc;
             if (num_ucq == 2) {
@@ -373,7 +371,7 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
             L0[current_q_pos] = current_q_pos;
             schedq[current_q_pos] = current_q_pos;
             cos_list[current_q_pos] = cosq_idx;
-            sp_child[current_q_pos] = strict_priority;
+            strict_priority[current_q_pos] = sp;
             fc_is_uc_only[current_q_pos] = fc_uc;
             if (num_ucq == 1) {
                 mmuq[current_q_pos] = ucq_base++;
@@ -389,9 +387,9 @@ int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profil
 
     for (cosq_idx = 0; cosq_idx <  SOC_TH3_COS_MAX; cosq_idx++) {
         LOG_INFO(BSL_LS_SOC_COSQ,
-            (BSL_META_U(unit, "Profile %d cos %d L0 %d schedq %d mmuq %d cos_list %d sp_child %d, sp_parent %d\n"),
+            (BSL_META_U(unit, "Profile %d cos %d L0 %d schedq %d mmuq %d cos_list %d strict_priority %d\n"),
             profile_index, cosq_idx, L0[cosq_idx], schedq[cosq_idx],
-            mmuq[cosq_idx], cos_list[cosq_idx], sp_child[cosq_idx], sp_parent[cosq_idx]));
+            mmuq[cosq_idx], cos_list[cosq_idx], strict_priority[cosq_idx]));
     }
     return SOC_E_NONE;
 }

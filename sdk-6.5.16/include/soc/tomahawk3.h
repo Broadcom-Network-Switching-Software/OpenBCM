@@ -559,11 +559,11 @@ extern int soc_tomahawk3_cosq_port_info_init(int unit, int port_num);
 
 extern int      soc_tomahawk3_scheduler_init(int unit);
 extern int soc_tomahawk3_sched_update_init(int unit, int profile, int *L0, int *schedq,
-        int *mmuq, int *cos, int *sp_child, int* sp_parent, int* fc_is_us_only);
+        int *mmuq, int *cos, int *strict_priority, int* fc_is_us_only);
 extern int
 soc_profile_port_list_get(int unit, int profile, int port_in_profile[]);
 extern int
-soc_cosq_sched_policy_init(int unit, int profile, int* sp_child, int* sp_parent);
+soc_cosq_sched_policy_init(int unit, int profile);
 extern int soc_tomahawk3_schduler_hier_show(int unit, int port);
 extern int soc_tomahawk3_sched_update_flex_per_port(int unit, int port, int profile, int *L0, int *schedq,
         int *mmuq, int *cos);
@@ -575,9 +575,9 @@ extern int soc_tomahawk3_get_sched_profile_max_cos(int unit, int profile);
 
 /* Warmboot helper functions */
 extern int soc_tomahawk3_sched_update_reinit(int unit, int profile, int *L0, int *schedq,
-        int *mmuq, int *cos, int *sp_child, int* sp_parent, int* fc_is_us_only);
+        int *mmuq, int *cos, int *strict_priority, int* fc_is_us_only);
 extern int
-soc_cosq_sched_policy_reinit(int unit, int profile, int* sp_child, int* sp_parent);
+soc_cosq_sched_policy_reinit(int unit, int profile);
 extern int soc_tomahawk3_sched_profile_attach_reinit(int unit, soc_port_t port, int profile);
 
 typedef enum {
@@ -1310,7 +1310,7 @@ extern int soc_tomahawk3_sched_profile_set(int unit, int profile, int L0, int sc
         int mmuq);
 extern int _soc_scheduler_profile_mapping_setup(int unit, _soc_mmu_cfg_scheduler_profile_t *sched_profile,
                                          int profile_index, int *L0, int *schedq, int *mmuq,
-                                         int *cos_list, int *sp_child, int *sp_parent, int *fc_is_uc_only);
+                                         int *cos_list, int *strict_priority, int *fc_is_uc_only);
 
 extern int soc_tomahawk3_profile_exists(int unit, int profile);
 extern int soc_tomahawk3_sched_profile_attach(int unit, soc_port_t port, int profile);
