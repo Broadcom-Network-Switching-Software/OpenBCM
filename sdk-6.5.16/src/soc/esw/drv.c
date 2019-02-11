@@ -8806,6 +8806,9 @@ soc_pcie_host_intf_init(int unit)
                 SOC_IF_ERROR_RETURN(
                     WRITE_PAXB_0_PAXB_HOTSWAP_CTRLr(unit, rval));
             }
+            /* Disable iProc reset on PCie link down event */
+            SOC_IF_ERROR_RETURN
+                     (WRITE_PAXB_0_RESET_ENABLE_IN_PCIE_LINK_DOWNr(unit, 0x0));
         }
 #endif
     }
@@ -8820,14 +8823,16 @@ soc_pci_hotswap_recover(int unit)
     int rv = SOC_E_NONE;
 
 #ifdef BCM_CMICX_SUPPORT
-    int hot_swap_usec = 10;
+    int hot_swap_usec = 100;
     uint32 hot_swap_cause = 0;
     uint32 rval = 0;
+    uint32 int_en;
+
     if (soc_feature(unit, soc_feature_cmicx) &&
            (soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE)) {
-        /* Suggested default time out is 10 usec for FSM_STATE to be DUMMYRESP or IDLE */
+        /* Suggested default time out is 100 usec for FSM_STATE to be DUMMYRESP or IDLE */
         hot_swap_usec = soc_property_get(unit, spn_PCIE_HOT_SWAP_TIMEOUT_USEC,
-                                         10);
+                                         100);
         LOG_INFO(BSL_LS_SOC_COMMON,
                 (BSL_META_U(unit,
                             "HOT_SWAP_TIMEOUT_USEC = %d\n"), hot_swap_usec));
@@ -8842,9 +8847,22 @@ soc_pci_hotswap_recover(int unit)
             SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_HOTSWAP_STATr(unit, &rval));
             hot_swap_cause = soc_reg_field_get(unit, PAXB_0_PAXB_HOTSWAP_STATr,
                                           rval, HOTSWAP_CAUSEf);
+            fsm_state = soc_reg_field_get(unit, PAXB_0_PAXB_HOTSWAP_STATr,
+                                              rval, FSM_STATEf);
+
+            /* Hot Swap status before Recovery */
+            LOG_INFO(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
+                              "Hot Swap status before Recovery = 0x%x\n"),
+                              rval));
 
             if (hot_swap_cause != 0) {
-            /* Poll for the HotSwap FSM_STATE to be DUMMYRESP or IDLE */
+                /* Clear and Disable PAXB interrupts */
+                SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_INTR_STATUSr(unit, &rval));
+                SOC_IF_ERROR_RETURN(WRITE_PAXB_0_PAXB_INTR_STATUSr(unit, rval));
+                SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_INTR_ENr(unit, &int_en));
+                SOC_IF_ERROR_RETURN(WRITE_PAXB_0_PAXB_INTR_ENr(unit, 0));
+
+                /* Poll for the HotSwap FSM_STATE to be DUMMYRESP or IDLE */
                 stime = sal_time_usecs();
                 while (!soc_timeout_check(&to)) {
                     SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_HOTSWAP_STATr(unit, &rval));
@@ -8886,6 +8904,8 @@ soc_pci_hotswap_recover(int unit)
                          WRITE_PAXB_0_PAXB_HOTSWAP_CTRLr(unit, rval));
                 }
 
+                 SDK_CONFIG_MEMORY_BARRIER;
+
                 /* Wait for PAXB_RDY bit to get set in HOTSWAP_STAT register to ensure that PCIE
                  *      subsystem is ready to accept new requests
                  */
@@ -8898,14 +8918,43 @@ soc_pci_hotswap_recover(int unit)
                         ready = soc_reg_field_get(unit, PAXB_0_PAXB_HOTSWAP_STATr,
                                                    rval, PAXB_RDYf);
                         if (ready) {
-                           break;
+                            LOG_INFO(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
+                                    "PAXB Ready to accept new requests.\n")));
+                            /* Reset PAXB_RDY and HOTSWAP_CAUSE bit */
+                            rval = 0;
+                            soc_reg_field_set(unit, PAXB_0_PAXB_HOTSWAP_STATr,
+                                              &rval, PAXB_RDYf, 0x01);
+                            soc_reg_field_set(unit, PAXB_0_PAXB_HOTSWAP_STATr,
+                                              &rval, HOTSWAP_CAUSEf, 0x07);
+                            SOC_IF_ERROR_RETURN(
+                                WRITE_PAXB_0_PAXB_HOTSWAP_STATr(unit, rval));
+                            break;
                         }
                     }
                     etime = sal_time_usecs();
+                    /* Hot Swap status after Recovery */
+                    SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_HOTSWAP_STATr(unit, &rval));
+                    LOG_INFO(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
+                                      "Hot Swap status after Recovery = 0x%x\n"),
+                                      rval));
+                    /* Clear and Restore PAXB interrupts */
+                    SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_INTR_STATUSr(unit, &rval));
+                    SOC_IF_ERROR_RETURN(WRITE_PAXB_0_PAXB_INTR_STATUSr(unit, rval));
+                    SOC_IF_ERROR_RETURN(WRITE_PAXB_0_PAXB_INTR_ENr(unit, int_en));
+
                     /* Check if time out has happened */
                     if (SAL_USECS_SUB(etime, stime) > hot_swap_usec) {
                         LOG_ERROR(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
                                     "Hot Swap Wait Time Out for READY\n")));
+                        /* Debug information */
+                        SOC_IF_ERROR_RETURN
+                            (READ_CMICX_M0_IDM_IDM_RESET_STATUSr(unit, &rval));
+                        LOG_INFO(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
+                                 "CMICX_M0_IDM_IDM_RESET_STATUSr=0x%x \r\n"), rval));
+                        SOC_IF_ERROR_RETURN
+                            (READ_AXI_PCIE_S0_IDM_IDM_RESET_STATUSr(unit, &rval));
+                        LOG_INFO(BSL_LS_SOC_COMMON, (BSL_META_U(unit,
+                                 "AXI_PCIE_S0_IDM_IDM_RESET_STATUSr=0x%x \r\n"), rval));
                         rv = SOC_E_TIMEOUT;
                         SOC_IF_ERROR_RETURN(rv);
                     } else {
@@ -9016,6 +9065,11 @@ soc_do_init(int unit, int reset)
      * After Soc initialization is done, the DPCs will be executed.
      */
     sal_dpc_cancel_and_disable(INT_TO_PTR(unit));
+
+    /* Initialize PCI Host interface */
+#if defined(BCM_CMICM_SUPPORT) || defined(BCM_CMICX_SUPPORT)
+        SOC_IF_ERROR_RETURN(soc_pcie_host_intf_init(unit));
+#endif
 
     /* Check for PCI hot swap and recover */
     SOC_IF_ERROR_RETURN(soc_pci_hotswap_recover(unit));
@@ -9502,9 +9556,6 @@ soc_do_init(int unit, int reset)
 
     if (reset && !SOC_WARM_BOOT(unit) && !SOC_IS_RCPU_ONLY(unit)) {
         SOC_IF_ERROR_RETURN(soc_reset(unit));
-#if defined(BCM_CMICM_SUPPORT) || defined(BCM_CMICX_SUPPORT)
-        SOC_IF_ERROR_RETURN(soc_pcie_host_intf_init(unit));
-#endif
     }
 
 #ifdef BCM_WARM_BOOT_SUPPORT
