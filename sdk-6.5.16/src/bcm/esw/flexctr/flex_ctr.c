@@ -338,10 +338,14 @@ static _flex_pkt_res_data_t egr_TrafficType_res[]={ /* 2 */
 static class_attr_combine_t class_attr_comb[BCM_MAX_NUM_UNITS];
 #endif
 
-bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_uncmprsd_bits_g={0};
-bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_uncmprsd_bits_g={0};
-bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_cmprsd_bits_g={0};
-bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_cmprsd_bits_g={0};
+bcm_stat_flex_ing_pkt_attr_bits_t
+    ing_pkt_attr_uncmprsd_bits_g[BCM_MAX_NUM_UNITS] =  {{0}};
+bcm_stat_flex_egr_pkt_attr_bits_t
+    egr_pkt_attr_uncmprsd_bits_g[BCM_MAX_NUM_UNITS] =  {{0}};
+bcm_stat_flex_ing_pkt_attr_bits_t
+    ing_pkt_attr_cmprsd_bits_g[BCM_MAX_NUM_UNITS] =  {{0}};
+bcm_stat_flex_egr_pkt_attr_bits_t
+    egr_pkt_attr_cmprsd_bits_g[BCM_MAX_NUM_UNITS] =  {{0}};
 
 /*  Information of compression table allocation per device. */
 static _bcm_stat_flex_compressed_mode_attr_sel_map_t
@@ -358,7 +362,7 @@ static bcm_error_t _bcm_esw_get_egr_fp_table_from_pipe(int pipe,
  * This flag is used to reset counter values
  * at old base index
  */
-compaction_status_t compaction_info={0};
+compaction_status_t compaction_info[BCM_MAX_NUM_UNITS] = {{0}};
 
 /*
  * Function:
@@ -687,7 +691,7 @@ void _bcm_esw_stat_get_counter_id(
 
         if (i >= BCM_MAX_STAT_COUNTER_IDS) {
             LOG_ERROR(BSL_LS_BCM_FLEXCTR,
-            (BSL_META_U(0,
+            (BSL_META_U(unit,
             "Failed to get counter id ")));
             return;
         }
@@ -789,7 +793,7 @@ _bcm_esw_stat_get_field_stage_from_stat_ctr(int unit, uint32 stat_counter_id)
 #ifdef BCM_TOMAHAWK_SUPPORT
     if (!stat_counter_map[unit] || (stat_counter_map[unit][stat_counter_id].used == 0)) {
         LOG_ERROR(BSL_LS_BCM_FLEXCTR,
-            (BSL_META_U(0,
+            (BSL_META_U(unit,
             "Failed to get counter id %d"), (int)stat_counter_id));
         return 0;
     }
@@ -941,7 +945,7 @@ void _bcm_esw_stat_get_counter_id_info(
          if ((stat_counter_id > BCM_MAX_STAT_COUNTER_IDS) ||
              (stat_counter_id <= 0) || (stat_counter_map[unit][stat_counter_id].used == 0)) {
              LOG_ERROR(BSL_LS_BCM_FLEXCTR,
-                      (BSL_META_U(0,
+                      (BSL_META_U(unit,
                                   "Failed to get counter id info %d"), stat_counter_id));
               *mode = 0;
               *group = *pool_number = 0;
@@ -1219,14 +1223,14 @@ bcm_error_t _bcm_esw_stat_attr_fill(
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 1;
          
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = 1;
 
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_mask;
 
          ing_cmprsd_attr_selectors->total_counters = 17;
@@ -1241,7 +1245,7 @@ bcm_error_t _bcm_esw_stat_attr_fill(
               map_index++) {
               ing_cmprsd_attr_selectors->pkt_res_attr_map[map_index]=0;
          }
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -1388,14 +1392,14 @@ bcm_error_t _bcm_esw_stat_attr_fill(
              ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
              /* Cannot consider 0 value so taking 3 i.s.o. 2 */
              ing_cmprsd_pkt_attr_bits->pkt_resolution = 3;
-             ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                             pkt_resolution_pos;
              ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<3)-1;
 
-             ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-             ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+             ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                      int_pri_pos;
-             ing_cmprsd_pkt_attr_bits->int_pri_mask= ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->int_pri_mask= ing_pkt_attr_cmprsd_bits_g[unit].
                                                      int_pri_mask;
 
              ing_cmprsd_attr_selectors->total_counters = 20;
@@ -1406,8 +1410,8 @@ bcm_error_t _bcm_esw_stat_attr_fill(
              /* set pkt_resolution map for  1 counters */
              /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
                 CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
-             shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + 
-                            ing_pkt_attr_cmprsd_bits_g.drop;
+             shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + 
+                            ing_pkt_attr_cmprsd_bits_g[unit].drop;
              shift_by_bits_for_value = shift_by_bits;
 
              /* set pkt_resolution map for  1 counters.Ignore SVP,DROP bits */
@@ -1498,23 +1502,23 @@ bcm_error_t _bcm_esw_stat_attr_fill(
             total_counters=18;
             egr_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
-            egr_cmprsd_pkt_attr_bits->pkt_resolution = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution = egr_pkt_attr_cmprsd_bits_g[unit].
                                                        pkt_resolution;
-            egr_cmprsd_pkt_attr_bits->pkt_resolution_pos = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                                                            pkt_resolution_pos;
-            egr_cmprsd_pkt_attr_bits->pkt_resolution_mask = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution_mask = egr_pkt_attr_cmprsd_bits_g[unit].
                                                             pkt_resolution_mask;
 
-            egr_cmprsd_pkt_attr_bits->int_pri = egr_pkt_attr_cmprsd_bits_g.int_pri;
-            egr_cmprsd_pkt_attr_bits->int_pri_pos = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->int_pri = egr_pkt_attr_cmprsd_bits_g[unit].int_pri;
+            egr_cmprsd_pkt_attr_bits->int_pri_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                                                     int_pri_pos;
-            egr_cmprsd_pkt_attr_bits->int_pri_mask=egr_pkt_attr_cmprsd_bits_g.int_pri_mask;
+            egr_cmprsd_pkt_attr_bits->int_pri_mask=egr_pkt_attr_cmprsd_bits_g[unit].int_pri_mask;
 
             egr_cmprsd_attr_selectors->total_counters = 18;
 
-            shift_by_bits= egr_pkt_attr_cmprsd_bits_g.svp_type + 
-                           egr_pkt_attr_cmprsd_bits_g.dvp_type + 
-                           egr_pkt_attr_cmprsd_bits_g.drop;
+            shift_by_bits= egr_pkt_attr_cmprsd_bits_g[unit].svp_type + 
+                           egr_pkt_attr_cmprsd_bits_g[unit].dvp_type + 
+                           egr_pkt_attr_cmprsd_bits_g[unit].drop;
              shift_by_bits_for_value = shift_by_bits;
             /* Set pkt_resolution map */
             /* Unicast */
@@ -1710,15 +1714,15 @@ bcm_error_t _bcm_esw_stat_attr_fill(
          ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 2;
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<2)-1;
 
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
 
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].
                                                   int_pri_mask;
          ing_cmprsd_attr_selectors->total_counters = 18;
 
@@ -1730,7 +1734,7 @@ bcm_error_t _bcm_esw_stat_attr_fill(
          /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
             CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
 
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -1906,13 +1910,13 @@ bcm_error_t _bcm_esw_stat_attr_fill(
          ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 3;
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<3)-1;
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.int_pri_mask;
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].int_pri_mask;
          ing_cmprsd_attr_selectors->total_counters = 21;
             
          /* Reset pkt_resolution map */
@@ -1924,7 +1928,7 @@ bcm_error_t _bcm_esw_stat_attr_fill(
          /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
             CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
 
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -2563,14 +2567,14 @@ bcm_error_t _bcm_esw_stat_group_create (
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 1;
          
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = 1;
 
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_mask;
 
          ing_cmprsd_attr_selectors->total_counters = 17;
@@ -2585,7 +2589,7 @@ bcm_error_t _bcm_esw_stat_group_create (
               map_index++) {
               ing_cmprsd_attr_selectors->pkt_res_attr_map[map_index]=0;
          }
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -2731,14 +2735,14 @@ bcm_error_t _bcm_esw_stat_group_create (
              ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
              /* Cannot consider 0 value so taking 3 i.s.o. 2 */
              ing_cmprsd_pkt_attr_bits->pkt_resolution = 3;
-             ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                             pkt_resolution_pos;
              ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<3)-1;
 
-             ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-             ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+             ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                      int_pri_pos;
-             ing_cmprsd_pkt_attr_bits->int_pri_mask= ing_pkt_attr_cmprsd_bits_g.
+             ing_cmprsd_pkt_attr_bits->int_pri_mask= ing_pkt_attr_cmprsd_bits_g[unit].
                                                      int_pri_mask;                                                    
 
              ing_cmprsd_attr_selectors->total_counters = 20;
@@ -2749,8 +2753,8 @@ bcm_error_t _bcm_esw_stat_group_create (
              /* set pkt_resolution map for  1 counters */
              /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
                 CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
-             shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + 
-                            ing_pkt_attr_cmprsd_bits_g.drop;
+             shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + 
+                            ing_pkt_attr_cmprsd_bits_g[unit].drop;
              shift_by_bits_for_value = shift_by_bits;
 
              /* set pkt_resolution map for  1 counters.Ignore SVP,DROP bits */
@@ -2841,23 +2845,23 @@ bcm_error_t _bcm_esw_stat_group_create (
             total_counters=18;
             egr_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
-            egr_cmprsd_pkt_attr_bits->pkt_resolution = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution = egr_pkt_attr_cmprsd_bits_g[unit].
                                                        pkt_resolution;
-            egr_cmprsd_pkt_attr_bits->pkt_resolution_pos = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                                                            pkt_resolution_pos;
-            egr_cmprsd_pkt_attr_bits->pkt_resolution_mask = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->pkt_resolution_mask = egr_pkt_attr_cmprsd_bits_g[unit].
                                                             pkt_resolution_mask;
 
-            egr_cmprsd_pkt_attr_bits->int_pri = egr_pkt_attr_cmprsd_bits_g.int_pri;
-            egr_cmprsd_pkt_attr_bits->int_pri_pos = egr_pkt_attr_cmprsd_bits_g.
+            egr_cmprsd_pkt_attr_bits->int_pri = egr_pkt_attr_cmprsd_bits_g[unit].int_pri;
+            egr_cmprsd_pkt_attr_bits->int_pri_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                                                     int_pri_pos;
-            egr_cmprsd_pkt_attr_bits->int_pri_mask=egr_pkt_attr_cmprsd_bits_g.int_pri_mask;
+            egr_cmprsd_pkt_attr_bits->int_pri_mask=egr_pkt_attr_cmprsd_bits_g[unit].int_pri_mask;
 
             egr_cmprsd_attr_selectors->total_counters = 18;
 
-            shift_by_bits= egr_pkt_attr_cmprsd_bits_g.svp_type + 
-                           egr_pkt_attr_cmprsd_bits_g.dvp_type + 
-                           egr_pkt_attr_cmprsd_bits_g.drop;
+            shift_by_bits= egr_pkt_attr_cmprsd_bits_g[unit].svp_type + 
+                           egr_pkt_attr_cmprsd_bits_g[unit].dvp_type + 
+                           egr_pkt_attr_cmprsd_bits_g[unit].drop;
              shift_by_bits_for_value = shift_by_bits;
             /* Set pkt_resolution map */
             /* Unicast */
@@ -3054,15 +3058,15 @@ bcm_error_t _bcm_esw_stat_group_create (
          ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 2;
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<2)-1;
 
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
 
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].
                                                   int_pri_mask;
          ing_cmprsd_attr_selectors->total_counters = 18;
 
@@ -3074,7 +3078,7 @@ bcm_error_t _bcm_esw_stat_group_create (
          /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
             CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
 
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -3250,13 +3254,13 @@ bcm_error_t _bcm_esw_stat_group_create (
          ing_attr->packet_attr_type=bcmStatFlexPacketAttrTypeCompressed;
 
          ing_cmprsd_pkt_attr_bits->pkt_resolution = 3;
-         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                         pkt_resolution_pos;
          ing_cmprsd_pkt_attr_bits->pkt_resolution_mask = (1<<3)-1;
-         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g.int_pri;
-         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g.
+         ing_cmprsd_pkt_attr_bits->int_pri = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
+         ing_cmprsd_pkt_attr_bits->int_pri_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                  int_pri_pos;
-         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g.int_pri_mask;
+         ing_cmprsd_pkt_attr_bits->int_pri_mask = ing_pkt_attr_cmprsd_bits_g[unit].int_pri_mask;
          ing_cmprsd_attr_selectors->total_counters = 21;
             
          /* Reset pkt_resolution map */
@@ -3268,7 +3272,7 @@ bcm_error_t _bcm_esw_stat_group_create (
          /* Map[Encoded Packet value << 2=>[SVP-1bit + DROP-1bit]=
             CounterIndex << 2=>[SVP-1bit + DROP-1bit]=4(Start),8,12*/
 
-         shift_by_bits= ing_pkt_attr_cmprsd_bits_g.svp_type + ing_pkt_attr_cmprsd_bits_g.drop;
+         shift_by_bits= ing_pkt_attr_cmprsd_bits_g[unit].svp_type + ing_pkt_attr_cmprsd_bits_g[unit].drop;
          shift_by_bits_for_value = shift_by_bits;
 
          for (ignore_index=0; 
@@ -4897,301 +4901,301 @@ void _bcm_esw_stat_flex_init_pkt_attr_bits(int unit)
        int next_pos = 0;
 
        /* Egress bits initialization */
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt = 1;
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.ip_pkt) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.ip_pkt;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt;
 
-       egr_pkt_attr_uncmprsd_bits_g.drop = 1;
-       egr_pkt_attr_uncmprsd_bits_g.drop_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.drop_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.drop) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.drop;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].drop) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].drop;
 
-       egr_pkt_attr_uncmprsd_bits_g.dvp_type =
+       egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type =
            (soc_feature(unit, soc_feature_multiple_split_horizon_group)) ? 3 : 1;
-       egr_pkt_attr_uncmprsd_bits_g.dvp_type_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.dvp_type_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.dvp_type) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.dvp_type;
+       egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type;
 
-        egr_pkt_attr_uncmprsd_bits_g.svp_type =
+        egr_pkt_attr_uncmprsd_bits_g[unit].svp_type =
            (soc_feature(unit, soc_feature_multiple_split_horizon_group)) ? 3 : 1;
-       egr_pkt_attr_uncmprsd_bits_g.svp_type_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.svp_type_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.svp_type;
+       egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].svp_type;
 
-       egr_pkt_attr_uncmprsd_bits_g.pkt_resolution = 1;
-       egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.pkt_resolution;
+       egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution;
 
-       egr_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-       egr_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.tos_ecn_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.tos_ecn;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn;
 
-       egr_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-       egr_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.tos_dscp_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.tos_dscp;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp;
 
        if (SOC_IS_TOMAHAWKX(unit) || SOC_IS_TRIDENT3X(unit)) {
-           egr_pkt_attr_uncmprsd_bits_g.egr_port = 8; /* For TH, TD3 8 bits */
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port = 8; /* For TH, TD3 8 bits */
        } else {
-           egr_pkt_attr_uncmprsd_bits_g.egr_port = 7; /* For KT2,TR3 6 bits */
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port = 7; /* For KT2,TR3 6 bits */
        }
-       egr_pkt_attr_uncmprsd_bits_g.egr_port_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.egr_port_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.egr_port) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.egr_port;
+       egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].egr_port) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].egr_port;
 
-       egr_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-       egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.inner_dot1p;
+       egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+       egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p;
 
-       egr_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-       egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.outer_dot1p;
+       egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+       egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p;
 
-       egr_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-       egr_pkt_attr_uncmprsd_bits_g.vlan_format_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.vlan_format_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.vlan_format;
+       egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+       egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format;
 
-       egr_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-       egr_pkt_attr_uncmprsd_bits_g.int_pri_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.int_pri_mask = 
-                           (1 << egr_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
-       next_pos += egr_pkt_attr_uncmprsd_bits_g.int_pri;
+       egr_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+       egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask = 
+                           (1 << egr_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].int_pri;
 
-       egr_pkt_attr_uncmprsd_bits_g.cng = 2;
-       egr_pkt_attr_uncmprsd_bits_g.cng_pos = next_pos;
-       egr_pkt_attr_uncmprsd_bits_g.cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g.cng) - 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+       egr_pkt_attr_uncmprsd_bits_g[unit].cng_pos = next_pos;
+       egr_pkt_attr_uncmprsd_bits_g[unit].cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 #ifdef BCM_APACHE_SUPPORT
        /* Added support for 3 Label Mpls Attr Counting */
        if (soc_feature(unit,soc_feature_flex_ctr_mpls_3_label_count)) {
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.cng;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].cng;
 
-           egr_pkt_attr_uncmprsd_bits_g.phb_1 = 4;
-           egr_pkt_attr_uncmprsd_bits_g.phb_1_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.phb_1_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.phb_1) - 1;
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.phb_1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_1 = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_1_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_1_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].phb_1) - 1;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].phb_1;
 
-           egr_pkt_attr_uncmprsd_bits_g.cng_1 = 2;
-           egr_pkt_attr_uncmprsd_bits_g.cng_1_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.cng_1_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.cng_1) - 1;
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.cng_1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_1 = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_1_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_1_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng_1) - 1;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].cng_1;
 
-           egr_pkt_attr_uncmprsd_bits_g.phb_2 = 4;
-           egr_pkt_attr_uncmprsd_bits_g.phb_2_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.phb_2_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.phb_2) - 1;
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.phb_2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_2 = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_2_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_2_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].phb_2) - 1;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].phb_2;
 
-           egr_pkt_attr_uncmprsd_bits_g.cng_2 = 2;
-           egr_pkt_attr_uncmprsd_bits_g.cng_2_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.cng_2_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.cng_2) - 1;
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.cng_2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_2 = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_2_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_2_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng_2) - 1;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].cng_2;
 
-           egr_pkt_attr_uncmprsd_bits_g.phb_3 = 4;
-           egr_pkt_attr_uncmprsd_bits_g.phb_3_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.phb_3_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.phb_3) - 1;
-           next_pos += egr_pkt_attr_uncmprsd_bits_g.phb_3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_3 = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_3_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].phb_3_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].phb_3) - 1;
+           next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].phb_3;
 
-           egr_pkt_attr_uncmprsd_bits_g.cng_3 = 2;
-           egr_pkt_attr_uncmprsd_bits_g.cng_3_pos = next_pos;
-           egr_pkt_attr_uncmprsd_bits_g.cng_3_mask =
-               (1 << egr_pkt_attr_uncmprsd_bits_g.cng_3) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_3 = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_3_pos = next_pos;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_3_mask =
+               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng_3) - 1;
        }
 #endif
 #if defined(BCM_TOMAHAWK_SUPPORT) || defined(BCM_TRIDENT3_SUPPORT)
     if (soc_feature(unit, soc_feature_flex_stat_egr_queue_congestion_marked)) {
-        next_pos += egr_pkt_attr_uncmprsd_bits_g.cng;
+        next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].cng;
 
-        egr_pkt_attr_uncmprsd_bits_g.congestion_marked = 1;
-        egr_pkt_attr_uncmprsd_bits_g.congestion_marked_pos = next_pos;
-        egr_pkt_attr_uncmprsd_bits_g.congestion_marked_mask =
-            (1 << egr_pkt_attr_uncmprsd_bits_g.congestion_marked) - 1;
-        next_pos += egr_pkt_attr_uncmprsd_bits_g.congestion_marked;
+        egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked = 1;
+        egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked_pos = next_pos;
+        egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked_mask =
+            (1 << egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked) - 1;
+        next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked;
 
-        egr_pkt_attr_uncmprsd_bits_g.uc_queueing = 1;
-        egr_pkt_attr_uncmprsd_bits_g.uc_queueing_pos = next_pos;
-        egr_pkt_attr_uncmprsd_bits_g.uc_queueing_mask =
-            (1 << egr_pkt_attr_uncmprsd_bits_g.uc_queueing) - 1;
-        next_pos += egr_pkt_attr_uncmprsd_bits_g.uc_queueing;
+        egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing = 1;
+        egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing_pos = next_pos;
+        egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing_mask =
+            (1 << egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing) - 1;
+        next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing;
 
        if (SOC_IS_HELIX5(unit)) {
-           egr_pkt_attr_uncmprsd_bits_g.mmu_cos = 5;
+           egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos = 5;
        } else {
-           egr_pkt_attr_uncmprsd_bits_g.mmu_cos = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos = 4;
        }
-        egr_pkt_attr_uncmprsd_bits_g.mmu_cos_pos = next_pos;
-        egr_pkt_attr_uncmprsd_bits_g.mmu_cos_mask =
-            (1 << egr_pkt_attr_uncmprsd_bits_g.mmu_cos) - 1;
+        egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos_pos = next_pos;
+        egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos_mask =
+            (1 << egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos) - 1;
     }
 #endif
     if (soc_feature(unit, soc_feature_flex_stat_int_cn_support)) {
-        next_pos += egr_pkt_attr_uncmprsd_bits_g.mmu_cos;
+        next_pos += egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos;
 
-        egr_pkt_attr_uncmprsd_bits_g.int_cn = 2;
-        egr_pkt_attr_uncmprsd_bits_g.int_cn_pos = next_pos;
-        egr_pkt_attr_uncmprsd_bits_g.int_cn_mask =
-            (1 << egr_pkt_attr_uncmprsd_bits_g.int_cn) - 1;
+        egr_pkt_attr_uncmprsd_bits_g[unit].int_cn = 2;
+        egr_pkt_attr_uncmprsd_bits_g[unit].int_cn_pos = next_pos;
+        egr_pkt_attr_uncmprsd_bits_g[unit].int_cn_mask =
+            (1 << egr_pkt_attr_uncmprsd_bits_g[unit].int_cn) - 1;
     }
 
        /* Ingress bits initialization */
        next_pos = 0;
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt = 1;
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.ip_pkt) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.ip_pkt;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt = 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt;
 
-       ing_pkt_attr_uncmprsd_bits_g.drop = 1;
-       ing_pkt_attr_uncmprsd_bits_g.drop_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.drop_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.drop) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.drop;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop = 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].drop) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].drop;
 
-       ing_pkt_attr_uncmprsd_bits_g.svp_type =
+       ing_pkt_attr_uncmprsd_bits_g[unit].svp_type =
            (soc_feature(unit, soc_feature_multiple_split_horizon_group)) ? 3 : 1;
-       ing_pkt_attr_uncmprsd_bits_g.svp_type_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.svp_type_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.svp_type;
+       ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].svp_type;
 
-       ing_pkt_attr_uncmprsd_bits_g.pkt_resolution = 6;
-       ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.pkt_resolution;
+       ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 6;
+       ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution;
 
-       ing_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-       ing_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.tos_ecn_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.tos_ecn;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn;
 
-       ing_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-       ing_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.tos_dscp_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.tos_dscp;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp;
 
        if (SOC_IS_TOMAHAWKX(unit) || SOC_IS_TRIDENT3X(unit)) {
-           ing_pkt_attr_uncmprsd_bits_g.ing_port = 8; /* FOR TH, TD3, 8 bits */
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port = 8; /* FOR TH, TD3, 8 bits */
        } else {
-           ing_pkt_attr_uncmprsd_bits_g.ing_port = 7; /* FOR TD2, 7 bits */
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port = 7; /* FOR TD2, 7 bits */
        }
-       ing_pkt_attr_uncmprsd_bits_g.ing_port_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.ing_port_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.ing_port) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.ing_port;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ing_port) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].ing_port;
 
-       ing_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-       ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.inner_dot1p;
+       ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+       ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p;
 
-       ing_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-       ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.outer_dot1p;
+       ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+       ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p;
 
-       ing_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-       ing_pkt_attr_uncmprsd_bits_g.vlan_format_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.vlan_format_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.vlan_format;
+       ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+       ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format;
 
-       ing_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-       ing_pkt_attr_uncmprsd_bits_g.int_pri_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.int_pri_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.int_pri;
+       ing_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+       ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].int_pri;
 
-       ing_pkt_attr_uncmprsd_bits_g.ifp_cng = 2;
-       ing_pkt_attr_uncmprsd_bits_g.ifp_cng_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.ifp_cng_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.ifp_cng) - 1;
-       next_pos += ing_pkt_attr_uncmprsd_bits_g.ifp_cng;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng = 2;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng) - 1;
+       next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng;
 
-       ing_pkt_attr_uncmprsd_bits_g.cng = 2;
-       ing_pkt_attr_uncmprsd_bits_g.cng_pos = next_pos;
-       ing_pkt_attr_uncmprsd_bits_g.cng_mask = 
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.cng) - 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+       ing_pkt_attr_uncmprsd_bits_g[unit].cng_pos = next_pos;
+       ing_pkt_attr_uncmprsd_bits_g[unit].cng_mask = 
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 #ifdef BCM_APACHE_SUPPORT
        /* Added support for 3 Label Mpls Attr Counting */
        if (soc_feature(unit,soc_feature_flex_ctr_mpls_3_label_count)) {
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.cng;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].cng;
 
-           ing_pkt_attr_uncmprsd_bits_g.phb_1 = 4;
-           ing_pkt_attr_uncmprsd_bits_g.phb_1_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.phb_1_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.phb_1) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.phb_1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_1 = 4;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_1_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_1_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].phb_1) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].phb_1;
 
-           ing_pkt_attr_uncmprsd_bits_g.cng_1 = 2;
-           ing_pkt_attr_uncmprsd_bits_g.cng_1_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.cng_1_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.cng_1) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.cng_1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_1 = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_1_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_1_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].cng_1) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].cng_1;
 
-           ing_pkt_attr_uncmprsd_bits_g.phb_2 = 4;
-           ing_pkt_attr_uncmprsd_bits_g.phb_2_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.phb_2_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.phb_2) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.phb_2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_2 = 4;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_2_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_2_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].phb_2) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].phb_2;
 
-           ing_pkt_attr_uncmprsd_bits_g.cng_2 = 2;
-           ing_pkt_attr_uncmprsd_bits_g.cng_2_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.cng_2_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.cng_2) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.cng_2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_2 = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_2_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_2_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].cng_2) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].cng_2;
 
-           ing_pkt_attr_uncmprsd_bits_g.phb_3 = 4;
-           ing_pkt_attr_uncmprsd_bits_g.phb_3_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.phb_3_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.phb_3) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.phb_3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_3 = 4;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_3_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].phb_3_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].phb_3) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].phb_3;
 
-           ing_pkt_attr_uncmprsd_bits_g.cng_3 = 2;
-           ing_pkt_attr_uncmprsd_bits_g.cng_3_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.cng_3_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.cng_3) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_3 = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_3_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_3_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].cng_3) - 1;
        }
 #endif
        if (soc_feature(unit, soc_feature_flex_stat_ing_tcp_flags_support)) {
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.cng;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].cng;
 
-           ing_pkt_attr_uncmprsd_bits_g.tcp_flags = 8;
-           ing_pkt_attr_uncmprsd_bits_g.tcp_flags_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.tcp_flags_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.tcp_flags) - 1;
-           next_pos += ing_pkt_attr_uncmprsd_bits_g.tcp_flags;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags = 8;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags) - 1;
+           next_pos += ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags;
        }
        if (soc_feature(unit, soc_feature_flex_stat_int_cn_support)) {
-           ing_pkt_attr_uncmprsd_bits_g.int_cn = 2;
-           ing_pkt_attr_uncmprsd_bits_g.int_cn_pos = next_pos;
-           ing_pkt_attr_uncmprsd_bits_g.int_cn_mask =
-               (1 << ing_pkt_attr_uncmprsd_bits_g.int_cn) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_cn = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_cn_pos = next_pos;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_cn_mask =
+               (1 << ing_pkt_attr_uncmprsd_bits_g[unit].int_cn) - 1;
        }
     } else {
        /* Egress bits initialization */
@@ -5199,614 +5203,614 @@ void _bcm_esw_stat_flex_init_pkt_attr_bits(int unit)
            if (SOC_IS_SABER2(unit)) {
                offset_adj = 1;
            }
-           egr_pkt_attr_uncmprsd_bits_g.cng = 2;
-           egr_pkt_attr_uncmprsd_bits_g.cng_pos = 37;
-           egr_pkt_attr_uncmprsd_bits_g.cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g.cng) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_pos = 37;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-           egr_pkt_attr_uncmprsd_bits_g.int_pri_pos = 33;
-           egr_pkt_attr_uncmprsd_bits_g.int_pri_mask = 
-                               (1 << egr_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = 33;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask = 
+                               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format_pos = 31;
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = 31;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = 28;
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = 28;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = 25;
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = 25;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
 
                                                    /* For KT2 : 8 bits */
                                                    /* For SB2 : 7 Bits */
-           egr_pkt_attr_uncmprsd_bits_g.egr_port = 8 - offset_adj;
-           egr_pkt_attr_uncmprsd_bits_g.egr_port_pos = 17;
-           egr_pkt_attr_uncmprsd_bits_g.egr_port_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.egr_port) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port = 8 - offset_adj;
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_pos = 17;
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].egr_port) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = 11;
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = 11;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = 9;
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = 9;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution = 1;
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = 8;
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = 8;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.svp_type = 3;
-           egr_pkt_attr_uncmprsd_bits_g.svp_type_pos = 5;
-           egr_pkt_attr_uncmprsd_bits_g.svp_type_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = 5;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type = 3;
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type_pos = 2;
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.dvp_type) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_pos = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type) - 1;
        } else {
-           egr_pkt_attr_uncmprsd_bits_g.cng = 2;
-           egr_pkt_attr_uncmprsd_bits_g.cng_pos = 31;
-           egr_pkt_attr_uncmprsd_bits_g.cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g.cng) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_pos = 31;
+           egr_pkt_attr_uncmprsd_bits_g[unit].cng_mask = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-           egr_pkt_attr_uncmprsd_bits_g.int_pri_pos = 27;
-           egr_pkt_attr_uncmprsd_bits_g.int_pri_mask = 
-                               (1 << egr_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = 27;
+           egr_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask = 
+                               (1 << egr_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format_pos = 25;
-           egr_pkt_attr_uncmprsd_bits_g.vlan_format_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = 25;
+           egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = 22;
-           egr_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = 22;
+           egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = 19;
-           egr_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = 19;
+           egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.egr_port = 6; /* For KT2,TR3 6 bits */
-           egr_pkt_attr_uncmprsd_bits_g.egr_port_pos = 13;
-           egr_pkt_attr_uncmprsd_bits_g.egr_port_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.egr_port) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port = 6; /* For KT2,TR3 6 bits */
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_pos = 13;
+           egr_pkt_attr_uncmprsd_bits_g[unit].egr_port_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].egr_port) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = 7;
-           egr_pkt_attr_uncmprsd_bits_g.tos_dscp_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = 7;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = 5;
-           egr_pkt_attr_uncmprsd_bits_g.tos_ecn_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = 5;
+           egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution = 1;
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = 4;
-           egr_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = 4;
+           egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
     
-           egr_pkt_attr_uncmprsd_bits_g.svp_type = 1;
-           egr_pkt_attr_uncmprsd_bits_g.svp_type_pos = 3;
-           egr_pkt_attr_uncmprsd_bits_g.svp_type_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type = 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = 3;
+           egr_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
 
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type = 1;
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type_pos = 2;
-           egr_pkt_attr_uncmprsd_bits_g.dvp_type_mask = 
-                               (1<<egr_pkt_attr_uncmprsd_bits_g.dvp_type) - 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type = 1;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_pos = 2;
+           egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type_mask = 
+                               (1<<egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type) - 1;
        }
-       egr_pkt_attr_uncmprsd_bits_g.drop = 1;
-       egr_pkt_attr_uncmprsd_bits_g.drop_pos = 1;
-       egr_pkt_attr_uncmprsd_bits_g.drop_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.drop) - 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop_pos = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].drop_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].drop) - 1;
 
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt = 1;
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt_pos = 0;
-       egr_pkt_attr_uncmprsd_bits_g.ip_pkt_mask = 
-                           (1<<egr_pkt_attr_uncmprsd_bits_g.ip_pkt) - 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt = 1;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_pos = 0;
+       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_mask = 
+                           (1<<egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt) - 1;
 
        /* Ingress bits initialization */
        if (SOC_IS_KATANA2(unit)) {
            if (SOC_IS_SABER2(unit)) {
                offset_adj = 1;
            }
-           ing_pkt_attr_uncmprsd_bits_g.cng = 2;
-           ing_pkt_attr_uncmprsd_bits_g.cng_pos = 41;
-           ing_pkt_attr_uncmprsd_bits_g.cng_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.cng) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_pos = 41;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng = 2;
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng_pos = 39;
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.ifp_cng) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_pos = 39;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-           ing_pkt_attr_uncmprsd_bits_g.int_pri_pos = 35;
-           ing_pkt_attr_uncmprsd_bits_g.int_pri_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = 35;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format_pos = 33;
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = 33;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = 30;
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = 30;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = 27;
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = 27;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
 
                                                    /* For KT2,For SB2 : 7 Bits */
-           ing_pkt_attr_uncmprsd_bits_g.ing_port = 8 - offset_adj;
-           ing_pkt_attr_uncmprsd_bits_g.ing_port_pos = 19;
-           ing_pkt_attr_uncmprsd_bits_g.ing_port_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.ing_port) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port = 8 - offset_adj;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_pos = 19;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ing_port) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = 13;
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = 13;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = 11;
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = 11;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution = 6;
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = 5;
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 6;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = 5;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.svp_type = 3;
-           ing_pkt_attr_uncmprsd_bits_g.svp_type_pos = 2;
-           ing_pkt_attr_uncmprsd_bits_g.svp_type_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
        } else {
-           ing_pkt_attr_uncmprsd_bits_g.cng = 2;
-           ing_pkt_attr_uncmprsd_bits_g.cng_pos = 37;
-           ing_pkt_attr_uncmprsd_bits_g.cng_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.cng) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_pos = 37;
+           ing_pkt_attr_uncmprsd_bits_g[unit].cng_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].cng) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng = 2;
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng_pos = 35;
-           ing_pkt_attr_uncmprsd_bits_g.ifp_cng_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.ifp_cng) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_pos = 35;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.int_pri = 4;
-           ing_pkt_attr_uncmprsd_bits_g.int_pri_pos = 31;
-           ing_pkt_attr_uncmprsd_bits_g.int_pri_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.int_pri) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri = 4;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos = 31;
+           ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].int_pri) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format = 2;
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format_pos = 29;
-           ing_pkt_attr_uncmprsd_bits_g.vlan_format_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.vlan_format) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos = 29;
+           ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p = 3;
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos = 26;
-           ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.outer_dot1p) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos = 26;
+           ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p = 3;
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos = 23;
-           ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.inner_dot1p) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos = 23;
+           ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.ing_port = 6; /* For KT2,TR3 6 bits */
-           ing_pkt_attr_uncmprsd_bits_g.ing_port_pos = 17;
-           ing_pkt_attr_uncmprsd_bits_g.ing_port_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.ing_port) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port = 6; /* For KT2,TR3 6 bits */
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_pos = 17;
+           ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ing_port) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp = 6;
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp_pos = 11;
-           ing_pkt_attr_uncmprsd_bits_g.tos_dscp_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn = 2;
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn_pos = 9;
-           ing_pkt_attr_uncmprsd_bits_g.tos_ecn_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp = 6;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos = 11;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos = 9;
+           ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution = 6;
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_pos = 3;
-           ing_pkt_attr_uncmprsd_bits_g.pkt_resolution_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.pkt_resolution) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution = 6;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_pos = 3;
+           ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution) - 1;
 
-           ing_pkt_attr_uncmprsd_bits_g.svp_type = 1;
-           ing_pkt_attr_uncmprsd_bits_g.svp_type_pos = 2;
-           ing_pkt_attr_uncmprsd_bits_g.svp_type_mask =
-                               (1<<ing_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type = 1;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos = 2;
+           ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask =
+                               (1<<ing_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
        }
-       ing_pkt_attr_uncmprsd_bits_g.drop = 1;
-       ing_pkt_attr_uncmprsd_bits_g.drop_pos = 1;
-       ing_pkt_attr_uncmprsd_bits_g.drop_mask =
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.drop) - 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop = 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop_pos = 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].drop_mask =
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].drop) - 1;
 
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt = 1;
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt_pos = 0;
-       ing_pkt_attr_uncmprsd_bits_g.ip_pkt_mask =
-                           (1<<ing_pkt_attr_uncmprsd_bits_g.ip_pkt) - 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt = 1;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_pos = 0;
+       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_mask =
+                           (1<<ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt) - 1;
    }
    if (SOC_IS_KATANA2(unit)) {
        if (SOC_IS_SABER2(unit)) {
            offset_adj = 1;
        }
-       ing_pkt_attr_cmprsd_bits_g.cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_pos = 39 - offset_adj;
-       ing_pkt_attr_cmprsd_bits_g.cng_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.cng) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_pos = 39 - offset_adj;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_pos = 37 - offset_adj;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ifp_cng) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_pos = 37 - offset_adj;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_pos = 33 - offset_adj;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.int_pri) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = 33 - offset_adj;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_pos = 31 - offset_adj;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = 31 - offset_adj;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = 28 - offset_adj;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = 28 - offset_adj;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = 25;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = 25;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.ing_port = 8 - offset_adj; /* For KT2,TR3 6 bits */
-       ing_pkt_attr_cmprsd_bits_g.ing_port_pos = 17;
-       ing_pkt_attr_cmprsd_bits_g.ing_port_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port = 8 - offset_adj; /* For KT2,TR3 6 bits */
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_pos = 17;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_pos = 11;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = 11;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_pos = 9;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = 9;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution = 4;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = 5;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = 5;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.svp_type = 3;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_pos = 2;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.svp_type) - 1;
-       ing_pkt_attr_cmprsd_bits_g.drop = 1;
-       ing_pkt_attr_cmprsd_bits_g.drop_pos = 1;
-       ing_pkt_attr_cmprsd_bits_g.drop_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.drop) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_pos = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
 
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_pos = 0;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = 0;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.cng = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_pos = 33;
-       egr_pkt_attr_cmprsd_bits_g.cng_mask = (1 << egr_pkt_attr_cmprsd_bits_g.cng) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_pos = 33;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_mask = (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_pos = 29;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_mask = 
-                           (1 << egr_pkt_attr_cmprsd_bits_g.int_pri) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = 29;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_mask = 
+                           (1 << egr_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_pos = 27;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = 27;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = 24;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = 24;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = 21;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = 21;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.egr_port = 8 - offset_adj; /* For KT2 : 8 bits */
-       egr_pkt_attr_cmprsd_bits_g.egr_port_pos = 13;
-       egr_pkt_attr_cmprsd_bits_g.egr_port_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port = 8 - offset_adj; /* For KT2 : 8 bits */
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_pos = 13;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_pos = 7;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = 7;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_pos = 5;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = 5;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution = 1;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = 4;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_mask = 
-                       (1<<egr_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask = 
+                       (1<<egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.svp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_pos = 3;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.svp_type) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.dvp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_pos = 2;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.dvp_type) - 1;
-       egr_pkt_attr_cmprsd_bits_g.drop = 1;
-       egr_pkt_attr_cmprsd_bits_g.drop_pos = 1;
-       egr_pkt_attr_cmprsd_bits_g.drop_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.drop) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_pos = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].dvp_type) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_pos = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
 
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_pos = 0;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_mask = 
-                           (1<<egr_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = 0;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask = 
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
 #ifdef BCM_APACHE_SUPPORT
    } else if (SOC_IS_APACHE(unit)) {
        int next_pos = 0;
        /* Egress bits initialization */
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.ip_pkt;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt;
 
-       egr_pkt_attr_cmprsd_bits_g.drop = 1;
-       egr_pkt_attr_cmprsd_bits_g.drop_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.drop_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.drop) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.drop;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].drop;
 
-       egr_pkt_attr_cmprsd_bits_g.dvp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.dvp_type) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.dvp_type;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].dvp_type) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].dvp_type;
 
-       egr_pkt_attr_cmprsd_bits_g.svp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.svp_type) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.svp_type;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].svp_type;
 
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution = 1;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.pkt_resolution;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.tos_ecn;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.tos_dscp;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp;
 
-       egr_pkt_attr_cmprsd_bits_g.egr_port = 7; /* For KT2,TR3 6 bits */
-       egr_pkt_attr_cmprsd_bits_g.egr_port_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.egr_port_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.egr_port;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port = 7; /* For KT2,TR3 6 bits */
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].egr_port;
 
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.inner_dot1p;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p;
 
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.outer_dot1p;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p;
 
-       egr_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_mask =
-           (1<<egr_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.vlan_format;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask =
+           (1<<egr_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].vlan_format;
 
-       egr_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.int_pri) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.int_pri;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].int_pri;
 
-       egr_pkt_attr_cmprsd_bits_g.cng = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.cng_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.cng) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
 
-       next_pos += egr_pkt_attr_cmprsd_bits_g.cng;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].cng;
 
-       egr_pkt_attr_cmprsd_bits_g.phb_1 = 4;
-       egr_pkt_attr_cmprsd_bits_g.phb_1_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.phb_1_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.phb_1) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.phb_1;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_1 = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_1_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_1_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].phb_1) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].phb_1;
 
-       egr_pkt_attr_cmprsd_bits_g.cng_1 = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_1_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.cng_1_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.cng_1) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.cng_1;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_1 = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_1_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_1_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng_1) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].cng_1;
 
-       egr_pkt_attr_cmprsd_bits_g.phb_2 = 4;
-       egr_pkt_attr_cmprsd_bits_g.phb_2_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.phb_2_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.phb_2) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.phb_2;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_2 = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_2_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_2_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].phb_2) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].phb_2;
 
-       egr_pkt_attr_cmprsd_bits_g.cng_2 = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_2_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.cng_2_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.cng_2) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.cng_2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_2 = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_2_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_2_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng_2) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].cng_2;
 
-       egr_pkt_attr_cmprsd_bits_g.phb_3 = 4;
-       egr_pkt_attr_cmprsd_bits_g.phb_3_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.phb_3_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.phb_3) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.phb_3;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_3 = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_3_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].phb_3_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].phb_3) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].phb_3;
 
-       egr_pkt_attr_cmprsd_bits_g.cng_3 = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_3_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.cng_3_mask =
-           (1 << egr_pkt_attr_cmprsd_bits_g.cng_3) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_3 = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_3_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_3_mask =
+           (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng_3) - 1;
 
        /* Ingress bits initialization */
        next_pos = 0;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ip_pkt;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt;
 
-       ing_pkt_attr_cmprsd_bits_g.drop = 1;
-       ing_pkt_attr_cmprsd_bits_g.drop_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.drop_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.drop) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.drop;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].drop;
 
-       ing_pkt_attr_cmprsd_bits_g.svp_type = 3;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.svp_type) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.svp_type;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].svp_type;
 
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution = 4;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.pkt_resolution;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution;
 
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.tos_ecn;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn;
 
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.tos_dscp;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp;
 
-       ing_pkt_attr_cmprsd_bits_g.ing_port = 7; /* FOR TD2, 7 bits */
-       ing_pkt_attr_cmprsd_bits_g.ing_port_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ing_port_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ing_port;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port = 7; /* FOR TD2, 7 bits */
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ing_port;
 
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.inner_dot1p;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p;
 
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.outer_dot1p;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p;
 
-       ing_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.vlan_format;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].vlan_format;
 
-       ing_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.int_pri) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.int_pri;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
 
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.ifp_cng) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ifp_cng;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng;
 
-       ing_pkt_attr_cmprsd_bits_g.cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.cng_mask =
-           (1<<ing_pkt_attr_cmprsd_bits_g.cng) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_mask =
+           (1<<ing_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
 
-       next_pos += ing_pkt_attr_cmprsd_bits_g.cng;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].cng;
 
-       ing_pkt_attr_cmprsd_bits_g.phb_1 = 4;
-       ing_pkt_attr_cmprsd_bits_g.phb_1_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.phb_1_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.phb_1) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.phb_1;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_1 = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_1_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_1_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].phb_1) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].phb_1;
 
-       ing_pkt_attr_cmprsd_bits_g.cng_1 = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_1_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.cng_1_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.cng_1) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.cng_1;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_1 = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_1_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_1_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].cng_1) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].cng_1;
 
-       ing_pkt_attr_cmprsd_bits_g.phb_2 = 4;
-       ing_pkt_attr_cmprsd_bits_g.phb_2_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.phb_2_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.phb_2) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.phb_2;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_2 = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_2_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_2_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].phb_2) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].phb_2;
 
-       ing_pkt_attr_cmprsd_bits_g.cng_2 = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_2_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.cng_2_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.cng_2) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.cng_2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_2 = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_2_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_2_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].cng_2) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].cng_2;
 
-       ing_pkt_attr_cmprsd_bits_g.phb_3 = 4;
-       ing_pkt_attr_cmprsd_bits_g.phb_3_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.phb_3_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.phb_3) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.phb_3;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_3 = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_3_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].phb_3_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].phb_3) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].phb_3;
 
-       ing_pkt_attr_cmprsd_bits_g.cng_3 = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_3_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.cng_3_mask =
-           (1 << ing_pkt_attr_cmprsd_bits_g.cng_3) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_3 = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_3_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_3_mask =
+           (1 << ing_pkt_attr_cmprsd_bits_g[unit].cng_3) - 1;
 #endif
    }
 #ifdef BCM_TRIDENT3_SUPPORT
@@ -5814,197 +5818,197 @@ void _bcm_esw_stat_flex_init_pkt_attr_bits(int unit)
        int next_pos = 0;
 
        /* Egress bits initialization */
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.ip_pkt_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.ip_pkt;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt;
 
-       egr_pkt_attr_cmprsd_bits_g.drop = 1;
-       egr_pkt_attr_cmprsd_bits_g.drop_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.drop_mask =
-                (1<<egr_pkt_attr_cmprsd_bits_g.drop) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.drop;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].drop_mask =
+                (1<<egr_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].drop;
 
-       egr_pkt_attr_cmprsd_bits_g.dvp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.dvp_type_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.dvp_type) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.dvp_type;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].dvp_type) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].dvp_type;
 
-       egr_pkt_attr_cmprsd_bits_g.svp_type = 1;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.svp_type_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.svp_type) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.svp_type;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].svp_type_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].svp_type;
 
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution = 1;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.pkt_resolution_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.pkt_resolution;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.tos_ecn_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.tos_ecn;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn;
 
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.tos_dscp_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.tos_dscp;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp;
 
-       egr_pkt_attr_cmprsd_bits_g.egr_port = 8;
-       egr_pkt_attr_cmprsd_bits_g.egr_port_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.egr_port_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.egr_port;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port = 8;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].egr_port_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].egr_port;
 
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.inner_dot1p_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.inner_dot1p;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p;
 
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.outer_dot1p_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.outer_dot1p;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p;
 
-       egr_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.vlan_format_mask =
-                           (1<<egr_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.vlan_format;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask =
+                           (1<<egr_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].vlan_format;
 
-       egr_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.int_pri_mask =
-                           (1 << egr_pkt_attr_cmprsd_bits_g.int_pri) - 1;
-       next_pos += egr_pkt_attr_cmprsd_bits_g.int_pri;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].int_pri_mask =
+                           (1 << egr_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += egr_pkt_attr_cmprsd_bits_g[unit].int_pri;
 
-       egr_pkt_attr_cmprsd_bits_g.cng = 2;
-       egr_pkt_attr_cmprsd_bits_g.cng_pos = next_pos;
-       egr_pkt_attr_cmprsd_bits_g.cng_mask = (1 << egr_pkt_attr_cmprsd_bits_g.cng) - 1;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_pos = next_pos;
+       egr_pkt_attr_cmprsd_bits_g[unit].cng_mask = (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
 
        if (soc_feature(unit, soc_feature_flex_stat_egr_queue_congestion_marked)) {
-           next_pos += egr_pkt_attr_cmprsd_bits_g.cng;
+           next_pos += egr_pkt_attr_cmprsd_bits_g[unit].cng;
 
-           egr_pkt_attr_cmprsd_bits_g.congestion_marked = 1;
-           egr_pkt_attr_cmprsd_bits_g.congestion_marked_pos = next_pos;
-           egr_pkt_attr_cmprsd_bits_g.congestion_marked_mask =
-               (1 << egr_pkt_attr_cmprsd_bits_g.congestion_marked) - 1;
-           next_pos += egr_pkt_attr_cmprsd_bits_g.congestion_marked;
+           egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked = 1;
+           egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked_pos = next_pos;
+           egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked_mask =
+               (1 << egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked) - 1;
+           next_pos += egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked;
 
-           egr_pkt_attr_cmprsd_bits_g.uc_queueing = 1;
-           egr_pkt_attr_cmprsd_bits_g.uc_queueing_pos = next_pos;
-           egr_pkt_attr_cmprsd_bits_g.uc_queueing_mask =
-               (1 << egr_pkt_attr_cmprsd_bits_g.uc_queueing) - 1;
-           next_pos += egr_pkt_attr_cmprsd_bits_g.uc_queueing;
+           egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing = 1;
+           egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing_pos = next_pos;
+           egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing_mask =
+               (1 << egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing) - 1;
+           next_pos += egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing;
 
            if (SOC_IS_HELIX5(unit)) {
-               egr_pkt_attr_uncmprsd_bits_g.mmu_cos = 5;
+               egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos = 5;
            } else {
-               egr_pkt_attr_uncmprsd_bits_g.mmu_cos = 4;
+               egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos = 4;
            }
 
-           egr_pkt_attr_cmprsd_bits_g.mmu_cos_pos = next_pos;
-           egr_pkt_attr_cmprsd_bits_g.mmu_cos_mask =
-               (1 << egr_pkt_attr_cmprsd_bits_g.mmu_cos) - 1;
+           egr_pkt_attr_cmprsd_bits_g[unit].mmu_cos_pos = next_pos;
+           egr_pkt_attr_cmprsd_bits_g[unit].mmu_cos_mask =
+               (1 << egr_pkt_attr_cmprsd_bits_g[unit].mmu_cos) - 1;
        }
 
        /* Ingress bits initialization */
        next_pos = 0;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt = 1;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ip_pkt_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ip_pkt) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ip_pkt;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt;
 
-       ing_pkt_attr_cmprsd_bits_g.drop = 1;
-       ing_pkt_attr_cmprsd_bits_g.drop_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.drop_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.drop) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.drop;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop = 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].drop_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].drop) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].drop;
 
-       ing_pkt_attr_cmprsd_bits_g.svp_type =
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type =
            (soc_feature(unit, soc_feature_multiple_split_horizon_group)) ? 3 : 1;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.svp_type_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.svp_type) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.svp_type;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].svp_type_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].svp_type) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].svp_type;
 
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution = 6;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.pkt_resolution_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.pkt_resolution) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.pkt_resolution;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution = 6;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution;
 
        /* PACKET_RESOLUTION (10:5) + SVP_NETWORK_GROUP(4:2) + DROP (1:1) is
         * 10 bits but compresed to 8 bits PKT_RES_FN (8:1). Position of
         * following attributes asjust by -2.
         */
        next_pos -= 2;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn = 2;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.tos_ecn_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.tos_ecn;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn;
 
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp = 6;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.tos_dscp_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.tos_dscp;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp = 6;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp;
 
-       ing_pkt_attr_cmprsd_bits_g.ing_port = 8;
-       ing_pkt_attr_cmprsd_bits_g.ing_port_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ing_port_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ing_port;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port = 8;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ing_port_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ing_port;
 
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.inner_dot1p_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.inner_dot1p) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.inner_dot1p;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p;
 
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p = 3;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.outer_dot1p_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.outer_dot1p) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.outer_dot1p;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p = 3;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p;
 
-       ing_pkt_attr_cmprsd_bits_g.vlan_format = 2;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.vlan_format_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.vlan_format) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.vlan_format;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].vlan_format_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].vlan_format) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].vlan_format;
 
-       ing_pkt_attr_cmprsd_bits_g.int_pri = 4;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.int_pri_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.int_pri) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.int_pri;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri = 4;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].int_pri_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].int_pri) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
 
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.ifp_cng_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.ifp_cng) - 1;
-       next_pos += ing_pkt_attr_cmprsd_bits_g.ifp_cng;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng) - 1;
+       next_pos += ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng;
 
-       ing_pkt_attr_cmprsd_bits_g.cng = 2;
-       ing_pkt_attr_cmprsd_bits_g.cng_pos = next_pos;
-       ing_pkt_attr_cmprsd_bits_g.cng_mask =
-                           (1<<ing_pkt_attr_cmprsd_bits_g.cng) - 1;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng = 2;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_pos = next_pos;
+       ing_pkt_attr_cmprsd_bits_g[unit].cng_mask =
+                           (1<<ing_pkt_attr_cmprsd_bits_g[unit].cng) - 1;
    }
 #endif
    else {
-       egr_pkt_attr_cmprsd_bits_g = egr_pkt_attr_uncmprsd_bits_g;
-       ing_pkt_attr_cmprsd_bits_g = ing_pkt_attr_uncmprsd_bits_g;
+       egr_pkt_attr_cmprsd_bits_g[unit] = egr_pkt_attr_uncmprsd_bits_g[unit];
+       ing_pkt_attr_cmprsd_bits_g[unit] = ing_pkt_attr_uncmprsd_bits_g[unit];
    }
 }
 /*
@@ -6255,8 +6259,8 @@ int _bcm_esw_stat_flex_compressed_attr_map_update(
 
         /* save port attributes */
         if (pkt_attr_selectors->port != 0) {
-            /* egr_pkt_attr_cmprsd_bits_g.egr_port
-             * egr_pkt_attr_cmprsd_bits_g.ing_port */
+            /* egr_pkt_attr_cmprsd_bits_g[unit].egr_port
+             * egr_pkt_attr_cmprsd_bits_g[unit].ing_port */
             for (i = 0; i < BCM_STAT_FLEX_BIT_ARRAY_SIZE; i++) {
                 cmprsd_attr_map->combine_value_array[bcmStatFlexAttrPort][i] =
                     pkt_attr_selectors->combine_value_array[bcmStatFlexAttrPort][i];
@@ -7016,39 +7020,39 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
         if (flex_attribute->cng_3 != 0) {
             total_bits += cng_3_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.cng_3: egr_pkt_attr_uncmprsd_bits_g.cng_3;
+                ing_pkt_attr_uncmprsd_bits_g[unit].cng_3: egr_pkt_attr_uncmprsd_bits_g[unit].cng_3;
         }
         if (flex_attribute->phb_3 != 0) {
             total_bits += phb_3_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.phb_3: egr_pkt_attr_uncmprsd_bits_g.phb_3;
+                ing_pkt_attr_uncmprsd_bits_g[unit].phb_3: egr_pkt_attr_uncmprsd_bits_g[unit].phb_3;
         }
         if (flex_attribute->cng_2 != 0) {
             total_bits += cng_2_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.cng_2: egr_pkt_attr_uncmprsd_bits_g.cng_2;
+                ing_pkt_attr_uncmprsd_bits_g[unit].cng_2: egr_pkt_attr_uncmprsd_bits_g[unit].cng_2;
         }
         if (flex_attribute->phb_2 != 0) {
             total_bits += phb_2_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.phb_2: egr_pkt_attr_uncmprsd_bits_g.phb_2;
+                ing_pkt_attr_uncmprsd_bits_g[unit].phb_2: egr_pkt_attr_uncmprsd_bits_g[unit].phb_2;
         }
         if (flex_attribute->cng_1 != 0) {
             total_bits += cng_1_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.cng_1: egr_pkt_attr_uncmprsd_bits_g.cng_1;
+                ing_pkt_attr_uncmprsd_bits_g[unit].cng_1: egr_pkt_attr_uncmprsd_bits_g[unit].cng_1;
         }
         if (flex_attribute->phb_1 != 0) {
             total_bits += phb_1_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.phb_1: egr_pkt_attr_uncmprsd_bits_g.phb_1;
+                ing_pkt_attr_uncmprsd_bits_g[unit].phb_1: egr_pkt_attr_uncmprsd_bits_g[unit].phb_1;
         }
     }
 #endif
     if (flex_attribute->pre_ifp_color != 0) {
         total_bits += cng_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.cng: egr_pkt_attr_uncmprsd_bits_g.cng;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].cng: egr_pkt_attr_uncmprsd_bits_g[unit].cng;
     }
     if (flex_attribute->ifp_color != 0) {
         if (direction == bcmStatFlexDirectionEgress) {
@@ -7057,79 +7061,79 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
         }
         ing_attr->uncmprsd_attr_selectors.uncmprsd_attr_bits_selector |=
                   BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_IFP_CNG_ATTR_BITS;
-        total_bits += ifp_cng_bits = ing_pkt_attr_uncmprsd_bits_g.ifp_cng;
+        total_bits += ifp_cng_bits = ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng;
     }
     if (flex_attribute->int_pri != 0) {
         total_bits += int_pri_bits =
                        (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.int_pri:egr_pkt_attr_uncmprsd_bits_g.int_pri;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].int_pri:egr_pkt_attr_uncmprsd_bits_g[unit].int_pri;
     }
     if (flex_attribute->vlan_format != 0) {
         total_bits += vlan_format_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.vlan_format:
-                       egr_pkt_attr_uncmprsd_bits_g.vlan_format;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].vlan_format;
     }
     if (flex_attribute->outer_dot1p != 0) {
         total_bits += outer_dot1p_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.outer_dot1p:
-                       egr_pkt_attr_uncmprsd_bits_g.outer_dot1p;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p;
     }
     if (flex_attribute->inner_dot1p != 0) {
         total_bits += inner_dot1p_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.inner_dot1p:
-                       egr_pkt_attr_uncmprsd_bits_g.inner_dot1p;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p;
     }
     if (flex_attribute->port != 0) {
         total_bits += port_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.ing_port:
-                       egr_pkt_attr_uncmprsd_bits_g.egr_port;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].ing_port:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].egr_port;
     }
     if (flex_attribute->tos_dscp != 0) {
         total_bits += tos_dscp_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.tos_dscp:
-                       egr_pkt_attr_uncmprsd_bits_g.tos_dscp;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp;
     }
     if (flex_attribute->tos_ecn != 0) {
         total_bits += tos_ecn_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.tos_ecn:
-                       egr_pkt_attr_uncmprsd_bits_g.tos_ecn;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn;
     }
     if (flex_attribute->pkt_resolution != 0) {
         total_bits += pkt_resolution_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.pkt_resolution:
-                       egr_pkt_attr_uncmprsd_bits_g.pkt_resolution;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution;
     }
     if (flex_attribute->svp != 0) {
         total_bits += svp_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.svp_type:
-                       egr_pkt_attr_uncmprsd_bits_g.svp_type;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].svp_type:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].svp_type;
     }
     if (flex_attribute->dvp != 0) {
         if (direction == bcmStatFlexDirectionIngress) {
             sal_free(attr);
             return BCM_E_PARAM;
         }
-        total_bits += dvp_bits = egr_pkt_attr_uncmprsd_bits_g.dvp_type;
+        total_bits += dvp_bits = egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type;
     }
     if (flex_attribute->drop != 0) {
         total_bits += drop_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.drop:
-                       egr_pkt_attr_uncmprsd_bits_g.drop;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].drop:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].drop;
     }
     if (flex_attribute->ip_pkt != 0) {
         total_bits += ip_pkt_bits =
                       (direction == bcmStatFlexDirectionIngress) ?
-                       ing_pkt_attr_uncmprsd_bits_g.ip_pkt:
-                       egr_pkt_attr_uncmprsd_bits_g.ip_pkt;
+                       ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt:
+                       egr_pkt_attr_uncmprsd_bits_g[unit].ip_pkt;
     }
     if (flex_attribute->udf != 0) {
         total_bits += flex_attribute->drop ? 7 : 8;
@@ -7142,7 +7146,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 return BCM_E_PARAM;
             }
             total_bits += mmu_cos_bits =
-                egr_pkt_attr_uncmprsd_bits_g.mmu_cos;
+                egr_pkt_attr_uncmprsd_bits_g[unit].mmu_cos;
         }
         if (flex_attribute->uc_queueing != 0) {
             if (direction == bcmStatFlexDirectionIngress) {
@@ -7150,7 +7154,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 return BCM_E_PARAM;
             }
             total_bits += uc_queueing_bits =
-                egr_pkt_attr_uncmprsd_bits_g.uc_queueing;
+                egr_pkt_attr_uncmprsd_bits_g[unit].uc_queueing;
         }
         if (flex_attribute->congestion_marked != 0) {
             if (direction == bcmStatFlexDirectionIngress) {
@@ -7158,7 +7162,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 return BCM_E_PARAM;
             }
             total_bits += congestion_marked_bits =
-                egr_pkt_attr_uncmprsd_bits_g.congestion_marked;
+                egr_pkt_attr_uncmprsd_bits_g[unit].congestion_marked;
         }
     }
 #endif
@@ -7169,15 +7173,15 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 return BCM_E_PARAM;
             }
             total_bits += tcp_flags_bits =
-                ing_pkt_attr_uncmprsd_bits_g.tcp_flags;
+                ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags;
         }
     }
     if (soc_feature(unit, soc_feature_flex_stat_int_cn_support)) {
         if (flex_attribute->int_cn != 0) {
             total_bits += int_cn_bits =
                 (direction == bcmStatFlexDirectionIngress) ?
-                ing_pkt_attr_uncmprsd_bits_g.int_cn:
-                egr_pkt_attr_uncmprsd_bits_g.int_cn;
+                ing_pkt_attr_uncmprsd_bits_g[unit].int_cn:
+                egr_pkt_attr_uncmprsd_bits_g[unit].int_cn;
         }
     }
 
@@ -8548,9 +8552,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_uncmprsd_bits_g.ing_port) - 1;
+                    max_count= (1 << ing_pkt_attr_uncmprsd_bits_g[unit].ing_port) - 1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_uncmprsd_bits_g.egr_port) - 1;
+                    max_count= (1 << egr_pkt_attr_uncmprsd_bits_g[unit].egr_port) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -8574,9 +8578,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                   max_count= (1 << ing_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+                   max_count= (1 << ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
                 } else {
-                   max_count= (1 << egr_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+                   max_count= (1 << egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -8598,9 +8602,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                   max_count= (1 << ing_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+                   max_count= (1 << ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
                 } else {
-                   max_count= (1 << egr_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+                   max_count= (1 << egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -8881,9 +8885,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_uncmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << ing_pkt_attr_uncmprsd_bits_g[unit].svp_type)-1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_uncmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << egr_pkt_attr_uncmprsd_bits_g[unit].svp_type)-1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -8901,7 +8905,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 (loop <= (BCM_STAT_FLEX_COUNTER_MAX_TOTAL_BITS - 2))) {
                 shift_by_bits = drop_bits +
                                 ip_pkt_bits ;
-                max_count= (1 << egr_pkt_attr_uncmprsd_bits_g.dvp_type)-1;
+                max_count= (1 << egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type)-1;
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
                             flex_attribute->combine_attr_counter[counter].
@@ -9136,7 +9140,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 }
                 /* Egress Not Possbile */
                 /*
-                   shift_by_bits = ing_pkt_attr_cmprsd_bits_g.int_pri;
+                   shift_by_bits = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
                    */
                 if (flex_attribute->combine_ifp_color_flags &
                         BCM_STAT_FLEX_COLOR_GREEN) {
@@ -9601,9 +9605,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     map_array[bcmStatGroupModeAttrPort][256]=0;
                 }
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -9637,9 +9641,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     map_array[bcmStatGroupModeAttrTosDscp][256]=0;
                 }
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -9671,9 +9675,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     map_array[bcmStatGroupModeAttrTosEcn][256]=0;
                 }
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -10362,9 +10366,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     map_array[bcmStatGroupModeAttrIngNetworkGroup][256]=0;
                 }
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -10397,7 +10401,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             0xFF,256);
                     map_array[bcmStatGroupModeAttrEgrNetworkGroup][256]=0;
                 }
-                max_count= (1 << egr_pkt_attr_cmprsd_bits_g.dvp_type)-1;
+                max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].dvp_type)-1;
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
                                 flex_attribute->combine_value_array[bcmStatFlexAttrDvp],
@@ -11218,7 +11222,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     }
                     /* Egress Not Possbile */
                     /*
-                       shift_by_bits = ing_pkt_attr_cmprsd_bits_g.int_pri;
+                       shift_by_bits = ing_pkt_attr_cmprsd_bits_g[unit].int_pri;
                        */
                     if (flex_attribute->combine_attr_counter[counter].
                             ifp_color_flags & BCM_STAT_FLEX_COLOR_GREEN) {
@@ -11678,9 +11682,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         map_array[bcmStatGroupModeAttrPort][256]=0;
                     }
                     if (direction == bcmStatFlexDirectionIngress) {
-                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
+                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
                     } else {
-                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
+                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
                     }
                     for (loop_index=0; loop_index <= max_count ; loop_index++) {
                         if (BCM_STAT_FLEX_VALUE_GET(
@@ -11715,9 +11719,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         map_array[bcmStatGroupModeAttrTosDscp][256]=0;
                     }
                     if (direction == bcmStatFlexDirectionIngress) {
-                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                     } else {
-                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                     }
                     for (loop_index=0; loop_index <= max_count ; loop_index++) {
                         if (BCM_STAT_FLEX_VALUE_GET(
@@ -11750,9 +11754,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         map_array[bcmStatGroupModeAttrTosEcn][256]=0;
                     }
                     if (direction == bcmStatFlexDirectionIngress) {
-                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                     } else {
-                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                     }
                     for (loop_index=0; loop_index <= max_count ; loop_index++) {
                         if (BCM_STAT_FLEX_VALUE_GET(
@@ -12506,9 +12510,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         map_array[bcmStatGroupModeAttrIngNetworkGroup][256]=0;
                     }
                     if (direction == bcmStatFlexDirectionIngress) {
-                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                        max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                     } else {
-                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                        max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                     }
                     for (loop_index=0; loop_index <= max_count ; loop_index++) {
                         if (BCM_STAT_FLEX_VALUE_GET(
@@ -12542,7 +12546,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 0xFF,256);
                         map_array[bcmStatGroupModeAttrEgrNetworkGroup][256]=0;
                     }
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.dvp_type)-1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].dvp_type)-1;
                     for (loop_index=0; loop_index <= max_count ; loop_index++) {
                         if (BCM_STAT_FLEX_VALUE_GET(
                                     flex_attribute->combine_attr_counter[counter].
@@ -13018,7 +13022,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_3_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_3 = max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_3_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->cng_3_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->cng_3_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         cng_3_pos;
                 }
                 if ((flex_attribute->phb_3 != 0) &&
@@ -13026,7 +13030,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_3_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_3 = max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_3_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->phb_3_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->phb_3_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         phb_3_pos;
 
                 }
@@ -13035,7 +13039,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_2_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_2 = max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_2_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->cng_2_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->cng_2_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         cng_2_pos;
                 }
                 if ((flex_attribute->phb_2 != 0) &&
@@ -13043,7 +13047,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_2_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_2 = max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_2_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->phb_2_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->phb_2_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         phb_2_pos;
 
                 }
@@ -13052,7 +13056,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_1_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_1 = max_bits;
                     ing_cmprsd_pkt_attr_bits->cng_1_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->cng_1_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->cng_1_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         cng_1_pos;
                 }
                 if ((flex_attribute->phb_1 != 0) &&
@@ -13060,7 +13064,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_1_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_1 = max_bits;
                     ing_cmprsd_pkt_attr_bits->phb_1_mask = (1 << max_bits) - 1;
-                    ing_cmprsd_pkt_attr_bits->phb_1_pos = ing_pkt_attr_cmprsd_bits_g.
+                    ing_cmprsd_pkt_attr_bits->phb_1_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                         phb_1_pos;
 
                 }
@@ -13080,7 +13084,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                      max_bits =  pre_ifp_cng_cmprsd_max_bits;
                      ing_cmprsd_pkt_attr_bits->cng = max_bits;
                      ing_cmprsd_pkt_attr_bits->cng_mask = (1 << max_bits) - 1;
-                     ing_cmprsd_pkt_attr_bits->cng_pos = ing_pkt_attr_cmprsd_bits_g.
+                     ing_cmprsd_pkt_attr_bits->cng_pos = ing_pkt_attr_cmprsd_bits_g[unit].
                                                          cng_pos;
                  }
                  if (map_array[bcmStatGroupModeAttrFieldIngressColor] != NULL) {
@@ -13088,20 +13092,20 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                      ing_cmprsd_pkt_attr_bits->ifp_cng = max_bits;
                      ing_cmprsd_pkt_attr_bits->ifp_cng_mask = (1 << max_bits)-1;
                      ing_cmprsd_pkt_attr_bits->ifp_cng_pos =  
-                                               ing_pkt_attr_cmprsd_bits_g.ifp_cng_pos;
+                                               ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng_pos;
                  }
                  if (map_array[bcmStatGroupModeAttrIntPri] != NULL) {
                      max_bits = int_pri_cmprsd_max_bits;
                      ing_cmprsd_pkt_attr_bits->int_pri = max_bits;
                      ing_cmprsd_pkt_attr_bits->int_pri_mask = (1 << max_bits)-1;
-                     ing_cmprsd_pkt_attr_bits->int_pri_pos= ing_pkt_attr_cmprsd_bits_g.
+                     ing_cmprsd_pkt_attr_bits->int_pri_pos= ing_pkt_attr_cmprsd_bits_g[unit].
                                                             int_pri_pos;
                  }
-                 invalid_map_value = (1 << (ing_pkt_attr_cmprsd_bits_g.cng +
-                         ing_pkt_attr_cmprsd_bits_g.ifp_cng +
-                         ing_pkt_attr_cmprsd_bits_g.int_pri)) - 1;
+                 invalid_map_value = (1 << (ing_pkt_attr_cmprsd_bits_g[unit].cng +
+                         ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng +
+                         ing_pkt_attr_cmprsd_bits_g[unit].int_pri)) - 1;
                  for (index0 =0;
-                      index0 < (1 << ing_pkt_attr_cmprsd_bits_g.cng);
+                      index0 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].cng);
                       index0++ ) {
                      invalid_index0 = FALSE;
                      if (map_array[bcmStatGroupModeAttrColor] != NULL) {
@@ -13114,7 +13118,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                          }
                      }
                      for (index1 =0;
-                             index1 < (1 << ing_pkt_attr_cmprsd_bits_g.ifp_cng);
+                             index1 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng);
                              index1++ ) {
                          invalid_index1 = FALSE;
                          if (map_array[bcmStatGroupModeAttrFieldIngressColor]
@@ -13130,7 +13134,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                              }
                          }
                          for (index2 =0;
-                                 index2 < (1 << ing_pkt_attr_cmprsd_bits_g.int_pri);
+                                 index2 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].int_pri);
                                  index2++ ) {
                              invalid_index2 = FALSE;
                              if (map_array[bcmStatGroupModeAttrIntPri]
@@ -13147,10 +13151,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                              }
                              final_index =
                                  (index0 <<
-                                  (ing_pkt_attr_cmprsd_bits_g.ifp_cng +
-                                   ing_pkt_attr_cmprsd_bits_g.int_pri)) +
+                                  (ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng +
+                                   ing_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                                  (index1 <<
-                                  (ing_pkt_attr_cmprsd_bits_g.int_pri)) +
+                                  (ing_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                                  (index2) ;
                              if (invalid_index0 || invalid_index1 ||
                                      invalid_index2) {
@@ -13158,10 +13162,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                              } else {
                                  final_mapped_value =
                                      (mapped_value0 << 
-                                      (ing_pkt_attr_cmprsd_bits_g.ifp_cng +
-                                       ing_pkt_attr_cmprsd_bits_g.int_pri)) +
+                                      (ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng +
+                                       ing_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                                      (mapped_value1 << 
-                                      (ing_pkt_attr_cmprsd_bits_g.int_pri)) +
+                                      (ing_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                                      (mapped_value2) ;
                              }
                              ing_cmprsd_attr_selectors->pri_cnf_attr_map
@@ -13186,7 +13190,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->vlan_format_mask =
                         (1 << max_bits) - 1;
                     ing_cmprsd_pkt_attr_bits->vlan_format_pos =
-                        ing_pkt_attr_cmprsd_bits_g.
+                        ing_pkt_attr_cmprsd_bits_g[unit].
                         vlan_format_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrOuterPri] != NULL) {
@@ -13194,21 +13198,21 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->outer_dot1p = max_bits;
                     ing_cmprsd_pkt_attr_bits->outer_dot1p_mask=(1<<max_bits)-1;
                     ing_cmprsd_pkt_attr_bits->outer_dot1p_pos =
-                        ing_pkt_attr_cmprsd_bits_g.outer_dot1p_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrInnerPri] != NULL) {
                     max_bits = inner_dot1p_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->inner_dot1p = max_bits;
                     ing_cmprsd_pkt_attr_bits->inner_dot1p_mask=(1<<max_bits)-1;
                     ing_cmprsd_pkt_attr_bits->inner_dot1p_pos=
-                        ing_pkt_attr_cmprsd_bits_g.inner_dot1p_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos;
                 }
                 invalid_map_value = (1 <<
-                        (ing_pkt_attr_cmprsd_bits_g.vlan_format +
-                         ing_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                         ing_pkt_attr_cmprsd_bits_g.inner_dot1p)) - 1;
+                        (ing_pkt_attr_cmprsd_bits_g[unit].vlan_format +
+                         ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                         ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) - 1;
                 for (index0 =0;
-                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g.vlan_format);
+                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].vlan_format);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrVlan] != NULL) {
@@ -13223,7 +13227,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     }
 
                     for (index1 =0;
-                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g.outer_dot1p);
+                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p);
                          index1++ ) {
                         invalid_index1 = FALSE;
                         if (map_array[bcmStatGroupModeAttrOuterPri]
@@ -13239,7 +13243,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                         }
                         for (index2 =0;
-                             index2 < (1 << ing_pkt_attr_cmprsd_bits_g.inner_dot1p);
+                             index2 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p);
                              index2++ ) {
                             invalid_index2 = FALSE;
                             if (map_array[bcmStatGroupModeAttrInnerPri]
@@ -13256,10 +13260,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                             final_index =
                                 (index0 <<
-                                 (ing_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                                  ing_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                 (ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                                  ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                 (index1 <<
-                                 (ing_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                 (ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                 (index2) ;
                             if (invalid_index0 || invalid_index1 ||
                                     invalid_index2) {
@@ -13267,10 +13271,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             } else {
                                 final_mapped_value =
                                     (mapped_value0 <<
-                                     (ing_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                                      ing_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                     (ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                                      ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                     (mapped_value1 <<
-                                     (ing_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                     (ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                     (mapped_value2) ;
                             }
                             ing_cmprsd_attr_selectors->pkt_pri_attr_map
@@ -13291,10 +13295,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->ing_port_mask =
                         (1 << max_bits) - 1;
                     ing_cmprsd_pkt_attr_bits->ing_port_pos =
-                        ing_pkt_attr_cmprsd_bits_g.ing_port_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].ing_port_pos;
                 }
                 for (index0 =0;
-                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g.ing_port);
+                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].ing_port);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrPort] != NULL) {
@@ -13331,7 +13335,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->tos_dscp_mask =
                         (1 << max_bits) - 1;
                     ing_cmprsd_pkt_attr_bits->tos_dscp_pos =
-                        ing_pkt_attr_cmprsd_bits_g.tos_dscp_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrTosEcn] != NULL) {
                     max_bits =  tos_ecn_cmprsd_max_bits;
@@ -13339,13 +13343,13 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->tos_ecn_mask =
                         (1 << max_bits) - 1;
                     ing_cmprsd_pkt_attr_bits->tos_ecn_pos =
-                        ing_pkt_attr_cmprsd_bits_g.tos_ecn_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos;
                 }
                 invalid_map_value =  (1 <<
-                        (ing_pkt_attr_cmprsd_bits_g.tos_dscp +
-                        ing_pkt_attr_cmprsd_bits_g.tos_ecn)) - 1;
+                        (ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp +
+                        ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn)) - 1;
                 for (index0 =0;
-                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g.tos_dscp);
+                     index0 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrTosDscp] != NULL) {
@@ -13358,7 +13362,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         }
                     }
                     for (index1 =0;
-                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g.tos_ecn);
+                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn);
                          index1++ ) {
                         invalid_index1 = FALSE;
                         if (map_array[bcmStatGroupModeAttrTosEcn] != NULL) {
@@ -13371,13 +13375,13 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                         }
                         final_index = (index0 <<
-                                ing_pkt_attr_cmprsd_bits_g.tos_ecn) +
+                                ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) +
                             index1;
                         if (invalid_index0 || invalid_index1) {
                             final_mapped_value = invalid_map_value;
                         } else {
                             final_mapped_value = (mapped_value0 <<
-                                    ing_pkt_attr_cmprsd_bits_g.tos_ecn) +
+                                    ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) +
                                 mapped_value1;
                         }
                         ing_cmprsd_attr_selectors->tos_attr_map[final_index] =
@@ -13403,7 +13407,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         ing_cmprsd_pkt_attr_bits->pkt_resolution_mask =
                             (1 << max_bits) - 1;
                         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos =
-                            ing_pkt_attr_cmprsd_bits_g.
+                            ing_pkt_attr_cmprsd_bits_g[unit].
                             pkt_resolution_pos;
                     }
                 } else
@@ -13415,7 +13419,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         ing_cmprsd_pkt_attr_bits->pkt_resolution_mask =
                             (1 << max_bits) - 1;
                         ing_cmprsd_pkt_attr_bits->pkt_resolution_pos =
-                            ing_pkt_attr_cmprsd_bits_g.
+                            ing_pkt_attr_cmprsd_bits_g[unit].
                             pkt_resolution_pos;
                     }
                 }
@@ -13424,19 +13428,19 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->svp_type = max_bits;
                     ing_cmprsd_pkt_attr_bits->svp_type_mask=(1<<max_bits)-1;
                     ing_cmprsd_pkt_attr_bits->svp_type_pos =
-                        ing_pkt_attr_cmprsd_bits_g.svp_type_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].svp_type_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrDrop] != NULL) {
                     max_bits = drop_cmprsd_max_bits;
                     ing_cmprsd_pkt_attr_bits->drop = max_bits;
                     ing_cmprsd_pkt_attr_bits->drop_mask=(1<<max_bits)-1;
                     ing_cmprsd_pkt_attr_bits->drop_pos=
-                        ing_pkt_attr_cmprsd_bits_g.drop_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].drop_pos;
                 }
                 invalid_map_value = (1 <<
-                    (ing_pkt_attr_cmprsd_bits_g.pkt_resolution +
-                     ing_pkt_attr_cmprsd_bits_g.svp_type +
-                     ing_pkt_attr_cmprsd_bits_g.drop)) - 1;
+                    (ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution +
+                     ing_pkt_attr_cmprsd_bits_g[unit].svp_type +
+                     ing_pkt_attr_cmprsd_bits_g[unit].drop)) - 1;
 
                 /*
                  * map_array of pkt_resolution is filled based on bit position
@@ -13445,7 +13449,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                  * bits in uncompressed mode to cover all position bit position.
                  */
                 for (index0 =0;
-                     index0 < (1 << ing_pkt_attr_uncmprsd_bits_g.pkt_resolution);
+                     index0 < (1 << ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution);
                      index0++ ) {
                     invalid_index0 = FALSE;
 #ifdef BCM_KATANA2_SUPPORT
@@ -13473,7 +13477,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         }
                     }
                     for (index1 =0;
-                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g.svp_type);
+                         index1 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].svp_type);
                          index1++ ) {
                         invalid_index1 = FALSE;
                         if (map_array[bcmStatGroupModeAttrIngNetworkGroup]
@@ -13489,7 +13493,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                         }
                         for (index2 =0;
-                             index2 < (1 << ing_pkt_attr_cmprsd_bits_g.drop);
+                             index2 < (1 << ing_pkt_attr_cmprsd_bits_g[unit].drop);
                              index2++ ) {
                             invalid_index2 = FALSE;
                             if (map_array[bcmStatGroupModeAttrDrop]
@@ -13506,20 +13510,20 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                             final_index =
                                 (index0 <<
-                                 (ing_pkt_attr_cmprsd_bits_g.svp_type +
-                                  ing_pkt_attr_cmprsd_bits_g.drop)) +
+                                 (ing_pkt_attr_cmprsd_bits_g[unit].svp_type +
+                                  ing_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                 (index1 <<
-                                 (ing_pkt_attr_cmprsd_bits_g.drop)) +
+                                 (ing_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                 (index2) ;
                             if (invalid_index0 || invalid_index1 || invalid_index2) {
                                 final_mapped_value = invalid_map_value;
                             } else {
                                 final_mapped_value =
                                     (mapped_value0 <<
-                                     (ing_pkt_attr_cmprsd_bits_g.svp_type +
-                                      ing_pkt_attr_cmprsd_bits_g.drop)) +
+                                     (ing_pkt_attr_cmprsd_bits_g[unit].svp_type +
+                                      ing_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                     (mapped_value1 <<
-                                     (ing_pkt_attr_cmprsd_bits_g.drop)) +
+                                     (ing_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                     (mapped_value2) ;
                             }
                             ing_cmprsd_attr_selectors->pkt_res_attr_map
@@ -13539,7 +13543,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     ing_cmprsd_pkt_attr_bits->ip_pkt_mask =
                         (1 << max_bits) - 1;
                     ing_cmprsd_pkt_attr_bits->ip_pkt_pos =
-                        ing_pkt_attr_cmprsd_bits_g.ip_pkt_pos;
+                        ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos;
                 }
             }
             break;
@@ -13556,7 +13560,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_3_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_3 = max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_3_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->cng_3_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->cng_3_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         cng_3_pos;
                 }
                 if ((flex_attribute->phb_3 != 0) &&
@@ -13564,7 +13568,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_3_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_3 = max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_3_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->phb_3_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->phb_3_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         phb_3_pos;
 
                 }
@@ -13573,7 +13577,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_2_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_2 = max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_2_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->cng_2_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->cng_2_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         cng_2_pos;
                 }
                 if ((flex_attribute->phb_2 != 0) &&
@@ -13581,7 +13585,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_2_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_2 = max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_2_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->phb_2_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->phb_2_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         phb_2_pos;
 
                 }
@@ -13590,7 +13594,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_mpls_1_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_1 = max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_1_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->cng_1_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->cng_1_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         cng_1_pos;
                 }
                 if ((flex_attribute->phb_1 != 0) &&
@@ -13598,7 +13602,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  int_pri_mpls_1_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_1 = max_bits;
                     egr_cmprsd_pkt_attr_bits->phb_1_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->phb_1_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->phb_1_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         phb_1_pos;
 
                 }
@@ -13616,22 +13620,22 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         max_bits =  mmu_cos_cmprsd_max_bits;
                         egr_cmprsd_pkt_attr_bits->mmu_cos = max_bits;
                         egr_cmprsd_pkt_attr_bits->mmu_cos_mask = (1 << max_bits) - 1;
-                        egr_cmprsd_pkt_attr_bits->mmu_cos_pos = egr_pkt_attr_cmprsd_bits_g.
+                        egr_cmprsd_pkt_attr_bits->mmu_cos_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                             mmu_cos_pos;
                     }
                     if (map_array[bcmStatGroupModeAttrQueueType] != NULL) {
                         max_bits =  uc_queueing_cmprsd_max_bits;
                         egr_cmprsd_pkt_attr_bits->uc_queueing = max_bits;
                         egr_cmprsd_pkt_attr_bits->uc_queueing_mask = (1 << max_bits) - 1;
-                        egr_cmprsd_pkt_attr_bits->uc_queueing_pos = egr_pkt_attr_cmprsd_bits_g.
+                        egr_cmprsd_pkt_attr_bits->uc_queueing_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                             uc_queueing_pos;
 
                     }
 
-                     invalid_map_value = (1 << (egr_pkt_attr_cmprsd_bits_g.mmu_cos +
-                         egr_pkt_attr_cmprsd_bits_g.uc_queueing)) - 1;
+                     invalid_map_value = (1 << (egr_pkt_attr_cmprsd_bits_g[unit].mmu_cos +
+                         egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing)) - 1;
                      for (index0 = 0;
-                          index0 < (1 << egr_pkt_attr_cmprsd_bits_g.mmu_cos);
+                          index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].mmu_cos);
                           index0++ ) {
                           invalid_index0 = FALSE;
                          if (map_array[bcmStatGroupModeAttrCos] != NULL) {
@@ -13645,7 +13649,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                              }
                          }
                          for (index1 = 0;
-                              index1 < (1 << egr_pkt_attr_cmprsd_bits_g.uc_queueing);
+                              index1 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing);
                               index1++ ) {
                              invalid_index1 = FALSE;
                              if (map_array[bcmStatGroupModeAttrQueueType] != NULL) {
@@ -13660,14 +13664,14 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                              }
                              final_index =
                                  (index0 <<
-                                  (egr_pkt_attr_cmprsd_bits_g.uc_queueing)) +
+                                  (egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing)) +
                                  (index1) ;
                              if (invalid_index0 || invalid_index1) {
                                  final_mapped_value = invalid_map_value;
                              } else {
                                  final_mapped_value =
                                      (mapped_value0 <<
-                                      (egr_pkt_attr_cmprsd_bits_g.uc_queueing)) +
+                                      (egr_pkt_attr_cmprsd_bits_g[unit].uc_queueing)) +
                                      (mapped_value1) ;
                              }
                              egr_cmprsd_attr_selectors->cos_uc_attr_map
@@ -13686,7 +13690,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         egr_cmprsd_pkt_attr_bits->congestion_marked_mask =
                                                   (1 << max_bits) - 1;
                         egr_cmprsd_pkt_attr_bits->congestion_marked_pos =
-                                                  egr_pkt_attr_cmprsd_bits_g.congestion_marked_pos;
+                                                  egr_pkt_attr_cmprsd_bits_g[unit].congestion_marked_pos;
                     }
                 }
             }
@@ -13701,20 +13705,20 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     max_bits =  pre_ifp_cng_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->cng = max_bits;
                     egr_cmprsd_pkt_attr_bits->cng_mask = (1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->cng_pos = egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->cng_pos = egr_pkt_attr_cmprsd_bits_g[unit].
                         cng_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrIntPri] != NULL) {
                     max_bits = int_pri_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->int_pri = max_bits;
                     egr_cmprsd_pkt_attr_bits->int_pri_mask=(1 << max_bits) - 1;
-                    egr_cmprsd_pkt_attr_bits->int_pri_pos= egr_pkt_attr_cmprsd_bits_g.
+                    egr_cmprsd_pkt_attr_bits->int_pri_pos= egr_pkt_attr_cmprsd_bits_g[unit].
                         int_pri_pos;
                 }
-                invalid_map_value = (1 << (egr_pkt_attr_cmprsd_bits_g.cng +
-                    egr_pkt_attr_cmprsd_bits_g.int_pri)) - 1;
+                invalid_map_value = (1 << (egr_pkt_attr_cmprsd_bits_g[unit].cng +
+                    egr_pkt_attr_cmprsd_bits_g[unit].int_pri)) - 1;
                 for (index0 =0;
-                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g.cng);
+                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].cng);
                      index0++ ) {
                      invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrColor] != NULL) {
@@ -13728,7 +13732,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         }
                     }
                     for (index1 =0;
-                         index1 < (1 << egr_pkt_attr_cmprsd_bits_g.int_pri);
+                         index1 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].int_pri);
                          index1++ ) {
                         invalid_index1 = FALSE;
                         if (map_array[bcmStatGroupModeAttrIntPri] != NULL) {
@@ -13743,14 +13747,14 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         }
                         final_index =
                             (index0 <<
-                             (egr_pkt_attr_cmprsd_bits_g.int_pri)) +
+                             (egr_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                             (index1) ;
                         if (invalid_index0 || invalid_index1) {
                             final_mapped_value = invalid_map_value;
                         } else {
                             final_mapped_value =
                                 (mapped_value0 <<
-                                 (egr_pkt_attr_cmprsd_bits_g.int_pri)) +
+                                 (egr_pkt_attr_cmprsd_bits_g[unit].int_pri)) +
                                 (mapped_value1) ;
                         }
                         egr_cmprsd_attr_selectors->pri_cnf_attr_map
@@ -13774,7 +13778,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->vlan_format_mask =
                         (1 << max_bits) - 1;
                     egr_cmprsd_pkt_attr_bits->vlan_format_pos =
-                        egr_pkt_attr_cmprsd_bits_g.
+                        egr_pkt_attr_cmprsd_bits_g[unit].
                         vlan_format_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrOuterPri] != NULL) {
@@ -13782,21 +13786,21 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->outer_dot1p = max_bits;
                     egr_cmprsd_pkt_attr_bits->outer_dot1p_mask=(1<<max_bits)-1;
                     egr_cmprsd_pkt_attr_bits->outer_dot1p_pos =
-                        egr_pkt_attr_cmprsd_bits_g.outer_dot1p_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrInnerPri] != NULL) {
                     max_bits = inner_dot1p_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->inner_dot1p = max_bits;
                     egr_cmprsd_pkt_attr_bits->inner_dot1p_mask=(1<<max_bits)-1;
                     egr_cmprsd_pkt_attr_bits->inner_dot1p_pos=
-                        egr_pkt_attr_cmprsd_bits_g.inner_dot1p_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p_pos;
                 }
                 invalid_map_value = (1 <<
-                        (egr_pkt_attr_cmprsd_bits_g.vlan_format +
-                         egr_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                         egr_pkt_attr_cmprsd_bits_g.inner_dot1p)) - 1;
+                        (egr_pkt_attr_cmprsd_bits_g[unit].vlan_format +
+                         egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                         egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) - 1;
                for (index0 =0;
-                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g.vlan_format);
+                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].vlan_format);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrVlan] != NULL) {
@@ -13809,7 +13813,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         }
                     }
                     for (index1 =0;
-                         index1 < (1 << egr_pkt_attr_cmprsd_bits_g.outer_dot1p);
+                         index1 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p);
                          index1++ ) {
                         invalid_index1 = FALSE;
                         if (map_array[bcmStatGroupModeAttrOuterPri]
@@ -13825,7 +13829,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                         }
                         for (index2 =0;
-                             index2 < (1 << egr_pkt_attr_cmprsd_bits_g.inner_dot1p);
+                             index2 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p);
                              index2++ ) {
                             invalid_index2 = FALSE;
                             if (map_array[bcmStatGroupModeAttrInnerPri]
@@ -13845,10 +13849,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             }
                             final_index =
                                 (index0 <<
-                                 (egr_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                                  egr_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                 (egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                                  egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                 (index1 <<
-                                 (egr_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                 (egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                 (index2) ;
                             if (invalid_index0 || invalid_index1 ||
                                     invalid_index2) {
@@ -13856,10 +13860,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                             } else {
                                 final_mapped_value =
                                     (mapped_value0 <<
-                                     (egr_pkt_attr_cmprsd_bits_g.outer_dot1p +
-                                      egr_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                     (egr_pkt_attr_cmprsd_bits_g[unit].outer_dot1p +
+                                      egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                     (mapped_value1 <<
-                                     (egr_pkt_attr_cmprsd_bits_g.inner_dot1p)) +
+                                     (egr_pkt_attr_cmprsd_bits_g[unit].inner_dot1p)) +
                                     (mapped_value2) ;
                             }
                             egr_cmprsd_attr_selectors->pkt_pri_attr_map
@@ -13880,10 +13884,10 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->egr_port_mask =
                         (1 << max_bits) - 1;
                     egr_cmprsd_pkt_attr_bits->egr_port_pos =
-                        egr_pkt_attr_cmprsd_bits_g.egr_port_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].egr_port_pos;
                 }
                 for (index0 =0;
-                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g.egr_port);
+                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].egr_port);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrPort] != NULL) {
@@ -13919,7 +13923,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->tos_dscp_mask =
                         (1 << max_bits) - 1;
                     egr_cmprsd_pkt_attr_bits->tos_dscp_pos =
-                        egr_pkt_attr_cmprsd_bits_g.tos_dscp_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrTosEcn] != NULL) {
                     max_bits =  tos_ecn_cmprsd_max_bits;
@@ -13927,13 +13931,13 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->tos_ecn_mask =
                         (1 << max_bits) - 1;
                     egr_cmprsd_pkt_attr_bits->tos_ecn_pos =
-                        egr_pkt_attr_cmprsd_bits_g.tos_ecn_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn_pos;
                 }
                 invalid_map_value = (1 <<
-                        (egr_pkt_attr_cmprsd_bits_g.tos_dscp +
-                        egr_pkt_attr_cmprsd_bits_g.tos_ecn)) - 1;
+                        (egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp +
+                        egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn)) - 1;
                 for (index0 =0;
-                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g.tos_dscp);
+                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrTosDscp] != NULL) {
@@ -13945,7 +13949,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 [bcmStatGroupModeAttrTosDscp][index0];
                         }
                         for (index1 =0;
-                             index1 < (1 << egr_pkt_attr_cmprsd_bits_g.tos_ecn);
+                             index1 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn);
                              index1++ ) {
                             invalid_index1 = FALSE;
                             if (map_array[bcmStatGroupModeAttrTosEcn] != NULL) {
@@ -13958,13 +13962,13 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 }
                             }
                             final_index = (index0 <<
-                                    egr_pkt_attr_cmprsd_bits_g.tos_ecn) +
+                                    egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) +
                                 index1;
                             if (invalid_index0 || invalid_index1) {
                                 final_mapped_value = invalid_map_value;
                             } else {
                                 final_mapped_value = (mapped_value0 <<
-                                        egr_pkt_attr_cmprsd_bits_g.tos_ecn) +
+                                        egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) +
                                     mapped_value1;
                             }
                             egr_cmprsd_attr_selectors->tos_attr_map[final_index] =
@@ -13977,8 +13981,8 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 (flex_attribute->svp != 0) || 
                 (flex_attribute->dvp != 0) || 
                 (flex_attribute->drop != 0)) {
-                uint8 tmp_svp_type = egr_pkt_attr_cmprsd_bits_g.svp_type;
-                uint8 tmp_dvp_type = egr_pkt_attr_cmprsd_bits_g.dvp_type;
+                uint8 tmp_svp_type = egr_pkt_attr_cmprsd_bits_g[unit].svp_type;
+                uint8 tmp_dvp_type = egr_pkt_attr_cmprsd_bits_g[unit].dvp_type;
                 mapped_value0 = 0;
                 mapped_value1 = 0;
                 mapped_value2 = 0;
@@ -13995,7 +13999,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         egr_cmprsd_pkt_attr_bits->pkt_resolution_mask =
                             (1 << max_bits) - 1;
                         egr_cmprsd_pkt_attr_bits->pkt_resolution_pos =
-                            egr_pkt_attr_cmprsd_bits_g.
+                            egr_pkt_attr_cmprsd_bits_g[unit].
                             pkt_resolution_pos;
                     }
                 } else
@@ -14007,7 +14011,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                         egr_cmprsd_pkt_attr_bits->pkt_resolution_mask =
                             (1 << max_bits) - 1;
                         egr_cmprsd_pkt_attr_bits->pkt_resolution_pos =
-                            egr_pkt_attr_cmprsd_bits_g.
+                            egr_pkt_attr_cmprsd_bits_g[unit].
                             pkt_resolution_pos;
                     }
                 }
@@ -14016,27 +14020,27 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     egr_cmprsd_pkt_attr_bits->svp_type = max_bits;
                     egr_cmprsd_pkt_attr_bits->svp_type_mask=(1<<max_bits)-1;
                     egr_cmprsd_pkt_attr_bits->svp_type_pos =
-                        egr_pkt_attr_cmprsd_bits_g.svp_type_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].svp_type_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrEgrNetworkGroup] != NULL) {
                     max_bits =  dvp_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->dvp_type = max_bits;
                     egr_cmprsd_pkt_attr_bits->dvp_type_mask=(1<<max_bits)-1;
                     egr_cmprsd_pkt_attr_bits->dvp_type_pos =
-                        egr_pkt_attr_cmprsd_bits_g.dvp_type_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].dvp_type_pos;
                 }
                 if (map_array[bcmStatGroupModeAttrDrop] != NULL) {
                     max_bits = drop_cmprsd_max_bits;
                     egr_cmprsd_pkt_attr_bits->drop = max_bits;
                     egr_cmprsd_pkt_attr_bits->drop_mask=(1<<max_bits)-1;
                     egr_cmprsd_pkt_attr_bits->drop_pos=
-                        egr_pkt_attr_cmprsd_bits_g.drop_pos;
+                        egr_pkt_attr_cmprsd_bits_g[unit].drop_pos;
                 }
                 invalid_map_value = (1 <<
-                    (egr_pkt_attr_cmprsd_bits_g.pkt_resolution +
-                     egr_pkt_attr_cmprsd_bits_g.svp_type +
-                     egr_pkt_attr_cmprsd_bits_g.dvp_type +
-                     egr_pkt_attr_cmprsd_bits_g.drop)) - 1;
+                    (egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution +
+                     egr_pkt_attr_cmprsd_bits_g[unit].svp_type +
+                     egr_pkt_attr_cmprsd_bits_g[unit].dvp_type +
+                     egr_pkt_attr_cmprsd_bits_g[unit].drop)) - 1;
 
 #if defined(BCM_TRIDENT3_SUPPORT)
                 if (SOC_IS_TRIDENT3X(unit) &&
@@ -14046,7 +14050,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 }
 #endif
                 for (index0 =0;
-                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g.pkt_resolution);
+                     index0 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].pkt_resolution);
                      index0++ ) {
                     invalid_index0 = FALSE;
                     if (map_array[bcmStatGroupModeAttrPktType] != NULL) {
@@ -14092,7 +14096,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 }
                             }
                             for (index3 =0;
-                                 index3 < (1 << egr_pkt_attr_cmprsd_bits_g.drop);
+                                 index3 < (1 << egr_pkt_attr_cmprsd_bits_g[unit].drop);
                                  index3++ ) {
                                 invalid_index3 = FALSE;
                                 if (map_array[bcmStatGroupModeAttrDrop]
@@ -14111,12 +14115,12 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                     (index0 <<
                                      (tmp_svp_type +
                                       tmp_dvp_type +
-                                      egr_pkt_attr_cmprsd_bits_g.drop)) +
+                                      egr_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                     (index1 <<
                                      (tmp_dvp_type +
-                                      egr_pkt_attr_cmprsd_bits_g.drop)) +
+                                      egr_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                     (index2 <<
-                                     egr_pkt_attr_cmprsd_bits_g.drop) +
+                                     egr_pkt_attr_cmprsd_bits_g[unit].drop) +
                                     (index3) ;
                                 if (invalid_index0 || invalid_index1 ||
                                         invalid_index2 || invalid_index3) {
@@ -14126,12 +14130,12 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                         (mapped_value0 <<
                                          (tmp_svp_type +
                                           tmp_dvp_type +
-                                          egr_pkt_attr_cmprsd_bits_g.drop)) +
+                                          egr_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                         (mapped_value1 <<
                                          (tmp_dvp_type +
-                                          egr_pkt_attr_cmprsd_bits_g.drop)) +
+                                          egr_pkt_attr_cmprsd_bits_g[unit].drop)) +
                                         (mapped_value2 <<
-                                         egr_pkt_attr_cmprsd_bits_g.drop) +
+                                         egr_pkt_attr_cmprsd_bits_g[unit].drop) +
                                         (mapped_value3) ;
                                 }
                                 egr_cmprsd_attr_selectors->pkt_res_attr_map
@@ -14152,7 +14156,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                      egr_cmprsd_pkt_attr_bits->ip_pkt_mask =
                                                (1 << max_bits) - 1;
                      egr_cmprsd_pkt_attr_bits->ip_pkt_pos =
-                                               egr_pkt_attr_cmprsd_bits_g.ip_pkt_pos;
+                                               egr_pkt_attr_cmprsd_bits_g[unit].ip_pkt_pos;
                  }
              }
              break;
@@ -15377,9 +15381,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                     goto cleanup;
                 }
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.ing_port) - 1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].ing_port) - 1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.egr_port) - 1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].egr_port) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -15404,9 +15408,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_cmprsd_max_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                   max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                   max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                 } else {
-                   max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_dscp) - 1;
+                   max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_dscp) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -15429,9 +15433,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_cmprsd_max_bits +
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                   max_count= (1 << ing_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                   max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                 } else {
-                   max_count= (1 << egr_pkt_attr_cmprsd_bits_g.tos_ecn) - 1;
+                   max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].tos_ecn) - 1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) {
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -15999,9 +16003,9 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                                 drop_cmprsd_max_bits + 
                                 ip_pkt_bits ;
                 if (direction == bcmStatFlexDirectionIngress) {
-                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << ing_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                 } else {
-                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g.svp_type)-1;
+                    max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].svp_type)-1;
                 }
                 for (loop_index=0; loop_index <= max_count ; loop_index++) { 
                     if (BCM_STAT_FLEX_VALUE_GET(
@@ -16020,7 +16024,7 @@ bcm_error_t _bcm_esw_stat_group_mode_associate_id(
                 (loop <= (BCM_STAT_FLEX_COUNTER_MAX_TOTAL_BITS - 2))) {
                 shift_by_bits = drop_cmprsd_max_bits + 
                                 ip_pkt_bits ;
-                max_count= (1 << egr_pkt_attr_cmprsd_bits_g.dvp_type)-1;
+                max_count= (1 << egr_pkt_attr_cmprsd_bits_g[unit].dvp_type)-1;
                 for (loop_index=0; loop_index <= max_count ; loop_index++) { 
                     if (BCM_STAT_FLEX_VALUE_GET(
                             flex_attribute->combine_attr_counter[counter].
@@ -16677,9 +16681,9 @@ bcm_error_t _bcm_esw_stat_group_mode_fillup_values(
          case bcmStatGroupModeAttrPort:
               flex_attribute->port = 1;
               if (flags & BCM_STAT_GROUP_MODE_INGRESS) {
-                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g.ing_port) - 1;
+                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g[unit].ing_port) - 1;
               } else {
-                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g.egr_port) - 1;
+                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].egr_port) - 1;
               }   
               switch(attr_value) {
               case BCM_STAT_GROUP_MODE_ATTR_ALL_VALUES:
@@ -16707,9 +16711,9 @@ bcm_error_t _bcm_esw_stat_group_mode_fillup_values(
          case bcmStatGroupModeAttrTosDscp:
               flex_attribute->tos_dscp = 1;
               if (flags & BCM_STAT_GROUP_MODE_INGRESS) {
-                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
               } else {
-                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g.tos_dscp) - 1;
+                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].tos_dscp) - 1;
               }   
               switch(attr_value) {
               case BCM_STAT_GROUP_MODE_ATTR_ALL_VALUES:
@@ -16737,9 +16741,9 @@ bcm_error_t _bcm_esw_stat_group_mode_fillup_values(
          case bcmStatGroupModeAttrTosEcn:
               flex_attribute->tos_ecn = 1;
               if (flags & BCM_STAT_GROUP_MODE_INGRESS) {
-                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
               } else {
-                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g.tos_ecn) - 1;
+                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].tos_ecn) - 1;
               }   
               switch(attr_value) {
               case BCM_STAT_GROUP_MODE_ATTR_ALL_VALUES:
@@ -17192,9 +17196,9 @@ bcm_error_t _bcm_esw_stat_group_mode_fillup_values(
          case bcmStatGroupModeAttrIngNetworkGroup:
               flex_attribute->svp = 1;
               if (flags & BCM_STAT_GROUP_MODE_INGRESS) {
-                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+                  max_value = (1 << ing_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
               } else {
-                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g.svp_type) - 1;
+                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].svp_type) - 1;
               }
               switch(attr_value) {
               case BCM_STAT_GROUP_MODE_ATTR_ALL_VALUES:
@@ -17227,7 +17231,7 @@ bcm_error_t _bcm_esw_stat_group_mode_fillup_values(
                                         "BAD PARAM(DVP) for Ingress Direction\n")));
                   return BCM_E_PARAM;
               } else {
-                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g.dvp_type) - 1;
+                  max_value = (1 << egr_pkt_attr_uncmprsd_bits_g[unit].dvp_type) - 1;
               }
               switch(attr_value) {
               case BCM_STAT_GROUP_MODE_ATTR_ALL_VALUES:
@@ -21613,7 +21617,7 @@ _bcm_stat_flex_counter_id_move (int unit,
                  * counter_info_old parameter to ensure no loss of counter values.
                  */
                 if (counter_info_new != NULL) {
-                    if(compaction_info.in_progress == FALSE) {
+                    if(compaction_info[unit].in_progress == FALSE) {
                         new_pool_id  = counter_info_new->ctr_tbl_pool_id;
                         new_base_idx = counter_info_new->ctr_tbl_pool_base_idx;
                         new_mode_id  = counter_info_new->ctr_tbl_mode_id;
@@ -21638,9 +21642,9 @@ _bcm_stat_flex_counter_id_move (int unit,
                                  stat_counter_id,new_base_idx));
                         if (rv == BCM_E_NONE) {
                             counter_info_new->stat_counter_id = stat_counter_id;
-                            compaction_info.base_idx    = counter_info_old.ctr_tbl_pool_base_idx;
-                            compaction_info.pool_number = counter_info_old.ctr_tbl_pool_id;
-                            compaction_info.in_progress = TRUE;
+                            compaction_info[unit].base_idx    = counter_info_old.ctr_tbl_pool_base_idx;
+                            compaction_info[unit].pool_number = counter_info_old.ctr_tbl_pool_id;
+                            compaction_info[unit].in_progress = TRUE;
                         }
                     } else {
                         rv = BCM_E_CONFIG;
@@ -21657,7 +21661,7 @@ _bcm_stat_flex_counter_id_move (int unit,
                 if (counter_info_new == NULL) {
                     return BCM_E_PARAM;
                 }
-                if (compaction_info.in_progress == FALSE) {
+                if (compaction_info[unit].in_progress == FALSE) {
                     LOG_DEBUG(BSL_LS_BCM_FLEXCTR,
                             (BSL_META_U(unit,
                                         "StatBaseIdxMove:Counter Move is not initiated\n")));
@@ -21678,9 +21682,9 @@ _bcm_stat_flex_counter_id_move (int unit,
                 }
                 rv = _bcm_stat_flex_counter_base_idx_move(unit,
                         counter_info_old, counter_info_new);
-                compaction_info.base_idx    = 0;
-                compaction_info.pool_number = 0;
-                compaction_info.in_progress = FALSE;
+                compaction_info[unit].base_idx    = 0;
+                compaction_info[unit].pool_number = 0;
+                compaction_info[unit].in_progress = FALSE;
                 break;
             default:
                 rv = BCM_E_PARAM;

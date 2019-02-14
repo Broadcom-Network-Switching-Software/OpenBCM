@@ -529,44 +529,44 @@ _bcm_esw_stat_flex_create_ingress_uncompress_mode(
     if (soc_feature(unit,soc_feature_flex_ctr_mpls_3_label_count)) {
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_CNG_3_ATTR_BITS) {
-            pkt_attr_bits.cng_3 = ing_pkt_attr_uncmprsd_bits_g.cng_3;
-            pkt_attr_bits.cng_3_mask = ing_pkt_attr_uncmprsd_bits_g.cng_3_mask;
-            pkt_attr_bits.cng_3_pos = ing_pkt_attr_uncmprsd_bits_g.cng_3_pos;
+            pkt_attr_bits.cng_3 = ing_pkt_attr_uncmprsd_bits_g[unit].cng_3;
+            pkt_attr_bits.cng_3_mask = ing_pkt_attr_uncmprsd_bits_g[unit].cng_3_mask;
+            pkt_attr_bits.cng_3_pos = ing_pkt_attr_uncmprsd_bits_g[unit].cng_3_pos;
             total_ingress_bits += pkt_attr_bits.cng_3;
         }
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_PHB_3_ATTR_BITS) {
-            pkt_attr_bits.phb_3 = ing_pkt_attr_uncmprsd_bits_g.phb_3;
-            pkt_attr_bits.phb_3_mask = ing_pkt_attr_uncmprsd_bits_g.phb_3_mask;
-            pkt_attr_bits.phb_3_pos = ing_pkt_attr_uncmprsd_bits_g.phb_3_pos;
+            pkt_attr_bits.phb_3 = ing_pkt_attr_uncmprsd_bits_g[unit].phb_3;
+            pkt_attr_bits.phb_3_mask = ing_pkt_attr_uncmprsd_bits_g[unit].phb_3_mask;
+            pkt_attr_bits.phb_3_pos = ing_pkt_attr_uncmprsd_bits_g[unit].phb_3_pos;
             total_ingress_bits += pkt_attr_bits.phb_3;
         }
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_CNG_2_ATTR_BITS) {
-            pkt_attr_bits.cng_2 = ing_pkt_attr_uncmprsd_bits_g.cng_2;
-            pkt_attr_bits.cng_2_mask = ing_pkt_attr_uncmprsd_bits_g.cng_2_mask;
-            pkt_attr_bits.cng_2_pos = ing_pkt_attr_uncmprsd_bits_g.cng_2_pos;
+            pkt_attr_bits.cng_2 = ing_pkt_attr_uncmprsd_bits_g[unit].cng_2;
+            pkt_attr_bits.cng_2_mask = ing_pkt_attr_uncmprsd_bits_g[unit].cng_2_mask;
+            pkt_attr_bits.cng_2_pos = ing_pkt_attr_uncmprsd_bits_g[unit].cng_2_pos;
             total_ingress_bits += pkt_attr_bits.cng_2;
         }
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_PHB_2_ATTR_BITS) {
-            pkt_attr_bits.phb_2 = ing_pkt_attr_uncmprsd_bits_g.phb_2;
-            pkt_attr_bits.phb_2_mask = ing_pkt_attr_uncmprsd_bits_g.phb_2_mask;
-            pkt_attr_bits.phb_2_pos = ing_pkt_attr_uncmprsd_bits_g.phb_2_pos;
+            pkt_attr_bits.phb_2 = ing_pkt_attr_uncmprsd_bits_g[unit].phb_2;
+            pkt_attr_bits.phb_2_mask = ing_pkt_attr_uncmprsd_bits_g[unit].phb_2_mask;
+            pkt_attr_bits.phb_2_pos = ing_pkt_attr_uncmprsd_bits_g[unit].phb_2_pos;
             total_ingress_bits += pkt_attr_bits.phb_2;
         }
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_CNG_1_ATTR_BITS) {
-            pkt_attr_bits.cng_1 = ing_pkt_attr_uncmprsd_bits_g.cng_1;
-            pkt_attr_bits.cng_1_mask = ing_pkt_attr_uncmprsd_bits_g.cng_1_mask;
-            pkt_attr_bits.cng_1_pos = ing_pkt_attr_uncmprsd_bits_g.cng_1_pos;
+            pkt_attr_bits.cng_1 = ing_pkt_attr_uncmprsd_bits_g[unit].cng_1;
+            pkt_attr_bits.cng_1_mask = ing_pkt_attr_uncmprsd_bits_g[unit].cng_1_mask;
+            pkt_attr_bits.cng_1_pos = ing_pkt_attr_uncmprsd_bits_g[unit].cng_1_pos;
             total_ingress_bits += pkt_attr_bits.cng_1;
         }
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_PHB_1_ATTR_BITS) {
-            pkt_attr_bits.phb_1 = ing_pkt_attr_uncmprsd_bits_g.phb_1;
-            pkt_attr_bits.phb_1_mask = ing_pkt_attr_uncmprsd_bits_g.phb_1_mask;
-            pkt_attr_bits.phb_1_pos = ing_pkt_attr_uncmprsd_bits_g.phb_1_pos;
+            pkt_attr_bits.phb_1 = ing_pkt_attr_uncmprsd_bits_g[unit].phb_1;
+            pkt_attr_bits.phb_1_mask = ing_pkt_attr_uncmprsd_bits_g[unit].phb_1_mask;
+            pkt_attr_bits.phb_1_pos = ing_pkt_attr_uncmprsd_bits_g[unit].phb_1_pos;
             total_ingress_bits += pkt_attr_bits.phb_1;
         }
     }
@@ -574,113 +574,113 @@ _bcm_esw_stat_flex_create_ingress_uncompress_mode(
     if (soc_feature(unit, soc_feature_flex_stat_ing_tcp_flags_support)) {
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_TCP_FLAG_ATTR_BITS) {
-            pkt_attr_bits.tcp_flags = ing_pkt_attr_uncmprsd_bits_g.tcp_flags;
-            pkt_attr_bits.tcp_flags_mask = ing_pkt_attr_uncmprsd_bits_g.tcp_flags_mask;
-            pkt_attr_bits.tcp_flags_pos = ing_pkt_attr_uncmprsd_bits_g.tcp_flags_pos;
+            pkt_attr_bits.tcp_flags = ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags;
+            pkt_attr_bits.tcp_flags_mask = ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags_mask;
+            pkt_attr_bits.tcp_flags_pos = ing_pkt_attr_uncmprsd_bits_g[unit].tcp_flags_pos;
             total_ingress_bits += pkt_attr_bits.tcp_flags;
         }
     }
     if (soc_feature(unit, soc_feature_flex_stat_int_cn_support)) {
         if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
                 BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_INT_CN_ATTR_BITS) {
-            pkt_attr_bits.int_cn = ing_pkt_attr_uncmprsd_bits_g.int_cn;
-            pkt_attr_bits.int_cn_mask = ing_pkt_attr_uncmprsd_bits_g.int_cn_mask;
-            pkt_attr_bits.int_cn_pos = ing_pkt_attr_uncmprsd_bits_g.int_cn_pos;
+            pkt_attr_bits.int_cn = ing_pkt_attr_uncmprsd_bits_g[unit].int_cn;
+            pkt_attr_bits.int_cn_mask = ing_pkt_attr_uncmprsd_bits_g[unit].int_cn_mask;
+            pkt_attr_bits.int_cn_pos = ing_pkt_attr_uncmprsd_bits_g[unit].int_cn_pos;
             total_ingress_bits += pkt_attr_bits.int_cn;
         }
     }
 
 if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_CNG_ATTR_BITS) {
-        pkt_attr_bits.cng = ing_pkt_attr_uncmprsd_bits_g.cng;
-        pkt_attr_bits.cng_mask = ing_pkt_attr_uncmprsd_bits_g.cng_mask;
-        pkt_attr_bits.cng_pos = ing_pkt_attr_uncmprsd_bits_g.cng_pos;
+        pkt_attr_bits.cng = ing_pkt_attr_uncmprsd_bits_g[unit].cng;
+        pkt_attr_bits.cng_mask = ing_pkt_attr_uncmprsd_bits_g[unit].cng_mask;
+        pkt_attr_bits.cng_pos = ing_pkt_attr_uncmprsd_bits_g[unit].cng_pos;
         total_ingress_bits +=pkt_attr_bits.cng;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_IFP_CNG_ATTR_BITS) {
-        pkt_attr_bits.ifp_cng = ing_pkt_attr_uncmprsd_bits_g.ifp_cng ;
-        pkt_attr_bits.ifp_cng_mask = ing_pkt_attr_uncmprsd_bits_g.ifp_cng_mask;
-        pkt_attr_bits.ifp_cng_pos = ing_pkt_attr_uncmprsd_bits_g.ifp_cng_pos;
+        pkt_attr_bits.ifp_cng = ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng ;
+        pkt_attr_bits.ifp_cng_mask = ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_mask;
+        pkt_attr_bits.ifp_cng_pos = ing_pkt_attr_uncmprsd_bits_g[unit].ifp_cng_pos;
         total_ingress_bits +=pkt_attr_bits.ifp_cng;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_INT_PRI_ATTR_BITS) {
-        pkt_attr_bits.int_pri = ing_pkt_attr_uncmprsd_bits_g.int_pri ;
-        pkt_attr_bits.int_pri_mask = ing_pkt_attr_uncmprsd_bits_g.int_pri_mask ;
-        pkt_attr_bits.int_pri_pos = ing_pkt_attr_uncmprsd_bits_g.int_pri_pos ;
+        pkt_attr_bits.int_pri = ing_pkt_attr_uncmprsd_bits_g[unit].int_pri ;
+        pkt_attr_bits.int_pri_mask = ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_mask ;
+        pkt_attr_bits.int_pri_pos = ing_pkt_attr_uncmprsd_bits_g[unit].int_pri_pos ;
         total_ingress_bits +=pkt_attr_bits.int_pri;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_VLAN_FORMAT_ATTR_BITS) {
-        pkt_attr_bits.vlan_format = ing_pkt_attr_uncmprsd_bits_g.vlan_format ;
-        pkt_attr_bits.vlan_format_mask = ing_pkt_attr_uncmprsd_bits_g.vlan_format_mask ;
-        pkt_attr_bits.vlan_format_pos = ing_pkt_attr_uncmprsd_bits_g.vlan_format_pos ;
+        pkt_attr_bits.vlan_format = ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format ;
+        pkt_attr_bits.vlan_format_mask = ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_mask ;
+        pkt_attr_bits.vlan_format_pos = ing_pkt_attr_uncmprsd_bits_g[unit].vlan_format_pos ;
         total_ingress_bits +=pkt_attr_bits.vlan_format;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_OUTER_DOT1P_ATTR_BITS) {
-        pkt_attr_bits.outer_dot1p = ing_pkt_attr_uncmprsd_bits_g.outer_dot1p;
-        pkt_attr_bits.outer_dot1p_mask = ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_mask;
-        pkt_attr_bits.outer_dot1p_pos = ing_pkt_attr_uncmprsd_bits_g.outer_dot1p_pos;
+        pkt_attr_bits.outer_dot1p = ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p;
+        pkt_attr_bits.outer_dot1p_mask = ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_mask;
+        pkt_attr_bits.outer_dot1p_pos = ing_pkt_attr_uncmprsd_bits_g[unit].outer_dot1p_pos;
         total_ingress_bits +=pkt_attr_bits.outer_dot1p;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_INNER_DOT1P_ATTR_BITS) {
-        pkt_attr_bits.inner_dot1p = ing_pkt_attr_uncmprsd_bits_g.inner_dot1p ;
-        pkt_attr_bits.inner_dot1p_mask = ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_mask ;
-        pkt_attr_bits.inner_dot1p_pos = ing_pkt_attr_uncmprsd_bits_g.inner_dot1p_pos ;
+        pkt_attr_bits.inner_dot1p = ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p ;
+        pkt_attr_bits.inner_dot1p_mask = ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_mask ;
+        pkt_attr_bits.inner_dot1p_pos = ing_pkt_attr_uncmprsd_bits_g[unit].inner_dot1p_pos ;
         total_ingress_bits += pkt_attr_bits.inner_dot1p;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_INGRESS_PORT_ATTR_BITS) {
-        pkt_attr_bits.ing_port = ing_pkt_attr_uncmprsd_bits_g.ing_port; 
-        pkt_attr_bits.ing_port_mask = ing_pkt_attr_uncmprsd_bits_g.ing_port_mask ;
-        pkt_attr_bits.ing_port_pos = ing_pkt_attr_uncmprsd_bits_g.ing_port_pos ;
+        pkt_attr_bits.ing_port = ing_pkt_attr_uncmprsd_bits_g[unit].ing_port; 
+        pkt_attr_bits.ing_port_mask = ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_mask ;
+        pkt_attr_bits.ing_port_pos = ing_pkt_attr_uncmprsd_bits_g[unit].ing_port_pos ;
         total_ingress_bits += pkt_attr_bits.ing_port;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_TOS_DSCP_ATTR_BITS) {
-        pkt_attr_bits.tos_dscp = ing_pkt_attr_uncmprsd_bits_g.tos_dscp ;
-        pkt_attr_bits.tos_dscp_mask = ing_pkt_attr_uncmprsd_bits_g.tos_dscp_mask ;
-        pkt_attr_bits.tos_dscp_pos = ing_pkt_attr_uncmprsd_bits_g.tos_dscp_pos ;
+        pkt_attr_bits.tos_dscp = ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp ;
+        pkt_attr_bits.tos_dscp_mask = ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_mask ;
+        pkt_attr_bits.tos_dscp_pos = ing_pkt_attr_uncmprsd_bits_g[unit].tos_dscp_pos ;
         total_ingress_bits += pkt_attr_bits.tos_dscp;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_TOS_ECN_ATTR_BITS) {
-        pkt_attr_bits.tos_ecn = ing_pkt_attr_uncmprsd_bits_g.tos_ecn ;
-        pkt_attr_bits.tos_ecn_mask = ing_pkt_attr_uncmprsd_bits_g.tos_ecn_mask ;
-        pkt_attr_bits.tos_ecn_pos = ing_pkt_attr_uncmprsd_bits_g.tos_ecn_pos ;
+        pkt_attr_bits.tos_ecn = ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn ;
+        pkt_attr_bits.tos_ecn_mask = ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_mask ;
+        pkt_attr_bits.tos_ecn_pos = ing_pkt_attr_uncmprsd_bits_g[unit].tos_ecn_pos ;
         total_ingress_bits += pkt_attr_bits.tos_ecn;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_PKT_RESOLUTION_ATTR_BITS) {
-        pkt_attr_bits.pkt_resolution = ing_pkt_attr_uncmprsd_bits_g.pkt_resolution ;
-        pkt_attr_bits.pkt_resolution_mask= ing_pkt_attr_uncmprsd_bits_g.
+        pkt_attr_bits.pkt_resolution = ing_pkt_attr_uncmprsd_bits_g[unit].pkt_resolution ;
+        pkt_attr_bits.pkt_resolution_mask= ing_pkt_attr_uncmprsd_bits_g[unit].
                                            pkt_resolution_mask;
-        pkt_attr_bits.pkt_resolution_pos= ing_pkt_attr_uncmprsd_bits_g.
+        pkt_attr_bits.pkt_resolution_pos= ing_pkt_attr_uncmprsd_bits_g[unit].
                                            pkt_resolution_pos;
         total_ingress_bits +=pkt_attr_bits.pkt_resolution ;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_SVP_TYPE_ATTR_BITS) {
-        pkt_attr_bits.svp_type = ing_pkt_attr_uncmprsd_bits_g.svp_type ;
-        pkt_attr_bits.svp_type_mask = ing_pkt_attr_uncmprsd_bits_g.svp_type_mask ;
-        pkt_attr_bits.svp_type_pos = ing_pkt_attr_uncmprsd_bits_g.svp_type_pos ;
+        pkt_attr_bits.svp_type = ing_pkt_attr_uncmprsd_bits_g[unit].svp_type ;
+        pkt_attr_bits.svp_type_mask = ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_mask ;
+        pkt_attr_bits.svp_type_pos = ing_pkt_attr_uncmprsd_bits_g[unit].svp_type_pos ;
         total_ingress_bits +=pkt_attr_bits.svp_type;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_DROP_ATTR_BITS) {
-        pkt_attr_bits.drop = ing_pkt_attr_uncmprsd_bits_g.drop ;
-        pkt_attr_bits.drop_mask = ing_pkt_attr_uncmprsd_bits_g.drop_mask ;
-        pkt_attr_bits.drop_pos = ing_pkt_attr_uncmprsd_bits_g.drop_pos ;
+        pkt_attr_bits.drop = ing_pkt_attr_uncmprsd_bits_g[unit].drop ;
+        pkt_attr_bits.drop_mask = ing_pkt_attr_uncmprsd_bits_g[unit].drop_mask ;
+        pkt_attr_bits.drop_pos = ing_pkt_attr_uncmprsd_bits_g[unit].drop_pos ;
         total_ingress_bits += pkt_attr_bits.drop;
     }
     if (uncmprsd_attr_selectors->uncmprsd_attr_bits_selector &
         BCM_STAT_FLEX_ING_UNCOMPRESSED_USE_IP_PKT_ATTR_BITS) {
-        pkt_attr_bits.ip_pkt = ing_pkt_attr_uncmprsd_bits_g.ip_pkt ;
-        pkt_attr_bits.ip_pkt_mask = ing_pkt_attr_uncmprsd_bits_g.ip_pkt_mask;
-        pkt_attr_bits.ip_pkt_pos = ing_pkt_attr_uncmprsd_bits_g.ip_pkt_pos;
+        pkt_attr_bits.ip_pkt = ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt ;
+        pkt_attr_bits.ip_pkt_mask = ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_mask;
+        pkt_attr_bits.ip_pkt_pos = ing_pkt_attr_uncmprsd_bits_g[unit].ip_pkt_pos;
         total_ingress_bits +=  pkt_attr_bits.ip_pkt;
     }
     if (total_ingress_bits > BCM_STAT_FLEX_MAX_PKT_ATTR_SEL_KEY_SIZE) {
@@ -912,7 +912,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
                         &mode_l));
     if (cmprsd_attr_selectors->pkt_attr_bits.cng !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.cng > 
-            ing_pkt_attr_cmprsd_bits_g.cng) {
+            ing_pkt_attr_cmprsd_bits_g[unit].cng) {
             return BCM_E_PARAM;
         }
         if (pri_cnf_map_used==1) {
@@ -924,7 +924,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     if (soc_feature(unit,soc_feature_flex_ctr_mpls_3_label_count)) {
         if (cmprsd_attr_selectors->pkt_attr_bits.cng_3 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.cng_3 >
-                    ing_pkt_attr_cmprsd_bits_g.cng_3) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].cng_3) {
                 return BCM_E_PARAM;
             }
             if (cng_3_map_used == 1) {
@@ -934,7 +934,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
         }
         if (cmprsd_attr_selectors->pkt_attr_bits.phb_3 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.phb_3 >
-                    ing_pkt_attr_cmprsd_bits_g.phb_3) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].phb_3) {
                 return BCM_E_PARAM;
             }
             if (phb_3_map_used == 1) {
@@ -944,7 +944,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
         }
         if (cmprsd_attr_selectors->pkt_attr_bits.cng_2 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.cng_2 >
-                    ing_pkt_attr_cmprsd_bits_g.cng_2) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].cng_2) {
                 return BCM_E_PARAM;
             }
             if (cng_2_map_used == 1) {
@@ -954,7 +954,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
         }
         if (cmprsd_attr_selectors->pkt_attr_bits.phb_2 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.phb_2 >
-                    ing_pkt_attr_cmprsd_bits_g.phb_2) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].phb_2) {
                 return BCM_E_PARAM;
             }
             if (phb_2_map_used == 1) {
@@ -964,7 +964,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
         }
         if (cmprsd_attr_selectors->pkt_attr_bits.cng_1 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.cng_1 >
-                    ing_pkt_attr_cmprsd_bits_g.cng_1) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].cng_1) {
                 return BCM_E_PARAM;
             }
             if (cng_1_map_used == 1) {
@@ -974,7 +974,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
         }
         if (cmprsd_attr_selectors->pkt_attr_bits.phb_1 != 0) {
             if (cmprsd_attr_selectors->pkt_attr_bits.phb_1 >
-                    ing_pkt_attr_cmprsd_bits_g.phb_1) {
+                    ing_pkt_attr_cmprsd_bits_g[unit].phb_1) {
                 return BCM_E_PARAM;
             }
             if (phb_1_map_used == 1) {
@@ -986,7 +986,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
 #endif
     if (cmprsd_attr_selectors->pkt_attr_bits.ifp_cng !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.ifp_cng >
-            ing_pkt_attr_cmprsd_bits_g.ifp_cng) {
+            ing_pkt_attr_cmprsd_bits_g[unit].ifp_cng) {
             return BCM_E_PARAM;
         }
         if (pri_cnf_map_used==1) {
@@ -996,7 +996,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.int_pri !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.int_pri > 
-            ing_pkt_attr_cmprsd_bits_g.int_pri) {
+            ing_pkt_attr_cmprsd_bits_g[unit].int_pri) {
             return BCM_E_PARAM;
         }
         if (pri_cnf_map_used==1) {
@@ -1006,7 +1006,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.vlan_format !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.vlan_format >
-            ing_pkt_attr_cmprsd_bits_g.vlan_format) {
+            ing_pkt_attr_cmprsd_bits_g[unit].vlan_format) {
             return BCM_E_PARAM;
         }
         if (pkt_pri_map_used==1) {
@@ -1016,7 +1016,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.outer_dot1p !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.outer_dot1p  > 
-            ing_pkt_attr_cmprsd_bits_g.outer_dot1p) {
+            ing_pkt_attr_cmprsd_bits_g[unit].outer_dot1p) {
             return BCM_E_PARAM;
         }
         if (pkt_pri_map_used==1) {
@@ -1026,7 +1026,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.inner_dot1p !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.inner_dot1p  >
-            ing_pkt_attr_cmprsd_bits_g.inner_dot1p) {
+            ing_pkt_attr_cmprsd_bits_g[unit].inner_dot1p) {
             return BCM_E_PARAM;
         }
         if (pkt_pri_map_used==1) {
@@ -1036,7 +1036,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.ing_port !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.ing_port  > 
-            ing_pkt_attr_cmprsd_bits_g.ing_port) {
+            ing_pkt_attr_cmprsd_bits_g[unit].ing_port) {
             return BCM_E_PARAM;
         }
         if (port_map_used==1) {
@@ -1046,7 +1046,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.tos_dscp !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.tos_dscp  > 
-            ing_pkt_attr_cmprsd_bits_g.tos_dscp) {
+            ing_pkt_attr_cmprsd_bits_g[unit].tos_dscp) {
             return BCM_E_PARAM;
         }
         if (tos_map_used==1) {
@@ -1056,7 +1056,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.tos_ecn !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.tos_ecn  > 
-            ing_pkt_attr_cmprsd_bits_g.tos_ecn) {
+            ing_pkt_attr_cmprsd_bits_g[unit].tos_ecn) {
             return BCM_E_PARAM;
         }
         if (tos_map_used==1) {
@@ -1066,7 +1066,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.pkt_resolution !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.pkt_resolution  > 
-            ing_pkt_attr_cmprsd_bits_g.pkt_resolution) {
+            ing_pkt_attr_cmprsd_bits_g[unit].pkt_resolution) {
             return BCM_E_PARAM;
         }
         if (pkt_res_map_used==1) {
@@ -1077,7 +1077,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.svp_type !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.svp_type  > 
-            ing_pkt_attr_cmprsd_bits_g.svp_type) {
+            ing_pkt_attr_cmprsd_bits_g[unit].svp_type) {
             return BCM_E_PARAM;
         }
         if (pkt_res_map_used==1) {
@@ -1087,7 +1087,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.drop        !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.drop > 
-            ing_pkt_attr_cmprsd_bits_g.drop) {
+            ing_pkt_attr_cmprsd_bits_g[unit].drop) {
             return BCM_E_PARAM;
         }
         if (pkt_res_map_used==1) {
@@ -1097,7 +1097,7 @@ _bcm_esw_stat_flex_create_ingress_compress_mode(
     }
     if (cmprsd_attr_selectors->pkt_attr_bits.ip_pkt        !=0) {
         if (cmprsd_attr_selectors->pkt_attr_bits.ip_pkt > 
-            ing_pkt_attr_cmprsd_bits_g.ip_pkt) {
+            ing_pkt_attr_cmprsd_bits_g[unit].ip_pkt) {
             return BCM_E_PARAM;
         }
         total_ingress_bits +=cmprsd_attr_selectors->pkt_attr_bits.ip_pkt ;

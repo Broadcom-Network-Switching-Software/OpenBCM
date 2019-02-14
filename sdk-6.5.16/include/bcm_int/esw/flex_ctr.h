@@ -1795,10 +1795,10 @@ _bcm_esw_stat_group_mode_id_config_get(
     bcm_stat_group_mode_attr_selector_t *attr_sel,
     uint32 *actual_num_selectors);
 
-extern bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_uncmprsd_bits_g;
-extern bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_cmprsd_bits_g;
-extern bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_uncmprsd_bits_g;
-extern bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_cmprsd_bits_g;
+extern bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_uncmprsd_bits_g[BCM_MAX_NUM_UNITS];
+extern bcm_stat_flex_ing_pkt_attr_bits_t ing_pkt_attr_cmprsd_bits_g[BCM_MAX_NUM_UNITS];
+extern bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_uncmprsd_bits_g[BCM_MAX_NUM_UNITS];
+extern bcm_stat_flex_egr_pkt_attr_bits_t egr_pkt_attr_cmprsd_bits_g[BCM_MAX_NUM_UNITS];
 extern bcm_error_t _bcm_esw_stat_flex_update_ingress_flex_info(
             int                                 unit,
             bcm_stat_flex_mode_t                mode,
