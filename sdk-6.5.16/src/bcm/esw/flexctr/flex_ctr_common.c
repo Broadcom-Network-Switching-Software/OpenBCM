@@ -2669,6 +2669,11 @@ _bcm_esw_get_flex_counter_fields(
              view_field = DATA_TYPEf;
          }
 #endif
+#if defined (BCM_TOMAHAWK3_SUPPORT)
+         else if (soc_mem_field_valid(unit, table, KEY_TYPEf)) {
+             view_field = KEY_TYPEf;
+         }
+#endif
          else {
              return BCM_E_CONFIG;
          }
@@ -5315,7 +5320,9 @@ _bcm_esw_stat_flex_check_ingress_table(
 #endif
 #if defined (BCM_TOMAHAWK3_SUPPORT)
         ((SOC_IS_TOMAHAWK3(unit)) &&
-          ((ingress_table == L3_ENTRY_DOUBLEm)  ||
+          ((ingress_table == LPORT_TABm)  ||
+           (ingress_table == L3_ENTRY_QUADm)  ||
+           (ingress_table == L3_ENTRY_DOUBLEm)  ||
            (ingress_table == MPLS_ENTRY_SINGLEm)))  ||
 #endif
 #if defined (BCM_TRIDENT3_SUPPORT)
@@ -9500,8 +9507,13 @@ STATIC bcm_error_t _bcm_esw_stat_flex_object_config_get(
                 config_mem = L3_ENTRY_DOUBLEm;
             } else
 #endif
+#if defined (BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)){
+                config_mem = L3_ENTRY_DOUBLEm;
+            } else
+#endif
             {
-            config_mem = L3_ENTRY_IPV4_MULTICASTm;
+                config_mem = L3_ENTRY_IPV4_MULTICASTm;
             }
             break;
 #endif
@@ -9641,6 +9653,11 @@ STATIC bcm_error_t _bcm_esw_stat_flex_object_config_set(
                 config_mem = L3_ENTRY_DOUBLEm;
             } else
 #endif
+#if defined (BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)){
+                config_mem = L3_ENTRY_DOUBLEm;
+            } else
+#endif      
             {
                 config_mem = L3_ENTRY_IPV4_MULTICASTm;
             }
@@ -16811,7 +16828,8 @@ bcm_error_t _bcm_esw_stat_flex_detach_ingress_table_counters1(
 #endif
 #if defined(BCM_TOMAHAWK3_SUPPORT)
         (SOC_IS_TOMAHAWK3(unit) &&
-        ((ingress_table == L3_ENTRY_QUADm)     ||
+        ((ingress_table == LPORT_TABm)  ||
+        (ingress_table == L3_ENTRY_QUADm)  ||
         (ingress_table == L3_ENTRY_DOUBLEm)))  ||
 #endif
 #if defined(BCM_TRIDENT3_SUPPORT)
@@ -17164,7 +17182,8 @@ bcm_error_t _bcm_esw_stat_flex_detach_ingress_table_counters(
 #endif
 #if defined(BCM_TOMAHAWK3_SUPPORT)
         (SOC_IS_TOMAHAWK3(unit) &&
-        ((ingress_table == L3_ENTRY_QUADm)     ||
+        ((ingress_table == LPORT_TABm)  ||
+        (ingress_table == L3_ENTRY_QUADm)  ||
         (ingress_table == L3_ENTRY_DOUBLEm)))  ||
 #endif
 #if defined(BCM_TRIDENT3_SUPPORT)
