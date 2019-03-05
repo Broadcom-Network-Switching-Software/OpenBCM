@@ -32687,7 +32687,6 @@ _bcm_field_th_qualifier_delete(int unit, bcm_field_entry_t entry,
     _bcm_field_qual_data_t    q_mask;  /* Qualifier match mask.     */
     int rv = BCM_E_NONE;      /* Operation return status.  */
     _field_entry_t            *f_ent; /* Field Entry */
-    bcm_pbmp_t                valid_pbm; /* Valid Bitmap */
 
     sal_memset(q_data, 0, sizeof(_bcm_field_qual_data_t));
     sal_memset(q_mask, 0, sizeof(_bcm_field_qual_data_t));
@@ -32696,17 +32695,10 @@ _bcm_field_th_qualifier_delete(int unit, bcm_field_entry_t entry,
     rv = _field_entry_get(unit, entry, _FP_ENTRY_PRIMARY, &f_ent);
     BCM_IF_ERROR_RETURN(rv);
 
-    if (_BCM_FIELD_QSET_PBMP_TEST(f_ent->group->qset)) {
+    if ((BCM_FIELD_QSET_TEST(f_ent->group->qset, qual_id)) &&
+        (_BCM_FIELD_IS_PBMP_QUALIFIER(qual_id))) {
         BCM_PBMP_CLEAR(f_ent->pbmp.data);
         BCM_PBMP_CLEAR(f_ent->pbmp.mask);
-        if (BCM_FIELD_QSET_TEST(f_ent->group->qset, bcmFieldQualifyInPorts)) {
-            rv = _bcm_field_valid_pbmp_get(unit, &valid_pbm);
-            if (BCM_FAILURE(rv)) {
-                return (rv);
-            }
-            BCM_PBMP_ASSIGN(f_ent->pbmp.data, f_ent->group->pbmp);
-            BCM_PBMP_ASSIGN(f_ent->pbmp.mask, valid_pbm);
-        }
     }
 
     if (_BCM_FIELD_IS_PRESEL_ENTRY(entry) == TRUE) {

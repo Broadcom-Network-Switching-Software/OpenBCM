@@ -4958,9 +4958,6 @@ bcm_esw_field_qualifier_delete(int unit, bcm_field_entry_t entry,
     _bcm_field_qual_data_t    q_mask;  /* Qualifier match mask.     */
     _field_entry_t            *f_ent;  /* Field entry structure.    */
     int                       rv;      /* Operation return status.  */
-#if defined(BCM_RAPTOR_SUPPORT) || defined(BCM_TRX_SUPPORT)
-    bcm_pbmp_t                valid_pbm; /* Valid Bitmap */
-#endif
 
     sal_memset(q_data, 0, sizeof(_bcm_field_qual_data_t));
     sal_memset(q_mask, 0, sizeof(_bcm_field_qual_data_t));
@@ -5010,14 +5007,6 @@ bcm_esw_field_qualifier_delete(int unit, bcm_field_entry_t entry,
         case bcmFieldQualifyInPorts:
             BCM_PBMP_CLEAR(f_ent->pbmp.data);
             BCM_PBMP_CLEAR(f_ent->pbmp.mask);
-            if (qual_id == bcmFieldQualifyInPorts) {
-                rv = _bcm_field_valid_pbmp_get(unit, &valid_pbm);
-                if (BCM_FAILURE(rv)) {
-                    return (rv);
-                }
-                BCM_PBMP_ASSIGN(f_ent->pbmp.data, f_ent->group->pbmp);
-                BCM_PBMP_ASSIGN(f_ent->pbmp.mask, valid_pbm);
-            }
             break;
 #endif /* BCM_RAPTOR_SUPPORT || BCM_TRX_SUPPORT */
 #if defined(BCM_FIREBOLT2_SUPPORT)
