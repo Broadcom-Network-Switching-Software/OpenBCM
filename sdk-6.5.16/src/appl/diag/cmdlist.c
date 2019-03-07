@@ -863,9 +863,11 @@ cmdlist_init(void)
 
     for (i = 0; i < soc_ndev; i++) {
         unit = SOC_NDEV_IDX2DEV(i);
-
+        if(!soc_attached(unit)) {
+            command_mode_set(unit, ESW_CMD_MODE);
+        }
 #if defined(BCM_DNX_SUPPORT)
-        if(SOC_IS_DNX(unit) ) {
+        else if(SOC_IS_DNX(unit) ) {
             command_mode_set(unit, DNX_CMD_MODE);
             /** initialize DNX specific dynamic shell commands */
             if(diag_sand_error_get(cmd_dnx_sh_init(unit)) != CMD_OK)
