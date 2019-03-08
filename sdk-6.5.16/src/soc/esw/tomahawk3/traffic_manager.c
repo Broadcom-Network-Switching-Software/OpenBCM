@@ -2288,7 +2288,7 @@ soc_cosq_struct_init(int unit)
             th3_cosq_mmu_info[unit]->th3_port_info[port_num].
                 mmuq[queue_num].level = 2;
             th3_cosq_mmu_info[unit]->th3_port_info[port_num].
-                mmuq[queue_num].in_use = 0;
+                mmuq[queue_num].in_use = 1;
             th3_cosq_mmu_info[unit]->th3_port_info[port_num].
                 mmuq[queue_num].sched_policy = SOC_TH3_SCHED_MODE_WRR;
             th3_cosq_mmu_info[unit]->th3_port_info[port_num].
@@ -4217,20 +4217,44 @@ soc_th3_cosq_parent_get(int unit, int port, int child_index, int child_level,
     soc_reg_t reg = MMU_QSCH_PORT_CONFIGr;
     uint64 rval_64;
     uint32 mapping = 0;
+    soc_reg_t prof_reg = MMU_MTRO_MMUQ_SCHQ_CFGr;
+    soc_reg_t map_reg = MMU_MTRO_MMUQ_SCHQ_PROFILEr;
+    int port_profile = 0;
+    uint32 rval;
+    soc_field_t schedq_field[12] = {
+        SCH_Q_NUM_0f, SCH_Q_NUM_1f,
+        SCH_Q_NUM_2f, SCH_Q_NUM_3f,
+        SCH_Q_NUM_4f, SCH_Q_NUM_5f,
+        SCH_Q_NUM_6f, SCH_Q_NUM_7f,
+        SCH_Q_NUM_8f, SCH_Q_NUM_9f,
+        SCH_Q_NUM_10f, SCH_Q_NUM_11f,
+    };
 
-    if (child_level != SOC_TH3_NODE_LVL_L1) {
-        /* Only child at L1 are allowed to move */
-        return SOC_E_PARAM;
-    }
-    /* Set the L1 queue's parent to the given L0 node */
-    SOC_IF_ERROR_RETURN
-        (soc_reg64_get(unit, reg, 0, port, &rval_64));
-    mapping = soc_reg64_field32_get(unit, reg, rval_64, L1_TO_L0_MAPPINGf);
 
-    if ((mapping & (1 << child_index)) == 0) {
-        *parent_index = child_index;
+    if (child_level == SOC_TH3_NODE_LVL_L1) {
+        /* Set the L1 queue's parent to the given L0 node */
+        SOC_IF_ERROR_RETURN
+            (soc_reg64_get(unit, reg, 0, port, &rval_64));
+        mapping = soc_reg64_field32_get(unit, reg, rval_64, L1_TO_L0_MAPPINGf);
+
+        if ((mapping & (1 << child_index)) == 0) {
+            *parent_index = child_index;
+        } else {
+            *parent_index = child_index+1;
+        }
+    } else if (child_level == SOC_TH3_NODE_LVL_L2) {
+        /* Retrieve schedq mapped to MMUQ*/
+        rval = 0;
+        SOC_IF_ERROR_RETURN
+            (soc_reg32_get(unit, prof_reg, port, 0, &rval));
+        port_profile = soc_reg_field_get(unit, prof_reg, rval, Q_PROFILE_SELf);
+        SOC_IF_ERROR_RETURN
+            (soc_reg64_get(unit, map_reg, REG_PORT_ANY, port_profile, &rval_64));
+        *parent_index = soc_reg64_field32_get(unit, map_reg, rval_64,
+                schedq_field[child_index]);
+
     } else {
-        *parent_index = child_index+1;
+        return SOC_E_PARAM;
     }
 
     return SOC_E_NONE;

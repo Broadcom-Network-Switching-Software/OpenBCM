@@ -885,6 +885,9 @@ soc_th3_cosq_cpu_parent_get(int unit, int child_index, int child_level,
                            int *parent_index);
 
 extern int
+soc_th3_cosq_parent_get(int unit, int port, int child_index, int child_level,
+                           int *parent_index);
+extern int
 soc_tomahawk3_mem_sram_info_get(int unit, soc_mem_t mem, int index,
                                _soc_ser_sram_info_t *sram_info);
 

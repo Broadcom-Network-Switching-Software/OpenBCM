@@ -1342,17 +1342,21 @@ _bcm_th3_cosq_gport_add_attach(int unit, bcm_gport_t port, int numq, uint32 flag
              "SCHED add_attach port %d numq %d gport %d sched.numq %d\n"),
              port, numq, port_info->sched[numq].gport, port_info->sched[numq].numq));
     } else {
-        id = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].children[0]->hw_index;
+        id = th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].hw_index;
         if (_bcm_th3_queue_is_unicast(unit, id)) {
-            port_info->ucast[id].level = SOC_TH3_NODE_LVL_L1;
-            port_info->ucast[id].in_use = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].in_use;
+            port_info->ucast[id].level = SOC_TH3_NODE_LVL_L2;
+            port_info->ucast[id].in_use =
+                th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].in_use;
             if (port_info->ucast[id].in_use) {
-                port_info->ucast[id].hw_index = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].hw_index;
-                port_info->ucast[id].cos = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].parent->cos;
+                port_info->ucast[id].hw_index =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].hw_index;
+                port_info->ucast[id].cos =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].parent->parent->cos;
                 BCM_GPORT_UCAST_QUEUE_GROUP_SYSQID_SET(gport, local_port, id);
                 port_info->ucast[id].gport = gport;
                 port_info->ucast[id].numq = 1;
-                queue_num = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].parent->hw_index;
+                queue_num =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].parent->parent->hw_index;
                 sched_encap = (queue_num << 16) | local_port;
                 BCM_GPORT_SCHEDULER_SET(parent_gport, sched_encap);
                 port_info->ucast[id].parent_gport = parent_gport;
@@ -1365,15 +1369,19 @@ _bcm_th3_cosq_gport_add_attach(int unit, bcm_gport_t port, int numq, uint32 flag
             }
         } else {
             id = id - _bcm_th3_get_num_ucq(unit);
-            port_info->mcast[id].level = SOC_TH3_NODE_LVL_L1;
-            port_info->mcast[id].in_use = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].in_use;
+            port_info->mcast[id].level = SOC_TH3_NODE_LVL_L2;
+            port_info->mcast[id].in_use =
+                th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].in_use;
             if (port_info->mcast[id].in_use) {
-                port_info->mcast[id].hw_index = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].hw_index;
-                port_info->mcast[id].cos = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].parent->cos;
+                port_info->mcast[id].hw_index =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].hw_index;
+                port_info->mcast[id].cos =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].parent->parent->cos;
                 BCM_GPORT_MCAST_QUEUE_GROUP_SYSQID_SET(gport, local_port, id);
                 port_info->mcast[id].gport = gport;
                 port_info->mcast[id].numq = 1;
-                queue_num = th3_cosq_mmu_info[unit]->th3_port_info[local_port].L1[numq].parent->hw_index;
+                queue_num =
+                    th3_cosq_mmu_info[unit]->th3_port_info[local_port].mmuq[numq].parent->parent->hw_index;
                 sched_encap = (queue_num << 16) | local_port;
                 BCM_GPORT_SCHEDULER_SET(parent_gport, sched_encap);
                 port_info->mcast[id].parent_gport = parent_gport;
@@ -9085,10 +9093,12 @@ _bcm_th3_cosq_port_info_dump(int unit, bcm_port_t port)
 {
     _bcm_th3_cosq_port_info_t *port_info;
     _bcm_th3_cosq_node_t *node;
+    soc_th3_cosq_node_t *l1_node;
     int index, empty;
     soc_th3_sched_mode_e sched_mode = 0;
     int weight = 0;
     char *sched_modes[] = {"X", "SP", "WRR", "WERR"};
+    int l1_parent = -1;
 
     if (!SOC_PORT_VALID(unit, port)) {
         return BCM_E_PORT;
@@ -9146,9 +9156,13 @@ _bcm_th3_cosq_port_info_dump(int unit, bcm_port_t port)
         /* UC Queue */
         int parent_id;
         node = &port_info->ucast[index];
+        l1_node =
+            th3_cosq_mmu_info[unit]->th3_port_info[port].mmuq[index].parent;
+        BCM_IF_ERROR_RETURN(soc_th3_cosq_parent_get(unit, port, index,
+                    node->level, &l1_parent));
         BCM_IF_ERROR_RETURN(
-            soc_th3_cosq_sched_mode_get(unit, port, node->level, index,
-                                       &sched_mode, &weight, 0));
+            soc_th3_cosq_sched_mode_get(unit, port, l1_node->level,
+                l1_parent, &sched_mode, &weight, 0));
         BCM_IF_ERROR_RETURN(
             _bcm_th3_cosq_node_get(unit, node->parent_gport, NULL, NULL,
                                   &parent_id, NULL));
@@ -9162,9 +9176,15 @@ _bcm_th3_cosq_port_info_dump(int unit, bcm_port_t port)
         /* MC Queue */
         int parent_id;
         node = &port_info->mcast[index];
+        l1_node =
+            th3_cosq_mmu_info[unit]->th3_port_info[port].mmuq[(index +
+            _bcm_th3_get_num_ucq(unit))].parent; 
+        BCM_IF_ERROR_RETURN(soc_th3_cosq_parent_get(unit, port,
+                    (index + _bcm_th3_get_num_ucq(unit)),
+                    node->level, &l1_parent));
         BCM_IF_ERROR_RETURN(
-            soc_th3_cosq_sched_mode_get(unit, port, node->level, index,
-                                       &sched_mode, &weight, 1));
+            soc_th3_cosq_sched_mode_get(unit, port, l1_node->level,
+                l1_parent, &sched_mode, &weight, 1));
         BCM_IF_ERROR_RETURN(
             _bcm_th3_cosq_node_get(unit, node->parent_gport, NULL, NULL,
                                   &parent_id, NULL));
