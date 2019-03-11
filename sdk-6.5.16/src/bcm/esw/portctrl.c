@@ -3187,7 +3187,6 @@ bcmi_esw_portctrl_speed_get(int unit, bcm_gport_t port, int *speed)
 #endif  /* PORTMOD_SUPPORT */
 }
 
-#ifdef PORTMOD_PM8X50_SUPPORT
 STATIC int
 bcmi_esw_portctrl_speed_ability_local_max(int unit, bcm_gport_t port,
                                             int *speed_max)
@@ -3230,7 +3229,6 @@ cleanup:
     return BCM_E_UNAVAIL;
 #endif /* Portmod Support */
 }
-#endif /* PORTMOD_PM8X50_SUPPORT */
 
 /*
  * Function:
@@ -3369,6 +3367,7 @@ _bcm_esw_portctrl_speed_validate(int unit, bcm_gport_t port, int speed)
     bcm_port_ability_t port_ability, requested_ability;
     int mode = -1;
     int rv;
+    int max_speed;
 
     /* PM8x50 ports will have their speed config checked in portmod */
     if (IS_CD_PORT(unit, port)) {
@@ -3381,6 +3380,14 @@ _bcm_esw_portctrl_speed_validate(int unit, bcm_gport_t port, int speed)
                     return rv;
                 }
             }
+        }
+
+        /* On a speed change validate, don't allow higher speed than
+         * port_speed_max. User needs to flex up */
+        BCM_IF_ERROR_RETURN(bcmi_esw_portctrl_speed_ability_local_max(
+                    unit, port, &max_speed));
+        if (speed > max_speed) {
+            return BCM_E_CONFIG;
         }
         return BCM_E_NONE;
     }
