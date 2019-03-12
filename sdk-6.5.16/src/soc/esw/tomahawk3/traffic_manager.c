@@ -2116,7 +2116,7 @@ soc_tomahawk3_cosq_port_info_init(int unit, int port_num)
         th3_cosq_mmu_info[unit]->th3_port_info[port_num].
             mmuq[queue_num].level = 2;
         th3_cosq_mmu_info[unit]->th3_port_info[port_num].
-            mmuq[queue_num].in_use = 0;
+            mmuq[queue_num].in_use = 1;
         th3_cosq_mmu_info[unit]->th3_port_info[port_num].
             mmuq[queue_num].sched_policy = SOC_TH3_SCHED_MODE_WRR;
         th3_cosq_mmu_info[unit]->th3_port_info[port_num].
