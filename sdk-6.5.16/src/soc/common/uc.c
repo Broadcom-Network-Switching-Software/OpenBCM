@@ -860,6 +860,10 @@ soc_uc_mhost_reset(int unit, int uC)
     uint32 rst_control;
 #endif
 
+#if defined(BCM_TRIDENT3_SUPPORT) || defined(BCM_TOMAHAWK3_SUPPORT) || defined(BCM_MAVERICK2_SUPPORT)
+    uint32 strap_status;
+#endif
+
 #if defined(BCM_SABER2_SUPPORT) || defined(BCM_JERICHO_SUPPORT)
     uint32 rvp = 0;
     uint32 retry_cnt;
@@ -1098,6 +1102,24 @@ soc_uc_mhost_reset(int unit, int uC)
                       DBG_RESET_Nf, 1);
     soc_reg_field_set(unit, MHOST_0_CR5_RST_CTRLr, &rst_control,
                       PRESET_DBG_Nf, 1);
+#if defined(BCM_TRIDENT3_SUPPORT) || defined(BCM_TOMAHAWK3_SUPPORT) || defined(BCM_MAVERICK2_SUPPORT)
+    if ((uC == 0) &&
+        (SOC_IS_TRIDENT3(unit) || SOC_IS_TOMAHAWK3(unit) || SOC_IS_MAVERICK2(unit))) {
+        /* Check if the processor boots into Flash Firmware */
+        READ_MHOST_0_MHOST_STRAP_STATUSr(unit,&strap_status);
+        if (strap_status != 0) {
+            /* let it unhalt for a while until the
+             * Flash FW finishes its work and gets into the penholder loop
+             */
+            soc_reg_field_set(unit, MHOST_0_CR5_RST_CTRLr, &rst_control,
+                              CPU_HALT_Nf, 1);
+            WRITE_MHOST_0_CR5_RST_CTRLr(unit, rst_control);
+            sal_msleep(20);
+            soc_reg_field_set(unit, MHOST_0_CR5_RST_CTRLr, &rst_control,
+                              CPU_HALT_Nf, 0);
+        }
+    }
+#endif
 
     if (uC == 0) {
         WRITE_MHOST_0_CR5_RST_CTRLr(unit, rst_control);
@@ -1373,13 +1395,11 @@ soc_uc_mhost_start(int unit, int uC, uint32 addr)
         WRITE_MHOST_0_CR5_RST_CTRLr(unit, rst_control);
 #if defined(BCM_TOMAHAWK2_SUPPORT)
         if ((BCM56970_DEVICE_ID & 0xFFF0) == (dev_id & 0xFFF0)){
-           sal_msleep(10);
             soc_cm_iproc_write(unit, 0xffff0fe8, 0);
         }
 #endif
 #if defined(BCM_TRIDENT3_SUPPORT) || defined(BCM_TOMAHAWK3_SUPPORT) || defined(BCM_MAVERICK2_SUPPORT)
         if (SOC_IS_TRIDENT3(unit) || SOC_IS_TOMAHAWK3(unit) || SOC_IS_MAVERICK2(unit)) {
-            sal_msleep(10);
             soc_cm_iproc_write(unit, 0xffff0fe8, 0); /* PenHolder Loc */
         }
 #endif
