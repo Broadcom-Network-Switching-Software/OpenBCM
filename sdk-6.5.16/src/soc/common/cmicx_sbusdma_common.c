@@ -603,6 +603,7 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout)
     }
     if (rv != SOC_E_NONE) {
         cmicx_sbusdma_curr_op_details(unit, cmc, ch);
+        soc_event_generate(unit, SOC_SWITCH_EVENT_IO_ERROR, cmc, ch, 0);
     }
 
     return rv;
@@ -654,7 +655,8 @@ cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout)
 
     _cmicx_sbusdma_ch.wait[unit][cmc] &= ~(0x01 << ch);
     if (rv != SOC_E_NONE) {
-             cmicx_sbusdma_curr_op_details(unit, cmc, ch);
+        cmicx_sbusdma_curr_op_details(unit, cmc, ch);
+        soc_event_generate(unit, SOC_SWITCH_EVENT_IO_ERROR, cmc, ch, 0);
     }
 
     return rv;
