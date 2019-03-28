@@ -1024,6 +1024,19 @@ bcm_esw_stat_init(int unit)
             SOC_IF_ERROR_RETURN
                 (_bcm_esw_stat_custom_rsv_add(unit, -1, snmpBcmCustomReceive0,
                                          bcmDbgCntRxPrivateVlanMismatch));
+            } else { /* SOC_IS_TOMAHAWK3(unit) */
+            SOC_IF_ERROR_RETURN
+                (_bcm_esw_stat_custom_rsv_add(unit, -1, snmpBcmCustomReceive2,
+                                         bcmDbgCntRxVlanMismatch));
+            SOC_IF_ERROR_RETURN
+                (_bcm_esw_stat_custom_rsv_add(unit, -1, snmpBcmCustomReceive2,
+                                         bcmDbgCntRxVlanMemberMismatch));
+            SOC_IF_ERROR_RETURN
+                (_bcm_esw_stat_custom_rsv_add(unit, -1, snmpBcmCustomReceive2,
+                                         bcmDbgCntRxTpidMismatch));
+            SOC_IF_ERROR_RETURN
+                (_bcm_esw_stat_custom_rsv_add(unit, -1, snmpBcmCustomReceive2,
+                                         bcmDbgCntRxPrivateVlanMismatch));
             }
 
             /* Setup counter for Bridged multicast packets */
@@ -3610,9 +3623,9 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
     case bcmDbgCntVLANDR:
         /*
          * Replaced by bcmDbgCntRxVlanMismatch bcmDbgCntRxVlanMemberMismatch
-         *  bcmDbgCntRxTpidMismatch bcmDbgCntRxPrivateVlanMismatch for TD3
+         * bcmDbgCntRxTpidMismatch bcmDbgCntRxPrivateVlanMismatch for TD3 and TH3
          */
-         _BCM_TD3_BIT_SET_E_PARAM(unit, result);
+        _BCM_TD3_BIT_SET_E_PARAM(unit, result);
         _BCM_TH3_BIT_SET_E_PARAM(unit, result);
         _BCM_DEFAULT_BIT_SET(unit, result, 26);
         break;
@@ -3693,9 +3706,9 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
     case bcmDbgCntDSTDISCARDDROP:
         /*
          * Replaced by bcmDbgCntRxL2DstDiscardDrop and
-         *  bcmDbgCntRxL3DstDiscardDrop for TD3
+         *  bcmDbgCntRxL3DstDiscardDrop for TD3 and TH3
          */
-        _BCM_TH3_BIT_SET(unit, result, 14); /* L2DST_DISCARD */
+        _BCM_TH3_BIT_SET_E_PARAM(unit, result);
         _BCM_TD3_BIT_SET_E_PARAM(unit, result);
         _BCM_TRX_BIT_SET(unit, result, 36);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
@@ -3819,18 +3832,22 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxVlanMismatch:
+        _BCM_TH3_BIT_SET(unit, result, 62); /* INVALID_VLAN */
         _BCM_TD3_BIT_SET(unit, result, 32);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxVlanMemberMismatch:
+        _BCM_TH3_BIT_SET(unit, result, 60); /* ENIFILTER */
         _BCM_TD3_BIT_SET(unit, result, 33);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxTpidMismatch:
+        _BCM_TH3_BIT_SET(unit, result, 61); /* INVALID_TPID */
         _BCM_TD3_BIT_SET(unit, result, 34);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxPrivateVlanMismatch:
+        _BCM_TH3_BIT_SET(unit, result, 63); /* PVLAN_VID_MISMATCH */
         _BCM_TD3_BIT_SET(unit, result, 35);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
@@ -3903,6 +3920,7 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxL2DstDiscardDrop:
+        _BCM_TH3_BIT_SET(unit, result, 14); /* L2DST_DISCARD */
         _BCM_TD3_BIT_SET(unit, result, 58);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
@@ -3935,6 +3953,7 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
     case bcmDbgCntRxL3DstDiscardDrop:
+        _BCM_TH3_BIT_SET(unit, result, 17); /* LDST_DISCARD */
         _BCM_TD3_BIT_SET(unit, result, 68);
         _BCM_DEFAULT_BIT_SET_E_PARAM (unit, result);
         break;
