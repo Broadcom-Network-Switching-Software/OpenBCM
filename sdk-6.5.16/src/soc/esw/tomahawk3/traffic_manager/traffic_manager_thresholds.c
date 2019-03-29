@@ -666,7 +666,7 @@ _soc_th3_mmu_config_mapping_profiles_set_hw(int unit,
             soc_reg64_field_set(unit,
                 MMU_THDI_PG_PROFILEr, &rval, field_hpid[loop], fval);
             COMPILER_64_SET(
-                fval, 0, buf_map_profiles->prigroup_to_servicepool[0]);
+                fval, 0, buf_map_profiles->prigroup_to_servicepool[loop]);
             soc_reg64_field_set(unit,
                 MMU_THDI_PG_PROFILEr, &rval, field_spid[loop], fval);
         }
