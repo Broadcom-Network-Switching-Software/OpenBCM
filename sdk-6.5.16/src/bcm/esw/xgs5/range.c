@@ -994,6 +994,7 @@ int bcmi_xgs5_range_destroy(
 
     range_tmp.rid       = cur->rid;
     range_tmp.pipe_instance = cur->pipe_instance;
+    range_tmp.hw_index = cur->hw_index;
 
     rv = bcmi_range_check_set(unit, &range_tmp, range_tmp.hw_index, 0, 0);
 
