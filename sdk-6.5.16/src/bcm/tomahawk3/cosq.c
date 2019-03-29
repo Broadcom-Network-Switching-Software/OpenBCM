@@ -407,7 +407,7 @@ _bcm_th3_cosq_sched_default_config(int unit)
             port_info = &_bcm_th3_cosq_port_info[unit][port];
         }
         for (i = 0; i < _BCM_TH3_NUM_SCHEDULER_PER_PORT; i++) {
-            if (!port_info->sched[i].in_use) {
+            if (!port_info->sched[i].in_use || (port_info->sched[i].numq == 0)) {
                 continue;
             }
             BCM_IF_ERROR_RETURN
@@ -5982,7 +5982,8 @@ bcm_th3_cosq_gport_traverse(int unit, bcm_cosq_gport_traverse_cb cb,
                         BCM_COSQ_GPORT_SCHEDULER,
                         cpu_port_info->sched[id].gport, user_data);
             } else {
-                if (port_info->sched[id].numq == 0) {
+                if (port_info->sched[id].numq == 0 ||
+                    port_info->sched[id].in_use == 0) {
                     continue;
                 }
                 rv = cb(unit, gport, port_info->sched[id].numq,
@@ -9139,7 +9140,7 @@ _bcm_th3_cosq_port_info_dump(int unit, bcm_port_t port)
     for (index = 0; index < _BCM_TH3_NUM_SCHEDULER_PER_PORT; index++) {
         /* Node */
         node = &port_info->sched[index];
-        if (node->in_use == 0) {
+        if (node->in_use == 0 || node->numq == 0) {
             continue;
         }
 
@@ -9431,8 +9432,12 @@ bcm_th3_cosq_port_attach(int unit, bcm_port_t port)
     /* Set Default Scheduler Configuration on the ports */
     port_info = &_bcm_th3_cosq_port_info[unit][port];
     for (i = 0; i < _BCM_TH3_NUM_SCHEDULER_PER_PORT; i++) {
-        BCM_IF_ERROR_RETURN
-            (bcm_th3_cosq_gport_sched_set(unit, port_info->sched[i].gport,
+        if (port_info->sched[i].in_use == 0 || port_info->sched[i].numq == 0) {
+            continue;
+        }
+
+        BCM_IF_ERROR_RETURN(
+                bcm_th3_cosq_gport_sched_set(unit, port_info->sched[i].gport,
                 -1, default_mode, default_weight));
     }
     for (i = 0; i < _bcm_th3_get_num_ucq(unit); i++) {
