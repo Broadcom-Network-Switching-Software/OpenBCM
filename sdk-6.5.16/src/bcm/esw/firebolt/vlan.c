@@ -3337,10 +3337,10 @@ _bcm_xgs3_vlan_table_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp,
         } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
         {
-        soc_mem_pbmp_field_get(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
-        BCM_PBMP_OR(cur_pbmp, pbmp);
-        soc_mem_pbmp_field_set(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
-    }
+            soc_mem_pbmp_field_get(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
+            BCM_PBMP_OR(cur_pbmp, pbmp);
+            soc_mem_pbmp_field_set(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
+        }
     }
 
     if (TABLE_HAS_UT_BITMAP(unit, table)) {
@@ -3404,10 +3404,10 @@ _bcm_xgs3_vlan_table_port_remove(int unit, bcm_vlan_t vid, pbmp_t pbmp,
         } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
         {
-        soc_mem_pbmp_field_get(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
-        BCM_PBMP_REMOVE(cur_pbmp, pbmp);
-        soc_mem_pbmp_field_set(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
-    }
+            soc_mem_pbmp_field_get(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
+            BCM_PBMP_REMOVE(cur_pbmp, pbmp);
+            soc_mem_pbmp_field_set(unit, table, &vt, PORT_BITMAPf, &cur_pbmp);
+        }
     }
 
     if (TABLE_HAS_UT_BITMAP(unit, table)) {
@@ -3989,6 +3989,8 @@ int
 bcm_xgs3_vlan_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp,
                        pbmp_t ing_pbmp)
 {
+    int rv = BCM_E_NONE;
+
     if (SOC_IS_FBX(unit)) {
         /* Check for the presence of 'ING_PORT_BITMAPf', this could either
            reside in VLAN_TABm or in the 'ING_VLAN_VFI_MEMBERSHIPm' if
@@ -4007,9 +4009,21 @@ bcm_xgs3_vlan_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp,
     }
 
     if (BCM_VLAN_VALID(vid)) {
-        BCM_IF_ERROR_RETURN
-            (_bcm_xgs3_vlan_table_port_add(unit, vid, pbmp, ubmp,
-                        ing_pbmp, VLAN_TABLE(unit)));
+        rv = _bcm_xgs3_vlan_table_port_add(
+                unit, vid, pbmp, ubmp, ing_pbmp, VLAN_TABLE(unit));
+        if (BCM_FAILURE(rv)) {
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+            /* For TH3, if the add to the INGRESS VLAN table fails
+             * revert the add to the EGR VLAN table done before.
+             */
+            if (SOC_IS_TOMAHAWK3(unit)) {
+                BCM_IF_ERROR_RETURN(
+                    _bcm_xgs3_vlan_table_port_remove(
+                        unit, vid, pbmp, ubmp, ing_pbmp, EGR_VLANm));
+            }
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+            return rv;
+        }
     }
 #if defined(BCM_TRIDENT3_SUPPORT)
     if (soc_feature(unit, soc_feature_vlan_vfi_untag_profile)) {
@@ -4026,7 +4040,7 @@ bcm_xgs3_vlan_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp,
                                 unit, vid, FALSE, TRUE, ing_pbmp));
     }
 #endif /* BCM_TRIDENT2PLUS_SUPPORT */
-    return BCM_E_NONE;
+    return rv;
 }
 
 int
