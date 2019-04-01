@@ -224,7 +224,8 @@ _bcm_th3_vlan_pbmp_profile_entry_add(
 
     /* Convert the SOC return value to BCM return code */
     if (SOC_FAILURE(rv)) {
-        return ((SOC_E_FULL != rv) ? BCM_E_FAIL : BCM_E_FULL);
+        return (((SOC_E_FULL == rv) || (SOC_E_RESOURCE == rv)) ?
+                BCM_E_FULL : BCM_E_FAIL);
     } else {
         /* Populate the given index buffer if the entry add succeeded */
         *index = profile_idx;
