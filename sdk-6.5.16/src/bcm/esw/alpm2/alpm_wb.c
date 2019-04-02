@@ -146,8 +146,7 @@ alpm_wb_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt)
     if (ACB_HAS_RTE(acb, vrf_id)) {
         rv = alpm_lib_trie_init(max_key_len, &ALPM_VRF_TRIE(u, vrf_id, ipt));
         if (BCM_SUCCESS(rv)) {
-            pfx_node = alpm_util_alloc(sizeof(*pfx_node), "Payload for pfx trie key");
-            sal_memset(pfx_node, 0, sizeof(*pfx_node));
+            ALPM_ALLOC_EG(pfx_node, sizeof(*pfx_node), "Payload for pfx trie key");
             root = ALPM_VRF_TRIE(u, vrf_id, ipt);
             rv = alpm_lib_trie_insert(root, key, 0, &(pfx_node->node));
         }
@@ -159,6 +158,8 @@ alpm_wb_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt)
             }
         }
     }
+
+bad:
     return rv;
 }
 

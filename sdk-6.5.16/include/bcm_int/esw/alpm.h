@@ -988,48 +988,6 @@ do {                                                  \
 #define VRF_ROUTE_CNT(acb, vrf_id, ipt)               \
     (ACB_PVT_CTRL(acb, vrf_id, ipt).route_cnt)
 
-
-/* ALPM ERROR condition check */
-
-/* If error return */
-#define ALPM_IER            BCM_IF_ERROR_RETURN
-
-/* If error goto */
-#define ALPM_IEG(op)    \
-    do { if ((rv = (op)) < 0) { goto bad; } } while(0)
-
-#define ALPM_REALLOC_EG(_ptr, _size, _str)  \
-    do {                                    \
-        if (_ptr == NULL) {                 \
-            _ptr = alpm_util_alloc(_size, _str);\
-        }                                   \
-        if (_ptr == NULL) {                 \
-            rv = BCM_E_MEMORY;              \
-            goto bad;                       \
-        }                                   \
-        sal_memset(_ptr, 0, _size);         \
-    } while (0)
-
-#define ALPM_ALLOC_EG(_ptr, _size, _str)    \
-    do {                                    \
-        _ptr = alpm_util_alloc(_size, _str);\
-        if (_ptr == NULL) {                 \
-            rv = BCM_E_MEMORY;              \
-            goto bad;                       \
-        }                                   \
-        sal_memset(_ptr, 0, _size);         \
-    } while (0)
-
-#define ALPM_DMA_ALLOC_EG(_u, _ptr, _size, _str)    \
-    do {                                            \
-        _ptr = soc_cm_salloc(_u, _size, _str);      \
-        if (_ptr == NULL) {                 \
-            rv = BCM_E_MEMORY;              \
-            goto bad;                       \
-        }                                   \
-        sal_memset(_ptr, 0, _size);         \
-    } while (0)
-
 /* ALPM logs */
 /* Macro for invoking "fast" checker */
 #define ALPM_LOG(chk_, stuff_) do {         \
@@ -1046,6 +1004,65 @@ do {                                                  \
 #define ALPM_VERB(stuff_)           ALPM_LOG(BSL_LS_BCM_ALPM|BSL_VERBOSE, stuff_)
 #define ALPM_DBG(stuff_)            ALPM_LOG(BSL_LS_BCM_ALPM|BSL_DEBUG, stuff_)
 #define ALPM_LOG_CHECK(stuff_)      LOG_CHECK(BSL_LS_BCM_ALPM|(stuff_))
+
+/* ALPM ERROR condition check */
+
+#define ALPM_IER_PRT_EXCEPT(op, except_err)            \
+    do { int __rv__; if ((__rv__ = (op)) < 0) { \
+        if (__rv__ != (except_err) && __rv__ != BCM_E_BUSY) \
+        {ALPM_ERR(("ALPMerr: %s : %d rv %d\n", FUNCTION_NAME(), __LINE__, __rv__));} return(__rv__); } } while(0)
+
+/* If error return */
+#define ALPM_IER(op)            \
+    do { int __rv__; if ((__rv__ = (op)) < 0) { \
+        if (__rv__ != BCM_E_BUSY) \
+        {ALPM_ERR(("ALPMerr: %s : %d rv %d\n", FUNCTION_NAME(), __LINE__, __rv__));} return(__rv__); } } while(0)
+
+#define ALPM_IEG_PRT_EXCEPT(op, except_err)            \
+    do { if ((rv = (op)) < 0) { \
+        if (rv != (except_err) && rv != BCM_E_BUSY) \
+        {ALPM_ERR(("ALPMerr: %s : %d rv %d\n", FUNCTION_NAME(), __LINE__, rv));} goto bad; } } while(0)
+
+/* If error goto */
+#define ALPM_IEG(op)            \
+    do { if ((rv = (op)) < 0) { \
+        if (rv != BCM_E_BUSY) \
+        {ALPM_ERR(("ALPMerr: %s : %d rv %d\n", FUNCTION_NAME(), __LINE__, rv));} goto bad; } } while(0)
+
+#define ALPM_REALLOC_EG(_ptr, _size, _str)  \
+    do {                                    \
+        if (_ptr == NULL) {                 \
+            _ptr = alpm_util_alloc(_size, _str);\
+        }                                   \
+        if (_ptr == NULL) {                 \
+            rv = BCM_E_MEMORY;              \
+            ALPM_ERR(("ALPMerr: out of memory at %s : %d\n", FUNCTION_NAME(), __LINE__)); \
+            goto bad;                       \
+        }                                   \
+        sal_memset(_ptr, 0, _size);         \
+    } while (0)
+
+#define ALPM_ALLOC_EG(_ptr, _size, _str)    \
+    do {                                    \
+        _ptr = alpm_util_alloc(_size, _str);\
+        if (_ptr == NULL) {                 \
+            rv = BCM_E_MEMORY;              \
+            ALPM_ERR(("ALPMerr: out of memory at %s : %d\n", FUNCTION_NAME(), __LINE__)); \
+            goto bad;                       \
+        }                                   \
+        sal_memset(_ptr, 0, _size);         \
+    } while (0)
+
+#define ALPM_DMA_ALLOC_EG(_u, _ptr, _size, _str)    \
+    do {                                            \
+        _ptr = soc_cm_salloc(_u, _size, _str);      \
+        if (_ptr == NULL) {                 \
+            rv = BCM_E_MEMORY;              \
+            ALPM_ERR(("ALPMerr: out of memory at %s : %d\n", FUNCTION_NAME(), __LINE__)); \
+            goto bad;                       \
+        }                                   \
+        sal_memset(_ptr, 0, _size);         \
+    } while (0)
 
 /* ALPM externs */
 extern int

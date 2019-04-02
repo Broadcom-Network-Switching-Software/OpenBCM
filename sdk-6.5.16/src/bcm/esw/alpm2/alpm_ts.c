@@ -1693,11 +1693,7 @@ bcm_esw_alpm_sanity_check(int u, soc_mem_t mem, int index, int check_sw)
 
             psanity = &sanity[pid];
             alloc_sz = BPC_BNK_CNT(bp_conf) * sizeof(int);
-            psanity->bktptr[i] = alpm_util_alloc(alloc_sz, "bktptr");
-            if (psanity->bktptr[i] == NULL) {
-                rv = BCM_E_MEMORY;
-                goto bad;
-            }
+            ALPM_ALLOC_EG(psanity->bktptr[i], alloc_sz, "bktptr");
             /* initialized to -1 to distinguish index 0 */
             sal_memset(psanity->bktptr[i], 0xff, alloc_sz);
             psanity->error = 0;
@@ -2285,7 +2281,7 @@ bcm_esw_alpm_find(int u, _bcm_defip_cfg_t *lpm_cfg, int *nh_ecmp_idx)
 
     /* Perform hw lookup */
     alpm_util_cfg_to_key(u, ipt, lpm_cfg, sw_key); /* get sw_key[4] */
-    ALPM_IER(alpm_find_best_match(u, vrf_id, pkm, sw_key, sw_len, lpm_cfg));
+    ALPM_IER_PRT_EXCEPT(alpm_find_best_match(u, vrf_id, pkm, sw_key, sw_len, lpm_cfg), BCM_E_NOT_FOUND);
     *nh_ecmp_idx = lpm_cfg->defip_ecmp_index;
 
     return (BCM_E_NONE);

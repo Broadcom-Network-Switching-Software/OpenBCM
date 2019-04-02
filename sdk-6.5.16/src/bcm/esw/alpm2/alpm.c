@@ -744,9 +744,9 @@ alpm_pvt_delete(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
     if (ACB_HAS_TCAM(acb)) {
         rv = bcm_esw_alpm_tcam_delete(u, lpm_cfg);
         if (BCM_FAILURE(rv)) {
-            ALPM_ERR(("**ACB(%d).PVT.DEL tcam_delete 0x%x/%d failed %d\n",
+            ALPM_ERR(("**ACB(%d).PVT.DEL tcam_delete 0x%x/%d vrf %d failed %d\n",
                       ACB_IDX(acb), lpm_cfg->defip_ip_addr,
-                      lpm_cfg->defip_sub_len, rv));
+                      lpm_cfg->defip_sub_len, lpm_cfg->defip_vrf, rv));
         }
     } else {
         rv = alpm_cb_delete(u, ACB_UPR(u, acb), lpm_cfg);
@@ -1475,10 +1475,10 @@ alpm_bkt_bnk_shrink(int u, int ipt, _alpm_cb_t *acb, _alpm_bkt_pool_conf_t *bp_c
             ALPM_INFO(("**ACB(%d).BNK.RLS: RBBE (%d %d %d *)\n",
                        ACB_IDX(acb), -1, BI_BKT_IDX(bkt_info), bnk));
 
-            (void)alpm_bkt_bnk_free(u, ipt, acb, bp_conf, bkt_info, bnk);
             if (fmt_update != NULL) {
                 *fmt_update = 1;
             }
+            ALPM_IER(alpm_bkt_bnk_free(u, ipt, acb, bp_conf, bkt_info, bnk));
         }
     }
 
@@ -1607,9 +1607,8 @@ alpm_bkt_pfx_ent_idx_update(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node,
         if (bnk == sb && bkt == BI_BKT_IDX(src_bkt)) {
             bkt_node->ent_idx = ALPM_IDX_MAKE(acb, dst_bkt, db, ent);
             if (ALPM_TCAM_HB_IS_PTR(u) && bak_idx != bkt_node->ent_idx) {
-                (void)alpm_ppg_hitbit(u, PVT_BKT_VRF(pvt_node),
-                                      PVT_BKT_IPT(pvt_node),
-                                      bkt_node->key, bkt_node->key_len);
+                ALPM_IEG(alpm_ppg_hitbit(u, PVT_BKT_VRF(pvt_node),
+                            PVT_BKT_IPT(pvt_node), bkt_node->key, bkt_node->key_len));
             }
         }
     }
@@ -1736,13 +1735,13 @@ alpm_bkt_bnk_ripple(int u, _alpm_cb_t *acb,
     /* 2. Update bkt_info info */
     bnk_fmt = bkt_info->bnk_fmt[mb];
     vet_bmp = bkt_info->vet_bmp[mb];
-    (void)alpm_bkt_bnk_chk_rsvd(u, ipt, ACB_BKT_VRF_POOL(acb,
-        PVT_BKT_VRF(pvt_node)), to_bnk);
+    ALPM_IER(alpm_bkt_bnk_chk_rsvd(u, ipt, ACB_BKT_VRF_POOL(acb,
+             PVT_BKT_VRF(pvt_node)), to_bnk));
     /* bkt_info could be changed here includes:
      * rofs, bkt-idx, bnk_fmt, so we need to save those values.
      */
-    (void)alpm_bkt_bnk_free(u, ipt, acb,
-        ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)), bkt_info, mb);
+    ALPM_IER(alpm_bkt_bnk_free(u, ipt, acb,
+             ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)), bkt_info, mb));
 
     PVT_ROFS(pvt_node)    = BI_ROFS(&dst_bkt);
     PVT_BKT_IDX(pvt_node) = BI_BKT_IDX(&dst_bkt);
@@ -1839,8 +1838,8 @@ alpm_bkt_move(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node,
     }
 
     /* Release bnk to global pool */
-    (void)alpm_bkt_bnk_shrink(u, PVT_BKT_IPT(pvt_node), acb,
-        ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)), dst_bkt, NULL);
+    ALPM_IER(alpm_bkt_bnk_shrink(u, PVT_BKT_IPT(pvt_node), acb,
+        ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)), dst_bkt, NULL));
 
     return rv;
 }
@@ -1973,7 +1972,7 @@ alpm_bkt_free(int u, _alpm_cb_t *acb, int vrf_id, int ipt,
     bp_conf = ACB_BKT_VRF_POOL(acb, vrf_id);
     for (bnk = 0; bnk < ALPM_BPB_MAX; bnk++) {
         if (BI_BNK_IS_USED(bkt_info, bnk)) {
-            (void)alpm_bkt_bnk_free(u, ipt, acb, bp_conf, bkt_info, bnk);
+            ALPM_IER(alpm_bkt_bnk_free(u, ipt, acb, bp_conf, bkt_info, bnk));
         }
     }
     bkt_info->reverse = 0;
@@ -2126,8 +2125,8 @@ alpm_bkt_pfx_copy(int u, _alpm_cb_t *acb,
                                         npvt_node);
     if (ALPM_TCAM_HB_IS_PTR(u)) {
         for (i = 0; i < pfx_arr->pfx_cnt; i++) {
-            (void)alpm_ppg_hitbit(u, PVT_BKT_VRF(opvt_node), PVT_BKT_IPT(opvt_node),
-                                  pfx_arr->pfx[i]->key, pfx_arr->pfx[i]->key_len);
+            ALPM_IER(alpm_ppg_hitbit(u, PVT_BKT_VRF(opvt_node), PVT_BKT_IPT(opvt_node),
+                                  pfx_arr->pfx[i]->key, pfx_arr->pfx[i]->key_len));
         }
     }
     return rv;
@@ -2199,8 +2198,10 @@ alpm_bkt_pfx_shrink(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node, void *us
         rv = alpm_bkt_bnk_shrink(u, PVT_BKT_IPT(pvt_node), acb,
                 ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)),
                 bkt_info, &fmt_update);
+        ALPM_IEG(rv);
         if (fmt_update && !ACB_BKT_FIXED_FMT(acb, PVT_BKT_VRF(pvt_node))) {
-            (void) alpm_pvt_update_by_pvt_node(u, acb, pvt_node, ALPM_PVT_UPDATE_ALPM_DATA);
+            rv = alpm_pvt_update_by_pvt_node(u, acb, pvt_node, ALPM_PVT_UPDATE_ALPM_DATA);
+            ALPM_IEG(rv);
         }
     }
 
@@ -2209,8 +2210,9 @@ alpm_bkt_pfx_shrink(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node, void *us
             if (bak_idx[i] == pfx_arr->pfx[i]->ent_idx) {
                 continue;
             }
-            (void)alpm_ppg_hitbit(u, PVT_BKT_VRF(pvt_node), PVT_BKT_IPT(pvt_node),
-                                  pfx_arr->pfx[i]->key, pfx_arr->pfx[i]->key_len);
+            rv = alpm_ppg_hitbit(u, PVT_BKT_VRF(pvt_node), PVT_BKT_IPT(pvt_node),
+                                 pfx_arr->pfx[i]->key, pfx_arr->pfx[i]->key_len);
+            ALPM_IEG(rv);
         }
     }
 
@@ -2419,7 +2421,11 @@ bad:
 
     if (cbt != NULL) {
         if (cbt->trie != NULL) {
-            (void)alpm_lib_trie_merge(pbt, cbt->trie, pvt_key, pvt_len);
+            int rv2;
+            rv2 = alpm_lib_trie_merge(pbt, cbt->trie, pvt_key, pvt_len);
+            if (BCM_FAILURE(rv2)) {
+                ALPM_ERR(("alpm_lib_trie_merge error in trie split, rv %d\n", rv2));
+            }
         }
 
         alpm_lib_trie_destroy(cbt);
@@ -2487,6 +2493,7 @@ alpm_bkt_add_to_npvt(int u, _alpm_cb_t *acb,
     int                  ipt = ALPM_LPM_IPT(u, lpm_cfg);
     uint32               *prefix, length;
     uint32               ent_idx;
+    int                  bkt_trie_added = 0;
 
     alpm_lib_trie_t      *bkt_trie = NULL;
     alpm_lib_trie_node_t *tmp_node = NULL;
@@ -2524,7 +2531,7 @@ alpm_bkt_add_to_npvt(int u, _alpm_cb_t *acb,
         rv = BCM_E_FULL;
     }
 
-    ALPM_IEG(rv);
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
     lpm_cfg->defip_index = ent_idx;
 
@@ -2541,12 +2548,9 @@ alpm_bkt_add_to_npvt(int u, _alpm_cb_t *acb,
     bkt_trie = PVT_BKT_TRIE(pvt_node);
     rv = alpm_lib_trie_insert(bkt_trie, prefix, length, (alpm_lib_trie_node_t *)bkt_node);
     ALPM_IEG(rv);
+    bkt_trie_added = 1;
 
-    rv = alpm_vrf_pfx_trie_add(u, acb, lpm_cfg, bkt_node);
-    if (BCM_FAILURE(rv)) {
-        (void)alpm_lib_trie_delete(bkt_trie, prefix, length, &tmp_node);
-        goto bad;
-    }
+    ALPM_IEG(alpm_vrf_pfx_trie_add(u, acb, lpm_cfg, bkt_node));
 
     if (BCM_SUCCESS(rv) &&
         ALPMC(u)->_alpm_dbg_bmp & _ALPM_DBG_PVT_SANITY_NODE) {
@@ -2558,6 +2562,9 @@ alpm_bkt_add_to_npvt(int u, _alpm_cb_t *acb,
     return rv;
 
 bad:
+    if (bkt_trie_added) {
+        (void)alpm_lib_trie_delete(bkt_trie, prefix, length, &tmp_node);
+    }
     if (bkt_node != NULL) {
         alpm_util_free(bkt_node);
     }
@@ -2662,12 +2669,9 @@ alpm_vrf_pfx_trie_add(int u, _alpm_cb_t *acb,
     /* Non default route start from here */
     prefix = lpm_cfg->user_data;
     length = lpm_cfg->defip_sub_len;
-    pfx_node = alpm_util_alloc(sizeof(_alpm_pfx_node_t), "VRF_trie_node");
-    if (pfx_node == NULL) {
-        return BCM_E_MEMORY;
-    }
 
-    sal_memset(pfx_node, 0, sizeof(_alpm_bkt_node_t));
+    ALPM_ALLOC_EG(pfx_node, sizeof(_alpm_pfx_node_t), "VRF_trie_node");
+
     sal_memcpy(pfx_node->key, prefix, sizeof(pfx_node->key));
     pfx_node->key_len = length;
     pfx_node->ent_idx = lpm_cfg->defip_index;
@@ -2680,6 +2684,7 @@ alpm_vrf_pfx_trie_add(int u, _alpm_cb_t *acb,
         }
     }
 
+bad:
     return rv;
 }
 
@@ -2776,26 +2781,23 @@ alpm_vrf_pfx_trie_init(int u, int vrf_id, int ipt)
 
     max_key_len = alpm_util_trie_max_key_len(u, ipt);
 
-    pfx_node = alpm_util_alloc(sizeof(*pfx_node), "Payload for pfx trie key");
-    if (pfx_node != NULL) {
-        sal_memset(pfx_node, 0, sizeof(*pfx_node));
-        rv = alpm_lib_trie_init(max_key_len, &ALPM_VRF_TRIE(u, vrf_id, ipt));
-        if (BCM_SUCCESS(rv)) {
-            root = ALPM_VRF_TRIE(u, vrf_id, ipt);
-            rv = alpm_lib_trie_insert(root, key, 0, &(pfx_node->node));
-        }
-
-        if (BCM_FAILURE(rv)) {
-            alpm_util_free(pfx_node);
-            if (root != NULL) {
-                alpm_lib_trie_destroy(root);
-                ALPM_VRF_TRIE(u, vrf_id, ipt) = NULL;
-            }
-        }
-    } else {
-        rv = BCM_E_MEMORY;
+    ALPM_ALLOC_EG(pfx_node, sizeof(*pfx_node), "Payload for pfx trie key");
+    sal_memset(pfx_node, 0, sizeof(*pfx_node));
+    rv = alpm_lib_trie_init(max_key_len, &ALPM_VRF_TRIE(u, vrf_id, ipt));
+    if (BCM_SUCCESS(rv)) {
+        root = ALPM_VRF_TRIE(u, vrf_id, ipt);
+        rv = alpm_lib_trie_insert(root, key, 0, &(pfx_node->node));
     }
 
+    if (BCM_FAILURE(rv)) {
+        alpm_util_free(pfx_node);
+        if (root != NULL) {
+            alpm_lib_trie_destroy(root);
+            ALPM_VRF_TRIE(u, vrf_id, ipt) = NULL;
+        }
+    }
+
+bad:
     return rv;
 }
 
@@ -2814,7 +2816,7 @@ alpm_vrf_pfx_trie_deinit(int u, int vrf_id, int ipt)
     rv = alpm_lib_trie_delete(root, key, 0, (alpm_lib_trie_node_t **)&pfx_node);
     if (BCM_SUCCESS(rv)) {
         alpm_util_free(pfx_node);
-        (void) alpm_lib_trie_destroy(root);
+        ALPM_IER(alpm_lib_trie_destroy(root));
         ALPM_VRF_TRIE(u, vrf_id, ipt) = NULL;
     }
 
@@ -2885,7 +2887,7 @@ alpm_vrf_pvt_node_delete(int u, _alpm_cb_t *acb, int vrf_id, int ipt,
     rv = alpm_lib_trie_delete(pvt_root, lpm_cfg->user_data, lpm_cfg->defip_sub_len,
                      (alpm_lib_trie_node_t **)&pvt_node);
     if (BCM_SUCCESS(rv)) {
-        (void) alpm_lib_trie_destroy(PVT_BKT_TRIE(pvt_node));
+        ALPM_IER(alpm_lib_trie_destroy(PVT_BKT_TRIE(pvt_node)));
         alpm_util_free(pvt_node);
     }
 
@@ -2900,7 +2902,7 @@ alpm_vrf_pvt_trie_deinit(int u, _alpm_cb_t *acb, int vrf_id, int ipt,
 
     rv = alpm_vrf_pvt_node_delete(u, acb, vrf_id, ipt, lpm_cfg);
     if (BCM_SUCCESS(rv)) {
-        (void) alpm_lib_trie_destroy(ACB_PVT_TRIE(acb, vrf_id, ipt));
+        ALPM_IER(alpm_lib_trie_destroy(ACB_PVT_TRIE(acb, vrf_id, ipt)));
         ACB_PVT_TRIE(acb, vrf_id, ipt) = NULL;
     }
 
@@ -2949,9 +2951,9 @@ retry:
     sal_memset(&bkt_info, 0, sizeof(_alpm_bkt_info_t));
     rv = alpm_bkt_alloc(u, acb, vrf_id, ipt, 1, &bkt_info, NULL);
     if (rv == BCM_E_BUSY) {
-        ALPM_IEG(alpm_bkt_alloc(u, acb, vrf_id, ipt, 1, &bkt_info, NULL));
+        ALPM_IEG_PRT_EXCEPT(alpm_bkt_alloc(u, acb, vrf_id, ipt, 1, &bkt_info, NULL), BCM_E_FULL);
     }
-    ALPM_IEG(rv);
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
     lpm_cfg->bkt_info = &bkt_info;
     sal_memcpy(&PVT_BKT_INFO(pvt_node), &bkt_info, sizeof(_alpm_bkt_info_t));
 
@@ -2961,12 +2963,12 @@ retry:
      * it's only 3 levels so it also works.
      */
     if (rv == BCM_E_BUSY && lpm_cfg->spl_pn && ACB_HAS_RTE(acb, vrf_id)) {
-        (void)alpm_bkt_free(u, acb, vrf_id, ipt, &bkt_info);
+        ALPM_IEG(alpm_bkt_free(u, acb, vrf_id, ipt, &bkt_info));
         sal_memset(&bkt_info, 0, sizeof(_alpm_bkt_info_t));
         rv = alpm_bkt_alloc(u, acb, vrf_id, ipt,
                             ACB_BNK_PER_BKT(acb, vrf_id),
                             &bkt_info, NULL);
-        ALPM_IEG(rv);
+        ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
         /* Case 2.2.2, split given l3 pvt_node first */
         rv = alpm_cb_split(u, acb, lpm_cfg, &bkt_info, 0xffff);
@@ -2977,7 +2979,7 @@ retry:
             goto retry;
         }
     }
-    ALPM_IEG(rv);
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
     PVT_IDX(pvt_node) = lpm_cfg->defip_index;
     lpm_cfg->pvt_node = (uint32 *)pvt_node;
@@ -3043,7 +3045,7 @@ alpm_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt, uint8 db_type)
     pvt_cfg.defip_vrf = ALPM_VRF_ID_TO_VRF(u, vrf_id);
     pvt_cfg.defip_flags |= ALPM_IS_IPV6(ipt) ? BCM_L3_IP6 : 0;
 
-    ALPM_IEG(alpm_cb_pvt_add(u, acb, vrf_id, ipt, &pvt_cfg));
+    ALPM_IEG_PRT_EXCEPT(alpm_cb_pvt_add(u, acb, vrf_id, ipt, &pvt_cfg), BCM_E_FULL);
 
     ACB_VRF_INIT_SET(u, acb, vrf_id, ipt);
 
@@ -3098,9 +3100,9 @@ alpm_vrf_deinit(int u, int vrf_id, int ipt)
         /* add Entry into tcam as default routes for the VRF */
         if (ACB_HAS_TCAM(acb)) {
             lpm_cfg.pvt_node = pvt_node;
-            (void)alpm_bkt_bnk_shrink(u, ipt, acb,
-                    ACB_BKT_VRF_POOL(acb, vrf_id),
-                    &PVT_BKT_INFO(pvt_node), NULL);
+            ALPM_IER(alpm_bkt_bnk_shrink(u, ipt, acb,
+                       ACB_BKT_VRF_POOL(acb, vrf_id),
+                       &PVT_BKT_INFO(pvt_node), NULL));
         } else {
             lpm_cfg.pvt_node = NULL;
         }
@@ -3412,7 +3414,7 @@ alpm_cb_defrag(int u, _alpm_cb_t *acb, int vrf_id, int ipt)
             bnk_bmp, BPC_BNK_CNT(bp_conf),
             bnkpb, &rngl, &rngr, &rngm);
 
-    ALPM_IEG(rv);
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
     if (ALPMC(u)->_alpm_dbg_bmp & _ALPM_DBG_PVT_DEFRAG) {
         cli_out("free range get: bpb %d, range left %d, right %d, mid %d\n",
@@ -3510,13 +3512,14 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
     ALPM_IEG(rv);
 
     if (max_spl_cnt < 0xffff && !ACB_BKT_FIXED_FMT(acb, 1)) {
-        (void)alpm_bkt_free(u, acb, vrf_id, ipt, nbkt_info);
+        rv = alpm_bkt_free(u, acb, vrf_id, ipt, nbkt_info);
+        ALPM_IEG(rv);
         sal_memset(nbkt_info, 0, sizeof(_alpm_bkt_info_t));
         nbkt_info->reverse = 1;
         rv = alpm_bkt_alloc(u, acb, vrf_id, ipt, ACB_BNK_PER_BKT(acb, vrf_id),
                             nbkt_info, NULL);
         /* Should not see error here */
-        ALPM_IEG(rv);
+        ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
     }
 
     /* 3. HW: Copy split prefixes from old bucket to new bucket */
@@ -3552,8 +3555,9 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
     ALPM_IEG(rv);
 
     /* Free unused banks of new pivot to Global bank pool */
-    (void)alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
-                              &PVT_BKT_INFO(npvt_node), NULL);
+    rv = alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
+                             &PVT_BKT_INFO(npvt_node), NULL);
+    ALPM_IEG(rv);
 
     /* 4. HW: insert new pivot
      *    recursion happens here: BCM_E_FULL is expected
@@ -3590,7 +3594,8 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
         sal_memcpy(lpm_cfg->spl_key, pvt_lpm_cfg.spl_key, sizeof(lpm_cfg->spl_key));
         lpm_cfg->spl_key_len = pvt_lpm_cfg.spl_key_len;
     }
-    ALPM_IEG(rv);
+
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
     /* Case of add new L1 pvt during L2 bkt split:
        - If new L2 bkt belongs to new L1 pvt, add new L2 bkt first.
@@ -3606,7 +3611,7 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
             ALPM_IEG(rv1);
         }
         /* check returned rv after _tcam_entry_write done */
-        ALPM_IEG(rv);
+        ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
     }
 
     /*
@@ -3616,12 +3621,14 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
      */
 
     /* 5. HW: Invalidate split prefixes in the old bucket */
-    (void)alpm_bkt_pfx_clean(u, acb, opvt_node, pfx_arr->pfx_cnt, bak_idx);
+    rv = alpm_bkt_pfx_clean(u, acb, opvt_node, pfx_arr->pfx_cnt, bak_idx);
+    ALPM_IEG(rv);
 
     /* 6. SW: Shrink old bucket,
      * A important step to make sure banks are continuously occupied by pivot
      */
-    (void)alpm_bkt_pfx_shrink(u, acb, opvt_node, &shrink_empty_only);
+    rv = alpm_bkt_pfx_shrink(u, acb, opvt_node, &shrink_empty_only);
+    ALPM_IEG(rv);
 
     /* 7. SW: release temporary resources */
     alpm_util_free(bak_idx);
@@ -3779,11 +3786,14 @@ alpm_cb_merge_pvt(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *src_pvt,
 
     /* 5. Invalid old entries
      *    Not expecting failures on invalidation */
-    (void)alpm_bkt_pfx_clean(u, acb, src_pvt, pfx_arr->pfx_cnt, bak_idx);
-    (void)alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
-                              &PVT_BKT_INFO(src_pvt), NULL);
-    (void)alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
-                              &PVT_BKT_INFO(dst_pvt), NULL);
+    rv = alpm_bkt_pfx_clean(u, acb, src_pvt, pfx_arr->pfx_cnt, bak_idx);
+    ALPM_IEG(rv);
+    rv = alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
+                             &PVT_BKT_INFO(src_pvt), NULL);
+    ALPM_IEG(rv);
+    rv = alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
+                             &PVT_BKT_INFO(dst_pvt), NULL);
+    ALPM_IEG(rv);
 
     /* 6. Delete child pvt entry from pvt table */
     rv = alpm_pvt_delete_by_pvt_node(u, acb, chd_pvt);
@@ -4029,18 +4039,21 @@ alpm_cb_delete(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
 
     if (ACB_BKT_WRA(acb, PVT_BKT_VRF(pvt_node))) {
         if (bkt_empty) {
-            (void)alpm_bkt_bnk_shrink(u, ipt, acb,
+            rv = alpm_bkt_bnk_shrink(u, ipt, acb,
                     ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)),
                     &PVT_BKT_INFO(pvt_node), NULL);
+            ALPM_IEG(rv);
         } else {
-            (void)alpm_bkt_pfx_shrink(u, acb, pvt_node, &shrink_empty_only);
+            rv = alpm_bkt_pfx_shrink(u, acb, pvt_node, &shrink_empty_only);
+            ALPM_IEG(rv);
         }
     } else {
         if (bkt_empty || bkt_trie->trie != NULL ||
             VRF_ROUTE_CNT(acb, vrf_id, ipt) == 0) {
-            (void)alpm_bkt_bnk_shrink(u, ipt, acb,
+            rv = alpm_bkt_bnk_shrink(u, ipt, acb,
                     ACB_BKT_VRF_POOL(acb, PVT_BKT_VRF(pvt_node)),
                     &PVT_BKT_INFO(pvt_node), NULL);
+            ALPM_IEG(rv);
         }
     }
 
@@ -4132,21 +4145,21 @@ alpm_cb_path_construct(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
             rv = alpm_bkt_alloc(u, top_cb, vrf_id, ipt,
                                 ACB_BNK_PER_BKT(top_cb, vrf_id),
                                 &bkt_info, NULL);
-            ALPM_IER(rv);
+            ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
             rv = alpm_cb_split(u, top_cb, lpm_cfg, &bkt_info, 0xffff);
             if (rv == BCM_E_BUSY && ACB_HAS_RTE(acb, vrf_id) && lpm_cfg->spl_pn) {
                 sal_memset(&bkt_info, 0, sizeof(_alpm_bkt_info_t));
                 rv = alpm_bkt_alloc(u, acb, vrf_id, ipt,
                                     ACB_BNK_PER_BKT(acb, vrf_id),
                                     &bkt_info, NULL);
-                ALPM_IER(rv);
+                ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
                 /* Case 2.2.2, split given l3 pvt_node first */
                 rv = alpm_cb_split(u, acb, lpm_cfg, &bkt_info, 0xffff);
-                ALPM_IER(rv);
+                ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
                 lpm_cfg->spl_pn = NULL;
                 lpm_cfg->spl_key_len = 0;
             } else if (BCM_FAILURE(rv)) {
-                ALPM_IER(rv);
+                ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
             } else {
                 lpm_cfg->pvt_node = NULL;
             }
@@ -4191,7 +4204,7 @@ alpm_cb_path_construct(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
             }
             rv = alpm_cb_pvt_add(u, acb, vrf_id, ipt, &l2_lpm_cfg);
             if (BCM_FAILURE(rv)) {
-                ALPM_IER(rv);
+                ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
             } else {
                 lpm_cfg->pvt_node = l2_lpm_cfg.pvt_node;
             }
@@ -4211,6 +4224,7 @@ alpm_cb_insert(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
     uint32              *prefix, length;
     uint32              ent_idx;
     int                 retry_count = 0, retry_max = 3;
+    int                 bkt_trie_added = 0;
 
     alpm_lib_trie_t              *bkt_trie = NULL;
     alpm_lib_trie_node_t         *tmp_node = NULL;
@@ -4223,7 +4237,7 @@ alpm_cb_insert(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
     /* Init ALPM structure for first insert */
     if (!ACB_VRF_INITED(u, acb, vrf_id, ipt)) {
         uint8 db_type = alpm_util_route_type_get(u, lpm_cfg);
-        ALPM_IEG(alpm_vrf_init(u, acb, vrf_id, ipt, db_type));
+        ALPM_IEG_PRT_EXCEPT(alpm_vrf_init(u, acb, vrf_id, ipt, db_type), BCM_E_FULL);
     }
 
     if (ACB_BKT_FIXED_FMT(acb, vrf_id)) {
@@ -4238,13 +4252,14 @@ retry:
         if (ACB_HAS_TCAM(acb)) {
             lpm_cfg->l1_pvt_node = pvt_node;
         } else {
-            (void)alpm_pvt_find(u, ACB_UPR(u, acb), lpm_cfg, &upr_pvt_node);
+            rv = alpm_pvt_find(u, ACB_UPR(u, acb), lpm_cfg, &upr_pvt_node);
+            ALPM_IEG(rv);
             if (pvt_node && upr_pvt_node) {
                 if (upr_pvt_node->key_len <= pvt_node->key_len) {
                     lpm_cfg->pvt_node = pvt_node;
                 } else {
                     lpm_cfg->l1_pvt_node = upr_pvt_node;
-                    ALPM_IER(alpm_cb_path_construct(u, acb, lpm_cfg));
+                    ALPM_IER_PRT_EXCEPT(alpm_cb_path_construct(u, acb, lpm_cfg), BCM_E_FULL);
                     pvt_node = lpm_cfg->pvt_node;
                     if (pvt_node == NULL) {
                         goto retry;
@@ -4260,7 +4275,7 @@ retry:
     /* return FULL when Expand exceeds bnk_threshold */
     if (rv == BCM_E_RESOURCE) {
         rv = BCM_E_FULL;
-        ALPM_IEG(rv);
+        ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
     }
 
 retry_spl:
@@ -4316,7 +4331,7 @@ retry_spl:
                         goto retry;
                     }
                 }
-                ALPM_IEG(rv);
+                ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
             } else {
                 avl_bnk_cnt = ACB_BNK_PER_BKT(acb, vrf_id);
             }
@@ -4328,7 +4343,7 @@ retry_spl:
             rv = alpm_bkt_alloc(u, acb, vrf_id, ipt,
                                 ACB_BNK_PER_BKT(acb, vrf_id),
                                 &bkt_info, &avl_bnk_cnt);
-            ALPM_IEG(rv);
+            ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
         }
 
         rv = alpm_cb_split(u, acb, lpm_cfg, &bkt_info, max_spl_cnt);
@@ -4341,7 +4356,7 @@ retry_spl:
             rv = alpm_bkt_alloc(u, acb, vrf_id, ipt,
                                 ACB_BNK_PER_BKT(acb, vrf_id),
                                 &bkt_info, &avl_bnk_cnt);
-            ALPM_IEG(rv);
+            ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
             /* Case 2.2.2, split given l3 pvt_node first */
             rv = alpm_cb_split(u, acb, lpm_cfg, &bkt_info, max_spl_cnt);
@@ -4354,7 +4369,7 @@ retry_spl:
             }
         }
 
-        ALPM_IEG(rv);
+        ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
         ptcam_write = lpm_cfg->tcam_write;
         if (ptcam_write != NULL) {
@@ -4373,7 +4388,7 @@ retry_spl:
         goto retry;
     }
 
-    ALPM_IEG(rv);
+    ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
 
     lpm_cfg->defip_index = ent_idx;
 
@@ -4390,12 +4405,10 @@ retry_spl:
     bkt_trie = PVT_BKT_TRIE(pvt_node);
     rv = alpm_lib_trie_insert(bkt_trie, prefix, length, (alpm_lib_trie_node_t *)bkt_node);
     ALPM_IEG(rv);
+    bkt_trie_added = 1;
 
     rv = alpm_vrf_pfx_trie_add(u, acb, lpm_cfg, bkt_node);
-    if (BCM_FAILURE(rv)) {
-        (void)alpm_lib_trie_delete(bkt_trie, prefix, length, &tmp_node);
-        goto bad;
-    }
+    ALPM_IEG(rv);
 
     /* do insert propagation to update existing default datas */
     if (ACB_HAS_RTE(acb, vrf_id)) {
@@ -4413,6 +4426,9 @@ retry_spl:
     return rv;
 
 bad:
+    if (bkt_trie_added) {
+        (void)alpm_lib_trie_delete(bkt_trie, prefix, length, &tmp_node);
+    }
     if (bkt_node != NULL) {
         alpm_util_free(bkt_node);
     }
@@ -4758,7 +4774,7 @@ bcm_esw_alpm_insert(int u, _bcm_defip_cfg_t *lpm_cfg)
     /* Insert prefix into trie */
     /* Split trie : Insertion into trie results into Split */
     /* Allocate a TCAM entry for PIVOT and bucket and move entries */
-    ALPM_IER(alpm_cb_path_construct(u, acb, lpm_cfg));
+    ALPM_IER_PRT_EXCEPT(alpm_cb_path_construct(u, acb, lpm_cfg), BCM_E_FULL);
 
     rv = alpm_cb_insert(u, acb, lpm_cfg);
     if (BCM_SUCCESS(rv)) {
@@ -5369,7 +5385,7 @@ static void
 alpm_cb_bkt_bnk_dump(int u, int ipt, _alpm_cb_t *acb,
                      _alpm_bkt_pool_conf_t *bp_conf, char *prefix)
 {
-    int j, k, bnk, vrf_id, ipt1;
+    int rv = BCM_E_NONE, j, k, bnk, vrf_id, ipt1;
     int vrf_min, vrf_max;
     int bnk_cnt, total_bnk_cnt;
     int ent_cnt, total_ent_cnt, max_ent_cnt;
@@ -5382,12 +5398,7 @@ alpm_cb_bkt_bnk_dump(int u, int ipt, _alpm_cb_t *acb,
 
     bkt_cnt = ACB_BKT_CNT(acb);
 
-    cdata = alpm_util_alloc(sizeof(*cdata), "bktusage");
-    if (cdata == NULL) {
-        ALPM_ERR(("Memory out of resource\n"));
-        return;
-    }
-    sal_memset(cdata, 0, sizeof(*cdata));
+    ALPM_ALLOC_EG(cdata, sizeof(*cdata), "bktusage");
 
     if (ACB_BKT_VRF_POOL(acb, ALPM_VRF_ID_GLO(u)) ==
         ACB_BKT_VRF_POOL(acb, 1)) {
@@ -5458,6 +5469,10 @@ alpm_cb_bkt_bnk_dump(int u, int ipt, _alpm_cb_t *acb,
     }
 
     alpm_util_free(cdata);
+
+bad:
+    return;
+
 }
 
 /*
