@@ -623,7 +623,11 @@ bcm_tomahawk3_cosq_port_priority_group_property_set(
                 (soc_reg_get(unit, MMU_THDI_ING_PORT_CONFIGr, port, -1, &rval));
             pg_lossless = soc_reg64_field32_get(unit,
                     MMU_THDI_ING_PORT_CONFIGr, rval, PG_IS_LOSSLESSf);
-            pg_lossless = pg_lossless | (arg << priority_group_id);
+            if (arg) {
+                pg_lossless = pg_lossless | (1 << priority_group_id);
+            } else {
+                pg_lossless &= (0xff ^ (1 << priority_group_id));
+            }
             soc_reg64_field32_set(unit, MMU_THDI_ING_PORT_CONFIGr, &rval,
                       PG_IS_LOSSLESSf, pg_lossless);
             SOC_IF_ERROR_RETURN
