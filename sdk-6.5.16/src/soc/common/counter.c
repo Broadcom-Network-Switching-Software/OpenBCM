@@ -15193,6 +15193,16 @@ soc_counter_collect_th_non_dma_entries(int unit,
                     non_dma++;
                     continue;
                 }
+#ifdef BCM_TOMAHAWK3_SUPPORT
+                if (SOC_IS_TOMAHAWK3(unit)) {
+                    if ((non_dma->flags & _SOC_COUNTER_NON_DMA_DO_DMA) &&
+                        count == 0) {
+                        COUNTER_UNLOCK(unit);
+                        sal_thread_yield();
+                        COUNTER_LOCK(unit);
+                    }
+                } else
+#endif
                 if (non_dma->flags & _SOC_COUNTER_NON_DMA_DO_DMA) {
                     COUNTER_UNLOCK(unit);
                     sal_thread_yield();
