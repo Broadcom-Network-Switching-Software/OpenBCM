@@ -2299,9 +2299,7 @@ alpm_bkt_trie_split(int u, _alpm_cb_t *acb,
                  &scb_data, *max_spl_cnt);
     }
     ALPM_IEG(rv);
-    /*
-     * cli_out("The type of split_node is %s\n",
-     */
+
     /* Split bucket2A in non-last level could cause misplaced routes in other
      * buckets in next level of current level.
      *   Note: bucket2A: bucketA in Level 2.
@@ -3558,6 +3556,16 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
     rv = alpm_bkt_bnk_shrink(u, ipt, acb, ACB_BKT_VRF_POOL(acb, vrf_id),
                              &PVT_BKT_INFO(npvt_node), NULL);
     ALPM_IEG(rv);
+
+    if (!ACB_BKT_FIXED_FMT(acb, 1) && ACB_HAS_TCAM(acb)) {
+        /* Check if an extra split is required */
+        rv = alpm_bkt_ent_get(u, vrf_id, acb, npvt_node, lpm_cfg->defip_sub_len, NULL, NULL, 1);
+        if (rv == BCM_E_FULL &&
+            /* Cannot affort another split, so should return here */
+            !bcm_esw_alpm_tcam_avail(u, vrf_id, ipt, PVT_KEY_LEN(npvt_node), 0)) {
+            ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
+        }
+    }
 
     /* 4. HW: insert new pivot
      *    recursion happens here: BCM_E_FULL is expected
