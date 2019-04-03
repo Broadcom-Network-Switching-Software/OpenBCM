@@ -3522,8 +3522,8 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
         _BCM_DEFAULT_BIT_SET(unit, result, 7);
         break;
     case bcmDbgCntRDISC:
-        /* Absent in TD3. */
         _BCM_TD3_BIT_SET_E_PARAM(unit, result);
+        _BCM_TH3_BIT_SET_E_PARAM(unit, result);
         _BCM_DEFAULT_BIT_SET(unit, result, 8);
         break;
     case bcmDbgCntRUC:
