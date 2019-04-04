@@ -3346,7 +3346,7 @@ _bcm_th3_cosq_index_resolve(int unit, bcm_port_t port, bcm_cos_queue_t cosq,
                 if (startq >= numq) {
                     return BCM_E_PARAM;
                 }
-                resolved_index = uc_base + startq;
+                resolved_index = (IS_CPU_PORT(unit, resolved_port) ? mc_base : uc_base) + startq;
                 mem = MMU_THDO_Q_TO_QGRP_MAPD0m;
             }
             SOC_IF_ERROR_RETURN(soc_mem_read(unit, mem, MEM_BLOCK_ALL, resolved_index,
