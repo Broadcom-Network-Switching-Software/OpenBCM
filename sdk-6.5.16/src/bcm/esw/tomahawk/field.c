@@ -7514,8 +7514,16 @@ _field_th_lookup_qualifiers_init(int unit, _field_stage_t *stage_fc)
                      _bcmFieldSliceSelFpf3, 0, f3_offset + 13, 3);
     }
 
-    _FP_QUAL_ADD(unit, stage_fc, bcmFieldQualifyEtherType,
+#if defined (BCM_TOMAHAWK3_SUPPORT)
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        _FP_QUAL_ADD(unit, stage_fc, bcmFieldQualifyEtherType,
+                 _bcmFieldSliceSelFpf3, 0, f3_offset + 0, 16);
+    } else
+#endif
+    {
+        _FP_QUAL_ADD(unit, stage_fc, bcmFieldQualifyEtherType,
                  _bcmFieldSliceSelFpf3, 0, f3_offset + 16, 16);
+    }
 
     /* F3_1 */
     _FP_QUAL_TWO_SLICE_SEL_ADD(unit, stage_fc, bcmFieldQualifyInnerL4DstPort,
@@ -7784,13 +7792,27 @@ _field_th_lookup_qualifiers_init(int unit, _field_stage_t *stage_fc)
                             _bcmFieldSliceSelFpf1, 0,
                             _bcmFieldSliceIpHeaderSelect, 0, f1_offset + 8,
                             8);
-
+#if defined (BCM_TOMAHAWK3_SUPPORT)
+   if (soc_feature(unit, soc_feature_th3_style_fp)) {
+       _FP_QUAL_INTRASLICE_ADD(unit, stage_fc, bcmFieldQualifyInterfaceClassL3,
+                                _bcmFieldSliceSelFpf1, 0,
+                                _bcmFieldSliceIpHeaderSelect, 0, f1_offset + 16,
+                                12);
+        _FP_QUAL_INTRASLICE_ADD(unit, stage_fc, bcmFieldQualifyEtherType,
+                                _bcmFieldSliceSelFpf1, 0,
+                                _bcmFieldSliceIpHeaderSelect, 0, f1_offset + 28,
+                                16);
+   } else
+#endif
+#if defined (BCM_TRIDENT3_SUPPORT)
     if (soc_feature(unit, soc_feature_td3_style_fp)) {
         _FP_QUAL_INTRASLICE_ADD(unit, stage_fc, bcmFieldQualifyEtherType,
                                 _bcmFieldSliceSelFpf1, 0,
                                 _bcmFieldSliceIpHeaderSelect, 0, f1_offset + 16,
                                 16);
-    } else {
+    } else
+#endif
+    {
         _FP_QUAL_INTRASLICE_ADD(unit, stage_fc, bcmFieldQualifyInterfaceClassL3,
                                 _bcmFieldSliceSelFpf1, 0,
                                 _bcmFieldSliceIpHeaderSelect, 0, f1_offset + 16,
