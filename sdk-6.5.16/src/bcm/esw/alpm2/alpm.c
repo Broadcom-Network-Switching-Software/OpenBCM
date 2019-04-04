@@ -5479,6 +5479,9 @@ alpm_cb_bkt_bnk_dump(int u, int ipt, _alpm_cb_t *acb,
     alpm_util_free(cdata);
 
 bad:
+    if (BCM_FAILURE(rv)) {
+        ALPM_ERR(("alpm_cb_bkt_bnk_dump error %d\n", rv));
+    }
     return;
 
 }
