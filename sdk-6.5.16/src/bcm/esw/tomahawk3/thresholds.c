@@ -3086,7 +3086,7 @@ _bcm_th3_adjust_delta_hdrm_service_pools(int unit, int itm, int hdrm_pool, int
                                 "than available shared space: %d for itm:"
                                 "%d. Try reducing the number of lossless"
                                 "classes\n"), cur_sp_limit[itm], itm));
-                return BCM_E_PARAM;
+                return BCM_E_RESOURCE;
             }
         }
         /* Update the saved shared limit */

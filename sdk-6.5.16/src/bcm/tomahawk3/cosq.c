@@ -5019,7 +5019,7 @@ _bcm_th3_cosq_ing_res_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
             if ((itm_map & (1 << itm)) && (delta[itm] > 0)) {
                 /* no space to decrease shared limit */
                 if (delta[itm] > shd_size[itm]) {
-                    return BCM_E_PARAM;
+                    return BCM_E_RESOURCE;
                 }
                 shd_size[itm] -= delta[itm];
                 update = 1;
@@ -5264,7 +5264,7 @@ _bcm_th3_cosq_egr_queue_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
                 if (delta[itm] > 0) {
                     /* no space to decrease shared limit */
                     if (delta[itm] > shd_size[itm]) {
-                        return BCM_E_PARAM;
+                        return BCM_E_RESOURCE;
                     }
                     shd_size[itm] -= delta[itm];
                     update = 1;
@@ -5826,7 +5826,7 @@ _bcm_th3_cosq_qgroup_limit_set(int unit, bcm_gport_t gport, bcm_cos_t cosq,
             if (delta[itm] > 0) {
                 /* no space to decrease shared limit */
                 if (delta[itm] > shd_size[itm]) {
-                    return BCM_E_PARAM;
+                    return BCM_E_RESOURCE;
                 }
                 shd_size[itm] -= delta[itm];
             }

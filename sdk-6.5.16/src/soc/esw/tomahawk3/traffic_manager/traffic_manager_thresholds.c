@@ -2534,7 +2534,7 @@ _soc_th3_mmu_cfg_buf_check(int unit, _soc_mmu_cfg_buf_t *buf,
             LOG_CLI((BSL_META_U(unit,
                                 "Pool %d has no shared space after "
                                 "deducting guaranteed !!"), idx));
-            return SOC_E_FAIL;
+            return SOC_E_RESOURCE;
         }
 
         if (buf_pool->yellow_size & _MMU_CFG_BUF_PERCENT_FLAG) {
