@@ -3560,10 +3560,12 @@ alpm_cb_split(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg,
     if (!ACB_BKT_FIXED_FMT(acb, 1) && ACB_HAS_TCAM(acb)) {
         /* Check if an extra split is required */
         rv = alpm_bkt_ent_get(u, vrf_id, acb, npvt_node, lpm_cfg->defip_sub_len, NULL, NULL, 1);
-        if (rv == BCM_E_FULL &&
+        if (rv == BCM_E_FULL) {
+            int rsvd = (ipt == ALPM_IPT_V6) ? 1 : 0;
             /* Cannot affort another split, so should return here */
-            !bcm_esw_alpm_tcam_avail(u, vrf_id, ipt, PVT_KEY_LEN(npvt_node), 0)) {
-            ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
+            if (bcm_esw_alpm_tcam_avail(u, vrf_id, ipt, PVT_KEY_LEN(npvt_node), 0) <= rsvd) {
+                ALPM_IEG_PRT_EXCEPT(rv, BCM_E_FULL);
+            }
         }
     }
 

@@ -1287,7 +1287,7 @@ _tcam_cfg_insert(int u, int zid, _bcm_defip_cfg_t *lpm_cfg, uint32 write_flags)
 int
 bcm_esw_alpm_tcam_avail(int u, int vrf_id, int ipt, int key_len, int mc)
 {
-    int pfx, zid;
+    int pfx, zid, fent, cnt = 0;
 
     if (!TCAMC(u)) {
         return 0;
@@ -1296,14 +1296,14 @@ bcm_esw_alpm_tcam_avail(int u, int vrf_id, int ipt, int key_len, int mc)
     zid = _tcam_zone_zid_get(u, ALPM_VRF_ID_TO_VRF(u, vrf_id), ipt, ALPM_128B(u), mc);
     pfx = _TCAMZ_PFX_MAX_IDX(u, zid);
     while (pfx >= 0) {
-        if (_TCAM_STATE_FENT(u, zid, pfx) > 0) {
-            return 1;
+        fent = _TCAM_STATE_FENT(u, zid, pfx);
+        if (fent > 0) {
+            cnt += fent;
         }
-
         pfx = _TCAM_STATE_NEXT(u, zid, pfx);
     }
 
-    return 0;
+    return cnt;
 }
 
 int
