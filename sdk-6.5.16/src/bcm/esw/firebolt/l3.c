@@ -14265,8 +14265,10 @@ bcm_xgs3_l3_egress_create(int unit, uint32 flags, bcm_l3_egress_t *egr,
                 soc_mem_field32_set(unit, EGR_L3_NEXT_HOPm, &egr_nh,
                                 IFP_ACTIONS__L3_UC_SA_DISABLEf,
                                 ((nh_info.flags & BCM_L3_KEEP_SRCMAC)!=0));
-                soc_mem_field32_set(unit, EGR_L3_NEXT_HOPm, &egr_nh,
-                                L3__L3_UC_SA_DISABLEf, 0);
+                if (!SOC_IS_TOMAHAWK3(unit)) {
+                    soc_mem_field32_set(unit, EGR_L3_NEXT_HOPm, &egr_nh,
+                                    L3__L3_UC_SA_DISABLEf, 0);
+                }
             }
 
             if (egr->vntag_action == bcmVnTagActionChange) {
@@ -31734,7 +31736,13 @@ _bcm_fb_nh_add(int unit, int idx, void *buf, void *info)
                                 2); 
         }
 #endif /* BCM_TRIUMPH_SUPPORT */
-
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+        if (soc_feature(unit, soc_feature_nh_for_ifp_actions) &&
+                 SOC_IS_TOMAHAWK3(unit) &&
+                 (nh_entry->flags2 & BCM_L3_FLAGS2_FIELD_ONLY)) {
+            entry_type = 2;
+        }
+#endif
 #ifdef BCM_TRIDENT3_SUPPORT
         if (SOC_IS_TRIDENT3X(unit)) {
             if (nh_entry->flags2 & BCM_L3_FLAGS2_FCOE_ONLY) {
@@ -32003,7 +32011,8 @@ _bcm_fb_nh_add(int unit, int idx, void *buf, void *info)
                 /* Set next hop mac address. */
                 soc_mem_mac_addr_set(unit, mem, &eg_entry, mac_addr_field,
                         nh_entry->mac_addr);
-            } else if (entry_type == 6) {
+            } else if ((entry_type == 6) ||
+                       ((SOC_IS_TOMAHAWK3(unit)) && (entry_type == 2))) {
                 if (soc_mem_field_valid(unit, mem, IFP_ACTIONS__MAC_ADDRESSf)) {
                     soc_mem_mac_addr_set(unit, mem, &eg_entry,
                                          IFP_ACTIONS__MAC_ADDRESSf,
