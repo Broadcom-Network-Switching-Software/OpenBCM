@@ -97,7 +97,7 @@ _soc_mem_array_sbusdma_read(int unit, soc_mem_t mem, unsigned array_index,
     param.index_begin = index_min;
     param.index_end = index_max;
     param.copyno = copyno;
-    param.flags = ser_flags;
+    param.flags = 0;
     param.buffer = buffer;
     param.vchan = vchan;
 
