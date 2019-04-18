@@ -1735,7 +1735,7 @@ th3_alpm_ent_assemble(int u, _alpm_cb_t *acb,
             fmt_a2d.KSHIFT = lpm_cfg->bkt_kshift;
             fmt_a2d.ROFS = bkt_info->rofs + offset;
             fmt_a2d.BKT_PTR = bkt_info->bkt_idx;
-            if (ALPM_TCAM_ZONED(u) && lpm_cfg->defip_ecmp_index == 0) {
+            if (ALPM_TCAM_ZONED(u) && PVT_BKT_DEF(pvt_node) == NULL) {
                 /* TH3TBD, Parallel & Mixed ALPM need to set DEFAULT_MISS to 1
                  * if assoc_data is NOT set, in case of missing default */
                 fmt_a2d.DEFAULT_MISS = 1;
@@ -2616,12 +2616,12 @@ th3_tcam_entry_from_cfg(int u, int pkm, _bcm_defip_cfg_t *lpm_cfg, void *e, int 
             sal_memset(&fmt_a1d, 0, sizeof(fmt_a1d));
 
             fmt_a1d.DIRECT_ROUTE = ALPM_LPM_DIRECT_RTE(u, lpm_cfg);
-            if (ALPM_TCAM_ZONED(u) && lpm_cfg->defip_ecmp_index == 0) {
+            pvt_node = (_alpm_pvt_node_t *)lpm_cfg->pvt_node;
+            if (ALPM_TCAM_ZONED(u) && (!pvt_node || PVT_BKT_DEF(pvt_node) == NULL)) {
                 /* TH3TBD, Parallel & Mixed ALPM need to set DEFAULT_MISS to 1
                  * if assoc_data is NOT set, in case of missing default */
                 fmt_a1d.DEFAULT_MISS = 1;
             }
-            pvt_node = (_alpm_pvt_node_t *)lpm_cfg->pvt_node;
             if (pvt_node != NULL) {
                 int offset = 0;
                 _alpm_tbl_t tbl;
