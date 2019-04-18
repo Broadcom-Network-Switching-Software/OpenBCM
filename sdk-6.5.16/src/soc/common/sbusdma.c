@@ -97,7 +97,21 @@ _soc_mem_array_sbusdma_read(int unit, soc_mem_t mem, unsigned array_index,
     param.index_begin = index_min;
     param.index_end = index_max;
     param.copyno = copyno;
-    param.flags = 0;
+
+#if defined(BCM_TRIDENT2_SUPPORT) || defined(BCM_TRIDENT2PLUS_SUPPORT) || defined(BCM_MONTEREY_SUPPORT) || defined(BCM_APACHE_SUPPORT)
+    if (SOC_IS_TRIDENT2X(unit)) {
+        /* The ser and access flags use different macros, using the same bits.
+         They were not designed to be specified by the same values.
+         The argument contains a flags field supporting
+         SOC_MEM_WRITE_* values, and does not support any _SOC_SER_FLAG_* flags.
+         TD2X device seem to have code specifying SOC_MEM_WRITE_* flags in serflags arguments. */
+        param.flags = ser_flags;
+    }
+    else
+#endif
+    {
+        param.flags = 0;
+    }
     param.buffer = buffer;
     param.vchan = vchan;
 
