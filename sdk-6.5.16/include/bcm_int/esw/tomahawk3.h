@@ -197,6 +197,10 @@ _bcm_field_th3_em_udf_keygen_mask_get(int unit,
 
 /* VLAN Port Bitmap Profile Mgmt function declarations */
 extern int bcm_tomahawk3_vlan_detach(int unit);
+extern int bcm_th3_vlan_port_add(
+    int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp, pbmp_t ing_pbmp);
+extern int bcm_th3_vlan_port_remove(
+    int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp, pbmp_t ing_pbmp);
 extern int _bcm_th3_vlan_pbmp_profile_init(int unit);
 extern int _bcm_th3_vlan_pbmp_profile_destroy(int unit);
 extern int _bcm_th3_vlan_pbmp_profile_entry_add(

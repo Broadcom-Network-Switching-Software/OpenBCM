@@ -21,6 +21,7 @@
 #include <bcm_int/esw/triumph.h>
 #endif
 #include <bcm_int/esw/tomahawk3.h>
+#include <bcm_int/esw/firebolt.h>
 
 /* VLAN Cross Connect DB declaraions/definitions */
 typedef struct _bcm_th3_vlan_xconnect_db_s {
@@ -108,6 +109,10 @@ _bcm_th3_vlan_pbmp_profile_init(int unit) {
         soc_profile_mem_create(
             unit, &mem, &entry_dwords, 1, vlan_pbmp_profile[unit]));
 
+    /* Create a default entry with empty port bitmap */
+    SOC_PBMP_CLEAR(pbmp);
+    _bcm_th3_vlan_pbmp_profile_entry_add(unit, pbmp, &profile_idx);
+
 #if defined(BCM_WARM_BOOT_SUPPORT)
     if (SOC_WARM_BOOT(unit)) {
         /* Sync the SW profile data structure with actual indexes is use */
@@ -125,19 +130,8 @@ _bcm_th3_vlan_pbmp_profile_init(int unit) {
                     unit, vlan_pbmp_profile[unit], profile_idx, 1);
             }
         }
-
-        /* One extra incr to preserve location PORTBITMAP_PROFILE_DEFAULT/
-        SOC_IF_ERROR_RETURN(
-            soc_profile_mem_reference(
-                unit, vlan_pbmp_profile[unit], PORTBITMAP_PROFILE_DEFAULT, 1));
-        */
-    } else
-#endif /* BCM_WARM_BOOT_SUPPORT */
-    {
-        /* Create a default entry with empty port bitmap */
-        SOC_PBMP_CLEAR(pbmp);
-        _bcm_th3_vlan_pbmp_profile_entry_add(unit, pbmp, &profile_idx);
     }
+#endif /* BCM_WARM_BOOT_SUPPORT */
     return BCM_E_NONE;
 }
 
@@ -502,21 +496,30 @@ _bcm_th3_vlan_pbmp_port_update(
     /* Only perform the profile modification if the pbmp has changed */
     if (BCM_PBMP_NEQ(cur_pbmp, org_pbmp)) {
 
-        /* Insert the modified port bitmap into the profile table */
-        BCM_IF_ERROR_RETURN(
-            _bcm_th3_vlan_pbmp_profile_entry_add(
-                    unit, cur_pbmp, &new_profile_idx));
-
-        /* Delete the old profile entry from the profile table */
+        /* First delete the old profile entry from the profile table */
         rv =  _bcm_th3_vlan_pbmp_profile_entry_delete(unit, old_profile_idx);
 
-        /* If old entry was not able to delete then revert the new change */
-        if (BCM_FAILURE(rv)) {
-            _bcm_th3_vlan_pbmp_profile_entry_delete(unit, new_profile_idx);
-        } else {
-            /* Set the new profile index into the given VLAN table entry */
-            soc_mem_field32_set(unit,
-                VLAN_2_TABm, vt, PORT_BITMAP_PROFILE_PTRf, new_profile_idx);
+        if (BCM_SUCCESS(rv)) {
+            /* Insert the modified port bitmap into the profile table */
+            rv = _bcm_th3_vlan_pbmp_profile_entry_add(unit,
+                                                      cur_pbmp,
+                                                      &new_profile_idx);
+
+            /* If new entry add failed then add back the old pbmp */
+            if (BCM_FAILURE(rv)) {
+                if (BCM_SUCCESS(
+                        _bcm_th3_vlan_pbmp_profile_entry_add(unit,
+                                                        org_pbmp,
+                                                        &old_profile_idx))) {
+                    /* Set the old index into the given VLAN table entry */
+                    soc_mem_field32_set(unit, VLAN_2_TABm,
+                        vt, PORT_BITMAP_PROFILE_PTRf, old_profile_idx);
+                }
+            } else {
+                /* Set the new profile index into the given VLAN table entry */
+                soc_mem_field32_set(unit,
+                    VLAN_2_TABm, vt, PORT_BITMAP_PROFILE_PTRf, new_profile_idx);
+            }
         }
     }
     return rv;
@@ -1910,6 +1913,82 @@ _bcm_th3_vlan_xconnect_traverse(int unit,
     BCM_TH3_VLAN_XCONNECT_MUTEX_REL(unit);
 
     return rv;
+}
+
+/*
+ * Function:
+ *      bcm_th3_vlan_port_add
+ *
+ * Purpose:
+ *      Invokes low level functions to program the port membership bitmaps
+ *      in tables VLAN_2 and EGR_VLAN.
+ *
+ * Parameters:
+ *      unit       - (IN) BCM unit.
+ *      vid        - (IN) VLAN Identifier.
+ *      pbmp       - (IN) Egress Tagged Port Bitmap to be added to the VLAN.
+ *      upbmp      - (IN) Egress Untagged Port Bitmap to be added to the VLAN.
+ *      ing_pbmp   - (IN) Ingress Port Bitmap to be added to the VLAN.
+ *
+ * Returns:
+ *      BCM_E_NONE
+ *      BCM_E_PARAM
+ *      BCM_E_NOT_FOUND
+ *      BCM_E_FAIL
+ *      BCM_E_FULL
+ *
+ * Notes:
+ */
+int
+bcm_th3_vlan_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp,
+                       pbmp_t ing_pbmp)
+{
+    if (BCM_VLAN_VALID(vid)) {
+        BCM_IF_ERROR_RETURN(_bcm_xgs3_vlan_table_port_add(
+                unit, vid, pbmp, ubmp, ing_pbmp, VLAN_2_TABm));
+
+        BCM_IF_ERROR_RETURN(_bcm_xgs3_vlan_table_port_add(
+                unit, vid, pbmp, ubmp, ing_pbmp, EGR_VLANm));
+    }
+
+    return BCM_E_NONE;
+}
+
+/*
+ * Function:
+ *      bcm_th3_vlan_port_remove
+ *
+ * Purpose:
+ *      Invokes low level functions to remove the ports in the given bitmaps
+ *      from tables VLAN_2 and EGR_VLAN.
+ *
+ * Parameters:
+ *      unit     - (IN) BCM unit.
+ *      vid      - (IN) VLAN Identifier.
+ *      pbmp     - (IN) Egress Tagged Port Bitmap to be removed from the VLAN.
+ *      upbmp    - (IN) Egress Untagged Port Bitmap to be removed from the VLAN.
+ *      ing_pbmp - (IN) Ingress Port Bitmap to be removed from the VLAN.
+ *
+ * Returns:
+ *      BCM_E_NONE
+ *      BCM_E_PARAM
+ *      BCM_E_NOT_FOUND
+ *      BCM_E_FAIL
+ *      BCM_E_FULL
+ *
+ * Notes:
+ */
+int
+bcm_th3_vlan_port_remove(int unit, bcm_vlan_t vid, pbmp_t pbmp, pbmp_t ubmp,
+                          pbmp_t ing_pbmp)
+{
+    if (BCM_VLAN_VALID(vid)) {
+        BCM_IF_ERROR_RETURN(_bcm_xgs3_vlan_table_port_remove(
+                    unit, vid, pbmp, ubmp, ing_pbmp, VLAN_2_TABm));
+        BCM_IF_ERROR_RETURN(_bcm_xgs3_vlan_table_port_remove(
+                    unit, vid, pbmp, ubmp, ing_pbmp, EGR_VLANm));
+    }
+    return BCM_E_NONE;
 }
 
 #ifndef BCM_SW_STATE_DUMP_DISABLE

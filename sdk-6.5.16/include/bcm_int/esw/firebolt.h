@@ -1488,6 +1488,8 @@ extern int bcm_xgs3_vlan_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp,
                                   pbmp_t ubmp, pbmp_t ing_pbmp);
 extern int bcm_xgs3_vlan_port_remove(int unit, bcm_vlan_t vid, pbmp_t pbmp,
                                      pbmp_t ubmp, pbmp_t ing_pbmp);
+extern int _bcm_xgs3_vlan_table_port_add(int unit, bcm_vlan_t vid, pbmp_t pbmp,
+                              pbmp_t ubmp, pbmp_t ing_pbmp, int table);
 extern int _bcm_xgs3_vlan_table_port_remove(int unit, bcm_vlan_t vid, pbmp_t pbmp,
                                  pbmp_t ubmp, pbmp_t ing_pbmp, int table);
 extern int bcm_xgs3_vlan_port_get(int unit, bcm_vlan_t vid, pbmp_t *pbmp,
