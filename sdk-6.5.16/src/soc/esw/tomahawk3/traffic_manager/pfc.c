@@ -434,6 +434,7 @@ _soc_th3_pfc_rx_mapping_hw_write(
     int i, pri, cos, pri_ebg, mmuq1 = -1, mmuq2 = -1;
     uint32 cos_bmp, mmuq_bmp, ebg_bmp, sp_bmp, hp_bmp, reg_index, rval;
     uint64 rval64;
+    int fc_only_uc = 0, cos_f_q = 0;
 
     soc_reg_t pri_reg = MMU_INTFI_PFCPRI_PROFILEr,
               mmuq_reg = MMU_EBCFP_MMUQ_EBGRP_PROFILEr,
@@ -472,12 +473,31 @@ _soc_th3_pfc_rx_mapping_hw_write(
                 mmuq1 = th3_sched_profile_info[unit][profile_id][l0_idx].mmuq[0];
                 mmuq2 = th3_sched_profile_info[unit][profile_id][l0_idx].mmuq[1];
             }
-            if (mmuq1 != -1) {
-                mmuq_bmp |= 1U << mmuq1;
+
+            /* flow control just the UC queue when FC_ONLY_UC=1. */
+            if ((mmuq1 != -1) && (mmuq2 != -1)) {
+                cos_f_q = soc_tomahawk3_get_cos_for_mmu_queue(unit, profile_id, mmuq1);
+                if (cos_f_q == -1) {
+                    return SOC_E_PARAM;
+                }
+                fc_only_uc = soc_tomahawk3_get_fc_only_uc_for_cos(unit, profile_id,
+                                                                  cos_f_q);
+                if (!(_soc_th3_pfc_mmuq_is_mc(unit, mmuq1) && (fc_only_uc))) {
+                    mmuq_bmp |= 1U << mmuq1;
+                }
+
+                if (!(_soc_th3_pfc_mmuq_is_mc(unit, mmuq2) && (fc_only_uc))) {
+                    mmuq_bmp |= 1U << mmuq2;
+                }
+            } else {
+                if (mmuq1 != -1) {
+                    mmuq_bmp |= 1U << mmuq1;
+                }
+                if (mmuq2 != -1) {
+                    mmuq_bmp |= 1U << mmuq2;
+                }
             }
-            if (mmuq2 != -1) {
-                mmuq_bmp |= 1U << mmuq2;
-            }
+
             pri_ebg = eb_config->eb_group[cos];
             if (eb_config->eb_group_opt[pri_ebg] == 1) {
                 ebg_bmp |= 1U << pri_ebg;
