@@ -4269,7 +4269,7 @@ retry:
                     lpm_cfg->pvt_node = pvt_node;
                 } else {
                     lpm_cfg->l1_pvt_node = upr_pvt_node;
-                    ALPM_IER_PRT_EXCEPT(alpm_cb_path_construct(u, acb, lpm_cfg), BCM_E_FULL);
+                    ALPM_IEG_PRT_EXCEPT(alpm_cb_path_construct(u, acb, lpm_cfg), BCM_E_FULL);
                     pvt_node = lpm_cfg->pvt_node;
                     if (pvt_node == NULL) {
                         goto retry;
@@ -4384,7 +4384,7 @@ retry_spl:
         ptcam_write = lpm_cfg->tcam_write;
         if (ptcam_write != NULL) {
             if (ptcam_write->rv == BCM_E_NONE) {
-                return rv; /* already done in alpm_bkt_add_to_npvt */
+                goto _exit; /* already done in alpm_bkt_add_to_npvt */
             } else if (ptcam_write->rv == BCM_E_FULL) {
                 rv = BCM_E_FULL;
                 retry_count ++;
@@ -4432,7 +4432,8 @@ retry_spl:
     }
 
     VRF_ROUTE_ADD(acb, vrf_id, ipt);
-
+_exit:
+    lpm_cfg->tcam_write = NULL;
     return rv;
 
 bad:
@@ -4442,7 +4443,7 @@ bad:
     if (bkt_node != NULL) {
         alpm_util_free(bkt_node);
     }
-
+    lpm_cfg->tcam_write = NULL;
     return rv;
 }
 
