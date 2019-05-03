@@ -5014,6 +5014,11 @@ _bcm_fb_lpm_prepare_defip_entry(int unit, _bcm_defip_cfg_t *lpm_cfg,
                                       lpm_cfg->defip_flex_ctr_base_id);
         }
 
+        /* Set destination discard flag. */
+        if (lpm_cfg->defip_flags & BCM_L3_DST_DISCARD) {
+             soc_format_field32_set(unit, ASSOC_DATA_FULLfmt, fmte, DST_DISCARDf, 1);
+        }
+
         soc_mem_field_set(unit, mem, lpm_entry, ASSOC_DATA0f, fmte);
         sal_memset(fmte, 0, sizeof(fmte));
         soc_format_field32_set(unit, ALPM1_DATAfmt, fmte, DIRECT_ROUTEf, 1);
