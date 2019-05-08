@@ -1034,6 +1034,12 @@ _soc_th3_learn_cache_entry_process(int unit,
     soc_mem_t mem;
     soc_l2_lrn_avl_info_t k;
     int invalidated = FALSE;
+    int curr_l2_table_entries;
+    int max_l2_table_entries;
+    int l2copyno;
+
+    max_l2_table_entries = soc_mem_index_count(unit, L2Xm);
+    l2copyno = SOC_MEM_BLOCK_ANY(unit, L2Xm);
 
     mem = SOC_MEM_UNIQUE_ACC(unit, L2_LEARN_CACHEm)[pipe];
 
@@ -1110,7 +1116,20 @@ _soc_th3_learn_cache_entry_process(int unit,
 
             /* Insert L2 entry in h/w */
             soc_mem_lock(unit, L2Xm);
-            rv = soc_mem_insert(unit, L2Xm, MEM_BLOCK_ALL, &l2x_entry);
+            curr_l2_table_entries = SOP_MEM_STATE(unit, L2Xm).count[l2copyno];
+
+            /* If there is no space in the L2 table, do not issue insert. Note
+             * that current L2 table size is dynamically changing; entries can
+             * be added/deleted though other sources like application thread
+             * (using L2 APIs), cmd shell, other internal SDK modules and so on.
+             * So the current table enttries is only a tentative (but closer to
+             * accurate) value
+             */
+            rv = SOC_E_NONE;
+            if ((curr_l2_table_entries >= 0) &&
+                (curr_l2_table_entries < max_l2_table_entries)) {
+                rv = soc_mem_insert(unit, L2Xm, MEM_BLOCK_ALL, &l2x_entry);
+            }
             soc_mem_unlock(unit, L2Xm);
 
             /* AVL tree will be updated through soc_th3_l2x_shadow_callback */
