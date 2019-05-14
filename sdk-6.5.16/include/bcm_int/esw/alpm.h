@@ -145,7 +145,6 @@ typedef struct _alpm_dist_hitbit_s {
     VOL int           interval;           /* Time between dist hitbit thread (us) */
     int               priority;           /* task priority */
     sal_sem_t         sema;               /* Dist hitbit semaphore */
-    sal_mutex_t       mutex;              /* Dist hitbit mutex */
 } _alpm_dist_hitbit_t;
 
 extern _alpm_dist_hitbit_t *alpm_dist_hitbit[];
@@ -164,8 +163,8 @@ extern _alpm_dist_hitbit_t *alpm_dist_hitbit[];
 #define ALPM_HTBL_ENT_MOVED(u, i, p)    (ALPM_HTBL(u, i, p)->ent_moved)
 #define ALPM_HTBL_ENT_MOVED_CNT(u, i, p) (ALPM_HTBL(u, i, p)->ent_moved_cnt)
 
-#define ALPM_HIT_LOCK(u)          sal_mutex_take(ALPMDH(u)->mutex, sal_sem_FOREVER)
-#define ALPM_HIT_UNLOCK(u)        sal_mutex_give(ALPMDH(u)->mutex)
+#define ALPM_HIT_LOCK(u)          L3_LOCK(u)
+#define ALPM_HIT_UNLOCK(u)        L3_UNLOCK(u)
 
 /* ALPM control block */
 

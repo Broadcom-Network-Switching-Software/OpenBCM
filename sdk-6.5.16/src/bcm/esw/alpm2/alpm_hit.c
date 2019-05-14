@@ -558,11 +558,6 @@ bcm_esw_alpm_hit_deinit(int u)
             ALPMDH(u)->sema = NULL;
         }
 
-        if (ALPMDH(u)->mutex != NULL) {
-            sal_mutex_destroy(ALPMDH(u)->mutex);
-            ALPMDH(u)->mutex = NULL;
-        }
-
         ALPM_DRV(u)->alpm_hit_deinit(u);
 
         alpm_util_free(ALPMDH(u));
@@ -606,11 +601,6 @@ bcm_esw_alpm_hit_init(int u)
                                            ALPM_HIT_PRIORITY_DEF);
     ALPMDH(u)->sema = sal_sem_create("bcmHit_SLEEP", sal_sem_BINARY, 0);
     if (ALPMDH(u)->sema == NULL) {
-        ALPM_IEG(BCM_E_MEMORY);
-    }
-
-    ALPMDH(u)->mutex = sal_mutex_create("bcmHit_LOCK");
-    if (ALPMDH(u)->mutex == NULL) {
         ALPM_IEG(BCM_E_MEMORY);
     }
 
