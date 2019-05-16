@@ -2973,6 +2973,7 @@ retry:
         if (BCM_SUCCESS(rv)) {
             lpm_cfg->spl_pn = NULL;
             lpm_cfg->spl_key_len = 0;
+            lpm_cfg->l1_pvt_node = NULL;
             /* PERF OPT point */
             goto retry;
         }
