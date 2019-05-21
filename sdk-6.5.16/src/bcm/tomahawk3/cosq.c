@@ -100,13 +100,13 @@ STATIC _bcm_th3_cosq_time_info_t th3_time_domain_info[BCM_MAX_NUM_UNITS][_BCM_TH
   }
 };
 
-#define TH3_WRED_CELL_FIELD_MAX       0x3ffff
+#define TH3_WRED_CELL_FIELD_MAX       0x7ffff
 #define TH3_WRED_PROFILE_INDEX_INVALID    0xffffffff
 #define TH3_WRED_DROP_PROB_MAX_INDEX    14
 
 /*
  * index: degree, value: contangent(degree) * 100
- * max value is 0x3ffff (18-bit) at 0 degree
+ * max value is 0x7ffff (19-bit) at 0 degree
  */
 STATIC int
 _bcm_th3_cotangent_lookup_table[] =
@@ -2614,9 +2614,9 @@ bcm_th3_cosq_init(int unit)
 
     for (i = 0; i < _BCM_TH3_NUM_WRED_PROFILES; i++) {
         soc_mem_field32_set(unit, wred_mems[i], entries[i],
-                            MIN_THDf, 0x3ffff);
+                            MIN_THDf, 0x7ffff);
         soc_mem_field32_set(unit, wred_mems[i], entries[i],
-                            MAX_THDf, 0x3ffff);
+                            MAX_THDf, 0x7ffff);
     }
     profile_index = TH3_WRED_PROFILE_INDEX_INVALID;
     wred_config_mem = MMU_WRED_QUEUE_CONFIGm;
@@ -8605,7 +8605,7 @@ bcm_th3_cosq_gport_discard_set(int unit, bcm_gport_t gport,
     }
 
     cell_size = _TH3_MMU_BYTES_PER_CELL;
-    cell_field_max = 0x3ffff;
+    cell_field_max = 0x7ffff;
 
     min_thresh = discard->min_thresh;
     max_thresh = discard->max_thresh;
