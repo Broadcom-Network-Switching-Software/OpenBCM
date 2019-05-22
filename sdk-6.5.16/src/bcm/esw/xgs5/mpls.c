@@ -3872,6 +3872,15 @@ bcmi_xgs5_mpls_egr_tunnel_lookup (int unit, int push_action,
                 BCMI_EGR_IP_TUNNEL_MPLS_START_OF_ENTRY)) {
                 continue;
             }
+            if (!push_action) {
+                if ((tunnel_entry[tnl_index]->label_entry[i]->flags &
+                    BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_ZERO)) {
+                    *match_mpls_tunnel_index = (tnl_index *
+                        _BCM_MPLS_NUM_MPLS_ENTRIES_PER_INDEX(unit)) + i;
+                }
+                return BCM_E_NONE;
+            }
+
             if (!(tunnel_entry[tnl_index]->label_entry[i]->num_elements ==
                 push_action)) {
                 continue;
@@ -4809,6 +4818,11 @@ bcmi_xgs5_mpls_tunnel_initiator_set(int unit, bcm_if_t intf, int num_labels,
                 BCMI_EGR_IP_TUNNEL_MPLS_START_OF_ENTRY;
     tunnel_entry[tnl_id]->label_entry[offset]->num_elements =
         ((num_labels) ? num_labels : 1);
+
+    if (!num_labels) {
+        tunnel_entry[tnl_id]->label_entry[offset]->flags |=
+                BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_ZERO;
+    }
 
     rv = bcmi_egr_ip_tnl_mpls_table_read(unit, tnl_id,tnl_entry);
     if (rv < 0) {
@@ -5844,8 +5858,14 @@ bcmi_xgs5_mpls_tunnel_initiator_get(int unit, bcm_if_t intf, int label_max,
     if (tunnel_entry[tnl_index]->label_entry[offset]->flags
         & BCMI_EGR_IP_TUNNEL_MPLS_START_OF_ENTRY) {
 
-        no_of_elements =
-            tunnel_entry[tnl_index]->label_entry[offset]->num_elements;
+        if (tunnel_entry[tnl_index]->label_entry[offset]->flags
+            & BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_ZERO) {
+            no_of_elements = 0;
+        } else {
+            no_of_elements =
+                tunnel_entry[tnl_index]->label_entry[offset]->num_elements;
+        }
+
     } else {
         return BCM_E_NOT_FOUND;
     }

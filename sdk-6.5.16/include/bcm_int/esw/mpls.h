@@ -210,9 +210,10 @@ typedef struct _bcm_mpls_old_nh_info_s {
 #define MAX_FREE_ENTRY_INDEXES                        8
 
 
-#define BCMI_EGR_IP_TUNNEL_MPLS_START_OF_ENTRY        0x1
-#define BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_USED            0x2
-#define BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_CHECKED         0x4
+#define BCMI_EGR_IP_TUNNEL_MPLS_START_OF_ENTRY        (1 << 0)
+#define BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_USED            (1 << 1)
+#define BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_CHECKED         (1 << 2)
+#define BCMI_EGR_IP_TUNNEL_MPLS_ENTRY_ZERO            (1 << 3)
 
 /* S/w list of all interfaces pointing to mpls tnl */
 typedef struct intf_list_s {
