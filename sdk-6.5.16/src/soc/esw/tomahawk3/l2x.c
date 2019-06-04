@@ -265,12 +265,15 @@ _soc_th3_l2_age_entries_process(int unit, l2x_entry_t *l2x_entries)
         LOG_ERROR(BSL_LS_SOC_L2,
                   (BSL_META_U(unit,
                    "%s:DMA read failed: %s\n"), __FUNCTION__, soc_errmsg(rv)));
+        /* We do not return error, otherwise thread will be killed. If thread
+         * is alive it can be debugged
+         */
+        return SOC_E_NONE;
     }
 
     for (i = index_min; i <= index_max; i++) {
         l2x_entry_t *l2x_entry;
         uint32 hit_da, hit_sa, local_sa;
-        void *data;
 
         l2x_entry = soc_mem_table_idx_to_pointer(unit, L2Xm, l2x_entry_t*,
                                                  l2x_entries, i);
@@ -292,19 +295,41 @@ _soc_th3_l2_age_entries_process(int unit, l2x_entry_t *l2x_entries)
         /* If no hot bits are set, delete the entry */
         if (!(hit_da || hit_sa || local_sa)) {
             /* Delete entry */
-            data = soc_mem_entry_null(unit, L2Xm);
+            soc_mem_lock(unit, L2Xm);
+            rv = soc_mem_delete(unit, L2Xm, MEM_BLOCK_ALL,
+                                (void *)l2x_entry);
+            soc_mem_unlock(unit, L2Xm);
+            if (SOC_FAILURE(rv)) {
+                /* If entry is not found, it has been deleted by other source,
+                 * e.g. address delete from application. So we ignore not found
+                 * condition here
+                 */
+                if (rv != SOC_E_NOT_FOUND) {
+                    LOG_WARN(BSL_LS_SOC_L2,
+                             (BSL_META_U(unit,
+                             "%s:soc mem delete failed: %s\n"), __FUNCTION__,
+                             soc_errmsg(rv)));
+                }
+            }
         } else {
             /* Clear hit bits */
             soc_L2Xm_field32_set(unit, l2x_entry, HITDAf, 0);
             soc_L2Xm_field32_set(unit, l2x_entry, HITSAf, 0);
             soc_L2Xm_field32_set(unit, l2x_entry, LOCAL_SAf, 0);
 
-            data = (void *)l2x_entry;
+            soc_mem_lock(unit, L2Xm);
+            rv = soc_mem_write(unit, L2Xm, MEM_BLOCK_ALL, i, (void *)l2x_entry);
+            soc_mem_unlock(unit, L2Xm);
+            if (SOC_FAILURE(rv)) {
+                /* We do not return error, otherwise thread will be killed. If
+                 * thread is alive it can be debugged
+                 */
+                LOG_WARN(BSL_LS_SOC_L2,
+                         (BSL_META_U(unit,
+                         "%s:soc mem write failed: %s\n"), __FUNCTION__,
+                         soc_errmsg(rv)));
+            }
         }
-
-        soc_mem_lock(unit, L2Xm);
-        SOC_IF_ERROR_RETURN(soc_mem_write(unit, L2Xm, MEM_BLOCK_ALL, i, data));
-        soc_mem_unlock(unit, L2Xm);
 
         /* When an entry is deleted, soc_th3_l2x_shadow_callback will call
          * learn shadow upadate function. So we don't call learn shadow update
