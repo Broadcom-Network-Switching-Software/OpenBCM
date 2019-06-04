@@ -40,6 +40,9 @@
 #if defined(BCM_HURRICANE3_SUPPORT)
 #include <soc/hurricane3.h>
 #endif
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+#include <soc/tomahawk3.h>
+#endif
 #ifdef BCM_XGS_SWITCH_SUPPORT
 
 #define L2X_ENTRY_EQL(unit, e1, e2, sz, bits) \
@@ -922,13 +925,28 @@ _soc_trident2_l2x_sync_multi_buckets(int unit, uint32 *new_entry,
 #endif /* BCM_APACHE_SUPPORT */
 #ifdef BCM_TOMAHAWK_SUPPORT
         if (SOC_IS_TOMAHAWKX(unit)) {
-            SOC_IF_ERROR_RETURN
-                (soc_tomahawk_hash_bank_number_get(unit, l2mem, bank_idx,
-                                                   &hw_bank));
-            SOC_IF_ERROR_RETURN
-                (soc_th_hash_bucket_get(unit, l2mem, hw_bank, new_entry,
-                                        &bucket));
-            bucket_base = soc_th_hash_index_get(unit, l2mem, hw_bank, bucket);
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)) {
+                SOC_IF_ERROR_RETURN
+                    (soc_tomahawk3_hash_bank_number_get(unit, l2mem, bank_idx,
+                                                        &hw_bank));
+                SOC_IF_ERROR_RETURN
+                    (soc_tomahawk3_hash_bucket_get(unit, l2mem, hw_bank,
+                                                   new_entry, &bucket));
+                bucket_base = soc_tomahawk3_hash_index_get(unit, l2mem, hw_bank,
+                                                           bucket);
+            } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+            {
+                SOC_IF_ERROR_RETURN
+                    (soc_tomahawk_hash_bank_number_get(unit, l2mem, bank_idx,
+                                                       &hw_bank));
+                SOC_IF_ERROR_RETURN
+                    (soc_th_hash_bucket_get(unit, l2mem, hw_bank, new_entry,
+                                            &bucket));
+                bucket_base = soc_th_hash_index_get(unit, l2mem, hw_bank,
+                                                    bucket);
+            }
         } else
 #endif /* BCM_TOMAHAWK_SUPPORT */
         {
@@ -1146,7 +1164,33 @@ _soc_l2x_sync_bucket(int unit,
                     }
                 }
 #endif /* BCM_TSN_SUPPORT */
-                soc_l2x_callback(unit, 0, (l2x_entry_t *) old_p, NULL);
+#ifdef BCM_XGS_SWITCH_SUPPORT
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+                if (SOC_IS_TOMAHAWK3(unit)) {
+                    int rv1 = SOC_E_NONE;
+                    int idx = -1;
+
+                    /* Entry not found in this bucket. Search in L2 table to see
+                     * if it was shuffled. It it was shuffled, the same entry
+                     * will be present at some other location. If the search
+                     * did not find it, it means the entry was deleted, so  we
+                     * can issue a 'delete' callback. This code is required
+                     * because TH3 does not have mod fifo; in legacy devices,
+                     * mod fifo is configured to supress callbacks due to
+                     * internal (within SDK) shuffling of L2 entries
+                     */
+                    rv1 = soc_mem_generic_lookup(unit, L2Xm, MEM_BLOCK_ANY, 0,
+                                                 old_p, NULL, &idx);
+                    if (rv1 == SOC_E_NOT_FOUND) {
+                        soc_l2x_callback(unit, 0, (l2x_entry_t *) old_p, NULL);
+                    }
+
+                } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+#endif /* BCM_XGS_SWITCH_SUPPORT */
+                {
+                    soc_l2x_callback(unit, 0, (l2x_entry_t *) old_p, NULL);
+                }
             }
             continue;
         }
