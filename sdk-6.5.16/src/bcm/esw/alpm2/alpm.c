@@ -4228,10 +4228,10 @@ alpm_cb_path_construct(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
             if (PVT_BKT_DEF(pvt_node)) {
                 alpm_util_adata_trie_to_cfg(u, &PVT_BKT_DEF(pvt_node)->adata,
                                             &l2_lpm_cfg);
+                l2_lpm_cfg.default_miss = 0;
             } else {
                 alpm_util_adata_zero_cfg(u, &l2_lpm_cfg);
                 l2_lpm_cfg.default_miss = 1;
-
             }
             rv = alpm_cb_pvt_add(u, acb, vrf_id, ipt, &l2_lpm_cfg);
             if (BCM_FAILURE(rv)) {
