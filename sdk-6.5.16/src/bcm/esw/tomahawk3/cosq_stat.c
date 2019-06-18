@@ -742,6 +742,11 @@ _bcm_th3_cosq_mmu_port_queue_wred_color_drop_set(int unit, bcm_gport_t port,
     if (cosq != BCM_COS_INVALID) {
         return BCM_E_UNAVAIL;
     }
+    if (stat == bcmCosqStatGreenDiscardDroppedPackets) {
+        /* Green Discard drop is combination of complete drops and red/yellow
+         * discard. All the elements can be set using other stat Enums */
+        return BCM_E_UNAVAIL;
+     }
     if (stat == bcmCosqStatYellowDiscardDroppedPackets) {
         ctr_reg = SOC_COUNTER_NON_DMA_PORT_WRED_PKT_YELLOW;
     } else { /*(stat == bcmCosqStatRedDiscardDroppedPackets) */
@@ -756,11 +761,6 @@ _bcm_th3_cosq_mmu_port_queue_wred_color_drop_set(int unit, bcm_gport_t port,
         (soc_counter_generic_set(unit, ctr_reg, ctrl_info,
                                  0, startq, value));
 
-    if (stat == bcmCosqStatGreenDiscardDroppedPackets) {
-        /* Green Discard drop is combination of complete drops and red/yellow
-         * discard. All the elements can be set using other stat Enums */
-        return BCM_E_UNAVAIL;
-     }
     return BCM_E_NONE;
 }
 
