@@ -4012,10 +4012,10 @@ soc_th3_process_pm_intr(void *unit_vp, void *d1,
  *                      different types of interrupts).
  */
 static void
-soc_th3_pm_intr_handler(int unit, int cmic_val, int reg_num)
+soc_th3_pm_intr_handler(int unit, uint32 cmic_val, int reg_num)
 {
-    int cmic_bit = cmic_val;
-    int cmic_bit_num = 0;
+    uint32 cmic_bit = cmic_val;
+    uint32 cmic_bit_num = 0;
 
     /* Get the bit num or the hw port macro id */
     while(cmic_bit != 0) {
