@@ -23471,6 +23471,12 @@ _bcm_mirror_sflow_dest_delete(int unit, uint32 flags, bcm_gport_t mirror_dest)
         check_flags |= BCM_MIRROR_PORT_PSAMP;
     }
 #endif
+#ifdef BCM_TOMAHAWK3_SUPPORT
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        check_flags |= BCM_MIRROR_PORT_PSAMP;
+    }
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+
     /* only support BCM_MIRROR_PORT_INGRESS */
     if (flags & ~check_flags) {
         return BCM_E_UNAVAIL;
@@ -23712,6 +23718,12 @@ _bcm_mirror_sflow_dest_get(int unit, uint32 flags, int mirror_dest_size,
     }
 #endif
 
+#ifdef BCM_TOMAHAWK3_SUPPORT
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        check_flags |= BCM_MIRROR_PORT_PSAMP;
+    }
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+
     /* only support BCM_MIRROR_PORT_INGRESS */
     if (flags & ~check_flags) {
         return BCM_E_UNAVAIL;
@@ -23915,6 +23927,13 @@ _bcm_mirror_sflow_dest_add(int unit, uint32 flags, bcm_gport_t mirror_dest)
         check_flags |= BCM_MIRROR_PORT_PSAMP;
     }
 #endif
+
+#ifdef BCM_TOMAHAWK3_SUPPORT
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        check_flags |= BCM_MIRROR_PORT_PSAMP;
+    }
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+
     if (flags & ~check_flags) {
         return BCM_E_UNAVAIL;
     }
