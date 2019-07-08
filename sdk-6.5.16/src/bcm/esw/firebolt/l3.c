@@ -29096,6 +29096,7 @@ _bcm_xgs3_th3_nh_entry_parse(int unit, uint32 *ing_entry_ptr,
     th3_mem_ING_L3_NEXT_HOP_t *ing_ent;
     th3_mem_EGR_L3_NEXT_HOP_t *egr_ent;
     th3_mem_EGR_L3_NEXT_HOP_2_t *egr2_ent;
+    soc_mem_t mem;                      /* Table location memory.           */
 
     ing_ent = (th3_mem_ING_L3_NEXT_HOP_t *)ing_entry_ptr;
     egr_ent = (th3_mem_EGR_L3_NEXT_HOP_t *)egr_entry_ptr;
@@ -29264,6 +29265,47 @@ _bcm_xgs3_th3_nh_entry_parse(int unit, uint32 *ing_entry_ptr,
 
     nh_entry->intf_class = egr_ent->L3__CLASS_ID;
 
+    /* Get next hop table memory location. */
+    mem = BCM_XGS3_L3_MEM(unit, nh);
+
+    if (soc_feature(unit, soc_feature_nh_for_ifp_actions) &&
+        (0x2 == ent_type) && _BCM_L3_FIELD_ONLY ==
+        BCM_XGS3_L3_ENT_FLAG(BCM_XGS3_L3_TBL_PTR(unit, next_hop), index)) {
+
+        /* Get mac address. */
+        soc_mem_mac_addr_get(unit, EGR_L3_NEXT_HOPm, egr_entry_ptr,
+                             IFP_ACTIONS__MAC_ADDRESSf, nh_entry->mac_addr);
+
+
+        nh_entry->flags2 |= BCM_L3_FLAGS2_FIELD_ONLY;
+
+        if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_VLAN_DISABLEf)) {
+            if (soc_mem_field32_get(unit, mem, egr_entry_ptr,
+                                    IFP_ACTIONS__L3_UC_VLAN_DISABLEf)) {
+                nh_entry->flags |= BCM_L3_KEEP_VLAN;
+            }
+        }
+
+        if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_TTL_DISABLEf)) {
+            if (soc_mem_field32_get(unit, mem, egr_entry_ptr,
+                                    IFP_ACTIONS__L3_UC_TTL_DISABLEf)) {
+                nh_entry->flags |= BCM_L3_KEEP_TTL;
+            }
+        }
+
+        if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_DA_DISABLEf)) {
+            if (soc_mem_field32_get(unit, mem, egr_entry_ptr,
+                                    IFP_ACTIONS__L3_UC_DA_DISABLEf)) {
+                nh_entry->flags |= BCM_L3_KEEP_DSTMAC;
+            }
+        }
+        if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_SA_DISABLEf)) {
+            if (soc_mem_field32_get(unit, mem, egr_entry_ptr,
+                                    IFP_ACTIONS__L3_UC_SA_DISABLEf)) {
+                nh_entry->flags |= BCM_L3_KEEP_SRCMAC;
+            }
+        }
+    }
     return (BCM_E_NONE);
 }
 
