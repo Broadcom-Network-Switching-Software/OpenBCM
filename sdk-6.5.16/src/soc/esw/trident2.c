@@ -4390,13 +4390,15 @@ _soc_trident2_process_ser_fifo(int unit, soc_block_t blk, int pipe, char *prefix
                         (spci.mem == L3_DEFIP_ALPM_IPV6_128m) ||
                         (spci.mem == L3_DEFIP_AUX_TABLEm)) {
                         SOC_ALPM_LPM_LOCK(unit);
-                    }
+                    } else 
 #endif
+                    {
+                        if (spci.mem != INVALIDm) {
+                            MEM_LOCK(unit,spci.mem);
+                        }
+                    }
                     if (SOC_MEM_SER_CORRECTION_TYPE(unit, spci.mem) != SOC_MEM_FLAG_SER_SPECIAL) {
                         spci.flags |= SOC_SER_LOG_WRITE_CACHE;
-                    }
-                    if (spci.mem != INVALIDm) {
-                        MEM_LOCK(unit,spci.mem);
                     }
                     spci.log_id = _soc_td2_populate_ser_log(unit,
                                               parity_enable_reg,
@@ -4410,9 +4412,6 @@ _soc_trident2_process_ser_fifo(int unit, soc_block_t blk, int pipe, char *prefix
                                               spci.addr,
                                               pipe,
                                               TRUE, 0);
-                    if (spci.mem != INVALIDm) {
-                        MEM_UNLOCK(unit,spci.mem);
-                    }
 #ifdef ALPM_ENABLE
                     if ((spci.mem == L3_DEFIP_ALPM_ECCm) ||
                         (spci.mem == L3_DEFIP_ALPM_IPV4m) ||
@@ -4420,10 +4419,16 @@ _soc_trident2_process_ser_fifo(int unit, soc_block_t blk, int pipe, char *prefix
                         (spci.mem == L3_DEFIP_ALPM_IPV6_64m) ||
                         (spci.mem == L3_DEFIP_ALPM_IPV6_64_1m) ||
                         (spci.mem == L3_DEFIP_ALPM_IPV6_128m) ||
+                        (spci.mem == L3_DEFIP_ALPM_RAWm) ||
                         (spci.mem == L3_DEFIP_AUX_TABLEm)) {
                         SOC_ALPM_LPM_UNLOCK(unit);
-                    }
+                    } else
 #endif
+                    {
+                        if (spci.mem != INVALIDm) {
+                            MEM_UNLOCK(unit,spci.mem);
+                        }
+                    }
 
                     rv = soc_ser_correction(unit, &spci);
                     if (spci.log_id != 0) {
