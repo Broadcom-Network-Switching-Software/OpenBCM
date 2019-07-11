@@ -4758,7 +4758,13 @@ _bcmi_xgs5_pm_enable(int unit, bcmi_xgs5_port_resource_bmp_t *pr_bmp,
         if (enable) {
             rval[i] |= (1 << offset);
         } else {
-            rval[i] &= ~(1 << offset);
+            /* Disabling of TOP_TSC_ENABLE for TH3 causes link flapping in
+             * PMs not being modified, so do not allow TOP_TSC_ENABLE
+             * to be disabled during TH3 flex
+             */
+            if (!SOC_IS_TOMAHAWK3(unit)) {
+                rval[i] &= ~(1 << offset);
+            }
         }
         count[i]++;
         /* If shut down or power up many port blocks at the same time, PCI
