@@ -100,6 +100,8 @@ static soc_field_t _timer_tick_fields[] = {
                                    };
 
 static const int _timer_tick_encoding[3] = {1, 10, 100};
+static sal_sem_t th3_pfc_deinit_notify[BCM_MAX_NUM_UNITS];
+static int th3_pfc_init[BCM_MAX_NUM_UNITS] = {FALSE};
 
 STATIC int
 _bcm_th3_pfc_deadlock_enable_config(int unit, bcm_port_t port,
@@ -472,7 +474,21 @@ _th3_pfc_deadlock_cb(void* owner, void* time_as_ptr, void *unit_as_ptr,
 {
     int callback_time = (int)(size_t)time_as_ptr;
     int unit = (int)(size_t)unit_as_ptr;
-    /*sal_dpc_cancel(INT_TO_PTR(&_th3_pfc_deadlock_cb));*/
+    _bcm_th3_pfc_deadlock_control_t *pfc_deadlock_control = NULL;
+
+    sal_dpc_cancel(INT_TO_PTR(&_th3_pfc_deadlock_cb));
+
+    if (!th3_pfc_init[unit]) {
+        sal_sem_give(th3_pfc_deinit_notify[unit]);
+        return;
+    }
+
+    pfc_deadlock_control = _BCM_TH3_PFC_DEADLOCK_CONTROL(unit);
+    if (pfc_deadlock_control == NULL) {
+        /* Should not happen, defensive check */
+        return;
+    }
+
     _bcm_th3_pfc_deadlock_monitor(unit);
 
     if (_BCM_TH3_PFC_DEADLOCK_CB_ENABLED(unit)) {
@@ -1043,6 +1059,15 @@ _bcm_th3_pfc_deadlock_init(int unit)
     if (_bcm_th3_pfc_lock[unit] == NULL) {
         return BCM_E_MEMORY;
     }
+
+    if (th3_pfc_deinit_notify[unit] == NULL) {
+        th3_pfc_deinit_notify[unit] = sal_sem_create("pfc deinit notify", sal_sem_BINARY, 0);
+        if (th3_pfc_deinit_notify[unit] == NULL) {
+            return BCM_E_MEMORY;
+        }
+    }
+    th3_pfc_init[unit] = TRUE;
+
     return BCM_E_NONE;
 }
 
@@ -1050,9 +1075,19 @@ int _bcm_th3_pfc_deadlock_deinit(int unit)
 {
     _bcm_th3_pfc_deadlock_control_t *pfc_deadlock_control = NULL;
     _bcm_pfc_deadlock_cb_t *pfc_deadlock_cb = NULL;
-
+    uint8 cb_enable = FALSE;
 
     pfc_deadlock_control = _BCM_TH3_PFC_DEADLOCK_CONTROL(unit);
+    if (pfc_deadlock_control != NULL) {
+        cb_enable = pfc_deadlock_control->cb_enabled;
+    }
+    if (th3_pfc_init[unit]) {
+        th3_pfc_init[unit] = FALSE;
+        if (cb_enable == TRUE) {
+            sal_sem_take(th3_pfc_deinit_notify[unit], sal_sem_FOREVER);
+        }
+    }
+    sal_dpc_cancel(INT_TO_PTR(&_th3_pfc_deadlock_cb));
 
     if (pfc_deadlock_control != NULL) {
         sal_free(pfc_deadlock_control);
@@ -1067,6 +1102,12 @@ int _bcm_th3_pfc_deadlock_deinit(int unit)
         sal_mutex_destroy(_bcm_th3_pfc_lock[unit]);
         _bcm_th3_pfc_lock[unit] = NULL;
     }
+
+    if (th3_pfc_deinit_notify[unit] != NULL) {
+        sal_sem_destroy(th3_pfc_deinit_notify[unit]);
+        th3_pfc_deinit_notify[unit] = NULL;
+    }
+
     return BCM_E_NONE;
 }
 

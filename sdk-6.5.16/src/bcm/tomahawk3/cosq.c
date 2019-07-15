@@ -708,6 +708,8 @@ _bcm_th3_cosq_cleanup(int unit)
 #if defined(BCM_TOMAHAWK3_SUPPORT) && defined(INCLUDE_L3)
     bcmi_ecn_map_clean_up(unit);
 #endif
+    (void)_bcm_th3_pfc_deadlock_deinit(unit);
+
     return;
 }
 
