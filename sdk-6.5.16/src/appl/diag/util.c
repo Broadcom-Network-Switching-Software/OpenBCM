@@ -1073,32 +1073,26 @@ parse_pbmp(int unit, char *s, soc_pbmp_t *pbmp)
                 /* Treat port as internal port number */
                 plast = DPORT_FROM_PORT(unit, port);
             } else {
-                /* Port number is port index + 1 */
-                i = 0;
                 plast = -1;
-                /* coverity[overrun-local] */
-                /* Initially, DPORT_SOC_PBMP_ITER macro was being used for
-                   iterating and converting all the dports to ports. Problem
-                   arises when there are spare ports. For the case of
-                   invalid / spare ports, we do not increment i and we get the
-                   wrong value of p which is not meant for the invalid port.
-                   This causes one port shift in the information. So instead
-                   of using the macro, we are iterating by using for loop
-                */
+
+                /* Iterate through the dport map and find the corresponding
+                 * logical port. If the logical port is valid and is the last
+                 * one passed in as the arg, mark it as the last port
+                 */
                 for (p = 0; p < SOC_DPORT_MAX; p++) {
                     tp = soc_dport_to_port(unit, p);
-                    if (tp == -1) {
-                        i++;
-                        continue;
-                    }
-                    if (tp >= 0 && SOC_PBMP_MEMBER(pbmp_temp, p)) {
-                    i += 1;
-                    if (i == port) {
-                        plast = p;
-                        break;
+
+                    /* If the logical port is valid and mapped, and if it's
+                     * the last port from the string passed above, mark it
+                     * as the last port and break out of the loop
+                     */
+                    if (tp >= 0 && SOC_PBMP_MEMBER(pbmp_temp, tp)) {
+                        if (p == port) {
+                            plast = p;
+                            break;
+                        }
                     }
                 }
-            }
             }
             if (plast < 0) {
                 return -1;                      /* error: port out of range */
