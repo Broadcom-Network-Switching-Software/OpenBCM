@@ -9665,7 +9665,14 @@ _bcm_xgs3_fieldoffset_set(int unit, bcm_port_t port,
     if (SOC_IS_TD_TT(unit) || SOC_IS_TRIUMPH3(unit)) {
         sub_field_width[0] = 16;  /* HASH_A0 (16bit) */
         sub_field_width[1] = 16;  /* HASH_B0 (16bit) */
-        sub_field_width[2] = 4;   /* LBN (4bit)      */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            sub_field_width[2] = 6;   /* LBN (6bit)  */
+        } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+        {
+            sub_field_width[2] = 4;   /* LBN (4bit)  */
+        }
         sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)           */
         sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */
         sub_field_width[5] = 8;   /* SW1 LBID ( 8 bit)*/
@@ -9740,7 +9747,14 @@ _bcm_xgs3_fieldoffset_set(int unit, bcm_port_t port,
         if (SOC_IS_TRIUMPH3(unit) || SOC_IS_TD_TT(unit)) {
             sub_field_width[0] = 64;  /* Concat B1,B0,A1,A0(64bit)      */
             sub_field_width[1] = 0;   /* 0                              */ 
-            sub_field_width[2] = 4;   /* LBN (4bit)                     */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)) {
+                sub_field_width[2] = 6;   /* LBN (6bit)                 */
+            } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+            {
+                sub_field_width[2] = 4;   /* LBN (4bit)                 */
+            }
             sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)       */ 
             sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */ 
             sub_field_width[5] = 8;   /* SW1 LBID (8 bit)               */
@@ -10008,7 +10022,14 @@ _bcm_xgs3_fieldoffset_get(int unit, bcm_port_t port,
     if (SOC_IS_TD_TT(unit) || SOC_IS_TRIUMPH3(unit)) {
         sub_field_width[0] = 16;  /* HASH_A0 (16bit) */
         sub_field_width[1] = 16;  /* HASH_B0 (16bit) */
-        sub_field_width[2] = 4;   /* LBN (4bit)      */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            sub_field_width[2] = 6;   /* LBN (6bit)  */
+        } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+        {
+            sub_field_width[2] = 4;   /* LBN (4bit)  */
+        }
         sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)           */
         sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */
         sub_field_width[5] = 8;   /* SW1 LBID ( 8 bit)*/
@@ -10072,7 +10093,14 @@ _bcm_xgs3_fieldoffset_get(int unit, bcm_port_t port,
         if (SOC_IS_TD_TT(unit) || SOC_IS_TRIUMPH3(unit)) {
             sub_field_width[0] = 64;  /* Concat B1,B0,A1,A0(64bit)      */
             sub_field_width[1] = 0;   /* 0                              */ 
-            sub_field_width[2] = 4;   /* LBN (4bit)                     */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)) {
+                sub_field_width[2] = 6;   /* LBN (6bit)                 */
+            } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+            {
+                sub_field_width[2] = 4;   /* LBN (4bit)                 */
+            }
             sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)       */ 
             sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */ 
             sub_field_width[5] = 8;   /* SW1 LBID (8 bit)               */

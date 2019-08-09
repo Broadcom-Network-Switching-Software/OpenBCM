@@ -38091,9 +38091,18 @@ bcm_pbmp_t  pbmp;
     case bcmPortControlLoadBalancingNumber:
 #if defined(BCM_BRADLEY_SUPPORT)
         if (SOC_IS_HBX(unit) || SOC_IS_TRX(unit)) {
-            rv = _bcm_esw_port_tab_set(unit, port, _BCM_CPU_TABS_BOTH,
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+            if (SOC_IS_TOMAHAWK3(unit)) {
+                rv = _bcm_esw_port_tab_set(unit, port, _BCM_CPU_TABS_BOTH,
+                                       RTAG7_PORT_LBNf,
+                                       (value) & 0x3f);
+            } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+            {
+                rv = _bcm_esw_port_tab_set(unit, port, _BCM_CPU_TABS_BOTH,
                                        RTAG7_PORT_LBNf,
                                        (value) & 0xf);
+            }
         }
 #endif /* BCM_BRADLEY_SUPPORT */
         break;
