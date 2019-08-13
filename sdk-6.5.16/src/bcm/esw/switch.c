@@ -9750,12 +9750,13 @@ _bcm_xgs3_fieldoffset_set(int unit, bcm_port_t port,
 #if defined(BCM_TOMAHAWK3_SUPPORT)
             if (SOC_IS_TOMAHAWK3(unit)) {
                 sub_field_width[2] = 6;   /* LBN (6bit)                 */
+                sub_field_width[3] = 64;  /* Concat B1,B0,A1,A0(64bit)  */
             } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
             {
                 sub_field_width[2] = 4;   /* LBN (4bit)                 */
+                sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)   */
             }
-            sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)       */ 
             sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */ 
             sub_field_width[5] = 8;   /* SW1 LBID (8 bit)               */
             sub_field_width[6] = 0;   /* 0                              */
@@ -10096,12 +10097,13 @@ _bcm_xgs3_fieldoffset_get(int unit, bcm_port_t port,
 #if defined(BCM_TOMAHAWK3_SUPPORT)
             if (SOC_IS_TOMAHAWK3(unit)) {
                 sub_field_width[2] = 6;   /* LBN (6bit)                 */
+                sub_field_width[3] = 64;  /* Concat B1,B0,A1,A0(64bit)  */
             } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
             {
                 sub_field_width[2] = 4;   /* LBN (4bit)                 */
+                sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)   */
             }
-            sub_field_width[3] = 16;  /* MH.DPORT/ HASH_A0(16bit)       */ 
             sub_field_width[4] = 8;   /* MH.LBID / IRSEL local LBID (8 bit) */ 
             sub_field_width[5] = 8;   /* SW1 LBID (8 bit)               */
             sub_field_width[6] = 0;   /* 0                              */
@@ -10387,14 +10389,74 @@ _bcm_td_macroflow_hash_info_get(int unit, bcm_switch_control_t type,
     return BCM_E_NONE;
 }
 
+STATIC void
+_bcm_td_macroflow_param_base_get(int unit, int *base_arr, uint8 concat_view) {
+    int sub_sel_id;
+    int sub_field_width[8];
+
+    if (concat_view) {
+        /* sub field width: 64, 0, 4, 64, 8, 8, 0, 0 */
+        sub_field_width[0] = 64;    /* Concat B1,B0,A1,A0(64bit)            */
+        sub_field_width[1] = 0;     /* 0                                    */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            sub_field_width[2] = 6; /* LBN (6bit)                           */
+        } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+        {
+            sub_field_width[2] = 4; /* LBN (4bit)                           */
+        }
+        sub_field_width[3] = 64;    /* Concat B1,B0,A1,A0(64bit)            */
+        sub_field_width[4] = 8;     /* MH.LBID / IRSEL local LBID (8bit)    */
+        sub_field_width[5] = 8;     /* SW1 LBID (8bit)                     */
+        sub_field_width[6] = 0;     /* 0                                    */
+        sub_field_width[7] = 0;     /* 0                                    */
+    } else {
+        /* sub field width: 16, 16, 4, 16, 8, 8, 16, 16 */
+        sub_field_width[0] = 16;    /* HASH_A0 (16bit)                      */
+        sub_field_width[1] = 16;    /* HASH_B0 (16bit)                      */
+#if defined(BCM_TOMAHAWK3_SUPPORT)
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            sub_field_width[2] = 6; /* LBN (6bit)                           */
+        } else
+#endif /* BCM_TOMAHAWK3_SUPPORT */
+        {
+            sub_field_width[2] = 4; /* LBN (4bit)                           */
+        }
+        sub_field_width[3] = 16;    /* MH.DPORT/ HASH_A0(16bit)             */
+        sub_field_width[4] = 8;     /* MH.LBID / IRSEL local LBID (8bit)    */
+        sub_field_width[5] = 8;     /* SW1 LBID ( 8bit)                     */
+        sub_field_width[6] = 16;    /* HASH_A1 (16bit)                      */
+        sub_field_width[7] = 16;    /* HASH_B1 (16bit)                      */
+    }
+
+    /* base[0] = 0
+     * base[1] = base[0] + width of base[0]
+     * base[2] = base[1] + width of base[1]
+     * base[3] = base[2] + width of base[2]
+     * base[4] = base[3] + width of base[3]
+     * base[5] = base[4] + width of base[4]
+     * base[6] = base[5] + width of base[5]
+     * base[7] = base[6] + width of base[6]
+     * base[8] = base[7] + width of base[7]
+     */
+    if (base_arr) {
+        base_arr[0] = 0;
+        for (sub_sel_id=1 ; sub_sel_id<=8 ; sub_sel_id++) {
+            base_arr[sub_sel_id] =
+                base_arr[sub_sel_id-1] + sub_field_width[sub_sel_id-1];
+        }
+    }
+    return;
+}
+
 STATIC int
 _bcm_td_macroflow_param_get(int unit, bcm_switch_control_t type,
                             int **sub_field_base, int *min_offset,
                             int *max_offset, int *stride_offset,
                             int *concat_enable)
 {
-    /* sub field width: 16, 16, 4, 16, 8, 8, 16, 16 */
-    static int base[] = { 0, 16, 32, 36, 52, 60, 68, 84, 100 };
+    static int base[9];
     rtag7_flow_based_hash_entry_t entry;
     int min, max, stride;
     int index, offset;
@@ -10416,32 +10478,14 @@ _bcm_td_macroflow_param_get(int unit, bcm_switch_control_t type,
                                   hash_info.sub_f);
     fval = soc_mem_field32_get(unit, hash_info.regmem, &entry,
                                hash_info.offset_f);
+
+    _bcm_td_macroflow_param_base_get(unit, base, 0);
+
     if (hash_info.concat_f != -1) {
         concat_value = soc_mem_field32_get(unit, hash_info.regmem, &entry,
                                            hash_info.concat_f);
-        if (hash_info.hash_concat || concat_value) {
-            /* sub field width: 64, 0, 4, 64, 8, 8, 0, 0 */
-            base[0] = 0;
-            base[1] = 64;  /* base[1] = base[0] + width of base[0] */
-            base[2] = 64;  /* base[2] = base[1] + width of base[1] */
-            base[3] = 68;  /* base[3] = base[2] + width of base[2] */
-            base[4] = 132; /* base[4] = base[3] + width of base[3] */
-            base[5] = 140; /* base[5] = base[4] + width of base[4] */
-            base[6] = 148; /* base[6] = base[5] + width of base[5] */
-            base[7] = 148; /* base[7] = base[6] + width of base[6] */
-            base[8] = 148; /* base[8] = base[7] + width of base[7] */
-        } else {
-            /* sub field width: 16, 16, 4, 16, 8, 8, 16, 16 */
-            base[0] = 0;
-            base[1] = 16;  /* base[1] = base[0] + width of base[0] */
-            base[2] = 32;  /* base[2] = base[1] + width of base[1] */
-            base[3] = 36;  /* base[3] = base[2] + width of base[2] */
-            base[4] = 52;  /* base[4] = base[3] + width of base[3] */
-            base[5] = 60;  /* base[5] = base[4] + width of base[4] */
-            base[6] = 68;  /* base[6] = base[5] + width of base[5] */
-            base[7] = 84;  /* base[7] = base[6] + width of base[6] */
-            base[8] = 100; /* base[8] = base[7] + width of base[7] */
-        }
+        _bcm_td_macroflow_param_base_get(unit,
+            base, (hash_info.hash_concat || concat_value));
     }
     min = base[sub_sel] + fval;
 
