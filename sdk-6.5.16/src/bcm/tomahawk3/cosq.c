@@ -281,7 +281,7 @@ _bcm_th3_cosq_wb_alloc(int unit)
     _bcm_th3_mmu_info_t *mmu_info = NULL;
     soc_scache_handle_t scache_handle;
     uint8 *scache_ptr = NULL;
-    int rv, alloc_size = 0, max_size = 4096 * 5;
+    int rv, alloc_size = 0, max_size = 4096 * 11;
     _bcm_th3_cosq_cpu_port_info_t *cpu_port_info = NULL;
 
     mmu_info = _bcm_th3_mmu_info[unit];
