@@ -1625,12 +1625,20 @@ do_dump_table(int unit, soc_mem_t mem,
                         }
                     } else {
                         if (mem == L3_ENTRY_DOUBLEm) {
-                            if ((soc_mem_field32_get(unit, mem, entry, BASE_VALID_0f) != 1) ||
-                                (soc_mem_field32_get(unit, mem, entry, BASE_VALID_1f) != 2) ||
-                                ((soc_mem_field32_get(unit, mem, entry, KEY_TYPEf) != 4) &&
-                                 (soc_mem_field32_get(unit, mem, entry, KEY_TYPEf) != 2))) {
+                            if (soc_mem_field32_get(unit, mem, entry, KEY_TYPEf) == 2) {
+                                if ((soc_mem_field32_get(unit, mem, entry, BASE_VALID_0f) != 1) ||
+                                    (soc_mem_field32_get(unit, mem, entry, BASE_VALID_1f) != 2)) {
+                                    continue;
+                                }
+                            } else if (soc_mem_field32_get(unit, mem, entry, KEY_TYPEf) == 4) {
+                                if ((soc_mem_field32_get(unit, mem, entry, BASE_VALID_0f) != 1) ||
+                                    (soc_mem_field32_get(unit, mem, entry, BASE_VALID_1f) != 7)) {
+                                    continue;
+                                }
+                            } else {
                                 continue;
                             }
+
                         }
                     }
                 }

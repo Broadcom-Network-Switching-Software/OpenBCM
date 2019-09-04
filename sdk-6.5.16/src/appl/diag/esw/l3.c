@@ -88,12 +88,12 @@ _ipmc_cmd_entry_print(int unit, bcm_ipmc_addr_t *info, void *cookie)
         cli_out("MC  IP ADDRESS: %s\n", mc_ip_str);
         cli_out("VLAN  MOD  PORT V COS  TS   ");
         cli_out("%s     %s     %s  %s  %s\n", "Group", "GroupL2", "VRF", "CLASS", "HIT");
-        cli_out("%3d %4d %5d %2d %3d %3d   0x%x 0x%x %2d,%5d,%4s\n",
+        cli_out("%3d %4d %5d %2d %3d %3d   0x%x 0x%x %2d,%5d,%4s %6d\n",
                 info->vid, info->mod_id, info->port_tgid,
                 info->v, info->cos,
                 info->ts, info->group, info->group_l2,
                 info->vrf, info->lookup_class,
-                (info->flags & BCM_IPMC_HIT) ? "y" :"no");
+                (info->flags & BCM_IPMC_HIT) ? "y" :"no", info->l3a_intf);
     } else {
         format_ipaddr(s_ip_str, info->s_ip_addr);
         format_ipaddr(mc_ip_str, info->mc_ip_addr);
@@ -102,8 +102,8 @@ _ipmc_cmd_entry_print(int unit, bcm_ipmc_addr_t *info, void *cookie)
                 info->mod_id, info->port_tgid,
                 info->v, info->cos, info->ts, info->group,
                 info->vrf);
-        cli_out("0x%x %d %6s\n",
-                info->group_l2, info->lookup_class, (info->flags & BCM_IPMC_HIT) ? "y" :"no");
+        cli_out("0x%x %d %6s %6d\n",
+                info->group_l2, info->lookup_class, (info->flags & BCM_IPMC_HIT) ? "y" :"no", info->l3a_intf);
 
     }
     return (BCM_E_NONE);
@@ -420,8 +420,8 @@ if_ipmc(int unit, args_t *a)
         cli_out("SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS ");
         cli_out("TS   GROUP     %s\n",
                 "VRF");
-        cli_out("%s %s %s\n",
-                "GROUP-L2 ", "CLASS", "HIT");
+        cli_out("%s %s %s %s\n",
+                "GROUP-L2 ", "CLASS", "HIT", "L3_IIF");
         if (one_entry_only) {
             /* bcm_ipmc_get_by_index is deprecated */
             r = BCM_E_UNAVAIL;
