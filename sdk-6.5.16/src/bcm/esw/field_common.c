@@ -22586,6 +22586,14 @@ _field_slice_enable_set(int            unit,
                         )
 {
     if (stage_fc->flags & _FP_STAGE_SLICE_ENABLE) {
+#if defined (BCM_TOMAHAWK_SUPPORT)
+        if ((soc_feature(unit, soc_feature_field_multi_pipe_support)) &&
+            ((fg->stage_id == _BCM_FIELD_STAGE_LOOKUP) ||
+             (fg->stage_id == _BCM_FIELD_STAGE_EGRESS))) {
+            return (_bcm_field_th_slice_enable_set(unit,
+                                                   fg, fs, 1));
+        }
+#endif
 #ifdef BCM_TRIUMPH3_SUPPORT
         if (SOC_IS_TRIUMPH3(unit)) {
             return (_bcm_field_tr3_slice_enable_set(unit, stage_fc, fg, fs, 1));

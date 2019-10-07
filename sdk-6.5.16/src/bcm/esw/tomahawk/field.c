@@ -29271,8 +29271,8 @@ _bcm_field_th_tcam_policy_clear(int unit, _field_entry_t *f_ent, int tcam_idx)
        if (BCM_FAILURE(_bcm_field_th_slice_enable_set(unit, f_ent->group,
                                                       fs, 0))) {
            LOG_WARN(BSL_LS_BCM_FP, (BSL_META("Failed to Disable Field"
-                                     " Slice[%d] for Entry[%d].\n\r"),
-                                       fs->slice_number, f_ent->eid));
+                                 " Slice[%d] for Entry[%d].\n\r"),
+                                   fs->slice_number, f_ent->eid));
        }
        fs->slice_flags &= ~_BCM_FIELD_SLICE_HW_ENABLE;
        /* Decrement the HW Slice entry count */
