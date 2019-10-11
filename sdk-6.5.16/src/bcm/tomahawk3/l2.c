@@ -49,6 +49,7 @@
 int _th3_l2_init[BCM_MAX_NUM_UNITS];
 
 static _bcm_l2_match_ctrl_t *_bcm_th3_l2_match_ctrl[BCM_MAX_NUM_UNITS];
+static sal_sem_t _bcm_th3_l2_cb_check[BCM_MAX_NUM_UNITS];
 
 /****************************************************************************
  *
@@ -293,6 +294,14 @@ bcm_tomahawk3_l2_init(int unit)
     }
 #endif /* BCM_WARM_BOOT_SUPPORT */
 
+    if (_bcm_th3_l2_cb_check[unit] == NULL) {
+        _bcm_th3_l2_cb_check[unit] = sal_sem_create("l2 callback check",
+                                                    sal_sem_BINARY, 1);
+        if (_bcm_th3_l2_cb_check[unit] == NULL) {
+            return BCM_E_MEMORY;
+        }
+    }
+
     _th3_l2_init[unit] = 1;
     return BCM_E_NONE;
 }
@@ -329,6 +338,11 @@ bcm_tomahawk3_l2_detach(int unit)
      * Call chip-dependent finalization
      */
     SOC_IF_ERROR_RETURN(mbcm_driver[unit]->mbcm_l2_term(unit));
+
+    if (_bcm_th3_l2_cb_check[unit] != NULL) {
+        sal_sem_destroy(_bcm_th3_l2_cb_check[unit]);
+        _bcm_th3_l2_cb_check[unit] = NULL;
+    }
 
     _th3_l2_init[unit] = 0;
 
@@ -642,10 +656,16 @@ _bcm_th3_l2_register_callback(int unit,
             }
         }
 
-        /* The entries are now set up.  Make the callbacks */
+        if (_bcm_th3_l2_cb_check[unit] != NULL) {
+            sal_sem_take(_bcm_th3_l2_cb_check[unit], sal_sem_FOREVER);
+        }
+
+        /* The entries are now set up. Make the callbacks */
         if (entry_del != NULL) {
-            _bcm_th3_l2_cbs[unit](unit, &l2addr_del, 0,
-                                  _bcm_th3_l2_cb_data[unit]);
+            if (_bcm_th3_l2_cbs[unit] != NULL) {
+                _bcm_th3_l2_cbs[unit](unit, &l2addr_del, 0,
+                                      _bcm_th3_l2_cb_data[unit]);
+            }
         }
 
         if (pflags & SOC_L2X_ENTRY_OVERFLOW) {
@@ -653,8 +673,14 @@ _bcm_th3_l2_register_callback(int unit,
         }
 
         if (entry_add != NULL) {
-            _bcm_th3_l2_cbs[unit](unit, &l2addr_add, 1,
-                                  _bcm_th3_l2_cb_data[unit]);
+            if (_bcm_th3_l2_cbs[unit] != NULL) {
+                _bcm_th3_l2_cbs[unit](unit, &l2addr_add, 1,
+                                      _bcm_th3_l2_cb_data[unit]);
+            }
+        }
+
+        if (_bcm_th3_l2_cb_check[unit] != NULL) {
+            sal_sem_give(_bcm_th3_l2_cb_check[unit]);
         }
     }
 }
@@ -3578,6 +3604,9 @@ bcm_tomahawk3_l2_addr_unregister(int unit,
 
     TH3_L2_INIT(unit);
     L2_MUTEX(unit);
+    if (_bcm_th3_l2_cb_check[unit] != NULL) {
+        sal_sem_take(_bcm_th3_l2_cb_check[unit], sal_sem_FOREVER);
+    }
     L2_LOCK(unit);
 
     for (i = 0; i < L2_CB_MAX; i++) {
@@ -3600,6 +3629,9 @@ bcm_tomahawk3_l2_addr_unregister(int unit,
     }
 
     L2_UNLOCK(unit);
+    if (_bcm_th3_l2_cb_check[unit] != NULL) {
+        sal_sem_give(_bcm_th3_l2_cb_check[unit]);
+    }
     return (rv);
 }
 
