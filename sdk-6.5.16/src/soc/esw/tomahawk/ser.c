@@ -6244,6 +6244,7 @@ _soc_tomahawk_ser_process_clmac(int unit, int block_info_idx,
     uint64 rval64;
     uint32 has_error = FALSE, rval = 0;
     int log_port;
+    int single_bit = 0, double_bit = 0;
     soc_stat_t *stat = SOC_STAT(unit);
 
     COMPILER_64_ZERO(rval64);
@@ -6252,12 +6253,24 @@ _soc_tomahawk_ser_process_clmac(int unit, int block_info_idx,
     }
 
     PBMP_ITER(SOC_BLOCK_BITMAP(unit, block_info_idx), log_port) {
+        single_bit = 0;
+        double_bit = 0;
         if (SOC_REG_IS_64(unit, info->intr_status_reg)) {
             SOC_IF_ERROR_RETURN
                      (soc_reg_get(unit, info->intr_status_reg, log_port, 0, &rval64));
             if (soc_reg64_field32_get(unit, info->intr_status_reg,
                                           rval64, info->intr_status_field)) {
                 has_error = TRUE;
+                if (info->intr_status_field == SUM_TX_CDC_SINGLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_CDC_SINGLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_TS_MEM_SINGLE_BIT_ERRf) {
+                    single_bit = 1;
+                }
+                if (info->intr_status_field == SUM_TX_CDC_DOUBLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_CDC_DOUBLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_TS_MEM_DOUBLE_BIT_ERRf) {
+                    double_bit = 1;
+                }
             }
             if ((info->intr_clr_reg != INVALIDr) && (INVALIDf != info->intr_clr_field)) {
                 COMPILER_64_ZERO(rval64);
@@ -6272,12 +6285,31 @@ _soc_tomahawk_ser_process_clmac(int unit, int block_info_idx,
             if (soc_reg_field_get(unit, info->intr_status_reg, rval,
                                   info->intr_status_field)) {
                 has_error = TRUE;
+                if (info->intr_status_field == SUM_TX_CDC_SINGLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_CDC_SINGLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_TS_MEM_SINGLE_BIT_ERRf) {
+                    single_bit = 1;
+                }
+                if (info->intr_status_field == SUM_TX_CDC_DOUBLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_CDC_DOUBLE_BIT_ERRf ||
+                    info->intr_status_field == SUM_RX_TS_MEM_DOUBLE_BIT_ERRf) {
+                    double_bit = 1;
+                }
             }
             if ((info->intr_clr_reg != INVALIDr) && (INVALIDf != info->intr_clr_field)) {
                  SOC_IF_ERROR_RETURN(soc_reg32_get(unit, info->intr_clr_reg, log_port, 0, &rval));
                  soc_reg_field_set(unit, info->intr_clr_reg, &rval, info->intr_clr_field,0);
                  SOC_IF_ERROR_RETURN(soc_reg32_set(unit, info->intr_clr_reg, log_port, 0, rval));
             }
+        }
+
+        if (single_bit) {
+            soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                               SOC_SWITCH_EVENT_DATA_ERROR_AUTO_CORRECTED, 0, 0);
+        }
+        if (double_bit) {
+            soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                               SOC_SWITCH_EVENT_DATA_ERROR_UNCORRECTABLE, 0, 0);
         }
     }
 
@@ -6299,11 +6331,16 @@ _soc_tomahawk_ser_process_clmac(int unit, int block_info_idx,
 STATIC int
 _soc_tomahawk_ser_process_cdmac(int unit, int block_info_idx,
                               const _soc_th_ser_info_t *info,
-                              char *prefix_str, char *mem_str)
+                              char *prefix_str, char *mem_str,
+                              soc_block_t blocktype)
 {
     uint32 has_error = FALSE, rval = 0;
     int log_port;
     int i = 0;
+    int single_bit = 0, double_bit = 0;
+    /* Mask is based on the bits in intr_status_reg */
+    uint32 single_bit_mask = 0x5, double_bit_mask = 0x80a;
+    soc_stat_t *stat = SOC_STAT(unit);
 
     if ((info->intr_status_reg == INVALIDr) ||
         ((INVALIDf == info->intr_status_field) &&
@@ -6312,10 +6349,18 @@ _soc_tomahawk_ser_process_cdmac(int unit, int block_info_idx,
     }
 
     PBMP_ITER(SOC_BLOCK_BITMAP(unit, block_info_idx), log_port) {
+        single_bit = 0;
+        double_bit = 0;
         for(i = 0; i < 2; i++) {
             SOC_IF_ERROR_RETURN(soc_reg32_get(unit, info->intr_status_reg, log_port, i, &rval));
             if (rval != 0) {
                 has_error = TRUE;
+                if (rval & single_bit_mask) {
+                    single_bit = 1;
+                }
+                if (rval & double_bit_mask) {
+                    double_bit = 1;
+                }
             }
             if ((info->intr_clr_reg != INVALIDr) && (INVALIDf != info->intr_clr_field)) {
                  SOC_IF_ERROR_RETURN(soc_reg32_get(unit, info->intr_clr_reg, log_port, i, &rval));
@@ -6323,6 +6368,19 @@ _soc_tomahawk_ser_process_cdmac(int unit, int block_info_idx,
                  SOC_IF_ERROR_RETURN(soc_reg32_set(unit, info->intr_clr_reg, log_port, i, rval));
             }
         }
+        if (single_bit) {
+            soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                               SOC_SWITCH_EVENT_DATA_ERROR_AUTO_CORRECTED, 0, 0);
+        }
+        if (double_bit) {
+            soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                               SOC_SWITCH_EVENT_DATA_ERROR_UNCORRECTABLE, 0, 0);
+        }
+    }
+
+    if (has_error) {
+        soc_ser_stat_update(unit, 0, blocktype, SOC_PARITY_TYPE_PARITY,
+                            0, SocSerCorrectTypeNoAction, stat);
     }
 
     if (!has_error) {
@@ -6899,10 +6957,10 @@ _soc_tomahawk_ser_process_mac(int unit, int block_info_idx, int pipe, int port,
         double_bit = soc_reg64_field32_get(unit, reg, rval, double_bit_f);
         if (single_bit || double_bit) {
             has_error = TRUE;
-            soc_event_generate(unit, SOC_SWITCH_EVENT_DATA_ERROR_PARITY,
+            soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
                                SOC_SWITCH_EVENT_DATA_ERROR_ECC, 0, 0);
             if (double_bit) {
-                soc_event_generate(unit, SOC_SWITCH_EVENT_DATA_ERROR_PARITY,
+                soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
                                    SOC_SWITCH_EVENT_DATA_ERROR_UNCORRECTABLE, 0, 0);
                 LOG_WARN(BSL_LS_SOC_SER,
                           (BSL_META_U(unit,
@@ -6910,7 +6968,7 @@ _soc_tomahawk_ser_process_mac(int unit, int block_info_idx, int pipe, int port,
                            prefix_str, mem_str_ptr, port));
                 db = TRUE;
             } else {
-                soc_event_generate(unit, SOC_SWITCH_EVENT_DATA_ERROR_PARITY,
+                soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
                                    SOC_SWITCH_EVENT_DATA_ERROR_AUTO_CORRECTED, 0, 0);
                 LOG_WARN(BSL_LS_SOC_SER,
                           (BSL_META_U(unit,
@@ -7074,7 +7132,7 @@ _soc_tomahawk_process_ser(int unit, int block_info_idx, int inst, int pipe,
         case _SOC_PARITY_TYPE_CDMAC:
             SOC_IF_ERROR_RETURN
                  (_soc_tomahawk_ser_process_cdmac(unit, block_info_idx, info,
-                                                  prefix_str, mem_str));
+                                                  prefix_str, mem_str, blocktype));
             break;
 #endif
         case _SOC_PARITY_TYPE_MAC_TX_CDC:
@@ -8176,6 +8234,8 @@ soc_tomahawk_process_ser_fifo(int unit, soc_block_t blk, int pipe,
                               (BSL_META_U(unit,
                                           "%s SER mem address un-accessable !!\n"),
                                blk_str));
+                    soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                                       SOC_SWITCH_EVENT_DATA_ERROR_UNCORRECTABLE, 0, 0);
                     soc_ser_stat_update(unit, 0, blk,
                                         ecc_parity == 0 ? SOC_PARITY_TYPE_PARITY :
                                         SOC_PARITY_TYPE_ECC,
@@ -8266,6 +8326,8 @@ soc_tomahawk_process_ser_fifo(int unit, soc_block_t blk, int pipe,
                               (BSL_META_U(unit,
                                           "%s SER reg address un-accessable !!\n"),
                                blk_str));
+                    soc_event_generate(unit, SOC_SWITCH_EVENT_PARITY_ERROR,
+                                       SOC_SWITCH_EVENT_DATA_ERROR_UNCORRECTABLE, 0, 0);
                     soc_ser_stat_update(unit, 0, blk,
                                         ecc_parity == 0 ? SOC_PARITY_TYPE_PARITY :
                                         SOC_PARITY_TYPE_ECC,
