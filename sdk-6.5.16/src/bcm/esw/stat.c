@@ -3607,7 +3607,7 @@ _bcm_stat_custom_to_bit(int unit, int chan, bcm_custom_stat_trigger_t trigger,
         break;
     case bcmDbgCntMTUERR:
         _BCM_TD3_BIT_SET(unit, result, 116); /* MTU_CHECK_FAIL */
-        _BCM_TH3_BIT_SET(unit, result, 32);
+        _BCM_TH3_BIT_SET(unit, result, 82);
         _BCM_DEFAULT_BIT_SET(unit, result, 23);
         break;
     case bcmDbgCntRTUN:
