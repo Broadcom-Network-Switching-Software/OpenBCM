@@ -1506,7 +1506,8 @@ int
 _bcm_th3_trunk_member_info_set(int unit, bcm_trunk_t tid,
               uint16 num_ports, uint8  *member_port, uint32 *member_flags)
 {
-    int i;
+    int i, rv;
+    bcm_module_t mod = 0;
     /* Save new trunk member info. Free up the old memory and allocate new space
      * since there may be a different number of entries. */
 
@@ -1537,6 +1538,11 @@ _bcm_th3_trunk_member_info_set(int unit, bcm_trunk_t tid,
     for (i = 0; i < num_ports; i++) {
         MEMBER_INFO(unit, tid).port[i] = member_port[i];
         MEMBER_INFO(unit, tid).member_flags[i] = member_flags[i];
+        /* restore inverted relationship also */
+        if ((rv = _bcm_th3_trunk_port_map_set(unit, mod,
+                 member_port[i], tid)) != BCM_E_NONE) {
+            return rv;
+        }
     }
     return BCM_E_NONE;
 }
