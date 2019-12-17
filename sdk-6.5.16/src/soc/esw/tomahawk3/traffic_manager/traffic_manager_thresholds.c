@@ -1685,7 +1685,7 @@ _soc_th3_mmu_config_thdo_per_itm_set_hw(int unit, _soc_mmu_cfg_buf_t *buf,
     /* Per-ITM Per-Pool programming */
     for (idx = 0; idx < _TH3_MMU_NUM_POOL; idx++) {
         limit = _soc_th3_get_shared_limit(unit, buf, idx);
-        buf_pool = &buf->pools[idx];
+        buf_pool = &buf->pools_itm[0][idx];
 
         if ((buf_pool->total != 0) &&
             ((limit - pool_resume) > 0)) {
@@ -2233,6 +2233,7 @@ _soc_th3_mmu_cfg_buf_calculate(int unit, _soc_mmu_cfg_buf_t *buf,
     int queue_min_itm[SOC_MMU_CFG_ITM_MAX][SOC_MMU_CFG_SERVICE_POOL_MAX];
     int qgroup_min_itm[SOC_MMU_CFG_ITM_MAX][SOC_MMU_CFG_SERVICE_POOL_MAX];
     int mcq_entry_reserved_itm[SOC_MMU_CFG_ITM_MAX][SOC_MMU_CFG_SERVICE_POOL_MAX];
+    int hdrm_pool_id, port_prof;
 
     si = &SOC_INFO(unit);
 
@@ -2274,7 +2275,9 @@ _soc_th3_mmu_cfg_buf_calculate(int unit, _soc_mmu_cfg_buf_t *buf,
         /* pg headroom and pg min */
         for (idx = 0; idx < _SOC_MMU_CFG_DEV_PG_NUM(devcfg); idx++) {
             buf_prigroup = &buf_port->prigroups[idx];
-            
+            port_prof = buf_port->prigroup_profile_idx;
+            hdrm_pool_id =
+            buf->mapprofiles[port_prof].prigroup_to_headroompool[idx];
             if (buf_prigroup->user_delay != -1 &&
                 buf_prigroup->switch_delay != -1) {
                 /*
@@ -2296,7 +2299,7 @@ _soc_th3_mmu_cfg_buf_calculate(int unit, _soc_mmu_cfg_buf_t *buf,
             for (itm = 0; itm < SOC_MMU_CFG_ITM_MAX; itm ++) {
                 itm_map = si->itm_ipipe_map[itm];
                 if (itm_map & (1 << pipe)) {
-                    headroom_itm[itm][buf_prigroup->pool_idx] += buf_prigroup->headroom;
+                    headroom_itm[itm][hdrm_pool_id] += buf_prigroup->headroom;
                     pg_min_itm[itm][buf_prigroup->pool_idx] += buf_prigroup->guarantee;
 
                 }
@@ -2517,7 +2520,7 @@ _soc_th3_mmu_cfg_buf_check(int unit, _soc_mmu_cfg_buf_t *buf,
     pool_map = 0;
 
     for (idx = 0; idx < _TH3_MMU_NUM_POOL; idx++) {
-        buf_pool = &buf->pools[idx];
+        buf_pool = &buf->pools_itm[0][idx];
         if (buf_pool->total != 0) {
             pool_map |= 1 << idx;
         }
@@ -2620,13 +2623,6 @@ _soc_th3_mmu_cfg_buf_check(int unit, _soc_mmu_cfg_buf_t *buf,
                                     "MMU config profile %d prigroup %d: "
                                     "Invalid pool value (%d)\n"),
                          profile_idx, idx, buf_map_profiles->prigroup_to_headroompool[idx]));
-                /* Set to default headroompool pool */
-                buf_map_profiles->prigroup_to_headroompool[idx] = 0;
-            } else if (!(pool_map & (1 << buf_map_profiles->prigroup_to_headroompool[idx]))) {
-                LOG_CLI((BSL_META_U(unit,
-                                    "MMU config profile %d prigroup %d: "
-                                    "Headroom Pool %d has no space and cannot be assigned\n"),
-                         profile_idx, idx,  buf_map_profiles->prigroup_to_headroompool[idx]));
                 /* Set to default headroompool pool */
                 buf_map_profiles->prigroup_to_headroompool[idx] = 0;
             }
