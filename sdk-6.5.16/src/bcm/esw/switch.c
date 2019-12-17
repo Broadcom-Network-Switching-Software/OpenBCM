@@ -28139,7 +28139,6 @@ bcm_esw_switch_hash_banks_config_set(int unit,
             BCM_IF_ERROR_RETURN
                 (soc_tomahawk3_hash_bank_number_get(unit, mem,bank_num,
                                                    &phy_bank_num));
-            hash_type = BCM_HASH_CRC32L;
         } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
 #ifdef BCM_TOMAHAWK_SUPPORT
@@ -28168,6 +28167,14 @@ bcm_esw_switch_hash_banks_config_set(int unit,
                 (soc_trident2_hash_bank_number_get(unit, mem, bank_num,
                                                    &phy_bank_num));
         }
+#ifdef BCM_TOMAHAWK3_SUPPORT
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            if ((hash_type != BCM_HASH_CRC32L) &&
+                (hash_type != BCM_HASH_OFFSET)) {
+                return BCM_E_PARAM;
+            }
+        }
+#endif /* BCM_TOMAHAWK3_SUPPORT */
         switch (hash_type) {
         case BCM_HASH_ZERO:
             offset = 48;
@@ -28187,12 +28194,6 @@ bcm_esw_switch_hash_banks_config_set(int unit,
                 zero = TRUE;
             }
 #endif /* BCM_TRIDENT3_SUPPORT */
-#ifdef BCM_TOMAHAWK3_SUPPORT
-            if (SOC_IS_TOMAHAWK3(unit)) {
-                offset = 32;
-                zero = TRUE;
-            }
-#endif /* BCM_TOMAHAWK3_SUPPORT */
             break;
         case BCM_HASH_CRC16L:
             offset = 32;
