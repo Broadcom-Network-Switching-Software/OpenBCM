@@ -1277,7 +1277,7 @@ th_alpm_key_sel_init(int u)
     };
 
     urpf_enb = !!SOC_URPF_STATUS_GET(u);
-    lpm_128b = !!soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1);
+    lpm_128b = !!SOC_ALPM_128B_ENABLE(u);
 
     if (soc_reg_field_valid(u, kselr, KEY_SEL_CAM0_1f)) {
         i = lpm_128b;

@@ -8531,7 +8531,7 @@ soc_alpm_lpm_init(int u)
             } 
         }
         SOC_IF_ERROR_RETURN(WRITE_L3_DEFIP_ALPM_CFGr(u, rval));
-        if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+        if (SOC_ALPM_128B_ENABLE(u)) {
             uint32 defip_key_sel_val = 0;
 
             SOC_IF_ERROR_RETURN(READ_L3_DEFIP_KEY_SELr(u, &defip_key_sel_val));
@@ -10404,7 +10404,7 @@ _soc_alpm_pivot_max_get(int u, alpm_vrf_counter_t *pvt_max)
     pvt_max->v4 = soc_mem_index_count(u, L3_DEFIPm) * 2;
     pvt_max->v6_128 = soc_mem_index_count(u, L3_DEFIP_PAIR_128m);
 
-    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+    if (SOC_ALPM_128B_ENABLE(u)) {
         pvt_max->v6_64 = pvt_max->v6_128;
     } else {
         pvt_max->v6_64 = pvt_max->v4 >> 1;

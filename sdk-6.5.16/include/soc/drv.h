@@ -2509,6 +2509,9 @@ extern int SOC_BLOCK_IN_LIST(int *blk, int type);
 #define SOC_FP_TCAM_SCACHE_HANDLE(unit) \
     SOC_CONTROL(unit)->fp_tcam_scache_ptr
 
+#define SOC_ALPM_128B_ENABLE(unit) \
+    (SOC_L3_DEFIP_MAX_128B_ENTRIES(unit) > 0 ? 1 : 0)
+
 /* URPF on/off set/get macros */
 #define SOC_L2X_GROUP_ENABLE_GET(_unit_) (SOC_CONTROL(_unit_)->l2x_group_enable)
 #define SOC_L2X_GROUP_ENABLE_SET(_unit_, _status_) \

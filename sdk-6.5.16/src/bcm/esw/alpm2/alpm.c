@@ -4473,19 +4473,13 @@ bcm_esw_alpm_ctrl_init(int u)
         ALPM_MODE_CHK(u, BCM_ALPM_MODE_TCAM_ALPM)) {
         ALPM_TCAM_ZONED(u) = TRUE;
     }
-    ALPM_128B(u) = soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1);
-    /* 256 entries per TCAM, 2 TCAMs per block, 4 blocks in total.
-     * by default we have 2 blocks paired. */
-    if (ALPM_128B(u)) {
-        pair_ent_cnt = soc_property_get(u, spn_NUM_IPV6_LPM_128B_ENTRIES,
-                                        def_ipv6_128b_entries);
-        if (pair_ent_cnt > (def_ipv6_128b_entries * 2)) {
-            pair_ent_cnt = def_ipv6_128b_entries * 2;
-        }
-        if (pair_ent_cnt == 0) {
-            ALPM_ERR(("ALPM wrong config! ipv6_lpm_128b_enable=1 "
-                      "with num_ipv6_lpm_128b_entries=0\n"));
-        }
+
+    /* Due to swith control L3Max128BV6Entries, pair_ent_cnt
+       shouldn't come directly from spn_NUM_IPV6_LPM_128B_ENTRIES */
+    ALPM_128B(u) = SOC_ALPM_128B_ENABLE(u);
+    pair_ent_cnt = SOC_L3_DEFIP_MAX_128B_ENTRIES(u);
+    if (pair_ent_cnt > (def_ipv6_128b_entries * 2)) {
+        pair_ent_cnt = def_ipv6_128b_entries * 2;
     }
 
     ALPM_TCAM_PAIR_BLK_CNT(u) = (pair_ent_cnt + (tcam_depth - 1)) / tcam_depth;

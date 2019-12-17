@@ -748,7 +748,7 @@ _soc_th_alpm_ctrl_init(int u)
         ALPM_CTRL(u).fld.key_mode               = MODEf;
         ALPM_CTRL(u).fld.key_type               = ENTRY_TYPEf;
     }
-    ALPM_CTRL(u)._alpm_128b = soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1);
+    ALPM_CTRL(u)._alpm_128b = SOC_ALPM_128B_ENABLE(u);
     if (ALPM_CTRL(u)._alpm_128b) {
         ALPM_CTRL(u)._alpm_128b_bkt_rsvd =
             soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0);
@@ -9651,7 +9651,7 @@ soc_alpm_key_sel_reg_init(int u)
     };
 
     urpf_enb = !!SOC_URPF_STATUS_GET(u);
-    lpm_128b = !!soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1);
+    lpm_128b = !!SOC_ALPM_128B_ENABLE(u);
 
     if (soc_reg_field_valid(u, kselr, KEY_SEL_CAM0_1f)) {
         i = lpm_128b;
@@ -11770,7 +11770,7 @@ _soc_th_alpm_pivot_max_get(int u, alpm_vrf_counter_t *pvt_max)
     pvt_max->v4 = soc_mem_index_count(u, L3_DEFIPm) * 2;
     pvt_max->v6_128 = soc_mem_index_count(u, L3_DEFIP_PAIR_128m);
 
-    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+    if (SOC_ALPM_128B_ENABLE(u)) {
         pvt_max->v6_64 = pvt_max->v6_128;
     } else {
         pvt_max->v6_64 = pvt_max->v4 >> 1;

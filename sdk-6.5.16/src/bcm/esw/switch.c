@@ -26753,6 +26753,8 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
         soc_property_get(u, spn_L3_ALPM_ENABLE, 0)) {
         if (SOC_IS_TD2_TT2(u)){
             int rv = BCM_E_NONE;
+            int alpm_128b_enable = SOC_ALPM_128B_ENABLE(u);
+
             int (* soc_alpm_capacity_get)(int, int, int *, int *) = NULL;
 #if defined(BCM_TOMAHAWK_SUPPORT) || defined(BCM_APACHE_SUPPORT)
 #if defined(BCM_TOMAHAWK_SUPPORT)
@@ -26776,7 +26778,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes64bMax:
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         *entries = 0;
                     } else {
                         rv = (* soc_alpm_capacity_get)(u,
@@ -26786,7 +26788,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes128bMax:
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         rv = (* soc_alpm_capacity_get)(u, 
                                 L3_DEFIP_ALPM_IPV6_128m, entries, NULL);
                     } else {
@@ -26802,7 +26804,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes64bMinGuaranteed :
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         *entries = 0;
                     } else {
                         rv = (* soc_alpm_capacity_get)(u,
@@ -26812,7 +26814,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes128bMinGuaranteed:
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         rv = (* soc_alpm_capacity_get)(u,
                                 L3_DEFIP_ALPM_IPV6_128m, NULL, entries);
                     } else {
@@ -26822,51 +26824,55 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV4RoutesFree:
-                    if (!soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1) ||
-                        !soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0)) {
-                        return BCM_E_UNAVAIL;
-                    }
+                    if (alpm_128b_enable &&
+                        soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0) &&
+                        SOC_IS_TOMAHAWKX(u)) {
 
-                    if (!SOC_IS_TOMAHAWKX(u)) {
-                        return BCM_E_UNAVAIL;
-                    }
-
-                    rv = (* soc_alpm_capacity_get)(u,
+                        rv = (* soc_alpm_capacity_get)(u,
                                 L3_DEFIP_ALPM_IPV4m, NULL, entries);
-                    *entries -= BCM_XGS3_L3_DEFIP_IP4_CNT(u);
-                    return rv;
+
+                        /* Coarse estimate: FreeRoutes = MinGuraranteed - UsedRoutes;
+                           Only applicable when V6_128B_RSVD is enabled and for TOMAHAWKX */
+                        *entries -= BCM_XGS3_L3_DEFIP_IP4_CNT(u);
+                        if (BCM_SUCCESS(rv) && *entries < 0) {
+                            *entries = 0;
+                        }
+                        return rv;
+                    } else {
+                        return BCM_E_UNAVAIL;
+                    }
                     break;
 
-                case bcmSwitchObjectL3RouteV6Routes64bFree:
-                    if (!soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1) ||
-                        !soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0)) {
+            case bcmSwitchObjectL3RouteV6Routes64bFree:
+                    if (alpm_128b_enable &&
+                        soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0) &&
+                        SOC_IS_TOMAHAWKX(u)) {
+
+                        *entries = 0; /* no V6Routes64bFree in V6_128B mode */
+                        return rv;
+                    } else {
                         return BCM_E_UNAVAIL;
                     }
-
-                    if (!SOC_IS_TOMAHAWKX(u)) {
-                        return BCM_E_UNAVAIL;
-                    }
-
-                    rv = (* soc_alpm_capacity_get)(u,
-                            L3_DEFIP_ALPM_IPV6_64m, NULL, entries);
-                    *entries -= BCM_XGS3_L3_DEFIP_IP6_CNT(u);
-                    return rv;
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes128bFree:
-                    if (!soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1) ||
-                        !soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0)) {
+                    if (alpm_128b_enable &&
+                        soc_property_get(u, spn_L3_ALPM_IPV6_128B_BKT_RSVD, 0) &&
+                        SOC_IS_TOMAHAWKX(u)) {
+
+                        rv = (* soc_alpm_capacity_get)(u,
+                                L3_DEFIP_ALPM_IPV6_128m, NULL, entries);
+
+                        /* Coarse estimate: FreeRoutes = MinGuraranteed - UsedRoutes;
+                           Only applicable when V6_128B_RSVD is enabled and for TOMAHAWKX */
+                        *entries -= BCM_XGS3_L3_DEFIP_IP6_CNT(u);
+                        if (BCM_SUCCESS(rv) && *entries < 0) {
+                            *entries = 0;
+                        }
+                        return rv;
+                    } else {
                         return BCM_E_UNAVAIL;
                     }
-
-                    if (!SOC_IS_TOMAHAWKX(u)) {
-                        return BCM_E_UNAVAIL;
-                    }
-
-                    rv = (* soc_alpm_capacity_get)(u,
-                            L3_DEFIP_ALPM_IPV6_128m, NULL, entries);
-                    *entries -= BCM_XGS3_L3_DEFIP_IP6_CNT(u);
-                    return rv;
                     break;
 
                 case bcmSwitchObjectL3RouteV4RoutesUsed:
@@ -26874,7 +26880,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes64bUsed:
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         *entries = 0;
                     } else {
                         *entries = BCM_XGS3_L3_DEFIP_IP6_CNT(u);
@@ -26882,7 +26888,7 @@ _bcm_esw_l3_route_info_get(int u, bcm_switch_object_t object, int *entries)
                     break;
 
                 case bcmSwitchObjectL3RouteV6Routes128bUsed:
-                    if (soc_property_get(u, spn_IPV6_LPM_128B_ENABLE, 1)) {
+                    if (alpm_128b_enable) {
                         *entries = BCM_XGS3_L3_DEFIP_IP6_CNT(u);
                     } else {
                         *entries = 0;
