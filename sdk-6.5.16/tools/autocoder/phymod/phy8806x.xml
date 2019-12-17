@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<driver name="phy8806x">
+    <prefix>phy8806x</prefix>
+    <support_flag>PHYMOD_PHY8806X_SUPPORT</support_flag>
+    <implementation library="phymod">
+        <Element type="func" name="core_init"/>
+        <Element type="func" name="core_identify"/>
+        <Element type="func" name="core_info_get"/>
+        <Element type="func" name="core_lane_map"/>
+        <Element type="func" name="core_reset"/>
+        <Element type="func" name="core_firmware_info_get"/>
+        <Element type="func" name="core_firmware_integrity_check"/>
+        <Element type="func" name="core_pll_sequencer_restart"/>
+        <Element type="func" name="core_wait_event"/>
+        <Element type="func" name="phy_pll_multiplier_get"/>
+        <Element type="func" name="phy_firmware_core_config"/>
+        <Element type="func" name="phy_firmware_lane_config"/>
+        <Element type="func" name="phy_init"/>
+        <Element type="func" name="phy_rx_restart"/>
+        <Element type="func" name="phy_polarity"/>
+        <Element type="func" name="phy_firmware_config"/>
+        <Element type="func" name="phy_tx"/>
+        <Element type="func" name="phy_media_type_tx_get"/>
+        <Element type="func" name="phy_tx_override"/>
+        <Element type="func" name="phy_rx"/>
+        <Element type="func" name="phy_reset"/>
+        <Element type="func" name="phy_power"/>
+        <Element type="func" name="phy_fec_enable"/>
+        <Element type="func" name="phy_eee"/>
+        <Element type="func" name="phy_tx_lane_control"/>
+        <Element type="func" name="phy_rx_lane_control"/>
+        <Element type="func" name="phy_interface_config"/>
+        <Element type="func" name="phy_cl72"/>
+        <Element type="func" name="phy_cl72_status_get"/>
+        <Element type="func" name="phy_autoneg_ability"/>
+        <Element type="func" name="phy_autoneg_remote_ability_get"/>
+        <Element type="func" name="phy_autoneg"/>
+        <Element type="func" name="phy_autoneg_status_get"/>
+        <Element type="func" name="phy_loopback"/>
+        <Element type="func" name="phy_reg_read"/>
+        <Element type="func" name="phy_reg_write"/>
+        <Element type="func" name="phy_i2c_read"/>
+        <Element type="func" name="phy_i2c_write"/>
+        <Element type="func" name="phy_private_read"/>
+        <Element type="func" name="phy_private_write"/>
+        <Element type="func" name="phy_link_status_get"/>
+        <Element type="func" name="phy_rx_pmd_locked_get"/>
+        <Element type="func" name="phy_pcs_userspeed"/>
+        <Element type="func" name="port_init"/>
+        <Element type="func" name="phy_autoneg_try_enable"/>
+        <Element type="func" name="reset_interface"/>
+        <Element type="func" name="debug_ether"/>
+        <Element type="func" name="port_enable"/>
+        <Element type="func" name="phy_forced_speed_line_side"/>
+        <Element type="func" name="phy_autoneg_line_side"/>
+        <Element type="func" name="phy_flow_control_mode"/>
+        <Element type="func" name="phy_psm_cos_bmp"/>
+        <Element type="func" name="phy_pfc_use_ip_cos"/>
+        <Element type="func" name="phy_op_mode_get"/>
+    </implementation>
+</driver>
+ 

@@ -1,0 +1,3246 @@
+File,Summary,Description - Test Setup,Description - Configuration,Description - Verification,Expected Result
+./tomahawk3/rtag7/rtag7_udf_trunk.c," This cint example configures RTAG7 UDF hashing on the egress trunk using
+ BCM APIs. The UDF is created for the Src and Dst port of the UDP header
+ "," a) Select one ingress port and three egress ports and configure them in Loopback mode.
+ "," a) Create a VLAN(12) and add ingress port and egress port as members.
+ b) Create a trunk with id 1 and add all the egress ports to this trunk. Set the port
+ selection criteria to BCM_TRUNK_PSC_PORTFLOW (RTAG7).
+ c) Configure the destination MAC address of the test packet statically in the L2 table
+ in order to make the test packet a unicast packet.
+ d) Set the switch controls required for UDF hashing.
+ e) Create 2 UDFs for the UDP Src and Dst port and add them to the hashing list
+ "," a) Transmit 10 packets with incremental L4 SrcPort and L4 DstPort on the ingress port
+ and verify that packets are load balanced across the egress ports using ""show counters""
+ Packets
+ =======
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5000 Dst Port 80
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 88 0A 0A
+ 01 00 0A 0A 02 00 13 88  00 50 00 3D CE 40 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5001 Dst Port 81
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 86 0A 0A
+ 01 01 0A 0A 02 01 13 89  00 51 00 3D CE 3C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5002 Dst Port 82
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 84 0A 0A
+ 01 02 0A 0A 02 02 13 8A  00 52 00 3D CE 38 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5003 Dst Port 83
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 82 0A 0A
+ 01 03 0A 0A 02 03 13 8B  00 53 00 3D CE 34 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5004 Dst Port 84
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 80 0A 0A
+ 01 04 0A 0A 02 04 13 8C  00 54 00 3D CE 30 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5005 Dst Port 85
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7E 0A 0A
+ 01 05 0A 0A 02 05 13 8D  00 55 00 3D CE 2C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5006 Dst Port 86
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7C 0A 0A
+ 01 06 0A 0A 02 06 13 8E  00 56 00 3D CE 28 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5007 Dst Port 87
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7A 0A 0A
+ 01 07 0A 0A 02 07 13 8F  00 57 00 3D CE 24 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5008 Dst Port 88
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 78 0A 0A
+ 01 08 0A 0A 02 08 13 90  00 58 00 3D CE 20 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5009 Dst Port 89
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 76 0A 0A
+ 01 09 0A 0A 02 09 13 91  00 59 00 3D CE 1C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+"," The packets should be load balanced across all the trunk member ports. This can be
+ checked using ""show counters""
+ "
+./tomahawk3/rtag7/l3_rtag7_trunk.c," CINT script to show L3 routing using Trunk as egress port,
+ RTAG7 is used as hashing for trunking.
+ "," a) Selects Four ports and configure them in Loopback mode. Out of these Four ports,
+ one port is used as Ingress port and the other as Egress port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create the trunk using Three port and Configure RTAG7 setting on the trunk. 
+ This is done in config_l3_trunk_rtag7().
+ "," a) For checking RTAG7 setting on the trunk. send the below packet on ingress port. 
+ Send traffic with incrementing DIP and SIP addresses to the ingress port,
+ observe the routed traffic distributed among the outgoing trunk ports.
+  SAMPLE-1
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.1 
+ SIP =10.10.10.1
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9B 1D 0A 0A 
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ 1D BB 9F BE 
+   SAMPLE-2
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.2 
+ SIP =10.10.10.2
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9B 1B 0A 0A 
+ 0A 02 C0 A8 0A 02 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ DE D5 F4 D2        
+   SAMPLE-3
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.3 
+ SIP =10.10.10.3
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 2E 00 00 00 00 40 11 9C 07 0A 0A 
+ 0A 03 C0 A8 0A 03 00 3F 00 3F 00 1A D8 32 00 01
+ 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 
+ CC 5A D2 87 
+ "," NOTE: Below is the snipet of show c output to illustrate packets are loadbalanced
+ Across all egress ports
+ For validating the RTAG7 setting on the trunk. Below is the counters output
+ CDMIB_RPKT.cd0                 3         +3         1/s
+ CDMIB_RPKT.cd1                 1         +1         1/s
+ CDMIB_RPKT.cd2                 1         +1
+ CDMIB_RPKT.cd3                 1         +1
+ CDMIB_TPKT.cd0                 3         +3         1/s
+ CDMIB_TPKT.cd1                 1         +1         1/s
+ CDMIB_TPKT.cd2                 1         +1
+ CDMIB_TPKT.cd3                 1         +1
+"
+./tomahawk3/rtag7/l3_rtag7_ecmp_trunk.c," CINT script to show L3 routing using both ECMP and Trunk,
+ there are two ECMP paths, each of which is on a trunk of three physical ports:
+ RTAG7 is used as hashing for ECMP and trunking.
+ this example demonstrates how to configure the RTAG7 to support both
+ ECMP and trunk simultaneously.
+ "," a) Selects Seven ports and configure them in Loopback mode. Out of these Seven ports,
+ one port is used as Ingress port and the other as Egress port. Install a rule
+ to copy incoming packets to CPU and start packet watcher. 
+ "," a) Create the trunk using Three port and Configure RTAG7 setting on the trunk. 
+ Here we use three physical ports each to configure two trunks.
+ Which in turn configured as two ECMP paths. RTAG7 is used as hashing for ECMP and trunking.
+ This is done in config_l3_trunk_ecmp_rtag7()
+ "," a) For checking RTAG7 setting on the trunk and ECMP. send the below packet on ingress port. 
+  SAMPLE-1
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.1 
+ SIP =10.10.10.1
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9B 1D 0A 0A 
+ 0A 01 C0 A8 0A 01 43 03 1F E5 B2 9E CF 90 C1 81 
+ 3A 56 99 BD 78 02 A6 9E FB 49 9E 95 BA 5A BF 76 
+ C3 48 74 7B 
+   SAMPLE-2
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.24 
+ SIP =10.10.10.24
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A EF 0A 0A 
+ 0A 18 C0 A8 0A 18 3A 10 1D 7B 40 01 84 D9 B1 55 
+ D1 50 6C FE 82 7B 76 83 4F 3C F7 F6 55 50 85 26 
+ FA 5E 7E 81 
+   SAMPLE-3
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.33 
+ SIP =10.10.10.33
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A DD 0A 0A 
+ 0A 21 C0 A8 0A 21 C4 65 87 43 14 45 B9 76 63 DB 
+ AB C3 4F DF 83 CD BC 36 E5 B5 1A 20 5D EA E7 B3 
+ B8 B4 B1 75 
+   SAMPLE-4
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.51 
+ SIP =10.10.10.51
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A B9 0A 0A 
+ 0A 33 C0 A8 0A 33 B8 94 D7 BC 72 CE 32 C9 2D 38 
+ 60 3C 1D C9 CA E9 9C 03 3B 7C 6F 25 44 54 4B A1 
+ 32 1E 69 5D 
+   SAMPLE-5
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.66 
+ SIP =10.10.10.66
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A 9B 0A 0A 
+ 0A 42 C0 A8 0A 42 57 62 6D F6 D1 8E 57 2A 98 49 
+ 37 9B 54 2A 94 C3 64 A5 65 C9 22 3A 79 55 68 EC 
+ CD 72 66 8F 
+   SAMPLE-6
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.87 
+ SIP =10.10.10.87
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A 71 0A 0A 
+ 0A 57 C0 A8 0A 57 EE E4 EF B9 8A BC A1 34 A4 08 
+ 32 69 93 D1 52 D3 34 92 63 E0 8C 4B 38 A5 AF D1 
+ E5 1F A4 DC 
+ "," NOTE: Below is the snipet of show c output to illustrate packets are loadbalanced
+ Across all egress ports
+ For validating the RTAG7 setting on the ecmp and trunk. Below is the counters output
+ CDMIB_RPKT.cd0                 6         +6         1/s
+ CDMIB_RPKT.cd1                 1         +1
+ CDMIB_RPKT.cd2                 1         +1
+ CDMIB_RPKT.cd3                 1         +1
+ CDMIB_RPKT.cd4                 1         +1         1/s
+ CDMIB_RPKT.cd5                 1         +1
+ CDMIB_RPKT.cd6                 1         +1
+ CDMIB_TPKT.cd0                 6         +6         1/s
+ CDMIB_TPKT.cd1                 1         +1
+ CDMIB_TPKT.cd2                 1         +1
+ CDMIB_TPKT.cd3                 1         +1
+ CDMIB_TPKT.cd4                 1         +1         1/s
+ CDMIB_TPKT.cd5                 1         +1
+ CDMIB_TPKT.cd6                 1         +1
+"
+./tomahawk3/rtag7/l3_rtag7_ecmp.c," CINT script to show L3 routing using ECMP nexthop.
+ there are two ECMP paths, RTAG7 is used as hashing for ECMP.
+ "," a) Selects Three ports and configure them in Loopback mode. Out of these Three ports,
+ one port is used as Ingress port and the other as Egress port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create the ECMP path using Two port and Configure RTAG7 setting on the ECMP path. 
+ This is done in config_ecmp_rtag7().
+ "," a) For checking RTAG7 setting on the ECMP Path. send the below packet on ingress port. 
+  SAMPLE-1
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.1 
+ SIP =10.10.10.1
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9B 1D 0A 0A 
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ 1D BB 9F BE 
+  SAMPLE-2
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.2 
+ SIP =10.10.10.2
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9B 1B 0A 0A 
+ 0A 02 C0 A8 0A 02 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ DE D5 F4 D2 
+ "," NOTE: Below is the snipet of show c output to illustrate packets are loadbalanced
+ Across all egress ports
+ For validating the RTAG7 setting on the trunk. Below is the counters output
+  CDMIB_RPKT.cd0		    :			  2		     +2 	      2/s
+ CDMIB_RPKT.cd1		    :			  1		     +1 	      1/s
+ CDMIB_RPKT.cd2		    :			  1		     +1 	      1/s
+ CDMIB_TPKT.cd0		    :			  2		     +2 	      2/s
+ CDMIB_TPKT.cd1		    :			  1		     +1 	      1/s
+ CDMIB_TPKT.cd2		    :			  1		     +1 	      1/s
+"
+./tomahawk3/rtag7/random_lb_trunk.c," This cint example configures randomized load balancing on the egress trunk using
+ BCM APIs
+ "," a) Select one ingress port and three egress ports and configure them in Loopback mode.
+ "," a) Create a VLAN(12) and add ingress port and  egress port as members.
+ b) Create a trunk with id 1 and add all the egress ports to this trunk. Set the port
+ selection criteria to BCM_TRUNK_PSC_RANDOMIZED (randomized load balancing).
+ c) Configure the destination MAC address of the test packet statically in the L2 table
+ in order to  make the test packet a unicast packet.
+ d) Set the load-balancing randomizer value to 3 for the ingress port.
+ "," a) Transmit 50 copies of the below packet on the ingress port and verify that packets
+ are load balanced across the egress ports using ""show counters""
+ Packet
+ ======
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 192.168.10.1
+ SIP 10.10.10.1
+ 00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 3C 00 00 00 00 40 FF 9B 0F 0A 0A
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19
+ 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 2E CB
+ F6 84
+"," The packets should be load balanced across all the trunk member ports. This can be
+ checked using ""show counters""
+ "
+./tomahawk3/rtag7/l2_rtag7_trunk.c," CINT script to show L2 switching using Trunk as egress port,
+ RTAG7 is used as hashing for trunk selection.
+ "," a) Selects Four ports and configure them in Loopback mode. Out of these Four ports,
+ one port is used as Ingress port and the other as Egress port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create the trunk using Three port and Configure RTAG7 setting on the trunk. 
+ This is done in config_l2_trunk_rtag7().
+ "," a) For checking RTAG7 setting on the trunk. send the below packet on ingress port. 
+ Send traffic with incrementing SA addresses to the ingress port,
+ observe the routed traffic distributed among the outgoing trunk ports.
+  SAMPLE-1
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C 
+ 08 00 45 00 00 3C 00 00 00 00 40 FF 9B 0F 0A 0A 
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 2E CB
+ F6 84 
+   SAMPLE-2
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002224
+ VLAN 12
+  00 00 00 00 AA AA 00 00 00 00 22 24 81 00 00 0C 
+ 08 00 45 00 00 3C 00 00 00 00 40 FF 9B 0F 0A 0A 
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 2E CB
+ F6 84 
+  SAMPLE-3
+ =========
+ DA 0x00000000AAAA
+ SA 0x000000002226
+ VLAN 12
+  00 00 00 00 AA AA 00 00 00 00 22 26 81 00 00 0C 
+ 08 00 45 00 00 3C 00 00 00 00 40 FF 9B 0F 0A 0A 
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09 
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 
+ 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 2E CB
+ F6 84 
+ "," NOTE: Below is the snipet of show c output to illustrate packets are loadbalanced
+ Across all egress ports
+ For validating the RTAG7 setting on the trunk. Below is the counters output
+ CDMIB_RPKT.cd0                 3         +3         1/s
+ CDMIB_RPKT.cd1                 1         +1
+ CDMIB_RPKT.cd2                 1         +1
+ CDMIB_RPKT.cd3                 1         +1         1/s
+ CDMIB_TPKT.cd0                 3         +3         1/s
+ CDMIB_TPKT.cd1                 1         +1
+ CDMIB_TPKT.cd2                 1         +1
+ CDMIB_TPKT.cd3                 1         +1         1/s
+"
+./tomahawk3/rtag7/random_lb_ecmp.c," This cint example configures randomized load balancing on the ECMP group using
+ BCM APIs
+ "," a) Select one ingress port and two egress ports and configure them in Loopback mode.
+ "," a) Create vlans 12, 13 and 14 and ingress_port, egress_port_1 and egress_port_2 as
+ members, respectively.
+ b) Create two L3 interfaces - on vlan13(egr_l3_if_1) and vlan14(egr_l3_if_2).
+ c) Create two egress objects - egr_obj_1(associated with egr_l3_if_1) and egr_obj_2
+ (associated with egr_l3_if_2). 
+ d) Create an ECMP group with egress objects egr_obj_1 and egr_obj_2. Configure this
+ ECMP group to use randomized load balancing for next hop resolution.
+ e) Create an L3 route to reach 192.168.10.1 via this ECMP group
+ "," a) Transmit 50 copies of the below packet on the ingress port and verify that packets
+ are load balanced across the egress objects/ports using ""show counters"" 
+ Packet
+ ====== 
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 192.168.10.1
+ SIP 10.10.10.1
+ 00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 3C 00 00 00 00 40 FF 9B 0F 0A 0A
+ 0A 01 C0 A8 0A 01 00 01 02 03 04 05 06 07 08 09
+ 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19
+ 1A 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 2E CB
+ F6 84
+"," The packets should be load balanced across the egress object/ports. This can be
+ checked using ""show counters"".
+ "
+./tomahawk3/trunk/trunk_basic.c," This cint example details basic trunk configurations like trunk creation, adding ports
+ to the trunk, removing ports from the trunk, changing the selection policy, configuring
+ RTAG7 hashing based on the L4 ports.
+ "," a) Select one ingress port and three egress ports and configure them in Loopback mode.
+ "," a) Create a trunk and add ports egress_port_1 and egress_port_2 as members. Set the
+ selection criteria to BCM_TRUNK_PSC_RANDOMIZED (randomized load balancing).
+ b) Add another port (egress_port_3) to the trunk.
+ c) Remove the port (egress_port_3) from the trunk.
+ d) Change the selection criteria to BCM_TRUNK_PSC_PORTFLOW (RTAG7).
+ e) Configure RTAG7 hashing based on L4 Src and Dst ports
+ "," a) Transmit 10 packets with incremental L4 SrcPort and L4 DstPort on the ingress port 
+ and verify that packets are load balanced across the egress ports using ""show counters""
+ Packets
+ =======
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5000 Dst Port 80
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 88 0A 0A
+ 01 00 0A 0A 02 00 13 88  00 50 00 3D CE 40 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5001 Dst Port 81
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 86 0A 0A
+ 01 01 0A 0A 02 01 13 89  00 51 00 3D CE 3C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5002 Dst Port 82
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 84 0A 0A
+ 01 02 0A 0A 02 02 13 8A  00 52 00 3D CE 38 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5003 Dst Port 83
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 82 0A 0A
+ 01 03 0A 0A 02 03 13 8B  00 53 00 3D CE 34 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5004 Dst Port 84
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 80 0A 0A
+ 01 04 0A 0A 02 04 13 8C  00 54 00 3D CE 30 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5005 Dst Port 85
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7E 0A 0A
+ 01 05 0A 0A 02 05 13 8D  00 55 00 3D CE 2C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5006 Dst Port 86
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7C 0A 0A
+ 01 06 0A 0A 02 06 13 8E  00 56 00 3D CE 28 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5007 Dst Port 87
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 7A 0A 0A
+ 01 07 0A 0A 02 07 13 8F  00 57 00 3D CE 24 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5008 Dst Port 88
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 78 0A 0A
+ 01 08 0A 0A 02 08 13 90  00 58 00 3D CE 20 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+  DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP 10.10.2.0 SIP 10.10.1.0
+ Src Port 5009 Dst Port 89
+ 00 00 00 00 AA AA 00 00  00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 51 00 01  00 00 40 11 63 76 0A 0A
+ 01 09 0A 0A 02 09 13 91  00 59 00 3D CE 1C 28 20
+ DB 20 00 20 00 20 45 20  00 20 00 20 54 20 00 20
+ 00 20 40 20 00 20 40 20  00 20 5E 20 A5 20 CA 20
+ 0B 20 28 20 9E 20 C0 20  A8 20 28 20 B2 20 08 20
+ 00 20 FF
+"," The packets should be load balanced across all the trunk member ports. This
+ can be checked using ""show counters""
+ "
+./tomahawk3/mmu/bst/bst.c," This cint example illustrates configuration of Buffer Statistics Tracking (BST) mechanism
+ to aid in resource monitoring and buffer allocation tuning.
+ ","a) Select one egress port on which bst has to be enabled.
+"," a) Enable device level BST, BST tracking mode and snapshot view for
+ THDO, THDI and CFAP using switch controls - bst_global_setup
+ b) Set BST profile for specified mmu resource - bcmBstStatIdEgrPool in this
+ example
+"," a) Check the Bst stats for the specified BST object - bcmBstStatIdEgrPool
+"," If profile threshold is exceeded we see non-zero stats in value1 and value2
+ (It is assumed that traffic path setup between ingress and egress port and egress port is
+ congested so that shared buffer usage exceeds the profile threshold in this example)
+"
+./tomahawk3/mmu/wred/wred_ecn.c," This cint example illustrates configuration of WRED and ECN feature
+ "," a) Select one ingress and one egress port
+"," a) data_path_setup - sets up required data path for traffic
+ b) set_responsive_protocol_indication - sets IP Protocol's Responsive indication setting
+ c) ip_to_int_cn_mapping - maps IP header ECN bits to INT_CN value
+ d) int_cn_to_mmuif_mapping - INT_CN value to WRED_RESPONSIVE and MARK_ELIGIBLE configuration
+ e) mmu_wred_ecn_setup - MMU wred and ecn profile Settings
+ f) egr_int_cn_update - configure outgoing INT_CN value based on congestion status in MMU
+ g) egr_ecn_mark - Mark outgoing IP header ECN bits based on final INT_CN value
+"," a) Transmit ICMP packets at line rate through Ixia connected to cd0
+ b) Transmit IGMP packets at line rate through Ixia connected to cd0
+"," For ICMP packets - In case of congestion we should see ECN marking (ECN bits=11)
+ for packets egressing cd1. If no congestion, ECN marking will not happen (ECN bits=10)
+ FOR IGMP packets - In case of congestion, WRED drops will be seen on cd1.
+ This can be verified by WRED_PKT_GRE.cd1' in 'show c' output
+ If no congestion, No wred drops will be seen.
+"
+./tomahawk3/mmu/sched/sched_profile.c," This cint example demonstrate creating a scheduler profile and attach it to a port
+ "," a) Select one egress port on which new scheduler profile has to be applied
+"," a) Create scheduler profile with queue to COS mapping, scheduler mode for
+ each COS and attach created scheduler profile to port.
+"," a) Verify the profile attachment to port using 'dump sw cosq'
+"," In 'dump sw cosq' output
+ - UCQ0-7 should be mapped to COS0-7
+ - MCQ0-3 should be mapped to COS0-3
+ "
+./tomahawk3/mmu/flow_control/pause.c," This cint example demonstrates pause feature on TH3
+"," a) Select one ingress and one egress port
+"," a) Sets up required data path for traffic and sets up Tx and Rx Pause on 
+ ports
+"," a) Transmit l2 packet with dmac=0x1, vlan=1 at linerate to from Ixia
+ to cd0(Port-1)
+ b) Along with a), Transmit Pause frame(dmac=0x0180C2000001 smac=0x1 type=0x8808 opcode=0x0001)
+ at linerate to cd1 (Port-2)
+ (Pause frame: dmac=0x0180C2000001, smac=0x1, type=0x8808, opcode=0x0001)
+"," For test case mentioned in a)
+ On cd0 (Port-1): verify that Pause frames should be transmitted at regular intervals as
+ egress port is congested.
+ In 'show c' output Pause frame Tx should be seen on cd0 (port-1)
+  On cd1 (Port-2): verify that packets egress at configured rate
+  For test case mentioned in b)
+ On cd1(Port-2): verify that Port does not egress any packets as pause frames are being
+ received. In 'show c' output, there should not be any Tx on on cd1 (port-2)
+"
+./tomahawk3/mmu/flow_control/pfc.c," This cint example demonstrates PFC feature on TH3
+ "," a) Select one ingress and one egress port
+"," a) Sets up required data path for traffic and enables PFC Tx and Rx on
+ ports
+"," a) send at linerate to cd0 L2 learnt packets (vlan=1 prio=2 dmac=0x1 smac=0x2)
+ b) Along with a), send at linerate to cd1 PFC frames with pause-control class 2 enabled
+"," For test case mentioned in a)
+ On cd0 (Port-1): verify that PFC frames should be transmitted at regular intervals as
+ egress port is congested.
+ In 'show c' output, PFC frame Tx should be seen on cd0 (port-1)
+  On cd1 (Port-2): packets should egress at configured rate
+  For test case mentioned in b)
+ Port cd1 should not egress any packets as pfc pasue frames are being
+ received. In 'show c' output, there should not be any Tx on on cd1 (port-2)
+"
+./tomahawk3/L2/l2_mc.c," This CINT configures L2 multicast using BCM APIs.
+ This example shows the steps to set up L2 multicast along with Port
+ Filtering Mode(PFM) on a per Vlan basis. The PFM controls the forwarding of
+ known and unknown multicast packets.
+  PFM
+ ===
+ 0 - All multicast packets are flooded to the entire Vlan
+ 1 - Known multicast packets are forwarded only to the ports in the
+ multicast group. Unknown multicast packets are flooded to the Vlan.
+ 2 - Known multicast packets are forwarded only to the ports in the
+ multicast group. Unknown multicast packets are dropped.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create a VLAN(2) and add egress_port1, egress_port2 and egress_port3
+ as members.
+ b) Create a L2 multicast group and add egress_port1, egress_port2 and egress_port3 to
+ this L2 multicast group.
+ c) Configure the PFM mode as BCM_VLAN_MCAST_FLOOD_NONE(mode 2) for VLAN(2).
+ d) Add ingress_port as member of vlan(2) and add an entry into L2 table
+ specifying the L2 multicast group as destination for the multicast MAC
+ address.
+ "," a) Transmit the below known multicast packet on ingress_port.
+ Packet:
+ ======
+ Ethernet II, Src: Xerox_00:00:00 (00:00:04:00:00:00), Dst: Xerox_00:01:00 (01:00:04:00:01:00)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 2
+  0100 0400 0100 0000 0400 0000 8100 0002
+ 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+ 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+ 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+ 8e0b ec9e 1cdf 4421
+  b) Transmit the below unknown multicast packet on ingress_port and verify that the 
+ packet is dropped as PFM for VLAN(2) is set to 2.
+  Packet:
+ ======
+ Ethernet II, Src: Xerox_00:00:00 (00:00:04:00:00:00), Dst: Xerox_00:01:00 (01:00:03:00:01:00)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 2
+  0100 0300 0100 0000 0400 0000 8100 0002
+ 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+ 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+ 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+ 5ca6 4d2a 1cdf 4421
+ "," After Step 3.a, the packet egresses out of egress_port1, egress_port2 and egress_port3.
+ This can be observed using ""show counters"" and/or packet watcher dump on console.
+  After step 3.b, it can be observed that packet is dropped as PFM for VLAN(2) is set to
+ BCM_VLAN_MCAST_FLOOD_NONE(mode 2)
+"
+./tomahawk3/L2/vlan_port_flex_ctr.c," This CINT example configures flex counters using BCM APIs.
+  Flex counters provide common counter resource that can be assigned for
+ different modules.The packet attributes on which the counters can be
+ configured are also flexible.They can be configured either in Fixed mode
+ or Custom mode. The following example shows Vlan flex stats in custom
+ mode and Port flex stats in fixed mode.
+  vlan flex stats [custom mode]
+ ===============================
+ Accountung object : Vlan [5]
+ Attributes        : Outer tag [offset 0] and untag [offset 1]
+ Stage             : Ingress specified through flag BCM_STAT_GROUP_MODE_INGRESS
+ of bcm_stat_group_mode_id_create
+  port flex stats [fixed mode]
+ ===============================
+ Accounting object : ingress_port2
+ GroupMode         : TrafficType [unicast counter at offset 0
+ multicast counter at offset 1
+ broadcast counter at offset 2]
+ "," a) Selects two ingress ports and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU and start packet watcher.
+ "," a) Creates a VLAN(5).
+ b) Create a custom stat group mode and create a stat group using the
+ created ""custom stat group mode"".
+ c) Attach the stat group to VLAN.
+ d) Create another stat group using existing fixed group and attach it to port.
+  Step 3 - Verification(Done in verify())
+ =======================================
+ a) Send 3 outer tagged packet, retrieve vlan flex counters and print them.
+  b) Send 2 untagged packets, retrieve vlan flex counters and print them.
+  c) Send 2 broadcast packets onto ingress_port2, retrieve port
+ flex counters and print them.
+  d) Send 3 multicast packets onto ingress_port2, retrieve port
+ flex counters and print them.
+  e) Send 4 unicast packets onto ingress_port2, retrieve port
+ flex counters and print them.
+  f) Expected Result:
+ ===================
+ After step 3.a, verify(from generated console log) that packet counter
+ at offset 0 (outer tagged packets) is 3.
+ After step 3.b, verify(from generated console log) that packet counter
+ at offset 1 (untagged packets) is 2.
+ After step 3.c, verify(from generated console log) that packet counter
+ at offset 2 (broadcast packets) is 2.
+ After step 3.d, verify(from generated console log) that packet counter
+ at offset 1 (multicast packets) is 3.
+ After step 3.e, verify(from generated console log) that packet counter
+ at offset 0 (unicast packets) is 4.
+  /
+ cint_reset();
+  bcm_port_t ingress_port1, ingress_port2;
+  /* This function is written so that hardcoding of port
+ numbers in Cint scripts is removed. This function gives
+ required number of ports
+ */
+ port_list, int num_ports)
+ {
+  int i=0,port=0,rv=0;
+ bcm_port_config_t configP;
+ bcm_pbmp_t ports_pbmp;
+  rv = bcm_port_config_get(unit,&configP);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in retrieving port configuration: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  ports_pbmp = configP.e;
+ for (i= 1; i < BCM_PBMP_PORT_MAX; i++) {
+ if (BCM_PBMP_MEMBER(&ports_pbmp,i)&& (port < num_ports)) {
+ port_list[port]=i;
+ port++;
+ }
+ }
+  if (( port == 0 ) || ( port != num_ports )) {
+ printf(""portNumbersGet() failed \n"");
+ return -1;
+ }
+  return BCM_E_NONE;
+  }
+   /*
+ Configures the port in loopback mode and installs
+ an IFP rule. This IFP rule copies the packets ingressing
+ on the specified port to CPU.
+ /
+ bcm_error_t ingress_port_setup(int unit, bcm_port_t port)
+ {
+ bcm_field_qset_t  qset;
+ bcm_field_group_t group;
+ bcm_field_entry_t entry;
+  BCM_IF_ERROR_RETURN(bcm_port_loopback_set(unit, port, BCM_PORT_LOOPBACK_PHY));
+  BCM_FIELD_QSET_INIT(qset);
+ BCM_FIELD_QSET_ADD(qset, bcmFieldQualifyInPort);
+  BCM_IF_ERROR_RETURN(bcm_field_group_create(unit, qset, 0, &group));
+  BCM_IF_ERROR_RETURN(bcm_field_entry_create(unit, group, &entry));
+  BCM_IF_ERROR_RETURN(bcm_field_qualify_InPort(unit, entry, port, BCM_FIELD_EXACT_MATCH_MASK));
+ BCM_IF_ERROR_RETURN(bcm_field_action_add(unit, entry, bcmFieldActionCopyToCpu, 0, 0));
+  BCM_IF_ERROR_RETURN(bcm_field_entry_install(unit, entry));
+ return BCM_E_NONE;
+ }
+  /*
+ Configures the port in loopback mode and installs
+ an IFP rule. This IFP rule copies the packets ingressing
+ on the specified port to CPU and drop the packets. This is
+ to avoid continuous loopback of the packet.
+ /
+ bcm_error_t egress_port_setup(int unit, bcm_port_t port)
+ {
+ bcm_field_qset_t  qset;
+ bcm_field_group_t group;
+ bcm_field_entry_t entry;
+  BCM_IF_ERROR_RETURN(bcm_port_loopback_set(unit, port, BCM_PORT_LOOPBACK_PHY));
+ BCM_IF_ERROR_RETURN(bcm_port_discard_set(unit, port, BCM_PORT_DISCARD_ALL));
+  BCM_FIELD_QSET_INIT(qset);
+ BCM_FIELD_QSET_ADD(qset, bcmFieldQualifyInPort);
+  BCM_IF_ERROR_RETURN(bcm_field_group_create(unit, qset, 0, &group));
+  BCM_IF_ERROR_RETURN(bcm_field_entry_create(unit, group, &entry));
+  BCM_IF_ERROR_RETURN(bcm_field_qualify_InPort(unit, entry, port, BCM_FIELD_EXACT_MATCH_MASK));
+ BCM_IF_ERROR_RETURN(bcm_field_action_add(unit, entry, bcmFieldActionCopyToCpu, 0, 0));
+ BCM_IF_ERROR_RETURN(bcm_field_action_add(unit, entry, bcmFieldActionDrop, 0, 0));
+  BCM_IF_ERROR_RETURN(bcm_field_entry_install(unit, entry));
+  return BCM_E_NONE;
+ }
+ /*
+ This functions gets the port numbers and sets up ingress and
+ egress ports. Check ingress_port_setup() and egress_port_setup().
+ /
+ bcm_error_t test_setup(int unit)
+ {
+ int port_list[2], i;
+  if (BCM_E_NONE != portNumbersGet(unit, port_list, 2)) {
+ printf(""portNumbersGet() failed\n"");
+ return -1;
+ }
+  ingress_port1 = port_list[0];
+ ingress_port2 = port_list[1];
+  for (i = 0; i < 2; i++) {
+ if (BCM_E_NONE != ingress_port_setup(unit, port_list[i])) {
+ printf(""ingress_port_setup() failed for port %d\n"", port_list[i]);
+ return -1;
+ }
+ }
+  bshell(unit, ""pw start report +raw +decode"");
+ return BCM_E_NONE;
+ }
+ /
+ int
+ configure_vlan(int unit, bcm_vlan_t vlan, bcm_port_t port)
+ {
+ bcm_error_t rv;
+ bcm_pbmp_t pbmp, ubmp;
+  BCM_PBMP_CLEAR(ubmp);
+ BCM_PBMP_CLEAR(pbmp);
+ BCM_PBMP_PORT_ADD(pbmp, port);
+  rv = bcm_vlan_create(unit, vlan);
+ if ((BCM_FAILURE(rv)) & (rv != BCM_E_EXISTS)) {
+ printf(""Error in creating vlan : %s.\n"", bcm_errmsg(rv));
+ return rv;
+ }
+ rv = bcm_vlan_port_add(unit, vlan, pbmp, ubmp);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError executing bcm_vlan_port_add(): %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  return BCM_E_NONE;
+ }
+  /* Configure flex counters for Vlan in Custom mode*/
+ int
+ configure_vlan_flex_ctr(int unit, bcm_vlan_t vlan)
+ {
+ uint32 mode_id;
+ bcm_stat_group_mode_attr_selector_t attr_sel[2];
+ uint32 num_sel = 2;
+ uint32 vlan_counters = 2;
+ uint32 stat_id;
+ uint32 num_entries;
+ bcm_error_t rv;
+  /*
+ Customized group mode is defined using a set of bcm_stat_group_mode_attr_selectors.
+ To uniquely specify a counter, below three properties are needed
+ Attribute selector[in this case bcmStatGroupModeAttrVlan],
+ Attribute Value to match [Outer tag and untagged]
+ and Offset [Outer tag at offset '0' and untag at offset '1']
+ /
+  bcm_stat_group_mode_attr_selector_t_init(&attr_sel[0]);
+ attr_sel[0].counter_offset = 0;
+ attr_sel[0].attr = bcmStatGroupModeAttrVlan;
+ attr_sel[0].attr_value = bcmStatGroupModeAttrVlanOuterTag;
+  bcm_stat_group_mode_attr_selector_t_init(&attr_sel[1]);
+ attr_sel[1].counter_offset = 1;
+ attr_sel[1].attr = bcmStatGroupModeAttrVlan;
+ attr_sel[1].attr_value = bcmStatGroupModeAttrVlanUnTagged;
+  /
+ rv = bcm_stat_group_mode_id_create(unit, BCM_STAT_GROUP_MODE_INGRESS,
+ vlan_counters, num_sel, attr_sel, &mode_id);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in creating stat group mode: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  /
+ rv = bcm_stat_custom_group_create(unit, mode_id, bcmStatObjectIngVlan,
+ &stat_id, &num_entries);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in creating stat group : %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  /
+ rv =  bcm_vlan_stat_attach(unit, vlan, stat_id);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in vlan stat attach %s.\n"", bcm_errmsg(rv));
+ return rv;
+ }
+  return BCM_E_NONE;
+ }
+  /
+ int
+ configure_port_flex_ctr(int unit, bcm_port_t port)
+ {
+ bcm_error_t rv;
+ uint32 stat_id;
+ uint32 num_entries;
+ bcm_gport_t gport;
+  /
+ rv = bcm_stat_group_create(unit, bcmStatObjectIngPort, bcmStatGroupModeTrafficType,
+ &stat_id, &num_entries);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in stat group creation %s.\n"", bcm_errmsg(rv));
+ return rv;
+ }
+ printf(""Counter Id is %d\n"", stat_id);
+  rv = bcm_port_gport_get(unit,port, &gport);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in gport get %s.\n"", bcm_errmsg(rv));
+ return rv;
+ }
+  /
+ rv =  bcm_port_stat_attach(unit, gport, stat_id);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in port stat attach %s.\n"", bcm_errmsg(rv));
+ return rv;
+ }
+  return BCM_E_NONE;
+ }
+  int
+ vlan_flex_stat_get(bcm_vlan_t vlan)
+ {
+ int unit = 0;
+ int i;
+ uint32 index[2] = {0, 1};
+ bcm_stat_value_t value[2];
+ uint32 num_entries = 2;
+ bcm_vlan_stat_t stat[2] = {bcmVlanStatIngressPackets, bcmVlanStatIngressBytes};
+ uint64 val;
+ bcm_error_t rv;
+  /*
+ COMPILER_64_HI and COMPILER_64_LO for 64-32 bit conversion
+ /
+  /
+ for(i=0; i<2; i++) {
+ rv = bcm_vlan_stat_counter_get(unit, vlan, stat[i], num_entries, index, value);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError executing bcm_vlan_stat_counter_get(): %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+ switch(stat[i]) {
+ case bcmVlanStatIngressPackets :
+ printf(""Packet counter at offset 0 (outer tagged packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[0].packets64),
+ COMPILER_64_LO(value[0].packets64));
+ printf(""Packet counter at offset 1 (untag packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[1].packets64),
+ COMPILER_64_LO(value[1].packets64));
+ break;
+  case bcmVlanStatIngressBytes :
+ printf(""Byte counter at offset 0 (for outer tagged packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[0].bytes),
+ COMPILER_64_LO(value[0].bytes));
+ printf(""Byte counter at offset 1 (for untag packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[1].bytes),
+ COMPILER_64_LO(value[1].bytes));
+ break;
+ }
+ }
+  return BCM_E_NONE;
+ }
+  int
+ port_flex_stat_get(bcm_port_t port)
+ {
+ int unit = 0;
+ int i,j;
+ bcm_gport_t gport;
+ uint32 index[3] = {0, 1, 2};
+ bcm_stat_value_t value[3];
+ uint32 num_entries = 3;
+ bcm_port_stat_t stat[2] = {bcmPortStatIngressPackets, bcmPortStatIngressBytes};
+ uint64 val;
+ bcm_error_t rv;
+  rv = bcm_port_gport_get(0, port, &gport);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in gport get: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  /*
+ COMPILER_64_HI and COMPILER_64_LO for 64-32 bit conversion
+ /
+  /
+ for(i = 0; i < 2; i++) {
+ rv = bcm_port_stat_counter_get(unit, gport, stat[i], num_entries,
+ index, value);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in port counter get: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  switch(stat[i]) {
+ case bcmVlanStatIngressPackets :
+ printf(""Packet counter at offset 0 (unicast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[0].packets64),
+ COMPILER_64_LO(value[0].packets64));
+ printf(""Packet counter at offset 1 (multicast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[1].packets64),
+ COMPILER_64_LO(value[1].packets64));
+ printf(""Packet counter at offset 2 (broadcast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[2].packets64),
+ COMPILER_64_LO(value[2].packets64));
+ break;
+  case bcmVlanStatIngressBytes :
+ printf(""Byte counter at offset 0 (for unicast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[0].bytes),
+ COMPILER_64_LO(value[0].bytes));
+ printf(""Byte counter at offset 1 (for multicast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[1].bytes),
+ COMPILER_64_LO(value[1].bytes));
+ printf(""Byte counter at offset 2 (for broadcast packets) is 0x%x%x\n"",
+ COMPILER_64_HI(value[2].bytes),
+ COMPILER_64_LO(value[2].bytes));
+ break;
+ }
+ }
+  return BCM_E_NONE;
+ }
+  void verify(int unit)
+ {
+ char   str[512];
+  bshell(unit, ""hm ieee"");
+  /* Send 3 outer tagged packet.
+  Ethernet header: DA=00:00:00:00:00:02, SA=00:00:00:00:00:01
+ Vlan Header: TPID0x8100, VLAN=5, Priority=0, CFI=0
+  000000000002 000000000001
+ 8100
+ 0005
+ 0800080045000062000000004011A4D7C0A801010A0A0A01003F2118004E000008000000012345000000000011AA00006DBAC047
+  /
+ printf(""Sending 3 outer tagged packets.\n"");
+ snprintf(str, 512, ""tx 3 pbm=%d data=0x000000000002000000000001810000050800080045000062000000004011A4D7C0A801010A0A0A01003F2118004E000008000000012345000000000011AA00006DBAC047; sleep 1"", ingress_port1);
+ bshell(unit, str);
+  /*Retrieve vlan flex counters and print them.*/
+ printf(""Retrieving vlan flex counters and displaying them\n"");
+ vlan_flex_stat_get(5);
+  /* Send 2 untagged packets.
+ Ethernet header: DA=00:00:00:00:00:02, SA=00:00:00:00:00:01
+  000000000002 000000000001
+ 000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2FDF52E538
+ /
+ printf(""Sending 2 untagged packets.\n"");
+ snprintf(str, 512, ""tx 2 pbm=%d data=0x000000000002000000000001000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2FDF52E538; sleep 1"", ingress_port1);
+ bshell(unit, str);
+  /*Retrieve vlan flex counters and print them.*/
+ printf(""Retrieving vlan flex counters and displaying them\n"");
+ vlan_flex_stat_get(5);
+  /* Send 2 broadcast packets onto ingress_port2.
+ Ethernet header: DA=FF:FF:FF:FF:FF:FF, SA=00:00:00:00:00:10
+ Vlan Header: TPID0x8100, VLAN=2, Priority=1, CFI=0
+  FFFFFFFFFFFF 000000000010
+ 8100
+ 2002
+ 0800000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D58093531
+ /
+ printf(""Sending 2 broadcast packets onto ingress_port2:%d\n"", ingress_port2);
+ snprintf(str, 512, ""tx 2 pbm=%d data=0xFFFFFFFFFFFF000000000010810020020800000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D58093531; sleep 1"", ingress_port2);
+ bshell(unit, str);
+ /*Retrieve port flex counters and print them.*/
+ printf(""Retrieving port flex counters and displaying them\n"");
+ port_flex_stat_get(ingress_port2);
+  /* Sending 3 multicast packets onto ingress_port2.
+ Ethernet header: DA=01:00:04:00:01:00, SA=00:00:04:00:00:00
+ Vlan Header: TPID0x8100, VLAN=2, Priority=0, CFI=0
+  010004000100 000004000000
+ 8100
+ 0002
+ 0800000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D8E0BEC9E
+ /
+ printf(""Sending 3 multicast packets onto ingress_port2:%d\n"", ingress_port2);
+ snprintf(str, 512, ""tx 3 pbm=%d data=0x010004000100000004000000810000020800000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D8E0BEC9E; sleep 1"", ingress_port2);
+ bshell(unit, str);
+ /*Retrieve port flex counters and print them.*/
+ printf(""Retrieving port flex counters and displaying them\n"");
+ port_flex_stat_get(ingress_port2);
+ /* Sending 4 unicast packets onto ingress_port2.
+ Ethernet header: DA=00:00:00:00:00:02, SA=00:00:00:00:00:01
+ Vlan Header: TPID0x8100, VLAN=2, Priority=6, CFI=0
+  000000000002 000000000001
+ 8100
+ C002
+ 08004500002E0000000040FF63BC010101010A0A0A0A000102030405060708090A0B0C0D0E0F101112131415161718194FA8E232
+ /
+ printf(""Sending 4 unicast packets onto ingress_port2:%d\n"", ingress_port2);
+ snprintf(str, 512, ""tx 4 pbm=%d data=0x0000000000020000000000018100C00208004500002E0000000040FF63BC010101010A0A0A0A000102030405060708090A0B0C0D0E0F101112131415161718194FA8E232; sleep 1"", ingress_port2);
+ bshell(unit, str);
+ /*Retrieve port flex counters and print them.*/
+ printf(""Retrieving port flex counters and displaying them\n"");
+ port_flex_stat_get(ingress_port2);
+  }
+ /* Creates a VLAN(5) and attaches a flex counter to it.
+ Attaches a flex counter to ingress_port2.
+ /
+ int
+ vlan_port_flex_ctr(int unit)
+ {
+ bcm_error_t rv;
+ /
+ bcm_vlan_t vlan1 = 2;
+ bcm_port_t vlan_port = ingress_port1;
+   rv = configure_vlan(unit, vlan, ingress_port1);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in configuring vlan: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+ rv = bcm_port_untagged_vlan_set(unit, ingress_port1, vlan);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in configuring port_untagged_vlan: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  rv = configure_vlan_flex_ctr(unit, vlan);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in configuring flex counter for vlan: %s.\n"",
+ bcm_errmsg(rv));
+ return rv;
+ }
+  rv = configure_vlan(unit, vlan1, ingress_port2);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in configuring vlan: %s.\n"",bcm_errmsg(rv));
+ return rv;
+ }
+  rv = configure_port_flex_ctr(unit, ingress_port2);
+ if(BCM_FAILURE(rv)) {
+ printf(""\nError in configuring flex counter for port: %s.\n"",
+ bcm_errmsg(rv));
+ return rv;
+ }
+  return BCM_E_NONE;
+ }
+ /*
+ This functions does the following
+ a)test setup
+ b)actual configuration (Done in vlan_port_flex_ctr())
+ c)demonstrates the functionality(done in verify()).
+ /
+ bcm_error_t execute()
+ {
+ bcm_error_t rv;
+ int unit =0;
+  bshell(unit, ""config show; a ; version"");
+  if (BCM_FAILURE((rv = test_setup(unit)))) {
+ printf(""test_setup() failed.\n"");
+ return -1;
+ }
+ printf(""Completed test setup successfully.\n"");
+ if (BCM_FAILURE((rv = vlan_port_flex_ctr(unit)))) {
+ printf(""vlan_port_flex_ctr() failed.\n"");
+ return -1;
+ }
+ printf(""Completed configuration(i.e executing vlan_port_flex_ctr()) successfully.\n"");
+  verify(unit);
+ return BCM_E_NONE;
+ }
+  print execute();
+ ",,
+./tomahawk3/ip_tunnel/l3_tunnel_ipgre_4in6.c,"  This cint example demonstrates L3 Ipv4 in Ipv6 GRE Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeGre4In6)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeGre4In6)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For Ipv4 in Ipv6 GRE tunnel initiation, send the below IPv4 packet on access_port.
+  Ethernet II, Src: 00:00:00_00:11:11 (00:00:00:00:11:11), Dst: 00:00:00_00:00:01 (00:00:00:00:00:01)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 1.1.1.1
+ Data (26 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f ................
+ 0010 10 11 12 13 14 15 16 17 18 19 ..........
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 0800 4500 002e 0000 0000 40ff 73cc 0202
+ 0202 0101 0101 0001 0203 0405 0607 0809
+ 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+  b)For Ipv4 in IPv6 GRE Tunnel Termination, send the below packet on network_port.
+ Ethernet II, Src: 00:00:00_00:22:22 (00:00:00:00:22:22), Dst: 00:00:00_00:00:02 (00:00:00:00:00:02)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 6, Src: cc00::1, Dst: dd00::1
+ Generic Routing Encapsulation (IP)
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 2.2.2.2
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 86dd 6030 0000 0018 2fff cc00 0000 0000
+ 0000 0000 0000 0000 0001 dd00 0000 0000
+ 0000 0000 0000 0000 0001 0000 0800 4500
+ 0014 0000 0000 40ff 73e6 0101 0101 0202
+ 0202 9d9c b928
+ "," After step 3.a, verify that the below IP-GRE tunnel packet egresses out
+ of network_port.
+  Ethernet II, Src: 00:00:00_00:00:02 (00:00:00:00:00:02), Dst: 00:00:00_00:22:22 (00:00:00:00:22:22)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 6, Src: ee00::1, Dst: ff00::1
+ Generic Routing Encapsulation (IP)
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 1.1.1.1
+ Data (26 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f ................
+ 0010 10 11 12 13 14 15 16 17 18 19 ..........
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 86dd 6000 0000 0032 2f0a ee00 0000 0000
+ 0000 0000 0000 0000 0001 ff00 0000 0000
+ 0000 0000 0000 0000 0001 0000 0800 4500
+ 002e 0000 0000 3fff 74cc 0202 0202 0101
+ 0101 0001 0203 0405 0607 0809 0a0b 0c0d
+ 0e0f 1011 1213 1415 1617 1819 fb82 e0b2
+  After step 3.b, verify that the below packet egresses out of access_port.
+ Ethernet II, Src: 00:00:00_00:00:01 (00:00:00:00:00:01), Dst: 00:00:00_00:11:11 (00:00:00:00:11:11)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 2.2.2.2
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 0800 4500 0014 0000 0000 feff b5e5 0101
+ 0101 0202 0202 9d9c b928
+ "
+./tomahawk3/ip_tunnel/l3_tunnel_ipgre.c," This cint example demonstrates IP-GRE tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeGre4In4)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeGre4In4)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IP-GRE tunnel initiation, send the below packet on access_port.
+  Ethernet II, Src: 00:00:00_00:00:01 (00:00:00:00:00:01), Dst: 00:00:00_00:11:11 (00:00:00:00:11:11)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 1.1.1.1
+ User Datagram Protocol, Src Port: 63, Dst Port: 63
+ Data (14 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d ..............
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 0800 4500 002a 0000 0000 4011 74be 0202
+ 0202 0101 0101 003f 003f 0016 cf0d 0001
+ 0203 0405 0607 0809 0a0b 0c0d f971 7221
+  b)For IP-GRE Tunnel Termination, send the below packet on network_port
+ Ethernet II, Src: 00:00:00_00:00:02 (00:00:00:00:00:02), Dst: 00:00:00_00:22:22 (00:00:00:00:22:22)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 4, Src: 9.9.9.9, Dst: 10.10.10.10
+ Generic Routing Encapsulation (IP)
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 2.2.2.2
+ User Datagram Protocol, Src Port: 63, Dst Port: 63
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 0800 4500 0034 0000 0000 402f 5476 0909
+ 0909 0a0a 0a0a 0000 0800 4500 001c 0000
+ 0000 4011 74cc 0101 0101 0202 0202 003f
+ 003f 0008 f95a 0e73 0ded
+ "," After step 3.a, verify that the below IP-GRE tunnel packet egresses out
+ of network_port.
+  Ethernet II, Src: 00:00:00_00:22:22 (00:00:00:00:22:22), Dst: 00:00:00_00:00:02 (00:00:00:00:00:02)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 4, Src: 10.10.10.10, Dst: 9.9.9.9
+ Generic Routing Encapsulation (IP)
+ Flags and Version: 0x0000
+ Protocol Type: IP (0x0800)
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 1.1.1.1
+ User Datagram Protocol, Src Port: 63, Dst Port: 63
+ Data (14 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d ..............
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 0800 4500 0042 0000 0000 162f 7e68 0a0a
+ 0a0a 0909 0909 0000 0800 4500 002a 0000
+ 0000 3f11 75be 0202 0202 0101 0101 003f
+ 003f 0016 cf0d 0001 0203 0405 0607 0809
+ 0a0b 0c0d f971 7221
+  After step 3.b, verify that the below packet egresses out of access_port.
+  Ethernet II, Src: 00:00:00_00:11:11 (00:00:00:00:11:11), Dst: 00:00:00_00:00:01 (00:00:00:00:00:01)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 2.2.2.2
+ User Datagram Protocol, Src Port: 63, Dst Port: 63
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 0800 4500 001c 0000 0000 3f11 75cc 0101
+ 0101 0202 0202 003f 003f 0008 f95a 0e73
+ 0ded
+"
+./tomahawk3/ip_tunnel/l3_tunnel_mcast_ipgre.c,"  This cint example demonstrates multicast IP-GRE tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeGre4In4)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeGre4In4)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For multicast IP-GRE tunnel initiation, send the below packet on access_port.
+  Ethernet II, Src: 00:00:00_00:00:01 (00:00:00:00:00:01), Dst: IPv4mcast_01:01:01 (01:00:5e:01:01:01)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 225.1.1.1
+ Data (26 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f ................
+ 0010 10 11 12 13 14 15 16 17 18 19 ..........
+  0100 5e01 0101 0000 0000 0001 8100 0015
+ 0800 4500 002e 0000 0000 40ff 95cd 0101
+ 0101 e101 0101 0001 0203 0405 0607 0809
+ 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+  *
+ b)For IP-GRE Tunnel Termination, send the below packet on network_port
+  Ethernet II, Src: 00:00:00_00:00:02 (00:00:00:00:00:02), Dst: 00:00:00_00:22:22 (00:00:00:00:22:22)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 4, Src: 9.9.9.9, Dst: 10.10.10.10
+ Generic Routing Encapsulation (IP)
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 225.1.1.1
+ Data (2 bytes)
+ 0000 00 01 ..
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 0800 4500 002e 0000 0000 402f 547c 0909
+ 0909 0a0a 0a0a 0000 0800 4500 0016 0000
+ 0000 40ff 93e3 0202 0202 e101 0101 0001
+ 0d44 1651 1cdf 4421
+ "," After step 3.a, verify that the below IP-GRE tunnel packet egresses out
+ of network_port.
+  Ethernet II, Src: 00:00:00_00:22:22 (00:00:00:00:22:22), Dst: 00:00:00_00:00:02 (00:00:00:00:00:02)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 22
+ Internet Protocol Version 4, Src: 10.10.10.10, Dst: 9.9.9.9
+ Generic Routing Encapsulation (IP)
+ Internet Protocol Version 4, Src: 1.1.1.1, Dst: 225.1.1.1
+ Data (26 bytes)
+ 0000 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f ................
+ 0010 10 11 12 13 14 15 16 17 18 19 ..........
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 0800 4500 0046 9f30 0000 162f df33 0a0a
+ 0a0a 0909 0909 0000 0800 4500 002e 0000
+ 0000 3fff 96cd 0101 0101 e101 0101 0001
+ 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+ 1213 1415 1617 1819 4e14 86f2 93a9 64fc
+  After step 3.b, verify that the below packet egresses out of access_port.
+  Ethernet II, Src: 00:00:00_00:11:11 (00:00:00:00:11:11), Dst: IPv4mcast_01:01:01 (01:00:5e:01:01:01)
+ 802.1Q Virtual LAN, PRI: 0, CFI: 0, ID: 21
+ Internet Protocol Version 4, Src: 2.2.2.2, Dst: 225.1.1.1
+ Data (2 bytes)
+ 0000 00 01 ..
+  0100 5e01 0101 0000 0000 1111 8100 0015
+ 0800 4500 0016 0000 0000 3fff 94e3 0202
+ 0202 e101 0101 0001 0d44 1651 1cdf 4421
+ 0000 0000 0000 0000 0000 0000 f3f2 8a9c
+ "
+./tomahawk3/ip_tunnel/l3_tunnel_ip4in4.c," This cint example configures L3 Ipv4 in Ipv4 Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIp4In4)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIp4In4)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IPv4 tunnel initiation, send the below packet on access_port.
+  DA 0x1111
+ SA 0x1
+ VLAN 21
+ DIP 1.1.1.1
+ SIP 2.2.2.2
+  00 00 00 00 11 11 00 00 00 00 00 01 81 00 00 15
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 73 CC 02 02
+ 02 02 01 01 01 01 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 58 86 3E CA
+  b)For IPv4 Tunnel Termination, send the below packet on network_port
+  DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Termination DIP 10.10.10.10
+ Tunnel Termination SIP 9.9.9.9
+ Inner Payload DIP 2.2.2.2
+ Inner Payload SIP 1.1.1.1
+  00 00 00 00 22 22 00 00 00 00 00 02 81 00 00 16
+ 08 00 45 00 00 42 00 00 00 00 40 04 54 93 09 09
+ 09 09 0A 0A 0A 0A 45 00 00 2E 00 00 00 00 40 FF
+ 73 CC 01 01 01 01 02 02 02 02 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 88 56 EE F7
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+  DA 0x02
+ SA 0x2222
+ VLAN 22
+ Tunnel Initiation DIP 9.9.9.9
+ Tunnel initiation SIP 10.10.10.10
+ Inner Payload DIP 1.1.1.1
+ Inner Payload SIP 2.2.2.2
+  00 00 00 00 00 02 00 00 00 00 22 22 81 00 00 16
+ 08 00 45 00 00 42 00 01 00 00 16 04 7E 92 0A 0A
+ 0A 0A 09 09 09 09 45 00 00 2E 00 00 00 00 3F FF
+ 74 CC 02 02 02 02 01 01 01 01 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 31 2B 7B 65
+  After step 3.b, verify that the below packet egresses out of access_port.
+  DA 0x1
+ SA 0x11
+ VLAN 21
+ DIP 2.2.2.2
+ SIP 1.1.1.1
+  00 00 00 00 00 01 00 00 00 00 11 11 81 00 00 15
+ 08 00 45 00 00 2E 00 00 00 00 3F FF 74 CC 01 01
+ 01 01 02 02 02 02 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 3A 50 39 5D
+"
+./tomahawk3/ip_tunnel/l3_tunnel_ip6in4.c," This cint example demonstrates L3 Ipv6 in Ipv4 Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIp6In4)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIp6In4)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IPv4 tunnel initiation, send the below IPv6 packet on access_port.
+  DA 0x1111
+ SA 0x1
+ VLAN 21
+ DIP AA00:0:0:0:0:0:0:1
+ SIP BB00:0:0:0:0:0:0:1
+  00 00 00 00 11 11 00 00 00 00 00 01 81 00 00 15
+ 86 DD 60 30 00 00 00 06 3B FF BB 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 01 AA 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 01 00 00 00 00 00 00
+ 11 4C 3F 26
+  b)For IPv4 Tunnel Termination, send the below packet on network_port.
+  DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Termination DIP 10.10.10.10
+ Tunnel Termination SIP 9.9.9.9
+ Inner Payload DIP BB00:0:0:0:0:0:0:1
+ Inner Payload SIP AA00:0:0:0:0:0:0:1
+  00 00 00 00 22 22 00 00 00 00 00 02 81 00 00 16
+ 08 00 45 00 00 42 00 00 00 00 40 29 54 6E 09 09
+ 09 09 0A 0A 0A 0A 60 30 00 00 00 06 3B FF AA 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 01 BB 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00
+ 00 00 00 00 01 4B 4D 98
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+  DA 0x02
+ SA 0x2222
+ VLAN 22
+ Tunnel Initiation DIP 9.9.9.9
+ Tunnel initiation SIP 10.10.10.10
+ Inner Payload DIP AA00:0:0:0:0:0:0:1
+ Inner Payload SIP BB00:0:0:0:0:0:0:1
+  00 00 00 00 00 02 00 00 00 00 22 22 81 00 00 16
+ 08 00 45 03 00 42 00 00 00 00 0A 29 8A 6B 0A 0A
+ 0A 0A 09 09 09 09 60 30 00 00 00 06 3B FE BB 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 01 AA 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00
+ 00 00 00 00 E9 1F 2F 47
+  After step 3.b, verify that below packet egresses out of access_port.
+  DA 0x1
+ SA 0x11
+ VLAN 21
+ DIP BB00:0:0:0:0:0:0:1
+ SIP AA00:0:0:0:0:0:0:1
+  00 00 00 00 00 01 00 00 00 00 11 11 81 00 00 15
+ 86 DD 60 00 00 00 00 06 3B 3F AA 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 01 BB 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 01 00 00 00 00 00 00
+ 47 7A A4 0A
+"
+./tomahawk3/ip_tunnel/l3_tunnel_ip4in6.c," This cint example demonstrates L3 Ipv4 in Ipv6 Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIp4In6)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIp4In6)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IPv6 tunnel initiation, send the below IPv4 packet on access_port. 
+  DA 0x1
+ SA 0x1111
+ VLAN 21
+ DIP 1.1.1.1
+ SIP 2.2.2.2
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 0800 4500 002e 0000 0000 40ff 73cc 0202
+ 0202 0101 0101 0001 0203 0405 0607 0809
+ 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+ fb82 e0b2 0000 0000
+   b)For IPv6 Tunnel Termination, send the below packet on network_port.
+  DA 0x2
+ SA 0x2222
+ VLAN 22
+ Tunnel Termination DIP DD00:0:0:0:0:0:0:1
+ Tunnel Termination SIP CC00:0:0:0:0:0:0:1
+ Inner Payload DIP 2.2.2.2
+ Inner Payload SIP 1.1.1.1
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 86dd 6030 0000 0014 04ff cc00 0000 0000
+ 0000 0000 0000 0000 0001 dd00 0000 0000
+ 0000 0000 0000 0000 0001 4500 0014 0000
+ 0000 40ff 73e6 0101 0101 0202 0202 8537
+ f178 0000 0000
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+  DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Initiation DIP FF00:0:0:0:0:0:0:1
+ Tunnel initiation SIP EE00:0:0:0:0:0:0:1
+ Inner Payload DIP 1.1.1.1
+ Inner Payload SIP 2.2.2.2
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 86dd 6000 0000 002e 040a ee00 0000 0000
+ 0000 0000 0000 0000 0001 ff00 0000 0000
+ 0000 0000 0000 0000 0001 4500 002e 0000
+ 0000 3fff 74cc 0202 0202 0101 0101 0001
+ 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+ 1213 1415 1617 1819 fb82 e0b2 0000 0000
+  After step 3.b, verify that below packet egresses out of access_port.
+  SA 0x01
+ DA 0x1111
+ VLAN 21
+ SIP 1.1.1.1
+ DIP 2.2.2.2
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 0800 4500 0014 0000 0000 feff b5e5 0101
+ 0101 0202 0202 8537 f178 0000 0000 0000
+ 0000 0000 0000 0000 0000 0000 0000 0000
+"
+./tomahawk3/ip_tunnel/l3_tunnel_isatap.c," ISATAP (Intra-Site Automatic Tunnel Addressing Protocol) is an IPv6 transition mechanism meant to
+ transmit IPv6 packets between dual-stack nodes on top of an IPv4 network.
+  +----------------+--------------+--------------------------------+
+ |                |              |                                |
+ |     32bits     |   32bits     |          64 bits               |
+ +----------------+--------------+--------------------------------+
+ |  IPV6 prefix   |   0x5EFE     |        IPV4 address            |
+ |                |              |                                |
+ +----------------+--------------+--------------------------------+
+   This cint example demonstrates L3 ISATAP auto Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIsatap)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIsatap)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For ISATAP auto tunnel initiation, send the below IPv6 packet on access_port.
+  DA 0x1111
+ SA 0x1
+ VLAN 21
+ DIP 0:0:0:0:0:5EFE:C0A8:0101
+ SIP 0:0:0:0:0:5EFE:C0A8:0201
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 86dd 6030 0000 0006 3bff 0000 0000 0000
+ 0000 0000 5efe c0a8 0201 0000 0000 0000
+ 0000 0000 5efe c0a8 0101 0000 0000 0000
+ 8f88 ec61 0000 0000
+   b)For IPv4 Tunnel Termination, send the below packet on network_port.
+  DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Termination DIP 192.168.2.1
+ Tunnel Termination SIP 192.168.1.1
+ Inner Payload DIP 0:0:0:0:0:5EFE:C0A8:0201
+ Inner Payload SIP 0:0:0:0:0:5EFE:C0A8:0101
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 0800 4500 003c 0000 0000 4029 f646 c0a8
+ 0101 c0a8 0201 6030 0000 0000 3bff 0000
+ 0000 0000 0000 0000 5efe c0a8 0101 0000
+ 0000 0000 0000 0000 5efe c0a8 0201 b484
+ afb5
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+  DA 0x02
+ SA 0x2222
+ VLAN 22
+ Tunnel Initiation DIP 192.168.1.1
+ Tunnel initiation SIP 192.168.2.1
+ Inner Payload DIP 0:0:0:0:0:5EFE:C0A8:0101
+ Inner Payload SIP 0:0:0:0:0:5EFE:C0A8:0201
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 0800 4503 0042 0000 0000 0a29 2c3e c0a8
+ 0201 c0a8 0101 6030 0000 0006 3bfe 0000
+ 0000 0000 0000 0000 5efe c0a8 0201 0000
+ 0000 0000 0000 0000 5efe c0a8 0101 0000
+ 0000 0000 8f88 ec61 0000 0000
+ *
+ After step 3.b, verify that below packet egresses out of access_port.
+  DA 0x01
+ SA 0x1111
+ VLAN 21
+ DIP 0:0:0:0:0:5EFE:C0A8:0201
+ SIP 0:0:0:0:0:5EFE:C0A8:0101
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 86dd 6030 0000 0000 3b3f 0000 0000 0000
+ 0000 0000 5efe c0a8 0101 0000 0000 0000
+ 0000 0000 5efe c0a8 0201 b484 afb5 0000
+ 0000
+"
+./tomahawk3/ip_tunnel/l3_tunnel_ip6in6.c," This cint example demonstrates L3 Ipv6 in Ipv6 Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIp6In6)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIp6In6)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IPv6 tunnel initiation, send the below IPv6 packet on access_port. 
+  DA 0x1
+ SA 0x1111
+ VLAN 21
+ DIP BB00:0:0:0:0:0:0:1
+ SIP AA00:0:0:0:0:0:0:1
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 86dd 6030 0000 0002 3bff aa00 0000 0000
+ 0000 0000 0000 0000 0001 bb00 0000 0000
+ 0000 0000 0000 0000 0001 0001 0cb1 f608
+ 0000 0000
+   b)For IPv6 Tunnel Termination, send the below packet on network_port.
+  DA 0x2
+ SA 0x2222
+ VLAN 22
+ Tunnel Termination DIP DD00:0:0:0:0:0:0:1
+ Tunnel Termination SIP CC00:0:0:0:0:0:0:1
+ Inner Payload DIP AA00:0:0:0:0:0:0:1
+ Inner Payload SIP BB00:0:0:0:0:0:0:1
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 86dd 6030 0000 002e 290a cc00 0000 0000
+ 0000 0000 0000 0000 0001 dd00 0000 0000
+ 0000 0000 0000 0000 0001 6030 0000 0006
+ 3bfe bb00 0000 0000 0000 0000 0000 0000
+ 0001 aa00 0000 0000 0000 0000 0000 0000
+ 0001 0000 0000 0000 114c 3f26 0000 0000
+ 0000 0000     
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+ *
+ DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Initiation DIP FF00:0:0:0:0:0:0:1
+ Tunnel initiation SIP EE00:0:0:0:0:0:0:1
+ Inner Payload DIP AA00:0:0:0:0:0:0:1
+ Inner Payload SIP BB00:0:0:0:0:0:0:1
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 86dd 6030 0000 002a 290a ee00 0000 0000
+ 0000 0000 0000 0000 0001 ff00 0000 0000
+ 0000 0000 0000 0000 0001 6030 0000 0002
+ 3bfe aa00 0000 0000 0000 0000 0000 0000
+ 0001 bb00 0000 0000 0000 0000 0000 0000
+ 0001 0001 0cb1 f608 0000 0000
+  After step 3.b, below packet egresses out of access_port.
+  SA 0x01
+ DA 0x1111
+ VLAN 21
+ Inner Payload DIP AA00:0:0:0:0:0:0:1
+ Inner Payload SIP BB00:0:0:0:0:0:0:1
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 86dd 6030 0000 0006 3b09 bb00 0000 0000
+ 0000 0000 0000 0000 0001 aa00 0000 0000
+ 0000 0000 0000 0000 0001 0000 0000 0000
+ 114c 3f26 0000 0000 0000 0000
+"
+./tomahawk3/ip_tunnel/l3_tunnel_ip6to4.c," The 6to4 automatic tunneling encapsulates incoming IPv6 packets with an IPv4 tunnel header and
+ routes the packets as IPv4 packets across the core. At the end of the tunnel, the XGS switches
+ removes the IPv4 header and forwards the original IP based on its own header. The IPv6 address
+ format must be the format as 2002:V4ADDR::/48 which illustrated as below.
+  | 3 |  13  |    32     |   16   |          64 bits               |
+ +---+------+-----------+--------+--------------------------------+
+ |FP | TLA  | V4ADDR    | SLA ID |         Interface ID           |
+ |001|0x0002|           |        |                                |
+ +---+------+-----------+--------+--------------------------------+
+  This cint example demonstrates L3 IP6TO4 Tunnel initiation and termination
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these two ports,
+ one port is used as access_port and the other as network port. Install a rule
+ to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an access_vlan(21) and add access_port as member.
+  b) Create network_vlan(22) and add network_port as member.
+  c) Create two L3 interfaces one each for access side and network side.
+  d) Create two L3 egress objects one each for access side and network side.
+  e) Configure tunnel initiator(type = bcmTunnelTypeIp6In4)
+ on network side L3 interface.
+  f) Configure tunnel terminator(type = bcmTunnelTypeIp6In4)
+ to match on packet's tunnel header contents.
+  g) For tunnel initiation, add a L3 route pointing to network side egress object.
+  h) For tunnel termination, add a L3 route pointing to access side egress object.
+ "," a) For IP6TO4 Tunnel initiation, send the below IPv6 packet on access_port.
+  DA 0x1111
+ SA 0x1
+ VLAN 21
+ DIP 2002:c0a8:0101:0:0:0:0:0
+ SIP 2002:c0a8:0201:0:0:0:0:0
+  0000 0000 1111 0000 0000 0001 8100 0015
+ 86dd 6030 0000 0006 3bff 2002 c0a8 0201
+ 0000 0000 0000 0000 0000 2002 c0a8 0101
+ 0000 0000 0000 0000 0000 0000 0000 0000
+ d738 8cf0 0000 0000
+   b)For IPv4 Tunnel Termination, send the below packet on network_port.
+  DA 0x2222
+ SA 0x2
+ VLAN 22
+ Tunnel Termination DIP 192.168.2.1
+ Tunnel Termination SIP 192.168.1.1
+ Inner Payload DIP 2002:c0a8:0201:0:0:0:0:0
+ Inner Payload SIP 2002:c0a8:0101:0:0:0:0:0
+  0000 0000 2222 0000 0000 0002 8100 0016
+ 0800 4500 0042 0000 0000 4029 f640 c0a8
+ 0101 c0a8 0201 6030 0000 0006 3bff 2002
+ c0a8 0101 0000 0000 0000 0000 0000 2002
+ c0a8 0201 0000 0000 0000 0000 0000 0000
+ 0000 0000 4b3e 8e53 0000 0000
+ "," After step 3.a, verify that the below Tunnel packet egresses out
+ of network_port.
+  DA 0x02
+ SA 0x2222
+ VLAN 22
+ Tunnel Initiation DIP 192.168.1.1
+ Tunnel initiation SIP 192.168.2.1
+ Inner Payload DIP 2002:c0a8:0101:0:0:0:0:0
+ Inner Payload SIP 2002:c0a8:0201:0:0:0:0:0
+  0000 0000 0002 0000 0000 2222 8100 0016
+ 0800 4503 0042 0000 0000 0a29 2c3e c0a8
+ 0201 c0a8 0101 6030 0000 0006 3bfe 2002
+ c0a8 0201 0000 0000 0000 0000 0000 2002
+ c0a8 0101 0000 0000 0000 0000 0000 0000
+ 0000 0000 d738 8cf0 0000 0000
+  After step 3.b, verify that below packet egresses out of access_port.
+  DA 0x01
+ SA 0x1111
+ VLAN 21
+ DIP 2002:c0a8:0201:0:0:0:0:0
+ SIP 2002:c0a8:0101:0:0:0:0:0
+  0000 0000 0001 0000 0000 1111 8100 0015
+ 86dd 6030 0000 0006 3b3f 2002 c0a8 0101
+ 0000 0000 0000 0000 0000 2002 c0a8 0201
+ 0000 0000 0000 0000 0000 0000 0000 0000
+ 4b3e 8e53 0000 0000
+"
+./tomahawk3/mirroring/mirror_payload_wiping_sFlow_PSAMP_th3.c," MIRRORING with Payload wiping of the payload packet
+ "," a) Put required ports in loopback so that test can be performed
+ using CPU generated traffic.
+ b) Install IFP entries to catch the ingress and egress packets
+ for visibility.
+ "," a) Configure Payload wiping HW to match and choose wiping begin offset
+ UDP Dest port is selected to match on.
+ b) Configure Mirror Port with Tunnel. Either sFlow and ERSPAN can
+ be selected.
+ "," a) Send any L3 packet with matching dest UDP port to Port0/Port1 or None.
+"," Payload content is wiped right after the Dest IP from
+ an offset as specified in the corresponding UDP match.
+   SAMPLE DECODE OF PSAMP PACKET:
+ {000000445566}->(Tunnel DMAC) {000000112233}->(Tunnel SMAC)
+ {8100 006f}->(VLAN TAG)
+ {86dd}->(Ether type IPv6) 6000 0000 0068 1140 {fe80 0000 0000
+ 0000 0000 0000 0000 2d6e}->(Src IP6) {ff02 0000 0000
+ 0000 0000 0000 0000 0005}-(Dst IP6) {2b67}-(Src L4 Port) {56ce}->(Dst L4 Port)
+ {0068}->(Len)
+ {0000}->(UDP Chksm, always 0) {{000a}->(IPFIX Version) {0060}->(IPFIX Len)
+ {0000 0000}->(Export Time) {0000 0000}->(Seq Num) {0000
+ 0000}->(Observation Domain ID) {0000}->(Template ID) {0050}->(PSAMP Len)
+ {0000 0000 0000 0000}->(Observation time ns) {00ff}->(PAD + FF)
+ {0044}->(PSAMP Sampled Len)}->(PSAMP Hdr) {0000 0000 00c4 0001 0203 0405 8100
+ 00c8 002e 0000 0000 0000 0000 1234 5678
+ 1234 5679 1234 567a 1234 567b 1234 567c
+ 1234 567d 1234 567e 1234 567f 1234 5680
+ 1234 0000 0000}->(Payload Packet)
+   SAMPLE DECODE OF SFLOW PACKET:
+ {000000445566}->(Tunnel DMAC) {000000112233}->(Tunnel SMAC)
+ {8100 006f}->(VLAN TAG)
+ {0800 4500 0068 0000 0000 4011 7480 0101
+ 0101 0202 0202 2b67 56ce 0054 0000 }->(IP+UDP Header)
+ { {2900}->(Source Port+ModID)
+ {2a00}->(Dest Port+ModID) {8080}->(sFLow Flags) {0000}->(Metadata)
+ {0000 0000}->(Seq Num) }->(sFlow HDR) {0000 0000 00c4
+ 0001 0203 0405 8100 00c8 002e 0000 0000
+ 0000 0000 1234 5678 1234 5679 1234 567a
+ 1234 567b 1234 567c 1234 567d 1234 567e
+ 1234 567f 1234 5680 1234 0000 0000}->(Payload Packet)
+    NOTE: Use opt_* variables to change the test variant
+  return BCM_E_NONE;
+ }
+   bcm_error_t execute()
+ {
+ if( (rrv = test_setup(unit)) != BCM_E_NONE )
+ {
+ printf(""Creating the test setup failed %d\n"", rrv);
+ return rrv;
+ }
+  if( (rrv = ConfigureMirror()) != BCM_E_NONE )
+ {
+ printf(""Configuring mirror failed with %d\n"", rrv);
+ return rrv;
+ }
+  if( (rrv = verify()) != BCM_E_NONE )
+ {
+ printf(""Verify mirror failed with %d\n"", rrv);
+ return rrv;
+ }
+  return BCM_E_NONE;
+ }
+   print execute();
+ "
+./tomahawk3/bcm_tx/bcm_tx_sobmh.c," This CINT script demonstrates how to send packets from application to particular
+ port bypassing the ingress pipeline.
+ This example shows how application can send packets using bcm_tx() API
+ "," a) Select three egress port and configure them in loopback mode.
+ b) Add static L2 entry on cpu port with mac=80:80:80:11:22:33 and vlan=1
+ c) start Packet Watcher diag app (PW start)
+ "," a) There is nothing to be done in tx_setup
+ "," a) Transmit 2 packets per egress port using bcm_tx() API
+"," The packets are looped back on egress ports and are received by CPU port
+ PW will dump the recieved packets on console.
+"
+./tomahawk3/bcm_tx/bcm_tx.c," This CINT script demonstrates how to send packets from application which will 
+ go through the ingress pipeline and pipeline decides the egress port to send out the packet.
+ This example shows how application can send packets using bcm_tx() API
+ "," a) Select three egress port and configure them in loopback mode.
+ b) Create Vlan 10 and add egress port 1 and CPU port to vlan 10.
+ c) Create Vlan 20 and add egress port 2 and CPU port to vlan 20.
+ d) Create Vlan 30 and add egress port 3 and CPU port to vlan 30.
+ e) start Packet Watcher diag app (PW start)
+ "," a) There is nothing to be done in tx_setup
+ "," a) Transmit one packet with vlan=10 using bcm_tx() API
+ b) Transmit one packet with vlan=20 using bcm_tx() API
+ c) Transmit one packet with vlan=30 using bcm_tx() API
+"," The packets are looped back on egress ports and are received by CPU port.
+ PW will dump the recieved packets on console.
+"
+./tomahawk3/linkscan/linkscan.c," The link scan feature enables to monitor the status of ports and links.
+ If the link status changes, the driver calls the callback routine.
+ "," a) Select 3 ports on the switch  
+ "," a) Start linkscan
+ b) Register linkscan callback
+ c) Add one port in software linkscan
+ d) Add two ports in a bitmap and enable software linkscan on this bitmap
+ "," a) Enable loopback on port1
+ b) Enable loopback on port2 and register port callback on port2
+"," Check that linkscan callback is seen on the console
+"
+./tomahawk3/bcm_rx/bcm_rx.c," This CINT script registers RX callback using BCM APIs.
+ This exampls hsows how application can register RX callback function
+ and process the packets received by CPU port.
+ "," a) Select one ingress port and configure it in loopback mode.
+ b) Add static L2 entry on cpu port with mac=00:00:00:00:00:03 and vlan=1
+ "," a) Check if RX is active, if not then Init RX and start RX thread
+ b) Register RX callback function which will print the received packet along
+ with the metadata of the packet.
+ "," a) Transmit multiple packets with different vlan_prio and mac=00:00:00:00:00:03
+"," The packets are looped back on ingress port and received by CPU port
+ The RX callback registered in step#4 will dump the packet along with metadata
+ on console
+"
+./tomahawk3/bcm_rx/bcm_rx_cpu_cosq_mapping.c," This CINT script demonstrate how to map cpu cos queues to RX DMA channels 
+ BCM APIs.
+ This exampls hsows how application can register RX callback function
+ and process the packets received by CPU port.
+ "," a) Stop packet watcher application
+ b) Start packet watchher application with all 7 RX DMA channels
+ "," a) Build cpu cosq mapping by calling bcm_cosq_gport_traverse() API 
+ "," a) Remap cpu cosq to different RX DMA channels as below and 
+ dump cmic_cmc0_pktdma_ch(x)_cos_ctrl_rx_[0..1] register
+ Map 0-6 cos to RX DMA channel 0
+ Map 7-13 cos to RX DMA channel 1
+ Map 14-20 cos to RX DMA channel 2
+ Map 21-27 cos to RX DMA channel 3
+ Map 28-34 cos to RX DMA channel 4
+ Map 35-41 cos to RX DMA channel 5
+ Map 42-47 cos to RX DMA channel 6
+"," RX DMA channel cos control registers values should matc as per 
+ the above mapping done in step# a)
+"
+./tomahawk3/pstats/pstats_all_elements_test.c," Tomahawk3 supports a feature packetized statistics (PSTATS) which allows software
+ to read out MMU buffer use counts over SBUS and send this data via packets into the
+ Tomahawk2 switch to any destination in the network in a timely manner.
+  PSTATS related config variables:
+  buffer_stats_collect_mode
+  Flags to denote pstats and oob stats mode.
+ 0x0 Instantaneous mode
+ 0x1 Max use count mode with HW clear on Read
+  buffer_stats_collect_type
+  Flags to enable pstats or oob stats, only one can be enabled at a time.
+ 0x0 None: disable both oob stats and pstats
+ 0x1 OOB STATS: only enable out-of-band stats
+ 0x2 PSTATS: only enable packetized statistic
+   bcm_num_cos
+  Initial number of CoS queues, by default is 8
+  "," a) Put required ports in loopback so that test can be performed
+ using CPU generated traffic.
+ b) Install IFP entries to catch the ingress and egress packets
+ for visibility.
+ "," a) Detect how many cosqs are present for each port and find out number of unicast cosqs,
+ multicast cosqs and port scheduler level cosqs. This will be used in case pstats are 
+ required for gport which represents cosqs (instead of port + cosqs). This is done by
+ registering a callout function to bcm_cosq_gport_traverse.
+ b) Calculate the buffer size rewuired to hold the pstats data for ingress, egress and port
+ cosq levels.
+ c) Create a PSTAT session, sync and then get the PSTAT data in the preallocated buffers.
+ d) Send the captured data from the CPU by encapsulating it in a tunnelled packet.
+ e) Do cleanup by destroying the session.
+ "," a) CPU sends the encapsulated packet with the proper PSTATS header and the payload data.
+"," Encalsulated packet is seen egressing from the egress port with the PSTATS data of
+ ingress, egress and gport levels.
+   NOTE: Use opt_* variables to change the test variant
+  return BCM_E_NONE;
+ }
+   bcm_error_t execute()
+ {
+ if( (rrv = test_setup(unit)) != BCM_E_NONE )
+ {
+ printf(""Creating the test setup failed %d\n"", rrv);
+ return rrv;
+ }
+  if( (rrv = do_pstats_config(0)) != BCM_E_NONE )
+ {
+ printf(""Configuring pstats failed with %d\n"", rrv);
+ return rrv;
+ }
+  if( (rrv = verify()) != BCM_E_NONE )
+ {
+ printf(""Verify mirror failed with %d\n"", rrv);
+ return rrv;
+ }
+  return BCM_E_NONE;
+ }
+   print execute();
+ "
+./tomahawk3/field/ifp_presel.c," IFP Logical Table Selection [LTS]/Presel demonstration using BCM APIs.
+ It demonstrates either in PIPE LOCAL or GLOBAL mode.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create Presel entry with qualifier as
+ QSET: IpTypeIpv4Any and
+ QSET: StageIngress (for IFP presel).
+ b) Create IFP Entry with
+ QSET: SrcIp
+ QSET: InPort
+ QSET: Presel (presel_id)
+ ACTION: DscpNew
+ ACTION: CopyToCpu
+ STAT: main_ifp_statid = 1
+ c) Create an L3 interface so that L3 packet gets recognised as L3.
+ DMAC: 0xDD (test_dmac)
+ VLAN: 100  (test_vid)
+ d) Create L3 egress object and set above interface (OPTIONAL)
+ e) Create a route entry for dest ip = 0x0A0A0A0B (OPTIONAL)
+ "," a) Send a packet with
+ test_dmac = 0xDD | any srcmac | test_vid = 100 |
+ fp_cfg.src_ip = 0x0A0A0A14 | dest_ip = 0x0A0A0A0B |
+ b) STAT with ID = 1 incremented by 1.
+"," Final STAT count should be 1.
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/ifp_flex_stat_policer.c," IFP flex stat and policer demonstration using BCM APIs.
+ From TH2 not much has changed in this area.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create entry
+ QUAL    : InPort and DstMac
+ ACTION  : None
+ POLICER : TrTcm with cir+cbs and eir+ebs
+ STAT    : Counter for
+ GREEN
+ YELLOW if opt_IncludeYellowStat = 1
+ RED    if opt_IncludeRedStat = 1
+ "," a) Goal is to see
+ a) if green counter is incrementing
+ b) if yellow counter is incrementing
+ c) if red counter is incrementing
+ b) Send traffic in such a way that packets are collored according to
+ their ingress rate.
+ c) Send   1 packet in a burst from CPU to get GREEN only hit
+ d) Send 500 packets in a burst from CPU to get GREEN+YELLOW hit
+ To some extent Red also hits
+ e) Send 100000 packets in a burst from CPU to get GREEN+YELLOW+RED hit
+ f) Call fp_flex_stat_get() to get the stat values.
+ g) To get a better result, you can integrate the sample code snippet
+ pasted at the bottom of this file.
+"," You will see that Green, Yellow and RED STAT counter should increment
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/ifp_range_checker.c," Cint example to show configuration of Range Checker and IFP in
+ Tomahawk3 using BCM APIs.
+ The following example shows the usage of Range Checker and IFP TCAM in
+ Pipe global mode [entries installed in all of the four pipes]. Range
+ Module in Pipe global Mode and IFP TCAM in Global mode is a miss
+ configuration and should never be done. But both the modules Operating
+ in same mode and Range in Global mode and Field in Pipe Global mode are
+ allowed configurations.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create Two Ranges of of type bcmRangeTypeOuterVlan with VID values
+ Range1 = [101-105]
+ Range2 = [111-115]
+  c) Create entry in Main IFP - TCAM
+ Qualifier1 : SrcMac - 0x202
+ Qualifier2 : RangeCheckGroup with range_bmp = Range1 OR Range2
+ Action     : CopyToCpu with match = 200
+ d) Create STAT with main_ifp_statid = 1
+ "," a) Send packets with VID from 101 to 120
+"," i)  VID within Range1 and Range2: Match occurs. STAT 1 increases
+ ii) VID outside Range1 and Range2: Match does NOT occurs. STAT 1 unchanged.
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/ifp_delayed_actions.c," IFP Delayed action demonstration using BCM APIs.
+ TH3 is optimized for residency of the packet in the chip. Due to
+ which many pipeline stages are folded. Packet resolution is one of them.
+ Due to this, at IFP stage port resolution is not known. Hence, the
+ qualifier MatchPbmpRedirect is introduced to apply delayed action of
+ legacy PortRedirect.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create a VLAN(100) and add ing_port1, ing_port2, egr_port1,
+ egr_port2, egr_nhop_redirect_port and egr_match_redirect_port as
+ members. Where,
+ egr_port1              : is the routed next hop dest port for
+ ip_subnet_1
+ egr_nhop_redirect_port : is the RedirectEgrNextHop dest port
+ overriddedn by IFP
+ egr_match_redirect_port: is the MatchPbmpRedirect dest port in
+ case resolved port is any of egr_port1
+ OR egr_port2 OR egr_nhop_redirect_port
+ b) Configure MPLS pop action so that terminated packet should go to
+ egr_obj_1 from l3_intf_1. (LOCALMAC:0xDD, REMOTEMAC=0xEE
+ VLAN=100, EGR_PORT=egr_port1)
+ c) Create another next hop as 'redirected_nh_index'.
+ (LOCAL_MAC:0xCE, REMOTE_MAC=0xCD
+ VLAN=100, EGR_PORT=egr_nhop_redirect_port)
+ d) Create entry:
+ QSET: Ingress, InPort
+ ACTION: MatchPbmpRedirect
+ ACTION: RedirectEgrNextHop
+ "," a) Send an IPv4 packet:
+ DMAC        : local_mac_1
+ VLAN        : test_vid
+ MPLS LABEL  : rx_label
+ DIP         : ip_subnet_1
+ b) You will see that packets are egressing from the redirected port
+ egr_match_redirect_port if opt_EnableMatchPbmpRedirect = 1.
+"," Please see the ""TEST CONFIGURATIONS SUMMARY"" section below.
+ LOG SUMMARY:
+ PACKET1:
+ MACDA:0xDD, MACSA: 0xCC, VLANID: 0x0064, MPLS LABEL: 1000,
+ SIP: 10.10.10.11, DIP: 20.20.20.21
+  PACKET2:
+ MACDA:0xEE, MACSA: 0xDD, VLANID: 0x0064, MPLS LABEL: 1000,
+ SIP: 10.10.10.11, DIP: 20.20.20.21
+  PACKET3:
+ MACDA:0xCD, MACSA: 0xCE, VLANID: 0x0064, SIP: 10.10.10.11,
+ DIP: 20.20.20.21
+  Summary:
+ In simple statement: If NHOP egress port falls in any of the
+ given PBMP, redirect it to a given port.
+  Test case:
+ #. PACKET1 ingresses
+ #. 2 nexthop entries are created.
+ NHOOP_a. Makes PACKET2 to egress from egr_port1
+ NHOOP_b. Makes PACKET3 to egress from egr_nhop_redirect_port
+  Kind of NHOOP_b_. Makes PACKET3 to egress from
+ egr_match_redirect_port
+  TEST CONFIGURATIONS SUMMARY of egressing packet
+  A]   opt_EnableMatchPbmpRedirect = 0 (0x0)
+ opt_EnableNhopRedirect = 0 (0x0)
+ DMAC: 0xEE
+ SMAC: 0xDD
+ EGR port: egr_port1
+  B]   opt_EnableMatchPbmpRedirect = 0 (0x0)
+ opt_EnableNhopRedirect = 1 (0x1)
+ DMAC: 0xCD
+ SMAC: 0xCE
+ EGR port: egr_nhop_redirect_port
+  C]   opt_EnableMatchPbmpRedirect = 1 (0x1)
+ [Match PBMP=egr_nhop_redirect_port]
+ opt_EnableNhopRedirect = 1 (0x1)
+ DMAC: 0xCD
+ SMAC: 0xCE
+ EGR port: egr_match_redirect_port
+  D]   opt_EnableMatchPbmpRedirect = 1 (0x1) [Match PBMP=egr_port1]
+ opt_EnableNhopRedirect = 0 (0x0)
+ DMAC: 0xEE
+ SMAC: 0xDD
+ EGR port: egr_match_redirect_port
+   NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/opaque_tag.c," Opaque TAG usage demonstration using BCM APIs.
+ TH3 does not support double tagged packets. If a double tagged
+ packets enters the pipeline it treats everything beyong 1st tag
+ as data. E.g. a double tagged L3 packet will not be recognised as
+ an IP packet. This CINT excercises the processing of opaque tag in
+ TH3. To do this we are sending double tag packet to qualify on
+ fields beyond the double tag field. You have to use Opaque TAG
+ to successfully parse the fields beyond 2nd tag.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create entry
+ QUAL    : OpaqueTagHigh and OpaqueTagLow
+ OpaqueTag      == 0x91000064
+ OpaqueTag_Extn == 0xAABBCCDD
+ ACTION  : CopyToCpu
+ STAT    : Counter with STAT ID = 1
+ "," a) Send packet with
+ a) Matched OpaqueTag,   Unmatched OpaqueTag_Extn
+ b) Unmatched OpaqueTag, Unmatched OpaqueTag_Extn
+ c) Matched OpaqueTag,   Matched OpaqueTag_Extn
+ d) Unmatched OpaqueTag, Matched OpaqueTag_Extn
+"," The final stat should be 1 because as per the IFP entry, both tag + extn parts
+ should match. (opt_OpaqueTagLen = 2)
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/udf_hints_hw_sharing_TH3.c," Opaque TAG usage demonstration using BCM APIs.
+ TH3 does not support double tagged packets. If a double tagged
+ packets enters the pipeline it treats everything beyong 1st tag
+ as data. E.g. a double tagged L3 packet will not be recognised as
+ an IP packet. This CINT excercises the processing of opaque tag in
+ TH3. To do this we are sending double tag packet to qualify on
+ fields beyond the double tag field. You have to use Opaque TAG
+ to successfully parse the fields beyond 2nd tag.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create L3 interface MAC=0xDD, VID=100
+ b) Create L3 egress object DMAC=0xEE, VID=100, Interface as above.
+ c) Configure MPLS POP action for label=1000. After POP,
+ applicable egress object as above.
+ d) Create 1st UDF extraction for 1 label MPLS packets
+ OFFSET to fetch TTL from mpls label
+ e) Create 2nd UDF extraction for 2 labels MPLS packets
+ OFFSET to fetch TTL from INNER mpls label (HW SHARED)
+ f) Create IFP Entry
+ QUAL    : UDF1 and UDF2
+ ACTION  : None
+ STAT    : Counter with STAT ID = 1
+ "," a) Send PACKET1, STAT UP (See below)
+ b) Send PACKET2, STAT SAME
+ c) Send PACKET3, STAT UP
+ d) Send PACKET4, STAT SAME
+"," The final STAT count should be 2
+  PACKET1:
+ MACDA: 0xDD, VID: 100, MPLS ONE label: 1000(h3E8), 7(h7), 39(h27)
+ PACKET2:
+ MACDA: 0xDD, VID: 100, MPLS ONE label: 1000(h3E8), 7(h7), 33(h21)
+ PACKET3:
+ MACDA: 0xDD, VID: 100, MPLS TWO label: 1000(h3E8), 7(h7), 33(h21) 
+ 2000(h7D0), 6(h6), 39(h27)
+ PACKET4:
+ MACDA: 0xDD, VID: 100, MPLS TWO label: 1000(h3E8), 7(h7), 33(h21)
+ 2000(h7D0), 6(h6), 33(h21)
+ NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/vfp_termination_override.c," Due to pipeline optimizations, TH3 stages now behave differently.
+ Some of the HW signals are not available to the stages which were
+ available in earlier chips. E.g. VID change done by VFP is not
+ visible to MY_STATION_TCAM. Hence MY_STATION_TCAM will not recognize
+ the changed packet, which may result into the lookup failure. To solve
+ this, VFP has introduced a set of dedicated actions.
+ Goal is to change the VID of a packet at the lookup stage. Then,
+ this changed VID, should hit one of L3 interfaces (programmed in
+ MY_STATION_TCAM) and go for tunnel termination. But in TH3 this
+ won't work due to pipeline optimizations. Hence VFP itself has to
+ play the role of initiating route lookup
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create L3 interface
+ b) Create L3 egress object and associate it with the above L3 interface
+ c) Create entry in the route table for dip = 0x0A0A0A0B
+ d) Create MPLS POP action and add tunnel initiation for DMAC=0xDD,
+ VID=0x64.
+ e) Add tunnel initiation for DMAC=0xDD, VID=0xC8. Here 0xC8 is the new VID
+ that will be assigned by VFP.
+ f) Create entry in VFP:
+ QUAL:   InPort -> ing_port1
+ ACTION: VlanNew -> vid_new (0xC8)
+ STAT    : Counter with STAT ID = 1
+ ",," i) Send PACKET1. Expected is that PACKET2 should egress from egr_port.
+ IF opt_ChangeVlanInVfp == 0.
+ ii) Expected Result: Send PACKET1. Expected is that PACKET3 should egress from egr_port.
+ IF opt_ChangeVlanInVfp == 1.
+  PACKET1:
+ DMAC         = 0xDD
+ VID          = 0x64
+ MPLS label   = 1000
+ DIP          = 0x0A0A0A0B
+  PACKET2:
+ DMAC         = 0xDD
+ VID          = 0x64
+ DIP          = 0x0A0A0A0B
+  PACKET3:
+ DMAC         = 0xDD
+ VID          = 0xC8 (200)
+ DIP          = 0x0A0A0A0B
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/field/ifp_compression_ttl.c," Compression using BCM APIs.
+ It compresses a range of TTL values into 1 class value. In this way
+ user will require only 1 entry in IFP to qualify for a range of TTL,
+ but at the expense of equivalent number of entries in the ExactMatch
+ stage/table. The following example shows the compression configuration
+ for TTL in Global mode - entries installed on all the four pipes. The
+ same can be applied to per pipe mode - entries installed in one of the
+ four pipes. Use opt_* variables to change the test variant
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode. Install a rule to copy incoming packets to CPU and
+ additional action to drop the packets when it loops back on egress
+ ports. Start packet watcher.
+ "," a) Create a VLAN(100) and add ing_port1, ing_port2 and egr_port
+ as members. Makes packet with dmac=0xDD to go to ing_port2.
+ b) Create multiple ExactMatch entries for a range of TTL to match
+ QSET:   IpTunnelTtl
+ ASET:   ClassZero -> Set value == compress_cfg.ttl_class_data
+ c) Create 1 main IFP entry to match on the above class value from
+ ExactMatch
+ QSET:   IpTunnelTtlClassZero.
+ Match value == compress_cfg.ttl_class_data
+ Action: CopyToCpu
+ "," a) Send any IPv4 packet with TTL values changing between ttl_data_from
+ and ttl_data_to and some packets beyond the range also. You will see
+ that packets within the TTL range hits the IFP entry. Rest do not.
+"," Final stat count should be 10 (0x0000000A)
+  NOTE: Use opt_* variables to change the test variant
+ "
+./tomahawk3/L3/ipmc_mpls_term.c," This Cint example to show configuration of the IPv4 multicast scenario
+ with MPLS Tunnel Termination using BCM APIs. Replication of IPMC packet to a set
+ of MPLS tunnels for the given (S, G)/(*, G)
+ "," a) Select one ingress and two egress ports and configure them in
+ Loopback mode.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 multicast functional scenario. This adds the
+ host in l3 table[host] and does the necessary configurations of vlan,
+ interface and next hop.
+ b) Configure MPLS Tunnel Termination and associate with multicast egress
+ object.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show','multicast show', 'l2 show'  and 'ipmc table show'
+  b) Transmit the MPLS packet with IPMC payload. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that terminates the MPLS Packet & see IPMC payload
+ (no change in dmac, smac) and vlan changed as the packet is
+ routed through the egress ports based on multicast table.
+ Also run the 'ipmc table show' to check the HIT bit status (y i.e Yes)
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/L3/hierarchical_ecmp.c," This Cint example to show configuration of the IPv4 unicast H-ECMP scenario
+ using BCM APIs.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 unicast with hirarchical ECMP functional
+ scenario. This adds the entry in l3 table[defip/LPM] and does
+ the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show', 'l3 defip show', 'l3 multipath show', 'l2 show'
+ and 'l3 ecmp egress show'
+  b) Transmit the known IPv4 multicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 defip show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters. Each time, the outgoing packet use a different
+ path or egress-port or next-hop via ECMP.
+"
+./tomahawk3/L3/ipv6_host.c," This Cint example to show configuration of the IPv6 host entry using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv6 host/entry functional scenario. This adds the
+ host in l3 table[host] and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 ip6host show'
+  b) Transmit the known IPv6 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 ip6host show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/l3_route_ingress_mode.c," This Cint example to show configuration of the IPv4 route entry with
+ ingress mode using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 route/entry with ingress mode functional
+ scenario. This adds the route in l3 table[route] and does the
+ necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 defip show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/dscp_queuing_remark_qos_map.c," This Cint example to show configuration of the L3 IPv4 DSCP classification
+ and remark QoS mapping using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 DSCP Queuing and remark QoS mapping functional
+ scenario. This adds the route in l3 table[route] and does the
+ necessary configurations of vlan, interface and next hopi.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet with DSCP. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and priority as 4. Also run the 'l3 defip show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+ "
+./tomahawk3/L3/ipmc_mpls_init.c," This Cint example to show configuration of the IPv4 multicast scenario
+ with MPLS Tunnel Initiation using BCM APIs. Replication of IPMC packet
+ to a set of MPLS tunnels for the given (S, G)/(*, G)
+ "," a) Select one ingress and two egress ports and configure them in
+ Loopback mode.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 multicast functional scenario. This adds the
+ host in l3 table[host] and does the necessary configurations of vlan,
+ interface and next hop.
+ b) Configure MPLS Tunnel Initiation and associate with multicast egress
+ object.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show','multicast show', 'l2 show'  and 'ipmc table show'
+  b) Transmit the known IPv4 multicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'ipmc table show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+ Packet replicate to egress_port1 & egress_port2 in below format
+ L2 + MPLS + L3 MC + Payload
+"
+./tomahawk3/L3/ipmc.c," This Cint example to show configuration of the IPv4 multicast scenario
+ using BCM APIs.
+ "," a) Select one ingress and three egress ports and configure them in
+ Loopback mode.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 multicast functional scenario. This adds the
+ host in l3 table[host] and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show','multicast show', 'l2 show'  and 'ipmc table show'
+  b) Transmit the known IPv4 multicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that smac and vlan are all changed as the packet is routed
+ through the egress por, but dmac is not changed as its a mcast
+ replication flow. Also run the 'ipmc table show' to check the HIT
+ bit status (y i.e Yes) and 'show c' to check the Tx/Rx packet
+ stats/counters.
+"
+./tomahawk3/L3/l3_route_frr.c," This Cint example to show configuration of the IPv4 route with failover
+ scenario using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, one port is used as ingress_port and the other as
+ egress_ports(primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 route/entry with failover functional scenario.
+ This adds the route in l3 table[route] and does the necessary
+ configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 defip show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/ipv4_host.c," This Cint example to show configuration of the IPv4 host entry using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 host/entry functional scenario. This adds the
+ host in l3 table[host] and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 l3table show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 l3table show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/ipv4_route.c," This Cint example to show configuration of the IPv4 route entry using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 route/entry functional scenario. This adds the
+ route in l3 table[route] and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 defip show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/ipv6_route.c," This Cint example to show configuration of the IPv6 route entry using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv6 route/entry functional scenario. This adds the
+ route in l3 table[route] and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 ip6route show'
+  b) Transmit the known IPv6 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port. Also run the 'l3 ip6route show' to
+ check the HIT bit status (y i.e Yes) and 'show c' to check the Tx/Rx
+ packet stats/counters.
+"
+./tomahawk3/L3/ipv4_route_dscp_queuing_remarking.c," This Cint example to show configuration of the IPv4 route with DSCP queuing
+ and remarking using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic IPv4 DSCP Queuing and remark QoS mapping functional
+ scenario. This adds the route in l3 table[route] and does the
+ necessary configurations of vlan, interface and next hopi.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet with DSCP. The contents of the
+ packet are printed on screen. The packet used matches the route
+ configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and priority as 3. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/pkt_trace/ptrace_lag_ecmp.c," This CINT example shows how to trace a packet using BCM APIs.
+  The BCM API to trace a packet is bcm_switch_pkt_trace_info_get().
+ This API returns the captured traced information. This example
+ parses the traced information, maps returned values to corresponding
+ software objects, and prints the traced information in readable form.
+  The packet trace results are determined by how the switch processes the
+ packet specified in the API call. As such, for a desired behavior,
+ the switch should be configured how to forward the packet before
+ tracing the packet. In this example, L3 routing flow with destination
+ as ecmp and trunk is configured and the packet is sent to match the
+ configured L3 routing flow.
+ "," a) Select one ingress and six egress ports and configure them in 
+ Loopback mode.
+  b) Configure RTAG7 settings for ECMP and trunk application.
+  c) Create two trunks each having three members.
+  d) Create an ecmp groups with two ecmp members where each ecmp member
+ uses one of the two trunks created in step 1.c.
+ ",," a) Transmit the below trace packet on ingress_port.
+ Packet:
+ =======
+ DA 0x00000000AAAA
+ SA 0x000000002222
+ VLAN 12
+ DIP=192.168.10.33
+ SIP =10.10.10.33
+  00 00 00 00 AA AA 00 00 00 00 22 22 81 00 00 0C
+ 08 00 45 00 00 2E 00 00 00 00 40 FF 9A DD 0A 0A
+ 0A 21 C0 A8 0A 21 C4 65 87 43 14 45 B9 76 63 DB
+ AB C3 4F DF 83 CD BC 36 E5 B5 1A 20 5D EA E7 B3
+ B8 B4 B1 75
+"," Verify that lookup status results, packet resolution result, ecmp resolution result
+ and trunk resolution result are displayed as below.
+ Lookup Status Results:
+ ForwardingVlanValid
+ L3DestRouteHit
+ MystationHit
+ Packet Resolution Result:
+ KnownL3UcPkt
+ Source port STP state: Forward
+ Hash resolution: ECMP1
+ EMCP egress object=200000
+ Number of egress objects in ecmp group:2
+ Egress Object 0: 100002
+ Egress Object 1: 100003
+ Egress object selected for the packet is 100002
+ trunk=1, L3 interface=0, mac=00:00:00:00:11:11, vlan=13
+ Hash resolution: Trunk
+ Trunk: 1
+ Rtag: 9
+ Members: 3 ports
+ modport(0, 2)
+ modport(0, 3)
+ modport(0, 4)
+ Trunk member selected for the packet: modport(0, 4)
+"
+./tomahawk3/mpls/l3_mpls_init_frr.c," This Cint example to show configuration of the L3 MPLS VPN initiation with
+ failover scenario using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, one port is used as ingress_port and the other as
+ egress_ports (primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Initiation functional scenario with
+ failover and does the necessary configurations of vlan, interface,
+ next hop and Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also Tunnel + VC labels are PUSHed
+ as part of tunnel initiation on egress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters. And also, we can see failover
+ _failover_set or
+ _failover_egress_status_set and observe that packet is routed to
+ backup path/tunnel.
+"
+./tomahawk3/mpls/lsr_trunk.c," This Cint example to show configuration of L3 MPLS tunnel LSR with trunk
+ using BCM APIs.
+ "," a) Selects five ports and configure them in Loopback mode. Out of these
+ five ports, one port is used as ingress_port and the other as
+ egress_ports(trunk egress members).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Swap with Trunk functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that each time, the outgoing
+ packet use a different trunk member port. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/l3_mpls_init.c," This Cint example to show configuration of L3 MPLS tunnel initiation using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Initiation functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also Tunnel + VC labels are pushed
+ as part of tunnel initiation on egress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/l3_mpls_vpn_pop_qos.c," This Cint example to show configuration of L3 MPLS tunnel termination
+ with QoS using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel termination functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels with POP action.
+ b) COnfigure a QoS remapping from incoming packet EXP to internal priority.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the MPLS packet with TWO labels & EXP as 3. The contents
+ of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel + VC labels are POPed
+ as part of tunnel termination on ingress port. We can observe that
+ exp is mapped to CoS 3 and int_proi as 6 on egress side. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/lsr_swap_frr.c," This Cint example to show configuration of the L3 MPLS LSR swap with
+ failover scenario using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, one port is used as ingress_port and the other as
+ egress_ports (primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap functional scenario with
+ failover and does the necessary configurations of vlan, interface,
+ next hop and swap labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS Label packet. The contents of the packet
+ are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also MPLS Labels are swapped
+ as part of tunnel switching on egress port. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+ _failover_set or
+ _failover_egress_status_set and observe that packet is switched/routed
+ to backup path/tunnel.
+"
+./tomahawk3/mpls/lsr_push.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap &
+ Push label using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel LSR with push+swap functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed on
+ screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that one Label is pushed and other
+ label is swapped.
+"
+./tomahawk3/mpls/l3_mpls_term.c," This Cint example to show configuration of L3 MPLS tunnel termination using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel termination functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels with POP action.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the MPLS packet with IP unicast payload. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel + VC labels are POPed
+ as part of tunnel termination on ingress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/lsr_qos.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap with QoS
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS LSR with QoS functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'
+  b) Transmit the MPLS packet. The contents of the packet are printed
+ on screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that EXP is marked for
+ MPLS Label. Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/lsr_multi_segment.c," This Cint example to show configuration of L3 MPLS tunnel switching for
+ MS-PW scenario using BCM APIs.
+ A multi-segment pseudowire (MS-PW) is a set of two or more PW segments that
+ function as a single PW, as shown in the figure below. It is also known as
+ switched PW. MS-PWs span multiple cores or autonomous systems of the same or
+ different carrier networks.
+  Segmenting the pseudowires is also referred to as pseudowire switching.
+ The following occurs in a pseudowire-switching at S-PE:
+  - The service receives vc-encapsulated traffic from one pseudowire segment.
+ - The service performs a de-encapsulation, followed by another vc-encapsulation.
+ - The service sends the traffic out over another pseudowire segment.
+  In this scenario, the vc-label has been swapped, and traffic is switched from
+ one pseudowire segment to another.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel switching/swapping functional
+ scenario and does the necessary configurations of vlan, interface,
+ next hop and Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',and
+ 'l3 egress show'
+  b) Transmit the MPLS packet with TWO labes. The contents of the packet
+ are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the L3 egress object/port and also the vc-label has
+ been swapped, and traffic is switched from one pseudowire segment to
+ another.
+"
+./tomahawk3/mpls/lsr_php.c," This Cint example to show configuration of L3 MPLS tunnel LSR with PHP
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS LSR with PHP functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel Label with PHP action.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed
+ on screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel label POPed(PHP)
+ as part of tunnel termination on ingress port and observe that
+ no change in Bos(VC) label if TWO label packet is ingressed.
+"
+./tomahawk3/mpls/lsr_swap_1.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap/switching functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS with One / Two Label with different TTL packet.
+ The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that MPLS Label is swapped
+ for different trails and covered with TTL checks as well. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/mpls/lsr_swap.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap/switching functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS with One / Two Label with different TTL packet.
+ The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that MPLS Label is swapped
+ for different trails and covered with TTL checks as well. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+./tomahawk3/flex_cnt/flex_cnt_l3_ingress_new_api.c,"  This cint example configures L3 ingress interface and attaches a flex counter
+ to the L3 interface. It also demonstrates how to retrieve these counters.
+ "," a) Selects one ingress port and one egress port and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an ingress_vlan(21) and add ingress_port as it member.
+  b) Create an egress_vlan(22) and add egress_port as it member.
+  c) Create two L3 interfaces one for ingress side and the other for egress side.
+  d) Create two egress objects one for ingress side and the other for egress side.
+ e) Create a route entry and attach flex counters to ingress L3 interface(L3_IIF).
+ Three flex counters are attached to the same ingress L3 interface.
+ Counter at offset 0 is for KNOWN_L3UC_PKT.
+ Counter at offset 1 is for UNKNOWN_L3UC_PKT
+ Counter at offset 2 is for L2_BC.
+ "," a) Send 3 KNOWN_L3_UNICAST packets. Below are the packet contents.
+  Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>
+  Retrieve L3IIF flex counters and print them.
+  b) Send another 2 KNOWN_L3_UNICAST packets. Packet contents are same as in step 3.a
+ Retrieve L3IIF flex counters and print them.
+  c) Send 2 UNKNOWN_L3_UNICAST packets. Below are the packet contents.
+  Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cb>
+  Retrieve L3IIF flex counters and print them.
+  d) Send 2 L2_BC packets. Below are the packet contents.
+  Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:05:00:01:00> Tagged Packet ProtID<0x8100> Ctrl<0x0015> 802.3 Packet
+ IP: V(0) src<14.15.16.17> dst<18.19.20.21> hl<2> service-type<3> tl<1029> id<1543> frg-off<2057> ttl<10> > chk-sum<0x0c0d>
+  Retrieve L3IIF flex counters and print them.
+"," After step 3.a, verify that counter at offset 0 is 3.
+ After step 3.b, verify that counter at offset 0 is 5.
+ After step 3.c, verify that counter at offset 1 is 2.
+ After step 3.d, verify that counter at offset 2 is 2.
+"
+./tomahawk3/flex_cnt/flex_cnt_l3_egress_new_api.c,"  This cint example configures and attaches a flex counter to a EGR L3 nexthop.
+ It also demonstrates how to retrieve these counters.
+ "," a) Selects one ingress port and one egress port and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU on egress port 
+ and start packet watcher.
+ "," a) Create an ingress_vlan(21) and add ingress_port as it member.
+  b) Create an egress_vlan(22) and add egress_port as it member.
+  c) Create two L3 interfaces one for ingress side and the other for egress side.
+  d) Create two egress objects one for ingress side and the other for egress side.
+ e) Create a route entry and attach flex counter to egress L3 nexthop. Three counters
+ are attached to the same egress L3 nexthop.
+ Counter at offset 1 to count packets with outer tag priority 0
+ Counter at offset 2 to count packets with outer tag priority 1
+ Counter at offset 3 to count packets with outer tag priority 2
+ "," a) Send 3 packets with outertag priority 0. Below are the packet contents. 
+  Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>
+  Retrieve Egress L3 Nexthop flex counters and print them.
+  b) Send another 2 packets with outertag priority 0. Packet contents are same as in step 3. 
+ Retrieve Egress L3 Nexthop flex counters and print them.
+  c) Send 2 packets with outertag priority 1. Below are the packet contents. 
+  Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x2015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>  
+  Retrieve Egress L3 Nexthop flex counters and print them.
+  d) Send 2 packets with outertag priority 2. Below are the packet contents. 
+  Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x4015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>
+  Retrieve Egress L3 Nexthop flex counters and print them.
+"," After step 3.a, verify that counter at offset 0 is 3.
+ After step 3.b, verify that counter at offset 0 is 5.
+ After step 3.c, verify that counter at offset 1 is 2.
+ After step 3.d, verify that counter at offset 2 is 2.
+ *
+"
+./tomahawk3/flex_cnt/flex_cnt_l3_egress.c,"  This cint example configures and attaches a flex counter to a EGR L3 nexthop.
+ It also demonstrates how to retrieve these counters.
+ "," a) Selects one ingress port and one egress port and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU on egress port 
+ and start packet watcher.
+ "," a) Create an ingress_vlan(21) and add ingress_port as it member.
+  b) Create an egress_vlan(22) and add egress_port as it member.
+  c) Create two L3 interfaces one for ingress side and the other for egress side.
+  d) Create two egress objects one for ingress side and the other for egress side.
+  e) Create a route entry and attach flex counter to egress L3 nexthop.
+ "," a) Send 3 packets that hit the egress L3 netxhop, retrieve the counters and print them.
+  Packet
+ ======
+ Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>
+  b) Send another 2 packets(same packet content as above), retrieve the counters and print them.
+"," After step 3.a, verify that the counter value is 3.
+ After step 3.b, verify that the counter value is 5.
+ *
+"
+./tomahawk3/flex_cnt/flex_cnt_l3_ingress.c,"  This cint example configures L3 ingress interface and attaches a flex counter
+ to the L3 interface. It also demonstrates how to retrieve these counters.
+ "," a) Selects one ingress port and one egress port and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU and start packet watcher.
+ "," a) Create an ingress_vlan(21) and add ingress_port as it member.
+  b) Create an egress_vlan(22) and add egress_port as it member.
+  c) Create two L3 interfaces one for ingress side and the other for egress side.
+  d) Create two egress objects one for ingress side and the other for egress side.
+  e) Create a route entry and attach flex counter to ingress L3 interface ( L3IIF ).
+ "," a) Send 3 packets that hit the ingress L3 interface, retrieve the counters and print them.
+ Packet
+ ======
+ Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+ IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x73cc>
+ b) Send another 2 packets(same packet content as above), retrieve the counters and print them.
+"," After step 3.a, verify that the counter value is 3.
+ After step 3.b, verify that the counter value is 5.
+ "
+./tomahawk3/vlan/l2_qos.c," This cint example configures mapping between {L2 packet Priority + CFI bit} and
+ {internal priority and CNG} using BCM APIs. It also shows how internal priority
+ and CNG can be used to remark out going packet's priority and CFI fields.
+ "," a) Selects one ingress port and one egress port and configure them in Loopback mode.
+ Install a rule to copy incoming packets to CPU and start packet watcher.
+ "," a) Creates a VLAN(20) and add ingress port and  egress port as members.
+  b) Configure ingress port's default VLAN as 20, default packet priority as 4 and CFI as 1.
+  c) Configure ingress QoS mapping as below and attach it to ingress_port.
+ {packet priority(4) + CFI(1)} is mapped to {internal_priority(10) + CNG(Yellow)}.
+  d) Configure egress QoS mapping as below and attach it to egress_port.
+ {{internal_priority(10) + CNG(Yellow)} is mapped {packet priority(2) + CFI(0)}.
+ "," a) Send the below untagged packet on ingress port.
+  Packet:
+ =======
+ Ethernet header: DA=00:00:00:00:00:02, SA=00:00:00:00:00:01
+  0000 0000 0002 0000 0000 0001 0001 0203
+ 0405 0607 0809 0A0B 0C0D 0E0F 1011 1213
+ 1415 1617 1819 1A1B 1C1D 1E1F 2021 2223
+ 2425 2627 2829 2A2B 2C2D 2E2F DF52 E538
+ "," The packet going out of egress_port has packet priority as ""2"" and CFI as ""0"".
+ Below is the packet that egresses out of egress_port.
+  Packet:
+ =======
+ Ethernet II, Src: 00:00:00_00:00:01 (00:00:00:00:00:01), Dst: 00:00:00_00:00:02 (00:00:00:00:00:02)
+ 802.1Q Virtual LAN, PRI: 2, CFI: 0, ID: 20
+ 010. .... .... .... = Priority: Spare (2)
+ ...0 .... .... .... = CFI: Canonical (0)
+ .... 0000 0001 0100 = ID: 20
+  0000 0000 0002 0000 0000 0001 8100 4014
+ 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f
+ 1011 1213 1415 1617 1819 1a1b 1c1d 1e1f
+ 2021 2223 2425 2627 2829 2a2b 2c2d 2e2f
+ df52 e538
+"
+./tomahawk3/vlan/stg.c," This cint example demonstrates Spanning tree group state management for
+ physical ports using BCM APIs. This script also demonstrates how to set up 
+ default STG on the device. It displays the STGs present in the system with
+ respect to ports and VLANs.
+ "," a) Select three ports port1, port2 and port3.
+ "," a) Creates two vlans 10 and 20 add port1, port2 and port3 as members.
+  b) Create a new default STG and print it. 
+  c) Create another STG(25) and add vlan 10 and 20.
+  d) Set STP state for vlan 10 for port1, port2, port3 as FORWARD.
+ "," a) Execute ""stg show"" and display the VLAN_STG, EGR_VLAN_STG HW tables.
+ "," In VLAN_STG[25], field SP_TREE_PORT<portnum> is set to 3 (i.e FORWARD)
+ In EGR_VLAN_STG[25], field SP_TREE_PORT<portnum> is set to 3 (i.e FORWARD)
+ ""stg show"" displays all the STG ids and the corresponding port's STP state.
+"
+./tomahawk3/vlan/private_vlan.c," CINT scripts for demonstrating the learning based on the private vlan
+ using BCM api's
+ "," a) Selects all five port and configure them in Loop back mode.
+ Install a rule to copy incoming packets to CPU and start packet watcher.
+ "," a) configure isolated port1 and isolated port2 with isolated vlan 102  
+  b) configure community port1 and community port2 with community vlan 101 
+  c) configure promiscuous port with promiscuous vlan 100 
+ "," a) Send the below packet on isolated port_1.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=102
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 66 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 6B 53 25 A9 
+  b) Send the below packet on promiscuous port.
+  Packet:
+ ======
+ DA=00:00:00:00:AA:AA
+ SA=00:00:00:00:11:11
+ Vlan=100
+  00 00 00 00 AA AA 00 00 00 00 11 11 81 00 00 
+ 64 08 00 00 01 02 03 04 05 06 07 08 09 0A 0B 
+ 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 
+ 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 28 29 
+ 2A 2B 2C 2D 4B 25 17 6E    
+  c) Send the below packet on Community port_1.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=101
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 65 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 6B 53 25 A9 
+ "," The below packet egresses on promiscuous port for step 3.a.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=100
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 64 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 0C 0B E4 6C 
+  The below packet egresses on all ports for step 3.b.
+  Packet:
+ ======
+ DA=00:00:00:00:AA:AA
+ SA=00:00:00:00:11:11
+   00 00 00 00 AA AA 00 00 00 00 11 11 81 00 00 
+ 66 08 00 00 01 02 03 04 05 06 07 08 09 0A 0B 
+ 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 
+ 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 28 29 
+ 2A 2B 2C 2D 2C 7D D6 AB 
+  The below packet egresses on promiscuous port and Community port_2 for set 3.c.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=100
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 64 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 0C 0B E4 6C 
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=101
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 65 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 6B 53 25 A9 
+  The below packet egresses on promiscuous port.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=100
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 64 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 0C 0B E4 6C 
+  c) Send the below packet on promiscuous port.
+  Packet:
+ ======
+ DA=00:00:00:00:AA:AA
+ SA=00:00:00:00:11:11
+ Vlan=100
+  00 00 00 00 AA AA 00 00 00 00 11 11 81 00 00 
+ 64 08 00 00 01 02 03 04 05 06 07 08 09 0A 0B 
+ 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 
+ 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 28 29 
+ 2A 2B 2C 2D 4B 25 17 6E       
+  d)Expected Result
+ ==================
+ The below packet egresses on all ports.
+  Packet:
+ ======
+ DA=00:00:00:00:AA:AA
+ SA=00:00:00:00:11:11
+   00 00 00 00 AA AA 00 00 00 00 11 11 81 00 00 
+ 66 08 00 00 01 02 03 04 05 06 07 08 09 0A 0B 
+ 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 
+ 1B 1C 1D 1E 1F 20 21 22 23 24 25 26 27 28 29 
+ 2A 2B 2C 2D 2C 7D D6 AB 
+  e) Send the below packet on Community port_1.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=101
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 65 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 6B 53 25 A9 
+  f)Expected Result
+ ==================
+ The below packet egresses on promiscuous port and Community port_2.
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=100
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 64 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 0C 0B E4 6C 
+  Packet:
+ ======
+ DA=00:00:00:00:11:11
+ SA=00:00:00:00:AA:AA
+ Vlan=101
+  00 00 00 00 11 11 00 00 00 00 AA AA 81 00 00 
+ 65 FF FF 88 E7 00 00 FA CE 00 00 00 00 11 22 
+ 00 00 00 00 AA AA 81 00 0F A0 00 01 02 03 04 
+ 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 
+ 14 15 16 17 6B 53 25 A9 
+ "
+./tomahawk3/vlan/general_vlan.c," This cint example is to demonstrate L2 VLAN management activities like
+ add/create/delete vlan using BCM APIs. This script also demonstrates how
+ to set up default VLAN on the device.
+ "," a) Selects two ingress ports.
+ "," a) Create a vlan 20 and add two ports to the vlan.
+  b) Create a vlan 10 and make it new default vlan.
+ "," a) Display the vlan configuration using ""vlan show""
+ and display default vlan using ""vlan default"".
+"," Default vlan should be 10.
+ Default Vlan 10 should have all ports as it members.
+ Vlan 20 should have ingress_port1 and ingressport2 as it members.
+  ""vlan show"" output
+ ==================
+ vlan 10 ports cpu,cd,xe (0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f), untagged cd,xe (0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001e) MCAST_FLOOD_UNKNOWN
+ vlan 20 ports cd0-cd1 (0x0000000000000000000000000000000000000000000000000000000000000006), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+  ""vlan default"" output
+ =====================
+ Default VLAN ID is 10
+"
+./tomahawk3/vlan/shared_vlan_learning.c," This is a an example script shows how to enable shared vlan learning(SVL) feature.
+ "," a) Select two ports ingress_port and egress_port.
+ "," a) Creates two vlans 100 and 200 add ingress_port and egress_port as members.
+  b) Enable shared VLAN learning on switch.
+  c) Set 300 as forwarding ID for both vlans 100 & 200.
+ "," a) Send vlan 100 and 200 tagged packets.
+ "," Verify that mac is learnt based on forwarding ID 300 using ""l2 show"".
+"
+./tomahawk3/knet/knet_tx.c,,,,,
+./tomahawk3/knet/knet_rx.c,,,,,
+./tomahawk3/knet/knet.c," This CINT script demonstrate how to send and receive packets over KNET interface
+ This exampls shows how application can create KNET interface 
+ and send/receive packets over it.
+  Prerequistes:
+ =============
+ a) Build SDK with KNET feature enabled
+ b) Build $SDK/src/examples/xgs/tomahawk3/knet/knet_tx.c and knet_rx.c 
+ source files for customer target CPU
+ c) Insert knet kernel module before launching SDK.
+ "," a) Enable siwtch control ""ArpReplyToCpu"" and ""ArpRequestCpu""
+ b) Enable BCM RX module and register Rx Callback
+ c) Add IFP rules to copy protocol and data packets to CPU
+ "," a) Create Knet interface of type BCM_KNET_NETIF_T_TX_CPU_INGRESS
+ b) Create Knet filter to divert packets to Knet interface
+ "," a) Provided steps to user for sending and receiving packets 
+ through knet interface  
+"," knet_tx executable will send 5 packets over knet interface
+ knet_rx executable will receive 5 packets over knet interface and display
+"

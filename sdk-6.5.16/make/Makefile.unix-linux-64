@@ -1,0 +1,67 @@
+# 
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2019 Broadcom Inc. All rights reserved.
+#
+# Build rules for Linux/x86 (Little Endian) with PLI support
+
+include ${SDK}/make/Makefile.unix-common
+
+# When using GDB on Linux, you may want to use "setenv GDB 1" to disable
+# editline.  For best results put "set environment GDB 1" in your .gdbinit.
+
+# Linux-specific Configuration Flags
+
+ENDIAN_DEF = -DLE_HOST=1
+
+# Notes on AMD Athlon 64-bit
+#
+# Compiles on x86_64 default to 32-bit emulation unless 64-bit mode
+# is specifically requested in Make.local by uncommenting the two defines
+# for PTRS_ARE_64BITS and LONGS_ARE_64BITS.
+#
+# Note that the code base will compile in 64-bit mode, but will not run
+# correctly because malloc() can return values >32 bits and the PLISIM
+# protocol only supports 32-bit addresses.
+
+ifeq ($(shell uname -m),x86_64)
+ ifeq (,$(findstring -DPTRS_ARE_64BITS,$(CFGFLAGS)))
+  CC = ${HCC} -m32
+  CXX = g++ -m32
+ else
+  CC = ${HCC}
+  CXX = g++
+ endif
+endif
+
+# Currently, this LD definitely seems to only be used for building
+# the SBX FE-2000 simulation target
+LD	= ld -melf_i386
+AR	= ar
+ARFLAGS	= -rc
+STRIP	= strip
+RANLIB  = ranlib
+
+# Filter out features that cannot or should not be supported in Linux
+ifdef ESW_CHIPS
+_FEATURE_EXCLUDE_LIST += OOB_RCPU
+endif
+FEATURE_EXCLUDE_LIST = $(sort $(_FEATURE_EXCLUDE_LIST))
+
+# Linux
+LIBS =-lnsl -pthread -lm -lrt
+
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"unix-linux-64\"
+
+# For GCC 4.2.x, add -Wno-address
+GCC_MAJOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f1)
+GCC_MINOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f2)
+ifeq (${GCC_MAJOR_VER}, 4)
+ifeq (${GCC_MINOR_VER}, 2)
+BCM_EXTRA_CC_CFLAGS   = -Wno-address
+endif
+endif
+
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+BCM_EXTRA_CC_CFLAGS += -fPIC
+endif
