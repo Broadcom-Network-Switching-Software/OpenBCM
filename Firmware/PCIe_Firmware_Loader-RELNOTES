@@ -1,0 +1,369 @@
+Release Notes for PCIe Firmware Loader for Broadcom Network Switch devices
+
+===========
+Release 2.7
+===========
+
+Release Date: November 25, 2019
+
+FW loader version: v2.7
+SerDes FW version (Merlin16): D102_0B
+SerDes FW version (Merlin7): D000_04
+
+Devices supported at Beta level quality in this release:
+BCM56880 (Trident4 A0) family
+BCM56275 (Trident3-X2) family
+BCM56470 (Trident3-X4) family
+
+Devices supported at GA level quality in this release:
+BCM56980 (Tomahawk3) family
+BCM56870 (Trident3-X7) family
+BCM56770 (Trident3-X5) family
+BCM56370 (Trident3-X3) family
+
+Important Notes:
+- This release supports XGS devices only.
+- The primary purpose of this release is to allow bringup/development of designs using the
+ BCM56880, BCM56275, and BCM56470 family devices. It is not meant as a production release
+ for those device families. Other device families are listed at GA level quality but this
+ release contains no specific changes for those device families since v2.6.
+- See important notes for v2.6 as they are applicable for v2.7 as well.
+- Image names have been changed under "Release contents" below.
+
+Improvements:
+  FW Loader:
+  - [SDKLT-17270] Reload PCIE firmware depends on PERST only
+  - [SDKLT-14714] Improve bootloader and support Merlin7 PCIE firmware
+  - [SDKLT-17772] Improve PCIE firmware loader TRACE log feature
+
+Known Issues:
+None.
+
+Documentation:
+pciefw_Loader_install.txt
+
+Release contents:
+PCIe Fimware Loader in binary and srec formats
+   pciefw-r5-m7.* - For BCM56880 family devices
+   pciefw-m0.* - For BCM56370 and BCM56275 family devices
+   pciefw-r5.* - For all other device families
+ARM DS-5 based serial flash programming tool
+
+
+===========
+Release 2.6
+===========
+
+Release Date: July 12, 2019
+
+FW loader version: v2.6
+SerDes FW version: D102_0A
+
+Devices supported in this release:
+BCM56980 (Tomahawk3) family
+BCM56870 (Trident3-X7) family
+BCM56770 (Trident3-X5) family
+BCM56370 (Trident3-X3) family
+BCM56275 (Trident3-X2) family
+
+Important Notes:
+v2.6 firmware supports PCIe warm reset without causing iProc reset.
+v2.6 firmware was validated with SDK 6.5.16 which implements PCIe hot swap sequencing code to ensure that there are no stale DMA transactions when the PCIe link went down. Customers who do not wish to enable hotswap support can disable it using switch control "bcmSwitchHotSwapDisable". Please refer to KM article # KB0028301 to understand SDK patches needed.
+
+Upgrading to v2.6 firmware is only supported with coldboot. Warmboot and live upgrade are not supported.
+
+Bug Fixes:
+  FW Loader:
+  - [SDK-159943] PCIe interface may not work in GEN3 speed after the switch is
+                 reset by toggling SYS_RST_N and PCIE_PERST_N
+  - [SDK-167844] PCIe G3 FW v2.5 ignores chip strap signals
+
+Improvements:
+  SerDes FW:
+   - [M16_PCIEG3][Enhancement] Update to set optimal PLL BW settings in Gen1/Gen2 (PLPSERDES-1013)
+
+  FW Loader:
+  - [SDK-167408] Added Hotswap support
+  - [SDK-165034] Better handling of PERST from Root Complex
+  - [SDK-171130] Optimizations to handle Reset, PERST/Hotswap events better
+
+Known Issues:
+This release does not support BCM88790 (Ramon) and BCM88690 (Jericho2) devices. Updated support for these devices will be provided in an upcoming release.
+
+Documentation:
+pcie_gen3_fw_install.txt
+
+Release contents:
+PCIe Gen3 Firmware in binary and srec formats
+   pcieg3fw-m0.* - For BCM5637x devices
+   pcieg3fw.* - For all other devices
+ARM DS-5 based serial flash programming tool
+
+===========
+Release 2.5
+===========
+
+Release Date: Oct 24, 2018
+
+FW loader version: v2.5
+SerDes FW version: D102_08
+
+Devices supported in this release:
+BCM56370 (Helix5) family
+BCM56770 (Maverick2) family
+BCM56870 (Trident3) family
+BCM56980 (Tomahawk3) family
+BCM88790 (Ramon)
+BCM88690 (Jericho2)
+
+Bug Fixes:
+  FW Loader:
+  - [SDK-157048] Fix for device enumeration fail sporadically when set to Gen3 mode
+                 Fix for Gen3 linkup failure upon sys_rst_l and/or PERST
+
+Improvements:
+None
+
+Known Issues:
+During HotSwap,Gen3 linkup may fail sporadically
+
+Documentation:
+pcie_gen3_fw_install.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+   pcieg3fw-m0.* - For BCM5637x devices
+   pcieg3fw.* - For all other devices
+ARM DS-5 based serial flash programming tool
+Sample custom settings file and "text to binary" conversion tool
+
+===========
+Release 2.4
+===========
+
+Release Date: Jul 27, 2018
+
+FW loader version: v2.4
+SerDes FW version: D102_08
+
+Devices supported in this release:
+BCM56370 (Helix5) family
+BCM56770 (Maverick2) family
+BCM56870 (Trident3) family
+BCM56980 (Tomahawk3) family
+BCM88790 (Ramon)
+BCM88690 (Jericho2)
+
+Bug Fixes:
+  FW Loader:
+  - [SDK-146358] Fix for bcm init failure with v2.3 firmware and Flow Tracker
+                 enabled.This fix applies to all systems which are
+                 using embedded apps on internal Cortex-R5
+
+  - Fix for Helix5 Cortex-M0-0 not entering into sleep mode. Applies to Helix
+    devices only
+
+Improvements:
+None
+
+Known Issues:
+None
+
+Documentation:
+pcie_gen3_fw_install.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+   pcieg3fw-m0.* - For BCM5637x devices
+   pcieg3fw.* - For all other devices
+ARM DS-5 based serial flash programming tool
+Sample custom settings file and "text to binary" conversion tool
+
+===========
+Release 2.3
+===========
+
+Release Date: Jun 08, 2018
+
+FW loader version: v2.3
+SerDes FW version: D102_08
+
+Devices supported in this release:
+BCM56370 (Helix5) family
+BCM56770 (Maverick2) family
+BCM56870 (Trident3) family
+BCM56980 (Tomahawk3) family
+BCM88790 (Ramon)
+BCM88690 (Jericho2)
+
+Bug Fixes:
+  SerDes FW:
+  - [M16_PCIEG3] Added fix for hot reset and link disable failures
+
+  FW Loader:
+  - [SDK-146358] Fix for instabilty in Gen3 negotiation, improvement
+                 in firmware loading time
+
+  - [SDK-143776] Fixed issue of PCIe intermittently linking at Gen1/Gen2 modes
+    when set to Gen3 mode. This is caused by FW loader fails to reset Micro.
+
+Improvements:
+  SerDes FW:
+  - [M16_PCIEG3] [Enhancement] Adding Signal Detect Offset Calibration
+  FW Loader:
+  - [SDK-150084] Add Support for pre/post FW load custom settings
+                 For more details, see pcie_gen3_fw_install.txt, section
+                 "How to apply custom/user settings in MAC/PHY registers"
+
+Known Issues:
+None
+
+Documentation:
+pcie_gen3_fw_install.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+   pcieg3fw-m0.* - For BCM5637x devices
+   pcieg3fw.* - For all other devices
+ARM DS-5 based serial flash programming tool
+Sample custom settings file and "text to binary" conversion tool
+
+
+===========
+Release 2.2
+===========
+No external release
+
+
+===========
+Release 2.1
+===========
+
+Release Date: Nov 02, 2017
+
+FW loader version: v2.1
+SerDes FW version: D102_04
+
+Devices supported in this release:
+BCM56870_A0 family
+
+Major Bug Fixes:
+SDK-134560 PCIe FW loader should jump to penholder at the end
+   In 2.0, FW loader parks at penholder location 0xffff0fe8 with WFE.
+   However embedded apps expects R5 to be in a loop jumping to
+   address pointed penholder location, SDK updates penholder with
+   start address of embedded apps entry point. FW is modified to do so.
+   Also, FW will check for FW load status at the very begining and brach
+   accordingly, i.e loading of SerDes FW vs jumping to penholder.
+
+Improvements:
+None
+
+Known Issues:
+The penholder location currently points to TCM boot penholder. This FW loader
+doesn't have support for penholder for other boot modes, QSPI/ROM etc.
+
+Documentation:
+pcie_gen3_fw_howto.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+ARM DS-5 based serial flash programming tool
+
+
+===========
+Release 2.0
+===========
+
+Release Date: Oct 25, 2017
+
+FW loader version: v2.0
+SerDes FW version: D102_04
+
+Devices supported in this release:
+BCM56870_A0 family
+
+Major Bug Fixes:
+SDK-134560 PCIe FW loader should jump to penholder at the end
+   In previous versions, FW loader goes into an infinite loop after
+   loading the SerDes FW, doesn't allow ARM R5-0 to boot any other
+   application, e.g.,uKernel. This issues is fixed in this release,
+   now R5-0 will park at penholder location 0xFFFF0FE8 which will allow
+   application to write starting address at this penholder location and
+   trigger SEV to run the application.
+
+SDK-123375 Adding support for arbitrary SerDes register writes
+   FW loader can now read {PHY addr, val} pairs from data blob at 0x10000
+   offset, and writes given value to register with given address in the
+   address/value pair.
+
+SDK-132724 Enhancements to PLL bandwidth and peaking
+    PLL bandwidth and peaking values are updated from dedfault to recommended
+    values based on DVT
+
+SDK-131047 Disable advertising Vital Product Data support
+
+Improvements:
+SDK-130877 Upgrade PCIe Gen3 SerDes Firmware to D102_04 version:
+    Previous versions of the SerDes FW mandates micro reset after every
+    PERST, hot-reset, hotswap event etc. This FW removes such requirement,
+    stays intact during all resets except power on reset.
+
+Known Issues:
+The penholder location currently points to TCM boot penholder. This FW loader
+doesn't have support for penholder for other boot modes, QSPI/ROM etc.
+
+Documentation:
+pcie_gen3_fw_howto.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+ARM DS-5 based serial flash programming tool
+
+===========
+Release 1.1
+===========
+
+Release Date: Aug 09, 2017
+
+FW loader version: v1.1
+SerDes FW version: D102_02
+
+Devices supported in this release:
+BCM56870_A0 family
+
+Major Bug Fixes:
+SDK-128733: Fix for PCIe intermittently negotiating in Gen2 mode
+            while it is set to link up in PCIe Gen3 mode
+
+Known Issues:
+None
+
+Documentation:
+pcie_gen3_fw_howto.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+ARM DS-5 based serial flash programming tool
+
+===========
+Release 1.0
+===========
+
+Release Date: Jul 17, 2017
+
+FW loader version: v1.0
+SerDes FW version: D102_02
+
+Release features:
+First release
+
+Devices supported in this release:
+BCM56870_A0 family
+
+Documentation:
+pcie_gen3_fw_howto.txt
+
+Release contents:
+PCIe Gen3 Fimware in binary and srec formats
+ARM DS-5 based serial flash programming tool
