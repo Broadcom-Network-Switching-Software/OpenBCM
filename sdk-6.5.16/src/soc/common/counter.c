@@ -14018,7 +14018,17 @@ soc_counter_collect64(int unit, int discard, soc_port_t tmp_port, soc_reg_t hw_c
                 } else
 #endif /* BCM_SBUSDMA_SUPPORT */
                 {
-                    ptr = (uint32 *)&soc->counter_buf64[port_base_dma + index];
+#ifdef BCM_TOMAHAWK3_SUPPORT
+                    if (SOC_IS_TOMAHAWK3(unit) &&
+                        soc_feature(unit, soc_feature_sbusdma) &&
+                        SOC_REG_IS_COUNTER_TABLE(unit, ctr_reg)) {
+                        int dma_offset = SOC_CTR_TBL_INFO(unit)->tables[index - soc->counter_mib_tbl_first].dma_offset;
+                        ptr = (uint32 *)&soc->counter_buf64[port_base_dma + soc->counter_mib_tbl_first + dma_offset];
+                    } else
+#endif
+                    {
+                        ptr = (uint32 *)&soc->counter_buf64[port_base_dma + index];
+                    }
                 COUNTER_ATOMIC_BEGIN(s);
                 /* Update the DMA location */
                 if (soc->counter_flags & SOC_COUNTER_F_SWAP64) {
