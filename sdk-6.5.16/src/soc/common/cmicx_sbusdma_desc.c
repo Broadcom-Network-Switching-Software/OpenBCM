@@ -267,12 +267,12 @@ _cmicx_sbusdma_wait(int unit, int cmc, int ch, int interval, uint8 intrEnb)
     uint32 ctrl;
 
     if (intrEnb) {
-        rv = cmicx_sbusdma_intr_wait(unit, cmc, ch, interval);
+        rv = cmicx_sbusdma_intr_wait(unit, cmc, ch, interval, 0);
         if (rv != SOC_E_TIMEOUT) {
             SOC_CONTROL(unit)->stat.intr_desc++;
         }
     } else {
-        rv = cmicx_sbusdma_poll_wait(unit, cmc, ch, interval);
+        rv = cmicx_sbusdma_poll_wait(unit, cmc, ch, interval, 0);
     }
 
     if (rv != SOC_E_NONE) {

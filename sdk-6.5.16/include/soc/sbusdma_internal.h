@@ -402,6 +402,7 @@ cmicx_sbusdma_intr_init(int unit);
 * @param cmc [in] cmc
 * @param ch [in] channel
 * @param interval [in] timeout
+* @param do_not_perform_start_operation [in] if the argument is non-zero, the operation is assumed to be already started.
 *
 * @returns SOC_E_NONE
 * @returns SOC_E_XXX
@@ -409,7 +410,7 @@ cmicx_sbusdma_intr_init(int unit);
 * @end
  */
 extern int
-cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout);
+cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout, uint32 do_not_perform_start_operation);
 
 /*******************************************
 * @function cmicx_sbusdma_poll_wait
@@ -419,6 +420,7 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout);
 * @param cmc [in] cmc
 * @param ch [in] channel
 * @param interval [in] timeout
+* @param do_not_perform_start_operation [in] if the argument is non-zero, the operation is assumed to be already started.
 *
 * @returns SOC_E_NONE
 * @returns SOC_E_XXX
@@ -426,7 +428,7 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout);
 * @end
  */
 extern int
-cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout);
+cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout, uint32 do_not_perform_start_operation);
 
 /*******************************************
 * @function cmicx_sbusdma_stop
@@ -443,6 +445,8 @@ cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout);
 int
 cmicx_sbusdma_stop(int unit, int cmc, int ch);
 
+int
+_cmicx_sbusdma_start(int unit, int cmc, int ch);
 
 
 #endif /* !_SOC_SBUSDMA_INTERNAL_H */

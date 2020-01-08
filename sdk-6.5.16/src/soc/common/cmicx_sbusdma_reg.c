@@ -188,6 +188,7 @@ _cmicx_sbusdma_reg_complete(int unit, void *data,
                                       void *wparam)
 {
     int rv;
+    uint32 do_not_perform_start_operation = 0;
     uint32 ctrl, rval;
     cmic_sbusdma_wait_t  *wait;
     soc_sbusdma_reg_param_t  *param;
@@ -208,16 +209,19 @@ _cmicx_sbusdma_reg_complete(int unit, void *data,
     data_beats = soc_mem_entry_words(unit, param->mem);
     wait->start_time = sal_time_usecs();
 #endif
-
+    if((param->flags & SOC_MEM_WRITE_STATUS_ONLY) != 0)
+    {
+        do_not_perform_start_operation = 1;
+    }
     if (wait->intr_enb) {
         rv = cmicx_sbusdma_intr_wait(unit, wait->cmc, wait->ch,
-                                     wait->timeout);
+                                     wait->timeout, do_not_perform_start_operation);
         if (rv != SOC_E_TIMEOUT) {
             SOC_CONTROL(unit)->stat.intr_tslam++;
         }
     } else {
         rv = cmicx_sbusdma_poll_wait(unit, wait->cmc, wait->ch,
-                                     wait->timeout);
+                                     wait->timeout, do_not_perform_start_operation);
     }
 
 #ifdef PRINT_DMA_TIME
@@ -535,6 +539,18 @@ _cmicx_sbusdma_reg_array_write_prog(int unit,
     }
     param = (soc_sbusdma_reg_param_t  *)data;
 
+    if ((param->flags & (SOC_MEM_WRITE_COMMIT_ONLY | SOC_MEM_WRITE_STATUS_ONLY | SOC_MEM_WRITE_SET_ONLY)) != 0 && param->array_id_start < param->array_id_end) {
+        LOG_ERROR(BSL_LS_SOC_DMA, (BSL_META_U(unit,
+            "cannot perform partial write operations for multiple memory array indices\n")));
+        return SOC_E_PARAM;
+    }
+
+    if ((param->flags & SOC_MEM_WRITE_COMMIT_ONLY) != 0 && param->vchan != -1) {
+        SOC_IF_ERROR_RETURN(cmicx_sbusdma_vchan_to_cmc_ch(unit,
+                                param->vchan, &prog.cmc, &prog.ch));
+        _cmicx_sbusdma_start(unit, prog.cmc, prog.ch);
+        return 0;
+    }
     wait = SBUSDMA_REG_WAIT(wparam);
 
     if (wait == NULL) {
@@ -558,10 +574,20 @@ _cmicx_sbusdma_reg_array_write_prog(int unit,
 
     param->data_beats = soc_mem_entry_words(unit, param->mem);
 
-    SOC_IF_ERROR_RETURN(_cmicx_sbusdma_reg_prog_init(unit, param, &msg,
-                                      &prog, WRITE_MEMORY_CMD_MSG));
-
-    prog.mem_clear = param->mem_clear;
+    if ((param->flags & (SOC_MEM_WRITE_COMMIT_ONLY | SOC_MEM_WRITE_STATUS_ONLY)) == 0) { /* used by SOC_MEM_WRITE_SET_ONLY */
+        SOC_IF_ERROR_RETURN(_cmicx_sbusdma_reg_prog_init(unit, param, &msg,
+                                        &prog, WRITE_MEMORY_CMD_MSG));
+        prog.mem_clear = param->mem_clear;
+    } else { /* calculate channel instead */
+        if (param->vchan == -1) {
+            LOG_ERROR(BSL_LS_SOC_DMA, (BSL_META_U(unit,
+                "SOC_MEM_WRITE_STATUS_ONLY requires a channel to be specified\n")));
+            return SOC_E_PARAM;
+        } else {
+            SOC_IF_ERROR_RETURN(cmicx_sbusdma_vchan_to_cmc_ch(unit,
+                                param->vchan, &prog.cmc, &prog.ch));
+        }
+    }
     /* fill out the interrupt data */
     wait->ch = prog.ch;
     wait->cmc = prog.cmc;
@@ -570,7 +596,7 @@ _cmicx_sbusdma_reg_array_write_prog(int unit,
 
     for (array_index = param->array_id_start;
                            array_index <= param->array_id_end; ++array_index) {
-        if (!param->flags || (param->flags & SOC_MEM_WRITE_SET_ONLY)) {
+        if ((param->flags & (SOC_MEM_WRITE_COMMIT_ONLY | SOC_MEM_WRITE_STATUS_ONLY)) == 0) { /* used by SOC_MEM_WRITE_SET_ONLY */
             prog.start_addr = soc_mem_addr_get(unit, param->mem, array_index,
                                           param->copyno, param->index_begin, &at);
 
@@ -590,7 +616,8 @@ _cmicx_sbusdma_reg_array_write_prog(int unit,
                 soc_cm_sflush(unit, param->buffer, WORDS2BYTES(prog.data_beats)
                               * prog.count);
             }
-
+        }
+        if ((param->flags & SOC_MEM_WRITE_SET_ONLY ) == 0) { /* used by SOC_MEM_WRITE_STATUS_ONLY */
             /* Wait for each index to finish, except the last one */
             if (array_index != param->array_id_end) {
                 rv = _cmicx_sbusdma_reg_complete(unit, param, wparam);
@@ -628,7 +655,9 @@ _cmicx_sbusdma_reg_array_write(int unit, soc_sbusdma_reg_param_t  *param)
     rv = _cmicx_sbusdma_reg_array_write_prog(unit, param, &wparam);
     SOC_IF_ERROR_RETURN(rv);
 
-    rv = _cmicx_sbusdma_reg_complete(unit, param, &wparam);
+    if ((param->flags & (SOC_MEM_WRITE_COMMIT_ONLY | SOC_MEM_WRITE_SET_ONLY)) == 0) { /* used by SOC_MEM_WRITE_STATUS_ONLY */
+        rv = _cmicx_sbusdma_reg_complete(unit, param, &wparam);
+    }
 
     return rv;
 }

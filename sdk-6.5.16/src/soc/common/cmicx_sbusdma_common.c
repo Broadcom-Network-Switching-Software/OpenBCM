@@ -509,7 +509,7 @@ cmicx_sbusdma_ch_endian_set(int unit, int cmc, int ch, int be)
 *
 * @end
  */
-STATIC int
+int
 _cmicx_sbusdma_start(int unit, int cmc, int ch)
 {
     int rv = SOC_E_NONE;
@@ -561,6 +561,7 @@ cmicx_sbusdma_stop(int unit, int cmc, int ch)
 * @param cmc [in] cmc
 * @param ch [in] channel
 * @param interval [in] timeout
+* @param do_not_perform_start_operation [in] if the argument is non-zero, the operation is assumed to be already started.
 *
 * @returns SOC_E_NONE
 * @returns SOC_E_XXX
@@ -568,7 +569,7 @@ cmicx_sbusdma_stop(int unit, int cmc, int ch)
 * @end
  */
 int
-cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout)
+cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout, uint32 do_not_perform_start_operation)
 {
     int rv = SOC_E_NONE;
     int rval;
@@ -580,8 +581,11 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout)
                                    cmc, ch, timeout));
 
     soc_cmic_intr_enable(unit, INTR_SBUSDMA(cmc, ch));
-    _cmicx_sbusdma_start(unit, cmc, ch);
-   _cmicx_sbusdma_ch.wait[unit][cmc] |= (0x01 << ch);
+
+    if (do_not_perform_start_operation == 0 ) {
+        _cmicx_sbusdma_start(unit, cmc, ch);
+    }
+    _cmicx_sbusdma_ch.wait[unit][cmc] |= (0x01 << ch);
 
     if (sal_sem_take(soc->sbusDmaIntrs[cmc][ch], timeout) < 0) {
         rv = SOC_E_TIMEOUT;
@@ -618,6 +622,7 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout)
 * @param cmc [in] cmc
 * @param ch [in] channel
 * @param interval [in] timeout
+* @param do_not_perform_start_operation [in] if the argument is non-zero, the operation is assumed to be already started.
 *
 * @returns SOC_E_NONE
 * @returns SOC_E_XXX
@@ -625,13 +630,15 @@ cmicx_sbusdma_intr_wait(int unit, int cmc, int ch, int timeout)
 * @end
  */
 int
-cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout)
+cmicx_sbusdma_poll_wait(int unit, int cmc, int ch, int timeout, uint32 do_not_perform_start_operation)
 {
     soc_timeout_t to;
     int rv = SOC_E_TIMEOUT;
     int rval;
 
-    _cmicx_sbusdma_start(unit, cmc, ch);
+    if (do_not_perform_start_operation == 0 ) {
+        _cmicx_sbusdma_start(unit, cmc, ch);
+    }
     _cmicx_sbusdma_ch.wait[unit][cmc] |= (0x01 << ch);
     soc_timeout_init(&to, timeout, 0);
 
