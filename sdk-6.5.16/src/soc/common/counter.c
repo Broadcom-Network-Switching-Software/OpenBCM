@@ -15213,10 +15213,12 @@ soc_counter_collect_th_non_dma_entries(int unit,
                     }
                 } else
 #endif
-                if (non_dma->flags & _SOC_COUNTER_NON_DMA_DO_DMA) {
-                    COUNTER_UNLOCK(unit);
-                    sal_thread_yield();
-                    COUNTER_LOCK(unit);
+                {
+                    if (non_dma->flags & _SOC_COUNTER_NON_DMA_DO_DMA) {
+                        COUNTER_UNLOCK(unit);
+                        sal_thread_yield();
+                        COUNTER_LOCK(unit);
+                    }
                 }
                 LOG_VERBOSE(BSL_LS_SOC_COUNTER,
                          (BSL_META_U(unit,
