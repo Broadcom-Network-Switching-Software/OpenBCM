@@ -692,7 +692,7 @@ bcm_tomahawk3_cosq_port_priority_group_property_get(
                 (soc_reg_get(unit, MMU_THDI_ING_PORT_CONFIGr, port, -1, &rval));
             pg_lossless = soc_reg64_field32_get(unit, MMU_THDI_ING_PORT_CONFIGr,
                     rval, PG_IS_LOSSLESSf);
-            *arg = pg_lossless & (1 << priority_group_id);
+            *arg = (pg_lossless & (1 << priority_group_id)) >> priority_group_id;
             break;
         case bcmCosqPauseEnable:
             COMPILER_64_ZERO(rval);
