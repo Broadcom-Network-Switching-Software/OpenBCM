@@ -3529,14 +3529,56 @@ int tscbh_phy_synce_clk_ctrl_set(const phymod_phy_access_t* phy,
                                  phymod_synce_clk_ctrl_t cfg)
 {
     phymod_phy_access_t phy_copy;
+    uint32_t current_pll_index, pll_div, sdm_val;
+    int osr_mode;
 
     PHYMOD_MEMCPY(&phy_copy, phy, sizeof(phy_copy));
 
     PHYMOD_IF_ERR_RETURN
          (tbhmod_synce_mode_set(&phy_copy.access, cfg.stg0_mode, cfg.stg1_mode));
 
-    PHYMOD_IF_ERR_RETURN
-        (tbhmod_synce_clk_ctrl_set(&phy_copy.access, cfg.sdm_val));
+    /* next check if SDM mode, if yes, needs to figure out the SDM value based on the current */
+    if ((cfg.stg0_mode == 0x2) && (cfg.stg1_mode == 0x0)) {
+        /* vco the port is using */
+        /* first get the PLL index */
+        PHYMOD_IF_ERR_RETURN
+            (blackhawk_lane_pll_selection_get(&phy_copy.access, &current_pll_index));
+
+        /* next get the OSR the port is current using */
+        PHYMOD_IF_ERR_RETURN
+            (blackhawk_osr_mode_get(&phy_copy.access, &osr_mode));
+
+        /* next get the VCO the port is current using */
+        phy_copy.access.pll_idx = current_pll_index;
+        phy_copy.access.lane_mask = 0x1;
+        PHYMOD_IF_ERR_RETURN
+            (blackhawk_tsc_INTERNAL_read_pll_div(&phy_copy.access, &pll_div));
+
+        /* next based on the VCO value and osr mode, set the SDM value properly */
+        /* first check 26G VCO */
+        if ((pll_div == TBHMOD_PLL_MODE_DIV_170) || (pll_div == TBHMOD_PLL_MODE_DIV_85))  {
+            sdm_val = TSCBH_SYNCE_SDM_DIVISOR_26G_VCO;
+        } else if ((pll_div == TBHMOD_PLL_MODE_DIV_165) || (pll_div == TBHMOD_PLL_MODE_DIV_82P5)) {
+            sdm_val = TSCBH_SYNCE_SDM_DIVISOR_25GP78125_VCO;
+        } else if ((pll_div == TBHMOD_PLL_MODE_DIV_132) || (pll_div == TBHMOD_PLL_MODE_DIV_66)) {
+            sdm_val = TSCBH_SYNCE_SDM_DIVISOR_20G_VCO;
+        } else if ((pll_div == TBHMOD_PLL_MODE_DIV_160) || (pll_div == TBHMOD_PLL_MODE_DIV_80)) {
+            sdm_val = TSCBH_SYNCE_SDM_DIVISOR_25G_VCO;
+        } else {
+            PHYMOD_DEBUG_ERROR(("Unsupported VCOs\n"));
+            return PHYMOD_E_UNAVAIL;
+        }
+
+        /* need to adjust the SDM value based on OSR mode */
+        if (osr_mode == 1) {
+            sdm_val >>= 1;
+        }
+
+        /* next configure the SDM value */
+        PHYMOD_MEMCPY(&phy_copy, phy, sizeof(phy_copy));
+        PHYMOD_IF_ERR_RETURN
+            (tbhmod_synce_clk_ctrl_set(&phy_copy.access, sdm_val));
+    }
 
     return PHYMOD_E_NONE;
 }

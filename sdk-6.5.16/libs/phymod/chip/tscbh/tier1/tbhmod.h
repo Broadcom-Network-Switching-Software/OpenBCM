@@ -84,6 +84,12 @@
 
 #define TSCBH_PMD_CRC_UCODE_VERIFY 1
 
+#define TSCBH_SYNCE_SDM_DIVISOR_20G_VCO  10560
+#define TSCBH_SYNCE_SDM_DIVISOR_25G_VCO  12800
+#define TSCBH_SYNCE_SDM_DIVISOR_25GP78125_VCO  13200
+#define TSCBH_SYNCE_SDM_DIVISOR_26G_VCO  13600
+
+
 #define TSCBH_CORE_TO_PHY_ACCESS(_phy_access, _core_access) \
     do{\
         PHYMOD_MEMCPY(&(_phy_access)->access, &(_core_access)->access, sizeof((_phy_access)->access));\

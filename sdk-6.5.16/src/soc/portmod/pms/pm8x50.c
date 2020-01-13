@@ -8698,6 +8698,7 @@ int pm8x50_port_synce_clk_ctrl_set(int unit, int port, pm_info_t pm_info,
     portmod_access_get_params_t params;
     phymod_phy_access_t phy_access;
     int nof_phys;
+    int config_valid = 0;
 
     SOC_INIT_FUNC_DEFS;
 
@@ -8710,8 +8711,23 @@ int pm8x50_port_synce_clk_ctrl_set(int unit, int port, pm_info_t pm_info,
     phy_synce_cfg.stg1_mode = cfg->stg1_mode;
     phy_synce_cfg.sdm_val = cfg->sdm_val;
 
-    _SOC_IF_ERR_EXIT(phymod_phy_synce_clk_ctrl_set(&phy_access,
-                                                   phy_synce_cfg));
+    /* next validate the stage0/1 config */
+    /* first check legacy mode */
+    if (cfg->stg0_mode == 0x0) {
+        config_valid = 1;
+    } else if ((cfg->stg0_mode == 0x1) && (cfg->stg1_mode == 0x2)) {
+        config_valid = 1;
+    } else if ((cfg->stg0_mode == 0x2) && (cfg->stg1_mode == 0x0)) {
+        config_valid = 1;
+    }
+
+    if (config_valid) {
+        _SOC_IF_ERR_EXIT(phymod_phy_synce_clk_ctrl_set(&phy_access,
+                                                       phy_synce_cfg));
+    } else {
+        _SOC_EXIT_WITH_ERR(SOC_E_CONFIG,
+                  (_SOC_MSG("SyncE config is not valid \n")));
+    }
 
 exit:
     SOC_FUNC_RETURN;
