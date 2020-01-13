@@ -6126,6 +6126,7 @@ exit:
 }
 /* link up event */
 /* 1. AN ports: Update port mode based on reslved speed mode.
+ *              Program resolved Pause settings.
  * 2. 1588 ports: timesync adjust.
  */
 int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
@@ -6137,6 +6138,12 @@ int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
     int mac_stage_id, phy_acc;
     uint32 reg_val;
     uint32 timesync_enable, bitmap, flags = 0;
+    int num_advert, num_remote;
+    portmod_port_speed_ability_t advert_ability[PM8x50_MAX_AN_ABILITY];
+    portmod_port_speed_ability_t remote_ability[PM8x50_MAX_AN_ABILITY];
+    portmod_pause_control_t pause_ctrl;
+    portmod_port_phy_pause_t pause_local, pause_remote;
+    uint8 rx_pause, tx_pause;
 
     SOC_INIT_FUNC_DEFS;
 
@@ -6145,11 +6152,14 @@ int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
                                 &params, 1, &phy_access, &nof_phys, NULL));
     _SOC_IF_ERR_EXIT(_pm8x50_port_index_get(unit, port, pm_info, &port_index, &bitmap));
 
-    /* 1. Update Port_mode for AN ports */
+    /* 1. Update for AN ports */
     _SOC_IF_ERR_EXIT(phymod_phy_autoneg_status_get(&phy_access, &an_status));
-    /* for the PM8x50 autoneg, once the port resolves and link up and
-    cdmac_port_mode needs to be updated based on the pcs final port mode */
     if ((an_status.enabled && an_status.locked)) {
+        /*!
+         * 1.1 Update port mode.
+         * For PM8x50 autoneg, once the port resolves and link up,
+         * cdmac_port_mode needs to be updated based on the PCS final port mode.
+         */
         mac_stage_id = port_index / CDMAC_NUM_LANES;
         _SOC_IF_ERR_EXIT(_pm8x50_phy_access_get(unit, port, pm_info, &phy_acc));
 
@@ -6163,6 +6173,61 @@ int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
             soc_reg_field_set(unit, CDPORT_MODE_REGr, &reg_val, MAC0_PORT_MODEf, an_status.resolved_port_mode);
         }
         _SOC_IF_ERR_EXIT(WRITE_CDPORT_MODE_REGr(unit, phy_acc, reg_val));
+
+        /*!
+         * 1.2 Update pause settings.
+         * Please see $SDK/doc/pause-resolution.txt for more information.
+         */
+        _SOC_IF_ERR_EXIT
+            (pm8x50_port_autoneg_ability_advert_get(unit, port, pm_info,
+                                                    PM8x50_MAX_AN_ABILITY,
+                                                    advert_ability, &num_advert));
+        _SOC_IF_ERR_EXIT
+            (pm8x50_port_autoneg_ability_remote_get(unit, port, pm_info,
+                                                    PM8x50_MAX_AN_ABILITY,
+                                                    remote_ability, &num_remote));
+
+        if (num_advert && num_remote) {
+            pause_local = advert_ability[0].pause;
+            pause_remote = remote_ability[0].pause;
+            if (
+                ((pause_local == PORTMOD_PORT_PHY_PAUSE_RX) &&
+                 (pause_remote == PORTMOD_PORT_PHY_PAUSE_TX)) ||
+                ((pause_local == PORTMOD_PORT_PHY_PAUSE_RX ||
+                  pause_local == PORTMOD_PORT_PHY_PAUSE_SYMM) &&
+                 (pause_remote == PORTMOD_PORT_PHY_PAUSE_RX ||
+                  pause_remote == PORTMOD_PORT_PHY_PAUSE_SYMM))
+               ) {
+                rx_pause = 1;
+            } else {
+                rx_pause = 0;
+            }
+            if (
+                ((pause_local == PORTMOD_PORT_PHY_PAUSE_RX ||
+                  pause_local == PORTMOD_PORT_PHY_PAUSE_SYMM) &&
+                 (pause_remote == PORTMOD_PORT_PHY_PAUSE_RX ||
+                  pause_remote == PORTMOD_PORT_PHY_PAUSE_SYMM)) ||
+                ((pause_local == PORTMOD_PORT_PHY_PAUSE_TX) &&
+                 (pause_remote == PORTMOD_PORT_PHY_PAUSE_RX))
+               ) {
+                tx_pause = 1;
+            } else {
+                tx_pause = 0;
+            }
+        } else {
+            tx_pause = 0;
+            rx_pause = 0;
+        }
+
+        _SOC_IF_ERR_EXIT
+            (pm8x50_port_pause_control_get(unit, port, pm_info, &pause_ctrl));
+        if ((pause_ctrl.rx_enable != rx_pause) ||
+            (pause_ctrl.tx_enable != tx_pause)) {
+            pause_ctrl.rx_enable = rx_pause;
+            pause_ctrl.tx_enable = tx_pause;
+            _SOC_IF_ERR_EXIT
+                (pm8x50_port_pause_control_set(unit, port, pm_info, &pause_ctrl));
+        }
     }
 
 

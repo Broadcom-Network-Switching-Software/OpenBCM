@@ -2535,46 +2535,55 @@ bcmi_esw_portctrl_update(int unit, bcm_gport_t port, int link)
      * MACs accordingly. Link can also be achieved thru parallel detect.
      * In this case, it should be treated as in the forced mode.
      */
-    if (an_status.enabled && an_status.locked) {
-        bcm_port_ability_t local_advert, remote_advert;
-        int tx_pause, rx_pause;
-        portmod_pause_control_t pause_control;
-
-        BCM_IF_ERROR_RETURN
-            (bcmi_esw_portctrl_ability_advert_get(unit, port,
-                                                  &local_advert, NULL));
-        BCM_IF_ERROR_RETURN
-            (bcmi_esw_portctrl_ability_remote_get(unit, port,
-                                                  &remote_advert, NULL));
-
-        /*
-         * IEEE 802.3 Flow Control Resolution.
-         * Please see $SDK/doc/pause-resolution.txt for more information.
+#ifdef PORTMOD_PM8X50_SUPPORT
+    if (pm_type == portmodDispatchTypePm8x50) {
+        /* Do nothing for PM8x50. Pause settings for AN will be taken care
+         * inside Portmod.
          */
-        if (duplex) {
-            tx_pause =
-                     ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
-                      (local_advert.pause & SOC_PA_PAUSE_RX)) ||
-                     ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
-                      !(remote_advert.pause & SOC_PA_PAUSE_TX) &&
-                      (local_advert.pause & SOC_PA_PAUSE_TX));
+    } else
+#endif
+    {
+        if (an_status.enabled && an_status.locked) {
+            bcm_port_ability_t local_advert, remote_advert;
+            int tx_pause, rx_pause;
+            portmod_pause_control_t pause_control;
 
-            rx_pause =
-                     ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
-                      (local_advert.pause & SOC_PA_PAUSE_RX)) ||
-                     ((local_advert.pause & SOC_PA_PAUSE_RX) &&
-                      (remote_advert.pause & SOC_PA_PAUSE_TX) &&
-                      !(local_advert.pause & SOC_PA_PAUSE_TX));
-        } else {
-            rx_pause = tx_pause = 0;
+            BCM_IF_ERROR_RETURN
+                (bcmi_esw_portctrl_ability_advert_get(unit, port,
+                                                      &local_advert, NULL));
+            BCM_IF_ERROR_RETURN
+                (bcmi_esw_portctrl_ability_remote_get(unit, port,
+                                                      &remote_advert, NULL));
+
+            /*
+             * IEEE 802.3 Flow Control Resolution.
+             * Please see $SDK/doc/pause-resolution.txt for more information.
+             */
+            if (duplex) {
+                tx_pause =
+                         ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
+                          (local_advert.pause & SOC_PA_PAUSE_RX)) ||
+                         ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
+                          !(remote_advert.pause & SOC_PA_PAUSE_TX) &&
+                          (local_advert.pause & SOC_PA_PAUSE_TX));
+
+                rx_pause =
+                         ((remote_advert.pause & SOC_PA_PAUSE_RX) &&
+                          (local_advert.pause & SOC_PA_PAUSE_RX)) ||
+                         ((local_advert.pause & SOC_PA_PAUSE_RX) &&
+                          (remote_advert.pause & SOC_PA_PAUSE_TX) &&
+                          !(local_advert.pause & SOC_PA_PAUSE_TX));
+            } else {
+                rx_pause = tx_pause = 0;
+            }
+
+            PORTMOD_IF_ERROR_RETURN
+                (portmod_port_pause_control_get(unit, pport, &pause_control));
+            pause_control.rx_enable = rx_pause;
+            pause_control.tx_enable = tx_pause;
+            PORTMOD_IF_ERROR_RETURN
+                (portmod_port_pause_control_set(unit, pport, &pause_control));
         }
-
-        PORTMOD_IF_ERROR_RETURN
-            (portmod_port_pause_control_get(unit, pport, &pause_control));
-        pause_control.rx_enable = rx_pause;
-        pause_control.tx_enable = tx_pause;
-        PORTMOD_IF_ERROR_RETURN
-            (portmod_port_pause_control_set(unit, pport, &pause_control));
     }
 
     /* Enable the MAC */
