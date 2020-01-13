@@ -2876,96 +2876,122 @@ _soc_th3_mmu_config_shared_limit_chk_set(int unit,
 }
 
 
-int soc_th3_mmu_config_res_limits_update(int unit, int *shared_limit,
-                                         int post_update)
+int soc_th3_mmu_config_res_limits_update(int unit, int *delta,
+                                         int pool, int post_update)
 {
     soc_info_t *si;
     soc_reg_t reg;
     soc_field_t field;
-    int limit[_TH3_MMU_NUM_POOL] = {0}, itm;
-    int idx;
+    int limit[_TH3_ITMS_PER_DEV] = {0};
+    int new_limit, itm;
     int resume_limit, pool_resume;
+    uint32 rval;
+    int cur_val;
 
     si = &SOC_INFO(unit);
     pool_resume = 2 * _TH3_MMU_JUMBO_PACKET_SIZE;
 
-    
-    /* Get the min of the 2 itm limits */
-    for (idx = 0; idx < _TH3_MMU_NUM_POOL; idx++) {
-        limit[idx] = _TH3_MMU_TOTAL_CELLS_PER_ITM;
-        for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm ++) {
+    /* THDI: Per pool shared settings */
+    for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm ++) {
+        limit[itm] = _TH3_MMU_TOTAL_CELLS_PER_ITM;
+        if (delta[itm] != 0) {
             if (si->itm_map & (1 << itm)) {
-                if (shared_limit[itm] < limit[idx]) {
-                    limit[idx] = shared_limit[itm];
+                reg = MMU_THDI_BUFFER_CELL_LIMIT_SPr;
+                field = LIMITf;
+                rval = 0;
+                SOC_IF_ERROR_RETURN
+                    (soc_tomahawk3_itm_reg32_get(unit, reg, itm, -1, pool, &rval));
+
+                cur_val = soc_reg_field_get(unit, reg, rval, field);
+                limit[itm] = cur_val - delta[itm];
+                if (limit[itm] < 0) {
+                    return SOC_E_RESOURCE;
                 }
             }
         }
     }
 
-    /* THDI: Per pool shared settings */
+    /* Get the min of the 2 itm limits */
+    new_limit = MIN(limit[0], limit[1]);
+
     for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm ++) {
         if (si->itm_map & (1 << itm)) {
-            for (idx = 0; idx < _TH3_MMU_NUM_POOL; idx++) {
-                reg = MMU_THDI_BUFFER_CELL_LIMIT_SPr;
-                field = LIMITf;
-                SOC_IF_ERROR_RETURN
-                    (_soc_th3_mmu_config_shared_limit_chk_set
-                        (unit, reg, INVALIDm, field, idx, itm, limit[idx],
-                         post_update, 1));
-            } /* for (idx */
+            reg = MMU_THDI_BUFFER_CELL_LIMIT_SPr;
+            field = LIMITf;
+            SOC_IF_ERROR_RETURN
+                (_soc_th3_mmu_config_shared_limit_chk_set
+                    (unit, reg, INVALIDm, field, pool, itm, new_limit,
+                     post_update, 1));
         }
-    } /* for (itm */
+    }
 
     /* THDO - Shared settings per Pool */
-    for (idx = 0; idx < _TH3_MMU_NUM_POOL; idx++) {
-        if ((limit[idx] != 0) && (limit[idx] > pool_resume)) {
-            resume_limit = limit[idx] - pool_resume;
-        } else {
-            resume_limit = 0;
+    for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm ++) {
+        limit[itm] = _TH3_MMU_TOTAL_CELLS_PER_ITM;
+        if (delta[itm] != 0) {
+            reg = MMU_THDO_SHARED_DB_POOL_SHARED_LIMITr;
+            field = SHARED_LIMITf;
+            rval = 0;
+            SOC_IF_ERROR_RETURN
+                (soc_tomahawk3_itm_reg32_get(unit, reg, itm, -1, pool, &rval));
+            cur_val = soc_reg_field_get(unit, reg, rval, field);
+            limit[itm] = cur_val - delta[itm];
+            if (limit[itm] < 0) {
+                return SOC_E_RESOURCE;
+            }
         }
-
-        reg = MMU_THDO_SHARED_DB_POOL_SHARED_LIMITr;
-        field = SHARED_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, limit[idx],
-                 post_update, 1));
-
-        reg = MMU_THDO_SHARED_DB_POOL_YELLOW_SHARED_LIMITr;
-        field = YELLOW_SHARED_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, limit[idx]/8,
-                 post_update, 1));
-
-        reg = MMU_THDO_SHARED_DB_POOL_RED_SHARED_LIMITr;
-        field = RED_SHARED_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, limit[idx]/8,
-                 post_update, 1));
-
-        reg = MMU_THDO_SHARED_DB_POOL_RESUME_LIMITr;
-        field = RESUME_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, resume_limit/8,
-                 post_update, 1));
-
-        reg = MMU_THDO_SHARED_DB_POOL_YELLOW_RESUME_LIMITr;
-        field = YELLOW_RESUME_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, resume_limit/8,
-                 post_update, 1));
-
-        reg = MMU_THDO_SHARED_DB_POOL_RED_RESUME_LIMITr;
-        field = RED_RESUME_LIMITf;
-        SOC_IF_ERROR_RETURN
-            (_soc_th3_mmu_config_shared_limit_chk_set
-                (unit, reg, INVALIDm, field, idx, -1, resume_limit/8,
-                 post_update, 1));
     }
+
+    /* Get the min of the 2 itm limits */
+    new_limit = MIN(limit[0], limit[1]);
+
+    reg = MMU_THDO_SHARED_DB_POOL_SHARED_LIMITr;
+    field = SHARED_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, new_limit,
+             post_update, 1));
+
+    reg = MMU_THDO_SHARED_DB_POOL_YELLOW_SHARED_LIMITr;
+    field = YELLOW_SHARED_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, new_limit/8,
+             post_update, 1));
+
+    reg = MMU_THDO_SHARED_DB_POOL_RED_SHARED_LIMITr;
+    field = RED_SHARED_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, new_limit/8,
+             post_update, 1));
+
+    if ((new_limit != 0) && (new_limit > pool_resume)) {
+        resume_limit = new_limit - pool_resume;
+    } else {
+        resume_limit = 0;
+    }
+
+    reg = MMU_THDO_SHARED_DB_POOL_RESUME_LIMITr;
+    field = RESUME_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, resume_limit/8,
+             post_update, 1));
+
+    reg = MMU_THDO_SHARED_DB_POOL_YELLOW_RESUME_LIMITr;
+    field = YELLOW_RESUME_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, resume_limit/8,
+             post_update, 1));
+
+    reg = MMU_THDO_SHARED_DB_POOL_RED_RESUME_LIMITr;
+    field = RED_RESUME_LIMITf;
+    SOC_IF_ERROR_RETURN
+        (_soc_th3_mmu_config_shared_limit_chk_set
+            (unit, reg, INVALIDm, field, pool, -1, resume_limit/8,
+             post_update, 1));
 
     return SOC_E_NONE;
 

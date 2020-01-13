@@ -174,8 +174,8 @@ extern int soc_th3_mmu_get_shared_size(int unit, int *thd_shared);
 extern int soc_th3_mmu_config_shared_buf_recalc(int unit, int res, int ing_shd,
                                                int egr_db_shd, int egr_qe_shd,
                                                int flags);
-extern int soc_th3_mmu_config_res_limits_update(int unit, int* shared_limit,
-                                                int post_update);
+extern int soc_th3_mmu_config_res_limits_update(int unit, int* delta,
+                                                int pool, int post_update);
 extern int soc_th3_cal_egress_rsvd_limit(int unit, int* total_egr_rsvd_limit);
 extern int soc_th3_mmu_config_flex_thresholds(int unit, int port, int shared_limit);
 extern int _soc_th3_mmu_config_shared_limit_chk_set(int unit,

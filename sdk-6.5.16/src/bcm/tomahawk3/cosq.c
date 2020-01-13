@@ -5028,7 +5028,7 @@ _bcm_th3_cosq_ing_res_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
         if (update) {
             /* Decrease shared limits */
             BCM_IF_ERROR_RETURN
-                (soc_th3_mmu_config_res_limits_update(unit, shd_size, 1));
+                (soc_th3_mmu_config_res_limits_update(unit, delta, pool, 1));
         }
 
         /* set new guarantee */
@@ -5048,7 +5048,7 @@ _bcm_th3_cosq_ing_res_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
         if (update) {
             /* Increase shared limits */
             BCM_IF_ERROR_RETURN
-                (soc_th3_mmu_config_res_limits_update(unit, shd_size, 0));
+                (soc_th3_mmu_config_res_limits_update(unit, delta, pool, 0));
         }
         sal_memcpy(_BCM_TH3_MMU_INFO(unit)->shared_limit, shd_size,
             sizeof(shd_size));
@@ -5244,8 +5244,10 @@ _bcm_th3_cosq_egr_queue_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
          (type == bcmCosqControlEgressMCQueueMinLimitBytes)) {
         int itm, itm_map;
         int delta[_TH3_ITMS_PER_DEV] = {0}, update;
-
+        int pool;
         itm_map = SOC_INFO(unit).itm_map;
+        BCM_IF_ERROR_RETURN(_bcm_th3_cosq_egr_pool_get(unit, gport,
+            cosq, -1, bcmCosqControlEgressPool,&pool));
 
         cur_val = soc_mem_field32_get(unit, mem, entry, fld_limit);
         sal_memcpy(shd_size, _BCM_TH3_MMU_INFO(unit)->shared_limit,
@@ -5273,7 +5275,7 @@ _bcm_th3_cosq_egr_queue_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
         }
         if (update) {
             BCM_IF_ERROR_RETURN
-                (soc_th3_mmu_config_res_limits_update(unit, shd_size, 1));
+                (soc_th3_mmu_config_res_limits_update(unit, delta, pool, 1));
         }
 
         /* set new guarantee */
@@ -5296,7 +5298,7 @@ _bcm_th3_cosq_egr_queue_set(int unit, bcm_gport_t gport, bcm_cos_queue_t cosq,
         }
         if (update) {
             BCM_IF_ERROR_RETURN
-                (soc_th3_mmu_config_res_limits_update(unit, shd_size, 0));
+                (soc_th3_mmu_config_res_limits_update(unit, delta, pool, 0));
         }
 
         sal_memcpy(_BCM_TH3_MMU_INFO(unit)->shared_limit, shd_size,
@@ -5546,8 +5548,10 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
     soc_field_t field = INVALIDf;
     soc_field_t field2 = INVALIDf;
     int old_qmin_limit[_TH3_ITMS_PER_DEV], new_qmin_limit[_TH3_ITMS_PER_DEV], shd_size[_TH3_ITMS_PER_DEV];
+    int delta[_TH3_ITMS_PER_DEV];
     int rv;
     int itm;
+    int pool;
 
     if (arg < 0) {
         return BCM_E_PARAM;
@@ -5630,6 +5634,10 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
      */
     if ((type == bcmCosqControlEgressUCQueueGroupMinEnable) ||
         (type == bcmCosqControlEgressMCQueueGroupMinEnable)) {
+
+        BCM_IF_ERROR_RETURN(_bcm_th3_cosq_egr_pool_get(unit, gport,
+            cosq, -1, bcmCosqControlEgressPool,&pool));
+
         BCM_IF_ERROR_RETURN(soc_th3_cal_egress_rsvd_limit(unit, new_qmin_limit));
         sal_memcpy(shd_size, _BCM_TH3_MMU_INFO(unit)->shared_limit,
             sizeof(shd_size));
@@ -5637,10 +5645,11 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
         /*Calculate the new value of shared limit*/
         for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm++) {
             shd_size[itm] = shd_size[itm] + old_qmin_limit[itm] - new_qmin_limit[itm];
+            delta[itm] = old_qmin_limit[itm] - new_qmin_limit[itm];
         }
 
         /*Passing the modified values to the funtion to re-adjust shared limits*/
-        rv = soc_th3_mmu_config_res_limits_update(unit, shd_size, 1);
+        rv = soc_th3_mmu_config_res_limits_update(unit, delta, pool, 1);
         if (rv < 0) {
             return rv;
         }
@@ -5802,6 +5811,7 @@ _bcm_th3_cosq_qgroup_limit_set(int unit, bcm_gport_t gport, bcm_cos_t cosq,
 
     if ((type == bcmCosqControlEgressUCQueueGroupMinLimitBytes) ||
         (type == bcmCosqControlEgressMCQueueGroupMinLimitBytes)) {
+        int pool;
         if (type == bcmCosqControlEgressUCQueueGroupMinLimitBytes) {
             mem = MMU_THDO_CONFIG_UC_QGROUP0m;
         }
@@ -5813,6 +5823,8 @@ _bcm_th3_cosq_qgroup_limit_set(int unit, bcm_gport_t gport, bcm_cos_t cosq,
         field = MIN_LIMITf;
         granularity =1;
         /* Recalculate Shared Values if Min Changed */
+        BCM_IF_ERROR_RETURN(_bcm_th3_cosq_egr_pool_get(unit, gport,
+            cosq, -1, bcmCosqControlEgressPool,&pool));
         sal_memcpy(shd_size, _BCM_TH3_MMU_INFO(unit)->shared_limit,
              sizeof(shd_size));
 
@@ -5835,7 +5847,7 @@ _bcm_th3_cosq_qgroup_limit_set(int unit, bcm_gport_t gport, bcm_cos_t cosq,
             }
         }
 
-        rv = soc_th3_mmu_config_res_limits_update(unit, shd_size, 1);
+        rv = soc_th3_mmu_config_res_limits_update(unit, delta, pool, 1);
 
         if (rv < 0) {
             return rv;
