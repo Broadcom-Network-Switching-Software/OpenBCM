@@ -90,6 +90,7 @@
 #include <soc/phy/phyctrl.h>
 #endif /* BCM_GREYHOUND2_SUPPORT */
 #ifdef PORTMOD_SUPPORT
+#include <soc/esw/portctrl.h>
 #include <soc/portmod/portmod.h>
 #include <soc/portmod/portmod_internal.h>
 #endif
@@ -9734,38 +9735,17 @@ _bcm_esw_time_synce_clock_source_frequency_get(int unit,
                         break;
                 }
             } else if (dispatch_type == phymodDispatchTypeTscbh) {
-                switch (port_speed) {
-                    case 10000:
-                    case 40000:
-                        /* 10G or 40G ports -  VCO 20.625 */
-                        if (sdm_divisor == 0x14a0) {
-                            *frequency = bcmTimeSyncE25MHz;
-                        } else {
-                            return BCM_E_PARAM;
-                        }
-                        break;
-                     case 20000:
-                     case 100000:
-                        /* 100G or 20G ports - VCO 25.78125*/
-                        if (sdm_divisor == 0x3390) {
-                            *frequency = bcmTimeSyncE25MHz;
-                        } else {
-                            return BCM_E_PARAM;
-                        }
-                        break;
-                     case 50000:
-                     case 400000:
-                        /* 100G or 20G ports - VCO 25.78125*/
-                        if (sdm_divisor == 0x3520) {
-                            *frequency = bcmTimeSyncE25MHz;
-                        } else {
-                            return BCM_E_PARAM;
-                        }
-                        break;
-                       default:
-                        return BCM_E_PARAM;
-                        break;
+#ifdef PORTMOD_SUPPORT
+                if (SOC_USE_PORTCTRL(unit)) {
+                    portmod_port_synce_clk_ctrl_t config;
+                    portmod_port_synce_clk_ctrl_t_init(unit, &config);
+
+                    SOC_IF_ERROR_RETURN(portmod_port_synce_clk_ctrl_get(unit, clk_src_config->port, &config));
+                    if ((config.stg0_mode == 0x2) && (config.stg1_mode == 0x0)) {
+                        *frequency = bcmTimeSyncE25MHz;
+                    }
                 }
+#endif
             } else if (dispatch_type == phymodDispatchTypeTsce_dpll) {
                 switch (port_speed) {
                     case 1000:
@@ -10517,20 +10497,7 @@ _bcm_esw_time_synce_clock_source_frequency_set(int unit,
                             div_in.stage0_sdm_frac  = 0x58;
                         }
                     } else if (dispatch_type == phymodDispatchTypeTscbh) {
-                        /* TSCBH ports */
-                        if (port_speed == 10000 || port_speed == 40000) {
-                            /* 10G or 40G ports -  VCO 20.625 */
-                            div_in.stage0_sdm_whole = 0x14;
-                            div_in.stage0_sdm_frac  = 0xa0;
-                        } else if (port_speed == 100000 || port_speed == 20000) {
-                            /* 100G or 20G or 400G ports - VCO 25.78125*/
-                            div_in.stage0_sdm_whole = 0x33;
-                            div_in.stage0_sdm_frac  = 0x90;
-                        } else if (port_speed == 50000 || port_speed == 400000){
-                            /* 50G port VCO 26.5625 */
-                            div_in.stage0_sdm_whole = 0x35;
-                            div_in.stage0_sdm_frac  = 0x20;
-                        }
+                        /* DO NOTHING: portmod API will program the proper settings for SDM mode. */
                     } else if (dispatch_type == phymodDispatchTypeTsce_dpll) {
                         if (port_speed == 1000 || port_speed == 10000 || port_speed == 40000 || port_speed == 20000) {
                             div_in.stage0_sdm_whole = 0x14;
