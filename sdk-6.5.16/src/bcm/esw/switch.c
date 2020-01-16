@@ -22359,6 +22359,15 @@ defined(BCM_TRIDENT3_SUPPORT))
         }
 #endif
 
+    case bcmSwitchPcieHotSwapDisable:
+        if (arg == 1) {
+            rv = soc_pcie_hot_swap_disable(unit);
+        } else {
+            rv = BCM_E_PARAM;
+        }
+        return rv;
+    break;
+
     default:
         break;
     }
@@ -26185,6 +26194,28 @@ defined(BCM_TRIDENT3_SUPPORT))
             return BCM_E_UNAVAIL;
         }
 #endif
+
+    case bcmSwitchPcieHotSwapDisable:
+#ifdef BCM_CMICX_SUPPORT
+    if (soc_feature(unit, soc_feature_cmicx) &&
+            (soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE)) {
+        uint32  rval;
+        if (SOC_REG_IS_VALID(unit, PAXB_0_PAXB_HOTSWAP_CTRLr) &&
+            SOC_REG_FIELD_VALID(unit, PAXB_0_PAXB_HOTSWAP_CTRLr, ENABLEf)) {
+            SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_HOTSWAP_CTRLr(unit, &rval));
+            *arg = soc_reg_field_get(
+                       unit, PAXB_0_PAXB_HOTSWAP_CTRLr, rval, ENABLEf);
+            *arg ^= 1;
+            return BCM_E_NONE;
+        } else {
+            return BCM_E_UNAVAIL;
+        }
+    } else
+#endif
+    {
+        return BCM_E_UNAVAIL;
+    }
+    break;
 
     default:
         break;

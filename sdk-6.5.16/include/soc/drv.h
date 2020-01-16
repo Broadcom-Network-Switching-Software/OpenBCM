@@ -6430,6 +6430,7 @@ extern int soc_pipe_port_get(int unit, uint32 port_type, int pipe,
 extern int soc_get_reg_first_block_id(int unit,soc_reg_t reg,uint32 *block);
 #endif /* defined(BCM_SAND_SUPPORT) */
 
+extern int soc_pcie_hot_swap_disable(int unit);
 
 #ifdef INCLUDE_MACSEC
 #endif     /* INCLUDE_MACSEC */

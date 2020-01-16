@@ -2518,7 +2518,10 @@ typedef enum bcm_switch_control_e {
                                            large scale multicast NAT updates. */
     bcmSwitchL2ChangeFieldsEnable = 1214, /* Enable L2 Change Fields for VFI
                                            switched packets. */
-    bcmSwitch__Count = 1215             /* Must be last.  Not a usable value. */
+    bcmSwitchPcieHotSwapDisable = 1215, /* When set value=1 PCIE Hot swap
+                                           manager is disabled. Applicable for
+                                           CMICX based devices only */
+    bcmSwitch__Count = 1216             /* Must be last.  Not a usable value. */
 } bcm_switch_control_t;
 
 #define BCM_SWITCH_CONTROL_STR \
@@ -3736,7 +3739,8 @@ typedef enum bcm_switch_control_e {
     "L3McLargeNATRewriteType0", \
     "L3McLargeNATRewriteType1", \
     "L3McLargeNATRewriteType2", \
-    "L2ChangeFieldsEnable" 
+    "L2ChangeFieldsEnable", \
+    "PcieHotSwapDisable" 
 
 /* ecmp hash bit count enums */
 typedef enum bcm_switch_ecmp_hash_bit_count_e {

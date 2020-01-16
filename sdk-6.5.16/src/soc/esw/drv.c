@@ -8976,6 +8976,49 @@ soc_pci_hotswap_recover(int unit)
 
 /*
  * Function:
+ *      soc_pcie_hot_swap_disable
+ * Purpose:
+ *      Disable hot swap manager.
+ * Parameters:
+ *      unit - unit #
+ * Returns:
+ *      SOC_E_XXX
+*/
+int
+soc_pcie_hot_swap_disable(int unit)
+{
+    int rv = SOC_E_UNAVAIL;
+
+#ifdef BCM_CMICX_SUPPORT
+    uint32  rval;
+    if (soc_feature(unit, soc_feature_cmicx) &&
+            (soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE)) {
+        /* Disable Hot Swap manager*/
+        if (SOC_REG_IS_VALID(unit, PAXB_0_PAXB_HOTSWAP_CTRLr) &&
+            SOC_REG_FIELD_VALID(unit, PAXB_0_PAXB_HOTSWAP_CTRLr, ENABLEf)) {
+            SOC_IF_ERROR_RETURN(READ_PAXB_0_PAXB_HOTSWAP_CTRLr(unit, &rval));
+            soc_reg_field_set(unit, PAXB_0_PAXB_HOTSWAP_CTRLr, &rval, ENABLEf, 0);
+            SOC_IF_ERROR_RETURN(
+                WRITE_PAXB_0_PAXB_HOTSWAP_CTRLr(unit, rval));
+            /* Enable reset to propogate to paxb data path logic when pcie link is down. */
+            SOC_IF_ERROR_RETURN
+                (READ_PAXB_0_RESET_ENABLE_IN_PCIE_LINK_DOWNr(unit, &rval));
+            soc_reg_field_set(unit, PAXB_0_RESET_ENABLE_IN_PCIE_LINK_DOWNr, &rval,
+                              EN_PAXB_RESETf, 1);
+            SOC_IF_ERROR_RETURN
+                (WRITE_PAXB_0_RESET_ENABLE_IN_PCIE_LINK_DOWNr(unit, rval));
+            LOG_INFO(BSL_LS_SOC_COMMON,
+                (BSL_META_U(unit, "PCIE HOTSWAP Manager is disabled!\n")));
+            rv = SOC_E_NONE;
+        }
+    }
+#endif
+    return rv;
+}
+
+
+/*
+ * Function:
  *      soc_do_init
  * Purpose:
  *      Optionally reset, and initialize a StrataSwitch.
