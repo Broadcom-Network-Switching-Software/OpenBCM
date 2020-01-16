@@ -10113,6 +10113,9 @@
 /* PCIE hot swap timeout in microseconds for IDLE/READY condition */
 #define spn_PCIE_HOT_SWAP_TIMEOUT_USEC  "pcie_hot_swap_timeout_usec"
 
+/* Specify the maximum MTU size for PFC optimized groups. */
+#define spn_MMU_PFC_GROUP_OPTIMIZED_MTU_SIZE  "mmu_pfc_group_optimized_mtu_size"
+
 #define BCM_SOC_PROP_NAMES_INITIALIZER \
 { \
   "10g_is_cx4", \
@@ -11408,6 +11411,7 @@
   "mmu_overcommit", \
   "mmu_overcommit_stack", \
   "mmu_pfc_class_profile", \
+  "mmu_pfc_group_optimized_mtu_size", \
   "mmu_pll_lock_tests", \
   "mmu_port_num_mc_queue", \
   "mmu_queue_flush_timeout", \

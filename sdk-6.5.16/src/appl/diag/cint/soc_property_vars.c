@@ -2301,4 +2301,5 @@ void soc_cint_property_vars_init(void)
     cint_interpreter_create_pointer("char", "spn_PROGRAMMABILITY_IMAGE_NAME", "programmability_image_name");
     cint_interpreter_create_pointer("char", "spn_TDM_MODE", "tdm_mode");
     cint_interpreter_create_pointer("char", "spn_PCIE_HOT_SWAP_TIMEOUT_USEC", "pcie_hot_swap_timeout_usec");
+    cint_interpreter_create_pointer("char", "spn_MMU_PFC_GROUP_OPTIMIZED_MTU_SIZE", "mmu_pfc_group_optimized_mtu_size");
 }

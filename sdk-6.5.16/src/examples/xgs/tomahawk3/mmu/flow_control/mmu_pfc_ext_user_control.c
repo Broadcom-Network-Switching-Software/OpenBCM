@@ -11,7 +11,7 @@ bshell(0, "config add pfc_deadlock_seq_control=1");
 /*Modify flex_enable and MTU size to aloow more number of PFC-optimized
  * classes*/
 bshell(0, "config add port_flex_enable=0");
-bshell (0, "config add max_mtu_size=1024");
+bshell (0, "config add mmu_pfc_group_optimized_mtu_size=1024");
 bshell(0, "rc");
 
 /* Program Pipeline for traffic flooding to different queues */

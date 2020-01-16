@@ -557,6 +557,7 @@ _soc_th3_pfc_rx_mapping_hw_write(
     SOC_IF_ERROR_RETURN
         (soc_reg32_get(unit, hp_reg, REG_PORT_ANY, profile_id, &rval));
     soc_reg_field_set(unit, hp_reg, &rval, hp_field, hp_bmp);
+
     SOC_IF_ERROR_RETURN
         (soc_reg32_set(unit, hp_reg, REG_PORT_ANY, profile_id, rval));
 
@@ -951,7 +952,7 @@ soc_th3_pfc_num_optimized_group_get(
     }
     speed_id = _soc_th3_pfc_speed_encoding_get(unit, speed);
 
-    mtu_size = soc_property_get(unit, spn_MAX_MTU_SIZE, 9416);
+    mtu_size = soc_property_get(unit, spn_MMU_PFC_GROUP_OPTIMIZED_MTU_SIZE, 9416);
     mtu_id = _soc_th3_pfc_mtu_encoding_get(unit, mtu_size);
 
     if (mtu_id == -1 || speed_id == -1) {
@@ -1148,6 +1149,8 @@ soc_th3_pfc_rx_init_from_cfg(int unit)
     char s_name[SOC_PROPERTY_NAME_MAX], s_opt[SOC_PROPERTY_NAME_MAX];
     int cos_list[TH3_PFC_COS_NUM], opt_val[TH3_PFC_PRIORITY_NUM];
     soc_cosq_pfc_class_map_config_t rx_config[TH3_PFC_PRIORITY_NUM];
+    int mtu_size;
+    uint32 rval = 0;
 
     for (i = 0; i <= TH3_PFC_CLASS_PROFILE_ID_MAX; i++) {
         set_profile = 0;
@@ -1191,6 +1194,34 @@ soc_th3_pfc_rx_init_from_cfg(int unit)
             if (rv != SOC_E_NONE) {
                 /* Output error log */
             }
+        }
+    }
+
+    mtu_size =  soc_property_get(unit, spn_MMU_PFC_GROUP_OPTIMIZED_MTU_SIZE, 9416);
+
+    if (mtu_size < 9416) {
+        mtu_size = (mtu_size + _TH3_MMU_BYTES_PER_CELL - 1) / _TH3_MMU_BYTES_PER_CELL;
+        rval = 0;
+        SOC_IF_ERROR_RETURN
+            (soc_reg32_get(unit, MMU_EBCFP_OPT_EBGRP_REDUCED_MTUr,
+                           REG_PORT_ANY, 0, &rval));
+
+        soc_reg_field_set(unit, MMU_EBCFP_OPT_EBGRP_REDUCED_MTUr, &rval,
+                         REDUCED_MTUf, mtu_size);
+        SOC_IF_ERROR_RETURN
+            (soc_reg32_set(unit, MMU_EBCFP_OPT_EBGRP_REDUCED_MTUr,
+                           REG_PORT_ANY, 0, rval));
+
+       /* specify to use this setting for all 8 profiles and 8 PFC priorities. */
+        for (i = 0; i <= TH3_PFC_CLASS_PROFILE_ID_MAX; i++) {
+            SOC_IF_ERROR_RETURN
+                (soc_reg32_get(unit, MMU_EBCFP_OPT_EBGRP_MTU_PROFILEr,
+                               REG_PORT_ANY, i, &rval));
+            soc_reg_field_set(unit, MMU_EBCFP_OPT_EBGRP_MTU_PROFILEr,
+                             &rval, OPT_EBGRP_MAX_MTU_BMPf, 0);
+            SOC_IF_ERROR_RETURN
+                (soc_reg32_set(unit, MMU_EBCFP_OPT_EBGRP_MTU_PROFILEr,
+                               REG_PORT_ANY, i, rval));
         }
     }
     return SOC_E_NONE;
