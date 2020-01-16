@@ -37,7 +37,7 @@
 
 /* Warmboot variable defines - start */
 
-#define PM8x50_WB_BUFFER_VERSION        (3)
+#define PM8x50_WB_BUFFER_VERSION        (4)
 #define PORTMOD_THREAD_INTERVAL_1s 1000000
 #define TIMEOUT_COUNT_400G_AN     10
 
@@ -231,6 +231,30 @@
                           pm_info->wb_vars_ids[anWaitlinkCount],\
                           an_wait_link_count)
 
+#define PM8x50_BER_WAR_ENABLE_SET(unit, pm_info, is_ber_war_enable, port_index) \
+    SOC_WB_ENGINE_SET_ARR(unit, SOC_WB_ENGINE_PORTMOD,                       \
+                          pm_info->wb_vars_ids[isBerWarEnable], &is_ber_war_enable, port_index)
+
+#define PM8x50_BER_WAR_STATE_SET(unit, pm_info, ber_war_state, port_index) \
+    SOC_WB_ENGINE_SET_ARR(unit, SOC_WB_ENGINE_PORTMOD,                       \
+                          pm_info->wb_vars_ids[berWarState], &ber_war_state, port_index)
+
+#define PM8x50_BER_WAR_WAIT_COUNT_SET(unit, pm_info, ber_war_wait_count, port_index) \
+    SOC_WB_ENGINE_SET_ARR(unit, SOC_WB_ENGINE_PORTMOD,                       \
+                          pm_info->wb_vars_ids[berWarWaitCount], &ber_war_wait_count, port_index)
+
+#define PM8x50_IS_CORE_FLEXE_CONFIGURED_SET(unit, pm_info, is_core_flexe_configured) \
+    SOC_WB_ENGINE_SET_VAR(unit, SOC_WB_ENGINE_PORTMOD,                     \
+                          pm_info->wb_vars_ids[coreisFlexeConfigured],         \
+                          &is_core_flexe_configured)
+
+#define PM8x50_400G_AN_REMOTE_PAUSE_SET(unit, pm_info, an_400g_remote_pause, port_index) \
+    SOC_WB_ENGINE_SET_ARR(unit, SOC_WB_ENGINE_PORTMOD,                       \
+                          pm_info->wb_vars_ids[an400gRemotePause], &an_400g_remote_pause, port_index)
+#define PM8x50_400G_AN_REMOTE_PAUSE_GET(unit, pm_info, an_400g_remote_pause, port_index) \
+    SOC_WB_ENGINE_GET_ARR(unit, SOC_WB_ENGINE_PORTMOD,                       \
+                          pm_info->wb_vars_ids[an400gRemotePause], an_400g_remote_pause, port_index)
+
 typedef enum pm8x50_wb_vars{
     isCoreInitialized,
     isActive,
@@ -259,6 +283,11 @@ typedef enum pm8x50_wb_vars{
     anState400g,        /* 400G an state */
     anWaitlinkCount,    /* 400G wait for link up count */
     portIsPcsBypassed,
+    isBerWarEnable,     /* Currently not supported */
+    berWarState,        /* Currently not supported */
+    berWarWaitCount,    /* Currently not supported */
+    coreisFlexeConfigured,   /* Currently not supported */
+    an400gRemotePause,  /* 400G AN Remote PAUSE value */
 }pm8x50_wb_vars_t;
 
 typedef enum pm8x50_port_soft_reset_mode{
@@ -321,6 +350,9 @@ typedef enum pm8x50_port_soft_reset_mode{
 #define SPEED_CTRL_SPEED_ID_CLEAR 0xffc0
 #define SPEED_ID_400G    0xa
 
+#define AN_X4_LP_BASE1r_REG 0xc1d3
+#define AN_LP_BASE1r_PAGE_PAUSE_MASK   0x3
+#define AN_LP_BASE1r_PAGE_PAUSE_OFFSET 0xA
 
 STATIC portmod_ucode_buf_t pm8x50_ucode_buf[SOC_MAX_NUM_DEVICES] = {{NULL, 0}};
 STATIC portmod_ucode_buf_t pm8x50_ucode_buf_2nd[SOC_MAX_NUM_DEVICES] = {{NULL, 0}};
@@ -335,6 +367,12 @@ typedef enum pm8x50_port_400g_an_state_e {
     PM8X50_PORT_AN_STATE_COUNT
 } pm8x50_port_400g_an_state_t;
 
+/*
+ * 200G and 400G BER monitoring workaround state
+ */
+typedef enum pm8x50_port_ber_war_state_e {
+    PM8X50_PORT_BER_WAR_STATE_COUNT = 4
+} pm8x50_port_ber_war_state_t;
 
 /*
  * Entries of the force speed ability table; each entry specifies a
@@ -781,12 +819,13 @@ int _pm8x50_400g_an_workaround(int unit, int port, pm_info_t pm_info, int* is_do
 {
     portmod_access_get_params_t params;
     phymod_phy_access_t phy_access;
-    uint32_t serdes_reg_val, wait_link_count;
+    uint32_t serdes_reg_val, wait_link_count, base_reg_val, remote_pause;
     int nof_phys;
     pm8x50_port_400g_an_state_t an_state;
     phymod_autoneg_control_t an_control;
     char* state_string = "\n";
-
+    int port_index;
+    uint32 bitmap;
 
     SOC_INIT_FUNC_DEFS;
 
@@ -814,6 +853,14 @@ int _pm8x50_400g_an_workaround(int unit, int port, pm_info_t pm_info, int* is_do
             if (serdes_reg_val & AN_X4_SW_CTRL_STS_AN_COMPLETE_MASK) {
                 int phy_acc;
                 uint32 reg_val;
+
+                /* get port index */
+                _SOC_IF_ERR_EXIT(_pm8x50_port_index_get(unit, port, pm_info, &port_index, &bitmap));
+                _SOC_IF_ERR_EXIT(phymod_phy_reg_read(&phy_access, AN_X4_LP_BASE1r_REG, &base_reg_val));
+                /* store remote pause value */
+                remote_pause = (base_reg_val >> AN_LP_BASE1r_PAGE_PAUSE_OFFSET) & AN_LP_BASE1r_PAGE_PAUSE_MASK;
+                _SOC_IF_ERR_EXIT(PM8x50_400G_AN_REMOTE_PAUSE_SET(unit, pm_info, remote_pause, port_index));
+
                 /* need to move one to the next stage */
                 /* disable AN_Cl73 and AN_CL73BAM */
                 _SOC_IF_ERR_EXIT(phymod_phy_reg_read(&phy_access, AN_X4_CL73_CFG_REG, &serdes_reg_val));
@@ -1449,6 +1496,7 @@ int portmod_pm8x50_wb_upgrade_func(int unit, void *arg, int recovered_version,
     int port_is_pcs_bypased;
     int i, ts_enable_port_count;
     uint32 fec_null, timesync_enable;
+    int remote_pause;
 
     SOC_INIT_FUNC_DEFS;
 
@@ -1476,6 +1524,14 @@ int portmod_pm8x50_wb_upgrade_func(int unit, void *arg, int recovered_version,
         for (i = 0; i < MAX_PORTS_PER_PM8X50; i++) {
             _SOC_IF_ERR_EXIT(
                 PM8x50_PORT_IS_PCS_BYPASSED_SET(unit, pm_info, port_is_pcs_bypased, i));
+        }
+    }
+    if ((recovered_version <= 3) &&
+        (new_version >= 4)) {
+        remote_pause = 0;
+        for (i = 0; i < MAX_PORTS_PER_PM8X50; i++) {
+            _SOC_IF_ERR_EXIT(
+                PM8x50_400G_AN_REMOTE_PAUSE_SET(unit, pm_info, remote_pause, i));
         }
     }
 
@@ -1673,6 +1729,36 @@ int pm8x50_wb_buffer_init(int unit, int wb_buffer_index, pm_info_t pm_info)
                           wb_buffer_index, sizeof(uint32), NULL, MAX_PORTS_PER_PM8X50, VERSION(3));
     _SOC_IF_ERR_EXIT(rv);
     pm_info->wb_vars_ids[portIsPcsBypassed] = wb_var_id;
+
+    _SOC_IF_ERR_EXIT(portmod_next_wb_var_id_get(unit, &wb_var_id));
+    SOC_WB_ENGINE_ADD_ARR(SOC_WB_ENGINE_PORTMOD, wb_var_id, "is_ber_war_enable",
+                           wb_buffer_index, sizeof(uint32), NULL, MAX_PORTS_PER_PM8X50, VERSION(4));
+    _SOC_IF_ERR_EXIT(rv);
+    pm_info->wb_vars_ids[isBerWarEnable] = wb_var_id;
+
+    _SOC_IF_ERR_EXIT(portmod_next_wb_var_id_get(unit, &wb_var_id));
+    SOC_WB_ENGINE_ADD_ARR(SOC_WB_ENGINE_PORTMOD, wb_var_id, "ber_war_state",
+                          wb_buffer_index, sizeof(int), NULL, MAX_PORTS_PER_PM8X50, VERSION(4));
+    _SOC_IF_ERR_EXIT(rv);
+    pm_info->wb_vars_ids[berWarState] = wb_var_id;
+
+    _SOC_IF_ERR_EXIT(portmod_next_wb_var_id_get(unit, &wb_var_id));
+    SOC_WB_ENGINE_ADD_ARR(SOC_WB_ENGINE_PORTMOD, wb_var_id, "ber_war_wait_count",
+                          wb_buffer_index, sizeof(int), NULL, MAX_PORTS_PER_PM8X50, VERSION(4));
+    _SOC_IF_ERR_EXIT(rv);
+    pm_info->wb_vars_ids[berWarWaitCount] = wb_var_id;
+
+    SOC_WB_ENGINE_ADD_ARR(SOC_WB_ENGINE_PORTMOD, wb_var_id,
+                         "is_core_flexe_configured", wb_buffer_index, sizeof(int),
+                          NULL, MAX_PORTS_PER_PM8X50, VERSION(4));
+    _SOC_IF_ERR_EXIT(rv);
+    pm_info->wb_vars_ids[coreisFlexeConfigured] = wb_var_id;
+
+    _SOC_IF_ERR_EXIT(portmod_next_wb_var_id_get(unit, &wb_var_id));
+    SOC_WB_ENGINE_ADD_ARR(SOC_WB_ENGINE_PORTMOD, wb_var_id, "an_400g_remote_pause",
+                          wb_buffer_index, sizeof(int), NULL, MAX_PORTS_PER_PM8X50, VERSION(4));
+    _SOC_IF_ERR_EXIT(rv);
+    pm_info->wb_vars_ids[an400gRemotePause] = wb_var_id;
 
     _SOC_IF_ERR_EXIT(soc_wb_engine_init_buffer(unit, SOC_WB_ENGINE_PORTMOD,
                                                wb_buffer_index, FALSE));
@@ -2327,7 +2413,8 @@ int pm8x50_pm_init(int unit,
     int i, rv;
     int pm_is_active, ts_enable_port_count, is_initiator, pcs_reconfigured, active_lane_map;
     int is_core_initialized, fec, invalid_port, rlm_state, fecType, txLaneMap, rxLaneMap, rlm_enabled;
-    int an_state, is_400g_an, an_wait_link_count;
+    int an_state, is_400g_an, an_wait_link_count, is_ber_war_enable = 0, ber_war_state = 0, ber_war_wait_count = 0;
+    int core_is_flexe_configured, remote_pause;
     uint8 ovco_pll_adv_lane_bitmap, tvco_pll_adv_lane_bitmap;
     uint8 ovco_pll_active_lane_bitmap, tvco_pll_active_lane_bitmap;
     int probe= 0;
@@ -2426,6 +2513,7 @@ int pm8x50_pm_init(int unit,
             _SOC_IF_ERR_EXIT(PM8x50_RLM_ENABLE_GET(unit, pm_info, &rlm_enabled, i));
             _SOC_IF_ERR_EXIT(PM8x50_RLM_STATE_GET(unit, pm_info, &rlm_state, i));
             _SOC_IF_ERR_EXIT(PM8x50_400G_AN_ENABLE_GET(unit, pm_info, &is_400g_an, i));
+            _SOC_IF_ERR_EXIT(PM8x50_400G_AN_REMOTE_PAUSE_GET(unit, pm_info, &remote_pause, i));
             /* need to re-register the call back */
             if ( (port_local >= 0) && (((rlm_enabled) && (rlm_state >= PORTMOD_PORT_RLM_SEND_PACKET_DATA) &&
                (rlm_state < PORTMOD_PORT_RLM_DONE)) ||
@@ -2556,6 +2644,28 @@ int pm8x50_pm_init(int unit,
         an_wait_link_count = 0;
         rv = PM8x50_400G_AN_WAIT_LINK_COUNT_SET(unit, pm_info, an_wait_link_count);
         _SOC_IF_ERR_EXIT(rv);
+
+        is_ber_war_enable = 0;
+        ber_war_state = PM8X50_PORT_BER_WAR_STATE_COUNT;
+        ber_war_wait_count = 0;
+        for (i = 0; i < MAX_PORTS_PER_PM8X50; i++) {
+            _SOC_IF_ERR_EXIT(PM8x50_BER_WAR_ENABLE_SET(unit, pm_info, is_ber_war_enable, i));
+
+            rv = PM8x50_BER_WAR_STATE_SET(unit, pm_info, ber_war_state, i);
+            _SOC_IF_ERR_EXIT(rv);
+
+            rv = PM8x50_BER_WAR_WAIT_COUNT_SET(unit, pm_info, ber_war_wait_count, i);
+            _SOC_IF_ERR_EXIT(rv);
+        }
+
+        core_is_flexe_configured = 0;
+        rv = PM8x50_IS_CORE_FLEXE_CONFIGURED_SET(unit, pm_info, core_is_flexe_configured);
+        _SOC_IF_ERR_EXIT(rv);
+
+        remote_pause = 0;
+        for (i = 0; i < MAX_PORTS_PER_PM8X50; i++) {
+            _SOC_IF_ERR_EXIT(PM8x50_400G_AN_REMOTE_PAUSE_SET(unit, pm_info, remote_pause, i));
+        }
     }
 
 exit:
@@ -5758,6 +5868,9 @@ int pm8x50_port_autoneg_ability_remote_get(int unit, int port, pm_info_t pm_info
     int nof_phys, i;
     phymod_autoneg_advert_ability_t autoneg_abilities[PM8x50_MAX_AN_ABILITY];
     phymod_autoneg_advert_abilities_t an_advert_abilities;
+    int port_index, is_400g_an = 0, remote_pause = 0;
+    uint32 bitmap;
+    phymod_autoneg_status_t an_status;
 
     SOC_INIT_FUNC_DEFS;
 
@@ -5771,6 +5884,21 @@ int pm8x50_port_autoneg_ability_remote_get(int unit, int port, pm_info_t pm_info
     an_advert_abilities.autoneg_abilities = autoneg_abilities;
 
     _SOC_IF_ERR_EXIT(phymod_phy_autoneg_remote_advert_ability_get(&phy_access, &an_advert_abilities));
+
+    /* next need to check 400G AN enabled or not */
+    _SOC_IF_ERR_EXIT(_pm8x50_port_index_get(unit, port, pm_info, &port_index, &bitmap));
+    _SOC_IF_ERR_EXIT(PM8x50_400G_AN_ENABLE_GET(unit, pm_info, &is_400g_an, port_index));
+    _SOC_IF_ERR_EXIT(pm8x50_port_autoneg_status_get(unit, port, pm_info, &an_status));
+    if (is_400g_an && an_status.enabled && an_status.locked) {
+        _SOC_IF_ERR_EXIT(PM8x50_400G_AN_REMOTE_PAUSE_GET(unit, pm_info, &remote_pause, port_index));
+        an_advert_abilities.num_abilities = 1;
+        an_advert_abilities.autoneg_abilities[0].pause = remote_pause;
+        an_advert_abilities.autoneg_abilities[0].speed = 400000;
+        an_advert_abilities.autoneg_abilities[0].resolved_num_lanes = 8;
+        an_advert_abilities.autoneg_abilities[0].fec = phymod_fec_RS544_2XN;
+        an_advert_abilities.autoneg_abilities[0].channel = phymod_channel_long;
+        an_advert_abilities.autoneg_abilities[0].an_mode = phymod_AN_MODE_MSA;
+    }
 
     if (an_advert_abilities.num_abilities > max_num_abilities) {
         _SOC_EXIT_WITH_ERR(SOC_E_PARAM,
@@ -6138,7 +6266,7 @@ int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
     int mac_stage_id, phy_acc;
     uint32 reg_val;
     uint32 timesync_enable, bitmap, flags = 0;
-    int num_advert, num_remote;
+    int num_advert, num_remote, is_400g_an;
     portmod_port_speed_ability_t advert_ability[PM8x50_MAX_AN_ABILITY];
     portmod_port_speed_ability_t remote_ability[PM8x50_MAX_AN_ABILITY];
     portmod_pause_control_t pause_ctrl;
@@ -6153,26 +6281,30 @@ int pm8x50_port_phy_link_up_event(int unit, int port, pm_info_t pm_info)
     _SOC_IF_ERR_EXIT(_pm8x50_port_index_get(unit, port, pm_info, &port_index, &bitmap));
 
     /* 1. Update for AN ports */
-    _SOC_IF_ERR_EXIT(phymod_phy_autoneg_status_get(&phy_access, &an_status));
+    _SOC_IF_ERR_EXIT(pm8x50_port_autoneg_status_get(unit, port, pm_info, &an_status));
     if ((an_status.enabled && an_status.locked)) {
+        /* read the 400G an enabled */
+        _SOC_IF_ERR_EXIT(PM8x50_400G_AN_ENABLE_GET(unit, pm_info, &is_400g_an, port_index));
         /*!
          * 1.1 Update port mode.
          * For PM8x50 autoneg, once the port resolves and link up,
          * cdmac_port_mode needs to be updated based on the PCS final port mode.
          */
-        mac_stage_id = port_index / CDMAC_NUM_LANES;
-        _SOC_IF_ERR_EXIT(_pm8x50_phy_access_get(unit, port, pm_info, &phy_acc));
+        if (!is_400g_an) {
+            mac_stage_id = port_index / CDMAC_NUM_LANES;
+            _SOC_IF_ERR_EXIT(_pm8x50_phy_access_get(unit, port, pm_info, &phy_acc));
 
-        _SOC_IF_ERR_EXIT(READ_CDPORT_MODE_REGr(unit, phy_acc, &reg_val));
+            _SOC_IF_ERR_EXIT(READ_CDPORT_MODE_REGr(unit, phy_acc, &reg_val));
 
-        if (mac_stage_id) {
-            /* MAC1 is single-port mode */
-            soc_reg_field_set(unit, CDPORT_MODE_REGr, &reg_val, MAC1_PORT_MODEf, an_status.resolved_port_mode);
-        } else {
-            /* MAC0 is single-port mode */
-            soc_reg_field_set(unit, CDPORT_MODE_REGr, &reg_val, MAC0_PORT_MODEf, an_status.resolved_port_mode);
+            if (mac_stage_id) {
+                /* MAC1 is single-port mode */
+                soc_reg_field_set(unit, CDPORT_MODE_REGr, &reg_val, MAC1_PORT_MODEf, an_status.resolved_port_mode);
+            } else {
+                /* MAC0 is single-port mode */
+                soc_reg_field_set(unit, CDPORT_MODE_REGr, &reg_val, MAC0_PORT_MODEf, an_status.resolved_port_mode);
+            }
+            _SOC_IF_ERR_EXIT(WRITE_CDPORT_MODE_REGr(unit, phy_acc, reg_val));
         }
-        _SOC_IF_ERR_EXIT(WRITE_CDPORT_MODE_REGr(unit, phy_acc, reg_val));
 
         /*!
          * 1.2 Update pause settings.
