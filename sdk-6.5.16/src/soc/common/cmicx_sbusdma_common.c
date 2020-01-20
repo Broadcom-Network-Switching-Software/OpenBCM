@@ -27,8 +27,9 @@ typedef struct intr_data_s {
 
 
 typedef struct cmicx_sbusdma_ch_s {
-    sal_spinlock_t   lock;
+    sal_spinlock_t   lock[SOC_MAX_NUM_DEVICES];
     int timeout;
+    sal_sem_t sem[SOC_MAX_NUM_DEVICES];
     uint8  ch[SOC_MAX_NUM_DEVICES][CMIC_CMC_NUM_MAX];
     uint8  wait[SOC_MAX_NUM_DEVICES][CMIC_CMC_NUM_MAX];
 }cmicx_sbusdma_ch_t;
@@ -236,12 +237,11 @@ cmicx_sbusdma_error_details(int unit, uint32 rval)
 
 /*******************************************
 * @function _cmicx_sbusdma_ch_get
-* purpose get idle channel on cmc
+* purpose get idle channel and cmc
 *
 * @param unit [in] unit #
-* @param cmc [in] cmc number 0-1
-* @param mask [in] mask for available channels
-* @param ch [out] channel number 0-2
+* @param cmc [out] cmc number 0-1
+* @param ch [out] channel number 0-3
 *
 * @returns SOC_E_BUSY
 * @returns SOC_E_NONE
@@ -249,33 +249,66 @@ cmicx_sbusdma_error_details(int unit, uint32 rval)
 * @end
  */
 STATIC int
-_cmicx_sbusdma_ch_get(int unit, int cmc,
-                       uint8 mask, int *ch)
+_cmicx_sbusdma_ch_get(int unit, int *cmc, int *ch)
 {
     int rv = SOC_E_BUSY;
     int i;
+    uint8 mask = 0;
 
-    sal_spinlock_lock(_cmicx_sbusdma_ch.lock);
+    /*
+     By Default all resources in CMC1 are reserved for embedded apps, i.e R5 apps,
+     only CMC0 is avaiable for use.
+     Return error in case channel allocation failure
+     */
+    if (sal_sem_take(_cmicx_sbusdma_ch.sem[unit],
+        _cmicx_sbusdma_ch.timeout) < 0) {
+        return rv;
+    }
+
+    sal_spinlock_lock(_cmicx_sbusdma_ch.lock[unit]);
+    /* Allocate CMC*/
+    if (soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE) {
+        *cmc = CMIC_CMCx_PCI;
+        mask = CMIC_CMC0_SBUSDMA_CH_MASK;
+        if (_cmicx_sbusdma_ch.ch[unit][*cmc] == 0) {
+            /* Check if CMIC_CMCx_AXI is configured */
+            if (SOC_PCI_CMCS_NUM(unit) > 1) {
+                *cmc = CMIC_CMCx_AXI;
+                mask = CMIC_CMC1_SBUSDMA_CH_MASK;
+            }
+        }
+    } else {
+        *cmc = CMIC_CMCx_AXI;
+        mask = CMIC_CMC1_SBUSDMA_CH_MASK;
+        if (_cmicx_sbusdma_ch.ch[unit][*cmc] == 0) {
+            /* Check if CMIC_CMCx_AXI is configured */
+            if (SOC_PCI_CMCS_NUM(unit) > 1) {
+                *cmc = CMIC_CMCx_PCI;
+                mask = CMIC_CMC0_SBUSDMA_CH_MASK;
+            }
+        }
+    }
+    /* Allocate Channel */
     for (i = 0; i < CMIC_CMCx_SBUSDMA_CHAN_MAX; i++) {
         if ((mask & 0x01 << i) &&
-             (_cmicx_sbusdma_ch.ch[unit][cmc] & 0x01 << i)) {
+             (_cmicx_sbusdma_ch.ch[unit][*cmc] & 0x01 << i)) {
             rv = SOC_E_NONE;
             *ch = i;
-            _cmicx_sbusdma_ch.ch[unit][cmc] &= ~(0x01 << i);
+            _cmicx_sbusdma_ch.ch[unit][*cmc] &= ~(0x01 << i);
             break;
         }
     }
-    sal_spinlock_unlock(_cmicx_sbusdma_ch.lock);
+    sal_spinlock_unlock(_cmicx_sbusdma_ch.lock[unit]);
     return rv;
 }
 
 /*******************************************
 * @function cmicx_sbusdma_ch_try_get
-* purpose get idle channel on cmc
+* purpose try to get channel on cmc
 *
 * @param unit [in] unit #
 * @param cmc [out] cmc number 0-1
-* @param ch [out] channel number 0-2
+* @param ch [out] channel number 0-3
 *
 * @returns SOC_E_BUSY
 * @returns SOC_E_NONE
@@ -288,16 +321,22 @@ int cmicx_sbusdma_ch_try_get(int unit, int cmc, int ch)
     soc_timeout_t to;
     soc_timeout_init(&to, _cmicx_sbusdma_ch.timeout, 100);
 
+    /* Try to allocate specified Channel from specified CMC */
     do {
-           sal_spinlock_lock(_cmicx_sbusdma_ch.lock);
-           if (_cmicx_sbusdma_ch.ch[unit][cmc] & (0x01 << ch)) {
-               rv = SOC_E_NONE;
-               _cmicx_sbusdma_ch.ch[unit][cmc] &= ~(0x01 << ch);
-               sal_spinlock_unlock(_cmicx_sbusdma_ch.lock);
-               break;
-           }
-           sal_spinlock_unlock(_cmicx_sbusdma_ch.lock);
+       sal_spinlock_lock(_cmicx_sbusdma_ch.lock[unit]);
+       if (_cmicx_sbusdma_ch.ch[unit][cmc] & (0x01 << ch)) {
+           rv = SOC_E_NONE;
+           _cmicx_sbusdma_ch.ch[unit][cmc] &= ~(0x01 << ch);
+           sal_spinlock_unlock(_cmicx_sbusdma_ch.lock[unit]);
+           break;
+       }
+       sal_spinlock_unlock(_cmicx_sbusdma_ch.lock[unit]);
     } while (!soc_timeout_check(&to));
+    /* Channel consumed */
+    if (rv == SOC_E_NONE) {
+        (void)sal_sem_take(_cmicx_sbusdma_ch.sem[unit]
+                           ,_cmicx_sbusdma_ch.timeout);
+    }
 
     return rv;
 }
@@ -308,7 +347,7 @@ int cmicx_sbusdma_ch_try_get(int unit, int cmc, int ch)
 *
 * @param unit [in] unit #
 * @param cmc [out] cmc number 0-1
-* @param ch [out] channel number 0-2
+* @param ch [out] channel number 0-3
 *
 * @returns SOC_E_BUSY
 * @returns SOC_E_NONE
@@ -319,63 +358,25 @@ int cmicx_sbusdma_ch_get(int unit, int *cmc, int *ch)
 {
     int rv;
 
-    soc_timeout_t to;
-
-    soc_timeout_init(&to, _cmicx_sbusdma_ch.timeout, 100);
-
-    /* Check the bus type
-     * If bus type is SOC_PCI_DEV_TYPE, CMC0 will have preference
-     * CMC0 has 3 channels available.
-     * If bus type is SOC_AXI_DEV_TYPE. CMC1 will have preference
-     * CMC1 has 1 channel avaiable , rest 2 are for M0
-     */
-
-    if (soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE) {
-        do {
-            *cmc = CMIC_CMCx_PCI;
-            rv = _cmicx_sbusdma_ch_get(unit, *cmc,
-                      CMIC_CMC0_SBUSDMA_CH_MASK, ch);
-            if (rv == SOC_E_NONE) {
-                break;
-            }
-            /* Check if CMIC_CMCx_AXI is configured */
-            if (SOC_PCI_CMCS_NUM(unit) > 1) {
-                *cmc = CMIC_CMCx_AXI;
-                rv = _cmicx_sbusdma_ch_get(unit, *cmc,
-                          CMIC_CMC1_SBUSDMA_CH_MASK, ch);
-                if (rv == SOC_E_NONE) {
-                    break;
-                }
-            }
-        } while (!soc_timeout_check(&to));
-
-    } else if (soc_cm_get_bus_type(unit) & SOC_AXI_DEV_TYPE) {
-        do {
-            /* Check if CMIC_CMCx_AXI is configured */
-            if (SOC_PCI_CMCS_NUM(unit) > 1) {
-                *cmc = CMIC_CMCx_AXI;
-                rv = _cmicx_sbusdma_ch_get(unit, *cmc,
-                          CMIC_CMC1_SBUSDMA_CH_MASK, ch);
-                if (rv == SOC_E_NONE) {
-                    break;
-                }
-            }
-            *cmc = CMIC_CMCx_PCI;
-            rv = _cmicx_sbusdma_ch_get(unit, *cmc,
-                      CMIC_CMC0_SBUSDMA_CH_MASK, ch);
-            if (rv == SOC_E_NONE) {
-                break;
-            }
-        } while (!soc_timeout_check(&to));
+    if ((soc_cm_get_bus_type(unit) & SOC_PCI_DEV_TYPE) ||
+        (soc_cm_get_bus_type(unit) & SOC_AXI_DEV_TYPE)) {
+        rv = _cmicx_sbusdma_ch_get(unit, cmc, ch);
     } else {
         rv = SOC_E_FAIL;
     }
+
     if (SOC_SUCCESS(rv)) {
         /* Check if interrupt resources are initialized */
         if (SOC_CMC_SBUSDMA_INTR(unit, *cmc, *ch) == NULL) {
             cmicx_sbusdma_ch_put(unit, *cmc, *ch);
             SOC_STAT(unit)->err_sbusdma_intr_res++;
             rv = SOC_E_FAIL;
+        }
+    } else {
+        int i;
+        /* Get the details of each channel in case of channel allocation fails */
+        for (i = 0; i < CMIC_CMCx_SBUSDMA_CHAN_MAX; i++) {
+            cmicx_sbusdma_curr_op_details(unit, *cmc, i);
         }
     }
     return rv;
@@ -386,7 +387,7 @@ int cmicx_sbusdma_ch_get(int unit, int *cmc, int *ch)
 * @function cmicx_sbusdma_ch_put
 * purpose put back the freed channel on cmc
 *
-* @param cmc [in] cmc number 0-1
+* @param cmc [in] cmc number 0
 * @param ch [in] channel number 0-2
 *
 * @returns SOC_E_PARAM
@@ -396,17 +397,17 @@ int cmicx_sbusdma_ch_get(int unit, int *cmc, int *ch)
  */
 int cmicx_sbusdma_ch_put(int unit, int cmc, int ch)
 {
-   int rv = SOC_E_NONE;
+    int rv = SOC_E_NONE;
 
-   if ((ch < 0) || (ch > CMIC_CMCx_SBUSDMA_CHAN_MAX -1)) {
+    if ((ch < 0) || (ch > CMIC_CMCx_SBUSDMA_CHAN_MAX -1)) {
        rv = SOC_E_PARAM;
        return rv;
-   }
-   sal_spinlock_lock(_cmicx_sbusdma_ch.lock);
-   _cmicx_sbusdma_ch.ch[unit][cmc] |= (0x01 << ch);
-   sal_spinlock_unlock(_cmicx_sbusdma_ch.lock);
-
-   return rv;
+    }
+    sal_spinlock_lock(_cmicx_sbusdma_ch.lock[unit]);
+    _cmicx_sbusdma_ch.ch[unit][cmc] |= (0x01 << ch);
+    sal_spinlock_unlock(_cmicx_sbusdma_ch.lock[unit]);
+    sal_sem_give(_cmicx_sbusdma_ch.sem[unit]);
+    return rv;
 }
 
 /*******************************************
@@ -423,13 +424,23 @@ int cmicx_sbusdma_ch_put(int unit, int cmc, int ch)
 int cmicx_sbusdma_ch_deinit(int unit)
 
 {
-   if (_cmicx_sbusdma_ch.lock != NULL) {
-        sal_spinlock_destroy(_cmicx_sbusdma_ch.lock);
-        _cmicx_sbusdma_ch.lock = NULL;
-   }
+    int i;
 
-   return SOC_E_NONE;
+    for (i = 0; i < SOC_MAX_NUM_DEVICES; i++) {
+        if (_cmicx_sbusdma_ch.lock[i] != NULL) {
+            sal_spinlock_destroy(_cmicx_sbusdma_ch.lock[i]);
+            _cmicx_sbusdma_ch.lock[i] = NULL;
+        }
+    }
+    /* Cleanup channel semaphore */
+    for (i = 0; i < SOC_MAX_NUM_DEVICES; i++) {
+      if (_cmicx_sbusdma_ch.sem[i] != NULL) {
+          sal_sem_destroy(_cmicx_sbusdma_ch.sem[i]);
+          _cmicx_sbusdma_ch.sem[i] = NULL;
+      }
+    }
 
+    return SOC_E_NONE;
 }
 
 /*******************************************
@@ -449,20 +460,32 @@ int cmicx_sbusdma_ch_init(int unit, int timeout,
                             soc_sbusdma_cmic_ch_t *cmic_ch)
 
 {
-   int rv = SOC_E_NONE;
+    int rv = SOC_E_NONE;
+    int i;
 
-   _cmicx_sbusdma_ch.lock = sal_spinlock_create("sbusdma Lock");
-
-   if (_cmicx_sbusdma_ch.lock == NULL) {
-        return SOC_E_MEMORY;
-   }
-   /* Availability of channels */
-   _cmicx_sbusdma_ch.ch[unit][0] = CMIC_CMC0_SBUSDMA_CH_MASK;
-   _cmicx_sbusdma_ch.ch[unit][1] = CMIC_CMC1_SBUSDMA_CH_MASK;
-   _cmicx_sbusdma_ch.timeout = timeout;
-   cmic_ch->soc_sbusdma_ch_try_get = cmicx_sbusdma_ch_try_get;
-   cmic_ch->soc_sbusdma_ch_put = cmicx_sbusdma_ch_put;
-   return rv;
+    for (i = 0; i < SOC_MAX_NUM_DEVICES; i++) {
+        _cmicx_sbusdma_ch.lock[i] = sal_spinlock_create("sbusdma Lock");
+        if (_cmicx_sbusdma_ch.lock[i] == NULL) {
+            return SOC_E_MEMORY;
+        }
+    }
+    /* Initialize channel semaphore */
+    for (i = 0; i < SOC_MAX_NUM_DEVICES; i++) {
+       _cmicx_sbusdma_ch.sem[i] =
+           sal_sem_create("SBUSDMA Channel",
+           sal_sem_COUNTING,
+           CMIC_CMCx_SBUSDMA_CHAN_MAX * SOC_PCI_CMCS_NUM(unit));
+       if (_cmicx_sbusdma_ch.sem[i] == NULL) {
+           return SOC_E_MEMORY;
+       }
+    }
+    /* Availability of channels */
+    _cmicx_sbusdma_ch.ch[unit][0] = CMIC_CMC0_SBUSDMA_CH_MASK;
+    _cmicx_sbusdma_ch.ch[unit][1] = CMIC_CMC1_SBUSDMA_CH_MASK;
+    _cmicx_sbusdma_ch.timeout = timeout;
+    cmic_ch->soc_sbusdma_ch_try_get = cmicx_sbusdma_ch_try_get;
+    cmic_ch->soc_sbusdma_ch_put = cmicx_sbusdma_ch_put;
+    return rv;
 
 }
 

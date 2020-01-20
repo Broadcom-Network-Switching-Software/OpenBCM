@@ -1088,7 +1088,7 @@ int soc_sbusdma_init(int unit, int interval, uint8 intrEnb)
         SOC_IF_ERROR_RETURN(cmicx_sbusdma_reg_init(unit,
                             &_sbusdma_reg_drv[unit].drv));
         SOC_IF_ERROR_RETURN(cmicx_sbusdma_ch_init(unit,
-                        CMIC_CMCx_SBUSDMA_CHSELECT_TIMEOUT,
+                        soc->sbusDmaTimeout + CMIC_CMCx_SBUSDMA_CHSELECT_TIMEOUT,
                         &_sbusdma_reg_drv[unit].ch));
 
         if ((soc->sbusDmaIntrEnb) || (soc->tslamDmaIntrEnb) ||
