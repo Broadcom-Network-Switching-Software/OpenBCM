@@ -50,6 +50,7 @@
 
 #define SPI_FLASH_ID_CYPRESS   (0x01)
 #define SPI_FLASH_ID_MICRON    (0x20)
+#define SPI_FLASH_ID_ISSI      (0x9d)
 #define SPI_FLASH_ID_MACRONIX  (0xc2)
 #define SPI_FLASH_ID_WINBOND   (0xef)
 
@@ -92,7 +93,8 @@ static const soc_flash_conf_t flash_table[] = {
     { SPI_FLASH_ID_MACRONIX, 0x100,     0x1000,    0,       0x2000,    0   },
     /* Winbond 25Q256FV */
     { SPI_FLASH_ID_WINBOND,  0x100,     0x10000,   0,       0x1000,    0   },
-
+    /* ISSI IS25LP256D/IS25WP256D family */
+    { SPI_FLASH_ID_ISSI,     0x100,     0x1000,    0,       0x10000,   0   },
 };
 
 STATIC soc_flash_t soc_flash[SOC_MAX_NUM_DEVICES];
