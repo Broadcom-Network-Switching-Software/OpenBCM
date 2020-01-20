@@ -1016,12 +1016,14 @@ extern char alpm_tmpbuf[_ALPM_ERR_MSG_BUF_ENT_SZ];
 extern void alpm_util_snprintf(const char *fmt, ...);
 
 #define ALPM_ERR_MSG_LOG(stuff_) do {       \
-        ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, ("#%d: ", ALPMTR_CNT(u)));\
+        if (ALPMTR(u)) ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, ("#%d: ", ALPMTR_CNT(u)));\
         ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, stuff_);\
-        sal_memset(alpm_tmpbuf, 0, sizeof(alpm_tmpbuf));\
-        sal_sprintf(alpm_tmpbuf, "#%d: ", ALPMTR_CNT(u));\
-        alpm_util_snprintf stuff_;\
-        _ALPM_ERR_MSG_INSERT(u, alpm_tmpbuf);  \
+        if (ALPMC(u) != NULL) {\
+            sal_memset(alpm_tmpbuf, 0, sizeof(alpm_tmpbuf));\
+            if (ALPMTR(u)) sal_sprintf(alpm_tmpbuf, "#%d: ", ALPMTR_CNT(u));\
+            alpm_util_snprintf stuff_;\
+            _ALPM_ERR_MSG_INSERT(u, alpm_tmpbuf);  \
+        }\
     } while (0)
 
 /* Any layer log macros */
