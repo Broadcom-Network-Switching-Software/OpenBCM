@@ -49,6 +49,8 @@ char *alpm_util_acb_str[] = {
     "ACB.1",
 };
 
+char alpm_tmpbuf[_ALPM_ERR_MSG_BUF_ENT_SZ];
+
 static uint32 alpm_mem_alloc_cnt;
 static uint32 alpm_mem_free_cnt;
 static uint32 alpm_mem_alloc_sz;
@@ -93,6 +95,16 @@ alpm_util_mem_stat_clear()
     alpm_mem_alloc_cnt = 0;
     alpm_mem_free_cnt = 0;
     alpm_mem_alloc_sz = 0;
+}
+
+void
+alpm_util_snprintf(const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    sal_vsnprintf(alpm_tmpbuf + sal_strlen(alpm_tmpbuf), _ALPM_ERR_MSG_BUF_ENT_SZ - 1, fmt, ap);
+    va_end(ap);
 }
 
 int

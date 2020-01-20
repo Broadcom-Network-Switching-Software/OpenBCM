@@ -738,6 +738,10 @@ alpm_wb_test(int u)
             alpm_util_free(ALPMC(u)->_alpm_merge_state);
         }
 
+        if (ALPMC(u)->_alpm_err_msg_buf != NULL) {
+            alpm_util_free(ALPMC(u)->_alpm_err_msg_buf);
+        }
+
         if (ALPMC(u) != NULL) {
             alpm_util_free(ALPMC(u));
             ALPMC(u) = NULL;

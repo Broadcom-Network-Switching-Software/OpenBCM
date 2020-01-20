@@ -139,6 +139,7 @@ alpm_trace_log(int u, int op, _bcm_defip_cfg_t *cfg, int nh_idx, int rc)
 
     ALPMTR_CURR(u)->op      = op;
     ALPMTR_CURR(u)->rc      = rc;
+    ALPMTR_CURR(u)->seq     = ALPMTR_CNT(u);
     if (cfg) {
         ALPMTR_CURR(u)->flags   = cfg->defip_flags;
         ALPMTR_CURR(u)->vrf     = cfg->defip_vrf;
@@ -197,7 +198,7 @@ alpm_trace_print(int u, int showflags, _alpm_log_t *p, char *data)
 {
     int egress_idx_min;
     char flags_st[14] = {0};
-    char rc_st[20] = {0};
+    char rc_st[40] = {0};
     char ip_st[SAL_IPADDR_STR_LEN]; /* only for IPv4 */
     char mask_st[SAL_IPADDR_STR_LEN];
 
@@ -206,7 +207,9 @@ alpm_trace_print(int u, int showflags, _alpm_log_t *p, char *data)
 
     rc_st[0] = 0;
     if (BCM_FAILURE(p->rc)) {
-        sal_sprintf(rc_st, "; # return failed (%d)", p->rc);
+        sal_sprintf(rc_st, "; #seq=%d return failed (%d)", p->seq, p->rc);
+    } else {
+        sal_sprintf(rc_st, "; #seq=%d", p->seq);
     }
 
     flags_st[0] = 0;

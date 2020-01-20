@@ -850,14 +850,18 @@ alpm_pvt_update(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg, uint32 write_
         }
     } else {
         upr_acb = ACB_UPR(u, acb);
-        ALPM_IEG(alpm_cb_find(u, upr_acb, lpm_cfg, &pvt_node, &bkt_node));
-        rv = alpm_bkt_ent_write(u, upr_acb, pvt_node, lpm_cfg,
-                                bkt_node->ent_idx, write_flags);
+        rv = alpm_cb_find(u, upr_acb, lpm_cfg, &pvt_node, &bkt_node);
+        if (BCM_SUCCESS(rv)) {
+            rv = alpm_bkt_ent_write(u, upr_acb, pvt_node, lpm_cfg,
+                                    bkt_node->ent_idx, write_flags);
+        } else {
+            ALPM_ERR(("pvt_update->alpm_cb_find: rv %d, ACB.%d pvt_node=%p, bkt_node=%p\n",
+                      rv, ACB_IDX(upr_acb), pvt_node, bkt_node));
+        }
     }
 
     ALPM_INFO(("**ACB(%d).PVT.UPD rv %d\n", ACB_IDX(acb), rv));
 
-bad:
     return rv;
 }
 
@@ -2970,6 +2974,7 @@ retry:
 
         /* Case 2.2.2, split given l3 pvt_node first */
         rv = alpm_cb_split(u, acb, lpm_cfg, &bkt_info, 0xffff);
+
         if (BCM_SUCCESS(rv)) {
             lpm_cfg->spl_pn = NULL;
             lpm_cfg->spl_key_len = 0;
@@ -4435,6 +4440,9 @@ retry_spl:
     VRF_ROUTE_ADD(acb, vrf_id, ipt);
 _exit:
     lpm_cfg->tcam_write = NULL;
+    if (rv == BCM_E_FULL) {
+        acb->acb_cnt.c_full++;
+    }
     return rv;
 
 bad:
@@ -4445,6 +4453,9 @@ bad:
         alpm_util_free(bkt_node);
     }
     lpm_cfg->tcam_write = NULL;
+    if (rv == BCM_E_FULL) {
+        acb->acb_cnt.c_full++;
+    }
     return rv;
 }
 
@@ -4463,6 +4474,10 @@ bcm_esw_alpm_ctrl_deinit(int u)
 
     if (ALPMC(u)->_alpm_merge_state != NULL) {
         alpm_util_free(ALPMC(u)->_alpm_merge_state);
+    }
+
+    if (ALPMC(u)->_alpm_err_msg_buf != NULL) {
+        alpm_util_free(ALPMC(u)->_alpm_err_msg_buf);
     }
 
     if (ALPMC(u) != NULL) {
@@ -4550,6 +4565,9 @@ bcm_esw_alpm_ctrl_init(int u)
     alloc_sz = sizeof(int) * vrf_id_cnt;
     ALPM_ALLOC_EG(ALPMC(u)->_alpm_merge_state, alloc_sz, "_alpm_merge_state");
 
+    alloc_sz = _ALPM_ERR_MSG_BUF_CNT * _ALPM_ERR_MSG_BUF_ENT_SZ;
+    ALPM_ALLOC_EG(ALPMC(u)->_alpm_err_msg_buf, alloc_sz, "_alpm_err_msg_buf");
+
     if (soc_feature(u, soc_feature_alpm2)) {
         if (SOC_IS_TOMAHAWK3(u)) {
             ALPMC(u)->alpm_driver = &th3_alpm_driver;
@@ -4593,6 +4611,9 @@ bcm_esw_alpm_ctrl_cleanup(int u)
     vrf_id_cnt = ALPM_VRF_ID_CNT(u);
     alloc_sz = sizeof(int) * vrf_id_cnt;
     sal_memset(ALPMC(u)->_alpm_merge_state, 0, alloc_sz);
+
+    alloc_sz = _ALPM_ERR_MSG_BUF_CNT * _ALPM_ERR_MSG_BUF_ENT_SZ;
+    sal_memset(ALPMC(u)->_alpm_err_msg_buf, 0, alloc_sz);
 
     rv = ALPM_DRV(u)->alpm_ctrl_cleanup(u);
     return rv;
@@ -4767,6 +4788,9 @@ bcm_esw_alpm_insert(int u, _bcm_defip_cfg_t *lpm_cfg)
                 rv = BCM_E_NONE;
             }
         }
+        if (rv == BCM_E_FULL) {
+            acb->acb_cnt.c_full++;
+        }
         return(rv);
     }
 
@@ -4786,7 +4810,11 @@ bcm_esw_alpm_insert(int u, _bcm_defip_cfg_t *lpm_cfg)
     /* Insert prefix into trie */
     /* Split trie : Insertion into trie results into Split */
     /* Allocate a TCAM entry for PIVOT and bucket and move entries */
-    ALPM_IER_PRT_EXCEPT(alpm_cb_path_construct(u, acb, lpm_cfg), BCM_E_FULL);
+    rv = alpm_cb_path_construct(u, acb, lpm_cfg);
+    if (rv == BCM_E_FULL) {
+        acb->acb_cnt.c_full++;
+    }
+    ALPM_IER_PRT_EXCEPT(rv, BCM_E_FULL);
 
     rv = alpm_cb_insert(u, acb, lpm_cfg);
     if (BCM_SUCCESS(rv)) {
@@ -5781,6 +5809,12 @@ alpm_cb_stat_dump(int u, int acb_bmp)
         cli_out("\toff\n");
     }
 
+    cli_out("ALPM recorded error messages:\n");
+    for (i = 0; i < _ALPM_ERR_MSG_CUR_IDX(u); i++) {
+        cli_out("%3d: %s", i, _ALPM_ERR_MSG_ENT(u, i));
+    }
+    cli_out("\n");
+
     alpm_util_mem_stat_get(&alloc_cnt, &free_cnt);
     cli_out("ALPM Host mem: alloc %8d free %8d\n", alloc_cnt, free_cnt);
     for (i = 0; i < ACB_CNT(u); i++) {
@@ -5838,7 +5872,7 @@ alpm_cb_stat_dump(int u, int acb_bmp)
         cli_out("\tSMCS21 : %8d\n", acb->acb_cnt.c_spl_mp_cs21);
         cli_out("\tSMCS221: %8d\n", acb->acb_cnt.c_spl_mp_cs221);
         cli_out("\tSMCS222: %8d\n", acb->acb_cnt.c_spl_mp_cs222);
-
+        cli_out("\tFULL:    %8d\n", acb->acb_cnt.c_full);
         cli_out("\n");
     }
 }

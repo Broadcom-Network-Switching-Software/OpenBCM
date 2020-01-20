@@ -352,6 +352,7 @@ typedef struct _alpm_cb_stat_s {
     uint32      c_ripple;
     uint32      c_bnkshrk;
     uint32      c_bnkfree;
+    uint32      c_full;
 
     /* Split misplaced case counter */
     uint32      c_spl_mp_cs1;
@@ -432,11 +433,27 @@ typedef struct _alpm_ctrl_s {
 #define _ALPM_DBG_INFO_ALL  0xffffffff
     uint32 _alpm_dbg_info_bmp;
 
+#define _ALPM_ERR_MSG_BUF_CNT       128
+#define _ALPM_ERR_MSG_BUF_ENT_SZ    128
+    char *_alpm_err_msg_buf;
+
     uint32 _alpm_schan_fifo_handle;
 
     struct alpm_functions_s *alpm_driver;
 
 } _alpm_ctrl_t;
+
+#define _ALPM_ERR_MSG_ENT(u, idx)  (ALPMC(u)->_alpm_err_msg_buf+1+((idx)*_ALPM_ERR_MSG_BUF_ENT_SZ))
+/* First char stores the current index */
+#define _ALPM_ERR_MSG_CUR_IDX(u) ((ALPMC(u)->_alpm_err_msg_buf[0]))
+#define _ALPM_ERR_MSG_INSERT(u, msg) \
+    do { \
+        uint8 cur_idx = _ALPM_ERR_MSG_CUR_IDX(u);\
+        if (cur_idx < _ALPM_ERR_MSG_BUF_CNT - 1) { \
+            sal_memcpy(_ALPM_ERR_MSG_ENT(u, cur_idx), msg, _ALPM_ERR_MSG_BUF_ENT_SZ); \
+            _ALPM_ERR_MSG_CUR_IDX(u) = cur_idx + 1; \
+        } \
+    } while(0)
 
 extern _alpm_ctrl_t *alpm_control[SOC_MAX_NUM_DEVICES];
 
@@ -995,9 +1012,21 @@ do {                                                  \
         }                                   \
     } while (0)
 
+extern char alpm_tmpbuf[_ALPM_ERR_MSG_BUF_ENT_SZ];
+extern void alpm_util_snprintf(const char *fmt, ...);
+
+#define ALPM_ERR_MSG_LOG(stuff_) do {       \
+        ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, ("#%d: ", ALPMTR_CNT(u)));\
+        ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, stuff_);\
+        sal_memset(alpm_tmpbuf, 0, sizeof(alpm_tmpbuf));\
+        sal_sprintf(alpm_tmpbuf, "#%d: ", ALPMTR_CNT(u));\
+        alpm_util_snprintf stuff_;\
+        _ALPM_ERR_MSG_INSERT(u, alpm_tmpbuf);  \
+    } while (0)
+
 /* Any layer log macros */
 #define ALPM_FATAL(stuff_)          ALPM_LOG(BSL_LS_BCM_ALPM|BSL_FATAL, stuff_)
-#define ALPM_ERR(stuff_)            ALPM_LOG(BSL_LS_BCM_ALPM|BSL_ERROR, stuff_)
+#define ALPM_ERR(stuff_)            ALPM_ERR_MSG_LOG(stuff_)
 #define ALPM_WARN(stuff_)           ALPM_LOG(BSL_LS_BCM_ALPM|BSL_WARN, stuff_)
 #define ALPM_INFO(stuff_)           ALPM_LOG(BSL_LS_BCM_ALPM|BSL_INFO, stuff_)
 #define ALPM_VERB(stuff_)           ALPM_LOG(BSL_LS_BCM_ALPM|BSL_VERBOSE, stuff_)

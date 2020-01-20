@@ -5541,7 +5541,7 @@ _cmd_esw_alpm_trace_dump(int u, int showflags, char *filename)
 {
     int rv = BCM_E_NONE;
     _alpm_log_t *p;
-    char data[256];
+    char data[300];
 #ifndef NO_FILEIO
     FILE *fp = NULL;
 #endif

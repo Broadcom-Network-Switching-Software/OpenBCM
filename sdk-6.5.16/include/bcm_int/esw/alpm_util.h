@@ -22,6 +22,7 @@ typedef struct _alpm_log_s {
     int     vrf;
     int     nh_idx;
     int     rc; /* op returned code */
+    int     seq; /* route sequence */
     uint32  flags;
     union u {
         bcm_ip_t    ip;
