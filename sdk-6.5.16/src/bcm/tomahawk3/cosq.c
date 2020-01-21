@@ -5539,7 +5539,7 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
                                int arg)
 {
     bcm_port_t local_port;
-    int startq=0, pipe=0, count=1, lc=0, to_cos=0;
+    int startq=0, count=1, lc=0, to_cos=0;
     uint32 entry[SOC_MAX_MEM_WORDS], entry2[SOC_MAX_MEM_WORDS];
     soc_mem_t mem = INVALIDm;
     soc_mem_t mmu_thdo_per_queue_mem = MMU_THDO_Q_TO_QGRP_MAPD0m;
@@ -5547,11 +5547,6 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
     int valid;
     soc_field_t field = INVALIDf;
     soc_field_t field2 = INVALIDf;
-    int old_qmin_limit[_TH3_ITMS_PER_DEV], new_qmin_limit[_TH3_ITMS_PER_DEV], shd_size[_TH3_ITMS_PER_DEV];
-    int delta[_TH3_ITMS_PER_DEV];
-    int rv;
-    int itm;
-    int pool;
 
     if (arg < 0) {
         return BCM_E_PARAM;
@@ -5598,13 +5593,11 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
         }
     }
 
-    SOC_IF_ERROR_RETURN(soc_port_pipe_get(unit, local_port, &pipe));
     mem = MMU_THDO_QUEUE_CONFIGm;
     if ((type == bcmCosqControlEgressUCQueueGroupMinEnable) ||
         (type == bcmCosqControlEgressMCQueueGroupMinEnable)) {
         field = USE_QGROUP_MINf;
         field2 = QGROUP_VALIDf;
-        BCM_IF_ERROR_RETURN(soc_th3_cal_egress_rsvd_limit(unit, old_qmin_limit));
     } else {
         return BCM_E_PARAM;
     }
@@ -5630,32 +5623,9 @@ _bcm_th3_cosq_qgroup_limit_enables_set(int unit, bcm_gport_t gport,
     }
 
     /*If qgroup min limit enable is being set,
-     *buffer shared limits need to be recalculated
+     buffer shared limits will not be recalculated. It is the responsibility
+     of the user to set the QueueMinLimitBytes to 0
      */
-    if ((type == bcmCosqControlEgressUCQueueGroupMinEnable) ||
-        (type == bcmCosqControlEgressMCQueueGroupMinEnable)) {
-
-        BCM_IF_ERROR_RETURN(_bcm_th3_cosq_egr_pool_get(unit, gport,
-            cosq, -1, bcmCosqControlEgressPool,&pool));
-
-        BCM_IF_ERROR_RETURN(soc_th3_cal_egress_rsvd_limit(unit, new_qmin_limit));
-        sal_memcpy(shd_size, _BCM_TH3_MMU_INFO(unit)->shared_limit,
-            sizeof(shd_size));
-
-        /*Calculate the new value of shared limit*/
-        for (itm = 0; itm < _TH3_ITMS_PER_DEV; itm++) {
-            shd_size[itm] = shd_size[itm] + old_qmin_limit[itm] - new_qmin_limit[itm];
-            delta[itm] = old_qmin_limit[itm] - new_qmin_limit[itm];
-        }
-
-        /*Passing the modified values to the funtion to re-adjust shared limits*/
-        rv = soc_th3_mmu_config_res_limits_update(unit, delta, pool, 1);
-        if (rv < 0) {
-            return rv;
-        }
-        sal_memcpy( _BCM_TH3_MMU_INFO(unit)->shared_limit, shd_size,
-            sizeof(shd_size));
-    }
 
     return BCM_E_NONE;
 }
@@ -9263,6 +9233,7 @@ _bcm_th3_cosq_port_guarantee_reset(int unit, bcm_port_t port)
     _soc_mmu_device_info_t devcfg;
     int lossless, override, default_mtu_cells, idx, numq;
     int pg_guarantee, uc_guarantee, mc_guarantee;
+    int qgroup_uc_guarantee, qgroup_mc_guarantee;
 
     lossless = soc_property_get(unit, spn_MMU_LOSSLESS, 0);
     override = soc_property_get(unit, spn_MMU_CONFIG_OVERRIDE, 1);
@@ -9323,6 +9294,40 @@ _bcm_th3_cosq_port_guarantee_reset(int unit, bcm_port_t port)
             (_bcm_th3_cosq_egr_queue_set(unit, port, idx,
                                        bcmCosqControlEgressMCQueueMinLimitBytes,
                                        mc_guarantee));
+    }
+
+    /* QGROUP UC */
+    numq = _bcm_th3_get_num_ucq(unit);
+    for (idx = 0; idx < numq; idx++) {
+        qgroup_uc_guarantee = 0;
+        if (!override) {
+            _soc_mmu_cfg_property_get_cells
+                (unit, -1, spn_QGROUP, idx, spn_GUARANTEE, FALSE,
+                 &qgroup_uc_guarantee, devcfg.mmu_cell_size,
+                 _MMU_DEFAULT_THRES_TYPE);
+            qgroup_uc_guarantee *= devcfg.mmu_cell_size;
+        }
+        BCM_IF_ERROR_RETURN
+            (_bcm_th3_cosq_qgroup_limit_set(unit, port, idx,
+                                       bcmCosqControlEgressUCQueueGroupMinLimitBytes,
+                                       qgroup_uc_guarantee));
+    }
+
+    /* QGROUP MC */
+    numq = _bcm_th3_get_num_ucq(unit) + _bcm_th3_get_num_mcq(unit);
+    for (idx = _bcm_th3_get_num_ucq(unit); idx < numq; idx++) {
+        qgroup_mc_guarantee = 0;
+        if (!override) {
+            _soc_mmu_cfg_property_get_cells
+                (unit, -1, spn_QGROUP, idx, spn_GUARANTEE_MC, FALSE,
+                 &qgroup_mc_guarantee, devcfg.mmu_cell_size,
+                 _MMU_DEFAULT_THRES_TYPE);
+            qgroup_mc_guarantee *= devcfg.mmu_cell_size;
+        }
+        BCM_IF_ERROR_RETURN
+            (_bcm_th3_cosq_qgroup_limit_set(unit, port, idx,
+                                       bcmCosqControlEgressMCQueueGroupMinLimitBytes,
+                                       qgroup_mc_guarantee));
     }
 
     return BCM_E_NONE;
