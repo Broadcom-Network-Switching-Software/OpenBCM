@@ -31740,14 +31740,12 @@ _bcm_fb_nh_add(int unit, int idx, void *buf, void *info)
             soc_mem_field32_set(unit, mem, &eg_entry, MPLS__MPLS_OAM_DOWNMEP_ENABLEf,
                                 2); 
         }
-#endif /* BCM_TRIUMPH_SUPPORT */
-#if defined(BCM_TOMAHAWK3_SUPPORT)
-        if (soc_feature(unit, soc_feature_nh_for_ifp_actions) &&
-                 SOC_IS_TOMAHAWK3(unit) &&
+        if ((soc_feature(unit, soc_feature_nh_for_ifp_actions) ||
+                    SOC_IS_TOMAHAWK3(unit)) &&
                  (nh_entry->flags2 & BCM_L3_FLAGS2_FIELD_ONLY)) {
             entry_type = 2;
         }
-#endif
+#endif /* BCM_TRIUMPH_SUPPORT */
 #ifdef BCM_TRIDENT3_SUPPORT
         if (SOC_IS_TRIDENT3X(unit)) {
             if (nh_entry->flags2 & BCM_L3_FLAGS2_FCOE_ONLY) {
@@ -31757,28 +31755,53 @@ _bcm_fb_nh_add(int unit, int idx, void *buf, void *info)
             }
         }
 #endif /* BCM_TRIDENT3_SUPPORT */
-        if ((entry_type == 0) || ((SOC_IS_TOMAHAWK3(unit)) && 
-                                      (entry_type == 2))) { /* L3 Unicast */
+        if ((entry_type == 0) ||
+                ((soc_feature(unit, soc_feature_nh_for_ifp_actions) ||
+                  SOC_IS_TOMAHAWK3(unit)) &&
+                 (entry_type == 2))) { /* L3 Unicast */
 #ifdef BCM_TRIUMPH2_SUPPORT
-            if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_VLAN_DISABLEf)) {
-                soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_VLAN_DISABLEf,
-                        _SHR_IS_FLAG_SET(nh_entry->flags,
-                            BCM_L3_KEEP_VLAN));
-            }
-            if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_TTL_DISABLEf)) {
-                soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_TTL_DISABLEf,
-                        _SHR_IS_FLAG_SET(nh_entry->flags,
-                            BCM_L3_KEEP_TTL));
-            }
-            if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_DA_DISABLEf)) {
-                soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_DA_DISABLEf,
-                        _SHR_IS_FLAG_SET(nh_entry->flags,
-                            BCM_L3_KEEP_DSTMAC));
-            }
-            if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_SA_DISABLEf)) {
-                soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_SA_DISABLEf,
-                        _SHR_IS_FLAG_SET(nh_entry->flags,
-                            BCM_L3_KEEP_SRCMAC));
+            if (entry_type == 2) {
+                if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_VLAN_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, IFP_ACTIONS__L3_UC_VLAN_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_VLAN));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_TTL_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, IFP_ACTIONS__L3_UC_TTL_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_TTL));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_DA_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, IFP_ACTIONS__L3_UC_DA_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_DSTMAC));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, IFP_ACTIONS__L3_UC_SA_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, IFP_ACTIONS__L3_UC_SA_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_SRCMAC));
+                }
+            } else {
+                if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_VLAN_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_VLAN_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_VLAN));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_TTL_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_TTL_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_TTL));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_DA_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_DA_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_DSTMAC));
+                }
+                if (SOC_MEM_FIELD_VALID(unit, mem, L3__L3_UC_SA_DISABLEf)) {
+                    soc_mem_field32_set(unit, mem, &eg_entry, L3__L3_UC_SA_DISABLEf,
+                            _SHR_IS_FLAG_SET(nh_entry->flags,
+                                BCM_L3_KEEP_SRCMAC));
+                }
             }
             if (SOC_MEM_FIELD_VALID(unit, mem, L3__CLASS_IDf)) {
                 soc_mem_field32_set(unit, mem, &eg_entry, L3__CLASS_IDf,
