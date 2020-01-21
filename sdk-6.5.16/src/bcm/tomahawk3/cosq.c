@@ -9344,6 +9344,8 @@ bcm_th3_cosq_port_detach(int unit, bcm_port_t port)
 {
     soc_info_t *si = &SOC_INFO(unit);
     _bcm_th3_cosq_port_info_t *port_info = NULL;
+    uint32 profile_index;
+    uint32 entry[SOC_MAX_MEM_WORDS];
 
     if (IS_CPU_PORT(unit, port) || IS_LB_PORT(unit, port) ||
         IS_MANAGEMENT_PORT(unit, port)) {
@@ -9366,6 +9368,14 @@ bcm_th3_cosq_port_detach(int unit, bcm_port_t port)
 
     /* Reset soc gport tree on port */
     BCM_IF_ERROR_RETURN(soc_tomahawk3_cosq_port_info_init(unit, port));
+
+    /* Decrease the reference of COS_MAP_PROFILE */
+    SOC_IF_ERROR_RETURN
+        (soc_mem_read(unit, COS_MAP_SELm, MEM_BLOCK_ALL, port, &entry));
+    profile_index = soc_mem_field32_get(unit, COS_MAP_SELm, &entry, SELECTf);
+    SOC_IF_ERROR_RETURN
+        (soc_profile_mem_delete(unit, _bcm_th3_cos_map_profile[unit],
+                                profile_index * 16));
 
     /* Clear cosq */
     si->port_num_cosq[port] = 0;
@@ -9420,9 +9430,11 @@ bcm_th3_cosq_port_attach(int unit, bcm_port_t port)
                          "bcm_th3_cosq_port_attach port %d\n"),
               port));
 
-    /* Increase the reference of defalt PRIO2COS_PROFILE */
-    
-    /* update PORT_LLFC_CFG as default profile might not be 0 */
+    /* Increase the reference of default COS_MAP_PROFILE */
+    BCM_IF_ERROR_RETURN
+        (soc_mem_field32_modify(unit, COS_MAP_SELm, port, SELECTf, 0));
+    BCM_IF_ERROR_RETURN
+        (soc_profile_mem_reference(unit, _bcm_th3_cos_map_profile[unit], 0, 0));
 
     /* set scheduler profile to port 0 */
     reg = MMU_PPSCH_SCHQ_MMUQ_PROFILEr;
