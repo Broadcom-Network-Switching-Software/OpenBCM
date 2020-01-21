@@ -784,6 +784,8 @@ alpm_pvt_delete_by_pvt_node(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node)
     /* Assoc-data */
     if (PVT_BKT_DEF(pvt_node) != NULL) {
         alpm_util_adata_trie_to_cfg(u, &PVT_BKT_DEF(pvt_node)->adata, &lpm_cfg);
+    } else {
+        lpm_cfg.default_miss = 1;
     }
 
     rv = alpm_pvt_delete(u, acb, &lpm_cfg);
@@ -891,6 +893,8 @@ alpm_pvt_update_by_pvt_node(int u, _alpm_cb_t *acb, _alpm_pvt_node_t *pvt_node, 
     /* Assoc-data */
     if (PVT_BKT_DEF(pvt_node) != NULL) {
         alpm_util_adata_trie_to_cfg(u, &PVT_BKT_DEF(pvt_node)->adata, &lpm_cfg);
+    } else {
+        lpm_cfg.default_miss = 1;
     }
 
     if (ACB_HAS_TCAM(acb)) {
@@ -2468,8 +2472,10 @@ alpm_bkt_split_pvt_add(int u, _alpm_cb_t *acb,
     /* Construct Assoc-data */
     if (pfx_node->bkt_ptr != NULL) {
         alpm_util_adata_trie_to_cfg(u, &pfx_node->bkt_ptr->adata, pvt_lpm_cfg);
+        pvt_lpm_cfg->default_miss = 0;
     } else {
         alpm_util_adata_zero_cfg(u, pvt_lpm_cfg);
+        pvt_lpm_cfg->default_miss = 1;
     }
     rv = alpm_pvt_insert(u, acb, pvt_lpm_cfg);
     if (BCM_SUCCESS(rv)) {
@@ -3049,6 +3055,10 @@ alpm_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt, uint8 db_type)
     pvt_cfg.defip_vrf = ALPM_VRF_ID_TO_VRF(u, vrf_id);
     pvt_cfg.defip_flags |= ALPM_IS_IPV6(ipt) ? BCM_L3_IP6 : 0;
 
+    if (ALPM_TCAM_ZONED(u)) {
+        pvt_cfg.default_miss = 1;
+    }
+
     ALPM_IEG_PRT_EXCEPT(alpm_cb_pvt_add(u, acb, vrf_id, ipt, &pvt_cfg), BCM_E_FULL);
 
     ACB_VRF_INIT_SET(u, acb, vrf_id, ipt);
@@ -3091,6 +3101,9 @@ alpm_vrf_deinit(int u, int vrf_id, int ipt)
     lpm_cfg.defip_vrf = ALPM_VRF_ID_TO_VRF(u, vrf_id);
     if (ALPM_IS_IPV6(ipt)) {
         lpm_cfg.defip_flags |= BCM_L3_IP6;
+    }
+    if (ALPM_TCAM_ZONED(u)) {
+        lpm_cfg.default_miss = 1;
     }
 
     for (i = ACB_CNT(u) - 1; i >= 0; i--) {
@@ -4217,6 +4230,8 @@ alpm_cb_path_construct(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
                                             &l2_lpm_cfg);
             } else {
                 alpm_util_adata_zero_cfg(u, &l2_lpm_cfg);
+                l2_lpm_cfg.default_miss = 1;
+
             }
             rv = alpm_cb_pvt_add(u, acb, vrf_id, ipt, &l2_lpm_cfg);
             if (BCM_FAILURE(rv)) {

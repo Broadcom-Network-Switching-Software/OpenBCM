@@ -280,6 +280,7 @@ typedef struct _bcm_defip_cfg_s {
     void          *tcam_write;      /* carry _alpm_tcam_write_t info for L1 pvt add during L2 bkt split */
     uint32        spl_key[5];
     int           spl_key_len;
+    int           default_miss;     /* Used for pivot's default_miss in ALPM_TCAM_ZONED */
     int           fast_delete_all;  /* used only in TH3 fast delete_all */
 #endif
 } _bcm_defip_cfg_t;

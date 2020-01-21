@@ -2642,7 +2642,7 @@ _conf:
     _MEM32_SET(fld_glb_rt[f], lpm_cfg->defip_vrf == BCM_L3_VRF_OVERRIDE ||
                               lpm_cfg->defip_vrf == BCM_L3_VRF_GLOBAL);
     _MEM32_SET(fld_df_ms[f], ALPM_TCAM_ZONED(unit) &&
-                             lpm_cfg->defip_ecmp_index == 0);
+                             lpm_cfg->default_miss == 1);
     _MEM32_SET(fld_dt[f], 0);
 
     pvt_node = (_alpm_pvt_node_t *)lpm_cfg->pvt_node;

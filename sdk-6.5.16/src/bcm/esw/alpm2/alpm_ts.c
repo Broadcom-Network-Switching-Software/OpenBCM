@@ -1356,13 +1356,15 @@ alpm_cb_sanity_process(int u, int vrf_id, int pkm, _alpm_cb_t *acb,
 #endif
 
     /* Pvt default route verification & Assoc_Data Sw validation */
-    if ((def_miss == FALSE) && (pfx_trie != NULL)) {
+    if (pfx_trie != NULL) {
         rv = alpm_lib_trie_find_lpm(pfx_trie, pfx, key_len,
                        (alpm_lib_trie_node_t **)&pfx_node);
         if (BCM_FAILURE(rv)) {
-            sanity->error++;
-            ALPM_ERR(("%s: Pivot idx:%d.%d BPM missing (rv=%d)\n",
-                       ALPM_TBL_NAME(pvt_tbl), idx, sub_idx, rv));
+            if (def_miss == 0) {
+                sanity->error++;
+                ALPM_ERR(("%s: Pivot idx:%d.%d BPM missing (rv=%d)\n",
+                            ALPM_TBL_NAME(pvt_tbl), idx, sub_idx, rv));
+            }
         } else {
             if (pvt_node != NULL) {
                 if (PVT_BKT_DEF(pvt_node) != pfx_node->bkt_ptr) {
@@ -1372,6 +1374,12 @@ alpm_cb_sanity_process(int u, int vrf_id, int pkm, _alpm_cb_t *acb,
                               ALPM_TBL_NAME(pvt_tbl), idx, sub_idx,
                               PVT_KEY_LEN(pvt_node), PVT_BPM_LEN(pvt_node),
                               PVT_BKT_DEF(pvt_node), pfx_node->bkt_ptr));
+                } else {
+                    if (def_miss == 1 && PVT_BKT_DEF(pvt_node)) {
+                        sanity->error++;
+                        ALPM_ERR(("%s: Pivot idx:%d.%d Default_Miss=1 but BPM route exits\n",
+                                   ALPM_TBL_NAME(pvt_tbl), idx, sub_idx));
+                    }
                 }
             }
 
@@ -1398,7 +1406,7 @@ alpm_cb_sanity_process(int u, int vrf_id, int pkm, _alpm_cb_t *acb,
             } else {
                  /* Parallel & TCAM mix mode, pivot sanity check:
                     no best match def_rte but default_miss = 0 */
-                if (ALPM_TCAM_ZONED(u)) {
+                if ((def_miss == 0) && ALPM_TCAM_ZONED(u)) {
                     sanity->error++;
                     ALPM_ERR(("%s: Pivot idx:%d.%d w/o bm_rte => "
                               "wrong def_miss:0 dest:%d\n",
