@@ -69,6 +69,20 @@
 #include <soc/tomahawk3.h>
 #endif /* BCM_TOMAHAWK3_SUPPORT */
 
+#if defined(ALPM_ENABLE)
+#include <soc/l3x.h>
+#define _ALPM_LOCK(unit) \
+    L3_LOCK(unit); \
+    _alpm_lock = 1
+#define _ALPM_UNLOCK(unit) \
+    if (_alpm_lock) { \
+        L3_UNLOCK(unit); \
+    }
+#else
+#define _ALPM_LOCK(unit)
+#define _ALPM_UNLOCK(unit)
+#endif /* ALPM_ENABLE */
+
 
 STATIC void _soc_sram_scan_thread(void *unit_vp);
 
@@ -433,6 +447,9 @@ _soc_sram_scan_thread(void *unit_vp)
     sal_thread_t thread;
     int     pipe, num_pipe;
     int     ser_flags[SOC_MAX_NUM_PIPES];
+#if defined(ALPM_ENABLE)
+    uint8 _alpm_lock = 0;
+#endif /* ALPM_ENABLE */
 
     chunk_size = soc_property_get(unit, spn_SRAM_SCAN_CHUNK_SIZE, 256);
 
@@ -508,7 +525,13 @@ _soc_sram_scan_thread(void *unit_vp)
                     if (mem == L2_ENTRY_ONLYm ||
                         mem == L2_ENTRY_ONLY_ECCm) {
                         SOC_L2X_MEM_LOCK(unit);
-                    } else {
+                    } else if (mem == L3_DEFIP_ALPM_IPV4m || mem == L3_DEFIP_ALPM_IPV4_1m ||
+                        mem == L3_DEFIP_ALPM_IPV6_64m || mem == L3_DEFIP_ALPM_IPV6_64_1m ||
+                        mem == L3_DEFIP_ALPM_IPV6_128m || mem == L3_DEFIP_PAIR_128m ||
+                        mem == L3_DEFIPm || mem == L3_DEFIP_AUX_TABLEm) {
+                       _ALPM_LOCK(unit);
+                    } else
+                    {
                         MEM_LOCK(unit, mem);
                     }
 
@@ -551,7 +574,13 @@ _soc_sram_scan_thread(void *unit_vp)
                             if (mem == L2_ENTRY_ONLYm ||
                                 mem == L2_ENTRY_ONLY_ECCm) {
                                 SOC_L2X_MEM_UNLOCK(unit);
-                            } else {
+                            } else if (mem == L3_DEFIP_ALPM_IPV4m || mem == L3_DEFIP_ALPM_IPV4_1m ||
+                                mem == L3_DEFIP_ALPM_IPV6_64m || mem == L3_DEFIP_ALPM_IPV6_64_1m ||
+                                mem == L3_DEFIP_ALPM_IPV6_128m || mem == L3_DEFIP_PAIR_128m ||
+                                mem == L3_DEFIPm || mem == L3_DEFIP_AUX_TABLEm) {
+                                _ALPM_UNLOCK(unit);
+                            } else
+                            {
                                 MEM_UNLOCK(unit, mem);
                             }
                             goto cleanup_exit;
@@ -560,7 +589,13 @@ _soc_sram_scan_thread(void *unit_vp)
                     if (mem == L2_ENTRY_ONLYm ||
                         mem == L2_ENTRY_ONLY_ECCm) {
                         SOC_L2X_MEM_UNLOCK(unit);
-                    } else {
+                    } else if (mem == L3_DEFIP_ALPM_IPV4m || mem == L3_DEFIP_ALPM_IPV4_1m ||
+                        mem == L3_DEFIP_ALPM_IPV6_64m || mem == L3_DEFIP_ALPM_IPV6_64_1m ||
+                        mem == L3_DEFIP_ALPM_IPV6_128m || mem == L3_DEFIP_PAIR_128m ||
+                        mem == L3_DEFIPm || mem == L3_DEFIP_AUX_TABLEm) {
+                        _ALPM_UNLOCK(unit);
+                    } else
+                    {
                         MEM_UNLOCK(unit, mem);
                     }
 

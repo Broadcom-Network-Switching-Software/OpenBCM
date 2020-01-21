@@ -1271,9 +1271,9 @@ soc_hx5_ser_register(int unit)
 #ifdef INCLUDE_MEM_SCAN
     if (!soc_feature(unit, soc_feature_tcam_scan_engine)) {
         /* To access Narrow view for HME stage TCAMs */
-        WRITE_IP_PARSER1_HME_STAGE_CONFIG_2r(unit, 0);
-        WRITE_IP_PARSER2_HME_STAGE_CONFIG_2r(unit, 0);
-        WRITE_IP_PARSER2_HME_STAGE_CONFIG_3r(unit, 0);
+        (void)WRITE_IP_PARSER1_HME_STAGE_CONFIG_2r(unit, 0);
+        (void)WRITE_IP_PARSER2_HME_STAGE_CONFIG_2r(unit, 0);
+        (void)WRITE_IP_PARSER2_HME_STAGE_CONFIG_3r(unit, 0);
         soc_mem_scan_ser_list_register(unit, TRUE, _soc_hx5_tcam_ser_info);
     }
 #endif
