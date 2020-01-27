@@ -6696,6 +6696,7 @@ bcmi_esw_portctrl_mac_rx_down(int unit, int nport, bcm_port_t *port)
     int i;
     bcm_port_t lport;
     portctrl_pport_t pport;
+    portmod_pfc_control_t pfc_control;
 
     for (i = 0; i < nport; i++) {
         lport = port[i];
@@ -6725,6 +6726,22 @@ bcmi_esw_portctrl_mac_rx_down(int unit, int nport, bcm_port_t *port)
             BCM_IF_ERROR_RETURN
                 (portmod_port_mac_reset_set(unit, pport, 0));
         }
+
+        /* WAR for SDK-183541/TH3-5475*/
+        if (SOC_IS_TOMAHAWK3(unit)) {
+            if (soc_feature(unit, soc_feature_priority_flow_control)) {
+                /* Toggle Force PFC XON */
+                BCM_IF_ERROR_RETURN
+                    (portmod_port_pfc_control_get(unit, pport, &pfc_control));
+                pfc_control.force_xon = 1;
+                BCM_IF_ERROR_RETURN
+                    (portmod_port_pfc_control_set(unit, pport, &pfc_control));
+                pfc_control.force_xon = 0;
+                BCM_IF_ERROR_RETURN
+                    (portmod_port_pfc_control_set(unit, pport, &pfc_control));
+            }
+        }
+
     }
     return BCM_E_NONE;
 #else /* PORTMOD_SUPPORT */
