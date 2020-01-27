@@ -270,7 +270,6 @@ latency_monitor_sbusdma_setup(int unit, int monitor_id, int pipe, uint32 *entbuf
         p_cb_data->pipe_num = pipe;
         ctrl.data = p_cb_data;
 
-        sal_strncpy(ctrl.name, latency_monitor_mem[unit][monitor_id].mem_str, sizeof(ctrl.name)-1);
         cfg.acc_type = SOC_MEM_ACC_TYPE(unit, latency_monitor_mem[unit][monitor_id].mem+pipe);
         cfg.blk = SOC_BLOCK2SCH(unit, latency_monitor_mem[unit][monitor_id].copyno);
         cfg.addr = soc_mem_addr_get(unit, latency_monitor_mem[unit][monitor_id].mem+pipe, 0,
@@ -717,9 +716,9 @@ sbusdma_read(void* up)
                                  index_min, index_max, monitor_id));
 
             LOG_DEBUG(BSL_LS_BCM_LATENCY_MONITOR,
-                 (BSL_META_U(unit, "%s reading from %s[%0d..%0d] to address 0x%08x\n"),
-                    access_type, latency_monitor_mem[unit][monitor_id].mem_str, index_max,
-                    index_min, PTR_TO_INT(entbuf)));
+                      (BSL_META_U(unit, "%s reading from %s[%0d..%0d] to address 0x%08x\n"),
+                      access_type, SOC_MEM_NAME(unit, latency_monitor_mem[unit][monitor_id].mem),
+                      index_max,index_min, PTR_TO_INT(entbuf)));
 
             for (pipe = 0; pipe < NUM_PIPE(unit); pipe++) {
                 if (!(latency_monitor_mem[unit][monitor_id].dest_pbmp_pipe_map & (1 << pipe))) {
@@ -784,7 +783,6 @@ exit:
 int
 latency_monitor_read(int unit, int monitor_id)
 {
-    char str[80];
     sal_thread_t pid;
 
     /* sbus dma read */
@@ -794,24 +792,29 @@ latency_monitor_read(int unit, int monitor_id)
         return BCM_E_NONE;
     }
 
-    pid = sal_thread_create(str, 32 * 1024 * 1024, 200,
+    pid = sal_thread_create("bcm_latency_monitor_sbusdma_read",
+                            SAL_THREAD_STKSZ,
+                            200,
                             sbusdma_read,
                             INT_TO_PTR(monitor_id << 8 | unit));
 
     LOG_DEBUG(BSL_LS_BCM_LATENCY_MONITOR,
                  (BSL_META_U(unit, "\npid_sbusdma[%0d] = %p"), monitor_id, pid));
 
-    if (pid == 0) {
+    if (pid == SAL_THREAD_ERROR) {
         LOG_ERROR(BSL_LS_BCM_LATENCY_MONITOR,
                         (BSL_META_U(unit, "Failed to create sbusdma_read thread for monitor ID:%d \n"),
                                      monitor_id));
         return BCM_E_FAIL;
     }
-    pid = sal_thread_create(str, 32 * 1024 * 1024, 200,
+
+    pid = sal_thread_create("bcm_latency_monitor_counter_accrue",
+                            SAL_THREAD_STKSZ,
+                            200,
                             counter_accrue_thread,
                             INT_TO_PTR(monitor_id << 8 | unit));
 
-    if (pid == 0) {
+    if (pid == SAL_THREAD_ERROR) {
         LOG_ERROR(BSL_LS_BCM_LATENCY_MONITOR,
                         (BSL_META_U(unit, "Failed to create counter_accrue_thread, for monitor ID:%d \n"),
                                      monitor_id));
@@ -850,22 +853,13 @@ latency_monitor_init(int unit, int monitor_id)
                                     sal_sem_create("SBUS DMA RUN Lock", sal_sem_BINARY, 1);
     }
 
-    if (parse_memory_name(unit, &latency_monitor_mem[unit][monitor_id].mem, latency_monitor_mem[unit][monitor_id].mem_str,
-                          &latency_monitor_mem[unit][monitor_id].copyno, 0) < 0) {
-        LOG_ERROR(BSL_LS_BCM_LATENCY_MONITOR,
-                 (BSL_META_U(unit, "Memory \"%s\" is invalid\n"),
-                   latency_monitor_mem[unit][monitor_id].mem_str));
-        return BCM_E_FAIL;
-    }
-
-    if (latency_monitor_mem[unit][monitor_id].copyno == COPYNO_ALL) {
-        latency_monitor_mem[unit][monitor_id].copyno = SOC_MEM_BLOCK_ANY(unit, latency_monitor_mem[unit][monitor_id].mem);
-    }
+    latency_monitor_mem[unit][monitor_id].copyno = SOC_MEM_BLOCK_ANY(unit, latency_monitor_mem[unit][monitor_id].mem);
     if (!SOC_MEM_BLOCK_VALID(unit, latency_monitor_mem[unit][monitor_id].mem, latency_monitor_mem[unit][monitor_id].copyno)) {
         LOG_ERROR(BSL_LS_BCM_LATENCY_MONITOR,
-                    (BSL_META_U(unit,
-                   "Invalid copyno %d specified in %s\n"),
-                   latency_monitor_mem[unit][monitor_id].copyno, latency_monitor_mem[unit][monitor_id].mem_str));
+                  (BSL_META_U(unit,
+                  "Invalid copyno %d specified in %s\n"),
+                  latency_monitor_mem[unit][monitor_id].copyno,
+                  SOC_MEM_NAME(unit, latency_monitor_mem[unit][monitor_id].mem)));
         return BCM_E_FAIL;
     }
 
@@ -954,16 +948,16 @@ bcm_tomahawk3_latency_monitor_config_set(
         return BCM_E_PARAM;
     }
 
+    if (!config) {
+        return BCM_E_PARAM;
+    }
+
     if ((!wb_post_init) &&
         (latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_RUNNING)) {
         if (config->mode == bcmLatencyMonitorTimeSeriesMode) {
             latency_monitor_mem[unit][monitor_id].cb = config->cb;
         }
         return BCM_E_BUSY;
-    }
-
-    if (!config) {
-        return BCM_E_FAIL;
     }
 
     if ((config->mode != bcmLatencyMonitorAccrueMode) &&
@@ -1170,24 +1164,20 @@ bcm_tomahawk3_latency_monitor_config_set(
     latency_monitor_mem[unit][monitor_id].stat_counter_id = stat_counter_id;
     latency_monitor_mem[unit][monitor_id].status = LATENCY_MONITOR_STATE_IDLE;
 
-    latency_monitor_mem[unit][monitor_id].index_max = latency_monitor_mem[unit][monitor_id].index_min + latency_monitor_mem[unit][monitor_id].count;
     latency_monitor_mem[unit][monitor_id].count = COUNTERS_PER_STEP_SET * TIME_STEP_SET_COUNT;
+    latency_monitor_mem[unit][monitor_id].index_max = latency_monitor_mem[unit][monitor_id].index_min + latency_monitor_mem[unit][monitor_id].count;
     switch (pool_number) {
     case 0:
         latency_monitor_mem[unit][monitor_id].mem = EGR_FLEX_CTR_COUNTER_TABLE_0_PIPE0m;
-        latency_monitor_mem[unit][monitor_id].mem_str = sal_strdup("EGR_FLEX_CTR_COUNTER_TABLE_0_PIPE0");
         break;
     case 1:
         latency_monitor_mem[unit][monitor_id].mem = EGR_FLEX_CTR_COUNTER_TABLE_1_PIPE0m;
-        latency_monitor_mem[unit][monitor_id].mem_str = sal_strdup("EGR_FLEX_CTR_COUNTER_TABLE_1_PIPE0");
         break;
     case 2:
         latency_monitor_mem[unit][monitor_id].mem = EGR_FLEX_CTR_COUNTER_TABLE_2_PIPE0m;
-        latency_monitor_mem[unit][monitor_id].mem_str = sal_strdup("EGR_FLEX_CTR_COUNTER_TABLE_2_PIPE0");
         break;
     case 3:
         latency_monitor_mem[unit][monitor_id].mem = EGR_FLEX_CTR_COUNTER_TABLE_3_PIPE0m;
-        latency_monitor_mem[unit][monitor_id].mem_str = sal_strdup("EGR_FLEX_CTR_COUNTER_TABLE_3_PIPE0");
         break;
     default:
         return BCM_E_BADID;
@@ -1545,20 +1535,21 @@ bcm_tomahawk3_latency_monitor_enable(
     }
 
     if (!wb_post_init) {
-        if ((enable) && (latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_RUNNING))
-            return BCM_E_NONE;
-
-        if ((!enable) && (latency_monitor_mem[unit][monitor_id].status != LATENCY_MONITOR_STATE_RUNNING))
-            return BCM_E_NONE;
-
-        if ((enable) &&
-                 ((latency_monitor_mem[unit][monitor_id].status != LATENCY_MONITOR_STATE_IDLE) &&
-                  (latency_monitor_mem[unit][monitor_id].status != LATENCY_MONITOR_STATE_ERROR)))
+        /* If monitor is in cleanup/error state, return failure. */
+        if ((latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_CLEANUP) ||
+            (latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_ERROR)) {
             return BCM_E_FAIL;
+        }
 
-        if ((!enable) &&
-                 (latency_monitor_mem[unit][monitor_id].status != LATENCY_MONITOR_STATE_RUNNING))
-            return BCM_E_FAIL;
+        /* If monitor is already enabled and running. */
+        if ((enable) &&(latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_RUNNING)) {
+            return BCM_E_NONE;
+        }
+
+        /* If monitor is already disabled and idle. */
+        if ((!enable) && (latency_monitor_mem[unit][monitor_id].status == LATENCY_MONITOR_STATE_IDLE)) {
+            return BCM_E_NONE;
+        }
     }
 
     if (enable)
@@ -2113,6 +2104,7 @@ _bcm_th3_latency_monitor_scache_v0_global_sync(int unit, uint8 **scache)
 {
     int i;
     int j;
+    uint8 tmp = 0;
 
     /* Reserve first 32 bits */
     LATENCY_MONITOR_SCACHE_WRITE(*scache, 0, uint32);
@@ -2124,7 +2116,12 @@ _bcm_th3_latency_monitor_scache_v0_global_sync(int unit, uint8 **scache)
 
     /* Store Monitor Mode */
     for (i=0; i<LATENCY_MONITOR_MAX_COUNT; i++) {
-        LATENCY_MONITOR_SCACHE_WRITE(*scache, latency_monitor_mem[unit][i].monitor_mode, uint8);
+        if (latency_monitor_mem[unit][i].monitor_mode == bcmLatencyMonitorTimeSeriesMode) {
+            tmp = 1;
+        } else {
+            tmp = 0;
+        }
+        LATENCY_MONITOR_SCACHE_WRITE(*scache, tmp, uint8);
     }
 
     /* Store SW ring buffer size (used in Timeseries mode */

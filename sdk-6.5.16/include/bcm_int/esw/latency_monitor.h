@@ -68,7 +68,6 @@ typedef struct latency_monitor_cosq_info_s {
 }latency_monitor_cosq_info_t;
 
 typedef struct latency_monitor_mem_s {
-    char           *mem_str;
     soc_mem_t       mem;
     int             init_done;
     int             copyno;
