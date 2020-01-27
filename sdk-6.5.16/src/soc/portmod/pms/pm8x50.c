@@ -5979,8 +5979,12 @@ int pm8x50_port_autoneg_set(int unit, int port, pm_info_t pm_info,
             PHYMOD_AN_F_FEC_RS272_CLR_SET(&an_control);
         }
     }
-    /*before enable serdes AN bit, need to update mac port mode */
+    /*
+     * Before enabling serdes AN bit, need to disable the port in PCS
+     * and update mac port mode.
+     */
     if (an_control.enable) {
+        _SOC_IF_ERR_EXIT(phymod_phy_pcs_enable_set(&phy_access, 0));
         /* call port level port mode update */
         _SOC_IF_ERR_EXIT(_pm8x50_pm_port_mode_update(unit, port, pm_info, port_index, 1));
     }
