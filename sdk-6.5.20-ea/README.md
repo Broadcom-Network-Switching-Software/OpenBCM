@@ -2,7 +2,7 @@
 
 Overview
 ========
-This directory contains a PREVIEW (?Early Access?) of OpenBCM Broadcom Switch Software Development Kit API examples for programming Broadcom network switch devices based on DNX architecture.
+This directory contains a PREVIEW ("Early Access") of OpenBCM Broadcom Switch Software Development Kit API examples for programming Broadcom network switch devices based on DNX architecture.
 
 
 Scope
