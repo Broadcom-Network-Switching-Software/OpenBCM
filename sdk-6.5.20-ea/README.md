@@ -16,5 +16,5 @@ The content of this directory is applicable only to the following Broadcom devic
 
 Lifecycle and Support
 =====================
-The content of this directory will be deprecated and superseded once 6.5.20 version of OpenBCM is posted. This early access release is provided ?as-is? with no claim of accuracy, no commitment to support and is subject to change without notice.
+The content of this directory will be deprecated and superseded once 6.5.20 version of OpenBCM is posted. This early access release is provided "as-is" with no claim of accuracy, no commitment to support and is subject to change without notice.
 
