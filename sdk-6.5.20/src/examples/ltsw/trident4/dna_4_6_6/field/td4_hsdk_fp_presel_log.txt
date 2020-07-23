@@ -1,0 +1,1623 @@
+~~~~~~~~~~~~~~ FP Presel (Without) for VFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c YES 0 1
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 0 (0x0)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageLookup (14)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageLookup (71)
+int opt_IsVfp = 1 (0x1)
+int opt_IsIfp = 0 (0x0)
+int opt_IsEfp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing group config create...
+Doing entry create to group 0x02000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x02000001. StatID: 1..
+Doing flexctr stat attach to entry 0x02000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending SMAC<DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x6
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	DROP_CODE_15_0                  :0x1717
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	VFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending SMAC>DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000001CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x6
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	DROP_CODE_15_0                  :0x1717
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	VFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_VFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_VFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_VFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_VFP_PRESEL_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_VFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_VFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_VFP_PDD_TEMPLATE_INDEX=1
+    DT_VFP_SBR_TEMPLATE_INDEX=1
+    ING_OBJ_BUS_SYSTEM_SOURCE=0xffff(65535)
+    DT_VFP_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_VFP_RULE_TEMPLATE:
+  traverse
+    ING_OBJ_BUS_SYSTEM_SOURCE_MASK=0xffff(65535)
+    ING_OBJ_BUS_SYSTEM_SOURCE=1
+    VFP_RULE_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_VFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=8
+    DT_VFP_ACTION_TEMPLATE_INDEX=1
+    DT_VFP_RULE_TEMPLATE_INDEX=1
+    DT_VFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_VFP_ENTRY_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_VFP_ACTION_TEMPLATE:
+  traverse
+    VFP_SCRATCH_BUS_COPY_TO_CPU_ACTION=1
+    VFP_SCRATCH_BUS_DROP_ACTION=1
+    VFP_ACTION_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> init all
+BCM.0> 
+~~~~~~~~~~~~~~ FP Presel (Without) for IFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c YES 0 2
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 0 (0x0)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageIngress (5)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageIngress (68)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 1 (0x1)
+int opt_IsEfp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing group config create...
+Doing entry create to group 0x00000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x00000001. StatID: 1..
+Doing flexctr stat attach to entry 0x00000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending SMAC<DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xcc
+	DROP_CODE_15_0                  :0x1818
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_6
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending SMAC>DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000001CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xcc
+	DROP_CODE_15_0                  :0x1818
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_6
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_IFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_IFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_IFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_IFP_PRESEL_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_IFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_IFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_IFP_SBR_TEMPLATE_INDEX=3
+    DT_IFP_PDD_TEMPLATE_INDEX=1
+    ING_OBJ_BUS_SYSTEM_SOURCE=0xffff(65535)
+    DT_IFP_GRP_TEMPLATE_INDEX=1
+
+    ENTRY_PRIORITY=4
+    DT_IFP_SBR_TEMPLATE_INDEX=1
+    DT_IFP_PDD_TEMPLATE_INDEX=0x3c(60)
+    ING_OBJ_BUS_INGRESS_PP_PORT=0xff(255)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3c(60)
+
+    ENTRY_PRIORITY=3
+    DT_IFP_SBR_TEMPLATE_INDEX=2
+    DT_IFP_PDD_TEMPLATE_INDEX=0x3d(61)
+    ING_OBJ_BUS_INGRESS_PP_PORT=0xff(255)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_IFP_RULE_TEMPLATE:
+  traverse
+    ING_OBJ_BUS_SYSTEM_SOURCE_MASK=0xffff(65535)
+    ING_OBJ_BUS_SYSTEM_SOURCE=1
+    IFP_RULE_TEMPLATE_INDEX=1
+
+    ING_OBJ_BUS_INGRESS_PP_PORT_MASK=0xff(255)
+    ING_OBJ_BUS_INGRESS_PP_PORT=1
+    IFP_RULE_TEMPLATE_INDEX=0x3c(60)
+
+    ING_OBJ_BUS_INGRESS_PP_PORT_MASK=0xff(255)
+    ING_OBJ_BUS_INGRESS_PP_PORT=4
+    IFP_RULE_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_IFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=8
+    DT_IFP_ACTION_TEMPLATE_INDEX=1
+    DT_IFP_RULE_TEMPLATE_INDEX=1
+    DT_IFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_IFP_ENTRY_INDEX=1
+
+    FLEX_CTR_ACTION=6
+    DT_IFP_ACTION_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_RULE_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_ENTRY_INDEX=0x3c(60)
+
+    FLEX_CTR_ACTION=7
+    DT_IFP_ACTION_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_RULE_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_ENTRY_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_IFP_ACTION_TEMPLATE:
+  traverse
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=0xc(12)
+    ING_CMD_BUS_IFP_DROP_ACTION=1
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=0xc(12)
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=1
+
+    ING_OBJ_BUS_IFP_OPAQUE_OBJ0=0xb(11)
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=0xa(10)
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=0xa(10)
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=0x3c(60)
+
+    ING_OBJ_BUS_IFP_OPAQUE_OBJ0=0xc(12)
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=5
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=5
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> init all
+BCM.0> 
+~~~~~~~~~~~~~~ FP Presel (Without) for EFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c YES 0 3
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 0 (0x0)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageEgress (6)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageEgress (72)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 0 (0x0)
+int opt_IsEfp = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing group config create...
+Doing entry create to group 0x01000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x01000001. StatID: 1..
+Doing flexctr stat attach to entry 0x01000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending IP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x0000011C}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending Non IP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC81000064FFFFFFFF00500000000040115F3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: ffff ffff 0050 0000 0000 4011 5f3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0xa22(2594)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	SYSTEM_OPCODE_3_0               :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 ff ff ff ff 00 50 00 00 00 00 40 11 5f 3c 10 10 10 11 20 20 20 21 11 11 22 22 00 36 c6 b0 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000238}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_EFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_EFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_EFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_EFP_PRESEL_TEMPLATE:
+  traverse
+    Entry not found (error code -7)
+B_CM.0> bsh -c "lt DT_EFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_EFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_EFP_PDD_TEMPLATE_INDEX=1
+    DT_EFP_SBR_TEMPLATE_INDEX=1
+    EGR_OBJ_BUS_SYS_SOURCE=0xffff(65535)
+    DT_EFP_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_EFP_RULE_TEMPLATE:
+  traverse
+    EGR_OBJ_BUS_SYS_SOURCE_MASK=0xffff(65535)
+    EGR_OBJ_BUS_SYS_SOURCE=1
+    EFP_RULE_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_EFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=2
+    DT_EFP_ACTION_TEMPLATE_INDEX=1
+    DT_EFP_RULE_TEMPLATE_INDEX=1
+    DT_EFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_EFP_ENTRY_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_EFP_ACTION_TEMPLATE:
+  traverse
+    EGR_CMD_BUS_EFP_DROP_TRACE_POLICY=1
+    EFP_ACTION_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> init all
+BCM.0> 
+~~~~~~~~~~~~~~ FP Presel (With) for VFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c YES 1 1
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 1 (0x1)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageLookup (14)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageLookup (71)
+int opt_IsVfp = 1 (0x1)
+int opt_IsIfp = 0 (0x0)
+int opt_IsEfp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing presel group config create...
+Doing presel config create...
+Doing presel Qualify1. preselid=0x02000001...
+Doing group config create...
+Doing entry create to group 0x02000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x02000001. StatID: 1..
+Doing flexctr stat attach to entry 0x02000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending SMAC<DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x6
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	DROP_CODE_15_0                  :0x1717
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	VFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending SMAC>DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000001CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[3]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[3]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x4(4)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	MULTICAST                       :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x4
+	VFI_15_0                        :0x1
+	INGRESS_PP_PORT_7_0             :0x4
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x3
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0x55
+	DROP_CODE_15_0                  :0x909
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_0
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_4
+	MATCHED_RULE_BIT_6
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_VFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_VFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    ING_CMD_BUS_FLEX_HVE_IPARSER1_0=0xf(15)
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_3=0xf(15)
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_2=0xf(15)
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_1=0xf(15)
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_0=0xf(15)
+    DT_VFP_PRESEL_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_VFP_PRESEL_TEMPLATE:
+  traverse
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_1_MASK=2
+    ING_CMD_BUS_FIXED_HVE_IPARSER1_1=2
+    VFP_PRESEL_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_VFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_VFP_PDD_TEMPLATE_INDEX=1
+    DT_VFP_PRESEL_TEMPLATE_INDEX[0]=1
+    DT_VFP_SBR_TEMPLATE_INDEX=1
+    DT_VFP_PRESEL_GRP_TEMPLATE_INDEX=1
+    NUM_DT_VFP_PRESEL_TEMPLATE_INDEX=1
+    ING_OBJ_BUS_SYSTEM_SOURCE=0xffff(65535)
+    DT_VFP_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_VFP_RULE_TEMPLATE:
+  traverse
+    ING_OBJ_BUS_SYSTEM_SOURCE_MASK=0xffff(65535)
+    ING_OBJ_BUS_SYSTEM_SOURCE=1
+    VFP_RULE_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_VFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=8
+    DT_VFP_ACTION_TEMPLATE_INDEX=1
+    DT_VFP_RULE_TEMPLATE_INDEX=1
+    DT_VFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_VFP_ENTRY_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_VFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_VFP_ACTION_TEMPLATE:
+  traverse
+    VFP_SCRATCH_BUS_COPY_TO_CPU_ACTION=1
+    VFP_SCRATCH_BUS_DROP_ACTION=1
+    VFP_ACTION_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> init all
+BCM.0> 
+~~~~~~~~~~~~~~ FP Presel (With) for IFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c.c YES 1 2
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 1 (0x1)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageIngress (5)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageIngress (68)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 1 (0x1)
+int opt_IsEfp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing presel group config create...
+Doing presel config create...
+Doing presel Qualify1. preselid=0x00000001...
+Doing group config create...
+Doing entry create to group 0x00000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x00000001. StatID: 1..
+Doing flexctr stat attach to entry 0x00000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending SMAC<DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xcc
+	DROP_CODE_15_0                  :0x1818
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_6
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending SMAC>DMAC packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000001CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {0000000000dd} {0000000001cc} 8100 0064
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[3]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[3]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x4(4)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	MULTICAST                       :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x4
+	VFI_15_0                        :0x1
+	INGRESS_PP_PORT_7_0             :0x4
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x3
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0x55
+	DROP_CODE_15_0                  :0x909
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_0
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_4
+	MATCHED_RULE_BIT_6
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:01:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_IFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_IFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    ING_CMD_BUS_FIXED_HVE_RESULT_SET_1=0xf(15)
+    ING_CMD_BUS_FIXED_HVE_RESULT_SET_0=0xf(15)
+    DT_IFP_PRESEL_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_IFP_PRESEL_TEMPLATE:
+  traverse
+    ING_CMD_BUS_FIXED_HVE_RESULT_SET_1_MASK=2
+    ING_CMD_BUS_FIXED_HVE_RESULT_SET_1=2
+    IFP_PRESEL_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_IFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_IFP_PRESEL_TEMPLATE_INDEX[0]=1
+    NUM_DT_IFP_PRESEL_TEMPLATE_INDEX=1
+    DT_IFP_PRESEL_GRP_TEMPLATE_INDEX=1
+    DT_IFP_SBR_TEMPLATE_INDEX=3
+    DT_IFP_PDD_TEMPLATE_INDEX=1
+    ING_OBJ_BUS_SYSTEM_SOURCE=0xffff(65535)
+    DT_IFP_GRP_TEMPLATE_INDEX=1
+
+    ENTRY_PRIORITY=4
+    DT_IFP_SBR_TEMPLATE_INDEX=1
+    DT_IFP_PDD_TEMPLATE_INDEX=0x3c(60)
+    ING_OBJ_BUS_INGRESS_PP_PORT=0xff(255)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3c(60)
+
+    ENTRY_PRIORITY=3
+    DT_IFP_SBR_TEMPLATE_INDEX=2
+    DT_IFP_PDD_TEMPLATE_INDEX=0x3d(61)
+    ING_OBJ_BUS_INGRESS_PP_PORT=0xff(255)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_IFP_RULE_TEMPLATE:
+  traverse
+    ING_OBJ_BUS_SYSTEM_SOURCE_MASK=0xffff(65535)
+    ING_OBJ_BUS_SYSTEM_SOURCE=1
+    IFP_RULE_TEMPLATE_INDEX=1
+
+    ING_OBJ_BUS_INGRESS_PP_PORT_MASK=0xff(255)
+    ING_OBJ_BUS_INGRESS_PP_PORT=1
+    IFP_RULE_TEMPLATE_INDEX=0x3c(60)
+
+    ING_OBJ_BUS_INGRESS_PP_PORT_MASK=0xff(255)
+    ING_OBJ_BUS_INGRESS_PP_PORT=4
+    IFP_RULE_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_IFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=8
+    DT_IFP_ACTION_TEMPLATE_INDEX=1
+    DT_IFP_RULE_TEMPLATE_INDEX=1
+    DT_IFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_IFP_ENTRY_INDEX=1
+
+    FLEX_CTR_ACTION=6
+    DT_IFP_ACTION_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_RULE_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3c(60)
+    DT_IFP_ENTRY_INDEX=0x3c(60)
+
+    FLEX_CTR_ACTION=7
+    DT_IFP_ACTION_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_RULE_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_GRP_TEMPLATE_INDEX=0x3d(61)
+    DT_IFP_ENTRY_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_IFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_IFP_ACTION_TEMPLATE:
+  traverse
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=0xc(12)
+    ING_CMD_BUS_IFP_DROP_ACTION=1
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=0xc(12)
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=1
+
+    ING_OBJ_BUS_IFP_OPAQUE_OBJ0=0xb(11)
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=0xa(10)
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=0xa(10)
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=0x3c(60)
+
+    ING_OBJ_BUS_IFP_OPAQUE_OBJ0=0xc(12)
+    ING_CMD_BUS_MATCHED_RULE_UPPER_4BITS=5
+    ING_CMD_BUS_MATCHED_RULE_LOWER_4BITS=5
+    ING_CMD_BUS_IFP_COPY_TO_CPU_ACTION=1
+    IFP_ACTION_TEMPLATE_INDEX=0x3d(61)
+  3 entries traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+t char *auto_execute = (ARGC == 1) ? ARGV[0] : "YES";
+  ^^^^ syntax error, unexpected CHAR, expecting ',' or ';' [892]
+BCM.0> 
+BCM.0> init all
+BCM.0> 
+~~~~~~~~~~~~~~ FP Presel (With) for EFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/fp_presel.c YES 1 3
+int ARGC = 3 (0x3)
+int opt_TestWithPresel = 1 (0x1)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageEgress (6)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageEgress (72)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 0 (0x0)
+int opt_IsEfp = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing presel group config create...
+Doing presel config create...
+Doing presel Qualify1. preselid=0x01000001...
+Doing group config create...
+Doing entry create to group 0x01000001...
+Doing SrcPort qualify...
+Doing actions add...
+Doing flexctr create to group 0x01000001. StatID: 1..
+Doing flexctr stat attach to entry 0x01000001...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191024 (Thu Oct 24 15:55:00 2019)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+
+
+##########  Sending IP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0x40
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000006A}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x0000011C}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending Non IP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC81000064FFFFFFFF00500000000040115F3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: ffff ffff 0050 0000 0000 4011 5f3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE                   :0x1(1)
+	PKT_LENGTH                      :0x6a(106)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0xa22(2594)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	L2_OIF_10_0                     :0x4
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	SYSTEM_OPCODE_3_0               :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xaa
+	SYSTEM_SOURCE_15_0              :0x1
+	SYSTEM_DESTINATION_15_0         :0x4
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_1
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_5
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 ff ff ff ff 00 50 00 00 00 00 40 11 5f 3c 10 10 10 11 20 20 20 21 11 11 22 22 00 36 c6 b0 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+Counter for ing:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x000000D4}
+    }
+}
+Counter for egr:
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000238}
+    }
+}
+--------------------------
+#####################################################
+
+B_CM.0> bsh -c "lt DT_EFP_PRESEL_GRP_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_EFP_PRESEL_GRP_TEMPLATE:
+  traverse
+    INGRESS_PKT_OUTER_L3_L4_HDR_GRE_SEQ=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_GRE_KEY=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS_ACH=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_BFD=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_IPV6=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_GRE=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_ICMP=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_IPV4=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS6=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS1=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_UDP=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_VXLAN=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_GRE_CHKSUM=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L4=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_P_1588=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_GPE=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS0=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS2=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS3=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MAC_IN_MAC=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_ARP=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_IFA_METADATA=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_IGMP=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_TCP_FIRST_4BYTES=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS5=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_MPLS4=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L3=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_RARP=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_GRE_ROUT=1
+    DT_EFP_PRESEL_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_PRESEL_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_EFP_PRESEL_TEMPLATE:
+  traverse
+    INGRESS_PKT_OUTER_L3_L4_HDR_UDP_MASK=1
+    INGRESS_PKT_OUTER_L3_L4_HDR_UDP=1
+    EFP_PRESEL_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_GRP_TEMPLATE attr=filter_dflt traverse -l"
+Table DT_EFP_GRP_TEMPLATE:
+  traverse
+    ENTRY_PRIORITY=0x40(64)
+    DT_EFP_PDD_TEMPLATE_INDEX=1
+    DT_EFP_PRESEL_GRP_TEMPLATE_INDEX=1
+    DT_EFP_SBR_TEMPLATE_INDEX=1
+    NUM_DT_EFP_PRESEL_TEMPLATE_INDEX=1
+    DT_EFP_PRESEL_TEMPLATE_INDEX[0]=1
+    EGR_OBJ_BUS_SYS_SOURCE=0xffff(65535)
+    DT_EFP_GRP_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_RULE_TEMPLATE  attr=filter_dflt traverse -l"
+Table DT_EFP_RULE_TEMPLATE:
+  traverse
+    EGR_OBJ_BUS_SYS_SOURCE_MASK=0xffff(65535)
+    EGR_OBJ_BUS_SYS_SOURCE=1
+    EFP_RULE_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_ENTRY attr=filter_dflt  traverse -l"
+Table DT_EFP_ENTRY:
+  traverse
+    FLEX_CTR_ACTION=2
+    DT_EFP_ACTION_TEMPLATE_INDEX=1
+    DT_EFP_RULE_TEMPLATE_INDEX=1
+    DT_EFP_GRP_TEMPLATE_INDEX=1
+    ENTRY_PRIORITY=0x64(100)
+    DT_EFP_ENTRY_INDEX=1
+  1 entry traversed for lookup operation.
+B_CM.0> bsh -c "lt DT_EFP_ACTION_TEMPLATE attr=filter_dflt  traverse -l"
+Table DT_EFP_ACTION_TEMPLATE:
+  traverse
+    EGR_CMD_BUS_EFP_DROP_TRACE_POLICY=1
+    EFP_ACTION_TEMPLATE_INDEX=1
+  1 entry traversed for lookup operation.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

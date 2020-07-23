@@ -1,0 +1,72 @@
+BCM.0> c int_ifa_timestamp_flow.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 1 (0x1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+[New Thread 0x7ffff7f9f700 (LWP 17485)]
+tx 1 pbm=1 data=000000AAAAAA000000BBBBBB8100000B12341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234123412341234;sleep 5
+Packet from data=<>, length=74
+Sleeping for 5 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000aaaaaa} {000000bbbbbb} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 1234 1234 1234 1234 1234 1234 1234 1234 
+[bcmPWN.0]Packet[1]: data[0020]: 1234 1234 1234 1234 1234 1234 1234 1234 
+[bcmPWN.0]Packet[1]: data[0030]: 1234 1234 1234 1234 1234 1234 1234 1234 
+[bcmPWN.0]Packet[1]: data[0040]: 1234 1234 1234 1234 1234 148f 4ffb 0000 
+[bcmPWN.0]Packet[1]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPWN.0]Packet[1]: data[0060]: 0000 5000 0001 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x6a
+        SRC_PORT_NUM=2
+        OUTER_VID=0xc
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_OTAG_ACTION=1
+        REGEN_CRC=1
+[RX reasons]
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:aa:aa:aa> src<00:00:00:bb:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x000c> DCA - Multicast
+XLMIB_TBYT.cd0                        :                    78                 +78
+XLMIB_RBYT.cd0                        :                    78                 +78
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+RUC_64.cd0                            :                     1                  +1
+XLMIB_TBYT.cd1                        :                   102                +102
+XLMIB_RBYT.cd1                        :                   102                +102
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+XLMIB_RFLR.cd1                        :                     1                  +1
+RUC_64.cd1                            :                     1                  +1

@@ -1,0 +1,292 @@
+# $Id: th3_sanity.soc, 2017/11/21 Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Tomahawk3 Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+# Port config assumes few 10G XE ports (including mgmt), 
+# few 400G CD ports.
+# By default use config: $SDK/rc/config_th3_32x400.bcm
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if !$?BCM56984_B0 \
+    "local dev 1"
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init soc
+if $?parity_enable 'local parity_old_state $parity_enable'
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+init soc
+init misc
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running CPU Benchmarks ..."
+tr 21
+$done
+
+#Memory tests
+set rct=false
+counter off
+l2mode off
+linkscan off
+memscan off
+config add parity_enable=0
+# Usage: BCM.0>th3_sanity w x y z
+# (w,x,y,z can be 50,51,52,71) and in any combination
+# By default ie. if no arguments provided, only TR 50, 52,71 are run
+echo "Running memory tests ..."
+if !"expr $1+0 == 50" || !"expr $2+0 == 50" || !"expr $3+0 == 50" || !"expr $4+0 == 50" \
+    'init soc;init misc;' \
+    'rcload tr50_bcm56980_a0.soc'
+if !"expr $1+0 == 51" || !"expr $2+0 == 51" || !"expr $3+0 == 51" || !"expr $4+0 == 51" \
+    'init soc;init misc;' \
+    'rcload tr51_bcm56980_a0.soc'
+if !"expr $1+0 == 52" || !"expr $2+0 == 52" || !"expr $3+0 == 52" || !"expr $4+0 == 52" \
+    'init soc;init misc;' \
+    'rcload tr52_bcm56980_a0.soc'
+if !"expr $1+0 == 71" || !"expr $2+0 == 71" || !"expr $3+0 == 71" || !"expr $4+0 == 71" \
+    'init soc;init misc;' \
+    'rcload tr71_bcm56980_a0.soc'
+if !"expr $1+0 == 0" && !"expr $2+0 == 0" && !"expr $3+0 == 0" && !"expr $4+0 == 0" \
+    'init soc;init misc;' \
+    'rcload tr50_bcm56980_a0.soc' \
+    'init soc;init misc;' \
+    'rcload tr52_bcm56980_a0.soc' \
+    'init soc;init misc;' \
+    'rcload tr71_bcm56980_a0.soc'
+$done
+
+if $?parity_old_state 'config add parity_enable=$parity_old_state' \
+else 'config delete parity_enable'
+
+# Re-initialize to clean up of various read/wrires to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#Hashing tests - TBD
+#tr 55
+
+#echo "Running MDIO Linkscan test" - TBD
+#tr 60
+#$done
+
+echo "Testing CPU DMA loopback ..."
+tr 17
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Reload ..."
+#tr 22
+#$done
+
+#echo "Testing CPU DMA, Scatter/Gather Simple ..."
+#tr 23
+#$done
+
+#echo "Testing CPU DMA, Scatter/Gather Random ..."
+#tr 24
+#$done
+
+#MAC Loopback
+echo "Testing MAC Loopback - 400 Gb/s all CD ports"
+if $?dev \
+    'tr 18 PortBitMap=cd Speed=400G'
+
+if !$?dev \
+    'tr 18 PortBitMap=ce Speed=100G'
+$done
+
+#PHY Loopback
+echo "Testing PHY Loopback - 400 Gb/s all CD ports"
+if $?dev \
+    'tr 19 PortBitMap=cd Speed=400G'
+
+if !$?dev \
+    'tr 19 PortBitMap=ce Speed=100G'
+$done
+
+echo "Running MAC loopback V2 on all ports ..."
+if $?dev \
+    'tr 48 PortBitMap=cd'
+
+if !$?dev \
+    'tr 48 PortBitMap=ce'
+$done
+
+echo "Running PHY loopback V2 on all ports ..."
+if $?dev \
+    'tr 49 PortBitMap=cd'
+
+if !$?dev \
+    'tr 49 PortBitMap=ce'
+$done
+
+#Internal snake Loopback
+echo "Running internal snake on all CD ports, MAC loopback ..."
+if $?dev \
+    'tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=cd'
+
+if !$?dev \
+    'tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=ce'
+$done
+
+echo "Running internal snake on all CD ports, PHY loopback ..."
+if $?dev \
+    'tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=cd'
+
+if !$?dev \
+    'tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=ce'
+$done
+
+#Traffic Test
+echo "Running Traffic Test in MAC mode on CD ports..."
+if $?dev \
+    'tr 72 RunMode=MAC PortBitMap=cd'
+
+if !$?dev \
+    'tr 72 RunMode=MAC PortBitMap=ce'
+$done
+
+echo "Running Traffic Test in PHY mode on Cd ports..."
+if $?dev \
+    'tr 72 RunMode=PHY PortBitMap=cd'
+
+if !$?dev \
+    'tr 72 RunMode=PHY PortBitMap=ce'
+$done
+
+config add parity_enable=1
+config add parity_correction=1
+config add mem_cache_enable=1
+rc
+
+echo "Running Software BUS BUFFER Error Recovery Test ..."
+linkscan off
+tr 143
+$done
+
+echo "Running Software Error Recovery Test ..."
+linkscan off
+tr 144 testType=1stHalf
+$done
+
+tr 144 testType=2ndHalf
+$done
+
+config add parity_enable=0;
+config add parity_correction=0
+config add mem_cache_enable=0
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xe2-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+#
+# tr 72 rm=external pbm=xe0,xe4 an=f sp=10g
+# tr 72 rm=external pbm=xe1,xe5 an=f sp=10g
+# tr 72 rm=external pbm=xe2,xe6 an=f sp=10g
+# tr 72 rm=external pbm=xe3,xe7 an=f sp=10g
+# tr 72 rm=external pbm=xe8,xe12 an=f sp=10g
+# tr 72 rm=external pbm=xe9,xe13 an=f sp=10g
+# tr 72 rm=external pbm=xe10,xe14 an=f sp=10g
+# tr 72 rm=external pbm=xe11,xe15 an=f sp=10g
+# ...
+# tr 72 rm=external pbm=xe56,xe60 an=f sp=10g
+# tr 72 rm=external pbm=xe57,xe61 an=f sp=10g
+# tr 72 rm=external pbm=xe58,xe62 an=f sp=10g
+# tr 72 rm=external pbm=xe59,xe63 an=f sp=10g
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xem-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+# echo "Running external loopback ..."
+# tr 20 tpbm=xe0-xe3 di=4 an=f s=10g
+# tr 20 tpbm=xe8-xe11 di=4 an=f s=10g
+# tr 20 tpbm=xe16-xe19 di=4 an=f s=10g
+# tr 20 tpbm=xe24-xe27 di=4 an=f s=10g
+# tr 20 tpbm=xe32-xe35 di=4 an=f s=10g
+# tr 20 tpbm=xe40-xe43 di=4 an=f s=10g
+# tr 20 tpbm=xe48-xe51 di=4 an=f s=10g
+# tr 20 tpbm=xe56-xe59 di=4 an=f s=10g
+# $done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"
+

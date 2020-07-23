@@ -1,0 +1,12 @@
+config delete ucode_port_1.BCM8848X
+config delete ucode_port_5.BCM8848X
+config delete ucode_port_6.BCM8848X
+config delete ucode_port_7.BCM8848X
+config delete ucode_port_17.BCM8848X
+
+config add ucode_port_1.BCM8848X=CGE3:core_0.1
+config add ucode_port_17.BCM8848X=CGE6:core_0.17
+
+config add ucode_port_5.BCM8848X=ILKN0.0:core_0.5
+config add ucode_port_6.BCM8848X=ILKN0.1:core_0.6
+config add ilkn_lanes_0.BCM8848X=8-11

@@ -1,0 +1,101 @@
+# $Id: hr3_led.soc,v 1.0 2015/07/01 06:10:38 rihuang Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script for controling the LED on HR3 SVK/REF board
+#
+
+# Enable LED matrix mode (RDB_Reg 0x85f) for PHY54292
+if  $?bcm956160k \
+    "phy raw 0x1 0x17 0xf7e; \
+     phy raw 0x1 0x15 0x0000; \
+     phy raw 0x1 0x1e 0x85f; \
+     phy raw 0x1 0x1f 0x23; \
+     phy raw 0x1 0x1e 0x87; \
+     phy raw 0x1 0x1f 0x8000; \
+     phy raw 0x13 0x17 0xf7e; \
+     phy raw 0x13 0x15 0x0000; \
+     phy raw 0x13 0x1e 0x85f; \
+     phy raw 0x13 0x1f 0x23; \
+     phy raw 0x13 0x1e 0x87; \
+     phy raw 0x13 0x1f 0x8000;"
+
+if  $?bcm956160k || $?bcm953434k || $?bcm956164k \
+    "phy raw 0xA 0x17 0xf7e; \
+     phy raw 0xA 0x15 0x0000; \
+     phy raw 0xA 0x1e 0x85f; \
+     phy raw 0xA 0x1f 0x23; \
+     phy raw 0xA 0x1e 0x87; \
+     phy raw 0xA 0x1f 0x8000;"
+
+if  $?bcm956166r \
+    "phy raw 0x9 0x17 0xf7e; \
+     phy raw 0x9 0x15 0x0000; \
+     phy raw 0x9 0x1e 0x85f; \
+     phy raw 0x9 0x1f 0x23; \
+     phy raw 0x9 0x1e 0x87; \
+     phy raw 0x9 0x1f 0x8000;"
+
+# Enable SER2PAR LED for A0 on Non-BCM956160R board
+if  !$?bcm956160r && !"expr $pcirev + 0 == 0x1" \
+    "m TOP_PARALLEL_LED_CTRL LED_SER2PAR_SEL=1;"
+
+# Default LEDuP code: bcm956160k.hex (SER2PAR)
+if  !$?bcm956160r && !"expr $pcirev + 0 == 0x1" \
+    "local ledcode ' \
+     02 11 28 60 E0 67 45 06 E0 90 D2 09 74 02 02 1A \
+     28 60 E0 67 45 06 E0 80 D2 22 74 10 02 02 28 60 \
+     E0 67 45 06 E0 80 D2 06 74 1E 02 12 28 60 E0 67 \
+     45 06 E0 80 D2 16 74 2C 3A 60 12 A0 FE E0 05 0A \
+     00 71 4C 77 59 32 08 97 71 4C 77 59 22 01 87 22 \
+     01 87 22 00 87 22 00 87 57 22 00 87 22 00 87 22 \
+     00 87 22 00 87 57 00 00 00 00 00 00 00 00 00 00'"
+
+# BCM956166R LEDuP code (SER2PAR)
+if  $?bcm956166r && !"expr $pcirev + 0 == 0x1" \
+    "local ledcode ' \
+     02 11 28 60 E0 67 40 06 E0 90 D2 09 74 02 02 1A \
+     28 60 E0 67 40 06 E0 80 D2 22 74 10 02 00 67 6B \
+     80 D2 06 74 1E 02 25 28 60 E0 67 40 06 E0 90 D2 \
+     21 74 27 3A 60 12 A0 FE E0 05 0A 00 71 47 77 63 \
+     32 08 97 71 47 77 63 16 E0 DA 22 71 4F 77 5C 22 \
+     01 87 22 01 87 22 00 87 22 00 87 57 22 00 87 22 \
+     00 87 57 16 E0 DA 22 71 6B 77 78 22 00 87 22 00 \
+     87 22 00 87 22 00 87 57 22 01 87 22 01 87 57 00'"
+
+# BCM956160R LEDuP code
+## master unit: bcm956160r_opt6.hex
+if  $?bcm956160r && $?unit0  \
+    "local ledcode ' \
+     02 24 28 60 E1 67 63 67 50 06 E1 90 D2 21 74 02 \
+     02 15 28 60 E1 67 74 06 E1 90 D2 11 74 12 02 05 \
+     28 60 E1 67 74 06 E1 90 D2 01 74 20 02 21 28 60 \
+     E1 67 63 67 50 06 E1 90 D2 19 74 2E 02 0A 28 60 \
+     E1 67 63 67 50 06 E1 80 D2 12 74 3E 86 E0 3A 36 \
+     12 A0 FE E1 05 0A 00 71 8C 77 90 28 32 08 97 71 \
+     8C 77 90 28 32 00 32 01 B7 97 75 90 16 E0 CA 05 \
+     74 8C 77 90 28 32 08 97 75 94 32 00 32 01 B7 97 \
+     71 84 77 9B 16 E0 CA 05 74 9B 77 94 22 00 87 57 \
+     22 01 87 57 22 01 87 22 01 87 57 22 00 87 22 00 \
+     87 57 00 00 00 00 00 00 00 00 00 00 00 00 00 00'"
+
+## slave unit: bcm956160r_opt6a.hex
+if  $?bcm956160r && $?unit1  \
+    "local ledcode ' \
+     02 28 28 60 E1 67 63 67 50 06 E1 90 D2 25 74 02 \
+     02 15 28 60 E1 67 74 06 E1 90 D2 11 74 12 02 05 \
+     28 60 E1 67 74 06 E1 90 D2 01 74 20 02 21 28 60 \
+     E1 67 63 67 50 06 E1 90 D2 19 74 2E 02 0A 28 60 \
+     E1 67 63 67 50 06 E1 80 D2 12 74 3E 86 E0 3A 36 \
+     12 A0 FE E1 05 0A 00 71 8C 77 90 28 32 08 97 71 \
+     8C 77 90 28 32 00 32 01 B7 97 75 90 16 E0 CA 05 \
+     74 8C 77 90 28 32 08 97 75 94 32 00 32 01 B7 97 \
+     71 84 77 9B 16 E0 CA 05 74 9B 77 94 22 00 87 57 \
+     22 01 87 57 22 01 87 22 01 87 57 22 00 87 22 00 \
+     87 57 00 00 00 00 00 00 00 00 00 00 00 00 00 00'"
+
+# Download LED code into LED processor and enable (if applicable).
+if $?feature_led_proc && $?ledcode && !$?simulator \
+    "led prog $ledcode; \
+     led auto on; led start"

@@ -1,0 +1,180 @@
+BCM.0> c TD4_HSDK_Mirror_over_hg3.c
+execute(): Start
+config show; attach; version
+~~~ #1) test_setup(): ** start **
+ingress_port_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+~~~ #1) test_setup(): ** end **
+~~~ #2) configure_port_mirror(): ** start **
+Add L2 Address for egress port 2.
+Configure HG3 on port 3. Packet going to remote mod 4/port 7 will be through this hg3 port
+Configure remote mtp to be mod 4/port 7
+~~~ #2) configure_port_mirror(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,xe,hg (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe,hg (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e) 
+vlan 21 ports cd0-cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+bcmPWN.0: WARNING: Already running
+
+
+Sending packet to ingress_port:1 forwarded to egress port 2
+
+Expect ingress and egress mirrored to remote mod 4/port 7 through local hg3 port 3
+
+tx 1 pbm=1 data=0x00000000AAAA00000000BBBB810000150800450000500001000040117497010101010202020200350035003C32F674657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374; sleep quiet 1
+Packet from data=<>, length=98
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101 
+[bcmPWN.0]Packet[1]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465 
+[bcmPWN.0]Packet[1]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[1]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[1]: data[0060]: 7374 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x66(102)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x405222(4215330)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x15
+        L2_IIF_10_0                     :0x1
+        SYSTEM_SOURCE_15_0              :0x1
+        L2_OIF_10_0                     :0x2
+        INGRESS_PP_PORT_7_0             :0x1
+        SYSTEM_DESTINATION_15_0         :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101 
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465 
+[bcmPWN.0]Packet[2]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[2]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[2]: data[0060]: 7374 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x66(102)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x405222(4215330)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x15
+        L2_IIF_10_0                     :0x2
+        SYSTEM_SOURCE_15_0              :0x2
+        L2_OIF_10_0                     :0x2
+        INGRESS_PP_PORT_7_0             :0x2
+        SYSTEM_DESTINATION_15_0         :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101 
+[bcmPWN.0]Packet[3]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465 
+[bcmPWN.0]Packet[3]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0060]: 7374 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x66(102)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x405226(4215334)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16        :0x5
+        DROP_CODE_15_0                  :0x6464
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x15
+        L2_IIF_10_0                     :0x1
+        SYSTEM_SOURCE_15_0              :0x1
+        L2_OIF_10_0                     :0xa1
+        INGRESS_PP_PORT_7_0             :0x1
+        SYSTEM_DESTINATION_15_0         :0x407
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        IFP_TS_CONTROL_ACTION_3_0       :0x4
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x9
+[RX reasons]
+        LEARN_CACHE_FULL
+        IFP
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101 
+[bcmPWN.0]Packet[4]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465 
+[bcmPWN.0]Packet[4]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[4]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[4]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[4]: data[0060]: 7374 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x66(102)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x405226(4215334)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16        :0x5
+        DROP_CODE_15_0                  :0x6464
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x15
+        L2_IIF_10_0                     :0x1
+        SYSTEM_SOURCE_15_0              :0x1
+        L2_OIF_10_0                     :0xa1
+        INGRESS_PP_PORT_7_0             :0x1
+        SYSTEM_DESTINATION_15_0         :0x407
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        IFP_TS_CONTROL_ACTION_3_0       :0x4
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x9
+[RX reasons]
+        LEARN_CACHE_FULL
+        IFP
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

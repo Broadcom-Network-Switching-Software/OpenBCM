@@ -1,0 +1,94 @@
+# $Id: Makefile.unix-common,v 1.15 2011/08/24 01:53:36 vinodhkc Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# This file contains the platform-independent portion of the Makefiles
+# for Unix compilation.
+#
+
+#
+# TARGETTYPE Defines: This defines the type of system you are compiling
+# the driver for.  New values can be created by porting the code to your
+# platform and adding the define in this Makefile.
+# 
+
+TARGETTYPE = PLISIM
+
+# Configuration Variable
+# OSType Defines: This defines the type of RTOS or microkernel which you
+# are compiling the SAL (and its associated driver) for.  New platforms
+# can be created by porting the code to your platform and changing the
+# define in this Makefile.
+
+OSTYPE = UNIX
+
+#
+# ORIGIN is used to Optionally select different CFLAGS. It is used to import
+# source from other vendors. If SOURCE=Broadcom, then the BCM_ flags are added
+# to those passed to the compiler. If SOURCE != Broadcom, BCM_ flags are NOT
+# added.
+#
+# Default specifies Broadcom
+#
+ifndef ORIGIN
+	ORIGIN = Broadcom
+endif
+
+#
+# STD_{C|CPP|CXX}FLAGS - Standard flags used by ALL compilations
+# BCM_{C|CPP|CXX}FLAGS - Flags used for Broadcom source files
+# OPT_{C|CPP|CXX}FLAGS - Defined in local make files BEFORE inclusion of 
+#			 this Makefile, to define local "Extra" flags.
+#
+STD_CFLAGS = ${OPTFLAGS} -D_REENTRANT -D${TARGETTYPE} -D${OSTYPE} ${CFGFLAGS} \
+    ${ENDIAN_DEF}
+STD_CPPFLAGS = ${STD_CFLAGS}
+STD_CXXFLAGS = ${STD_CFLAGS}
+
+BCM_CFLAGS   = -Wall -Werror ${BCM_EXTRA_CC_CFLAGS}
+
+BCM_CPPFLAGS = ${BCM_CFLAGS}
+BCM_CXXFLAGS = ${BCM_CFLAGS}
+
+ifeq (${ORIGIN}, Broadcom)
+	CFLAGS   += ${STD_CFLAGS}   ${BCM_CFLAGS}   ${OPT_CFLAGS}
+	CPPFLAGS += ${STD_CPPFLAGS} ${BCM_CPPFLAGS} ${OPT_CPPFLAGS}
+	CXXFLAGS += ${STD_CXXFLAGS} ${BCM_CXXFLAGS} ${OPT_CXXFLAGS}
+else
+	CFLAGS   += ${STD_CFLAGS}   ${OPT_CFLAGS}
+	CPPFLAGS += ${STD_CPPFLAGS} ${OPT_CPPFLAGS}
+	CXXFLAGS += ${STD_CXXFLAGS} ${OPT_CXXFLAGS}
+endif
+
+#
+# Add flags required for running on unix.
+# For GCC version > 4.6, add -Wl,--no-as-needed
+# This is needed for compilation with shared libraries.
+#
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+GCC_VERSION = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | tr \\. 0)
+ifeq ($(shell test $(GCC_VERSION) -ge 40600; echo $$?),0)
+LDFLAGS += -Wl,--no-as-needed
+endif
+endif
+
+# BCM.SIM needs: LDFLAGS += -lgcov for linking GCOV library
+# if GCOV is enabled by: OPTFLAGS += -fprofile-arcs -ftest-coverage
+#
+
+ifneq (,$(findstring -fprofile-arcs,${OPTFLAGS}))
+LDFLAGS += -lgcov --coverage
+endif
+
+LDFLAGS += ${LIBS}
+
+#
+# DEPEND is used as a command to generate the list of dependencies.
+# The format of the output must be 
+#	"file.o : file.c a/b/c.h d/e/f.h ...", 
+# if it is on multiple lines, each line must end in a backslash. 
+# The output MUST be on standard out.
+#
+DEPEND = ${CC} -M -P $(CFLAGS) $< 
+

@@ -1,0 +1,12 @@
+PROJECT_NAME            = "Base Driver Library (BCMBD)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INCLUDE_PATH            = include
+
+INPUT                   = DOC/bcmbd.dox \
+                          DOC/bcmbd_fwm.dox \
+                          DOC/bcmbd_hmi.dox \
+                          DOC/bcmbd_led.dox \
+                          include
+
+EXCLUDE_PATTERNS        = *_acc.h

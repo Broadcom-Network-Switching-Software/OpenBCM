@@ -1,0 +1,58 @@
+#/*----------------------------------------------------------------------
+# * 
+# *
+# * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# * 
+# * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+# *
+# * Broadcom Corporation
+# * Proprietary and Confidential information
+# * All rights reserved
+# * This source file is the property of Broadcom Corporation, and
+# * may not be copied or distributed in any isomorphic form without the
+# * prior written consent of Broadcom Corporation.
+# *---------------------------------------------------------------------
+# * File       : fs_10g_cl72_fec.soc
+# * Description: fs_10g_cl72_fec
+# *---------------------------------------------------------------------*/
+
+link off
+local port xe4,xe8
+
+
+#To Enable CL72
+phy $port  0x8000096 0x3 
+
+#To Enable FEC. Enable FEC, and set block sync for FEC
+phy $port  0xc134 0x2874 
+phy  $port 0xc113 0x05cb
+
+#Restart Speed Change
+phy $port  0xc050 0x1c
+phy $port  0xc050 0x11c
+
+
+phy $port  0xc051  #0x0003
+#burst err
+#phy $port  0xc143  #0x0009
+
+#read the cl72 status
+phy xe4,xe8 0xc072
+phy xe4,xe8 0x8000096
+phy xe4,xe8 0x8000097
+
+#FEC Error injection
+#phy xe4,xe8  0x9045  0x2
+
+#inject error on lane 0/ports xe4,xe8
+#phy xe4,xe8  0x9032  0x24
+#phy xe4,xe8  0x9032  0x4
+#phy xe4,xe8  0x9032  0x24
+#phy xe4,xe8  0x9032  0x4
+#phy xe4  0x9032  0x24
+#phy xe4  0x9032  0x4
+
+#Read the clear on read,Error Counter
+#phy xe4,xe8  0xc157
+
+

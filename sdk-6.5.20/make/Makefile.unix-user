@@ -1,0 +1,166 @@
+# $Id: Makefile.unix-user,v 1.29 2011/05/05 10:15:41 mlarsen Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Build rules for Linux user mode support
+
+# When using GDB on Linux, you may want to use "setenv GDB 1" to disable
+# editline.  For best results put "set environment GDB 1" in your .gdbinit.
+
+# Get cross tools and platform specific settings
+
+ifneq (,$(platform))
+include ${SDK}/make/Makefile.linux-$(platform)
+endif
+
+
+# Filter out features that cannot or should not be supported in Linux 
+ifdef ESW_CHIPS
+_FEATURE_EXCLUDE_LIST += OOB_RCPU
+endif
+FEATURE_EXCLUDE_LIST = $(sort $(_FEATURE_EXCLUDE_LIST))
+
+# User-Linux Configuration Flags
+
+CC	= $(LSRUN) $(CROSS_COMPILE)gcc
+CXX	= $(CROSS_COMPILE)g++
+LD	= $(CROSS_COMPILE)ld
+ARFLAGS	= -rc
+STRIP	= $(CROSS_COMPILE)strip
+OBJCOPY = $(CROSS_COMPILE)objcopy
+#From version ~4.7 of gcc, it has its ownar, ranlib, nm tools that should be used
+ifeq (1,$(USE_GCC_TOOLS))
+AR	= $(CROSS_COMPILE)gcc-ar
+RANLIB  = $(CROSS_COMPILE)gcc-ranlib
+else
+AR	= $(CROSS_COMPILE)ar
+RANLIB  = $(CROSS_COMPILE)ranlib
+endif
+
+OPTFLAGS_DEFAULT = -O2
+
+# Configuration Variable
+# OSType Defines: This defines the type of RTOS or microkernel which you
+# are compiling the SAL (and its associated driver) for. New platforms
+# can be created by porting the routines (system.c) to your platform and
+# adding the define in this Makefile.
+
+OSTYPE = LINUX
+
+# Linux
+LIBS =-lnsl -pthread -lm -lrt
+ifeq ($(LINK_DL),1)
+LIBS += -ldl
+endif
+
+#
+# ORIGIN is used to Optionally select different CFLAGS. It is used to import
+# source from other vendors. If SOURCE=Broadcom, then the BCM_ flags are added
+# to those passed to the compiler. If SOURCE != Broadcom, BCM_ flags are NOT
+# added.
+#
+# Default specifies Broadcom
+#
+ifndef ORIGIN
+	ORIGIN = Broadcom
+endif
+
+#
+# STD_{C|CPP|CXX}FLAGS - Standard flags used by ALL compilations
+# BCM_{C|CPP|CXX}FLAGS - Flags used for Broadcom source files
+# OPT_{C|CPP|CXX}FLAGS - Defined in local make files BEFORE inclusion of
+#			 this Makefile, to define local "Extra" flags.
+#
+
+STD_CFLAGS = $(OPTFLAGS) -D_REENTRANT -D${OSTYPE} ${CFGFLAGS} \
+    -D$(ENDIAN) -D__BSD_SOURCE -DUNIX
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+STD_CFLAGS += -fPIC
+endif
+STD_CPPFLAGS = ${STD_CFLAGS}
+STD_CXXFLAGS = ${STD_CFLAGS}
+
+BCM_CFLAGS   ?= -Wall -Werror -fno-strict-aliasing
+ifeq ($(platform), iproc-3_6)
+ifeq (BE,$(ENDIAN_MODE))
+BCM_CFLAGS   += -Werror=format-security
+endif
+endif
+
+ifeq ($(BCM_SIM_PATH_SUPPORT),1)
+BCM_CFLAGS += -DLINUX_PLI_COMBO_BDE
+BCM_CFLAGS += -DPLISIM
+BCM_CFLAGS += -DPLISIM_DIRECT_SCHAN
+endif
+
+
+# Check for redundant declarations in pedantic build
+ifeq ($(DEBUG_PEDANTIC),TRUE)
+ifneq (,$(LOCALDIR))
+SKIP_LOCALDIR_LIST = \
+    src/bcm                    \
+    src/appl/cint              \
+    src/appl/diag/cint         \
+    src/appl/tcl8.3.3/broadcom \
+    src/appl/tcl8.3.3/generic  \
+    src/appl/tcl8.3.3/unix     \
+    src/sal/appl/editline
+ifeq (,$(findstring $(LOCALDIR),$(SKIP_LOCALDIR_LIST)))
+BCM_CFLAGS   += -Wredundant-decls
+endif
+endif
+endif
+
+BCM_CPPFLAGS = ${BCM_CFLAGS}
+BCM_CXXFLAGS = ${BCM_CFLAGS}
+
+ifeq (${ORIGIN}, Broadcom)
+	CFLAGS   += ${STD_CFLAGS}   ${BCM_CFLAGS}   ${OPT_CFLAGS}
+	CPPFLAGS += ${STD_CPPFLAGS} ${BCM_CPPFLAGS} ${OPT_CPPFLAGS}
+	CXXFLAGS += ${STD_CXXFLAGS} ${BCM_CXXFLAGS} ${OPT_CXXFLAGS}
+else
+	CFLAGS   += ${STD_CFLAGS}   ${OPT_CFLAGS}
+	CPPFLAGS += ${STD_CPPFLAGS} ${OPT_CPPFLAGS}
+	CXXFLAGS += ${STD_CXXFLAGS} ${OPT_CXXFLAGS}
+endif
+
+#
+# Add flags required for running on linux.
+#
+
+ifneq ($(LINUX_MAKE_SHARED_LIB),1)
+ifndef LINK_STATIC
+LINK_STATIC = 1
+endif
+endif
+
+ifeq (${LINK_STATIC},1)
+LDFLAGS += -static
+endif
+
+LDFLAGS += ${LIBS}
+
+#
+# DEPEND is used as a command to generate the list of dependencies.
+# The format of the output must be
+#	"file.o : file.c a/b/c.h d/e/f.h ...",
+# if it is on multiple lines, each line must end in a backslash.
+# The output MUST be on standard out.
+#
+DEPEND = ${CC} -M $(CFLAGS) $<
+
+#
+# Optionally link against different library versions.
+#
+ifneq (,${LIB_OVERRIDE})
+CFLAGS += -B${LIB_OVERRIDE} -nostdinc -I`$(CC) --print-file-name=include` -I${LIB_OVERRIDE}/../usr/include
+LDFLAGS += -Wl,-rpath-link,${LIB_OVERRIDE}
+endif
+#
+# Optionally use the linker --relax flag to enable linking larger
+# images on the GTO platform
+#
+ifneq (,${LINKER_RELAX})
+LDFLAGS += -Wl,--relax
+endif

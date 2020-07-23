@@ -1,0 +1,44 @@
+#
+# file: l3_egress_ha.yml
+# L3 Egress YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_l3_egress:
+        bcmint_l3_ecmp_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                max_paths:
+                    type: int
+                    comment: Maximum ECMP Paths.
+        bcmint_l3_ecmp_member_ent_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                type:
+                    type: int
+                    comment: User type.
+                ol_egr_obj:
+                    type: int
+                    comment: Overlay egress object.
+                ul_egr_obj:
+                    type: int
+                    comment: Underlay egress object.
+                dvp:
+                    type: int
+                    comment: DVP.
+                prot_swt_prfl_idx:
+                    type: int
+                    comment: Protection switching profile index.
+                ref_cnt:
+                    type: uint32_t
+                    comment: Reference count.

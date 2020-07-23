@@ -1,0 +1,492 @@
+# $Id: c2switch.soc,v 1.1 2004/11/22 20:27:56 miyarn Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Chassis 2
+#
+# Sample script to configure line modules and CFM on backplane
+#
+# TBD update
+# traffic path
+# TBD update
+#
+######################################################################
+# BP S0   LM     
+# CFM0 BCM5675 P7 L4 BCM5675 P5  
+# CFM0 BCM5675 P8 L4 BCM5675 P7  
+# CFM0 BCM5675 P5 L3 BCM5675 P5  
+# CFM0 BCM5675 P6 L3 BCM5675 P7  
+# CFM0 BCM5675 P3 L2 BCM5675 P5  
+# CFM0 BCM5675 P4 L2 BCM5675 P7  
+# CFM0 BCM5675 P1 L1 BCM5675 P5  
+# CFM0 BCM5675 P2 L1 BCM5675 P7  
+# 
+# BP CFM0 LM     
+# CFM1 BCM5675 P7 L4 BCM5675 P6  
+# CFM1 BCM5675 P8 L4 BCM5675 P8  
+# CFM1 BCM5675 P5 L3 BCM5675 P6  
+# CFM1 BCM5675 P6 L3 BCM5675 P8  
+# CFM1 BCM5675 P3 L2 BCM5675 P6  
+# CFM1 BCM5675 P4 L2 BCM5675 P8  
+# CFM1 BCM5675 P1 L1 BCM5675 P6  
+# CFM1 BCM5675 P2 L1 BCM5675 P8  
+# ######################################################################
+#Backplane [ CFM1 CFM2 LM-slot3 LM-slot4 LM-slot5 LM-slot6 ]
+#
+#CFM1 Herc
+#port-1 (hg0) (0x002) <--> slot 3 port-5 (0x040)
+#port-2 (hg1) (0x004) <--> slot 3 port-7 (0x080)
+#port-3 (hg2) (0x008) <--> slot 4 port-5 (0x040)
+#port-4 (hg3) (0x010) <--> slot 4 port-7 (0x080)
+#port-5 (hg4) (0x020) <--> slot 5 port-5 (0x040)
+#port-6 (hg5) (0x040) <--> slot 5 port-7 (0x080)
+#port-7 (hg6) (0x080) <--> slot 6 port-5 (0x040)
+#port-8 (hg7) (0x100) <--> slot 6 port-7 (0x080)
+#CFM2 Herc
+#port-1 (hg0) (0x002) <--> slot 3 port-6 (0x040)
+#port-2 (hg1) (0x004) <--> slot 3 port-8 (0x080)
+#port-3 (hg2) (0x008) <--> slot 4 port-6 (0x040)
+#port-4 (hg3) (0x010) <--> slot 4 port-8 (0x080)
+#port-5 (hg4) (0x020) <--> slot 5 port-6 (0x040)
+#port-6 (hg5) (0x040) <--> slot 5 port-8 (0x080)
+#port-7 (hg6) (0x080) <--> slot 6 port-6 (0x040)
+#port-8 (hg7) (0x100) <--> slot 6 port-8 (0x080)
+#
+#LM slot 3
+#port-1 (hg0) (0x002) <--> Unit-1 Modid  0
+#port-2 (hg1) (0x004) <--> Unit-2 Modid  1
+#port-3 (hg2) (0x008) <--> Unit-3 Modid  2
+#port-4 (hg3) (0x010) <--> Unit-4 Modid  3
+#port-5 (hg4) (0x020) <--> CFM1 port-1 (0x040)
+#port-6 (hg5) (0x040) <--> CFM2 port-1 (0x080)
+#port-7 (hg6) (0x080) <--> CFM1 port-2 (0x040)
+#port-8 (hg7) (0x100) <--> CFM2 port-2 (0x080)
+#
+#LM slot 4
+#port-1 (hg0) (0x002) <--> Unit-1 Modid  0
+#port-2 (hg1) (0x004) <--> Unit-2 Modid  1
+#port-3 (hg2) (0x008) <--> Unit-3 Modid  2
+#port-4 (hg3) (0x010) <--> Unit-4 Modid  3
+#port-5 (hg4) (0x020) <--> CFM1 port-3 (0x040)
+#port-6 (hg5) (0x040) <--> CFM2 port-3 (0x080)
+#port-7 (hg6) (0x080) <--> CFM1 port-4 (0x040)
+#port-8 (hg7) (0x100) <--> CFM2 port-4 (0x080)
+#LM slot 5
+#port-1 (hg0) (0x002) <--> Unit-1 Modid  0
+#port-2 (hg1) (0x004) <--> Unit-2 Modid  1
+#port-3 (hg2) (0x008) <--> Unit-3 Modid  2
+#port-4 (hg3) (0x010) <--> Unit-4 Modid  3
+#port-5 (hg4) (0x020) <--> CFM1 port-5 (0x040)
+#port-6 (hg5) (0x040) <--> CFM2 port-5 (0x080)
+#port-7 (hg6) (0x080) <--> CFM1 port-6 (0x040)
+#port-8 (hg7) (0x100) <--> CFM2 port-6 (0x080)
+#LM slot 6
+#port-1 (hg0) (0x002) <--> Unit-1 Modid  0
+#port-2 (hg1) (0x004) <--> Unit-2 Modid  1
+#port-3 (hg2) (0x008) <--> Unit-3 Modid  2
+#port-4 (hg3) (0x010) <--> Unit-4 Modid  3
+#port-5 (hg4) (0x020) <--> CFM1 port-7 (0x040)
+#port-6 (hg5) (0x040) <--> CFM2 port-7 (0x080)
+#port-7 (hg6) (0x080) <--> CFM1 port-8 (0x040)
+#port-8 (hg7) (0x100) <--> CFM2 port-8 (0x080)
+######################################################################
+
+if !@?lm 'setenv cfm 1'
+
+if @?cfm 'echo "Configuring CFM"'
+if @?cfm1 'echo "Configuring CFM in slot 1"'
+if @?cfm2 'echo "Configuring CFM in slot 2"'
+if @?lm3 'echo "Configuring Line Module in slot 3"'
+if @?lm4 'echo "Configuring Line Module in slot 4"'
+if @?lm5 'echo "Configuring Line Module in slot 5"'
+if @?lm6 'echo "Configuring Line Module in slot 6"'
+
+#determine LM type
+#lm24x1g - 24 port 1G LM
+#lm2x10g - 2 port 10G XFP LM
+#lm6x10g - 6 port 10G CX4 LM
+#*:lmchk
+#if $?lm24x1g 'echo "Setting Up 24 x 1G line module"'
+#if $?lm2x10g 'echo "Setting Up 2 x 10G XFP line module"'
+#if $?lm6x10g 'echo "Setting Up 6 x 10G CX4 line module"'
+
+#run RC
+if @?lm && !@?chassis2_no_rc ' \
+    0:rc ; \
+    1:rc ; \
+    2:rc ; \
+    3:rc ; \
+    4:rc ; \
+    '
+#if @?lm ' \
+#    1:port ge sp=1000 fd=t ; \
+#    2:port ge sp=1000 fd=t ; \
+#    3:port ge sp=1000 fd=t ; \
+#    4:port ge sp=1000 fd=t ; \
+#    '
+
+local ledcode '\
+ E0 28 60 C3 67 7C 06 C3 80 28 60 C3 67 7C 67 40 \
+ 06 C3 90 28 60 C3 67 40 06 C3 80 80 D2 0C 74 01 \
+ 12 C2 85 05 D2 0F 71 2A 52 00 12 C1 85 05 D2 1F \
+ 71 34 52 00 12 C0 85 05 D2 05 71 3E 52 00 3A 30 \
+ 32 00 97 75 4C 12 A0 FE C3 02 0A 50 32 01 97 75 \
+ 58 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 6A 85 \
+ 12 A0 FE C3 95 75 B9 85 77 AB 12 A0 FE C3 95 75 \
+ 74 85 77 B2 16 C0 DA 02 71 B2 77 B9 32 05 97 71 \
+ 8C 32 02 97 71 AB 06 C1 D2 01 71 AB 06 C3 67 A4 \
+ 75 AB 32 03 97 71 B9 32 04 97 75 B2 06 C2 D2 07 \
+ 71 B2 77 B9 12 80 F8 15 1A 00 57 32 0E 87 32 0E \
+ 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+'
+if @?lm ' \
+    1:led prog $ledcode ; \
+    2:led prog $ledcode  ; \
+    3:led prog $ledcode  ; \
+    4:led prog $ledcode  ; \
+    1:led auto on ; \
+    2:led auto on  ; \
+    3:led auto on  ; \
+    4:led auto on  ; \
+    1:led start ; \
+    2:led start  ; \
+    3:led start  ; \
+    4:led start  ; \
+'
+
+#if @?lm6x10g && !@?chassis2_no_rc ' \
+#    local led_file 'lm5673.hex' ; \
+#    3:rc ; \
+#    4:rc ; \
+#    5:rc ; \
+#    6:rc ; \
+#    '
+
+if @?cfm && !@?chassis2_no_rc ' \
+    0:rc ; \
+    '
+#CFM Config
+# Remove the CPU from VLAN. No traffic to CPU.
+if @?cfm '0:vlan remove 1 PortBitMap=0x1'
+# Filter out unwanted traffic to CPU
+if @?cfm '0:m ING_CPUTOBMAP BMAP=0'
+
+#CFM connectivity
+# Always use one port from LM(hg4)  to CFM(Use CFM in slot 1 only
+# for inter LM switching)
+if @?cfm ' \
+        0:m ING_EGRMSKBMAP.hg0 BMAP=0x0aa ; \
+        0:m ING_EGRMSKBMAP.hg1 BMAP=0x000 ; \
+        0:m ING_EGRMSKBMAP.hg2 BMAP=0x0aa ; \
+        0:m ING_EGRMSKBMAP.hg3 BMAP=0x000 ; \
+        0:m ING_EGRMSKBMAP.hg4 BMAP=0x0aa ; \
+        0:m ING_EGRMSKBMAP.hg5 BMAP=0x000 ; \
+        0:m ING_EGRMSKBMAP.hg6 BMAP=0x0aa ; \
+        0:m ING_EGRMSKBMAP.hg7 BMAP=0x000 ; \
+        0:w vid.1 1 4095 VIDBITMAP=0x0aa ; \
+        0:w vid.2 1 4095 VIDBITMAP=0x000 ; \
+        0:w vid.3 1 4095 VIDBITMAP=0x0aa ; \
+        0:w vid.4 1 4095 VIDBITMAP=0x000 ; \
+        0:w vid.5 1 4095 VIDBITMAP=0x0aa ; \
+        0:w vid.6 1 4095 VIDBITMAP=0x000 ; \
+        0:w vid.7 1 4095 VIDBITMAP=0x0aa ; \
+        0:w vid.8 1 4095 VIDBITMAP=0x000 ; \
+        '
+
+if @?cfm "\
+   ;\
+    0:w uc.1     0 128 0x000 ; \
+    0:w uc.2     0 128 0x000 ; \
+    0:w uc.3     0 128 0x000 ; \
+    0:w uc.4     0 128 0x000 ; \
+    0:w uc.5     0 128 0x000 ; \
+    0:w uc.6     0 128 0x000 ; \
+    0:w uc.7     0 128 0x000 ; \
+    0:w uc.8     0 128 0x000 ; \
+    "
+#       Port    Mod    PBMP
+if @?cfm \
+   " \
+    0:w uc.1     0  8 0x002 ; \
+    0:w uc.1     8  8 0x008 ; \
+    0:w uc.1    16  8 0x020 ; \
+    0:w uc.1    24  8 0x080 ; \
+    ; \
+    0:w uc.3     0  8 0x002 ; \
+    0:w uc.3     8  8 0x008 ; \
+    0:w uc.3    16  8 0x020 ; \
+    0:w uc.3    24  8 0x080 ; \
+    ; \
+    0:w uc.5     0  8 0x002 ; \
+    0:w uc.5     8  8 0x008 ; \
+    0:w uc.5    16  8 0x020 ; \
+    0:w uc.5    24  8 0x080 ; \
+    ; \
+    0:w uc.7     0  8 0x002 ; \
+    0:w uc.7     8  8 0x008 ; \
+    0:w uc.7    16  8 0x020 ; \
+    0:w uc.7    24  8 0x080 ; \
+    ; \
+    "
+
+######################### LM ############################
+#LM config
+# Remove the CPU from VLAN. No traffic to CPU.
+if $?lm ' \
+        0:clear c; \
+        0:vlan remove 1 PortBitMap=cpu ; \
+        1:vlan remove 1 PortBitMap=cpu ; \
+        2:vlan remove 1 PortBitMap=cpu ; \
+        3:vlan remove 1 PortBitMap=cpu ; \
+        4:vlan remove 1 PortBitMap=cpu ; \
+        0:m ING_CPUTOBMAP BMAP=0 ; \
+        '
+#LM connectivity
+if @?lm ' \
+        0:m ING_EGRMSKBMAP BMAP=0x03e ; \
+         ; \
+        0:m ING_EGRMSKBMAP.hg5 BMAP=0x000 ; \
+        0:m ING_EGRMSKBMAP.hg6 BMAP=0x000 ; \
+        0:m ING_EGRMSKBMAP.hg7 BMAP=0x000 ; \
+        0:w vid.1 1 4095 VIDBITMAP=0x03e ; \
+        0:w vid.2 1 4095 VIDBITMAP=0x03e ; \
+        0:w vid.3 1 4095 VIDBITMAP=0x03e ; \
+        0:w vid.4 1 4095 VIDBITMAP=0x03e ; \
+        0:w vid.5 1 4095 VIDBITMAP=0x03e ; \
+        ; \
+        0:w vid.6 1 4095 VIDBITMAP=0x000 ; \
+        0:w vid.7 1 4095 VIDBITMAP=0x000 ; \
+        0:w vid.8 1 4095 VIDBITMAP=0x000 ; \
+        '
+
+#######################################
+# Hercules UC setup
+#######################################
+if @?lm \
+   "  \
+    0:w uc.1     0  32 0x020 ; \
+    0:w uc.2     0  32 0x020 ; \
+    0:w uc.3     0  32 0x020 ; \
+    0:w uc.4     0  32 0x020 ; \
+    0:w uc.5     0  32 0x020 ; \
+    0:w uc.6     0  32 0x000 ; \
+    0:w uc.7     0  32 0x000 ; \
+    0:w uc.8     0  32 0x000 ; \
+   "
+
+if @?lm3 \
+   " \
+    0:w uc.1     0  1 0x002 ; \
+    0:w uc.1     1  1 0x004 ; \
+    0:w uc.1     2  1 0x008 ; \
+    0:w uc.1     3  1 0x010 ; \
+    ;\
+    0:w uc.2     0  1 0x002 ; \
+    0:w uc.2     1  1 0x004 ; \
+    0:w uc.2     2  1 0x008 ; \
+    0:w uc.2     3  1 0x010 ; \
+    ;\
+    0:w uc.3     0  1 0x002 ; \
+    0:w uc.3     1  1 0x004 ; \
+    0:w uc.3     2  1 0x008 ; \
+    0:w uc.3     3  1 0x010 ; \
+    ;\
+    0:w uc.4     0  1 0x002 ; \
+    0:w uc.4     1  1 0x004 ; \
+    0:w uc.4     2  1 0x008 ; \
+    0:w uc.4     3  1 0x010 ; \
+    ;\
+    0:w uc.5     0  1 0x002 ; \
+    0:w uc.5     1  1 0x004 ; \
+    0:w uc.5     2  1 0x008 ; \
+    0:w uc.5     3  1 0x010 ; \
+    ;\
+    "
+
+if @?lm4 \
+   " \
+    0:w uc.1     8  1 0x002 ; \
+    0:w uc.1     9  1 0x004 ; \
+    0:w uc.1    10  1 0x008 ; \
+    0:w uc.1    11  1 0x010 ; \
+    ;\
+    0:w uc.2     8  1 0x002 ; \
+    0:w uc.2     9  1 0x004 ; \
+    0:w uc.2    10  1 0x008 ; \
+    0:w uc.2    11  1 0x010 ; \
+    ;\
+    0:w uc.3     8  1 0x002 ; \
+    0:w uc.3     9  1 0x004 ; \
+    0:w uc.3    10  1 0x008 ; \
+    0:w uc.3    11  1 0x010 ; \
+    ;\
+    0:w uc.4     8  1 0x002 ; \
+    0:w uc.4     9  1 0x004 ; \
+    0:w uc.4    10  1 0x008 ; \
+    0:w uc.4    11  1 0x010 ; \
+    ;\
+    0:w uc.5     8  1 0x002 ; \
+    0:w uc.5     9  1 0x004 ; \
+    0:w uc.5    10  1 0x008 ; \
+    0:w uc.5    11  1 0x010 ; \
+    ;\
+    "
+
+if @?lm5 \
+   " \
+    0:w uc.1    16  1 0x002 ; \
+    0:w uc.1    17  1 0x004 ; \
+    0:w uc.1    18  1 0x008 ; \
+    0:w uc.1    19  1 0x010 ; \
+    ;\
+    0:w uc.2    16  1 0x002 ; \
+    0:w uc.2    17  1 0x004 ; \
+    0:w uc.2    18  1 0x008 ; \
+    0:w uc.2    19  1 0x010 ; \
+    ;\
+    0:w uc.3    16  1 0x002 ; \
+    0:w uc.3    17  1 0x004 ; \
+    0:w uc.3    18  1 0x008 ; \
+    0:w uc.3    19  1 0x010 ; \
+    ;\
+    0:w uc.4    16  1 0x002 ; \
+    0:w uc.4    17  1 0x004 ; \
+    0:w uc.4    18  1 0x008 ; \
+    0:w uc.4    19  1 0x010 ; \
+    ;\
+    0:w uc.5    16  1 0x002 ; \
+    0:w uc.5    17  1 0x004 ; \
+    0:w uc.5    18  1 0x008 ; \
+    0:w uc.5    19  1 0x010 ; \
+    ;\
+    "
+
+if @?lm6 \
+   " \
+    0:w uc.1    24  1 0x002 ; \
+    0:w uc.1    25  1 0x004 ; \
+    0:w uc.1    26  1 0x008 ; \
+    0:w uc.1    27  1 0x010 ; \
+    ;\
+    0:w uc.2    24  1 0x002 ; \
+    0:w uc.2    25  1 0x004 ; \
+    0:w uc.2    26  1 0x008 ; \
+    0:w uc.2    27  1 0x010 ; \
+    ;\
+    0:w uc.3    24  1 0x002 ; \
+    0:w uc.3    25  1 0x004 ; \
+    0:w uc.3    26  1 0x008 ; \
+    0:w uc.3    27  1 0x010 ; \
+    ;\
+    0:w uc.4    24  1 0x002 ; \
+    0:w uc.4    25  1 0x004 ; \
+    0:w uc.4    26  1 0x008 ; \
+    0:w uc.4    27  1 0x010 ; \
+    ;\
+    0:w uc.5    24  1 0x002 ; \
+    0:w uc.5    25  1 0x004 ; \
+    0:w uc.5    26  1 0x008 ; \
+    0:w uc.5    27  1 0x010 ; \
+    ;\
+    "
+
+#######################################
+# Draco Module ID setup
+#######################################
+if @?lm \
+    " \
+    1:s MODPORT_7_0 0xcccccccc ; \
+    1:s IMODPORT_7_0 0xcccccccc ; \
+    1:s MODPORT_15_8 0xcccccccc ; \
+    1:s IMODPORT_15_8 0xcccccccc ; \
+    1:s MODPORT_23_16 0xcccccccc ; \
+    1:s IMODPORT_23_16 0xcccccccc ; \
+    1:s MODPORT_31_24 0xcccccccc ; \
+    1:s IMODPORT_31_24 0xcccccccc ; \
+    2:s MODPORT_7_0 0xcccccccc ; \
+    2:s IMODPORT_7_0 0xcccccccc ; \
+    2:s MODPORT_15_8 0xcccccccc ; \
+    2:s IMODPORT_15_8 0xcccccccc ; \
+    2:s MODPORT_23_16 0xcccccccc ; \
+    2:s IMODPORT_23_16 0xcccccccc ; \
+    2:s MODPORT_31_24 0xcccccccc ; \
+    2:s IMODPORT_31_24 0xcccccccc ; \
+    3:s MODPORT_7_0 0xcccccccc ; \
+    3:s IMODPORT_7_0 0xcccccccc ; \
+    3:s MODPORT_15_8 0xcccccccc ; \
+    3:s IMODPORT_15_8 0xcccccccc ; \
+    3:s MODPORT_23_16 0xcccccccc ; \
+    3:s IMODPORT_23_16 0xcccccccc ; \
+    3:s MODPORT_31_24 0xcccccccc ; \
+    3:s IMODPORT_31_24 0xcccccccc ; \
+    4:s MODPORT_7_0 0xcccccccc ; \
+    4:s IMODPORT_7_0 0xcccccccc ; \
+    4:s MODPORT_15_8 0xcccccccc ; \
+    4:s IMODPORT_15_8 0xcccccccc ; \
+    4:s MODPORT_23_16 0xcccccccc ; \
+    4:s IMODPORT_23_16 0xcccccccc ; \
+    4:s MODPORT_31_24 0xcccccccc ; \
+    4:s IMODPORT_31_24 0xcccccccc ; \
+        "
+if @?lm3\
+    " \
+    1:m config my_modid=0; \
+    1:m iconfig my_modid=0; \
+    2:m config my_modid=1; \
+    2:m iconfig my_modid=1; \
+    3:m config my_modid=2; \
+    3:m iconfig my_modid=2; \
+    4:m config my_modid=3; \
+    4:m iconfig my_modid=3; \
+    "
+if @?lm4\
+    " \
+    1:m config my_modid=8; \
+    1:m iconfig my_modid=8; \
+    2:m config my_modid=9; \
+    2:m iconfig my_modid=9; \
+    3:m config my_modid=10; \
+    3:m iconfig my_modid=10; \
+    4:m config my_modid=11; \
+    4:m iconfig my_modid=11; \
+    "
+if @?lm5\
+    " \
+    1:m config my_modid=16; \
+    1:m iconfig my_modid=16; \
+    2:m config my_modid=17; \
+    2:m iconfig my_modid=17; \
+    3:m config my_modid=18; \
+    3:m iconfig my_modid=18; \
+    4:m config my_modid=19; \
+    4:m iconfig my_modid=19; \
+    "
+if @?lm6\
+    " \
+    1:m config my_modid=24; \
+    1:m iconfig my_modid=24; \
+    2:m config my_modid=25; \
+    2:m iconfig my_modid=25; \
+    3:m config my_modid=26; \
+    3:m iconfig my_modid=26; \
+    4:m config my_modid=27; \
+    4:m iconfig my_modid=27; \
+    "
+
+if $?lm \
+    " \
+    1:m CONFIG L2DH_EN=0 ; \
+    2:m CONFIG L2DH_EN=0 ; \
+    3:m CONFIG L2DH_EN=0 ; \
+    4:m CONFIG L2DH_EN=0 ; \
+    1:age 5 ; \
+    2:age 5 ; \
+    3:age 5 ; \
+    4:age 5 ; \
+    "
+

@@ -1,0 +1,94 @@
+$Id: README,v 1.3 2004/03/11 02:24:51 csm Exp $
+
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+Assuming a Solaris or Linux build server with one or more of the
+following cross-compilers installed:
+
+	* Diab Data DCC ColdFire
+	* Tornado x86
+	* Tornado MIPS
+	* Tornado PPC
+
+This explains how to set the target to build the Strata device drivers
+for that a particular platform and chip.
+
+Target Makefiles for the SAL and SOC device driver:
+
+Remember that $TARGET is set to <TARGETBASE>-<TARGETPLAT>.  <TARGETBASE>
+represents the operating system environment, and <TARGETPLAT> represents
+the platform.  For example:
+
+	BMW CPCI card
+		setenv TARGET vxworks-bmw
+		<TARGETBASE> is vxworks
+		<TARGETPLAT> is bmw
+
+	Unix PCID simulation
+		setenv TARGET unix-solaris
+		<TARGETBASE> is unix
+		<TARGETPLAT> is solaris
+
+	Linux PCID simulation
+		setenv TARGET unix-linux
+		<TARGETBASE> is unix
+		<TARGETPLAT> is linux
+
+For VxWorks builds of existing BSPs, edit the platform Makefile.$TARGET
+and modify WIND_BASE so it points to your installed VxWorks tree.
+
+Then to build a BSP and link to binary, go to the
+
+	sdk/systems/<TARGETBASE>/<TARGETPLAT>
+
+directory corresponding to the system and run gmake.
+
+It is possible to run 'make' in any subdirectory of the driver source
+tree by setting the environment variable TARGET appropriately.  The
+compiled objects will go into that target's build subdirectory,
+sdk/build/$TARGET.  For example:
+
+	setenv TARGET vxworks-bmw
+	cd $SDK/src/soc
+	make drv.o
+
+To compile a driver that only supports specific chips, see instructions
+in $SDK/make/Make.local.template.  Copy Make.local.template to
+Make.local and make the required modifications.  By default, the driver
+will be built to include code for all supported chips.  You may be able
+to save some code space by customizing in support for only one or two
+chips.
+
+Adding new VxWorks platforms:
+
+1) Pick a <TARGETPLAT> name for your BSP, eg, my_board_name.
+
+2) Create a new Makefile.vxworks-my_board_name in $SDK/make.
+   It is easiest to copy from a similar existing Makefile and
+   modify it.
+
+3) Create a new directory tree structure in $SDK/systems:
+
+   $SDK/systems/<TARGETBASE>/<TARGETPLAT>
+
+   Where TARGETBASE is vxworks and <TARGETPLAT> is your platofmr name, e.g.
+
+   $SDK/systems/vxworks/my_board_name
+
+4) Copy the file socdiag.c and Makefile from an existing
+   directory in that configuration into the new directory.
+
+   $SDK/systems/vxworks/my_board_name/socdiag.c
+   $SDK/systems/vxworks/my_board_name/Makefile
+
+5) Place all your BSP files in the new <TARGETPLAT> directory.
+
+6) Edit the Makefiles in the directory tree, overriding
+   the target in the toplevel Makefile and pulling in
+   $SDK/make/Makefile.<TARGETBASE>-<TARGETPLAT>

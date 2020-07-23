@@ -1,0 +1,35 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport DLB RC (run commands) file
+#
+#       These are default commands that are for TechSupport DLB.
+#
+
+# Show S/W state in DLB.
+dump sw dlb
+
+# Show DLB related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Trunk DLB related LTs.
+local lt DLB_TRUNK;                                                $traverse_lt;
+local lt DLB_TRUNK_PORT_CONTROL;                                   $traverse_lt;
+local lt DLB_TRUNK_PORT_STATUS;                                    $traverse_lt;
+local lt DLB_TRUNK_MONITOR;                                        $traverse_lt;
+local lt DLB_TRUNK_STATS;                                          $traverse_lt;
+
+# Show Ecmp DLB related LTs.
+local lt DLB_ECMP;                                                 $traverse_lt;
+local lt DLB_ECMP_PORT_CONTROL;                                    $traverse_lt;
+local lt DLB_ECMP_PORT_STATUS;                                     $traverse_lt;
+local lt DLB_ECMP_MONITOR;                                         $traverse_lt;
+local lt DLB_ECMP_STATS;                                           $traverse_lt;
+
+# Show DLB related configurable LTs.
+local lt DLB_CONTROL;                                              $traverse_lt;
+local lt DLB_PORT_CONTROL;                                         $traverse_lt;
+local lt DLB_QUANTIZATION_THRESHOLD;                               $traverse_lt;
+local lt DLB_QUALITY_MAP;                                          $traverse_lt;

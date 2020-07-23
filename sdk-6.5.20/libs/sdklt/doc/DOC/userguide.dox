@@ -1,0 +1,61 @@
+/*! \mainpage Overview
+
+\section ug_start Getting Started
+
+\subpage build_intro
+
+\subpage build_ex
+
+\section ug_dev Device Management
+
+Please refer to the following section for a detailed description of
+the DRD device management APIs intended for application use.
+
+\subpage drd_dev
+
+\section ug_init Initialization
+
+The SDK Management API (BCMMGMT) is used to initialize and shut down
+the SDK core as well as the individual switch devices.
+
+\section ug_ha High-Availability (HA) Memory
+
+The SDK HA Memory API (BCMHA) is used to install callback functions
+for allocating and releasing HA memory pools that reside in the
+application space. The SDK components will allocate HA memory from the
+HA memory pools via the SDK HA memory manager.
+
+\subpage ha_mem
+
+\section ug_cfg Configuration
+
+The SDK Configuration API (BCMCFG) is used to configure basic system
+settings that are not mapped to any hardware switch tables.
+
+\subpage cfg_user_guide
+
+\section ug_appl Application Code
+
+The SDK includes a number of optional application libraries, which can
+be interated into a customer application or just serve as example
+code.
+
+\subpage bcma_comp
+
+\section ug_ltapi BCMLT API
+
+Once the SDK has been initialized, the application should use the
+BCMLT API for all switch configuration and monitoring.
+
+\subpage lt_user_guide
+
+\section ug_pktio Packet I/O
+
+The Packet I/O API (BCMPKT) is used to transfer network packet between
+the switch and the host CPU system. Please refer to the following
+section for a detailed description of the Packet I/O APIs intended for
+application use.
+
+\subpage pkt_user_guide
+
+*/

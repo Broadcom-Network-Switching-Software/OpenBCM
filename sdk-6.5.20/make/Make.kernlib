@@ -1,0 +1,55 @@
+# $Id: Make.kernlib,v 1.7 2011/08/21 07:18:42 bhanup Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Make rules/targets for handling libraries
+
+.SECONDARY:: ${BOBJS}
+
+targetlibsoname = ${lib}.so.${SHAREDLIBVER}
+targetlibrealname = ${targetlibsoname}
+targetlibso = ${LIBDIR}/${targetlibrealname}
+
+ifeq ($(TOOLS),Borland)
+
+LIBSUFFIX=lib
+
+${LIBDIR}/%.lib: ${BORLAND_BOBJS}
+	$(RM) $@
+	$(FOREACH) -subdir "$(LIBDIR)" \
+		"tlib $@ $(foreach obj, $(BORLAND_LOBJS), +-$(obj))"
+
+else	# !Borland
+
+LIBSUFFIX=a
+
+${LIBDIR}/%.a: ${BOBJS}
+ifdef QUIET
+	@$(ECHO) Building library $(notdir $@)
+endif
+	$Q$(RM) $@
+	$Q$(AR) ${ARFLAGS} $@ $(sort ${BOBJS})
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+ifeq ($(targetbase),unix)
+	$(CC) -shared -Wl,-soname,${targetlibsoname} -o ${targetlibso} ${BOBJS} -lc
+endif
+endif # LINUX_MAKE_SHARED_LIB #
+endif	# !Borland
+
+targetlib = ${LIBDIR}/${lib}.${LIBSUFFIX}
+
+all:: ${BLDDIR}/.tree ${targetlib}
+
+install:: all
+
+clean::
+ifdef QUIET
+	@$(ECHO) Cleaning objects for ${LOCALDIR} and ${lib}
+endif
+	$Q$(RM) ${BOBJS}
+	$Q$(RM) ${targetlib}
+	$Q$(RM) ${targetlibso}
+
+distclean:: clean
+

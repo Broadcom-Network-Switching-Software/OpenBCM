@@ -1,0 +1,79 @@
+/*! \page ngbde Broadcom Device Enumerator (BDE)
+
+\tableofcontents
+
+\section bde_intro Overview
+
+The Broadcom Device Enumerator (BDE) provides the SDK hardware
+abstraction for switch devices. The main areas of abstraction are
+register access, interrupt handling and DMA memory management.
+
+The BDE has a Linux kernel component (implemented as a loadable kernel
+module) and a user mode component (implemented as a C library).
+
+The user mode component communicates with the kernel component through
+a standard IOCTL interface.
+
+The API for the user mode component is described in a separate
+document (BCMLU).
+
+\section dev_info Device Information
+
+When the kernel BDE module is loaded, it will probe the system for
+Broadcom switch devices and save the device information in a local
+database.
+
+The user mode component can query this data through the IOCTL commands
+\ref NGBDE_IOC_PROBE_INFO and \ref NGBDE_IOC_DEV_INFO.
+
+The user mode component can use the IOCTL command \ref
+NGBDE_IOC_PHYS_ADDR to query the physical address of the memory-mapped
+device registers and then map those registers into user space.
+
+\section dma_pool DMA Memory Pools
+
+For each probed device, the BDE will allocate a pool of physically
+contiguous memory suitable for DMA operations.
+
+The user mode component can query the physical addresses for these DMA
+memory pools using the IOCTL command \ref NGBDE_IOC_PHYS_ADDR and then
+map the memory into user space for use by the SDK user mode drivers.
+
+By using kernel-managed DMA memory, we also avoid potential
+DMA-induced memory corruption in case the user mode application
+crashes without properly shutting down the switch hardware.
+
+\section intr_mgmt Interrupt Management
+
+The interrupt handler in the user mode driver is implemented as a
+high-priority thread that calls into the kernel BDE and sleeps on a
+wait queue until a hardware interrupt arrives.
+
+When a hardware interrupt arrives, the hardware interrupt handler in
+the kernel BDE will mask all interrupts and wake the user mode
+interrupt thread, which will return to user mode and process all
+pending interrupts.
+
+When there are no more pending interrupts, the user mode interrupt
+thread will re-enable the hardware interrupts (which were masked by
+the kernel interrupt handler), after which the thread will once again
+call into the kernel and slepp on the BDE wait queue.
+
+In order to keep the kernel BDE as generic as possible, the user mode
+application will use the IOCTL command \ref NGBDE_IOC_IRQ_REG_ADD to
+configure the interrupt registers that need to be masked by the kernel
+mode interrupt handler, when an interrupt arrives.
+
+The user mode interrupt thread will use the IOCTL command \ref
+NGBDE_IOC_INTR_CTRL to enter the kernel BDE wait queue. The same IOCTL
+command is also used to connect and disconnect the kernel mode
+interrupt handler.
+
+\section knet_intf KNET Interface
+
+The KNET kernel mode driver is used for packet I/O between the host
+CPU and the switch. The kernel mode BDE provides a public kernel mode
+API to allow the KNET module to access the switch device registers
+related to packet I/O. Please refer to \ref ngbde_kapi.h for details.
+
+*/

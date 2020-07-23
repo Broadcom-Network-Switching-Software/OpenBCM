@@ -1,0 +1,61 @@
+/*! \page bcma_qspicmd CLI Commands for QSPI flash device (QSPI)
+
+\section bcma_qspicmd_qspi Introduction
+
+The \c qspi command is mainly used to read and write data on a QSPI
+flash device.
+
+To see the complete command syntax, please run:
+
+\verbatim
+
+help qspi
+
+\endverbatim
+
+\section bcma_qspicmd_qspi_flashdev Specifying a flash profile
+
+The flash operations support 128MB and 256MB serial flash devices such
+as Micron MT25QL128 and MT25QL256.
+
+By default the flash driver recognizes compatible parts from the
+following vendors (manufacturer ID in parentheses):
+
+ - Micron (0x20)
+ - Cypress (0x01)
+ - Macronix (0xc2)
+ - Winbond (0xef)
+
+Any minor differences in the flash command set for compatible devices
+will be configured based on the manufacturer ID.
+
+For comaptible flash devices which are not supported by default, a
+custom flash profile can be added via the "qspi flashdev" command.
+
+\section bcma_qspicmd_qspi_flashop Accessing the flash device
+
+After the flash device has been identified and a profile has been
+assigned internally, we can start to access the flash e.g. "qspi
+flashread" for reading, "qspi flashwrite" for writing and "qspi
+flasherase" for erasing.
+
+Please note that the flash device must be erased before any data can
+be written to it. Also note that the offset and length of the erase
+command msut be aligned to the sector size.
+
+A dedicated command "flashload" is provided to load data from a binary
+file into the flash device. The command will internally erase the
+entire flash first and then write the file data to the flash.
+
+\section bcma_qspicmd_qspi_write Send raw command to the device
+
+For debugging purposes, a raw command can be sent to the device via
+"qspi write". An example would be to read the manufacturer ID with the
+command "qspi write 0x9f read 1". This command will send "0x9f" to the
+flash device and read one byte of data back.
+
+The flash instructions (e.g. using 0x9f to read the manufacturer ID)
+are sometimes device-specific. Please consult the flash device
+documentation for details.
+
+*/

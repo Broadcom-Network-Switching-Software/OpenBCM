@@ -1,0 +1,82 @@
+/*! \file bcm56996_a0_cmic_bcast.h
+ *
+ * Definitions for CMIC SBUS broadcast.
+ */
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+#ifndef BCM56996_A0_CMIC_BCAST_H
+#define BCM56996_A0_CMIC_BCAST_H
+
+#include <bcmbd/bcmbd_cmicx.h>
+
+/*! Number of CDPORT broadcast domains. */
+#define CDPORT_NUM_BCAST        4
+
+/*! Broadcast block for CDPORT broadcast domain #0. for U0 */
+#define CDPORT_BCST0_BLK_U0        102
+
+/*! Broadcast block for CDPORT broadcast domain #1. for U0 */
+#define CDPORT_BCST1_BLK_U0        104
+
+/*! Broadcast block for CDPORT broadcast domain #2. for U0 */
+#define CDPORT_BCST2_BLK_U0        106
+
+/*! Broadcast block for CDPORT broadcast domain #3. for U0 */
+#define CDPORT_BCST3_BLK_U0        108
+
+
+/*! Broadcast block for CDPORT broadcast domain #0. for U1 */
+#define CDPORT_BCST0_BLK_U1        103
+
+/*! Broadcast block for CDPORT broadcast domain #1. for U1 */
+#define CDPORT_BCST1_BLK_U1        105
+
+/*! Broadcast block for CDPORT broadcast domain #2. for U1 */
+#define CDPORT_BCST2_BLK_U1        107
+
+/*! Broadcast block for CDPORT broadcast domain #3. for U1 */
+#define CDPORT_BCST3_BLK_U1        109
+
+
+/*! First port in broadcast domain #0. */
+#define CDPORT_BCST0_1ST_PORT   1
+
+/*! First port in broadcast domain #1. */
+#define CDPORT_BCST1_1ST_PORT   65
+
+/*! First port in broadcast domain #2. */
+#define CDPORT_BCST2_1ST_PORT   129
+
+/*! First port in broadcast domain #3. */
+#define CDPORT_BCST3_1ST_PORT   193
+
+/*! Get broadcast block for a given broadcast domain for U0 */
+#define CDPORT_BCAST_BLK_U0(_d)    (CDPORT_BCST0_BLK_U0 + (_d) * 2)
+
+/*! Get broadcast block for a given broadcast domain for U1 */
+#define CDPORT_BCAST_BLK_U1(_d)    (CDPORT_BCST0_BLK_U1 + (_d) * 2)
+
+
+/*! Get broadcast domain for a given physical port number. */
+#define CDPORT_BCAST_DOMAIN(_p) \
+    (((_p) < CDPORT_BCST1_1ST_PORT) ? 0 : \
+     ((_p) < CDPORT_BCST2_1ST_PORT) ? 1 : \
+     ((_p) < CDPORT_BCST3_1ST_PORT) ? 2 : 3)
+
+/*! Get broadcast port for a given broadcast domain for U0 */
+#define CDPORT_BCAST_PORT_U0(_d) \
+    (BCMBD_CMICX_BCAST_BIT | CDPORT_BCAST_BLK_U0(_d))
+
+/*! Get broadcast port for a given broadcast domain for U1 */
+#define CDPORT_BCAST_PORT_U1(_d) \
+    (BCMBD_CMICX_BCAST_BIT | CDPORT_BCAST_BLK_U1(_d))
+
+/*! Get U0 or U1 for a given physical port number. */
+#define PORT_IS_U0(_p) ((((_p - 1) % 8) < 4) ? 1 : 0)
+
+
+#endif /* BCM56996_A0_CMIC_BCAST_H */

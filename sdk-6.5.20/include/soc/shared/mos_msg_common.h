@@ -1,0 +1,1799 @@
+/*
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ *
+ * File:    mos_msg_common.h
+ */
+
+#ifndef _SOC_SHARED_MOS_MSG_COMMON_H
+#define _SOC_SHARED_MOS_MSG_COMMON_H
+
+#ifdef BCM_UKERNEL
+  /* Build for uKernel not SDK */
+  #include "sdk_typedefs.h"
+#else
+#define CMICM_MSG_AREAS (0x00400000)
+#define NUM_UCS         (SOC_INFO(unit).num_ucs)
+#endif
+
+#include <soc/shared/mos_intr_common.h>
+
+/*
+ * Common structure shared between ARMs, host at fixed location
+ */
+
+/* This is the format of the status word sent/recvd between the
+   processors.  The ack bits is what limits the number of msgs to 16. */
+
+#define MOS_MSG_STATUS_STATE(s) ((s) & 0x03)
+#define MOS_MSG_STATUS_SENT_INDEX(s) ((((s)) >> 2) & 0x0f)
+#define MOS_MSG_STATUS_ACK_INDEX(s) ((((s)) >> 6) & 0x0f)
+
+#define MOS_MSG_STATUS_STATE_W(s, i) s = (s  & 0xfffffffc) | (i)
+#define MOS_MSG_STATUS_SENT_INDEX_W(s, i) s = (s  & 0xffffffc3) | ((i)  << 2)
+#define MOS_MSG_STATUS_ACK_INDEX_W(s, i) s = (s  & 0xfffffc3f) | ((i) << 6)
+
+#define MOS_MSG_ACK_MASK(i) (1 << ((i) + 16))
+#define MOS_MSG_ACK_BIT(s,i) (((s) >> ((i) + 16)) & 1)
+
+#define MOS_MSG_ACK_BIT_SET(s,i) s |= MOS_MSG_ACK_MASK(i)
+#define MOS_MSG_ACK_BIT_CLEAR(s,i) s &= ~MOS_MSG_ACK_MASK(i)
+
+typedef uint32 mos_msg_host_status_t;
+
+#define MOS_MSG_RESET_STATE 1     /* Used to force a reset */
+#define MOS_MSG_INIT_STATE  2     /* Used to indicate initilaized */
+#define MOS_MSG_READY_STATE 3     /* In normal mode */
+
+/*  Message data format.  Messages can be raw 60-bit messages or have
+    a predefined structure interpreted below.  It is up to the class
+    owner to make the interpretation */
+typedef union {
+    uint32   words[2];
+    struct {
+        uint8    mclass;        /* Class of this message */
+        uint8    subclass;      /* Subclass (or data for raw) */
+        uint16   len;           /* Arbitrary data field (usually length) */
+        uint32   data;          /* Arbitrary data field (usually phys addr) */
+    } s;
+} mos_msg_data_t;
+
+/* For now, all of the interfaces have 16 pending messages */
+#define NUM_MOS_MSG_SLOTS 16
+
+/* Highest order bit (0x80) is used for the subclass REPLY message */
+#define MOS_MSG_SUBCLASS_REPLY(subclass) (0x80 | (subclass))
+
+/* _MOS_MSG_DMA_FLAG indicates a "long" message (DMA required) */
+#define _MOS_MSG_DMA_FLAG                     0x40
+#define MOS_MSG_DMA_SET(sublass)          ((sublass) | _MOS_MSG_DMA_FLAG)
+#define MOS_MSG_DMA_CLEAR(sublass)        ((sublass) & ~_MOS_MSG_DMA_FLAG)
+#define MOS_MSG_DMA_MSG(sublass)          ((sublass) & _MOS_MSG_DMA_FLAG)
+
+/* If DMAs are requested then we must round the size up */
+#define MOS_MSG_DMA_LEN(x) (((x) + 3) & ~3)
+
+/* Define the message classes and subclasses */
+#define MOS_MSG_CLASS_SYSTEM            0
+#define   MOS_MSG_SUBCLASS_SYSTEM_PING              1
+#define   MOS_MSG_SUBCLASS_SYSTEM_APPL_INIT         2
+#define   MOS_MSG_SUBCLASS_SYSTEM_LOG               3
+#define   MOS_MSG_SUBCLASS_SYSTEM_INFO              4
+#define   MOS_MSG_SUBCLASS_SYSTEM_INFO_REPLY    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCLASS_SYSTEM_INFO)
+#define   MOS_MSG_SUBCLASS_SYSTEM_STATS             5
+#define   MOS_MSG_SUBCLASS_SYSTEM_CONSOLE_IN        6
+#define   MOS_MSG_SUBCLASS_SYSTEM_CONSOLE_OUT       7
+#define   MOS_MSG_SUBCLASS_SYSTEM_PBUF              8
+#define   MOS_MSG_SUBCLASS_SYSTEM_VERSION           9
+#define   MOS_MSG_SUBCLASS_SYSTEM_DMA_ENDIAN       10
+#define   _MOS_MSG_SUBCLASS_SYSTEM_LINK            11 /* Send Link bmp to uC */
+#define   MOS_MSG_SUBCLASS_SYSTEM_LINK_REQ         12 /* link bmp Req from uC */
+#define   MOS_MSG_SUBCLASS_SYSTEM_THREAD_INFO      13
+#define   MOS_MSG_SUBCLASS_SYSTEM_CMD_STATS_RESET  14
+#define   MOS_MSG_SUBCLASS_SYSTEM_CMD_CONSOLE_LOG  15
+#define   MOS_MSG_SUBCLASS_SYSTEM_EXCEPTION        16
+
+#define MOS_MSG_SUBCLASS_SYSTEM_LINK        \
+    MOS_MSG_DMA_SET(_MOS_MSG_SUBCLASS_SYSTEM_LINK)
+
+
+/*
+ * BFD
+ */
+#define MOS_MSG_CLASS_BFD                     1
+
+/* BFD message subclasses */
+#define _BFD_APPL_READY                       0x00
+#define _BFD_INIT                             0x01
+#define _BFD_UNINIT                           0x02
+#define _BFD_SESS_SET                         0x03
+#define _BFD_SESS_GET                         0x04
+#define _BFD_SESS_DELETE                      0x05
+#define _BFD_AUTH_SP_SET                      0x06
+#define _BFD_AUTH_SP_GET                      0x07
+#define _BFD_AUTH_SHA1_SET                    0x08
+#define _BFD_AUTH_SHA1_GET                    0x09
+#define _BFD_STAT_GET                         0x0a
+#define _BFD_SESS_POLL                        0x0b
+#define _BFD_SESS_DELETE_ALL                  0x0c
+#define _BFD_EVENT_MASK_SET                   0x0d
+#define _BFD_TX_START                         0x0e
+#define _BFD_TX_STOP                          0x0f
+#define _BFD_VERSION_EXCHANGE                 0x10
+#define _BFD_SEND_PORT_TX_QNUM_MAP            0x11
+#define _BFD_STATUS_MULTI_GET                 0x12
+#define _BFD_DISCARD_STAT_SET                 0x13
+#define _BFD_DISCARD_STAT_GET                 0x14
+#define _BFD_TRACE_LOG_ENABLE                 0x15
+#define _BFD_SEND_MATCH_ID_MAP                0x16
+
+#define MOS_MSG_SUBCLASS_BFD_APPL_READY             \
+    _BFD_APPL_READY
+#define MOS_MSG_SUBCLASS_BFD_INIT                   \
+    MOS_MSG_DMA_SET(_BFD_INIT)
+#define MOS_MSG_SUBCLASS_BFD_INIT_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_INIT)
+#define MOS_MSG_SUBCLASS_BFD_UNINIT                 \
+    _BFD_UNINIT
+#define MOS_MSG_SUBCLASS_BFD_UNINIT_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_UNINIT)
+#define MOS_MSG_SUBCLASS_BFD_SESS_SET               \
+    MOS_MSG_DMA_SET(_BFD_SESS_SET)
+#define MOS_MSG_SUBCLASS_BFD_SESS_SET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SESS_SET)
+#define MOS_MSG_SUBCLASS_BFD_SESS_GET	\
+    _BFD_SESS_GET
+#define MOS_MSG_SUBCLASS_BFD_SESS_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_SESS_GET))
+#define MOS_MSG_SUBCLASS_BFD_SESS_DELETE            \
+    _BFD_SESS_DELETE
+#define MOS_MSG_SUBCLASS_BFD_SESS_DELETE_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SESS_DELETE)
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SP_SET            \
+    MOS_MSG_DMA_SET(_BFD_AUTH_SP_SET)
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SP_SET_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_AUTH_SP_SET)
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SP_GET            \
+    _BFD_AUTH_SP_GET
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SP_GET_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_AUTH_SP_GET))
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SHA1_SET          \
+    MOS_MSG_DMA_SET(_BFD_AUTH_SHA1_SET)
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SHA1_SET_REPLY    \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_AUTH_SHA1_SET)
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SHA1_GET          \
+    _BFD_AUTH_SHA1_GET
+#define MOS_MSG_SUBCLASS_BFD_AUTH_SHA1_GET_REPLY    \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_AUTH_SHA1_GET))
+#define MOS_MSG_SUBCLASS_BFD_STAT_GET               \
+    MOS_MSG_DMA_SET(_BFD_STAT_GET)
+#define MOS_MSG_SUBCLASS_BFD_STAT_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_STAT_GET))
+#define MOS_MSG_SUBCLASS_BFD_SESS_POLL              \
+    _BFD_SESS_POLL
+#define MOS_MSG_SUBCLASS_BFD_SESS_POLL_REPLY        \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SESS_POLL)
+#define MOS_MSG_SUBCLASS_BFD_SESS_DELETE_ALL        \
+    _BFD_SESS_DELETE_ALL
+#define MOS_MSG_SUBCLASS_BFD_SESS_DELETE_ALL_REPLY  \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SESS_DELETE_ALL)
+#define MOS_MSG_SUBCLASS_BFD_EVENT_MASK_SET         \
+    _BFD_EVENT_MASK_SET
+#define MOS_MSG_SUBCLASS_BFD_EVENT_MASK_SET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_EVENT_MASK_SET)
+#define MOS_MSG_SUBCLASS_BFD_TX_START               \
+    _BFD_TX_START
+#define MOS_MSG_SUBCLASS_BFD_TX_START_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_TX_START)
+#define MOS_MSG_SUBCLASS_BFD_TX_STOP                \
+    _BFD_TX_STOP
+#define MOS_MSG_SUBCLASS_BFD_TX_STOP_REPLY          \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_TX_STOP)
+
+#define MOS_MSG_SUBCLASS_BFD_VERSION_EXCHANGE       \
+    MOS_MSG_DMA_SET(_BFD_VERSION_EXCHANGE)
+#define MOS_MSG_SUBCLASS_BFD_VER_EXCHANGE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_VERSION_EXCHANGE))
+
+#define MOS_MSG_SUBCLASS_BFD_PORT_TX_QNUM          \
+    MOS_MSG_DMA_SET(_BFD_SEND_PORT_TX_QNUM_MAP)
+#define MOS_MSG_SUBCLASS_BFD_PORT_TX_QNUM_REPLY    \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SEND_PORT_TX_QNUM_MAP)
+
+#define MOS_MSG_SUBCLASS_BFD_STATUS_MULTI_GET               \
+    _BFD_STATUS_MULTI_GET
+#define MOS_MSG_SUBCLASS_BFD_STATUS_MULTI_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_STATUS_MULTI_GET))
+
+#define MOS_MSG_SUBCLASS_BFD_DISCARD_STAT_SET               \
+    _BFD_DISCARD_STAT_SET
+#define MOS_MSG_SUBCLASS_BFD_DISCARD_STAT_SET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_DISCARD_STAT_SET)
+
+#define MOS_MSG_SUBCLASS_BFD_DISCARD_STAT_GET               \
+    _BFD_DISCARD_STAT_GET
+#define MOS_MSG_SUBCLASS_BFD_DISCARD_STAT_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_DISCARD_STAT_GET))
+
+#define MOS_MSG_SUBCLASS_BFD_TRACE_LOG_ENABLE                 \
+    _BFD_TRACE_LOG_ENABLE
+#define MOS_MSG_SUBCLASS_BFD_TRACE_LOG_ENABLE_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BFD_TRACE_LOG_ENABLE))
+
+#define MOS_MSG_SUBCLASS_BFD_MATCH_ID              \
+    MOS_MSG_DMA_SET(_BFD_SEND_MATCH_ID_MAP)
+#define MOS_MSG_SUBCLASS_BFD_MATCH_ID_REPLY        \
+    MOS_MSG_SUBCLASS_REPLY(_BFD_SEND_MATCH_ID_MAP)
+
+#define   MOS_MSG_CLASS_BFD_EVENT       2
+
+
+/*
+ * 1588/PTP Message Class
+ */
+#define MOS_MSG_CLASS_1588              (3)
+#define   MOS_MSG_SUBCLASS_MBOX_APPL_READY              (0)
+#define   MOS_MSG_SUBCLASS_MBOX_CONFIG                  (1)
+#define   MOS_MSG_SUBCLASS_MBOX_CMDRESP                 (2)
+#define   MOS_MSG_SUBCLASS_MBOX_TUNNEL_OUT              (3)
+#define   MOS_MSG_SUBCLASS_MBOX_TUNNEL_TO               (4)
+#define   MOS_MSG_SUBCLASS_MBOX_TUNNEL_IN               (5) 
+#define   MOS_MSG_SUBCLASS_MBOX_WB_PREP                 (6)
+#define   MOS_MSG_SUBCLASS_MBOX_EVENT_BASE              (32)
+
+/*Send ptp cosq port to ukernel by this message. The value 128 has not special meaning, it's only different from above message.*/
+#define   MOS_MSG_SUBCLASS_PTP_COSQ_PORT                (128)
+#define   MOS_MSG_SUBCLASS_TS0_TS1_COMBINED_MODE_EN     (129)
+#define   MOS_MSG_SUBCLASS_DNX_SYSHDR_UDHHDR_LEN        (130)
+#define   MOS_MSG_SUBCLASS_DNX_CUSTOM_FTMH_HEADER_EN    (131)
+#define   MOS_MSG_SUBCLASS_PTP_CF_SW_UPDATE_EN          (132)
+
+
+#define   MOS_MSG_MBOX_APPL_UNKNOWN  (0)
+#define   MOS_MSG_MBOX_APPL_BS       (1)
+#define   MOS_MSG_MBOX_APPL_1588     (2)
+
+
+#define MOS_MSG_CLASS_CES               4
+#define _CES_APPL_READY              0
+#define _CES_CRM_INIT                0x01 /* Init hello message */
+#define _CES_CRM_CONFIG              0x02 /* Common Clock Configuration */
+#define _CES_CRM_RCLOCK_CONFIG       0x03 /* Per service diff configuration */
+#define _CES_CRM_STATUS              0x04 /* Per port configuration */
+
+#define   MOS_MSG_SUBCLASS_CES_APPL_READY              _CES_APPL_READY
+#define   MOS_MSG_SUBCLASS_CES_CRM_INIT                MOS_MSG_DMA_SET(_CES_CRM_INIT)
+#define   MOS_MSG_SUBCLASS_CES_CRM_INIT_REPLY          MOS_MSG_SUBCLASS_REPLY(_CES_CRM_INIT)
+#define   MOS_MSG_SUBCLASS_CES_CRM_CONFIG              MOS_MSG_DMA_SET(_CES_CRM_CONFIG)
+#define   MOS_MSG_SUBCLASS_CES_CRM_CONFIG_REPLY        MOS_MSG_SUBCLASS_REPLY(_CES_CRM_CONFIG)
+#define   MOS_MSG_SUBCLASS_CES_CRM_RCLOCK_CONFIG       MOS_MSG_DMA_SET(_CES_CRM_RCLOCK_CONFIG)
+#define   MOS_MSG_SUBCLASS_CES_CRM_RCLOCK_CONFIG_REPLY MOS_MSG_SUBCLASS_REPLY(_CES_CRM_RCLOCK_CONFIG)
+#define   MOS_MSG_SUBCLASS_CES_CRM_STATUS              _CES_CRM_STATUS
+#define   MOS_MSG_SUBCLASS_CES_CRM_STATUS_REPLY        MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_CES_CRM_STATUS))
+
+#define MOS_MSG_CLASS_PKT_BCN           5
+#define   MOS_MSG_SUBCLASS_PKT_BCN_APPL_READY   0
+#define   MOS_MSG_SUBCLASS_PKT_BCN_CONFIG       1
+#define   MOS_MSG_SUBCLASS_PKT_BCN_DESTROY      2
+#define   MOS_MSG_SUBCLASS_PKT_BCN_GET          3
+#define   MOS_MSG_SUBCLASS_PKT_BCN_START        4
+#define   MOS_MSG_SUBCLASS_PKT_BCN_STOP         5
+
+#define   MOS_MSG_SUBCLASS_PKT_BCN_CONFIG_REPLY   1
+#define   MOS_MSG_SUBCLASS_PKT_BCN_DESTROY_REPLY  2
+#define   MOS_MSG_SUBCLASS_PKT_BCN_GET_REPLY      3
+#define   MOS_MSG_SUBCLASS_PKT_BCN_START_REPLY    4
+#define   MOS_MSG_SUBCLASS_PKT_BCN_STOP_REPLY     5
+
+#define MOS_MSG_CLASS_OANM              6
+#define   MOS_MSG_SUBCLASS_OANM_APPL_READY         0
+
+
+/*
+ * BHH
+ */
+#define MOS_MSG_CLASS_BHH                     7
+
+/* BHH message subclasses */
+#define _BHH_APPL_READY                       0x00
+#define _BHH_INIT                             0x01
+#define _BHH_UNINIT                           0x02
+#define _BHH_SESS_SET                         0x05
+#define _BHH_SESS_GET                         0x06
+#define _BHH_SESS_DELETE                      0x07
+#define _BHH_LOOPBACK_ADD                     0x08
+#define _BHH_LOOPBACK_GET                     0x09
+#define _BHH_LOOPBACK_DELETE                  0x0a
+#define _BHH_EVENT_MASK_SET                   0x0b
+#define _BHH_STAT_GET                         0x0c
+#define _BHH_RMEP_CREATE                      0x0d
+#define _BHH_LOSS_MEASUREMENT_ADD             0x0e
+#define _BHH_LOSS_MEASUREMENT_GET             0x0f
+#define _BHH_LOSS_MEASUREMENT_DELETE          0x10
+#define _BHH_DELAY_MEASUREMENT_ADD            0x11
+#define _BHH_DELAY_MEASUREMENT_GET            0x12
+#define _BHH_DELAY_MEASUREMENT_DELETE         0x13
+#define _BHH_PM_STATS_GET                     0x14
+#define _BHH_PM_PROFILE_ATTACH                0x15
+#define _BHH_PM_PROFILE_DETACH                0x16
+#define _BHH_PM_RAW_DATA_EVENT_SET            0x17
+#define _BHH_PM_RAW_DATA_EVENT_UNSET          0x18
+#define _BHH_VERSION_EXCHANGE                 0x19
+#define _BHH_FAULTS_MULTI_GET                 0x1a
+#define _BHH_SESS_UPDATE                      0x1b
+#define _BHH_PORT_TRUNK_UPDATE                0x1c
+#define _BHH_PORT_TRUNK_GET                   0x1d
+#define _BHH_CSF_ADD                          0x1e
+#define _BHH_CSF_GET                          0x1f
+#define _BHH_CSF_DELETE                       0x20
+#define _BHH_ACH_CHANNEL_TYPE                 0x21
+
+#define MOS_MSG_SUBCLASS_BHH_APPL_READY             \
+    _BHH_APPL_READY
+#define MOS_MSG_SUBCLASS_BHH_INIT                   \
+    MOS_MSG_DMA_SET(_BHH_INIT)
+#define MOS_MSG_SUBCLASS_BHH_INIT_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_INIT)
+#define MOS_MSG_SUBCLASS_BHH_UNINIT                 \
+    _BHH_UNINIT
+#define MOS_MSG_SUBCLASS_BHH_UNINIT_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_UNINIT)
+#define MOS_MSG_SUBCLASS_BHH_SESS_SET               \
+    MOS_MSG_DMA_SET(_BHH_SESS_SET)
+#define MOS_MSG_SUBCLASS_BHH_SESS_SET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_SESS_SET)
+#define MOS_MSG_SUBCLASS_BHH_SESS_GET               \
+    _BHH_SESS_GET
+#define MOS_MSG_SUBCLASS_BHH_SESS_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_SESS_GET))
+#define MOS_MSG_SUBCLASS_BHH_SESS_DELETE            \
+    _BHH_SESS_DELETE
+#define MOS_MSG_SUBCLASS_BHH_SESS_DELETE_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_SESS_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_SESS_UPDATE            \
+    MOS_MSG_DMA_SET(_BHH_SESS_UPDATE)
+#define MOS_MSG_SUBCLASS_BHH_SESS_UPDATE_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_SESS_UPDATE)
+#define MOS_MSG_SUBCLASS_BHH_STAT_GET               \
+    MOS_MSG_DMA_SET(_BHH_STAT_GET)
+#define MOS_MSG_SUBCLASS_BHH_STAT_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_STAT_GET))
+#define MOS_MSG_SUBCLASS_BHH_RMEP_CREATE              \
+    MOS_MSG_DMA_SET(_BHH_RMEP_CREATE)
+#define MOS_MSG_SUBCLASS_BHH_RMEP_CREATE_REPLY        \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_RMEP_CREATE)
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_ADD        \
+    MOS_MSG_DMA_SET(_BHH_LOOPBACK_ADD)
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_ADD_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_LOOPBACK_ADD)
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_DELETE        \
+    MOS_MSG_DMA_SET(_BHH_LOOPBACK_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_DELETE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_LOOPBACK_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_GET        \
+    _BHH_LOOPBACK_GET
+#define MOS_MSG_SUBCLASS_BHH_LOOPBACK_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_LOOPBACK_GET))
+#define MOS_MSG_SUBCLASS_BHH_EVENT_MASK_SET         \
+    _BHH_EVENT_MASK_SET
+#define MOS_MSG_SUBCLASS_BHH_EVENT_MASK_SET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_EVENT_MASK_SET)
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_ADD        \
+    MOS_MSG_DMA_SET(_BHH_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_ADD_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_DELETE        \
+    MOS_MSG_DMA_SET(_BHH_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_DELETE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_GET        \
+    _BHH_LOSS_MEASUREMENT_GET
+#define MOS_MSG_SUBCLASS_BHH_LOSS_MEASUREMENT_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_LOSS_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_ADD        \
+    MOS_MSG_DMA_SET(_BHH_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_ADD_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_DELETE        \
+    MOS_MSG_DMA_SET(_BHH_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_DELETE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_GET        \
+    _BHH_DELAY_MEASUREMENT_GET
+#define MOS_MSG_SUBCLASS_BHH_DELAY_MEASUREMENT_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_DELAY_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_BHH_PM_RAW_DATA_EVENT_SET         \
+    _BHH_PM_RAW_DATA_EVENT_SET
+#define MOS_MSG_SUBCLASS_BHH_PM_RAW_DATA_EVENT_SET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_PM_RAW_DATA_EVENT_SET)
+#define MOS_MSG_SUBCLASS_BHH_PM_RAW_DATA_EVENT_UNSET         \
+    _BHH_PM_RAW_DATA_EVENT_UNSET
+#define MOS_MSG_SUBCLASS_BHH_PM_RAW_DATA_EVENT_UNSET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_PM_RAW_DATA_EVENT_UNSET)
+
+#define MOS_MSG_SUBCLASS_BHH_PM_STATS_GET        \
+    _BHH_PM_STATS_GET
+#define MOS_MSG_SUBCLASS_BHH_PM_STATS_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_PM_STATS_GET))
+
+#define MOS_MSG_SUBCLASS_BHH_PM_PROFILE_ATTACH               \
+    MOS_MSG_DMA_SET(_BHH_PM_PROFILE_ATTACH)
+#define MOS_MSG_SUBCLASS_BHH_PM_PROFILE_ATTACH_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_PM_PROFILE_ATTACH)
+
+#define MOS_MSG_SUBCLASS_BHH_PM_PROFILE_DETACH            \
+    _BHH_PM_PROFILE_DETACH
+#define MOS_MSG_SUBCLASS_BHH_PM_PROFILE_DETACH_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_PM_PROFILE_DETACH)
+
+#define MOS_MSG_SUBCLASS_BHH_VERSION_EXCHANGE       \
+    MOS_MSG_DMA_SET(_BHH_VERSION_EXCHANGE)
+#define MOS_MSG_SUBCLASS_BHH_VER_EXCHANGE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_VERSION_EXCHANGE))
+
+#define MOS_MSG_SUBCLASS_BHH_FAULTS_MULTI_GET               \
+    _BHH_FAULTS_MULTI_GET
+
+#define MOS_MSG_SUBCLASS_BHH_FAULTS_MULTI_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_FAULTS_MULTI_GET))
+
+#define MOS_MSG_SUBCLASS_BHH_PORT_TRUNK_UPDATE                   \
+    MOS_MSG_DMA_SET(_BHH_PORT_TRUNK_UPDATE)
+#define MOS_MSG_SUBCLASS_BHH_PORT_TRUNK_UPDATE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_PORT_TRUNK_UPDATE)
+#define MOS_MSG_SUBCLASS_BHH_PORT_TRUNK_GET                      \
+    _BHH_PORT_TRUNK_GET
+#define MOS_MSG_SUBCLASS_BHH_PORT_TRUNK_GET_REPLY                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_PORT_TRUNK_GET))
+
+#define MOS_MSG_SUBCLASS_BHH_CSF_ADD                          \
+    MOS_MSG_DMA_SET(_BHH_CSF_ADD)
+#define MOS_MSG_SUBCLASS_BHH_CSF_ADD_REPLY                    \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_CSF_ADD)
+#define MOS_MSG_SUBCLASS_BHH_CSF_GET                          \
+    _BHH_CSF_GET
+#define MOS_MSG_SUBCLASS_BHH_CSF_GET_REPLY                    \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_BHH_CSF_GET))
+#define MOS_MSG_SUBCLASS_BHH_CSF_DELETE                       \
+    _BHH_CSF_DELETE
+#define MOS_MSG_SUBCLASS_BHH_CSF_DELETE_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_CSF_DELETE)
+
+#define MOS_MSG_SUBCLASS_BHH_ACH_CHANNEL_TYPE                 \
+    MOS_MSG_DMA_SET(_BHH_ACH_CHANNEL_TYPE)
+#define MOS_MSG_SUBCLASS_BHH_ACH_CHANNEL_TYPE_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(_BHH_ACH_CHANNEL_TYPE)
+
+/* BHH EVENT class */
+#define   MOS_MSG_CLASS_BHH_EVENT       8
+
+/* BHH EVENT subclasses */
+#define _BHH_EVENT_OAM_PM_EVENT            0x01
+
+
+/*
+ * LLM
+ */
+#define MOS_MSG_CLASS_LLM                     9
+
+/* LLM message subclasses */
+#define _LLM_APPL_READY                       0x00
+#define _LLM_INIT                             0x01
+#define _LLM_UNINIT                           0x02
+#define _LLM_PON_ATT_MAC_BITMAP_SET           0x03
+#define _LLM_PON_ATT_MAC_BITMAP_GET           0x04
+#define _LLM_APP_INFO_GET                     0x05
+#define _LLM_APP_POINTER_DB_GET               0x06
+#define _LLM_APP_PON_ID_DB_GET                0x07
+#define _LLM_PON_ATT_MAC_BITMAP_INCREASE      0x08
+#define _LLM_PON_ATT_MAC_BITMAP_DECREASE      0x09
+#define _LLM_PON_ATT_SERVICE_ENABLE           0x0a
+#define _LLM_PON_ATT_UPDATE                   0x0b
+#define _LLM_PON_ATT_MAC_RX_MODE_SET          0x0c
+#define _LLM_PON_ATT_MAC_MOVE_SET             0x0d
+#define _LLM_PON_ATT_MAC_MOVE_GET             0x0e
+
+
+
+
+#define MOS_MSG_SUBCLASS_LLM_APPL_READY             \
+    _LLM_APPL_READY
+
+#define MOS_MSG_SUBCLASS_LLM_INIT                   \
+    MOS_MSG_DMA_SET(_LLM_INIT)
+#define MOS_MSG_SUBCLASS_LLM_INIT_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_INIT)
+
+#define MOS_MSG_SUBCLASS_LLM_UNINIT                 \
+    _LLM_UNINIT
+#define MOS_MSG_SUBCLASS_LLM_UNINIT_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_UNINIT)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_SET                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_BITMAP_SET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_SET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_MAC_BITMAP_SET)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_GET                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_BITMAP_GET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_GET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_BITMAP_GET))
+
+#define MOS_MSG_SUBCLASS_LLM_APP_INFO_GET                   \
+    MOS_MSG_DMA_SET(_LLM_APP_INFO_GET)
+#define MOS_MSG_SUBCLASS_LLM_APP_INFO_GET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_LLM_APP_INFO_GET))
+
+#define MOS_MSG_SUBCLASS_LLM_POINTER_DB_INFO_GET                   \
+    MOS_MSG_DMA_SET(_LLM_APP_POINTER_DB_GET)
+#define MOS_MSG_SUBCLASS_LLM_POINTER_DB_INFO_GET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_LLM_APP_POINTER_DB_GET))
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ID_DB_GET                   \
+    MOS_MSG_DMA_SET(_LLM_APP_PON_ID_DB_GET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ID_DB_GET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_LLM_APP_PON_ID_DB_GET))
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_INCREASE                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_BITMAP_INCREASE)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_INCREASE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_MAC_BITMAP_INCREASE)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_DECREASE                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_BITMAP_DECREASE)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_BITMAP_DECREASE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_MAC_BITMAP_DECREASE)
+
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_SERVICE_ENABLE                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_SERVICE_ENABLE)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_SERVICE_ENABLE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_SERVICE_ENABLE)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_UPDATE                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_UPDATE)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_UPDATE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_UPDATE)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_RX_MODE_SET                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_RX_MODE_SET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_RX_MODE_SET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_MAC_RX_MODE_SET)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_MOVE_SET                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_MOVE_SET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_MOVE_SET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_LLM_PON_ATT_MAC_MOVE_SET)
+
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_MOVE_GET                   \
+    MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_MOVE_GET)
+#define MOS_MSG_SUBCLASS_LLM_PON_ATT_MAC_MOVE_GET_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_LLM_PON_ATT_MAC_MOVE_GET))
+
+
+
+
+/*
+ * BroadSync Message Class
+ */
+#define MOS_MSG_CLASS_BS               10
+
+
+/*
+ * LLM EVENT listiner
+ */
+#define MOS_MSG_CLASS_LLM_EVENT        11
+                  
+/* LLM event subclasses */
+#define _LLM_NOTIFICATION                     0x00
+#define _LLM_EVENT_MAC_MOVE                   0x01
+
+#define MOS_MSG_SUBCLASS_LLM_NOTIFICATION                   \
+    _LLM_NOTIFICATION
+
+#define MOS_MSG_SUBCLASS_LLM_EVENT_MAC_MOVE                 \
+    MOS_MSG_DMA_SET(_LLM_EVENT_MAC_MOVE)
+
+/*
+ * Test interface
+ */
+#define MOS_MSG_CLASS_TEST              12
+#define   MOS_MSG_SUBCLASS_TEST_APPL_READY      0
+#define   MOS_MSG_SUBCLASS_TEST_COUNT           1
+#define   MOS_MSG_SUBCLASS_TEST_RUN             2
+
+/*
+ * PSCAN application
+ */
+#define MOS_MSG_CLASS_PSCAN             13
+#define MOS_MSG_SUBCLASS_PSCAN_APPL_READY       0
+#define MOS_MSG_SUBCLASS_PSCAN_SCAN_DELAY       1
+#define MOS_MSG_SUBCLASS_PSCAN_PORT_CONFIG      2
+#define MOS_MSG_SUBCLASS_PSCAN_PORT_BITMAP      MOS_MSG_DMA_SET(3)
+#define MOS_MSG_SUBCLASS_PSCAN_PORT_BITMAP_REPLY 4
+
+#define MOS_MSG_CLASS_PSCAN_EVENT       14
+#define MOS_MSG_SUBCLASS_PSCAN_PORT_ALERT       0
+
+#define MOS_MSG_CLASS_VERSION           15
+
+/*
+ * ETH LM/DM application
+ */
+
+#define MOS_MSG_CLASS_ETH_LM_DM			16
+
+#define _ETH_LM_DM_APPL_READY           		0x00
+#define _ETH_LM_DM_INIT                         0x01
+#define _ETH_LM_DM_UNINIT                       0x02
+#define _ETH_LM_DM_SESS_SET                     0x03
+#define _ETH_LM_DM_SESS_GET                     0x04
+#define _ETH_LM_DM_SESS_DELETE                  0x05
+#define _ETH_LM_DM_STAT_GET                     0x06
+#define _ETH_LM_DM_LOSS_MEASUREMENT_ADD         0x07
+#define _ETH_LM_DM_LOSS_MEASUREMENT_GET         0x08
+#define _ETH_LM_DM_LOSS_MEASUREMENT_DELETE      0x09
+#define _ETH_LM_DM_DELAY_MEASUREMENT_ADD        0x0a
+#define _ETH_LM_DM_DELAY_MEASUREMENT_GET        0x0b
+#define _ETH_LM_DM_DELAY_MEASUREMENT_DELETE     0x0c
+#define _ETH_LM_DM_PM_RAW_DATA_EVENT_SET        0x0d
+#define _ETH_LM_DM_PM_RAW_DATA_EVENT_UNSET      0x0e
+#define _ETH_LM_DM_PM_STATS_GET                 0x0f
+#define _ETH_LM_DM_PM_PROFILE_ATTACH            0x10
+#define _ETH_LM_DM_PM_PROFILE_DETACH            0x11
+#define _ETH_LM_DM_VERSION_EXCHANGE             0x12
+#define _ETH_LM_DM_EVENT_MASK_SET               0x13
+
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_APPL_READY             \
+    _ETH_LM_DM_APPL_READY
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_INIT                   \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_INIT)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_INIT_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_INIT)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_UNINIT                 \
+    _ETH_LM_DM_UNINIT
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_UNINIT_REPLY           \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_UNINIT)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_SET               \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_SESS_SET)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_SET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_SESS_SET)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_GET               \
+    _ETH_LM_DM_SESS_GET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_SESS_GET))
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_DELETE            \
+    _ETH_LM_DM_SESS_DELETE
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_SESS_DELETE_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_SESS_DELETE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_STAT_GET               \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_STAT_GET)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_STAT_GET_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_STAT_GET))
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_ADD        \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_ADD_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_DELETE        \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_DELETE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_GET        \
+    _ETH_LM_DM_LOSS_MEASUREMENT_GET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_LOSS_MEASUREMENT_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_LOSS_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_ADD        \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_ADD_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_DELETE        \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_DELETE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_GET        \
+    _ETH_LM_DM_DELAY_MEASUREMENT_GET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_DELAY_MEASUREMENT_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_DELAY_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_RAW_DATA_EVENT_SET         \
+    _ETH_LM_DM_PM_RAW_DATA_EVENT_SET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_RAW_DATA_EVENT_SET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_PM_RAW_DATA_EVENT_SET)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_RAW_DATA_EVENT_UNSET         \
+    _ETH_LM_DM_PM_RAW_DATA_EVENT_UNSET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_RAW_DATA_EVENT_UNSET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_PM_RAW_DATA_EVENT_UNSET)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_STATS_GET        \
+    _ETH_LM_DM_PM_STATS_GET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_STATS_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_PM_STATS_GET))
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_EVENT_MASK_SET                            \
+    _ETH_LM_DM_EVENT_MASK_SET
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_EVENT_MASK_SET_REPLY                      \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_EVENT_MASK_SET)
+
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_PROFILE_ATTACH               \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_PM_PROFILE_ATTACH)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_PROFILE_ATTACH_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_PM_PROFILE_ATTACH)
+
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_PROFILE_DETACH            \
+    _ETH_LM_DM_PM_PROFILE_DETACH
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_PM_PROFILE_DETACH_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_ETH_LM_DM_PM_PROFILE_DETACH)
+
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_VERSION_EXCHANGE       \
+    MOS_MSG_DMA_SET(_ETH_LM_DM_VERSION_EXCHANGE)
+#define MOS_MSG_SUBCLASS_ETH_LM_DM_VER_EXCHANGE_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ETH_LM_DM_VERSION_EXCHANGE))
+/*
+ * PTP SIM application
+ */
+
+#define MOS_MSG_CLASS_PTPSIM            17
+
+#define   MOS_MSG_SUBCLASS_PTPSIM_APPL_READY     (0)
+#define   MOS_MSG_SUBCLASS_PTPSIM_CONFIG         (1)
+#define   MOS_MSG_SUBCLASS_PTPSIM_STATS          (2)
+
+#define   MOS_MSG_SUBCLASS_PTPSIM_CONFIG_REPLY   (1)
+#define   MOS_MSG_SUBCLASS_PTPSIM_STATS_REPLY    (2)
+
+/*
+ * MPLS_LM_DM
+ */
+#define MOS_MSG_CLASS_MPLS_LM_DM                     18 
+
+/* MPLS_LM_DM message subclasses */
+#define _MPLS_LM_DM_APPL_READY                       0x00
+#define _MPLS_LM_DM_INIT                             0x01
+#define _MPLS_LM_DM_UNINIT                           0x02
+#define _MPLS_LM_DM_LOSS_MEASUREMENT_ADD             0x03
+#define _MPLS_LM_DM_LOSS_MEASUREMENT_GET             0x04
+#define _MPLS_LM_DM_LOSS_MEASUREMENT_DELETE          0x05
+#define _MPLS_LM_DM_DELAY_MEASUREMENT_ADD            0x06
+#define _MPLS_LM_DM_DELAY_MEASUREMENT_GET            0x07
+#define _MPLS_LM_DM_DELAY_MEASUREMENT_DELETE         0x08
+#define _MPLS_LM_DM_EVENT_MASK_SET                   0x09
+#define _MPLS_LM_DM_STAT_GET                         0x0A
+#define _MPLS_LM_DM_PM_STATS_GET                     0x0B
+#define _MPLS_LM_DM_PM_PROFILE_ATTACH                0x0C
+#define _MPLS_LM_DM_PM_PROFILE_DETACH                0x0D
+#define _MPLS_LM_DM_PM_RAW_DATA_EVENT_SET            0x0E
+#define _MPLS_LM_DM_PM_RAW_DATA_EVENT_UNSET          0x0F
+
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_APPL_READY                                \
+    _MPLS_LM_DM_APPL_READY
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_INIT                                      \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_INIT)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_INIT_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_INIT)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_UNINIT                                    \
+    _MPLS_LM_DM_UNINIT
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_UNINIT_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_UNINIT)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_STAT_GET                                  \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_STAT_GET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_STAT_GET_REPLY                            \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_MPLS_LM_DM_STAT_GET))
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_EVENT_MASK_SET                            \
+    _MPLS_LM_DM_EVENT_MASK_SET
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_EVENT_MASK_SET_REPLY                      \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_EVENT_MASK_SET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_ADD                      \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_ADD_REPLY                \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_LOSS_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_DELETE                   \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_DELETE_REPLY             \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_LOSS_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_GET                      \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_LOSS_MEASUREMENT_GET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_LOSS_MEASUREMENT_GET_REPLY                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_MPLS_LM_DM_LOSS_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_ADD                     \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_ADD_REPLY               \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_DELAY_MEASUREMENT_ADD)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_DELETE                  \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_DELETE_REPLY            \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_DELAY_MEASUREMENT_DELETE)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_GET                     \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_DELAY_MEASUREMENT_GET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_DELAY_MEASUREMENT_GET_REPLY               \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_MPLS_LM_DM_DELAY_MEASUREMENT_GET))
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_RAW_DATA_EVENT_SET   \
+    _MPLS_LM_DM_PM_RAW_DATA_EVENT_SET
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_RAW_DATA_EVENT_SET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_PM_RAW_DATA_EVENT_SET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_RAW_DATA_EVENT_UNSET         \
+    _MPLS_LM_DM_PM_RAW_DATA_EVENT_UNSET
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_RAW_DATA_EVENT_UNSET_REPLY   \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_PM_RAW_DATA_EVENT_UNSET)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_STATS_GET        \
+    _MPLS_LM_DM_PM_STATS_GET
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_STATS_GET_REPLY     \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_MPLS_LM_DM_PM_STATS_GET))
+
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_PROFILE_ATTACH               \
+    MOS_MSG_DMA_SET(_MPLS_LM_DM_PM_PROFILE_ATTACH)
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_PROFILE_ATTACH_REPLY         \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_PM_PROFILE_ATTACH)
+
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_PROFILE_DETACH            \
+    _MPLS_LM_DM_PM_PROFILE_DETACH
+#define MOS_MSG_SUBCLASS_MPLS_LM_DM_PM_PROFILE_DETACH_REPLY      \
+    MOS_MSG_SUBCLASS_REPLY(_MPLS_LM_DM_PM_PROFILE_DETACH)
+
+
+/* MPLS LM DM event class */
+#define   MOS_MSG_CLASS_MPLS_LM_DM_EVENT       19
+
+/* MPLS LM DM event subclasses */
+#define _MPLS_LM_DM_EVENT_OAM_PM_EVENT         0x0
+
+#define MOS_MSG_CLASS_OAM_PM			20
+
+#define _OAM_PM_BHH                     		0x00
+#define _OAM_PM_MPLS_LM_DM                		0x01
+#define _OAM_PM_ETH_LM_DM                		0x02
+
+#define MOS_MSG_SUBCLASS_OAM_PM_BHH         \
+    MOS_MSG_DMA_SET(_OAM_PM_BHH)
+
+/* Ethernet LM DM event class */
+#define MOS_MSG_CLASS_ETH_LM_DM_EVENT         21
+
+/* Ethernet LM DM event subclasses */
+#define _ETH_LM_DM_EVENT_OAM_PM_EVENT         0x0
+
+
+#define MOS_MSG_CLASS_CCM                       22
+
+#define _CCM_APPL_READY                         0x00
+#define _CCM_INIT                               0x01
+#define _CCM_GROUP_SET                          0x02
+#define _CCM_GROUP_GET                          0x03
+#define _CCM_GROUP_GET_FAULTS_ONLY              0x04
+#define _CCM_GROUP_DELETE                       0x05
+#define _CCM_MEP_SET                            0x06
+#define _CCM_MEP_GET                            0x07
+#define _CCM_MEP_GET_FAULTS_ONLY                0x08
+#define _CCM_MEP_DELETE                         0x09
+#define _CCM_EVENT_MASK_SET                     0x0A
+#define _CCM_UNINT                              0x0B
+#define _CCM_GET_APP_DATA                       0x0C
+#define _CCM_PORT_TRUNK_UPDATE                  0x0D
+#define _CCM_PORT_TRUNK_GET                     0x0E
+
+#define MOS_MSG_SUBCLASS_CCM_APPL_READY                                       \
+    _CCM_APPL_READY
+#define MOS_MSG_SUBCLASS_CCM_INIT                                             \
+    MOS_MSG_DMA_SET(_CCM_INIT)
+#define MOS_MSG_SUBCLASS_CCM_INIT_REPLY                                       \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_INIT)
+
+#define MOS_MSG_SUBCLASS_CCM_GROUP_SET                                        \
+    MOS_MSG_DMA_SET(_CCM_GROUP_SET)
+#define MOS_MSG_SUBCLASS_CCM_GROUP_SET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_GROUP_SET)
+#define MOS_MSG_SUBCLASS_CCM_GROUP_GET                                        \
+    _CCM_GROUP_GET
+#define MOS_MSG_SUBCLASS_CCM_GROUP_GET_REPLY                                  \
+        MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_CCM_GROUP_GET))
+#define MOS_MSG_SUBCLASS_CCM_GROUP_GET_FAULTS_ONLY                            \
+    _CCM_GROUP_GET_FAULTS_ONLY
+#define MOS_MSG_SUBCLASS_CCM_GROUP_DELETE                                     \
+    _CCM_GROUP_DELETE
+#define MOS_MSG_SUBCLASS_CCM_GROUP_DELETE_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_GROUP_DELETE)
+
+#define MOS_MSG_SUBCLASS_CCM_MEP_SET                                          \
+    MOS_MSG_DMA_SET(_CCM_MEP_SET)
+#define MOS_MSG_SUBCLASS_CCM_MEP_SET_REPLY                                    \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_MEP_SET)
+#define MOS_MSG_SUBCLASS_CCM_MEP_GET                                          \
+    _CCM_MEP_GET
+#define MOS_MSG_SUBCLASS_CCM_MEP_GET_REPLY                                    \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_CCM_MEP_GET))
+#define MOS_MSG_SUBCLASS_CCM_MEP_GET_FAULTS_ONLY                              \
+    _CCM_MEP_GET_FAULTS_ONLY
+#define MOS_MSG_SUBCLASS_CCM_MEP_DELETE                                       \
+    _CCM_MEP_DELETE
+#define MOS_MSG_SUBCLASS_CCM_MEP_DELETE_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_MEP_DELETE)    
+
+#define MOS_MSG_SUBCLASS_CCM_EVENT_MASK_SET                                   \
+    _CCM_EVENT_MASK_SET
+#define MOS_MSG_SUBCLASS_CCM_EVENT_MASK_SET_REPLY                             \
+        MOS_MSG_SUBCLASS_REPLY(_CCM_EVENT_MASK_SET)
+
+#define MOS_MSG_SUBCLASS_CCM_UNINIT                                           \
+    _CCM_UNINT
+#define MOS_MSG_SUBCLASS_CCM_UNINIT_REPLY                                     \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_UNINT)
+
+#define MOS_MSG_SUBCLASS_CCM_GET_APP_DATA                                     \
+    _CCM_GET_APP_DATA
+#define MOS_MSG_SUBCLASS_CCM_GET_APP_DATA_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_CCM_GET_APP_DATA))
+
+#define MOS_MSG_SUBCLASS_CCM_PORT_TRUNK_UPDATE                                \
+    MOS_MSG_DMA_SET(_CCM_PORT_TRUNK_UPDATE)
+#define MOS_MSG_SUBCLASS_CCM_PORT_TRUNK_UPDATE_REPLY                          \
+    MOS_MSG_SUBCLASS_REPLY(_CCM_PORT_TRUNK_UPDATE)
+
+#define MOS_MSG_SUBCLASS_CCM_PORT_TRUNK_GET                                   \
+    _CCM_PORT_TRUNK_GET
+#define MOS_MSG_SUBCLASS_CCM_PORT_TRUNK_GET_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_CCM_PORT_TRUNK_GET))
+
+
+#define MOS_MSG_CLASS_CCM_EVENT                 23
+
+#define MOS_MSG_CLASS_THREAD_INFO               24
+
+/*
+ * KBP
+ */
+#define MOS_MSG_CLASS_KBP                       25
+#define   _KBP_APPL_READY                       1 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_ROP_REQ         2 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_ROP_RSP         3 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_TEST_REQ        4 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_TEST_RSP        5 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_CONFIG_REQ      6 /* Send Link bmp to uC */
+#define   _MOS_MSG_SUBCLASS_KBP_CONFIG_RSP      7 /* Send Link bmp to uC */
+
+
+#define MOS_MSG_SUBCLASS_KBP_APPL_READY             \
+        _KBP_APPL_READY
+#define MOS_MSG_SUBCLASS_KBP_ROP_REQ        \
+        MOS_MSG_DMA_SET(_MOS_MSG_SUBCLASS_KBP_ROP_REQ)
+#define MOS_MSG_SUBCLASS_KBP_ROP_RSP       \
+        _MOS_MSG_SUBCLASS_KBP_ROP_RSP
+#define MOS_MSG_SUBCLASS_KBP_TEST_REQ       \
+        _MOS_MSG_SUBCLASS_KBP_TEST_REQ
+#define MOS_MSG_SUBCLASS_KBP_TEST_RSP      \
+        _MOS_MSG_SUBCLASS_KBP_TEST_RSP
+#define MOS_MSG_SUBCLASS_KBP_CONFIG_REQ       \
+        MOS_MSG_DMA_SET(_MOS_MSG_SUBCLASS_KBP_CONFIG_REQ)
+#define MOS_MSG_SUBCLASS_KBP_CONFIG_RSP      \
+        _MOS_MSG_SUBCLASS_KBP_CONFIG_RSP
+
+/* FT Messages */
+
+#define MOS_MSG_CLASS_FT                        26
+
+#define _FT_APPL_READY                         0x00
+#define _FT_INIT                               0x01
+#define _FT_SHUTDOWN                           0x02
+#define _FT_EM_KEY_FORMAT                      0x03
+#define _FT_GROUP_CREATE                       0x04
+#define _FT_GROUP_GET                          0x05
+#define _FT_GROUP_DELETE                       0x06
+#define _FT_GROUP_UPDATE                       0x07
+#define _FT_GROUP_FLOW_DATA_GET                0x08
+#define _FT_TEMPLATE_CREATE                    0x09
+#define _FT_TEMPLATE_GET                       0x0A
+#define _FT_TEMPLATE_DELETE                    0x0B
+#define _FT_COLLECTOR_CREATE                   0x0C
+#define _FT_COLLECTOR_GET                      0x0D
+#define _FT_COLLECTOR_DELETE                   0x0E
+#define _FT_SER_EVENT                          0x0F
+#define _FT_TEMPLATE_XMIT                      0x10
+#define _FT_TEMPLATE_XMIT_GET                  0x11 /* Unimplemented */
+#define _FT_ELPH_PROFILE_CREATE                0x12
+#define _FT_ELPH_PROFILE_GET                   0x13
+#define _FT_ELPH_PROFILE_DELETE                0x14
+#define _FT_STATS_LEARN_GET                    0x15
+#define _FT_STATS_EXPORT_GET                   0x16
+#define _FT_STATS_AGE_GET                      0x17
+#define _FT_STATS_ELPH_GET                     0x18
+#define _FT_FEATURES_EXCHANGE                  0x19
+#define _FT_EM_GROUP_CREATE                    0x20
+#define _FT_EM_GROUP_DELETE                    0x21
+#define _FT_GROUP_ACTIONS_SET                  0x22
+#define _FT_EXPORT_INTERVAL_UPDATE             0x23
+#define _FT_QCM_CFG_INIT_SET                   0x24
+#define _FT_QCM_HOST_BUF_CREATE                0x25
+#define _FT_QCM_HOST_BUF_GET                   0x26
+#define _FT_QCM_CONFIG_CREATE                  0x27
+#define _FT_QCM_CONFIG_GET                     0x28
+#define _FT_QCM_FLOW_VIEW_CONFIG_CREATE        0x29
+#define _FT_QCM_FLOW_VIEW_CONFIG_GET           0x2A
+#define _FT_QCM_CURRENT_TIME_GET               0x2B
+#define _FT_QCM_EM_GROUP_CREATE                0x2C
+#define _FT_QCM_STATS_SCAN_GET                 0x2D
+#define _FT_QCM_STATS_ENABLE                   0x2E
+
+
+#define MOS_MSG_SUBCLASS_FT_APPL_READY                                       \
+    _FT_APPL_READY
+
+#define MOS_MSG_SUBCLASS_FT_INIT                                             \
+    MOS_MSG_DMA_SET(_FT_INIT)
+
+#define MOS_MSG_SUBCLASS_FT_INIT_REPLY                                        \
+    MOS_MSG_SUBCLASS_REPLY(_FT_INIT)
+
+#define MOS_MSG_SUBCLASS_FT_SHUTDOWN                                          \
+    _FT_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_FT_SHUTDOWN_REPLY                                    \
+    MOS_MSG_SUBCLASS_REPLY(_FT_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_FT_EM_KEY_FORMAT                                     \
+    MOS_MSG_DMA_SET(_FT_EM_KEY_FORMAT)
+
+#define MOS_MSG_SUBCLASS_FT_EM_KEY_FORMAT_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(_FT_EM_KEY_FORMAT)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_CREATE                                      \
+    MOS_MSG_DMA_SET(_FT_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_CREATE_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_FT_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_GET                                         \
+    _FT_GROUP_GET
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_GET_REPLY                                   \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_GROUP_GET))
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_DELETE                                      \
+    _FT_GROUP_DELETE
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_DELETE_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_FT_GROUP_DELETE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_UPDATE                                      \
+    MOS_MSG_DMA_SET(_FT_GROUP_UPDATE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_UPDATE_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_FT_GROUP_UPDATE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_FLOW_DATA_GET                               \
+    MOS_MSG_DMA_SET(_FT_GROUP_FLOW_DATA_GET)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_FLOW_DATA_GET_REPLY                         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_GROUP_FLOW_DATA_GET))
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_CREATE                                    \
+    MOS_MSG_DMA_SET(_FT_TEMPLATE_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_CREATE_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_FT_TEMPLATE_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_GET                                        \
+    _FT_TEMPLATE_GET
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_TEMPLATE_GET))
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_DELETE                                     \
+    _FT_TEMPLATE_DELETE
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_DELETE_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(_FT_TEMPLATE_DELETE)
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_CREATE                                    \
+    MOS_MSG_DMA_SET(_FT_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_CREATE_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_FT_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_GET                                        \
+    _FT_COLLECTOR_GET
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_COLLECTOR_GET))
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_DELETE                                     \
+    _FT_COLLECTOR_DELETE
+
+#define MOS_MSG_SUBCLASS_FT_COLLECTOR_DELETE_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(_FT_COLLECTOR_DELETE)
+
+#define MOS_MSG_SUBCLASS_FT_SER_EVENT                                            \
+    MOS_MSG_DMA_SET(_FT_SER_EVENT)
+
+#define MOS_MSG_SUBCLASS_FT_SER_EVENT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(_FT_SER_EVENT)
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_XMIT                                        \
+    MOS_MSG_DMA_SET(_FT_TEMPLATE_XMIT)
+
+#define MOS_MSG_SUBCLASS_FT_TEMPLATE_XMIT_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_FT_TEMPLATE_XMIT)
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_CREATE                                  \
+    MOS_MSG_DMA_SET(_FT_ELPH_PROFILE_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_CREATE_REPLY                            \
+    MOS_MSG_SUBCLASS_REPLY(_FT_ELPH_PROFILE_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_GET                                     \
+    _FT_ELPH_PROFILE_GET
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_GET_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_ELPH_PROFILE_GET))
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_DELETE                                  \
+    _FT_ELPH_PROFILE_DELETE
+
+#define MOS_MSG_SUBCLASS_FT_ELPH_PROFILE_DELETE_REPLY                            \
+    MOS_MSG_SUBCLASS_REPLY(_FT_ELPH_PROFILE_DELETE)
+
+#define MOS_MSG_SUBCLASS_FT_STATS_LEARN_GET                                      \
+    _FT_STATS_LEARN_GET
+
+#define MOS_MSG_SUBCLASS_FT_STATS_LEARN_GET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_STATS_LEARN_GET))
+
+#define MOS_MSG_SUBCLASS_FT_STATS_EXPORT_GET                                     \
+    _FT_STATS_EXPORT_GET
+
+#define MOS_MSG_SUBCLASS_FT_STATS_EXPORT_GET_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_STATS_EXPORT_GET))
+
+#define MOS_MSG_SUBCLASS_FT_STATS_AGE_GET                                        \
+    _FT_STATS_AGE_GET
+
+#define MOS_MSG_SUBCLASS_FT_STATS_AGE_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_STATS_AGE_GET))
+
+#define MOS_MSG_SUBCLASS_FT_STATS_ELPH_GET                                       \
+    _FT_STATS_ELPH_GET
+
+#define MOS_MSG_SUBCLASS_FT_STATS_ELPH_GET_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_STATS_ELPH_GET))
+
+#define MOS_MSG_SUBCLASS_FT_FEATURES_EXCHANGE                                    \
+    MOS_MSG_DMA_SET(_FT_FEATURES_EXCHANGE)
+
+#define MOS_MSG_SUBCLASS_FT_FEATURES_EXCHANGE_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_FEATURES_EXCHANGE))
+
+#define MOS_MSG_SUBCLASS_FT_EM_GROUP_CREATE                                      \
+    MOS_MSG_DMA_SET(_FT_EM_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_EM_GROUP_CREATE_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_FT_EM_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_EM_GROUP_DELETE                                      \
+    _FT_EM_GROUP_DELETE
+
+#define MOS_MSG_SUBCLASS_FT_EM_GROUP_DELETE_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_FT_EM_GROUP_DELETE)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_ACTIONS_SET                                    \
+    MOS_MSG_DMA_SET(_FT_GROUP_ACTIONS_SET)
+
+#define MOS_MSG_SUBCLASS_FT_GROUP_ACTIONS_SET_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_FT_GROUP_ACTIONS_SET)
+
+#define MOS_MSG_SUBCLASS_FT_EXPORT_INTERVAL_UPDATE                               \
+    (_FT_EXPORT_INTERVAL_UPDATE)
+
+#define MOS_MSG_SUBCLASS_FT_EXPORT_INTERVAL_UPDATE_REPLY                         \
+    MOS_MSG_SUBCLASS_REPLY(_FT_EXPORT_INTERVAL_UPDATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CFG_INIT_SET                                     \
+    MOS_MSG_DMA_SET(_FT_QCM_CFG_INIT_SET)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CFG_INIT_SET_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_CFG_INIT_SET)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_HOST_BUF_CREATE                                  \
+    MOS_MSG_DMA_SET(_FT_QCM_HOST_BUF_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_HOST_BUF_CREATE_REPLY                            \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_HOST_BUF_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_HOST_BUF_GET                                     \
+    _FT_QCM_HOST_BUF_GET
+
+#define MOS_MSG_SUBCLASS_FT_QCM_HOST_BUF_GET_REPLY                               \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_QCM_HOST_BUF_GET))
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CONFIG_CREATE                                    \
+    MOS_MSG_DMA_SET(_FT_QCM_CONFIG_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CONFIG_CREATE_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_CONFIG_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CONFIG_GET                                       \
+    _FT_QCM_CONFIG_GET
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CONFIG_GET_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_QCM_CONFIG_GET))
+
+#define MOS_MSG_SUBCLASS_FT_QCM_FLOW_VIEW_CONFIG_CREATE                          \
+    MOS_MSG_DMA_SET(_FT_QCM_FLOW_VIEW_CONFIG_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_FLOW_VIEW_CONFIG_CREATE_REPLY                    \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_FLOW_VIEW_CONFIG_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_FLOW_VIEW_CONFIG_GET                             \
+    _FT_QCM_FLOW_VIEW_CONFIG_GET
+
+#define MOS_MSG_SUBCLASS_FT_QCM_FLOW_VIEW_CONFIG_GET_REPLY                       \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_QCM_FLOW_VIEW_CONFIG_GET))
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CURRENT_TIME_GET                                 \
+    _FT_QCM_CURRENT_TIME_GET
+
+#define MOS_MSG_SUBCLASS_FT_QCM_CURRENT_TIME_GET_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_QCM_CURRENT_TIME_GET))
+
+#define MOS_MSG_SUBCLASS_FT_QCM_EM_GROUP_CREATE                                  \
+    MOS_MSG_DMA_SET(_FT_QCM_EM_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_EM_GROUP_CREATE_REPLY                            \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_EM_GROUP_CREATE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_STATS_SCAN_GET                                   \
+    _FT_QCM_STATS_SCAN_GET
+
+#define MOS_MSG_SUBCLASS_FT_QCM_STATS_SCAN_GET_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_FT_QCM_STATS_SCAN_GET))
+
+#define MOS_MSG_SUBCLASS_FT_QCM_STATS_ENABLE                                   \
+    MOS_MSG_DMA_SET(_FT_QCM_STATS_ENABLE)
+
+#define MOS_MSG_SUBCLASS_FT_QCM_STATS_ENABLE_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(_FT_QCM_STATS_ENABLE)
+
+#define MOS_MSG_CLASS_IFA                        27
+
+#define _IFA_APPL_READY                         0x00
+#define _IFA_INIT                               0x01
+#define _IFA_SHUTDOWN                           0x02
+#define _IFA_COLLECTOR_SET                      0x03
+#define _IFA_COLLECTOR_GET                      0x04
+#define _IFA_CONFIG_SET                         0x05
+#define _IFA_CONFIG_GET                         0x06
+#define _IFA_STAT_GET                           0x07
+#define _IFA_STAT_SET                           0x08
+
+#define MOS_MSG_SUBCLASS_IFA_APPL_READY                                      \
+    _IFA_APPL_READY
+
+#define MOS_MSG_SUBCLASS_IFA_INIT                                            \
+    MOS_MSG_DMA_SET(_IFA_INIT)
+
+#define MOS_MSG_SUBCLASS_IFA_INIT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(_IFA_INIT)
+
+#define MOS_MSG_SUBCLASS_IFA_SHUTDOWN                                        \
+    _IFA_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_IFA_SHUTDOWN_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_IFA_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_IFA_COLLECTOR_SET                                   \
+    MOS_MSG_DMA_SET(_IFA_COLLECTOR_SET)
+
+#define MOS_MSG_SUBCLASS_IFA_COLLECTOR_SET_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(_IFA_COLLECTOR_SET)
+
+#define MOS_MSG_SUBCLASS_IFA_COLLECTOR_GET                                   \
+    _IFA_COLLECTOR_GET
+
+#define MOS_MSG_SUBCLASS_IFA_COLLECTOR_GET_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_IFA_COLLECTOR_GET))
+
+#define MOS_MSG_SUBCLASS_IFA_CONFIG_SET                                      \
+    MOS_MSG_DMA_SET(_IFA_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_IFA_CONFIG_SET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_IFA_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_IFA_CONFIG_GET                                      \
+    _IFA_CONFIG_GET
+
+#define MOS_MSG_SUBCLASS_IFA_CONFIG_GET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_IFA_CONFIG_GET))
+
+#define MOS_MSG_SUBCLASS_IFA_STAT_GET                                        \
+    _IFA_STAT_GET
+
+#define MOS_MSG_SUBCLASS_IFA_STAT_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_IFA_STAT_GET))
+
+#define MOS_MSG_SUBCLASS_IFA_STAT_SET                                        \
+    MOS_MSG_DMA_SET(_IFA_STAT_SET)
+
+#define MOS_MSG_SUBCLASS_IFA_STAT_SET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_IFA_STAT_SET)
+
+/* ST Messages */
+
+#define MOS_MSG_CLASS_ST                        28
+
+#define _ST_APPL_READY                         0x00
+#define _ST_INIT                               0x01
+#define _ST_SHUTDOWN                           0x02
+#define _ST_PORTS_ADD                          0x03
+#define _ST_PORTS_GET                          0x04
+#define _ST_PORTS_DELETE                       0x05
+#define _ST_INSTANCE_CREATE                    0x06
+#define _ST_INSTANCE_GET                       0x07
+#define _ST_INSTANCE_DELETE                    0x08
+/* Create a collector in the FW */
+#define _ST_COLLECTOR_CREATE                   0x09
+#define _ST_COLLECTOR_DELETE                   0x0A
+/* Enable the collector by attaching to instance */
+#define _ST_INSTANCE_COLLECTOR_ATTACH          0x0B
+#define _ST_INSTANCE_COLLECTOR_DETACH          0x0C
+#define _ST_SYSTEM_ID_SET                      0x0D
+#define _ST_SYSTEM_ID_GET                      0x0E
+#define _ST_INSTANCE_EXPORT_STATS_GET          0x0F
+#define _ST_INSTANCE_EXPORT_STATS_SET          0x10
+#define _ST_CONFIG_SET                         0x11
+
+#define MOS_MSG_SUBCLASS_ST_APPL_READY                                      \
+    _ST_APPL_READY
+
+#define MOS_MSG_SUBCLASS_ST_INIT                                            \
+    MOS_MSG_DMA_SET(_ST_INIT)
+
+#define MOS_MSG_SUBCLASS_ST_INIT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INIT)
+
+#define MOS_MSG_SUBCLASS_ST_SHUTDOWN                                        \
+    _ST_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_ST_SHUTDOWN_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_ST_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_ST_PORT_CONFIG_SET                                 \
+    MOS_MSG_DMA_SET(_ST_PORT_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_ST_PORT_CONFIG_SET_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(_ST_PORT_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_ADD                                       \
+    MOS_MSG_DMA_SET(_ST_PORTS_ADD)
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_ADD_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(_ST_PORTS_ADD)
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_GET                                       \
+    _ST_PORTS_GET
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_GET_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ST_PORTS_GET))
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_DELETE                                    \
+    MOS_MSG_DMA_SET(_ST_PORTS_DELETE)
+
+#define MOS_MSG_SUBCLASS_ST_PORTS_DELETE_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(_ST_PORTS_DELETE)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_CREATE                                 \
+    MOS_MSG_DMA_SET(_ST_INSTANCE_CREATE)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_CREATE_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INSTANCE_CREATE)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_GET                                    \
+    _ST_INSTANCE_GET
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_GET_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ST_INSTANCE_GET))
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_DELETE                                 \
+    _ST_INSTANCE_DELETE
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_DELETE_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INSTANCE_DELETE)
+
+#define MOS_MSG_SUBCLASS_ST_COLLECTOR_CREATE                                \
+    MOS_MSG_DMA_SET(_ST_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_ST_COLLECTOR_CREATE_REPLY                          \
+    MOS_MSG_SUBCLASS_REPLY(_ST_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_ST_COLLECTOR_DELETE                                \
+    _ST_COLLECTOR_DELETE
+
+#define MOS_MSG_SUBCLASS_ST_COLLECTOR_DELETE_REPLY                          \
+    MOS_MSG_SUBCLASS_REPLY(_ST_COLLECTOR_DELETE)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_COLLECTOR_ATTACH                       \
+    MOS_MSG_DMA_SET(_ST_INSTANCE_COLLECTOR_ATTACH)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_COLLECTOR_ATTACH_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INSTANCE_COLLECTOR_ATTACH)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_COLLECTOR_DETACH                        \
+    _ST_INSTANCE_COLLECTOR_DETACH
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_COLLECTOR_DETACH_REPLY                  \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INSTANCE_COLLECTOR_DETACH)
+
+#define MOS_MSG_SUBCLASS_ST_SYSTEM_ID_SET                                   \
+    MOS_MSG_DMA_SET(_ST_SYSTEM_ID_SET)
+
+#define MOS_MSG_SUBCLASS_ST_SYSTEM_ID_SET_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(_ST_SYSTEM_ID_SET)
+
+#define MOS_MSG_SUBCLASS_ST_SYSTEM_ID_GET                                   \
+    _ST_SYSTEM_ID_GET
+
+#define MOS_MSG_SUBCLASS_ST_SYSTEM_ID_GET_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ST_SYSTEM_ID_GET))
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_EXPORT_STATS_GET                       \
+    _ST_INSTANCE_EXPORT_STATS_GET
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_EXPORT_STATS_GET_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_ST_INSTANCE_EXPORT_STATS_GET))
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_EXPORT_STATS_SET                       \
+    MOS_MSG_DMA_SET(_ST_INSTANCE_EXPORT_STATS_SET)
+
+#define MOS_MSG_SUBCLASS_ST_INSTANCE_EXPORT_STATS_SET_REPLY                 \
+    MOS_MSG_SUBCLASS_REPLY(_ST_INSTANCE_EXPORT_STATS_SET)
+
+#define MOS_MSG_SUBCLASS_ST_CONFIG MOS_MSG_DMA_SET(_ST_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_ST_CONFIG_REPLY MOS_MSG_SUBCLASS_REPLY(_ST_CONFIG_SET)
+
+
+#define MOS_MSG_CLASS_INT                        29
+
+#define _INT_APPL_READY                         0x00
+#define _INT_INIT                               0x01
+#define _INT_SHUTDOWN                           0x02
+#define _INT_CONFIG_SET                         0x03
+#define _INT_CONFIG_GET                         0x04
+#define _INT_STAT_GET                           0x05
+
+#define MOS_MSG_SUBCLASS_INT_APPL_READY                                      \
+    _INT_APPL_READY
+
+#define MOS_MSG_SUBCLASS_INT_INIT                                            \
+    MOS_MSG_DMA_SET(_INT_INIT)
+
+#define MOS_MSG_SUBCLASS_INT_INIT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(_INT_INIT)
+
+#define MOS_MSG_SUBCLASS_INT_SHUTDOWN                                        \
+    _INT_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_INT_SHUTDOWN_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_INT_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_INT_CONFIG_SET                                      \
+    MOS_MSG_DMA_SET(_INT_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_INT_CONFIG_SET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_INT_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_INT_CONFIG_GET                                      \
+    _INT_CONFIG_GET
+
+#define MOS_MSG_SUBCLASS_INT_CONFIG_GET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_INT_CONFIG_GET))
+
+#define MOS_MSG_SUBCLASS_INT_STAT_GET                                        \
+    _INT_STAT_GET
+
+#define MOS_MSG_SUBCLASS_INT_STAT_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_INT_STAT_GET))
+
+
+#define MOS_MSG_CLASS_SUM                        30
+
+#define _SUM_APPL_READY                         0x00
+#define _SUM_INIT                               0x01
+#define _SUM_SHUTDOWN                           0x02
+#define _SUM_CONFIG_SET                         0x03
+#define _SUM_CONFIG_GET                         0x04
+#define _SUM_STAT_GET                           0x05
+
+#define MOS_MSG_SUBCLASS_SUM_APPL_READY                                      \
+    _SUM_APPL_READY
+
+#define MOS_MSG_SUBCLASS_SUM_INIT                                            \
+    _SUM_INIT
+
+#define MOS_MSG_SUBCLASS_SUM_INIT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(_SUM_INIT)
+
+#define MOS_MSG_SUBCLASS_SUM_SHUTDOWN                                        \
+    _SUM_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_SUM_SHUTDOWN_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(_SUM_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_SUM_CONFIG_SET                                      \
+    MOS_MSG_DMA_SET(_SUM_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_SUM_CONFIG_SET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(_SUM_CONFIG_SET)
+
+#define MOS_MSG_SUBCLASS_SUM_CONFIG_GET                                      \
+    _SUM_CONFIG_GET
+
+#define MOS_MSG_SUBCLASS_SUM_CONFIG_GET_REPLY                                \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_SUM_CONFIG_GET))
+
+#define MOS_MSG_SUBCLASS_SUM_STAT_GET                                        \
+    _SUM_STAT_GET
+
+#define MOS_MSG_SUBCLASS_SUM_STAT_GET_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(_SUM_STAT_GET))
+
+/* IFAv2 messages. */
+#define MOS_MSG_CLASS_IFA2                31
+
+#define IFA2_APPL_READY                         0x00
+#define IFA2_INIT                               0x01
+#define IFA2_SHUTDOWN                           0x02
+#define IFA2_MD_FORMAT_SET                      0x03
+#define IFA2_CONFIG_UPDATE                      0x04
+#define IFA2_COLLECTOR_CREATE                   0x05
+#define IFA2_COLLECTOR_DELETE                   0x06
+#define IFA2_STATS_SET                          0x07
+#define IFA2_STATS_GET                          0x08
+#define IFA2_TEMPLATE_CREATE                    0x09
+#define IFA2_TEMPLATE_DELETE                    0x0A
+#define IFA2_TEMPLATE_GET                       0x0B
+#define IFA2_TEMPLATE_XMIT_SET                  0x0C
+#define IFA2_TEMPLATE_XMIT_GET                  0x0D
+
+#define MOS_MSG_SUBCLASS_IFA2_APPL_READY                                      \
+    IFA2_APPL_READY
+
+#define MOS_MSG_SUBCLASS_IFA2_INIT                                            \
+    MOS_MSG_DMA_SET(IFA2_INIT)
+
+#define MOS_MSG_SUBCLASS_IFA2_INIT_REPLY                                      \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_INIT)
+
+#define MOS_MSG_SUBCLASS_IFA2_SHUTDOWN                                        \
+    IFA2_SHUTDOWN
+
+#define MOS_MSG_SUBCLASS_IFA2_SHUTDOWN_REPLY                                  \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_SHUTDOWN)
+
+#define MOS_MSG_SUBCLASS_IFA2_MD_FORMAT_SET                                   \
+    MOS_MSG_DMA_SET(IFA2_MD_FORMAT_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_MD_FORMAT_SET_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_MD_FORMAT_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_CONFIG_UPDATE                                   \
+    MOS_MSG_DMA_SET(IFA2_CONFIG_UPDATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_CONFIG_UPDATE_REPLY                             \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_CONFIG_UPDATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_COLLECTOR_CREATE                                \
+    MOS_MSG_DMA_SET(IFA2_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_COLLECTOR_CREATE_REPLY                          \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_COLLECTOR_CREATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_COLLECTOR_DELETE                                \
+    IFA2_COLLECTOR_DELETE
+
+#define MOS_MSG_SUBCLASS_IFA2_COLLECTOR_DELETE_REPLY                          \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_COLLECTOR_DELETE)
+
+#define MOS_MSG_SUBCLASS_IFA2_STATS_SET                                       \
+    MOS_MSG_DMA_SET(IFA2_STATS_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_STATS_SET_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_STATS_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_STATS_GET                                       \
+    IFA2_STATS_GET
+
+#define MOS_MSG_SUBCLASS_IFA2_STATS_GET_REPLY                                 \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(IFA2_STATS_GET))
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_CREATE                                 \
+    MOS_MSG_DMA_SET(IFA2_TEMPLATE_CREATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_CREATE_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_TEMPLATE_CREATE)
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_DELETE                                 \
+    IFA2_TEMPLATE_DELETE
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_DELETE_REPLY                           \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_TEMPLATE_DELETE)
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_GET                                    \
+    IFA2_TEMPLATE_GET
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_GET_REPLY                              \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(IFA2_TEMPLATE_GET))
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_XMIT_SET                               \
+    MOS_MSG_DMA_SET(IFA2_TEMPLATE_XMIT_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_XMIT_SET_REPLY                         \
+    MOS_MSG_SUBCLASS_REPLY(IFA2_TEMPLATE_XMIT_SET)
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_XMIT_GET                               \
+    IFA2_TEMPLATE_XMIT_GET
+
+#define MOS_MSG_SUBCLASS_IFA2_TEMPLATE_XMIT_GET_REPLY                         \
+    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_DMA_SET(IFA2_TEMPLATE_XMIT_GET))
+
+/* Notes:
+ *  - Changing MOS_MSG_CLASS numbers will break backwards compatibility.
+ *  - Please contact stakeholders before modifying MOS_MSG_CLASS sections
+ *  - MAX_MOS_MSG_CLASS should == the value of the highest MOS_MSG_CLASS
+ */
+
+#define MAX_MOS_MSG_CLASS                       31
+
+#define MOS_MSG_INCR(val) (((val) + 1) & (NUM_MOS_MSG_SLOTS - 1))
+
+/* Message area per processor pair/direction */
+typedef struct {
+    mos_msg_host_status_t status;
+    mos_msg_data_t data[NUM_MOS_MSG_SLOTS];
+} mos_msg_area_t;
+
+#define MOS_MSG_HOST_SDK 0
+#define MOS_MSG_HOST_UC0 1
+#define MOS_MSG_HOST_UC1 2
+#define MOS_MSG_HOST_UC2 3
+
+
+typedef struct {
+    uint32 config;
+    uint32 clk_ctrl;
+    uint32 heartbeat_ctrl;
+    uint32 heartbeat_down_duration;
+    uint32 heartbeat_up_duration;
+} mos_msg_bs_reg_cache_t;
+
+/* Structure for containing 32/48/64-bit hardware timestamp */
+typedef struct {
+    uint32 ts_hi;
+    uint32 ts_lo;
+} mos_msg_hw_ts_t;
+
+/* Area for storage of most recent timestamps from timestamp FIFO
+ * together with system (PTP / Broadsync) time
+ */
+#if defined(BCM_MONTEREY_SUPPORT) || defined(MONTEREY)
+
+#define MOS_MSG_MAX_TS_EVENTS (19)
+#else
+#define MOS_MSG_MAX_TS_EVENTS (19)
+#endif
+typedef struct {
+    uint32 capture_mask;
+    uint32 full_time_seconds_hi;
+    uint32 full_time_seconds_low;
+    uint32 full_time_nanoseconds;
+
+    mos_msg_hw_ts_t ts0_timestamp;
+    mos_msg_hw_ts_t ts1_timestamp;
+
+    mos_msg_hw_ts_t event_timestamp[MOS_MSG_MAX_TS_EVENTS];
+    mos_msg_hw_ts_t prev_event_timestamp[MOS_MSG_MAX_TS_EVENTS];
+} mos_msg_timestamps_t;
+
+/* ukernel debug data structures */
+#define MOS_UCDBG_MAX_LOG_ENTRIES_HOST  (512)
+#define MOS_UCDBG_MAX_LOG_ENTRIES_UC    (512)
+#define MOS_UCDBG_LOG_BUFF_SIZE         (128)
+
+typedef enum mos_msg_ucdbg_logtype_e {
+    _bcmCmicUcDbgLogHostMcsLoad     = (1<<0),
+    _bcmCmicUcDbgLogHostUcMsg       = (1<<1),
+    _bcmCmicUcDbgLogHostPtpRx       = (1<<2),
+    _bcmCmicUcDbgLogHostPtp         = (1<<3),
+    _bcmCmicUcDbgLogUcMcsLoad       = (1<<4),
+    _bcmCmicUcDbgLogUcPtp           = (1<<5) 
+} mos_msg_ucdbg_logtype_t;
+
+typedef union {
+    uint32 word;
+    struct {
+        uint8   valid;
+        uint8   unused;
+        uint16  logtype;
+    } h;
+} mos_msg_ucdbg_entry_hdr_t;
+
+typedef struct {
+    mos_msg_ucdbg_entry_hdr_t   hdr;
+    char                        log[MOS_UCDBG_LOG_BUFF_SIZE];
+} mos_msg_ucdbg_entry_t;
+
+typedef enum mos_msg_ucdbg_capture_mode_e {
+    _bcmUcDbgLogCaptureDisabled     = 0,
+    _bcmUcDbgLogCaptureFreerun      = 1, /* default circular write from wrindx */
+    _bcmUcDbgLogCaptureOneShot      = 2  /* one shot write wrptr to rdptr */
+} mos_msg_ucdbg_capture_mode_t;
+
+typedef enum mos_msg_ucdbg_mod_state_e {
+    _bcmUcDbgUcUnInitialized            =0,
+    _bcmUcDbgUcSP408InitComplete        =1,
+    _bcmUcDbgUcUARTInitComplete         =2,
+    _bcmUcDbgUcCmicIRQInitComplete      =3,
+    _bcmUcDbgUcTimesyncIRQInitComplete  =4,
+    _bcmUcDbgUcMosDMAInitComplete       =5,
+    _bcmUcDbgUcPKTDMAInitComplete       =6,
+    _bcmUcDbgUcSBUSDMAInitComplete      =7,
+    _bcmUcDbgUcMoSMsgInitStarted        =8,
+    _bcmUcDbgUcBoardInitComplete        =9,
+    _bcmUcDbgUcWaitingForHostSync       =10,
+    _bcmUcDbgUcRunning                  =11,
+    _bcmUcDbgUcDMAFail                  =12,
+    _bcmUcDbgHostInitialized            =13,
+    _bcmUcDbgHostRunning                =14,
+    _bcmUcDbgMaxState                   =15
+}mos_msg_ucdbg_mod_state_t;
+
+typedef struct {
+    uint32  area_in;
+    uint32  area_out;
+} mos_msg_ucbdg_msg_area_t;
+
+typedef union {
+    uint32 word[12];             /* 2 words used by Host, 1 by UC */
+    struct {
+        uint32  state_host;
+        uint32  state_uc; 
+        uint32  capture_mode;
+        uint32  filter_mask;
+        uint32  rdindx;         
+        uint32  wrindx;
+        uint32  debug[6];
+    }s;
+} mos_msg_ucdbg_hdr_t;
+
+#define UCBDG_OFFSET_STATE_HOST   0
+#define UCDBG_OFFSET_STATE_UC     1
+#define UCDBG_OFFSET_CAPTURE_MODE 2
+#define UCDBG_OFFSET_WR_INDX      5
+#define UCDBG_OFFSET_MSG_AREA     (sizeof(mos_msg_ucdbg_hdr_t)/sizeof(uint32)) 
+
+
+typedef struct {
+    mos_msg_ucdbg_hdr_t      hdr;
+    mos_msg_ucbdg_msg_area_t msg_host[2 + 2];
+    uint32                   msg_area_base;
+    uint32                   ucdbg_msg_base;
+    uint32                   uc_processor_num;
+    void   *puclog_buff; /*arr of ptr - mos_msg_ucdbg_entry_t*/
+} mos_msg_cmic_ucdbg_t;
+
+
+/*  Fixed memory locations */
+
+/* The host-to UC message areas are first */
+#define MSG_AREA_HOST_TO_ARM(base, arm) ((base) + (sizeof(mos_msg_area_t) * (arm)))
+
+/* The ARM areas are next with the uC to host area taking the slot that
+   would be for self messages */
+#define MSG_AREA_ARM_TO_HOST(base, arm) ((base) + (sizeof(mos_msg_area_t) * (NUM_UCS + (NUM_UCS * (arm)) + (arm))))
+#define MSG_AREA_ARM_TO_ARM(base, FROM, TO) ((base) + (sizeof(mos_msg_area_t) * (NUM_UCS  + (NUM_UCS * (FROM)) + (TO))))
+
+#define MSG_AREA_END(base) ((base) + sizeof(mos_msg_area_t) * 2 * (NUM_UCS+1) * NUM_UCS)
+
+extern uint32 bfd_firmware_version;
+extern uint32 bhh_firmware_version;
+
+#if defined(INCLUDE_ETH_LM_DM)
+extern uint32 eth_lm_dm_firmware_version;
+#endif  /* INCLUDE_ETH_LM_DM */
+
+#define MOS_MSG_EVENT_QUEUE_SIZE 1000
+#endif

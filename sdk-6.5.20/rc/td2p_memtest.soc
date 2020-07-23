@@ -1,0 +1,27 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Trident2Plus Sanity Memory tests
+#
+# Script to run all available memory tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+set rct=false
+
+echo "Running Switching Memory Tests ..."
+
+counter off
+l2mode off
+linkscan off
+memscan off
+config add parity_enable=0
+#init soc;
+#init misc;
+
+rcload tr50_bcm56860_a0.soc
+rcload tr51_bcm56860_a0.soc
+rcload tr52_bcm56860_a0.soc
+rcload tr71_bcm56860_a0.soc

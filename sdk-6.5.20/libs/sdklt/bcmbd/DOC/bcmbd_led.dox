@@ -1,0 +1,104 @@
+/*! \page bcmbd_led LED Driver
+
+\section bcmbd_led_example BCMBD LED Application Example.
+
+An application may use the following two sets of BCMBD APIs to download LED
+firmware and control it:
+- The FWM (\ref bcmbd_fwm) component provides common APIs to download firmware.
+- The LED component provides APIs to control LED controllers and read/write the
+  port link up information from the LED firmware.
+
+The LED application example below demonstrates:
+
+- How to use the BCMBD FWM API to download LED firmware.
+
+- How to use the BCMBD LED API to control the LED controller.
+
+- How to install a link-change callback function which will update the
+  link status within the LED firmware usiing BCMBD LED API.
+
+\code{.c}
+
+/*
+ * Callback function for updating link status within LED firmware.
+ */
+void
+led_callback(bcmlt_table_notif_info_t *notify_info, void *user_data)
+{
+    int led_uc, led_uc_port, pport;
+    uint8_t portdata;
+    int rv;
+
+    bcmlt_entry_handle_t ent_hdl;
+    int unit;
+    bcmlt_entry_handle_t ent_hdl;
+    int unit;
+    uint64_t port, link;
+
+    unit = notify_info->unit;
+    ent_hdl = notify_info->entry_hdl;
+
+    bcmlt_entry_field_get(ent_hdl, "PORT_ID", &port);
+    bcmlt_entry_field_get(ent_hdl, "LINK_STATE", &link);
+
+    pport = bcmpc_lport_to_pport(unit, port);
+
+    if (pport == BCMPC_INVALID_PPORT) {
+        return;
+    }
+
+    rv = bcmbd_port_to_led_uc_port(unit, pport, &led_uc, &led_uc_port);
+
+    if (SHR_SUCCESS(rv)) {
+        /* Update link up information within LED firmware */
+        bcmbd_led_uc_swdata_read(unit, led_uc, led_uc_port, &portdata);
+
+        /* Add link up information into portdata */
+        portdata = (portdata & 0xFE) | (link != 0);
+
+        /* Update link up information to LED firmware*/
+        bcmbd_led_uc_swdata_write(unit, led_uc, led_uc_port, portdata);
+    }
+}
+
+
+/*
+ * Per-unit LED firmware package pointers and associated sizes.
+ */
+extern uint8_t *fpkg_buffer[];
+extern int fpkg_size[];
+
+/*
+ * This example function should be invoked after SDK intialization.
+ */
+void bcmbd_led_example(int unit)
+{
+    int led_uc;
+
+    /*
+     * Load code into all LED controllers and start them.
+     */
+    for (led_uc = 0; led_uc < bcmbd_led_uc_num_get(unit); led_uc++) {
+
+         int fpkg_id;
+         int inst_id;
+
+         /* Ensure that LED controller is not running */
+         bcmbd_led_uc_stop(unit, led_uc);
+
+         /* Load firmware into LED controller */
+         bcmbd_fwm_fpkg_open(fpkg_buffer[led_uc], fpkg_size[led_uc], &fpkg_id);
+         bcmbd_fwm_fpkg_load(unit, fpkg_id, NULL, &inst_id);
+         bcmbd_fwm_fpkg_close(fpkg_id);
+
+         /* Start LED controller firmware */
+         bcmbd_led_uc_start(unit, led_uc);
+
+    }
+
+    /* Install callback for updating LED link data when link status changes */
+    bcmlt_table_subscribe(unit, "LM_LINK_STATE", &led_callback, NULL);
+}
+\endcode
+
+*/

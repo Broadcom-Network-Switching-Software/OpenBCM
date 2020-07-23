@@ -1,0 +1,108 @@
+BCM.0> c int_ioam.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int l3_egr_obj_id = 100001 (0x186a1)
+int $$ = 0 (0x0)
+int l3_egr_obj_id_i = 100002 (0x186a2)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+[New Thread 0x7ffff7f9f700 (LWP 136641)]
+tx 1 pbm=2 data=D201391105D882802851E77B81000015080045BC009B00000000E12F5A6BC43E3A779D9DE1B9000000640103001100FF5014000FFF00014D013F007700000202002201000000000000000000000000000000000000000000000000000000007FAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAABBAA0001EE81DC85;sleep 5
+Packet from data=<>, length=177
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {c0be9e497d03} {e002bb0d8665} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 45bc 00ab 0000 0000 e02f 5b5b c43e 
+[bcmPWN.0]Packet[1]: data[0020]: 3a77 9d9d e1b9 0000 0064 0107 0011 00ff 
+[bcmPWN.0]Packet[1]: data[0030]: 5010 000f ff00 ffaf fffa 0000 0000 0002 
+[bcmPWN.0]Packet[1]: data[0040]: 0001 0000 0000 014d 013f 0077 0000 0202 
+[bcmPWN.0]Packet[1]: data[0050]: 0022 0100 0000 0000 0000 0000 0000 0000 
+[bcmPWN.0]Packet[1]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 007f 
+[bcmPWN.0]Packet[1]: data[0070]: aabb aabb aabb aabb aabb aabb aabb aabb 
+[bcmPWN.0]Packet[1]: data[0080]: aabb aabb aabb aabb aabb aabb aabb aabb 
+[bcmPWN.0]Packet[1]: data[0090]: aabb aabb aabb aabb aabb aabb aabb aabb 
+[bcmPWN.0]Packet[1]: data[00a0]: aabb aabb aabb aabb aabb aabb aabb aabb 
+[bcmPWN.0]Packet[1]: data[00b0]: aabb aabb aabb aabb aabb aa00 01ee 81dc 
+[bcmPWN.0]Packet[1]: data[00c0]: 85
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        UNICAST_QUEUE=1
+        PKT_LENGTH=0xc5
+        SRC_PORT_NUM=3
+        OUTER_VID=0x16
+        SPECIAL_PACKET_TYPE=7
+        DSCP=0x2f
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+[RX reasons]
+        MY_STATION
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<c0:be:9e:49:7d:03> src<e0:02:bb:0d:86:65> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<196.62.58.119> dst<157.157.225.185> hl<5> service-type<188> tl<171> id<0> frg-off<0> ttl<224> > chk-sum<0x5b5b>
+Sleeping for 5 seconds
+XLMIB_TBYT.cd1                        :                   181                +181
+XLMIB_RBYT.cd1                        :                   181                +181
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T255.cd1                        :                     1                  +1
+XLMIB_R255.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+RUC_64.cd1                            :                     1                  +1
+RIPC4_64.cd1                          :                     1                  +1
+XLMIB_TBYT.cd2                        :                   197                +197
+XLMIB_RBYT.cd2                        :                   197                +197
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T255.cd2                        :                     1                  +1
+XLMIB_R255.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+RUC_64.cd2                            :                     1                  +1
+RIPD4_64.cd2                          :                     1                  +1
+RDBGC0_64.cd2                         :                     1                  +1
+TDBGC4_64.cd2                         :                     1                  +1

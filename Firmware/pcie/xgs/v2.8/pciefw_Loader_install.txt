@@ -1,0 +1,224 @@
+
+NOTE: For DNX devices (BCM88xxx devices), please refer to the "DNX16 Hardware
+Design Guidelines for StrataDNX 16-nm Devices", DNX16-AN1xx.pdf, "DNX16
+(BCM88790, BCM88690) QSPI Flash Programming" section.
+
+For XGS devices (BCM56xxx devices), please follow instrutions below.
+
+How to install PCIe FW Loader
+=============================
+PCIe Gen3 FW can be programmed into serial flash using various methods.  The
+customer can use whatever method suits their manufacturing flow best.
+
+Method 1: Using external flash programmer or gang programmer
+  This method requires all of the flash memory devices to be pre-programmed
+  with the provided firmware using an external programming device prior to
+  being mounted on the board. See programmers manual of external programmer for
+  instructions on how to erase and program serial flash device.
+
+Method 2: Using ARM DS-5 and ARM DSTREAM
+  This method allows a blank flash device to be populated on the board at the
+  time of manufacturing. A small programming utility as well as the PCIe
+  firmware are loaded into the ARM R5 inside of the Broadcom switch device via
+  its JTAG interface. Once the load is complete, the programming utility will
+  be run by the ARM R5 and will program the firmware to the flash device. This
+  package includes further instructions on this flow in
+  tools/flashwrite/ARM_DS-5
+
+Method 3: Initially advertise Gen1-only support from PCIe link partner
+  This method allows a blank flash device to be populated on the board at the
+  time of manufacturing. The Broadcom switch device is strapped to support PCIe
+  Gen3 and boot using the firmware (BOOT_DEV[2:0]=3'b000, MHOST0_BOOT_DEV=1'b1,
+  and PCIE_FORCE_GENTYPE[1:0]=2'b00). Since the PCIe link partner is
+  advertising Gen1 only support, the PCIe link will be able to come up and the
+  device will enumerate and function. The Broadcom SDK can then be loaded and
+  the SDK's PCIe Gen3 firmware in-field upgrade utility (SDK diag command
+  "pciephy fw load") can be used to program the firmware to the blank flash
+  device. Following that, the system can be reset and the PCIe link partner
+  can be reconfigured to advertise all supported PCIe speeds.
+
+  Syntax of in-field upgrade command:
+  BCM.0> pciephy fw load <Firmware file>
+  e.g.,
+  BCM.0> pciephy fw load pciefw-r5.bin
+
+  NOTE: Use pciefw-m0.bin for BCM56370 (Helix5 family) and
+        use pciefw-r5-m7.bin for Merlin7 devices (Trident4 family)
+
+  The flash driver in SDK is based on MT25QL256. If the mounted flash part is
+  compatible with MT25QL256's instruction set but unrecognized by the driver,
+  please use SoC property "pcie_flash_mem_params" to specify the parameters of
+  the flash device.
+
+  pcie_flash_mem_params=<id>,<sector_size>,<page_size>
+  <id>: Manufacturer ID.
+  <sector_size>: The smallest erase unit in bytes.
+  <page_size>: The smallest access unit in bytes.
+
+Method 4: Initially advertise Gen1-only support from Broadcom switch device
+  This method allows a blank flash device to be populated on the board at the
+  time of manufacturing. The Broadcom switch device is initially strapped to
+  support PCIe Gen1 and boot using the firmware (BOOT_DEV[2:0]=3'b000,
+  MHOST0_BOOT_DEV=1'b1, and PCIE_FORCE_GENTYPE[1:0]=2'b01). The PCIe link
+  will be able to come up and the device will enumerate and function. The
+  Broadcom SDK can then be loaded and the SDK's PCIe Gen3 firmware in-field
+  upgrade utility (SDK diag command "pciephy fw load") can be used to program
+  the firmware to the blank flash device. Following that, the
+  PCIE_FORCE_GENTYPE0 strap signal should be changed to 1'b0 and system should
+  be reset to advertise all supported PCIe speeds.
+
+  Syntax of in-field upgrade command:
+  BCM.0> pciephy fw load <Firmware file>
+  e.g.,
+  BCM.0> pciephy fw load ppciefw-r5.bin
+
+  NOTE: Use pciefw-m0.bin for BCM56370 (Helix5 family) and
+        use pciefw-r5-m7.bin for Merlin7 devices (Trident4 family)
+
+Method 5: Use I2C to write the firmware.
+  This requires the CPU that the SDK is running as to be an I2C master of an
+  I2C bus to which the Broadcom switch device is connected.
+  In such a case you need to know the I2C bus number (as Linux enumerates I2C
+  buses). And also know the I2C device number of the Broadcom switch device in
+  the bus which is by default 0x44.
+  This method also requires the SDK to be built with CPU I2C support.
+  This means that FEATURE_LIST in the make.local file should contain CPU_I2C .
+
+  Here is an example command making pciephy firmware handling use I2c with a
+  specific bus number and device number:
+  BCM.0> pciephy fw access i2c 0 0x44
+
+  After this command you can either test that I2C device access work using:
+  "pciephy fw version" or directly attempt to write the firmware to the flash
+  memory: "pciephy fw load <firmware file>"
+
+  If the BDE you are using with the SDK supports I2C access to the device
+  internally, removing the need to specify the I2C bus and device numbers,
+  instead of "pciephy fw access i2c <bus id> <device id>" you may use
+  "pciephy fw i2c_bde".
+
+
+How to boot and verify PCIe FW
+===================================
+1. Ensure that strap signals are set to load the firmware:
+    BOOT_DEV[2:0] = 3'b000
+    MHOST0_BOOT_DEV = 1'b1
+    PCIE_FORCE_GENTYPE[1:0] = 2'b00
+
+2. Power On the system
+
+3. Load and run linux
+   a) At a linux prompt run
+      lspci -d 0x14e4: -vvv
+
+   b) The Broadcom switch device should have enumerated and should show
+      something similar to the following:
+      "05:00.0 Ethernet controller: Broadcom Limited Device b870 (rev 01)"
+
+   c) In the lspci output, check that the link status register field shows
+      speed set to 8GT/s
+        8GT/s - PCIe Gen3
+        5GT/s - PCIe Gen2
+        2.5GT/s - PCIe Gen1
+
+   d) check that link capability register shows "ASPM not supported" and
+      link control register shows "ASPM disabled"
+
+   e) Run SDK and verify that "tr 502" completes successfully
+
+How to apply custom/user settings in MAC/PHY registers
+======================================================
+It is anticipated that some of MAC/PHY settings, like TX FIR etc, may be tuned
+by customer based on customer system requirements. PCIe Gen3 FW offers
+provision for such cases. This provision offers optional custom settings
+programming prior to and after SerDes FW loading. This provision requires
+custom or system specific PCIe MAC/PHY register settings to be programmed at
+30K offset of QSPI flash in the format described below i.e
+{type, address, value} triplets.
+
+              -----------------------  __
+              |     0x50434945      |    |
+              |     0x41524753      |    |__ Header, fixed, 4x32-bit words
+              |     0x00000000      |    |
+              |     0x00000000      |  __|
+              -----------------------  __
+              |     0x4354524C      |    |   Optional controls for FW load
+              |     controls_0      |    |__ Must have 0x4354524C as first word
+              |     controls_1      |  __|   followed be two controls words
+              -----------------------  __
+              |     0x5052454c      |    |
+              |  {type, addr, val}  |    |
+              |  {type, addr, val}  |    |   Optional pre FW load settings
+              |         :           |    |   Must have 0x5052454c as first word
+              |         :           |    |__ followed by {type, addr, val}
+              |         :           |    |   triplets (triplet - 3x32bit words)
+              |         :           |    |   type: 0 - MAC address, 1 - PHY addr
+              |         :           |    |   addr: MAC/PHY register address
+              |  {type, addr, val}  |  __|   Val: Value to be programmed
+              -----------------------  __
+              |     0x504f5354      |    |
+              |  {type, addr, val}  |    |   Optional post FW load settings
+              |         :           |    |   Must have 0x504f5354 as first word
+              |         :           |    |__ followed by {type, addr, val}
+              |         :           |    |   triplets (triplet - 3x32bit words).
+              |         :           |    |   type: 0 - MAC address, 1 - PHY addr
+              |         :           |    |   addr: MAC/PHY register address
+              |  {type, addr, val}  |  __|   Val: Value to be programmed
+              -----------------------  __
+              |     0x00454E44      |    |__Footer, fixed, 2x32-bit words
+              |     0x41524753      |  __|
+              -----------------------
+
+User can program up to maximum 168 triplets (i.e 504x32-bit words).
+There is no restriction on number of triplets for pre FW load settings or post
+FW load settings, provided total number of triplets do not exceed max limit
+of 168.
+
+Control section is used for optionally disable some loader feature or change
+basic settings. Currently support below controls:
+control_0[0:0] - Ignore enabling hotswap
+control_0[1:1] - Ignore PERST status initial check
+control_0[7:4] - Link Speed (PCIE generation) override,
+                 1 - 2.5G, 2 - 5G, 3 - 8G, 0 - unconfigured
+control_0[11:8] - Link width override, 1, 2 or 4 lanes are valid
+Other fields are reserved for future.
+
+Each type customer settings are optional, and total support up to 168 settings.
+The settings should be organized as the below sequence.
+[Controls] -> [Pre] -> [Post]
+
+The address[26:16] of lane based PHY registers is used for lane number
+assignment. 0 ~ 3 are used for selecting lane 1 ~ 4, and 0x1ff means
+broadcast configuration to all PCIE lanes.
+
+A sample format file in text format (custom.txt) and perl based text to binary
+conversion utility provided under tools/flashwrite/custom/ directory of this
+release package to help customer to generate customer settings in binary format.
+
+Customer settings in text format may have comments with '#' at the begining of
+the line and also blank lines which will be ignored by text to binary conversion
+tool.
+
+Syntax of text to binary conversion tool:
+perl custom_ascii2bin.pl <input text file> <output file>
+
+Example: Conversion of sample custom.txt file
+
+linux#: perl custom_ascii2bin.pl custom.txt custom.bin
+454943505347524100000000000000004c45525000000000381800000040088254534f5001000000b0d000008024000001000000b1d0000007000000444E450053475241
+
+Hexdump of generated file should look like the following:
+linux#:  hexdump -c custom.bin
+0000000   E   I   C   P   S   G   R   A  \0  \0  \0  \0  \0  \0  \0  \0
+0000010   L   E   R   P  \0  \0  \0  \0   8 030  \0  \0  \0   @  \b 202
+0000020   T   S   O   P 001  \0  \0  \0   �   �  \0  \0 200   $  \0  \0
+0000030 001  \0  \0  \0   �   �  \0  \0  \a  \0  \0  \0   D   N   E  \0
+0000040   S   G   R   A
+0000044
+
+Installing custom settings binary file:
+1) Append binary file to PCIe Gen3 FW file (pciefw-r5.bin/pciefw-r5-m7.bin/pciefw-m0.bin)
+   e.g.,
+   cat pciefw-r5.bin custom.bin >custom_pciefw-r5.bin
+2) Install the appended binary into QSPI flash at offset 0x0 using one of the
+   FW installation methods mentioned above.

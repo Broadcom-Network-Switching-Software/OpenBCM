@@ -1,0 +1,509 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+*/
+
+
+#ifndef __SOC_PPC_API_FRWRD_IPV4_INCLUDED__
+
+#define __SOC_PPC_API_FRWRD_IPV4_INCLUDED__
+
+
+
+
+#include <soc/dpp/SAND/Utils/sand_header.h>
+
+#include <soc/dpp/SAND/Management/sand_general_macros.h>
+#include <soc/dpp/SAND/Management/sand_error_code.h>
+#include <soc/dpp/SAND/Utils/sand_array_memory_allocator.h>
+
+#include <soc/dpp/PPC/ppc_api_general.h>
+
+
+
+
+
+
+#define  SOC_PPC_FRWRD_IP_ALL_VRFS_ID (0xFFFFFFFF)
+
+
+#define  SOC_PPC_FRWRD_IP_HOST_ONLY (0x1)
+
+
+#define  SOC_PPC_FRWRD_IP_LPM_ONLY (0x2)
+
+
+#define  SOC_PPC_FRWRD_IP_EXACT_MATCH  (0x1)
+
+#define  SOC_PPC_FRWRD_IP_CLEAR_ON_GET  (0x2)
+
+
+
+
+#define  SOC_PPC_FRWRD_IP_HOST_CLEAR_ON_GET  (0x1)
+
+
+#define  SOC_PPC_FRWRD_IP_HOST_GET_ACCESSED_ONLY  (0x2)
+
+
+#define  SOC_PPC_FRWRD_IP_HOST_GET_ACCESSS_STATUS   (0x4)
+
+
+#define  SOC_PPC_FRWRD_IP_HOST_KBP_HOST_INDICATION  (0x8)
+
+
+#define  SOC_PPC_FRWRD_IP_MC_BIDIR_IGNORE_RIF   (0x1)
+
+
+
+
+
+
+
+
+
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE_FEC = 0,
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE_ACTION_PROFILE = 1,
+  
+  SOC_PPC_NOF_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPES = 2
+}SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE_LPM_THEN_LEM = 0,
+  
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE_LPM_ONLY = 1,
+  
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE_LEM_THEN_LPM = 2,
+  
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE_LEM_ONLY = 3,
+  
+  SOC_PPC_NOF_FRWRD_IPV4_HOST_TABLE_RESOURCES = 4
+}SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IPV4_MC_HOST_TABLE_RESOURCE_TCAM_ONLY = 0,
+  
+  SOC_PPC_NOF_FRWRD_IPV4_MC_HOST_TABLE_RESOURCES = 1
+}SOC_PPC_FRWRD_IPV4_MC_HOST_TABLE_RESOURCE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IP_CACHE_MODE_NONE = 0,
+  
+  SOC_PPC_FRWRD_IP_CACHE_MODE_IPV4_UC_LPM = 1,
+
+  SOC_PPC_NOF_FRWRD_IP_CACHE_MODES = 2
+}SOC_PPC_FRWRD_IP_CACHE_MODE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IP_ROUTE_STATUS_COMMITED = 1,
+  
+  SOC_PPC_FRWRD_IP_ROUTE_STATUS_PEND_ADD = 2,
+  
+  SOC_PPC_FRWRD_IP_ROUTE_STATUS_PEND_REMOVE = 4,
+  
+  SOC_PPC_FRWRD_IP_ROUTE_STATUS_ACCESSED = 8,
+  
+  SOC_PPC_NOF_FRWRD_IP_ROUTE_STATUSS = 3
+}SOC_PPC_FRWRD_IP_ROUTE_STATUS;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IP_ROUTE_LOCATION_HOST = 0,
+  
+  SOC_PPC_FRWRD_IP_ROUTE_LOCATION_LPM = 1,
+  
+  SOC_PPC_FRWRD_IP_ROUTE_LOCATION_TCAM = 2,
+  
+  SOC_PPC_NOF_FRWRD_IP_ROUTE_LOCATIONS = 3
+}SOC_PPC_FRWRD_IP_ROUTE_LOCATION;
+
+typedef union
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 route_val;
+  
+  SOC_PPC_ACTION_PROFILE action_profile;
+
+} SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE type;
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL value;
+
+} SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION uc_default_action;
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION mc_default_action;
+  
+  uint8 flood_unknown_mc;
+
+  
+  uint8 ipv4_mc_l2_lookup;
+
+  uint8 rpf_default_route;
+
+} SOC_PPC_FRWRD_IPV4_ROUTER_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_INFO router_info;
+  
+  uint8 use_dflt_non_vrf_routing;
+
+} SOC_PPC_FRWRD_IPV4_VRF_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV4_ROUTER_INFO router_info;
+  
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE uc_table_resouces;
+  
+  SOC_PPC_FRWRD_IPV4_MC_HOST_TABLE_RESOURCE mc_table_resouces;
+
+} SOC_PPC_FRWRD_IPV4_GLBL_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_IPV4_SUBNET subnet;
+
+  
+  uint8 route_scale;
+
+} SOC_PPC_FRWRD_IPV4_UC_ROUTE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 group;
+
+  
+  uint8 group_prefix_len;
+
+  
+  SOC_SAND_PP_IPV4_SUBNET source;
+  
+  SOC_PPC_RIF_ID inrif;
+  
+  uint8 inrif_valid;
+ 
+  SOC_PPC_FID fid;
+
+  
+  SOC_PPC_VRF_ID vrf_ndx;
+
+  
+ uint8 with_vlan_lkup;
+
+  
+    SOC_PPC_VLAN_TAG vlan_tag;
+
+} SOC_PPC_FRWRD_IPV4_MC_ROUTE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 flags;
+  
+  uint32 rp_id;
+  
+  uint32 inrif;
+
+} SOC_PPC_FRWRD_IP_MC_RP_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_IPV4_SUBNET subnet;
+
+  
+  uint8 route_scale;
+
+} SOC_PPC_FRWRD_IPV4_VPN_ROUTE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_VRF_ID vrf_ndx;
+  
+  uint32 ip_address;
+
+  
+  uint8 is_local_host;
+
+  
+  uint8 route_scale;
+
+} SOC_PPC_FRWRD_IPV4_HOST_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FEC_ID fec_id;
+  
+  SOC_PPC_FRWRD_DECISION_INFO frwrd_decision;
+  
+  uint32 eep;
+  
+  uint8 mac_lsb;
+
+   
+  SOC_PPC_VSI_ID native_vsi;
+
+} SOC_PPC_FRWRD_IPV4_HOST_ROUTE_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_DESTINATION_ID dest_id;
+
+  uint32 flags;
+
+} SOC_PPC_FRWRD_IPV4_MC_ROUTE_INFO;
+
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_ARR_MEM_ALLOCATOR_MEM_STATUS mem_stat;
+
+} SOC_PPC_FRWRD_IPV4_MEM_STATUS;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_TABLE_BLOCK_RANGE range;
+
+} SOC_PPC_FRWRD_IPV4_MEM_DEFRAG_INFO;
+
+
+
+
+
+
+
+
+
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_ROUTER_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_VRF_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_VRF_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_GLBL_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_UC_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_UC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MC_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_MC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IP_MC_RP_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IP_MC_RP_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_VPN_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_VPN_ROUTE_KEY *info
+  );
+
+
+void
+  SOC_PPC_FRWRD_IPV4_MEM_STATUS_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_MEM_STATUS *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MEM_DEFRAG_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_MEM_DEFRAG_INFO *info
+  );
+
+
+void
+  SOC_PPC_FRWRD_IPV4_HOST_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_HOST_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_HOST_ROUTE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_HOST_ROUTE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MC_ROUTE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV4_MC_ROUTE_INFO *info
+  );
+
+#if SOC_PPC_DEBUG_IS_LVL1
+
+const char*
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_TYPE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_HOST_TABLE_RESOURCE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_IPV4_MC_HOST_TABLE_RESOURCE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_MC_HOST_TABLE_RESOURCE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_IP_CACHE_MODE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IP_CACHE_MODE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_IP_ROUTE_STATUS_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IP_ROUTE_STATUS enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_IP_ROUTE_LOCATION_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IP_ROUTE_LOCATION enum_val
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_VAL *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_ROUTER_DEFAULT_ACTION *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_ROUTER_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_ROUTER_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_VRF_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_VRF_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_GLBL_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_UC_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_UC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MC_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_MC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IP_MC_RP_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IP_MC_RP_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_VPN_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_VPN_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MEM_STATUS_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_MEM_STATUS *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MEM_DEFRAG_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_MEM_DEFRAG_INFO *info
+  );
+
+
+void
+  SOC_PPC_FRWRD_IPV4_HOST_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_HOST_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_HOST_ROUTE_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_HOST_ROUTE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV4_MC_ROUTE_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV4_MC_ROUTE_INFO *info
+  );
+
+#endif 
+
+
+
+#include <soc/dpp/SAND/Utils/sand_footer.h>
+
+
+#endif
+

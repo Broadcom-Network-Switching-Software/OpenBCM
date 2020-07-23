@@ -1,0 +1,178 @@
+BCM.0> cint td4_hsdk_mpls_vpls_AtoN_ControlWordSequence.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200223 (Sun Feb 23 09:02:54 2020)
+From root@lc-sj1-4301:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+egress_port_multi_setup port: 4 setup
+~~ #1) test_setup(): ** end **
+~~ #2) setup_vpls(): ** start **
+VPN ID = 8000
+Create VLAN 11
+Access MPLS port = 0x18000001
+Create VLAN 12
+Access MPLS port = 0x18000002
+Create VLAN 22
+Tunnel ID = 4c600001
+Network MPLS port = 0x18000003
+Create VLAN 23
+Tunnel ID = 4c600002
+Network MPLS port = 0x18000004
+Access-to-Network: Add payload-dest-mac => Network VPort 1
+~~ #2) setup_vpls(): ** end **
+~~ #3) verify(): ** start **
+vlan show
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 11 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 12 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 22 ports cd2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000008), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 23 ports cd3 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000010), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+l2 show
+mac=00:00:00:00:00:22 vlan=32768 GPORT=0x18000003 port=0x18000003(mpls) Static
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+16385 22    00:00:00:00:00:bb  UnderLay
+
+16386 23    00:00:00:00:00:dd  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+132769  00:00:00:00:00:aa  16385     3            0     0   underlay   no
+
+132770  00:00:00:00:00:cc  16386     4            0     0   underlay   no
+
+multicast show
+Group 0x3000001 (VPLS)
+        port cd2, encap id 16385
+        port cd3, encap id 16386
+        port cd0, encap id -1
+        port cd1, encap id -1
+
+Sending packet to ingress port:1
+Packet from data=<>, length=76
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 000b
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0036 0000 0000 40ff 65ac 0a00
+[bcmPWN.0]Packet[1]: data[0020]: 0014 0a00 000a 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[1]: data[0040]: 1a1b 1c1d 1e1f 2021 2394 12f0
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x50
+        SRC_PORT_NUM=1
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0x40
+        INGRESS_PP_PORT_7_0=1
+        L2_OIF_10_0=3
+        VFI_15_0=0x1000
+        DVP_15_0=3
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=3
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        SVP_15_0=1
+        NHOP_2_OR_ECMP_GROUP_INDEX_1_15_0=0x8001
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.0.0.20> dst<10.0.0.10> hl<5> service-type<0> tl<54> id<0> frg-off<0> ttl<64> > chk-sum<0x65ac>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000aa} {0000000000bb} 8100 0016
+[bcmPWN.0]Packet[2]: data[0010]: 8847 0011 1016 0044 4116 0000 0001 0000
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0022 0000 0000 0011 8100 000b 0800
+[bcmPWN.0]Packet[2]: data[0030]: 4500 0036 0000 0000 40ff 65ac 0a00 0014
+[bcmPWN.0]Packet[2]: data[0040]: 0a00 000a 0001 0203 0405 0607 0809 0a0b
+[bcmPWN.0]Packet[2]: data[0050]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b
+[bcmPWN.0]Packet[2]: data[0060]: 1c1d 1e1f 2021 2394 12f0
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x6e
+        SRC_PORT_NUM=3
+        SWITCH=1
+        MATCH_ID_LO=0x88828622
+        MATCH_ID_HI=0x1402
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=3
+        SYSTEM_DESTINATION_15_0=0xf03
+        INGRESS_PP_PORT_7_0=3
+        VFI_15_0=0x16
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:aa> src<00:00:00:00:00:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 aa 00 00 00 00 00 bb 81 00 00 16 88 47 00 11 10 16 00 44 41 16 00 00 00 01 00 00 00 00 00 22 00 00 00 00 00 11 81 00 00 0b 08 00 45 00 00 36 00 00 00 00 40 ff 65 ac 0a 00 00 14
+show c
+XLMIB_TBYT.cd0                        :                    80                 +80
+XLMIB_RBYT.cd0                        :                    80                 +80
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd2                        :                   110                +110
+XLMIB_RBYT.cd2                        :                   110                +110
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T127.cd2                        :                     1                  +1
+XLMIB_R127.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+UC_PERQ_PKT(0).cd2                    :                     1                  +1
+UC_PERQ_BYTE(0).cd2                   :                   110                +110
+
+******Port stats check******
+--------Access port (1) stats--------
+Rx : 1 packets / 80 bytes
+--------Access port (2) stats--------
+Tx : 0 packets / 0 bytes
+--------Network port (3) stats--------
+Tx : 1 packets / 110 bytes
+--------Network port (4) stats--------
+Tx : 0 packets / 0 bytes
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

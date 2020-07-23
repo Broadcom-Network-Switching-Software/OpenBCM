@@ -1,0 +1,57 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# SDK library source checksum.
+#
+# This file is being used as a top-level makefile, i.e. it is not
+# intended for inclusion.
+#
+# Setting SDK_GEN_CHECKSUM=0 will turn off this feature, but this will
+# also disable warm boot support.
+#
+
+# Get BLDDIR
+include $(SDK)/make/Make.config
+
+# Target file directory for generating library checksum
+LIBSUM_TARGETS := include \
+                  src \
+                  libs/pciephy \
+                  libs/phymod
+
+# Name of SDK source file checksum file
+SDK_LIBSUM := sdk.sum
+
+# Target for generating library checksum header file
+LIBSUM_DIR := $(SDK)/include/bcm_int/ltsw/generated
+LIBSUM_HDR := $(LIBSUM_DIR)/bcm_libsum.h
+LIBSUM_FILE := $(BLDDIR)/$(SDK_LIBSUM)
+LIBSUM_STR = $(shell cat $(LIBSUM_FILE) 2>/dev/null)
+
+# Tool for generating component checksum files
+LIBSUM := $(SDKLT)/make/libsum.sh
+
+all: libsum
+
+libsum: $(LIBSUM_HDR)
+
+$(LIBSUM_HDR): $(LIBSUM_FILE)
+	@$(ECHO) Generating ISSU checksum file
+	$(MKDIR) $(LIBSUM_DIR)
+	$(ECHO) "#define BCM_LIBSUM_STR \"$(LIBSUM_STR)\""  > $@
+
+$(LIBSUM_FILE): $(BLDDIR)/.tree FORCE
+ifneq (0,$(SDK_GEN_CHECKSUM))
+	@$(ECHO) "Generating library checksum"
+	$(LIBSUM) $(BLDDIR) $(SDK_LIBSUM) $(LIBSUM_TARGETS)
+endif
+
+FORCE:
+
+.PHONY: all libsum $(LIBSUM_HDR) $(LIBSUM_FILE) FORCE
+
+clean::
+	$(RM) $(LIBSUM_DIR)/*
+	$(RM) $(BLDDIR)/*sum

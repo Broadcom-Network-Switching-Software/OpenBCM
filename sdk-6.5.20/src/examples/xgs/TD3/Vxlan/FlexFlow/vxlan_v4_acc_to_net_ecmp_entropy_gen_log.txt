@@ -1,0 +1,533 @@
+BCM.0> c vxlan_v4_acc_to_net_ecmp_entropy_gen.c
+execute(): Start
+config show; attach; version
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Configure Vxlan Global Configuration.
+Get flow-handler for Classic_Vxlan
+Create Multicast group for UUC/MC/BC.
+Create Flow VPN.
+Configure Vxlan Access Port Configuration.
+Create access L3 interface
+Create access L3 Egress object.
+Create Access Flow Port (VP).
+Create Flow VP.
+Access: Add flow match (match: port,vlan criteria).
+Access: Set Encapsulation. VP=>egress-obj{Device,Port}.
+int $$ = 134217733 (0x8000005)
+Create network L3 interface
+Create network L3 Egress object.
+Create network L3 Egress object.
+Create network L3 Egress object.
+Create network L3 Egress object.
+Create network L3 Egress object.
+Create network L3 ECMP object.
+Create Network Flow Port.
+Create Flow VP.
+Network: encap add, VFI-->VNID
+Network: Configure match condition to derive VPN (Match: {VN_ID}, Derive: VFI (VPN))
+Network; Set Encapsulation. VP=>egress-obj{Device,Port}.
+Network: Set Egress-vlan-xlate key-type for network VP
+Network: Add flow match (match: SIP => network SVP)
+Tunnel_init: Create Flow Tunnel Initiator.
+Tunnel_term: Create Flow Tunnel Terminator.
+Access-to-Network: Add payload-dest-mac Address => Network-flow-port (VP).
+~~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1	ports cpu,ce,xe (0x00000000000000000000000000000004888888888888888c2222222222222223), untagged ce,xe (0x00000000000000000000000000000004888888888888888c2222222222222222) MCAST_FLOOD_UNKNOWN
+vlan 21	ports ce0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22	ports ce1-ce5 (0x0000000000000000000000000000000000000000000000000000000000222220), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+mac=00:00:00:00:aa:aa vlan=28688 GPORT=0xb0000002 port=0xb0000002(flow) Static
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100003  00:00:00:00:00:02   22    2     5    0        -1   no   no    1   no
+100004  00:00:00:00:00:03   22    2     9    0        -1   no   no    1   no
+100005  00:00:00:00:00:04   22    2    13    0        -1   no   no    1   no
+100006  00:00:00:00:00:05   22    2    17    0        -1   no   no    1   no
+100007  00:00:00:00:00:06   22    2    21    0        -1   no   no    1   no
+Multipath Egress Object 200256
+Interfaces: 100003 100004 100005 100006 100007
+Reference count: 1
+
+Sending known unicast packet No.[1] to ingress_port access side:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4011 74ba 0101 
+[bcmPW.0]Packet[1]: data[0020]: 0101 0202 0202 0035 0036 001a b0f8 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 33cf 192c 1cdf 4421 
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x74ba>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 0064 0000 0000 3f11 a5d5 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 0a01 c0a8 0101 dfbb 2118 0050 0000 0800 
+[bcmPW.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000 
+[bcmPW.0]Packet[2]: data[0040]: bbbb 0800 4500 002e 0000 0000 4011 74ba 
+[bcmPW.0]Packet[2]: data[0050]: 0101 0101 0202 0202 0035 0036 001a b0f8 
+[bcmPW.0]Packet[2]: data[0060]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f 
+[bcmPW.0]Packet[2]: data[0070]: 1011 33cf 192c 9ab5 84e0 
+[bcmPW.0]Packet[2]: length 122 (122). rx-port 5. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 5. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<100> id<0> frg-off<0> ttl<63> > chk-sum<0xa5d5>
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			194		   +194 	    189/s
+RUC_64.ce0		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  1		     +1 	      1/s
+CLMIB_R127.ce0		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce0		    :			  1		     +1 	      1/s
+CLMIB_RUCA.ce0		    :			  1		     +1 	      1/s
+CLMIB_RPRM.ce0		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce0		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce0		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce0		    :			 72		    +72 	     70/s
+CLMIB_T127.ce0		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce0		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce0		    :			  1		     +1 	      1/s
+CLMIB_TUCA.ce0		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce0		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce0		    :			 72		    +72 	     70/s
+CLMIB_RPROG0.ce0	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce0	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce0	    :			 72		    +72 	     70/s
+RUC_64.ce1		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce1    :			  1		     +1 	      1/s
+CLMIB_R127.ce1		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce1		    :			  1		     +1 	      1/s
+CLMIB_RUCA.ce1		    :			  1		     +1 	      1/s
+CLMIB_RPRM.ce1		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce1		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce1		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce1		    :			122		   +122 	    119/s
+CLMIB_T127.ce1		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce1		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce1		    :			  1		     +1 	      1/s
+CLMIB_TUCA.ce1		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce1		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce1		    :			122		   +122 	    119/s
+CLMIB_RPROG3.ce1	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce1	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce1	    :			122		   +122 	    119/s
+
+Sending known unicast packet No.[2] to ingress_port access side:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4011 74b9 0101 
+[bcmPW.0]Packet[3]: data[0020]: 0102 0202 0202 0035 0036 001a b0f7 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 975e 7df7 1cdf 4421 
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<1.1.1.2> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x74b9>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000004} {000000002222} 8100 0016
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 0064 0001 0000 3f11 a5d4 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0a01 c0a8 0101 fd60 2118 0050 0000 0800 
+[bcmPW.0]Packet[4]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000 
+[bcmPW.0]Packet[4]: data[0040]: bbbb 0800 4500 002e 0000 0000 4011 74b9 
+[bcmPW.0]Packet[4]: data[0050]: 0101 0102 0202 0202 0035 0036 001a b0f7 
+[bcmPW.0]Packet[4]: data[0060]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f 
+[bcmPW.0]Packet[4]: data[0070]: 1011 975e 7df7 1fd0 a9bb 
+[bcmPW.0]Packet[4]: length 122 (122). rx-port 13. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 13. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:04> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<100> id<1> frg-off<0> ttl<63> > chk-sum<0xa5d4>
+
+Sending known unicast packet No.[3] to ingress_port access side:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 4011 74b6 0101 
+[bcmPW.0]Packet[5]: data[0020]: 0105 0202 0202 0035 0036 001a b0f4 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: b78e 90b5 1cdf 4421 
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<1.1.1.5> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x74b6>
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000000005} {000000002222} 8100 0016
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 0064 0002 0000 3f11 a5d3 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a01 c0a8 0101 673f 2118 0050 0000 0800 
+[bcmPW.0]Packet[6]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000 
+[bcmPW.0]Packet[6]: data[0040]: bbbb 0800 4500 002e 0000 0000 4011 74b6 
+[bcmPW.0]Packet[6]: data[0050]: 0101 0105 0202 0202 0035 0036 001a b0f4 
+[bcmPW.0]Packet[6]: data[0060]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f 
+[bcmPW.0]Packet[6]: data[0070]: 1011 b78e 90b5 3658 617f 
+[bcmPW.0]Packet[6]: length 122 (122). rx-port 17. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 17. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<00:00:00:00:00:05> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<100> id<2> frg-off<0> ttl<63> > chk-sum<0xa5d3>
+MC_PERQ_PKT(0).cpu0	    :			  6		     +4 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			582		   +388 	    188/s
+RUC_64.ce0		    :			  3		     +2 	      1/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  3		     +2 	      1/s
+CLMIB_R127.ce0		    :			  3		     +2 	      1/s
+CLMIB_RPKT.ce0		    :			  3		     +2 	      1/s
+CLMIB_RUCA.ce0		    :			  3		     +2 	      1/s
+CLMIB_RPRM.ce0		    :			  3		     +2 	      1/s
+CLMIB_RVLN.ce0		    :			  3		     +2 	      1/s
+CLMIB_RPOK.ce0		    :			  3		     +2 	      1/s
+CLMIB_RBYT.ce0		    :			216		   +144 	     70/s
+CLMIB_T127.ce0		    :			  3		     +2 	      1/s
+CLMIB_TPOK.ce0		    :			  3		     +2 	      1/s
+CLMIB_TPKT.ce0		    :			  3		     +2 	      1/s
+CLMIB_TUCA.ce0		    :			  3		     +2 	      1/s
+CLMIB_TVLN.ce0		    :			  3		     +2 	      1/s
+CLMIB_TBYT.ce0		    :			216		   +144 	     70/s
+CLMIB_RPROG0.ce0	    :			  3		     +2 	      1/s
+UC_PERQ_PKT(0).ce0	    :			  3		     +2 	      1/s
+UC_PERQ_BYTE(0).ce0	    :			216		   +144 	     70/s
+RUC_64.ce3		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ce3    :			  1		     +1
+CLMIB_R127.ce3		    :			  1		     +1
+CLMIB_RPKT.ce3		    :			  1		     +1
+CLMIB_RUCA.ce3		    :			  1		     +1
+CLMIB_RPRM.ce3		    :			  1		     +1
+CLMIB_RVLN.ce3		    :			  1		     +1
+CLMIB_RPOK.ce3		    :			  1		     +1
+CLMIB_RBYT.ce3		    :			122		   +122
+CLMIB_T127.ce3		    :			  1		     +1
+CLMIB_TPOK.ce3		    :			  1		     +1
+CLMIB_TPKT.ce3		    :			  1		     +1
+CLMIB_TUCA.ce3		    :			  1		     +1
+CLMIB_TVLN.ce3		    :			  1		     +1
+CLMIB_TBYT.ce3		    :			122		   +122
+CLMIB_RPROG3.ce3	    :			  1		     +1
+UC_PERQ_PKT(0).ce3	    :			  1		     +1
+UC_PERQ_BYTE(0).ce3	    :			122		   +122
+RUC_64.ce4		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce4    :			  1		     +1 	      1/s
+CLMIB_R127.ce4		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce4		    :			  1		     +1 	      1/s
+CLMIB_RUCA.ce4		    :			  1		     +1 	      1/s
+CLMIB_RPRM.ce4		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce4		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce4		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce4		    :			122		   +122 	    118/s
+CLMIB_T127.ce4		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce4		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce4		    :			  1		     +1 	      1/s
+CLMIB_TUCA.ce4		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce4		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce4		    :			122		   +122 	    118/s
+CLMIB_RPROG3.ce4	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce4	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce4	    :			122		   +122 	    118/s
+
+Sending known unicast packet No.[4] to ingress_port access side:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4011 74b5 0101 
+[bcmPW.0]Packet[7]: data[0020]: 0106 0202 0202 0035 0036 001a b0f3 0001 
+[bcmPW.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[7]: data[0040]: 9602 5567 1cdf 4421 
+[bcmPW.0]Packet[7]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<1.1.1.6> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x74b5>
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {000000000003} {000000002222} 8100 0016
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 0064 0003 0000 3f11 a5d2 0a0a 
+[bcmPW.0]Packet[8]: data[0020]: 0a01 c0a8 0101 45e4 2118 0050 0000 0800 
+[bcmPW.0]Packet[8]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000 
+[bcmPW.0]Packet[8]: data[0040]: bbbb 0800 4500 002e 0000 0000 4011 74b5 
+[bcmPW.0]Packet[8]: data[0050]: 0101 0106 0202 0202 0035 0036 001a b0f3 
+[bcmPW.0]Packet[8]: data[0060]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f 
+[bcmPW.0]Packet[8]: data[0070]: 1011 9602 5567 b33d 4c24 
+[bcmPW.0]Packet[8]: length 122 (122). rx-port 9. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-port 9. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<00:00:00:00:00:03> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<100> id<3> frg-off<0> ttl<63> > chk-sum<0xa5d2>
+MC_PERQ_PKT(0).cpu0	    :			  8		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			776		   +194 	    189/s
+RUC_64.ce0		    :			  4		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  4		     +1 	      1/s
+CLMIB_R127.ce0		    :			  4		     +1 	      1/s
+CLMIB_RPKT.ce0		    :			  4		     +1 	      1/s
+CLMIB_RUCA.ce0		    :			  4		     +1 	      1/s
+CLMIB_RPRM.ce0		    :			  4		     +1 	      1/s
+CLMIB_RVLN.ce0		    :			  4		     +1 	      1/s
+CLMIB_RPOK.ce0		    :			  4		     +1 	      1/s
+CLMIB_RBYT.ce0		    :			288		    +72 	     70/s
+CLMIB_T127.ce0		    :			  4		     +1 	      1/s
+CLMIB_TPOK.ce0		    :			  4		     +1 	      1/s
+CLMIB_TPKT.ce0		    :			  4		     +1 	      1/s
+CLMIB_TUCA.ce0		    :			  4		     +1 	      1/s
+CLMIB_TVLN.ce0		    :			  4		     +1 	      1/s
+CLMIB_TBYT.ce0		    :			288		    +72 	     70/s
+CLMIB_RPROG0.ce0	    :			  4		     +1 	      1/s
+UC_PERQ_PKT(0).ce0	    :			  4		     +1 	      1/s
+UC_PERQ_BYTE(0).ce0	    :			288		    +72 	     70/s
+RUC_64.ce2		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce2    :			  1		     +1 	      1/s
+CLMIB_R127.ce2		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce2		    :			  1		     +1 	      1/s
+CLMIB_RUCA.ce2		    :			  1		     +1 	      1/s
+CLMIB_RPRM.ce2		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce2		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce2		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce2		    :			122		   +122 	    119/s
+CLMIB_T127.ce2		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce2		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce2		    :			  1		     +1 	      1/s
+CLMIB_TUCA.ce2		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce2		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce2		    :			122		   +122 	    119/s
+CLMIB_RPROG3.ce2	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce2	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce2	    :			122		   +122 	    119/s
+
+Sending known unicast packet No.[5] to ingress_port access side:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[9]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4011 74a7 0101 
+[bcmPW.0]Packet[9]: data[0020]: 0114 0202 0202 0035 0036 001a b0e5 0001 
+[bcmPW.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[9]: data[0040]: a703 cd11 1cdf 4421 
+[bcmPW.0]Packet[9]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[9]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch
+[bcmPW.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<1.1.1.20> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x74a7>
+[bcmPW.0]
+[bcmPW.0]Packet[10]: data[0000]: {000000000006} {000000002222} 8100 0016
+[bcmPW.0]Packet[10]: data[0010]: 0800 4500 0064 0004 0000 3f11 a5d1 0a0a 
+[bcmPW.0]Packet[10]: data[0020]: 0a01 c0a8 0101 358c 2118 0050 0000 0800 
+[bcmPW.0]Packet[10]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000 
+[bcmPW.0]Packet[10]: data[0040]: bbbb 0800 4500 002e 0000 0000 4011 74a7 
+[bcmPW.0]Packet[10]: data[0050]: 0101 0114 0202 0202 0035 0036 001a b0e5 
+[bcmPW.0]Packet[10]: data[0060]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f 
+[bcmPW.0]Packet[10]: data[0070]: 1011 a703 cd11 dd62 799f 
+[bcmPW.0]Packet[10]: length 122 (122). rx-port 21. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[10]: dest-port 0. dest-mod 0. src-port 21. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<00:00:00:00:00:06> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<100> id<4> frg-off<0> ttl<63> > chk-sum<0xa5d1>
+MC_PERQ_PKT(0).cpu0	    :			 10		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			970		   +194 	    189/s
+RUC_64.ce0		    :			  5		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  5		     +1 	      1/s
+CLMIB_R127.ce0		    :			  5		     +1 	      1/s
+CLMIB_RPKT.ce0		    :			  5		     +1 	      1/s
+CLMIB_RUCA.ce0		    :			  5		     +1 	      1/s
+CLMIB_RPRM.ce0		    :			  5		     +1 	      1/s
+CLMIB_RVLN.ce0		    :			  5		     +1 	      1/s
+CLMIB_RPOK.ce0		    :			  5		     +1 	      1/s
+CLMIB_RBYT.ce0		    :			360		    +72 	     70/s
+CLMIB_T127.ce0		    :			  5		     +1 	      1/s
+CLMIB_TPOK.ce0		    :			  5		     +1 	      1/s
+CLMIB_TPKT.ce0		    :			  5		     +1 	      1/s
+CLMIB_TUCA.ce0		    :			  5		     +1 	      1/s
+CLMIB_TVLN.ce0		    :			  5		     +1 	      1/s
+CLMIB_TBYT.ce0		    :			360		    +72 	     70/s
+CLMIB_RPROG0.ce0	    :			  5		     +1 	      1/s
+UC_PERQ_PKT(0).ce0	    :			  5		     +1 	      1/s
+UC_PERQ_BYTE(0).ce0	    :			360		    +72 	     70/s
+RUC_64.ce5		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce5    :			  1		     +1 	      1/s
+CLMIB_R127.ce5		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce5		    :			  1		     +1 	      1/s
+CLMIB_RUCA.ce5		    :			  1		     +1 	      1/s
+CLMIB_RPRM.ce5		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce5		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce5		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce5		    :			122		   +122 	    119/s
+CLMIB_T127.ce5		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce5		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce5		    :			  1		     +1 	      1/s
+CLMIB_TUCA.ce5		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce5		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce5		    :			122		   +122 	    119/s
+CLMIB_RPROG3.ce5	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce5	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce5	    :			122		   +122 	    119/s
+
+ Vpn :28688 
+
+ VpnInfo : 
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 2 (0x2)
+        int igmp_query_action = 2 (0x2)
+        int igmp_unknown_msg_action = 2 (0x2)
+        int mld_report_done_action = 2 (0x2)
+        int mld_query_action = 2 (0x2)
+        int ip4_rsvd_mc_action = 2 (0x2)
+        int ip6_rsvd_mc_action = 2 (0x2)
+        int ip4_mc_router_adv_action = 2 (0x2)
+        int ip6_mc_router_adv_action = 2 (0x2)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 2
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177279 (0xb0000001)
+    unsigned int flags = 16 (0x10)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 18446744073709519104 (0x8100)
+}
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 18 (0x12)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 1 (0x1)
+    unsigned short egress_service_tpid = 18446744073709519104 (0x8100)
+}
+
+----------------------------------------------
+Distribution of 5 Packets on ECMP member ports:
+----------------------------------------------
+MC_PERQ_PKT(0).cpu0	    :			 10		     +0
+MC_PERQ_BYTE(0).cpu0	    :			970		     +0
+RUC_64.ce0		    :			  5		     +0
+ING_NIV_RX_FRAMES_VL.ce0    :			  5		     +0
+CLMIB_R127.ce0		    :			  5		     +0
+CLMIB_RPKT.ce0		    :			  5		     +0
+CLMIB_RUCA.ce0		    :			  5		     +0
+CLMIB_RPRM.ce0		    :			  5		     +0
+CLMIB_RVLN.ce0		    :			  5		     +0
+CLMIB_RPOK.ce0		    :			  5		     +0
+CLMIB_RBYT.ce0		    :			360		     +0
+CLMIB_T127.ce0		    :			  5		     +0
+CLMIB_TPOK.ce0		    :			  5		     +0
+CLMIB_TPKT.ce0		    :			  5		     +0
+CLMIB_TUCA.ce0		    :			  5		     +0
+CLMIB_TVLN.ce0		    :			  5		     +0
+CLMIB_TBYT.ce0		    :			360		     +0
+CLMIB_RPROG0.ce0	    :			  5		     +0
+UC_PERQ_PKT(0).ce0	    :			  5		     +0
+UC_PERQ_BYTE(0).ce0	    :			360		     +0
+RUC_64.ce1		    :			  1		     +0
+ING_NIV_RX_FRAMES_VL.ce1    :			  1		     +0
+CLMIB_R127.ce1		    :			  1		     +0
+CLMIB_RPKT.ce1		    :			  1		     +0
+CLMIB_RUCA.ce1		    :			  1		     +0
+CLMIB_RPRM.ce1		    :			  1		     +0
+CLMIB_RVLN.ce1		    :			  1		     +0
+CLMIB_RPOK.ce1		    :			  1		     +0
+CLMIB_RBYT.ce1		    :			122		     +0
+CLMIB_T127.ce1		    :			  1		     +0
+CLMIB_TPOK.ce1		    :			  1		     +0
+CLMIB_TPKT.ce1		    :			  1		     +0
+CLMIB_TUCA.ce1		    :			  1		     +0
+CLMIB_TVLN.ce1		    :			  1		     +0
+CLMIB_TBYT.ce1		    :			122		     +0
+CLMIB_RPROG3.ce1	    :			  1		     +0
+UC_PERQ_PKT(0).ce1	    :			  1		     +0
+UC_PERQ_BYTE(0).ce1	    :			122		     +0
+RUC_64.ce2		    :			  1		     +0
+ING_NIV_RX_FRAMES_VL.ce2    :			  1		     +0
+CLMIB_R127.ce2		    :			  1		     +0
+CLMIB_RPKT.ce2		    :			  1		     +0
+CLMIB_RUCA.ce2		    :			  1		     +0
+CLMIB_RPRM.ce2		    :			  1		     +0
+CLMIB_RVLN.ce2		    :			  1		     +0
+CLMIB_RPOK.ce2		    :			  1		     +0
+CLMIB_RBYT.ce2		    :			122		     +0
+CLMIB_T127.ce2		    :			  1		     +0
+CLMIB_TPOK.ce2		    :			  1		     +0
+CLMIB_TPKT.ce2		    :			  1		     +0
+CLMIB_TBYT.ce2		    :			122		     +0
+CLMIB_RPROG3.ce2	    :			  1		     +0
+UC_PERQ_PKT(0).ce2	    :			  1		     +0
+UC_PERQ_BYTE(0).ce2	    :			122		     +0
+RUC_64.ce3		    :			  1		     +0
+ING_NIV_RX_FRAMES_VL.ce3    :			  1		     +0
+CLMIB_R127.ce3		    :			  1		     +0
+CLMIB_RPKT.ce3		    :			  1		     +0
+CLMIB_RUCA.ce3		    :			  1		     +0
+CLMIB_RPRM.ce3		    :			  1		     +0
+CLMIB_RVLN.ce3		    :			  1		     +0
+CLMIB_RPOK.ce3		    :			  1		     +0
+CLMIB_RBYT.ce3		    :			122		     +0
+CLMIB_T127.ce3		    :			  1		     +0
+CLMIB_TPOK.ce3		    :			  1		     +0
+CLMIB_TPKT.ce3		    :			  1		     +0
+CLMIB_TUCA.ce3		    :			  1		     +0
+CLMIB_TVLN.ce3		    :			  1		     +0
+CLMIB_TBYT.ce3		    :			122		     +0
+CLMIB_RPROG3.ce3	    :			  1		     +0
+UC_PERQ_PKT(0).ce3	    :			  1		     +0
+UC_PERQ_BYTE(0).ce3	    :			122		     +0
+RUC_64.ce4		    :			  1		     +0
+ING_NIV_RX_FRAMES_VL.ce4    :			  1		     +0
+CLMIB_R127.ce4		    :			  1		     +0
+CLMIB_RPKT.ce4		    :			  1		     +0
+CLMIB_RUCA.ce4		    :			  1		     +0
+CLMIB_RPRM.ce4		    :			  1		     +0
+CLMIB_RVLN.ce4		    :			  1		     +0
+CLMIB_RPOK.ce4		    :			  1		     +0
+CLMIB_RBYT.ce4		    :			122		     +0
+CLMIB_T127.ce4		    :			  1		     +0
+CLMIB_TPOK.ce4		    :			  1		     +0
+CLMIB_TPKT.ce4		    :			  1		     +0
+CLMIB_TUCA.ce4		    :			  1		     +0
+CLMIB_TVLN.ce4		    :			  1		     +0
+CLMIB_TBYT.ce4		    :			122		     +0
+CLMIB_RPROG3.ce4	    :			  1		     +0
+UC_PERQ_PKT(0).ce4	    :			  1		     +0
+UC_PERQ_BYTE(0).ce4	    :			122		     +0
+RUC_64.ce5		    :			  1		     +0
+ING_NIV_RX_FRAMES_VL.ce5    :			  1		     +0
+CLMIB_R127.ce5		    :			  1		     +0
+CLMIB_RPKT.ce5		    :			  1		     +0
+CLMIB_RUCA.ce5		    :			  1		     +0
+CLMIB_RPRM.ce5		    :			  1		     +0
+CLMIB_RVLN.ce5		    :			  1		     +0
+CLMIB_RPOK.ce5		    :			  1		     +0
+CLMIB_RBYT.ce5		    :			122		     +0
+CLMIB_T127.ce5		    :			  1		     +0
+CLMIB_TPOK.ce5		    :			  1		     +0
+CLMIB_TPKT.ce5		    :			  1		     +0
+CLMIB_TUCA.ce5		    :			  1		     +0
+CLMIB_TVLN.ce5		    :			  1		     +0
+CLMIB_TBYT.ce5		    :			122		     +0
+CLMIB_RPROG3.ce5	    :			  1		     +0
+UC_PERQ_PKT(0).ce5	    :			  1		     +0
+UC_PERQ_BYTE(0).ce5	    :			122		     +0
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

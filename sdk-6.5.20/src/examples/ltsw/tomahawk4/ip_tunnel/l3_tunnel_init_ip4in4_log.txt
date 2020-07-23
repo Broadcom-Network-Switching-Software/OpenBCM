@@ -1,0 +1,75 @@
+BCM.0> c l3_tunnel_init_ip4in4.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int l3_egr_obj_id = 100001 (0x186a1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+[New Thread 0x7ffff4a66700 (LWP 27070)]
+tx 1 pbm=2 data=0000000011110000000000018100001508004500002E0000000040FF73CC0202020201010101000000000000000000000000000000000000000000000000000058863ECA;sleep 5
+Packet from data=<>, length=68
+Sleeping for 5 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0042 eb8d 0000 1604 9305 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0909 0909 4500 002e 0000 0000 3fff
+[bcmPWN.0]Packet[1]: data[0030]: 74cc 0202 0202 0101 0101 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0050]: 0000 0000 5886 3eca
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x5c(92)
+        SRC_PORT_NUM                    :0x3(3)
+        OUTER_VID                       :0x16(22)
+        TIMESTAMP_TYPE                  :0x3(3)
+        SWITCH                          :0x1(1)
+        ING_TAG_TYPE                    :0x1(1)
+[RX reasons]
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.10> dst<9.9.9.9> hl<5> service-type<0> tl<66> id<60301> frg-off<0> ttl<22> > chk-sum<0x9305>
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+RUC_64.cd1                            :                     1                  +1
+RIPC4_64.cd1                          :                     1                  +1
+XLMIB_TBYT.cd2                        :                    92                 +92
+XLMIB_RBYT.cd2                        :                    92                 +92
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T127.cd2                        :                     1                  +1
+XLMIB_R127.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+RUC_64.cd2                            :                     1                  +1
+TDBGC4_64.cd2                         :                     1                  +1

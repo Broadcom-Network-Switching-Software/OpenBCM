@@ -1,0 +1,266 @@
+#
+# file: bcmptm_rm_tcam_fp_ha.yml
+# PTRM HA memory YAML file describing the HA data structures for FP LTs.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    BCMPTM_FP_ENTRY_SEG_WORDS: 1
+    BCMPTM_FP_MAX_LT_PARTS: 12
+    BCMPTM_RM_TCAM_GRP_MODE_COUNT: 6
+
+component:
+   bcmptm_rmtcam_ha:
+      bcmptm_fp_entry_seg_bmp_t:
+         type: struct
+         fields:
+            w:
+               type: uint32_t
+               length: BCMPTM_FP_ENTRY_SEG_WORDS
+               comment: Entry Segment bitmap structure.
+      bcmptm_rm_tcam_lt_config_t:
+         type: struct
+         fields:
+            valid:
+               type: uint8_t
+               comment: Valid entry.
+            lt_id:
+               type: uint8_t
+               comment: Logical Table ID.
+            group_ltid:
+               type: uint8_t
+               comment: Group LT ID.
+            lt_action_pri:
+               type: uint8_t
+               comment: Logical Table action priority.
+            priority:
+               type: int
+               comment: Group priority.
+            pipe_id:
+               type: int
+               comment: Pipe where group belongs to.
+            lt_part_map:
+               type: uint32_t
+               comment: Logical Table to Physical slice mapping.
+            lt_part_pri:
+               type: uint8_t
+               length: BCMPTM_FP_MAX_LT_PARTS
+               comment: Logical table partition priority.
+      bcmptm_rm_tcam_slice_t:
+         type: struct
+         fields:
+            slice_flags:
+              type: uint32_t
+              comment: BCMPTM_SLICE_XXX flags.
+            slice_id:
+              type: uint8_t
+              comment: Physical Slice Id of the Slice.
+            primary_grp_id:
+              type: int16_t
+              comment: when groups are shared, primary group Id will be the first group, to which the current slice is allocated.
+            num_entries:
+              type: uint16_t
+              comment: Number of physical entries in the slice.
+            free_entries:
+              type: uint16_t
+              comment: Number of free physical entries in the slice.
+            num_presel_entries:
+              type: uint16_t
+              comment: Number of physical presel entries in the slice.
+            free_presel_entries:
+              type: uint16_t
+              comment: Number of free physical presel entries in the slice.
+            next_slice_id_offset:
+              type: int
+              length: BCMPTM_RM_TCAM_GRP_MODE_COUNT
+              comment: Next slice Id offset in case slice is depth expanded.
+            prev_slice_id_offset:
+              type: int
+              length: BCMPTM_RM_TCAM_GRP_MODE_COUNT
+              comment: Previous slice Id offset in case slice is depth expanded.
+            left_slice_id_offset:
+              type: int
+              length: BCMPTM_RM_TCAM_GRP_MODE_COUNT
+              comment: Left Slice id in case of slice is width expanded.
+            right_slice_id_offset:
+              type: int
+              length: BCMPTM_RM_TCAM_GRP_MODE_COUNT
+              comment: Right Slice id in case of slice is width expanded.
+      bcmptm_rm_tcam_fp_group_t:
+         type: struct
+         fields:
+            valid:
+               type: uint8_t
+               comment: Valid entry.
+            group_id:
+               type:  uint32_t
+               comment: Group Id.
+            next_shared_group_id:
+               type: int16_t
+               comment: next group id sharing same resources.
+            priority:
+               type: uint32_t
+               comment: group priority.
+            group_ltid:
+               type: uint8_t
+               comment: group_ltid.
+            group_mode:
+               type: uint32_t
+               comment: Mode of the group.
+            primary_slice_id:
+               type: uint8_t
+               comment: Primary Slice ID allocated for the group.
+            pipe_id:
+               type: int
+               comment: Pipe where group belongs to.
+            num_presel_entries:
+               type: uint16_t
+               comment: Number of presel entries associated to this group.
+            num_entries:
+               type: uint32_t
+               comment: Number of entries associated to slices mapped to this group.
+            num_entries_ltid:
+               type: uint32_t
+               comment: Number of valid entries associated to this group.
+            flags:
+               type: uint32_t
+               comment: Number of flags associated to this group.
+            entry_hash_size:
+               type: uint32_t
+               comment: Size of entry hash bucket.
+            entry_info_seg:
+               type: uint32_t
+               comment:  Main FP TCAM entry information of type bcmptm_rm_tcam_prio_eid_info_t.
+            entry_hash_seg:
+               type: uint32_t
+               comment: Entry hash info offset in the memory segment.
+            presel_entry_info_seg:
+               type: uint32_t
+               comment: Presel TCAM entry information of type bcmptm_rm_tcam_prio_eid_info_t.
+            presel_entry_hash_seg:
+               type: uint32_t
+               comment: Presel Entry hash info offset in the memory segment.
+            presel_entry_hash_size:
+               type: uint32_t
+               comment: Size of presel entry hash bucket.
+            entry_seg_bmp:
+               type: bcmptm_fp_entry_seg_bmp_t
+               comment: Bitmap for entry segment used.
+      bcmptm_rm_tcam_fp_stage_t:
+         type: struct
+         fields:
+            stage_id:
+               type: int
+               comment: FP stage ID (INGRESS/EGRESS/LOOKUP/EM).
+            trans_state:
+               type: uint8_t
+               comment: Transaction state for the ltid.
+            num_pipes:
+               type: uint8_t
+               comment: Number of pipes in this stage.
+            num_slices:
+               type: uint8_t
+               comment: Count of Slices in this stage.
+            slice_bundle_size:
+               type: uint8_t
+               comment: Size of slice bundle in this stage.
+            flags:
+               type: uint64_t
+               comment: BCMPTM_STAGE_XXX flags.
+            max_entries_per_slice:
+               type: uint16_t
+               comment: Max number of physical entries per slice.
+            max_presel_entries_per_slice:
+               type: uint16_t
+               comment: Max number of presel physical entries per slice.
+            num_presel_groups:
+               type: uint8_t
+               comment: Total number of tiles across all pipes.
+            num_sbr_profiles:
+               type: uint16_t
+               comment: Total number of SBR profiles across all pipes.
+            num_pdd_profiles:
+               type: uint16_t
+               comment: Total number of PDD profiles across all pipes.
+            slice_seg:
+               type: uint32_t
+               comment: Slice offset in the memory segment for slice.
+            slice_seg_size:
+               type: uint32_t
+               comment: Size of slice segment.
+            slice_group_id:
+               type: uint32_t
+               comment: Slice group id from ser.
+            num_groups:
+               type: uint16_t
+               comment: Total number of groups in this stage.
+            group_info_seg:
+               type: uint32_t
+               comment: Slice offset in the memory segment.
+            group_info_seg_size:
+               type: uint32_t
+               comment: Size of group segment.
+            lt_config_seg:
+               type: uint32_t
+               comment: LT config info offset in the memory segment.
+            lt_config_seg_size:
+               type: uint32_t
+               comment: Size of lt_config_seg.
+            entry_seg_bmp_offset:
+               type: uint32_t
+               comment: Bitmap for usage of entry hash and info segements.
+            entry_seg_bmp_size:
+               type: uint32_t
+               comment: Size of entry_seg_bmp_offset.
+            entry_hash_size:
+               type: uint32_t
+               comment: Size of entry hash bucket.
+            presel_entry_hash_size:
+               type: uint16_t
+               comment: Size of presel entry hash bucket.
+            entry_hash_seg:
+               type: uint32_t
+               comment: Entry hash info offset in the memory segment.
+            entry_hash_seg_size:
+               type: uint32_t
+               comment: Size of entry_hash_seg.
+            entry_info_seg:
+               type: uint32_t
+               comment: Entry info offset in the memory segment.
+            entry_info_seg_size:
+               type: uint32_t
+               comment: Size of entry_info_seg.
+            presel_entry_hash_seg:
+               type: uint32_t
+               comment: Presel Entry hash info offset in the memory segment.
+            presel_entry_hash_seg_size:
+               type: uint32_t
+               comment: Size of presel_entry_hash_seg.
+            presel_entry_info_seg:
+               type: uint32_t
+               comment: Presel Entry info offset in the memory segment.
+            presel_entry_info_seg_size:
+               type: uint32_t
+               comment: Size of presel_entry_info_seg.
+            presel_group_ref_count_seg:
+               type: uint32_t
+               comment: Per tile(i.e. slice bundle) operational information.
+            presel_group_ref_count_seg_size:
+               type: uint32_t
+               comment: Size of presel_group_ref_count_seg.
+            pdd_ref_count_seg:
+               type: uint32_t
+               comment: Offset to PDD profile info in the master memory segment.
+            pdd_ref_count_seg_size:
+               type: uint32_t
+               comment: Size of pdd_ref_count_seg.
+            sbr_ref_count_seg:
+               type: uint32_t
+               comment: Offset to SBR profile info in the master memory segment.
+            sbr_ref_count_seg_size:
+               type: uint32_t
+               comment: Size of sbr_ref_count_seg.

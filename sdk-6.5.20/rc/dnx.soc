@@ -1,0 +1,239 @@
+#
+# $Id: dnx.soc,v 1.90 2013/08/14 08:32:00 ninash Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+debug info
+debug appl rcload warn
+debug appl symtab warn
+debug bcm rx,tx,link,attach warn
+debug soc tests warn
+debug soc rx,phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,ddr warn
+debug soc common err
+debug sys verinet warn
+debug soc physim warn
+debug socdnx DbalDnx warn
+debug socdnx DiagDbalDnx warn
+debug socdnx DbalAccessDnx warn
+debug bcmdnx fldtestsdnx warn
+debug bcmdnx fldprocdnx warn
+debug bcmdnx mpls warn
+debug bcmdnx mplstestsdnx warn
+debug bcmdnx switchtestsdnx warn
+#debug soc ddr info
+#debug bcmdnx dram verb
+
+#
+# For DBAL trace export
+#
+if $?dbal_severity_override \
+       'debug socdnx DbalDnx $dbal_severity_override '
+
+# Loading the board configuration file according to the board type, which is encoded on the EEPROM.
+# Boards types: Pizza box, revB and DVT.
+# This board loading script can be replaced by the user with a simple command to load the board file that they are using.
+# 0x86908790 - mgmt system of JR2 and Ramon (all are pizza boxes).
+# 0x86918790 - mgmt system of JR2 with revB board and Ramon pizza box.
+# 0x86928790 - mgmt system of JR2 pizza box, Ramon Negev and Jer.
+# 0x86938790 - mgmt system of JR2, Ramon and J2C (all are pizza boxes).
+
+# 0x86900202 - specially marked device connecting Jer2, Jer and FE3200.
+if $?BCM_JR2_DEV && !$?plisim \
+    'local i2c_result 1;  \
+    cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x86900101 || $i2c_result == 0x86908790 || $i2c_result == 0x86928790 || $i2c_result == 0x86938790" \
+        "import bcm88690_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x86900102 || $i2c_result == 0x86918790" \
+        "import bcm88690_revB_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x86900201" \
+        "import bcm88690_dvt_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x86900202" \
+        "import bcm88690_legacy_interop_board.bcm";\
+    if !"expr $i2c_result == 0x86948790" \
+        "import bcm88690_sonic_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"$board_file_loaded"\
+        "import bcm88690_board.bcm";'
+
+if $?BCM_JR2_DEV && $?plisim \
+    'import bcm88690_board.bcm;'
+
+if $?BCM_J2C_DEV && !$?plisim \
+    'local i2c_result 1;  \
+    cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x88000101"  \
+        "import bcm88800_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x88000201" \
+        "import bcm88800_dvt_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x88000202" \
+        "import bcm88800_legacy_interop_board.bcm"\
+        "config add appl_param_nof_modids.BCM8880X=2";\
+    if !"$board_file_loaded"\
+        "import bcm88800_board.bcm";'
+
+if $?BCM_J2C_DEV && $?plisim \
+    'import bcm88800_board.bcm;'
+    
+if $?BCM_J2P_DEV \
+    'import bcm88850_board.bcm;'
+
+if $?BCM_Q2A_DEV && !$?plisim \
+    'local i2c_result 1;  \
+    cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x84800101" \
+        "import bcm88480_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x84800201" \
+        "import bcm88480_dvt_board.bcm"\
+        "local board_file_loaded 1";\
+    if !"$board_file_loaded"\
+        "import bcm88480_board.bcm";'
+
+if $?BCM_Q2A_DEV && $?plisim \
+    'import bcm88480_board.bcm;'    
+    
+# Assumption: in systems containing JR2 and 8879X - the CPU is on a JR2 unit and not on 8879X. 
+# So when loading JR2 standalone or JR2 in mgmt system- the ref clock Silab values read are expected to be the JR2 values.
+# This script can be deleted by the user and replaced by serdes_fabric_clk_freq_in/out and serdes_nif_clk_freq_in/out SoC properties configuration with the relevant frequency values.
+
+local pll_freq -1
+local standalone_system 0
+local mgmt_system 0
+
+if $?BCM_JR2_DEV && !$?plisim \
+    'cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x86900101 || $i2c_result == 0x86900102 || $i2c_result == 0x86900201 || $i2c_result == 0x86900202" \
+        "local standalone_system 1"; \
+    if !"expr $i2c_result == 0x86908790 || $i2c_result == 0x86918790 || $i2c_result == 0x86928790 || $i2c_result == 0x86938790 || $i2c_result == 0x86948790" \
+        "local mgmt_system 1";'
+
+expr $standalone_system || $mgmt_system
+if $?BCM_JR2_DEV && !$?plisim && $? \
+    'cpu_i2c write 0x11 0x70 0x0 0x02; \
+    cpu_i2c write 0x11 0x74 0x1 0x02; \
+    cpu_i2c read 0x11 0x74 0x50; \
+    local pll_freq $i2c_result; \
+    cpu_i2c write 0x11 0x70 0x0 0x0;'
+
+# JR2 configuration
+expr $?plisim || $standalone_system || $mgmt_system
+if $?BCM_JR2_DEV && $? \
+    'if !"expr $pll_freq != 0x0 && $pll_freq != 0x1" \
+        "config add serdes_fabric_clk_freq_in.BCM8869X=2"\
+        "config add serdes_fabric_clk_freq_out.BCM8869X=1"\
+        "config add serdes_nif_clk_freq_in.BCM8869X=2"\
+        "config add serdes_nif_clk_freq_out.BCM8869X=1";\
+    if !"expr $pll_freq == 0x0" \
+        "config add serdes_fabric_clk_freq_in.BCM8869X=2"\
+        "config add serdes_fabric_clk_freq_out.BCM8869X=1"\
+        "config add serdes_nif_clk_freq_in.BCM8869X=2"\
+        "config add serdes_nif_clk_freq_out.BCM8869X=1";\
+    if !"expr $pll_freq == 0x1" \
+        "config add serdes_fabric_clk_freq_in.BCM8869X=1"\
+        "config add serdes_fabric_clk_freq_out.BCM8869X=bypass"\
+        "config add serdes_nif_clk_freq_in.BCM8869X=1"\
+        "config add serdes_nif_clk_freq_out.BCM8869X=bypass";'
+
+########
+
+# Load DRAM tuning properties from local File. RcLoad will not fail if file not found, and will not show errors of missing file.
+set RCError=off
+debug appl shell warn
+
+if $?BCM_JR2_DEV && !$?plisim \
+    'import /home/negev/BCM8869X_dram_tune_v1.bcm'
+
+if $?BCM_J2C_DEV && !$?plisim \
+    'import /home/negev/BCM8880X_dram_tune.bcm'
+
+# Load specific Dram configurations in regard to timing parameters.
+# For simulation, load Samsung timing params.
+if $?BCM_Q2A_DEV && !$?plisim \
+    'import /home/negev/BCM8848X_dram_config.bcm' \
+    'rcload dnx_dram/dnx_dram.soc' \
+    'import /home/negev/BCM8848X_dram_tune.bcm'
+if $?BCM_Q2A_DEV && $?plisim \
+    'config add dram_type_GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT.BCM8848X=1' \
+    'rcload dnx_dram/dnx_dram.soc'
+
+debug appl shell =
+set RCError=on
+
+#Set fabric connect mode as FE for multi FAP system
+if $?diag_chassis \
+   "config add fabric_connect_mode.BCM8869X=FE" \
+   "config add fabric_connect_mode.BCM8880X=FE" \
+   "config add fabric_connect_mode.BCM8885X=FE"
+   
+
+##set default nof devices for chassis system
+#if chassis system then default number of devices is 2 (unless stated otherwise)
+if $?diag_chassis " \
+  local nof_devices 2" \
+else "\
+  local nof_devices 1"
+if !$?appl_param_nof_devices \
+  "config add appl_param_nof_devices.BCM8869X=$nof_devices" \
+  "config add appl_param_nof_devices.BCM8880X=$nof_devices"
+
+# Set modid:
+# If diag_chassis is enabled (two line cards) - set device index to be 1 for unit 2, and 0 for unit != 2
+local device_index 0
+expr $unit+0 == 2; if $? "local device_index 1"
+
+# A specific system of J+ (unit0), J2C (unit1), FE3200 (unit2). Usually the second FAP is unit2, but here it's unit1. Need to set modids accordingly.
+if $?BCM_J2C_DEV && !$?plisim \
+    'local i2c_result 1;  \
+    cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x88000202" \
+        "config add  appl_param_nof_devices=2"\
+        "config add appl_param_device_type0=0x8690"\
+        "config add appl_param_device_type1=0x8800"\
+        "config add appl_param_cpu_agent_id=0" \
+        "config add appl_param_cpu_agent_0_device_unit_map0=0" \
+        "config add appl_param_cpu_agent_0_device_unit_map1=1";'
+
+if !$?appl_param_device_index " \
+  config add appl_param_device_index.$unit=$device_index"
+
+if !"expr $diag_emulator_partial_init + 0" || $?plisim "\
+  local simulator 1; \
+  config add phy_simul=1"
+
+# In case of access only or heat-up boots, avoid from running M0 firmware
+expr $custom_feature_heat_up + 0 || $custom_feature_access_only + 0
+expr 1 - $?
+local full_startup $?
+
+if $?feature_cmicx && !$?simulator && $full_startup \
+    "m0 load 0 0x0 linkscan_led_fw.bin" \
+    "m0 load 0 0x3800 custom_led.bin"
+
+# In ANAT testing parallel mode DNX init is invoked by a dedicated ctest command
+if $?diag_parallel \
+    exit    
+
+#SKU configuration
+rcload dnx_sku/dnx_sku.soc
+
+INIT_DNX
+
+if $?feature_cmicx && !$?simulator && $full_startup \
+    "led auto on" \
+    "led start"
+
+echo "dnx.soc: Done............................."
+exit
+
+#In emulation do not execute slow steps not needed for emulation
+if $?simulator \
+    exit
+

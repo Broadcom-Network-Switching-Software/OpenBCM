@@ -1,0 +1,115 @@
+BCM.0> c TD4_HSDK_Mirror_use_IFP.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191022 (Tue Oct 22 20:50:45 2019)
+From yp929377@lvnvde0743:/projects/ntsw-sw14/home/ypeng/TD4_Verify/hsdk-all-6.5.18-EA6/hsdk-all-6.5.18-EA6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+Ingress port: 2
+Egress    port: 61
+Mirrored port: 140
+egress_port_multi_setup port: 61 setup
+egress_port_multi_setup port: 140 setup
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 2, expect forward to port 61
+Two packets will be mirror to port 140 by using IFP, one for IFP ingress mirror action and the other for IFP egress mirror action
+tx 1 pbm=2 data=0x00BBBBBBBBBB0011223344558100000208004500001C000000004002F95DC0A8001EC0A800141164EE9B00000000000102030405060708090A0B0C0D0E0F1011E544D79B;sleep 5
+Packet from data=<>, length=68
+Sleeping for 5 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:bb:bb:bb:bb:bb> src<00:11:22:33:44:55> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.0.30> dst<192.168.0.20> hl<5> service-type<0> tl<28> id<0> frg-off<0> ttl<64> > chk-sum<0xf95d>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[2]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:bb:bb:bb:bb:bb> src<00:11:22:33:44:55> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<192.168.0.30> dst<192.168.0.20> hl<5> service-type<0> tl<28> id<0> frg-off<0> ttl<64> > chk-sum<0xf95d>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[3]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[3]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:bb:bb:bb:bb:bb> src<00:11:22:33:44:55> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<192.168.0.30> dst<192.168.0.20> hl<5> service-type<0> tl<28> id<0> frg-off<0> ttl<64> > chk-sum<0xf95d>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[4]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[4]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:bb:bb:bb:bb:bb> src<00:11:22:33:44:55> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<192.168.0.30> dst<192.168.0.20> hl<5> service-type<0> tl<28> id<0> frg-off<0> ttl<64> > chk-sum<0xf95d>
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+XLMIB_TBYT.cd13                       :                    68                 +68
+XLMIB_RBYT.cd13                       :                    68                 +68
+XLMIB_TPOK.cd13                       :                     1                  +1
+XLMIB_RPOK.cd13                       :                     1                  +1
+XLMIB_TUCA.cd13                       :                     1                  +1
+XLMIB_RUCA.cd13                       :                     1                  +1
+XLMIB_TPKT.cd13                       :                     1                  +1
+XLMIB_RPKT.cd13                       :                     1                  +1
+XLMIB_T127.cd13                       :                     1                  +1
+XLMIB_R127.cd13                       :                     1                  +1
+XLMIB_RPRM.cd13                       :                     1                  +1
+UC_PERQ_PKT(0).cd13                   :                     1                  +1
+UC_PERQ_BYTE(0).cd13                  :                    68                 +68
+XLMIB_TBYT.cd28                       :                   144                +144
+XLMIB_RBYT.cd28                       :                   144                +144
+XLMIB_TPOK.cd28                       :                     2                  +2
+XLMIB_RPOK.cd28                       :                     2                  +2
+XLMIB_TVLN.cd28                       :                     2                  +2
+XLMIB_RVLN.cd28                       :                     2                  +2
+XLMIB_TUCA.cd28                       :                     2                  +2
+XLMIB_RUCA.cd28                       :                     2                  +2
+XLMIB_TPKT.cd28                       :                     2                  +2
+XLMIB_RPKT.cd28                       :                     2                  +2
+XLMIB_T127.cd28                       :                     2                  +2
+XLMIB_R127.cd28                       :                     2                  +2
+XLMIB_RPRM.cd28                       :                     2                  +2
+
+******Port stats check******
+--------Ingress port (2) stats--------
+Rx : 1 packets
+--------Egress port (61) stats--------
+Tx : 1 packets
+--------IFP Mirrored port (140) stats--------
+IFP Mirror : 2 packets, One for ingress mirror and the other for egress mirror
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

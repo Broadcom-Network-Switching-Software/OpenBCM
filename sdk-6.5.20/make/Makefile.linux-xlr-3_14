@@ -1,0 +1,143 @@
+# $Id: Makefile.linux-xlr-3_14,v 0.1 2015/06/30 00:00:00 nowakm Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+#
+# XLR system make file.
+#
+# Most of this was taken from target x86-smp_generic_64-2_6.
+#
+
+
+#############################################################################
+# this segment is custom and not sourced from any existing makefile         #
+# (base thanks to http:<slash><slash>confluence.broadcom.com/display/NTSWSW/X86+System) #
+#############################################################################
+
+# set up a basic feature list. tcl, etc. #
+#ifeq (,$(FEATURE_LIST))
+#FEATURE_LIST = TCL BFD PTP CINT L3 I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE CUSTOMER TEST CHASSIS MSTP RCPU
+#endif
+
+# some basic path variables for tools and kernel source, etc #
+export XLR_TOOLS_BASE = /projects/ntsw-tools
+TOOLCHAIN_DIR = $(XLR_TOOLS_BASE)/toolchains/x86_64/fedora-21
+KERNDIR       = $(XLR_TOOLS_BASE)/linux/fedora-21-x86_64/linux-3.14.0-1.nfsv2.fc21.x86_64
+
+# set up cross compile prefix, tools dir variables. #
+export CROSS_COMPILE := x86_64-fedora-linux-gnu-
+export TOOLS_DIR     := $(TOOLCHAIN_DIR)/bin
+
+# architecture. #
+ARCH                = x86_64
+TARGET_ARCHITECTURE = x86_64-fedora-linux-gnu
+
+# set up paths. #
+export LIBRARY_PATH := $(TOOLCHAIN_DIR)/lib:$(TOOLCHAIN_DIR)/lib64:$(LIBRARY_PATH)
+export PATH         := $(TOOLCHAIN_DIR)/bin:$(KERNDIR):$(PATH)
+
+# set up SYSINC path #
+export SYSINC := $(TOOLCHAIN_DIR)/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include
+
+# CFLAGS/CFGFLAGS #
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+#CFGFLAGS += -DALPM_ENABLE
+CFGFLAGS += -DBCM_BPROF_STATS
+CFLAGS += -DUSE_LINUX_BDE_MMAP=1
+#CFLAGS += -DBDE_LINUX_USE_MSI_INTERRUPT
+CFLAGS += -Wno-error=unused-value
+CFLAGS += -Wno-error=unused-but-set-variable
+CFLAGS += -Wno-error=maybe-uninitialized
+CFLAGS += -Wno-error=cpp
+CFLAGS += -Wno-error=aggressive-loop-optimizations
+CFLAGS += -Wno-error=array-bounds
+CFLAGS += -L$(TOOLCHAIN_DIR)/lib
+CFLAGS += -L$(TOOLCHAIN_DIR)/lib64
+#CFLAGS += -Wl,--rpath=/lib64                                 # may need to set rpath and dynamic-linker path here (and possibly in KLFAGS below) in the future, #
+#CFLAGS += -Wl,--dynamic-linker=/lib64/ld-linux-x86-64.so.2   # if we want to build the target executable to be used with shared libs #
+
+# set up KFLAGS appropriately. #
+ifeq (,$(KFLAGS))
+KFLAGS := -L$(TOOLCHAIN_DIR)/lib -L$(TOOLCHAIN_DIR)/lib64 -I$(KERNDIR) -lc -nostdinc -isystem $(SYSINC) -Iinclude -I$(KERNDIR)/arch/x86/include -I$(KERNDIR)/include -I$(KERNDIR)/include/generated -I$(KERNDIR)/arch/x86/include/generated -I$(KERNDIR)/usr/include -I$(KERNDIR)/arch/x86/include/uapi -I$(KERNDIR)/include/uapi -include $(KERNDIR)/include/generated/autoconf.h -D__KERNEL__ -DNDEBUG -Wundef -Wno-error=unused-value -Wno-error=maybe-uninitialized -Wno-error=cpp -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Wno-format-security -fno-delete-null-pointer-checks -O2 -m64 -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -maccumulate-outgoing-args -fstack-protector -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -Wframe-larger-than=1024 -fno-omit-frame-pointer -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fno-dwarf2-cfi-asm -fconserve-stack
+endif
+
+
+######################################################################
+# this segment comes from make/Makefile.linux-x86-smp_generic_64-2_6 #
+######################################################################
+CFGFLAGS += -DLONGS_ARE_64BITS
+CFGFLAGS += -DPTRS_ARE_64BITS
+CFGFLAGS += -DSAL_SPL_LOCK_ON_IRQ
+
+
+###########################################################################################
+# This segment comes from make/Makefile.linux-x86-generic-common-2_6 (with modifications) #
+###########################################################################################
+
+# Default kernel source directory
+ifeq (,$(KERNDIR))
+KERNDIR := /lib/modules/$(shell uname -r)/build
+export KERNDIR
+endif
+
+# Default architecture
+ifeq (,$(ARCH))
+ARCH = x86_64
+endif
+
+# Noisy kernel build
+KBUILD_VERBOSE = 1
+
+export ARCH KBUILD_VERBOSE KERNDIR
+
+# Default Linux include directory
+ifeq (,$(LINUX_INCLUDE))
+LINUX_INCLUDE := $(KERNDIR)/include
+endif
+
+# autoconf.h was moved in later kernels
+AUTOCONF = $(KERNDIR)/include/generated/autoconf.h
+ifeq (,$(shell ls $(AUTOCONF) 2>/dev/null))
+AUTOCONF = $(KERNDIR)/include/linux/autoconf.h
+endif
+
+# gcc system include path
+#SYSINC = $(shell gcc -print-search-dirs | grep install | cut -c 10-)include
+
+
+ifeq (,$(KFLAGS))
+KFLAGS := -nostdinc -isystem $(SYSINC) -I$(KERNDIR)/include -I$(KERNDIR)/arch/x86/include -include $(AUTOCONF) -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -m64 -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -maccumulate-outgoing-args -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -fno-stack-protector -fomit-frame-pointer -g -Wdeclaration-after-statement -Wno-pointer-sign
+endif
+
+
+
+##############################################################
+# This segment comes from make/Makefile.linux-x86-common-2_6 #
+##############################################################
+CFGFLAGS += -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0
+ENDIAN = LE_HOST=1
+CFGFLAGS += -D$(ENDIAN)
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"X86\"
+CFGFLAGS += -DSAL_BDE_DMA_MEM_DEFAULT=32
+
+# Extra variables.
+EXTRA_CFLAGS = -D"KBUILD_STR(s)=\#s" $(basename_flags) $(modname_flags)
+
+comma = ,
+basetarget = $(basename $(notdir $@))
+modname = $(basetarget)
+
+name-fix = $(subst $(comma),_,$(subst -,_,$1))
+basename_flags = -D"KBUILD_BASENAME=KBUILD_STR($(call name-fix,$(basetarget)))"
+modname_flags  = $(if $(filter 1,$(words $(modname))),\
+-D"KBUILD_MODNAME=KBUILD_STR($(call name-fix,$(modname)))")
+
+ifneq ($(targetplat),user)
+# By default we exclude -Werror from x86 kernel builds
+BCM_CFLAGS   = -Wall
+include ${SDK}/make/Makefile.linux-kernel-2_6
+endif
+
+

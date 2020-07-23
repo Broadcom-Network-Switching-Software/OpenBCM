@@ -1,0 +1,39 @@
+echo "testsuite: started: sanity"
+# $Id$
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# ARAD (BCM88650) Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+local done 'echo "   Done"'
+# Avoid link messages while testing
+linkscan off 
+counter off
+ctrp suspend
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -* 
+
+#Clear test statistics
+tc *
+
+#Display some useful information
+date
+
+echo "No tr tests for PB. Sanity is successfull bringup"
+
+date
+tl
+local returnCode $?
+#echo "testsuite: finished: sanity: $returnCode"
+#Force sanity to 1. No TRs for PetraB. This will indicate successfull power-up.
+echo "testsuite: finished: sanity: 0"

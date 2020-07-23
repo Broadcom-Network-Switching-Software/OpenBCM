@@ -1,0 +1,27 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Filename Make.local.56450
+FEATURE_LIST=PTP CINT L3 I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE  CUSTOMER TEST CHASSIS MSTP RCPU
+BCM_PTL_SPT = 1
+
+BCM_56450_A0 = 1
+BCM_56450_B0 = 1
+BCM_56450_B1 = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+
+# workspace:system=56450
+# linux44-user:system=56450 buildDir=systems/linux/user/iproc-4_4 cpu=iproc
+# linux-user:system=56450 buildDir=systems/linux/user/iproc cpu=iproc
+# linux-user:system=56450 buildDir=systems/linux/user/gto cpu=gto
+# linux26wrs-user:system=56450 buildDir=systems/linux/user/gto-2_6 cpu=gto
+# linux37-user:system=56450 buildDir=systems/linux/user/wrx-3_7 cpu=WRX
+# linux44-user:system=56450 buildDir=systems/linux/user/xlr-4_4 cpu=XLR
+# linux-user:system=56450 buildDir=systems/linux/user/xlr          cpu=XLR
+# linux-user:system=56450 buildDir=systems/linux/user/gts          cpu=GTS
+# linux44-user:system=56450 buildDir=systems/linux/user/gts-4_4     cpu=GTS
+# linux36-user:system=56450 buildDir=systems/linux/user/rsx-3_6 cpu=rsx

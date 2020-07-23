@@ -1,0 +1,158 @@
+/*
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ *
+ * File:        lex.patch
+ * Purpose:     Add additional error checking to generated flex code
+ *              Patch validated with Flex 2.5.31 and 2.5.35
+ *              This is expected to apply with offsets from 2.5.31 to 2.5.34
+ *              Known not to apply with 2.5.37
+ */
+
+
+--- cint_c.lex.c	2017-05-26 08:30:49.915968338 -0700
++++ cint_c.lex.c.new	2017-05-26 08:30:44.096036652 -0700
+@@ -349,7 +349,6 @@
+ static yy_state_type yy_get_previous_state (yyscan_t yyscanner );
+ static yy_state_type yy_try_NUL_trans (yy_state_type current_state  ,yyscan_t yyscanner);
+ static int yy_get_next_buffer (yyscan_t yyscanner );
+-static void yy_fatal_error (yyconst char msg[] ,yyscan_t yyscanner );
+ 
+ /* Done after the current pattern has been matched and before the
+  * corresponding action - sets up yytext.
+@@ -898,11 +897,6 @@
+ #define YY_START_STACK_INCR 25
+ #endif
+ 
+-/* Report a fatal error. */
+-#ifndef YY_FATAL_ERROR
+-#define YY_FATAL_ERROR(msg) yy_fatal_error( msg , yyscanner)
+-#endif
+-
+ /* end tables serialization structures and prototypes */
+ 
+ /* Default declaration of generated scanner - a define so the user can
+@@ -931,6 +925,13 @@
+ #define YY_RULE_SETUP \
+ 	YY_USER_ACTION
+ 
++/*
++ * BRCM: Check buffer stack
++ */
++#ifndef YY_CHECK_BUFFER_STACK
++#define YY_CHECK_BUFFER_STACK if (!yyg->yy_buffer_stack) YY_FATAL_ERROR("buffer error")
++#endif
++
+ /** The main scanner function which does all the work.
+  */
+ YY_DECL
+@@ -957,6 +958,7 @@
+ #ifdef YY_USER_INIT
+ 		YY_USER_INIT;
+ #endif
++		YY_CHECK_BUFFER_STACK;
+ 
+ 		if ( ! yyg->yy_start )
+ 			yyg->yy_start = 1;	/* first start state */
+@@ -1685,6 +1687,7 @@
+ 		/* Undo the effects of YY_DO_BEFORE_ACTION. */
+ 		*yy_cp = yyg->yy_hold_char;
+ 		YY_RESTORE_YY_MORE_OFFSET
++		YY_CHECK_BUFFER_STACK;
+ 
+ 		if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_NEW )
+ 			{
+@@ -2090,6 +2093,7 @@
+ 
+ 	if ( ! YY_CURRENT_BUFFER ){
+         cint_c_ensure_buffer_stack (yyscanner);
++        YY_CHECK_BUFFER_STACK;
+ 		YY_CURRENT_BUFFER_LVALUE =
+             cint_c__create_buffer(yyin,YY_BUF_SIZE ,yyscanner);
+ 	}
+@@ -2123,6 +2127,7 @@
+ 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = yyg->yy_n_chars;
+ 		}
+ 
++        YY_CHECK_BUFFER_STACK;
+ 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
+ 	cint_c__load_buffer_state(yyscanner );
+ 
+@@ -2276,6 +2281,7 @@
+ 	/* Only push if top exists. Otherwise, replace top. */
+ 	if (YY_CURRENT_BUFFER)
+ 		yyg->yy_buffer_stack_top++;
++        YY_CHECK_BUFFER_STACK;
+ 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
+ 
+ 	/* copied from cint_c__switch_to_buffer. */
+@@ -2319,11 +2325,11 @@
+ 		 * immediate realloc on the next call.
+          */
+ 		num_to_alloc = 1;
+-		yyg->yy_buffer_stack = (struct yy_buffer_state**)cint_c_alloc
+-								(num_to_alloc * sizeof(struct yy_buffer_state*)
++		yyg->yy_buffer_stack = (struct yy_buffer_state**)cint_c_realloc
++                    (NULL, num_to_alloc * sizeof(struct yy_buffer_state*)
+ 								, yyscanner);
+ 		
+-		memset(yyg->yy_buffer_stack, 0, num_to_alloc * sizeof(struct yy_buffer_state*));
++		cint_cparser_memset(yyg->yy_buffer_stack, 0, num_to_alloc * sizeof(struct yy_buffer_state*));
+ 				
+ 		yyg->yy_buffer_stack_max = num_to_alloc;
+ 		yyg->yy_buffer_stack_top = 0;
+@@ -2342,7 +2348,7 @@
+ 								, yyscanner);
+ 
+ 		/* zero only the new slots.*/
+-		memset(yyg->yy_buffer_stack + yyg->yy_buffer_stack_max, 0, grow_size * sizeof(struct yy_buffer_state*));
++		cint_cparser_memset(yyg->yy_buffer_stack + yyg->yy_buffer_stack_max, 0, grow_size * sizeof(struct yy_buffer_state*));
+ 		yyg->yy_buffer_stack_max = num_to_alloc;
+ 	}
+ }
+@@ -2419,16 +2425,6 @@
+ 	return b;
+ }
+ 
+-#ifndef YY_EXIT_FAILURE
+-#define YY_EXIT_FAILURE 2
+-#endif
+-
+-static void yy_fatal_error (yyconst char* msg , yyscan_t yyscanner)
+-{
+-    	(void) fprintf( stderr, "%s\n", msg );
+-	exit( YY_EXIT_FAILURE );
+-}
+-
+ /* Redefine yyless() so it works in section 3 code. */
+ 
+ #undef yyless
+@@ -2540,7 +2536,7 @@
+ 
+         /* lineno is only valid if an input buffer exists. */
+         if (! YY_CURRENT_BUFFER )
+-           yy_fatal_error( "cint_c_set_lineno called with no buffer" , yyscanner); 
++           YY_FATAL_ERROR( "cint_c_set_lineno called with no buffer" );
+     
+     yylineno = line_number;
+ }
+@@ -2555,7 +2551,7 @@
+ 
+         /* column is only valid if an input buffer exists. */
+         if (! YY_CURRENT_BUFFER )
+-           yy_fatal_error( "cint_c_set_column called with no buffer" , yyscanner); 
++           YY_FATAL_ERROR( "cint_c_set_column called with no buffer" );
+     
+     yycolumn = column_no;
+ }
+@@ -2669,7 +2665,7 @@
+         return 1;
+     }
+ 
+-    memset(*ptr_yy_globals,0,sizeof(struct yyguts_t));
++    cint_cparser_memset(*ptr_yy_globals,0,sizeof(struct yyguts_t));
+ 
+     return yy_init_globals ( *ptr_yy_globals );
+ }

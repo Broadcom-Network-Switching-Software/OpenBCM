@@ -1,0 +1,33 @@
+# $Id: 53547r_led.soc,v 1.0 2017/11/20 06:10:38 leonlee Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script for controling the LED on WH2 REF board
+#
+
+
+## bcm953547r.hex
+local ledcode " \
+ 02 22 28 60 E0 67 58 06 E0 80 D2 26 74 02 02 1D \
+ 28 60 E0 67 58 06 E0 90 D2 11 74 10 02 02 28 60 \
+ E0 67 58 06 E0 80 D2 0E 74 1E 02 22 28 60 E0 67 \
+ 69 06 E0 80 D2 26 74 2C 02 1D 28 60 E0 67 69 06 \
+ E0 90 D2 11 74 3A 02 02 28 60 E0 67 69 06 E0 80 \
+ D2 0E 74 48 86 1E 3A 38 32 08 97 71 81 77 85 32 \
+ 00 32 01 B7 97 71 81 77 85 28 32 08 97 75 85 32 \
+ 00 32 01 B7 97 71 79 77 81 16 1E CA 05 70 81 77 \
+ 85 22 00 87 57 22 01 87 57 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 "
+
+
+# Download LED code into LED processor and enable (if applicable).
+if $?feature_led_proc && $?ledcode && !$?simulator \
+    "led prog $ledcode; \
+     led auto on; led start"

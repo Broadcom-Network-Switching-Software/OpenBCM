@@ -1,0 +1,1081 @@
+#
+# $Id: dune.soc,v 1.5 2011/12/20 10:53:28 yaronm Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Configure fap device mode (TM/PP/TDM_OPTIMIZED/TDM_STANDARD)
+# and ftmh outlif extension depending on config variables 'packet_processing' and 'tdm' variables
+if $?tdm "\
+  echo '*** TDM MODE ***'; \
+  config add diag_cosq_disable=1; \
+  if !$?fap_device_mode 'config add fap_device_mode=TDM_STANDARD'; \
+  config add fabric_ftmh_outlif_extension=ALWAYS; \
+  config ext_qdr_type=NONE; \
+  config ext_ram_present=0"
+if !$?tdm && $?packet_processing "\
+  echo '*** PACKET PROCESSING MODE ***'; \
+  config add fabric_ftmh_outlif_extension=ALWAYS; \
+  config add fap_device_mode=PP; \
+  config add egress_encap_ip_tunnel_range_min=4095; \
+  config add egress_encap_ip_tunnel_range_max=4095; \
+  config add mpls_tunnel_term_label_range_min_0=1000; \
+  config add mpls_tunnel_term_label_range_max_0=1001; \
+  config add mpls_tunnel_term_label_range_min_1=1002; \
+  config add mpls_tunnel_term_label_range_max_1=1003; \
+  config add mpls_tunnel_term_label_range_min_2=1004; \
+  config add mpls_tunnel_term_label_range_max_2=1005; \
+  if !$?diag_cosq_disable 'config add diag_cosq_disable=0';"
+if !$?tdm && !$?packet_processing "\
+  echo '*** TM ONLY MODE ***'; \
+  config add fap_device_mode=TM; \
+  config add fabric_ftmh_outlif_extension=IF_MC; \
+  if !$?diag_cosq_disable 'config add diag_cosq_disable=0'"
+
+# When more than a single device, set connect mode to FE and modid
+# to the slot id. For a single device, set connect mode to SINGLE_FAP
+# and modid to 0. Note that when using single_fap, all fabric-facing serdes
+# lanes are set in loopback, for fabric multicast to work.
+# All options for fabric_connect_mode are FE/BACK2BACK/MESH/MULTI_STAGE_FE/SINGLE_FAP
+
+if !$?diag_cosq_disable "config add diag_cosq_disable=0"
+if !$?slot || !$?diag_chassis "local slot 0"
+if !$?board_type_GFA_BI "local board_type_GFA_BI 1"
+if !$?board_type_GFA_BI_2 "local board_type_GFA_BI_2 0"
+
+if $?diag_chassis " \
+  local nof_devices 2; \
+  config add fabric_connect_mode=FE" \
+else "\
+  local nof_devices 1; \
+  if !$?fabric_connect_mode 'config add fabric_connect_mode=SINGLE_FAP'"
+   
+#Enable all quartets. Can be done per quartet using _N suffix
+config add pb_serdes_qrtt_active=1
+
+local lane_rate_nif 6250000
+local lane_rate_com_a 6250000
+if $board_type_GFA_BI "\
+    local lane_rate_fbr 5000000; \
+    local lane_rate_com_b 3125000; \
+    config add fabric_ref_clock=250000; \
+    config add combo_nif_0=1; \
+    config add combo_nif_1=1" \
+else '\
+    local lane_rate_fbr 6250000; \
+    local lane_rate_com_b 6250000; \
+    config add fabric_ref_clock=312500; \
+    config add combo_nif_0=0; \
+    config add combo_nif_1=0; \
+    for i=32,59 \'config add pb_serdes_lane_tx_phys_media_type_$i=CHIP2CHIP\''
+
+# Nif serdes quartets
+for i=0,2 'config add pb_serdes_qrtt_max_expected_rate_$i=$lane_rate_nif'
+for i=4,6 'config add pb_serdes_qrtt_max_expected_rate_$i=$lane_rate_nif'
+
+# Nif serdes quartet (combo-a)
+config add pb_serdes_qrtt_max_expected_rate_3=$lane_rate_com_a
+
+# Nif serdes quartet (combo-b)
+config add pb_serdes_qrtt_max_expected_rate_7=$lane_rate_com_b
+
+# Fabric serdes quartets
+for i=8,14 'config add pb_serdes_qrtt_max_expected_rate_$i=$lane_rate_fbr'
+
+# set default rate to nif rate. Override fabric lanes.
+config add pb_serdes_lane_rate=$lane_rate_nif
+for i=12,15 'config add pb_serdes_lane_rate_$i=$lane_rate_com_a'
+for i=28,31 'config add pb_serdes_lane_rate_$i=$lane_rate_com_b'
+for i=32,59 'config add pb_serdes_lane_rate_$i=$lane_rate_fbr'
+
+# Board Type configuration.
+
+if $board_type_GFA_BI "\
+    echo Configure GFA_BI Port/Interfcae/Nif/SerDes parameters; \
+    config add ucode_port_1=RXAUI7; \
+    config add ucode_port_2=RXAUI6; \
+    config add ucode_port_3=XAUI7; \
+    config add ucode_port_4=RXAUI0; \
+    config add ucode_port_5=RXAUI2; \
+    config add ucode_port_6=RXAUI4; \
+    config add ucode_port_7=RXAUI12; \
+    config add ucode_port_8=RXAUI10; \
+    config add ucode_port_9=RXAUI8; \
+    config add pb_serdes_lane_swap_polarity_tx_9=1; \
+    config add pb_serdes_lane_swap_polarity_tx_29=1; \
+    config add pb_serdes_lane_swap_polarity_rx_13=1; \
+    config add pb_serdes_lane_swap_polarity_rx_18=1; \
+    config add pb_serdes_lane_swap_polarity_rx_22=1; \
+    config add pb_serdes_lane_swap_polarity_rx_30=1; \
+    config add pb_serdes_lane_swap_polarity_rx_31=1; \
+    config add pb_serdes_lane_rx_phys_zcnt=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt=1; \
+    config add pb_serdes_lane_rx_phys_dfelth=20; \
+    config add pb_serdes_lane_rx_phys_tlth=20; \
+    config add pb_serdes_lane_rx_phys_g1cnt=1; \
+    config add pb_serdes_lane_tx_phys_amp_12=30; \
+    config add pb_serdes_lane_tx_phys_main_12=18; \
+    config add pb_serdes_lane_tx_phys_pre_12=3; \
+    config add pb_serdes_lane_tx_phys_post_12=13; \
+    config add pb_serdes_lane_tx_phys_amp_13=30; \
+    config add pb_serdes_lane_tx_phys_main_13=18; \
+    config add pb_serdes_lane_tx_phys_pre_13=3; \
+    config add pb_serdes_lane_tx_phys_post_13=13; \
+    config add pb_serdes_lane_tx_phys_amp_14=30; \
+    config add pb_serdes_lane_tx_phys_main_14=18; \
+    config add pb_serdes_lane_tx_phys_pre_14=3; \
+    config add pb_serdes_lane_tx_phys_post_14=13; \
+    config add pb_serdes_lane_tx_phys_amp_15=30; \
+    config add pb_serdes_lane_tx_phys_main_15=18; \
+    config add pb_serdes_lane_tx_phys_pre_15=3; \
+    config add pb_serdes_lane_tx_phys_post_15=13;"
+    
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_rx_phys_zcnt_3=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_3=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_3=15;  \
+    config add pb_serdes_lane_rx_phys_tlth_3=18;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_3=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_12=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_12=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_12=1;  \
+    config add pb_serdes_lane_rx_phys_tlth_12=8;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_12=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_13=18;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_13=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_13=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_13=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_13=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_14=17;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_14=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_14=2;  \
+    config add pb_serdes_lane_rx_phys_tlth_14=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_14=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_15=19;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_15=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_15=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_15=0;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_15=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_28=12;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_28=0;  \
+    config add pb_serdes_lane_rx_phys_dfelth_28=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_28=0;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_28=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_29=12;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_29=0;  \
+    config add pb_serdes_lane_rx_phys_dfelth_29=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_29=0;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_29=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_30=12;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_30=0;  \
+    config add pb_serdes_lane_rx_phys_dfelth_30=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_30=0;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_30=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_31=12;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_31=0;  \
+    config add pb_serdes_lane_rx_phys_dfelth_31=0;  \
+    config add pb_serdes_lane_rx_phys_tlth_31=0;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_31=1;"
+    
+# TX params for fabric rate of 5000 mbps (Negev system).
+# Overrides media type configuration.
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_tx_phys_amp_32=31; \
+    config add pb_serdes_lane_tx_phys_main_32=24; \
+    config add pb_serdes_lane_tx_phys_pre_32=0; \
+    config add pb_serdes_lane_tx_phys_post_32=0; \
+    config add pb_serdes_lane_tx_phys_amp_33=31; \
+    config add pb_serdes_lane_tx_phys_main_33=24; \
+    config add pb_serdes_lane_tx_phys_pre_33=0; \
+    config add pb_serdes_lane_tx_phys_post_33=0; \
+    config add pb_serdes_lane_tx_phys_amp_34=31; \
+    config add pb_serdes_lane_tx_phys_main_34=24; \
+    config add pb_serdes_lane_tx_phys_pre_34=0; \
+    config add pb_serdes_lane_tx_phys_post_34=0; \
+    config add pb_serdes_lane_tx_phys_amp_35=31; \
+    config add pb_serdes_lane_tx_phys_main_35=24; \
+    config add pb_serdes_lane_tx_phys_pre_35=0; \
+    config add pb_serdes_lane_tx_phys_post_35=0; \
+    config add pb_serdes_lane_tx_phys_amp_36=31; \
+    config add pb_serdes_lane_tx_phys_main_36=24; \
+    config add pb_serdes_lane_tx_phys_pre_36=0; \
+    config add pb_serdes_lane_tx_phys_post_36=0; \
+    config add pb_serdes_lane_tx_phys_amp_37=31; \
+    config add pb_serdes_lane_tx_phys_main_37=24; \
+    config add pb_serdes_lane_tx_phys_pre_37=0; \
+    config add pb_serdes_lane_tx_phys_post_37=0; \
+    config add pb_serdes_lane_tx_phys_amp_38=31; \
+    config add pb_serdes_lane_tx_phys_main_38=24; \
+    config add pb_serdes_lane_tx_phys_pre_38=0; \
+    config add pb_serdes_lane_tx_phys_post_38=0; \
+    config add pb_serdes_lane_tx_phys_amp_39=31; \
+    config add pb_serdes_lane_tx_phys_main_39=24; \
+    config add pb_serdes_lane_tx_phys_pre_39=0; \
+    config add pb_serdes_lane_tx_phys_post_39=0; \
+    config add pb_serdes_lane_tx_phys_amp_40=31; \
+    config add pb_serdes_lane_tx_phys_main_40=24; \
+    config add pb_serdes_lane_tx_phys_pre_40=0; \
+    config add pb_serdes_lane_tx_phys_post_40=0; \
+    config add pb_serdes_lane_tx_phys_amp_41=31; \
+    config add pb_serdes_lane_tx_phys_main_41=24; \
+    config add pb_serdes_lane_tx_phys_pre_41=0; \
+    config add pb_serdes_lane_tx_phys_post_41=0; \
+    config add pb_serdes_lane_tx_phys_amp_42=31; \
+    config add pb_serdes_lane_tx_phys_main_42=24; \
+    config add pb_serdes_lane_tx_phys_pre_42=0; \
+    config add pb_serdes_lane_tx_phys_post_42=0"
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_tx_phys_amp_43=31; \
+    config add pb_serdes_lane_tx_phys_main_43=24; \
+    config add pb_serdes_lane_tx_phys_pre_43=0; \
+    config add pb_serdes_lane_tx_phys_post_43=0; \
+    config add pb_serdes_lane_tx_phys_amp_44=31; \
+    config add pb_serdes_lane_tx_phys_main_44=24; \
+    config add pb_serdes_lane_tx_phys_pre_44=0; \
+    config add pb_serdes_lane_tx_phys_post_44=0; \
+    config add pb_serdes_lane_tx_phys_amp_45=31; \
+    config add pb_serdes_lane_tx_phys_main_45=24; \
+    config add pb_serdes_lane_tx_phys_pre_45=0; \
+    config add pb_serdes_lane_tx_phys_post_45=0; \
+    config add pb_serdes_lane_tx_phys_amp_46=31; \
+    config add pb_serdes_lane_tx_phys_main_46=24; \
+    config add pb_serdes_lane_tx_phys_pre_46=0; \
+    config add pb_serdes_lane_tx_phys_post_46=0; \
+    config add pb_serdes_lane_tx_phys_amp_47=31; \
+    config add pb_serdes_lane_tx_phys_main_47=24; \
+    config add pb_serdes_lane_tx_phys_pre_47=0; \
+    config add pb_serdes_lane_tx_phys_post_47=0; \
+    config add pb_serdes_lane_tx_phys_amp_48=31; \
+    config add pb_serdes_lane_tx_phys_main_48=24; \
+    config add pb_serdes_lane_tx_phys_pre_48=0; \
+    config add pb_serdes_lane_tx_phys_post_48=0; \
+    config add pb_serdes_lane_tx_phys_amp_49=31; \
+    config add pb_serdes_lane_tx_phys_main_49=24; \
+    config add pb_serdes_lane_tx_phys_pre_49=0; \
+    config add pb_serdes_lane_tx_phys_post_49=0; \
+    config add pb_serdes_lane_tx_phys_amp_50=31; \
+    config add pb_serdes_lane_tx_phys_main_50=24; \
+    config add pb_serdes_lane_tx_phys_pre_50=0; \
+    config add pb_serdes_lane_tx_phys_post_50=0; \
+    config add pb_serdes_lane_tx_phys_amp_51=31; \
+    config add pb_serdes_lane_tx_phys_main_51=24; \
+    config add pb_serdes_lane_tx_phys_pre_51=0; \
+    config add pb_serdes_lane_tx_phys_post_51=0; \
+    config add pb_serdes_lane_tx_phys_amp_52=31; \
+    config add pb_serdes_lane_tx_phys_main_52=24; \
+    config add pb_serdes_lane_tx_phys_pre_52=0; \
+    config add pb_serdes_lane_tx_phys_post_52=0; \
+    config add pb_serdes_lane_tx_phys_amp_53=31; \
+    config add pb_serdes_lane_tx_phys_main_53=24; \
+    config add pb_serdes_lane_tx_phys_pre_53=0; \
+    config add pb_serdes_lane_tx_phys_post_53=0; \
+    config add pb_serdes_lane_tx_phys_amp_54=31; \
+    config add pb_serdes_lane_tx_phys_main_54=24; \
+    config add pb_serdes_lane_tx_phys_pre_54=0; \
+    config add pb_serdes_lane_tx_phys_post_54=0; \
+    config add pb_serdes_lane_tx_phys_amp_55=31; \
+    config add pb_serdes_lane_tx_phys_main_55=24; \
+    config add pb_serdes_lane_tx_phys_pre_55=0; \
+    config add pb_serdes_lane_tx_phys_post_55=0; \
+    config add pb_serdes_lane_tx_phys_amp_56=31; \
+    config add pb_serdes_lane_tx_phys_main_56=24; \
+    config add pb_serdes_lane_tx_phys_pre_56=0; \
+    config add pb_serdes_lane_tx_phys_post_56=0; \
+    config add pb_serdes_lane_tx_phys_amp_57=31; \
+    config add pb_serdes_lane_tx_phys_main_57=24; \
+    config add pb_serdes_lane_tx_phys_pre_57=0; \
+    config add pb_serdes_lane_tx_phys_post_57=0; \
+    config add pb_serdes_lane_tx_phys_amp_58=31; \
+    config add pb_serdes_lane_tx_phys_main_58=24; \
+    config add pb_serdes_lane_tx_phys_pre_58=0; \
+    config add pb_serdes_lane_tx_phys_post_58=0; \
+    config add pb_serdes_lane_tx_phys_amp_59=31; \
+    config add pb_serdes_lane_tx_phys_main_59=24; \
+    config add pb_serdes_lane_tx_phys_pre_59=0; \
+    config add pb_serdes_lane_tx_phys_post_59=0;"
+
+# RX params for fabric rate of 5000 mbps (Negev system)
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_rx_phys_zcnt_32=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_32=2; \
+    config add pb_serdes_lane_rx_phys_dfelth_32=21; \
+    config add pb_serdes_lane_rx_phys_tlth_32=35; \
+    config add pb_serdes_lane_rx_phys_g1cnt_32=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_33=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_33=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_33=28; \
+    config add pb_serdes_lane_rx_phys_tlth_33=16; \
+    config add pb_serdes_lane_rx_phys_g1cnt_33=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_34=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_34=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_34=18; \
+    config add pb_serdes_lane_rx_phys_tlth_34=26; \
+    config add pb_serdes_lane_rx_phys_g1cnt_34=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_35=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_35=2; \
+    config add pb_serdes_lane_rx_phys_dfelth_35=23; \
+    config add pb_serdes_lane_rx_phys_tlth_35=14; \
+    config add pb_serdes_lane_rx_phys_g1cnt_35=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_36=22; \
+    config add pb_serdes_lane_rx_phys_z1cnt_36=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_36=22; \
+    config add pb_serdes_lane_rx_phys_tlth_36=30; \
+    config add pb_serdes_lane_rx_phys_g1cnt_36=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_37=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_37=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_37=20; \
+    config add pb_serdes_lane_rx_phys_tlth_37=14; \
+    config add pb_serdes_lane_rx_phys_g1cnt_37=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_38=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_38=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_38=23; \
+    config add pb_serdes_lane_rx_phys_tlth_38=29; \
+    config add pb_serdes_lane_rx_phys_g1cnt_38=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_39=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_39=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_39=24; \
+    config add pb_serdes_lane_rx_phys_tlth_39=30; \
+    config add pb_serdes_lane_rx_phys_g1cnt_39=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_40=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_40=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_40=21; \
+    config add pb_serdes_lane_rx_phys_tlth_40=33; \
+    config add pb_serdes_lane_rx_phys_g1cnt_40=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_41=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_41=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_41=20; \
+    config add pb_serdes_lane_rx_phys_tlth_41=6; \
+    config add pb_serdes_lane_rx_phys_g1cnt_41=1;"
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_rx_phys_zcnt_42=20; \
+    config add pb_serdes_lane_rx_phys_z1cnt_42=3; \
+    config add pb_serdes_lane_rx_phys_dfelth_42=18; \
+    config add pb_serdes_lane_rx_phys_tlth_42=33; \
+    config add pb_serdes_lane_rx_phys_g1cnt_42=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_43=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_43=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_43=26; \
+    config add pb_serdes_lane_rx_phys_tlth_43=33; \
+    config add pb_serdes_lane_rx_phys_g1cnt_43=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_44=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_44=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_44=22; \
+    config add pb_serdes_lane_rx_phys_tlth_44=34; \
+    config add pb_serdes_lane_rx_phys_g1cnt_44=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_45=22; \
+    config add pb_serdes_lane_rx_phys_z1cnt_45=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_45=18; \
+    config add pb_serdes_lane_rx_phys_tlth_45=16; \
+    config add pb_serdes_lane_rx_phys_g1cnt_45=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_46=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_46=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_46=21; \
+    config add pb_serdes_lane_rx_phys_tlth_46=28; \
+    config add pb_serdes_lane_rx_phys_g1cnt_46=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_47=20; \
+    config add pb_serdes_lane_rx_phys_z1cnt_47=2; \
+    config add pb_serdes_lane_rx_phys_dfelth_47=16; \
+    config add pb_serdes_lane_rx_phys_tlth_47=9; \
+    config add pb_serdes_lane_rx_phys_g1cnt_47=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_48=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_48=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_48=23; \
+    config add pb_serdes_lane_rx_phys_tlth_48=33; \
+    config add pb_serdes_lane_rx_phys_g1cnt_48=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_49=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_49=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_49=28; \
+    config add pb_serdes_lane_rx_phys_tlth_49=12; \
+    config add pb_serdes_lane_rx_phys_g1cnt_49=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_50=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_50=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_50=24;"
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_rx_phys_tlth_50=19; \
+    config add pb_serdes_lane_rx_phys_g1cnt_50=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_51=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_51=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_51=22; \
+    config add pb_serdes_lane_rx_phys_tlth_51=20; \
+    config add pb_serdes_lane_rx_phys_g1cnt_51=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_52=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_52=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_52=24; \
+    config add pb_serdes_lane_rx_phys_tlth_52=33; \
+    config add pb_serdes_lane_rx_phys_g1cnt_52=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_53=20; \
+    config add pb_serdes_lane_rx_phys_z1cnt_53=4; \
+    config add pb_serdes_lane_rx_phys_dfelth_53=10; \
+    config add pb_serdes_lane_rx_phys_tlth_53=5; \
+    config add pb_serdes_lane_rx_phys_g1cnt_53=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_54=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_54=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_54=29; \
+    config add pb_serdes_lane_rx_phys_tlth_54=25; \
+    config add pb_serdes_lane_rx_phys_g1cnt_54=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_55=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_55=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_55=24; \
+    config add pb_serdes_lane_rx_phys_tlth_55=22; \
+    config add pb_serdes_lane_rx_phys_g1cnt_55=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_56=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_56=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_56=22; \
+    config add pb_serdes_lane_rx_phys_tlth_56=31; \
+    config add pb_serdes_lane_rx_phys_g1cnt_56=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_57=24; \
+    config add pb_serdes_lane_rx_phys_z1cnt_57=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_57=22; \
+    config add pb_serdes_lane_rx_phys_tlth_57=25; \
+    config add pb_serdes_lane_rx_phys_g1cnt_57=1;"
+
+if $board_type_GFA_BI "\
+    config add pb_serdes_lane_rx_phys_zcnt_58=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_58=1; \
+    config add pb_serdes_lane_rx_phys_dfelth_58=23; \
+    config add pb_serdes_lane_rx_phys_tlth_58=26; \
+    config add pb_serdes_lane_rx_phys_g1cnt_58=1; \
+    config add pb_serdes_lane_rx_phys_zcnt_59=23; \
+    config add pb_serdes_lane_rx_phys_z1cnt_59=2; \
+    config add pb_serdes_lane_rx_phys_dfelth_59=21; \
+    config add pb_serdes_lane_rx_phys_tlth_59=25; \
+    config add pb_serdes_lane_rx_phys_g1cnt_59=1;"
+
+if $board_type_GFA_BI_2 "\
+    echo Configure GFA_BI_2 Port/Interfcae/Nif/SerDes parameters; \
+    config add ucode_port_1=RXAUI3; \
+    config add ucode_port_2=RXAUI2; \
+    config add ucode_port_3=RXAUI1; \
+    config add ucode_port_4=RXAUI0; \
+    config add ucode_port_5=RXAUI8; \
+    config add ucode_port_6=RXAUI9; \
+    config add ucode_port_7=RXAUI5; \
+    config add ucode_port_8=RXAUI4; \
+    config add ucode_port_9=RXAUI12; \
+    config add ucode_port_10=RXAUI13; \
+    config add ucode_port_11=RXAUI10; \
+    config add ucode_port_12=RXAUI11; \
+    config add lanes_swap_6=1; \
+    config add lanes_swap_10=1; \
+    config add lanes_swap_11=1; \
+    config add lanes_swap_12=1; \
+    config add pb_serdes_lane_swap_polarity_tx_12=1; \
+    config add pb_serdes_lane_swap_polarity_tx_14=1; \
+    config add pb_serdes_lane_swap_polarity_tx_28=1; \
+    config add pb_serdes_lane_swap_polarity_tx_31=1; \
+    config add pb_serdes_lane_swap_polarity_tx_32=1; \
+    config add pb_serdes_lane_swap_polarity_tx_34=1; \
+    config add pb_serdes_lane_swap_polarity_tx_41=1; \
+    config add pb_serdes_lane_swap_polarity_rx_48=1; \
+    config add pb_serdes_lane_swap_polarity_rx_50=1; \
+    config add pb_serdes_lane_swap_polarity_rx_52=1; \
+    config add pb_serdes_lane_swap_polarity_rx_55=1; \
+    config add pb_serdes_lane_swap_polarity_rx_56=1; \
+    config add pb_serdes_lane_swap_polarity_rx_58=1;"
+    
+if $board_type_GFA_BI_2 && !$system_is_fe600_in_system "\
+    config add pb_serdes_lane_rx_phys_zcnt=21; \
+    config add pb_serdes_lane_rx_phys_z1cnt=1; \
+    config add pb_serdes_lane_rx_phys_dfelth=1; \
+    config add pb_serdes_lane_rx_phys_tlth=8; \
+    config add pb_serdes_lane_rx_phys_g1cnt=1; \
+    config add pb_serdes_lane_tx_phys_amp=30;  \
+    config add pb_serdes_lane_tx_phys_main=18;  \
+    config add pb_serdes_lane_tx_phys_pre=3;  \
+    config add pb_serdes_lane_tx_phys_post=13;"
+
+#GFA-BI2, with fe600, slot 0
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && !$slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_12=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_12=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_12=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_12=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_12=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_13=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_13=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_13=17;  \
+    config add pb_serdes_lane_rx_phys_tlth_13=7;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_13=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_14=18;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_14=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_14=7;  \
+    config add pb_serdes_lane_rx_phys_tlth_14=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_14=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_15=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_15=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_15=21;  \
+    config add pb_serdes_lane_rx_phys_tlth_15=21;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_15=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_28=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_28=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_28=18;  \
+    config add pb_serdes_lane_rx_phys_tlth_28=8;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_28=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_29=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_29=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_29=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_29=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_29=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_30=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_30=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_30=18;  \
+    config add pb_serdes_lane_rx_phys_tlth_30=12;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_30=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_31=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_31=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_31=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_31=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_31=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_32=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_32=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_32=22;  \
+    config add pb_serdes_lane_rx_phys_tlth_32=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_32=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && !$slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_33=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_33=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_33=13;  \
+    config add pb_serdes_lane_rx_phys_tlth_33=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_33=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_34=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_34=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_34=20;  \
+    config add pb_serdes_lane_rx_phys_tlth_34=30;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_34=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_35=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_35=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_35=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_35=5;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_35=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_36=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_36=0;  \
+    config add pb_serdes_lane_rx_phys_dfelth_36=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_36=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_36=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_37=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_37=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_37=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_37=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_37=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_38=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_38=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_38=20;  \
+    config add pb_serdes_lane_rx_phys_tlth_38=11;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_38=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_39=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_39=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_39=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_39=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_39=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_40=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_40=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_40=24;  \
+    config add pb_serdes_lane_rx_phys_tlth_40=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_40=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_41=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_41=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_41=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_41=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_41=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && !$slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_42=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_42=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_42=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_42=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_42=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_43=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_43=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_43=25;  \
+    config add pb_serdes_lane_rx_phys_tlth_43=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_43=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_44=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_44=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_44=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_44=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_44=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_45=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_45=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_45=18;  \
+    config add pb_serdes_lane_rx_phys_tlth_45=16;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_45=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_46=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_46=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_46=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_46=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_46=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_47=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_47=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_47=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_47=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_47=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_48=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_48=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_48=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_48=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_48=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_49=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_49=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_49=15;  \
+    config add pb_serdes_lane_rx_phys_tlth_49=13;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_49=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_50=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_50=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_50=17;  \
+    config add pb_serdes_lane_rx_phys_tlth_50=3;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_50=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && !$slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_51=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_51=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_51=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_51=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_51=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_52=17;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_52=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_52=6;  \
+    config add pb_serdes_lane_rx_phys_tlth_52=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_52=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_53=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_53=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_53=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_53=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_53=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_54=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_54=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_54=5;  \
+    config add pb_serdes_lane_rx_phys_tlth_54=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_54=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_55=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_55=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_55=14;  \
+    config add pb_serdes_lane_rx_phys_tlth_55=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_55=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_56=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_56=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_56=20;  \
+    config add pb_serdes_lane_rx_phys_tlth_56=21;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_56=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_57=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_57=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_57=14;  \
+    config add pb_serdes_lane_rx_phys_tlth_57=7;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_57=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_58=19;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_58=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_58=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_58=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_58=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_59=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_59=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_59=12;  \
+    config add pb_serdes_lane_rx_phys_tlth_59=3;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_59=1"
+
+#GFA-BI2, with fe600, slot 1
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && $slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_12=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_12=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_12=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_12=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_12=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_13=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_13=4;  \
+    config add pb_serdes_lane_rx_phys_dfelth_13=20;  \
+    config add pb_serdes_lane_rx_phys_tlth_13=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_13=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_14=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_14=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_14=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_14=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_14=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_15=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_15=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_15=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_15=9;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_15=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_28=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_28=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_28=14;  \
+    config add pb_serdes_lane_rx_phys_tlth_28=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_28=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_29=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_29=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_29=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_29=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_29=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_30=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_30=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_30=6;  \
+    config add pb_serdes_lane_rx_phys_tlth_30=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_30=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_31=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_31=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_31=14;  \
+    config add pb_serdes_lane_rx_phys_tlth_31=8;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_31=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_32=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_32=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_32=19;  \
+    config add pb_serdes_lane_rx_phys_tlth_32=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_32=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && $slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_33=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_33=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_33=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_33=10;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_33=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_34=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_34=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_34=17;  \
+    config add pb_serdes_lane_rx_phys_tlth_34=20;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_34=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_35=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_35=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_35=12;  \
+    config add pb_serdes_lane_rx_phys_tlth_35=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_35=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_36=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_36=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_36=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_36=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_36=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_37=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_37=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_37=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_37=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_37=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_38=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_38=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_38=20;  \
+    config add pb_serdes_lane_rx_phys_tlth_38=14;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_38=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_39=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_39=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_39=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_39=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_39=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_40=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_40=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_40=24;  \
+    config add pb_serdes_lane_rx_phys_tlth_40=18;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_40=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_41=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_41=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_41=11;  \
+    config add pb_serdes_lane_rx_phys_tlth_41=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_41=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && $slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_42=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_42=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_42=10;  \
+    config add pb_serdes_lane_rx_phys_tlth_42=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_42=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_43=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_43=4;  \
+    config add pb_serdes_lane_rx_phys_dfelth_43=22;  \
+    config add pb_serdes_lane_rx_phys_tlth_43=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_43=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_44=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_44=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_44=7;  \
+    config add pb_serdes_lane_rx_phys_tlth_44=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_44=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_45=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_45=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_45=18;  \
+    config add pb_serdes_lane_rx_phys_tlth_45=16;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_45=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_46=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_46=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_46=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_46=3;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_46=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_47=22;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_47=1;  \
+    config add pb_serdes_lane_rx_phys_dfelth_47=9;  \
+    config add pb_serdes_lane_rx_phys_tlth_47=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_47=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_48=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_48=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_48=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_48=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_48=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_49=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_49=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_49=12;  \
+    config add pb_serdes_lane_rx_phys_tlth_49=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_49=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_50=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_50=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_50=18;  \
+    config add pb_serdes_lane_rx_phys_tlth_50=11;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_50=1"
+if $board_type_GFA_BI_2 && $system_is_fe600_in_system && $slot "\
+    config add pb_serdes_lane_rx_phys_zcnt_51=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_51=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_51=7;  \
+    config add pb_serdes_lane_rx_phys_tlth_51=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_51=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_52=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_52=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_52=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_52=2;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_52=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_53=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_53=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_53=12;  \
+    config add pb_serdes_lane_rx_phys_tlth_53=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_53=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_54=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_54=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_54=7;  \
+    config add pb_serdes_lane_rx_phys_tlth_54=3;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_54=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_55=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_55=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_55=12;  \
+    config add pb_serdes_lane_rx_phys_tlth_55=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_55=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_56=24;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_56=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_56=21;  \
+    config add pb_serdes_lane_rx_phys_tlth_56=16;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_56=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_57=23;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_57=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_57=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_57=4;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_57=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_58=17;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_58=3;  \
+    config add pb_serdes_lane_rx_phys_dfelth_58=8;  \
+    config add pb_serdes_lane_rx_phys_tlth_58=1;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_58=1;  \
+    config add pb_serdes_lane_rx_phys_zcnt_59=21;  \
+    config add pb_serdes_lane_rx_phys_z1cnt_59=2;  \
+    config add pb_serdes_lane_rx_phys_dfelth_59=14;  \
+    config add pb_serdes_lane_rx_phys_tlth_59=12;  \
+    config add pb_serdes_lane_rx_phys_g1cnt_59=1"
+ 
+# DRAM pre-configurations according to config variables which defines
+# the dram type.
+
+#DDR3
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1333 || \
+   $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1600 || \
+   $?dram_type_DDR3_MICRON_MT41J64M16_15E || \
+   $?dram_type_DDR3_MICRON_MT41J128M16HA_15E_2G "\
+    config add ext_ram_type=DDR3; \
+    config add ext_ram_columns=1024; \
+    config add ext_ram_banks=8" 
+if $?dram_type_DDR3_MICRON_MT41J128M16HA_15E_2G "\
+  config add ext_ram_total_size=3072"
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1333 || \
+   $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1600 || \
+   $?dram_type_DDR3_MICRON_MT41J64M16_15E "\
+    config add ext_ram_total_size=1536"
+
+#GDDR3
+if $?dram_type_GDDR3_SAMSUNG_K4J52324QE \
+  "config add ext_ram_type=GDDR3" \
+  "config add ext_ram_columns=512" \
+  "config add ext_ram_banks=8" \
+  "config add ext_ram_total_size=384"
+
+#DDR2
+if $?dram_type_DDR2_MICRON_K4T51163QE_ZC_LF7 \
+  "config add ext_ram_type=DDR2" \
+  "config add ext_ram_columns=1024" \
+  "config add ext_ram_banks=4" \
+  "config add ext_ram_total_size=768"
+   
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1600 \
+  "config add ext_ram_ap_bit_pos=10" \
+  "config add ext_ram_burst_size=32" \
+  "config add ext_ram_c_cas_latency=11" \
+  "config add ext_ram_c_wr_latency=8" \
+  "config add ext_ram_t_rc=48750" \
+  "config add ext_ram_t_rfc=110000" \
+  "config add ext_ram_t_ras=35000" \
+  "config add ext_ram_t_faw=40000" \
+  "config add ext_ram_t_rcd_rd=13750" \
+  "config add ext_ram_t_rcd_wr=13750" \
+  "config add ext_ram_t_rrd=7500" \
+  "config add ext_ram_t_ref=3900" \
+  "config add ext_ram_t_rp=13750" \
+  "config add ext_ram_t_wr=15000" \
+  "config add ext_ram_t_wtr=7500" \
+  "config add ext_ram_t_rtp=7500"
+
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1333 \
+  "config add ext_ram_ap_bit_pos=10" \
+  "config add ext_ram_burst_size=32" \
+  "config add ext_ram_c_cas_latency=9" \
+  "config add ext_ram_c_wr_latency=8" \
+  "config add ext_ram_t_rc=50000" \
+  "config add ext_ram_t_rfc=110000" \
+  "config add ext_ram_t_ras=36666" \
+  "config add ext_ram_t_faw=45000" \
+  "config add ext_ram_t_rcd_rd=15000" \
+  "config add ext_ram_t_rcd_wr=15000" \
+  "config add ext_ram_t_rrd=8333" \
+  "config add ext_ram_t_ref=3900" \
+  "config add ext_ram_t_rp=15000" \
+  "config add ext_ram_t_wr=15000" \
+  "config add ext_ram_t_wtr=8333" \
+  "config add ext_ram_t_rtp=6666"
+
+if $?dram_type_DDR3_MICRON_MT41J64M16_15E || $?dram_type_DDR3_MICRON_MT41J128M16HA_15E_2G \
+  "config add ext_ram_ap_bit_pos=10" \
+  "config add ext_ram_burst_size=32" \
+  "config add ext_ram_c_cas_latency=9" \
+  "config add ext_ram_c_wr_latency=7" \
+  "config add ext_ram_t_rc=49500" \
+  "config add ext_ram_t_rfc=110000" \
+  "config add ext_ram_t_ras=36000" \
+  "config add ext_ram_t_faw=50000" \
+  "config add ext_ram_t_rcd_rd=13500" \
+  "config add ext_ram_t_rcd_wr=13500" \
+  "config add ext_ram_t_rrd=7500" \
+  "config add ext_ram_t_ref=3900c" \
+  "config add ext_ram_t_rp=13500" \
+  "config add ext_ram_t_wr=15000" \
+  "config add ext_ram_t_wtr=7500" \
+  "config add ext_ram_t_rtp=7500"
+
+# Samsung (K4J52324QE)
+# The following parameters correspond to BC-16 dash, and were tested in
+# dune's lab with BC-14 dash dram working in frequency of 533MHz.
+if $?dram_type_GDDR3_SAMSUNG_K4J52324QE \
+  "config add ext_ram_ap_bit_pos=8" \
+  "config add ext_ram_burst_size=16" \
+  "config add ext_ram_gddr3_mrs0_wr1=0x00000312" \
+  "config add ext_ram_gddr3_emr0_wr1=0x0000109d" \
+  "config add ext_ram_c_cas_latency=9" \
+  "config add ext_ram_c_wr_latency=1" \
+  "config add ext_ram_t_rc_clk=24" \
+  "config add ext_ram_t_rfc_clk=29" \
+  "config add ext_ram_t_ras_clk=16" \
+  "config add ext_ram_t_faw_clk=5" \
+  "config add ext_ram_t_rcd_rd_clk=9" \
+  "config add ext_ram_t_rcd_wr_clk=6" \
+  "config add ext_ram_t_rrd_clk=7" \
+  "config add ext_ram_t_ref=1450" \
+  "config add ext_ram_t_rp_clk=8" \
+  "config add ext_ram_t_wr_clk=8" \
+  "config add ext_ram_t_wtr_clk=4" \
+  "config add ext_ram_t_rtp_clk=4"
+
+if $?dram_type_DDR2_MICRON_K4T51163QE_ZC_LF7 \
+  "config add ext_ram_ap_bit_pos=10" \
+  "config add ext_ram_burst_size=16" \
+  "config add ext_ram_auto_mode=TRUE" \
+  "config add ext_ram_c_cas_latency=6" \
+  "config add ext_ram_c_wr_latency=5" \
+  "config add ext_ram_t_rc=60000" \
+  "config add ext_ram_t_rfc=105000" \
+  "config add ext_ram_t_ras=45000" \
+  "config add ext_ram_t_faw=45000" \
+  "config add ext_ram_t_rcd_rd=15000" \
+  "config add ext_ram_t_rcd_wr=15000" \
+  "config add ext_ram_t_rrd=10000" \
+  "config add ext_ram_t_ref=3900)" \
+  "config add ext_ram_t_rp=15000" \
+  "config add ext_ram_t_wr=15000" \
+  "config add ext_ram_t_wtr=7500" \
+  "config add ext_ram_t_rtp=7500"
+
+
+# If using elk, override relevant parameters:
+if $?pcp_elk "\
+  echo *** OVERRIDING DEFAULT CONFIG WITH ELK CONFIG ***; \
+  config combo_ref_clock=125000; \
+  config pb_serdes_qrtt_max_expected_rate_7=3750000; \
+  config pb_serdes_lane_rate_28=3750000; \
+  config pb_serdes_lane_rate_29=3750000; \
+  config pb_serdes_lane_rate_30=3750000; \
+  config pb_serdes_lane_rate_31=3750000; \
+  config add external_lookup_mal=14; \
+  config add spaui_ipg_dic_mode=MIN; \
+  config add spaui_ipg_size=1; \
+  config add spaui_crc_mode=32b; \
+  config add spaui_preamble_size=0; \
+  config add spaui_preamble_skip_sop=1; \
+  config add spaui_is_double_size_sop_even_only=1; \
+  config add spaui_link_partner_double_size_bus=1"
+
+if $?pcp_elk || $?pcp_oam || $?pcp_dma "\
+  config add streaming_if_multi_port_mode=1; \
+  config add streaming_if_discard_pkt_streaming=0; \
+  config add fabric_ftmh_outlif_extension=IF_MC" \
+else "\
+  config add streaming_if_multi_port_mode=0; \
+  config add streaming_if_discard_pkt_streaming=1;"
+
+# Run sweep pcp on real HW
+if !$?plisim && !$?warmboot "   \
+  sweep pcp"
+  
+# Set synts according to reference clocks
+expr $nif_ref_clock*1000; local synt_nif $?
+expr $combo_ref_clock*1000; local synt_combo $?
+expr $fabric_ref_clock*1000; local synt_fabric $?
+
+# Real HW: Take petra out of reset
+if !$?plisim && !$?warmboot " \
+  gfa_bi utils petra_reset 1; \
+  echo Configure synthesizers:; \
+  echo Fabric: $synt_fabric; gfa_bi utils synt_set 1 $synt_fabric $synt_over; \
+  echo Combo:  $synt_combo;  gfa_bi utils synt_set 2 $synt_combo $synt_over; \
+  echo Nif:    $synt_nif;    gfa_bi utils synt_set 3 $synt_nif $synt_over; \
+  echo Core:   $synt_core;   gfa_bi utils synt_set 4 $synt_core $synt_over; \
+  echo DDR:    $synt_ddr;    gfa_bi utils synt_set 5 $synt_ddr $synt_over; \
+  echo Phy:    $synt_phy;    gfa_bi utils synt_set 10 $synt_phy $synt_over; \
+  gfa_bi utils petra_reset 0"
+  
+dbm soc error
+dbm bcm error
+
+echo "$unit:init soc"
+init soc
+echo "$unit:init soc - Done"
+
+echo "$unit:init bcm"
+init bcm
+
+echo "$unit:init bcm - Done"
+
+if $?warmboot "\
+  echo 'Warmboot: init done'; \
+  echo 'dune.soc: Done.'; \
+  exit"
+
+# Real HW + non using sweep: Init phys
+if !$?plisim " \
+  gfa_bi utils phys"
+
+if !$?no_bcm && !$?diag_disable "\
+  init appl_dpp $slot $nof_devices $diag_cosq_disable;" \
+else "\
+  echo 'Skipping diag_init. In order to run traffic, extra configuration must be performed.'"
+
+# If running BCM library:
+# Start linkscan task and set port linkscan mode.
+if !$?no_bcm && !$?pcp_elk "\
+  linkscan 250000; \
+  linkscan spbm=xe"
+     
+# If using elk, configure  bsp:
+if $?pcp_elk "\
+  echo *** BSP ELK CONFIGURATIONS ***; \
+  gfa_bi elk_init;"
+  
+# If using pcp dma then init dma
+if !$?plisim && $?pcp_dma " \
+  echo *** PCP DMA CONFIGURATIONS ***; \
+  gfa_bi dma_init"
+
+#if $?diag_chassis && !$slot "rcload rc/negev_rpc_master.soc.assi" # Master on slot 0
+#if $?diag_chassis && $slot "rcload rc/negev_rpc_slave.soc.assi"   # Slave on slot 1
+
+echo "dune.soc: Done."

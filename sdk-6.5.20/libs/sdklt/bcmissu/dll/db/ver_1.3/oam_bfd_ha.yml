@@ -1,0 +1,90 @@
+#
+# file: oam_bfd_ha.yml
+# YAML file describing the HA data structures for BFD.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+
+component:
+    bcmcth_oam:
+        bcmcth_oam_bfd_control_ha_t:
+            type: struct
+            fields:
+                init:
+                    type: bool
+                    comment: Indicates that the embedded app was initialized or not.
+                run:
+                    type: bool
+                    comment: Indicates if the embedded app is running or not. If this field is true, then it implies init is also true.
+                uc_num:
+                    type: uint8_t
+                    comment: The microcontroller number on which the embedded app is running.
+                max_endpoints:
+                    type: uint32_t
+                    comment: The maximum number of indicies that are available in endpoint table.
+                max_active_endpoints:
+                    type: uint32_t
+                    comment: The maximum number of endpoints that can be created in the app.
+                num_active_endpoints:
+                    type: uint32_t
+                    comment: The number of endpoints currently created in the app.
+                max_active_auth_sp_keys:
+                    type: uint32_t
+                    comment: Max number of simple password auth keys that can be created in the app.
+                num_active_auth_sp_keys:
+                    type: uint32_t
+                    comment: The number of simple password auth keys currently created in the app.
+                max_active_auth_sha1_keys:
+                    type: uint32_t
+                    comment: Max number of SHA1 auth keys that can be created in the app.
+                num_active_auth_sha1_keys:
+                    type: uint32_t
+                    comment: The number of SHA1 auth keys currently created in the app.
+
+        bcmcth_oam_bfd_auth_ha_t:
+            type: struct
+            fields:
+                in_use:
+                    type: bool
+                    comment: Indicates if the auth entry is created.
+                active:
+                    type: bool
+                    comment: Indicates if the auth entry is created in the app. If this field is true, then it implies that in_use is also true.
+                int_id:
+                    type: uint32_t
+                    comment: Internal ID allocated to the authentication entry. Only valid if active == true.
+
+        bcmcth_oam_bfd_endpoint_ha_t:
+            type: struct
+            fields:
+                in_use:
+                    type: bool
+                    comment: Indicates if the endpoint is created.
+                active:
+                    type: bool
+                    comment: Indicates if the endpoint is created in the app. If this field is true, then it implies that in_use is also true.
+                ep_type:
+                    type: uint32_t
+                    comment: Endpoint type of the endpoint. Only valid if active == true.
+
+        bcmcth_oam_bfd_event_report_ha_t:
+            type: struct
+            fields:
+                next_idx:
+                    type: uint32_t
+                    comment: The next index in the OAM_BFD_EVENT table to write the event.
+                max_idx:
+                    type: uint32_t
+                    comment: Maximum number of indices available in OAM_BFD_EVENT table.
+                wraparound:
+                    type: bool
+                    comment: Indicates if a wraparound has occured in OAM_BFD_EVENT table.
+                status_create:
+                    type: bool
+                    comment: Indicates if an entry was created in OAM_BFD_EVENT_STATUS table.
+

@@ -1,0 +1,350 @@
+# $Id: sanity.soc,v 1.9 2007/05/04 19:09:02 miyarn Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+echo "testsuite: started: sanity"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+# Avoid link messages while testing
+linkscan off
+
+# Use expected COS configuration for tests
+config add bcm_num_cos=4
+
+init 
+init misc
+
+local done 'echo "   Done"'
+
+if $?slc "local sl 1"
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+# Tests Start Here
+
+echo Running CPU benchmarks ...
+tr 21
+$done
+
+echo Running PCI tests ...
+tr 2
+$done
+
+# Register test currently includes some non-existent registers, and fails.
+#echo Running register tests ...
+#tr 3
+#$done
+
+echo Running S-Channel message buffer test ...
+tr 4
+$done
+
+echo Running BIST on CBP, ARL, and L3 tables ...
+tr 5
+$done
+
+echo Running ARL tests
+echo "   incrementing insert ..."
+tr 7
+echo "   decrementing insert ..."
+tr 8
+echo "   dma ..."
+tr 15
+echo "   overflow behavior ..."
+tr 16
+$done
+
+# Link status test requires Linkscan to be running
+rcload rc.soc
+
+echo Running Link Status tests ...
+tr 9
+$done
+
+echo Running GBP Available tests ...
+tr 10
+$done
+
+echo Running HOL Status tests ...
+tr 12
+$done
+
+echo Running COS Status tests ...
+tr 13
+$done
+
+echo Running Back Pressure Discard tests ...
+tr 14
+$done
+
+echo Running counter width verification test ...
+tr 30
+$done
+
+echo Running counter read/write test ...
+tr 31
+$done
+
+echo Running MDIO Linkscan test
+tr 60 readcount=10000
+$done
+
+echo Running Switching Memory tests
+# Note: Switching memory tests automatically put MMU in debug mode
+
+local arl_writable "$?gsl || $?BCM5615_A0"
+
+if $arl_writable \
+	'echo "   ARL";		tr 50 m=ARL; tr 51 m=ARL'
+echo "   MARL";			tr 50 m=MARL; tr 51 m=MARL
+echo "   PTABLE";		tr 50 m=PTABLE; tr 51 m=PTABLE
+echo "   VTABLE";		tr 50 m=VTABLE; tr 51 m=VTABLE
+if $?ul \
+	'echo "   STG";		tr 50 m=STG; tr 51 m=STG'
+
+# Turn off caching for trunk table memory tests.
+# init bcm turns on caching for these memories as a chip erratum workaround.
+
+cache -tbmap -ttr
+
+echo "   TBMAP";		tr 50 m=TBMAP; tr 51 m=TBMAP
+echo "   TTR";			tr 50 m=TTR; tr 51 m=TTR
+
+if !$?gsl '\
+	echo "   IMASK";	tr 50 m=IMASK; tr 51 m=IMASK; \
+	echo "   IRULE";	tr 50 m=IRULE; tr 51 m=IRULE'
+
+echo "   GIMASK";		tr 50 m=GIMASK; tr 51 m=GIMASK
+echo "   GIRULE";		tr 50 m=GIRULE; tr 51 m=GIRULE
+
+if $?sml || $?ul '\
+	echo "   METERING";	tr 50 m=METERING; tr 51 m=METERING; \
+				tr 50 m=GMETERING; tr 51 m=GMETERING; \
+	echo "   FFPCOUNTERS";	tr 50 m=FFPCOUNTERS; tr 51 m=FFPCOUNTERS; \
+				tr 50 m=GFFPCOUNTERS; tr 51 m=GFFPCOUNTERS; \
+	echo "   FFPPACKETCOUNTERS"; \
+				tr 50 m=FFPPACKETCOUNTERS; \
+				tr 51 m=FFPPACKETCOUNTERS; \
+				tr 50 m=GFFPPACKETCOUNTERS; \
+				tr 51 m=GFFPPACKETCOUNTERS'
+
+echo "   L3IF";			tr 50 m=L3IF; tr 51 m=L3IF
+echo "   L3";			tr 50 m=L3; tr 51 m=L3
+echo "   DEFIP";		tr 50 m=DEF_IP; tr 51 m=DEF_IP
+if $?sml || $?ul '\
+	echo "   L3_IPMC";	tr 50 m=L3_IPMC; tr 51 m=L3_IPMC'
+
+if !$?gsl '\
+	echo "   CAB 0-3";	tr 50 m=CAB0; tr 51 m=CAB0; \
+				tr 50 m=CAB1; tr 51 m=CAB1; \
+				tr 50 m=CAB2; tr 51 m=CAB2; \
+				tr 50 m=CAB3; tr 51 m=CAB3'
+
+echo "   CBPDATA 0-3";		tr 50 m=CBPDATA0; tr 51 m=CBPDATA0
+				tr 50 m=CBPDATA1; tr 51 m=CBPDATA1
+				tr 50 m=CBPDATA2; tr 51 m=CBPDATA2
+				tr 50 m=CBPDATA3; tr 51 m=CBPDATA3
+echo "   CBPHEADER";		tr 50 m=CBPHEADER; tr 51 m=CBPHEADER
+echo "   CCP";			tr 50 m=CCP; tr 51 m=CCP
+echo "   CFAP";			tr 50 m=CFAP; tr 51 m=CFAP
+
+if !$?gsl '\
+	echo "   PID";		tr 50 m=PID; tr 51 m=PID; \
+	echo "   PPP";		tr 50 m=PPP; tr 51 m=PPP; \
+	echo "   SFAP";		tr 50 m=SFAP; tr 51 m=SFAP'
+
+if  $?gsl "local max_xq 7"
+if !$?gsl "local max_xq 25"
+
+echo "   XQ 0-$max_xq,27"
+for xq=0,$max_xq		'tr 50 m=XQ$xq; tr 51 m=XQ$xq'
+				tr 50 m=XQ27; tr 51 m=XQ27
+$done
+
+# GBP Memory Test
+# Load rc.soc first to set up SDRAMCONTROL registers.
+
+local have_gbp !$?gsl
+
+if $have_gbp \
+	"echo Initializing for GBP test ...; \
+	 rcload rc.soc; \
+	 echo '   GBP (partial, every 8th address) ...'; \
+	 tr 50 m=GBP ii=8; \
+	 tr 51 m=GBP iter=10000"
+
+# Loopback Tests
+# Each test loads rc.soc in case a previous test failed
+
+# Re-initialize to clean up of various read/writes to memories
+rcload rc.soc
+linkscan off
+
+echo Testing CPU DMA loopback ...
+tr 17 c=5
+$done
+
+echo Testing CPU DMA, Scatter/Gather Reload ...
+tr 22
+$done
+
+echo Testing CPU DMA, Scatter/Gather Simple ...
+tr 23
+$done
+
+echo Testing CPU DMA, Scatter/Gather Random ...
+tr 24
+$done
+
+#--------- MAC Loopback ---------
+
+if !$?sl "echo Testing MAC Loopback - 10 Mb/s all ports; \
+    tr 18 pbm=e speed=10; echo done"
+
+if !$?sl "echo Testing MAC Loopback - 100 Mb/s all ports; \
+    tr 18 pbm=e speed=100; echo done"
+
+echo Testing MAC Loopback - 1000 Mb/s gigabit ports
+tr 18 pbm=ge speed=1000
+
+$done
+
+#--------- PHY Loopback ---------
+
+# If you have SERDES ports (two on 5680 or two on 5600/5605) then run
+#	setenv serdes 1
+# before running this script to avoid running 10/100 on SERDES ports.
+
+if $?sl "local slowable fe"
+if $?gsl && $?serdes "local slowable ge2-ge7"
+if $?gsl && !$?serdes "local slowable ge"
+if !$?sl && !$?gsl && $?serdes "local slowable fe"
+if !$?sl && !$?gsl && !$?serdes "local slowable e"
+
+echo Testing PHY Loopback - 10 Mb/s all capable ports
+tr 19 pbm=$slowable speed=10 count=1
+
+echo Testing PHY Loopback - 100 Mb/s all capable ports
+tr 19 pbm=$slowable speed=100 count=1
+
+echo Testing PHY Loopback - 1000 MB/s all capable ports
+tr 19 pbm=ge speed=1000
+
+$done
+
+#--------- EXT Loopback ---------
+
+# If you have external loopback cables connected as follows
+#	1-2, 3-4, 5-6, 7-8, [..., 23-24, 25-26]
+# then you can enable this script to perform external loopback at
+# different speeds.  Before running this script, use:
+#	setenv ext10 1
+#	setenv ext100 1
+#	setenv ext1000 1
+# or
+#	setenv extall 1
+# If you have SERDES ports (two on 5680 or two on 5600/5605) then run
+#	setenv serdes 1
+# before running this script to avoid running 10/100 on SERDES ports.
+
+if $?sl "local fwd_slow 0x555555;  local bwd_slow 0xaaaaaa; \
+	 local fwd_fast ge0;       local bwd_fast ge1"
+if $?gsl && $?serdes \
+	"local fwd_slow 0x54;      local bwd_slow 0xa8; \
+	 local fwd_fast 0x55;      local bwd_fast 0xaa"
+if $?gsl && !$?serdes \
+	"local fwd_slow 0x55;      local bwd_slow 0xaa; \
+	 local fwd_fast 0x55;      local bwd_fast 0xaa"
+if !$?sl && !$?gsl && $?serdes \
+	"local fwd_slow 0x555555;  local bwd_slow 0xaaaaaa; \
+	 local fwd_fast ge0;       local bwd_fast ge1"
+if !$?sl && !$?gsl && !$?serdes \
+	"local fwd_slow 0x1555555; local bwd_slow 0x2aaaaaa; \
+	 local fwd_fast ge0;       local bwd_fast ge1"
+
+if $?extall \
+	"local ext10 1; local ext100 1; local ext1000 1"
+
+if $?ext10 \
+	"echo Testing External Loopback - 10 MB/s forward; \
+		tr 20 tpbm=$fwd_slow di=1 speed=10 count=10; \
+	 echo Testing External Loopback - 10 MB/s reverse; \
+		tr 20 tpbm=$bwd_slow di=-1 speed=10 count=10"
+
+if $?ext100 \
+	"echo Testing External Loopback - 100 MB/s forward; \
+		tr 20 tpbm=$fwd_slow di=1 speed=100 count=10; \
+	 echo Testing External Loopback - 100 MB/s reverse; \
+		tr 20 tpbm=$bwd_slow di=-1 speed=100 count=10"
+
+if $?ext1000 \
+	"echo Testing External Loopback - 1000 MB/s forward; \
+		tr 20 tpbm=$fwd_fast di=1 speed=1000 count=10; \
+	 echo Testing External Loopback - 1000 MB/s reverse; \
+		tr 20 tpbm=$bwd_fast di=-1 speed=1000 count=10"
+
+
+#--------- MAC Loopback V2 ---------
+
+if !$?sl "echo Testing MAC Loopback V2 - 10 Mb/s all ports; \
+    tr 48 pbm=e speed=10; echo done"
+
+if !$?sl "echo Testing MAC Loopback V2 - 100 Mb/s all ports; \
+    tr 48 pbm=e speed=100; echo done"
+
+echo Testing MAC Loopback V2 - 1000 Mb/s gigabit ports
+tr 48 pbm=ge speed=1000
+
+$done
+
+#--------- PHY Loopback V2 ---------
+
+# If you have SERDES ports (two on 5680 or two on 5600/5605) then run
+#	setenv serdes 1
+# before running this script to avoid running 10/100 on SERDES ports.
+
+if $?sl "local slowable fe"
+if $?gsl && $?serdes "local slowable ge2-ge7"
+if $?gsl && !$?serdes "local slowable ge"
+if !$?sl && !$?gsl && $?serdes "local slowable fe"
+if !$?sl && !$?gsl && !$?serdes "local slowable e"
+
+echo Testing PHY Loopback V2 - 10 Mb/s all capable ports
+tr 49 pbm=$slowable speed=10 count=1
+
+echo Testing PHY Loopback V2 - 100 Mb/s all capable ports
+tr 49 pbm=$slowable speed=100 count=1
+
+echo Testing PHY Loopback V2 - 1000 MB/s all capable ports
+tr 49 pbm=ge speed=1000
+
+$done
+
+echo Testing Filters
+tr 70
+$done
+
+# Show status
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+rcload rc.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"

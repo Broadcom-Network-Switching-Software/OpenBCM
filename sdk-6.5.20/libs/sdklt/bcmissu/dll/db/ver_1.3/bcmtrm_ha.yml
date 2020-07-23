@@ -1,0 +1,94 @@
+#
+# file: bcmtrm_ha.yml
+# TRM HA memory YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMTRM_MAX_COMMITTED_TRANS: 32
+   BCMTRM_STATE_NONE: 0
+   BCMTRM_STATE_STAGING: 1
+   BCMTRM_STATE_COMMITTED: 2
+
+component:
+   bcmtrm_ha:
+      trn_state_t:
+         comment: Maintains the state of a transaction for the model path
+         type: struct
+         fields:
+            trn_id:
+               type: uint32_t
+               comment: The transaction ID
+            state:
+               type: uint32_t
+               comment: The state of the transaction (staging or committed)
+
+      trn_info_t:
+         comment: Maintain an array of all the active transactions
+         type: struct
+         fields:
+            signature:
+               type: uint32_t
+               comment: Identify if structure is coherent
+            start_idx:
+               type: uint8_t
+               comment: The index of the first transaction
+            last_idx:
+               type: uint8_t
+               comment: The index of the last transaction
+            entry_cnt:
+               type: uint8_t
+               comment: Count the number of occupied entries
+            trn_state:
+               type: trn_state_t
+               length: BCMTRM_MAX_COMMITTED_TRANS
+               comment: Array of committed transactions state
+
+      trn_interact_field_t:
+         comment: Information required for each field in an entry of interactive table
+         type: struct
+         fields:
+            fid:
+               type: uint32_t
+               comment: Field ID
+            idx:
+               type: uint32_t
+               comment: Index when part of an array
+            data:
+               type: uint64_t
+               comment: The value of the field
+
+      trn_interact_info_t:
+         comment: Maintains the state of a transaction for the interactive path
+         type: struct
+         fields:
+            signature:
+               type: uint32_t
+               comment: Identify if structure is coherent
+            max_fields:
+               type: uint16_t
+               comment: The maximal number of fields in the array
+            field_count:
+               type: uint16_t
+               comment: The actual number of valid fields
+            trn_id:
+               type: uint32_t
+               comment: The transaction ID associated with this operation
+            pt:
+               type: bool
+               comment: Indicates if the entry is PT or not
+            opcode:
+               type: uint32_t
+               comment: The operation code associated with the entry
+            tbl_id:
+               type: uint32_t
+               comment: The table ID associated with this entry
+            field_arry:
+               type: trn_interact_field_t
+               table:
+               size: max_fields
+               comment: Array of fields with max_fields elements

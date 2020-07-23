@@ -1,0 +1,159 @@
+xl-sj1-27{sg944605}366: ./bcm.sim -y $SDKLT/INTERNAL/examples/bcm56990_a0/config/bcm56990_a0-generic-64x400.config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190602 (Sun Jun  2 23:07:38 2019)
+From sg944605@xl-sj1-30:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+Starting Interrupt service...
+[DMA-listener]DMA Controller listening on port[34441]
+[Interrupt-listener]ISR dispatcher listening on port[33592]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+0:bcmi_ltsw_sbr_init: Feature unavailable
+0:bcmpkt_gih_fid_support_get: null
+0:bcmpkt_higig3_fid_support_get: null
+0:bcmpkt_rxpmd_flex_fid_support_get: null
+0:mbcm_virtual_index_get: Feature unavailable
+0:bcmi_ltsw_virtual_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_field_clear: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_stk_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_ipmc_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_flowtracker_init: Feature unavailable
+0:ltsw_flowtracker_resource_free: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+rc: BCM driver initialized
+rc: Port modes initialized
+BCM.0> c classifier.c
+** error: bad initializer
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190602 (Sun Jun  2 23:07:38 2019)
+From sg944605@xl-sj1-30:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     BCM56990_A0_BASE, BCM56880_A0_BASE
+Input flag: 0x40
+Created classifier ID: 0x10000000
+0:ltsw_profile_index_valid_check: Entry not found
+0:bcmi_ltsw_profile_index_free: Entry not found
+Printing after bcm_cosq_classifier_mapping_multi_get
+int[48] out_priority_array = {
+    int out_priority_array[0] = 0 (0x0)
+    int out_priority_array[1] = 1 (0x1)
+    int out_priority_array[2] = 2 (0x2)
+    int out_priority_array[3] = 3 (0x3)
+    int out_priority_array[4] = 4 (0x4)
+    int out_priority_array[5] = 5 (0x5)
+    int out_priority_array[6] = 6 (0x6)
+    int out_priority_array[7] = 7 (0x7)
+    int out_priority_array[8] = 8 (0x8)
+    int out_priority_array[9] = 9 (0x9)
+    int out_priority_array[10] = 10 (0xa)
+    int out_priority_array[11] = 11 (0xb)
+    int out_priority_array[12] = 12 (0xc)
+    int out_priority_array[13] = 13 (0xd)
+    int out_priority_array[14] = 14 (0xe)
+    int out_priority_array[15] = 15 (0xf)
+    int out_priority_array[16] = 0 (0x0)
+    int out_priority_array[17] = 1 (0x1)
+    int out_priority_array[18] = 2 (0x2)
+    int out_priority_array[19] = 3 (0x3)
+    int out_priority_array[20] = 4 (0x4)
+    int out_priority_array[21] = 5 (0x5)
+    int out_priority_array[22] = 6 (0x6)
+    int out_priority_array[23] = 7 (0x7)
+    int out_priority_array[24] = 8 (0x8)
+    int out_priority_array[25] = 9 (0x9)
+    int out_priority_array[26] = 10 (0xa)
+    int out_priority_array[27] = 11 (0xb)
+    int out_priority_array[28] = 12 (0xc)
+    int out_priority_array[29] = 13 (0xd)
+    int out_priority_array[30] = 14 (0xe)
+    int out_priority_array[31] = 15 (0xf)
+    int out_priority_array[32] = 0 (0x0)
+    int out_priority_array[33] = 1 (0x1)
+    int out_priority_array[34] = 2 (0x2)
+    int out_priority_array[35] = 3 (0x3)
+    int out_priority_array[36] = 4 (0x4)
+    int out_priority_array[37] = 5 (0x5)
+    int out_priority_array[38] = 6 (0x6)
+    int out_priority_array[39] = 7 (0x7)
+    int out_priority_array[40] = 8 (0x8)
+    int out_priority_array[41] = 9 (0x9)
+    int out_priority_array[42] = 10 (0xa)
+    int out_priority_array[43] = 11 (0xb)
+    int out_priority_array[44] = 12 (0xc)
+    int out_priority_array[45] = 13 (0xd)
+    int out_priority_array[46] = 14 (0xe)
+    int out_priority_array[47] = 15 (0xf)
+}
+int[48] out_cosq_array = {
+    int out_cosq_array[0] = 7 (0x7)
+    int out_cosq_array[1] = 6 (0x6)
+    int out_cosq_array[2] = 5 (0x5)
+    int out_cosq_array[3] = 4 (0x4)
+    int out_cosq_array[4] = 3 (0x3)
+    int out_cosq_array[5] = 2 (0x2)
+    int out_cosq_array[6] = 1 (0x1)
+    int out_cosq_array[7] = 0 (0x0)
+    int out_cosq_array[8] = 4 (0x4)
+    int out_cosq_array[9] = 3 (0x3)
+    int out_cosq_array[10] = 2 (0x2)
+    int out_cosq_array[11] = 1 (0x1)
+    int out_cosq_array[12] = 1 (0x1)
+    int out_cosq_array[13] = 2 (0x2)
+    int out_cosq_array[14] = 3 (0x3)
+    int out_cosq_array[15] = 4 (0x4)
+    int out_cosq_array[16] = 0 (0x0)
+    int out_cosq_array[17] = 1 (0x1)
+    int out_cosq_array[18] = 2 (0x2)
+    int out_cosq_array[19] = 3 (0x3)
+    int out_cosq_array[20] = 0 (0x0)
+    int out_cosq_array[21] = 1 (0x1)
+    int out_cosq_array[22] = 2 (0x2)
+    int out_cosq_array[23] = 3 (0x3)
+    int out_cosq_array[24] = 0 (0x0)
+    int out_cosq_array[25] = 1 (0x1)
+    int out_cosq_array[26] = 2 (0x2)
+    int out_cosq_array[27] = 3 (0x3)
+    int out_cosq_array[28] = 0 (0x0)
+    int out_cosq_array[29] = 1 (0x1)
+    int out_cosq_array[30] = 2 (0x2)
+    int out_cosq_array[31] = 3 (0x3)
+    int out_cosq_array[32] = 0 (0x0)
+    int out_cosq_array[33] = 1 (0x1)
+    int out_cosq_array[34] = 2 (0x2)
+    int out_cosq_array[35] = 3 (0x3)
+    int out_cosq_array[36] = 0 (0x0)
+    int out_cosq_array[37] = 1 (0x1)
+    int out_cosq_array[38] = 2 (0x2)
+    int out_cosq_array[39] = 3 (0x3)
+    int out_cosq_array[40] = 0 (0x0)
+    int out_cosq_array[41] = 1 (0x1)
+    int out_cosq_array[42] = 2 (0x2)
+    int out_cosq_array[43] = 3 (0x3)
+    int out_cosq_array[44] = 0 (0x0)
+    int out_cosq_array[45] = 1 (0x1)
+    int out_cosq_array[46] = 2 (0x2)
+    int out_cosq_array[47] = 3 (0x3)
+}
+Classifier mapping was not found after mapping_clear as expected
+bcm_error_t $$ = BCM_E_NONE (0)
+

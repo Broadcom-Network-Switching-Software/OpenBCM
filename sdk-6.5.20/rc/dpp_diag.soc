@@ -1,0 +1,51 @@
+set rcerror=off
+tm -stoponerror +progress
+g * debug
+diag dump
+diag pp last
+diag pp rpi
+diag pp pi
+diag pp termi
+diag pp ive
+diag pp pkttm
+diag pp dblif
+diag pp fdt
+diag pp trapsi
+diag pp encap
+diag pp fli
+kbp kaps_show
+kbp kaps_db_stats
+diag pp dblem
+diag pp modeg
+diag prge_info
+diag prge_last
+diag template all
+diag pp vtt
+diag pp vtt last=1
+diag pp eve
+diag pp ipv4_mc
+stg show
+diag pp flp
+diag pp flp last=1
+diag alloc all
+diag dbal tif
+diag dbal lp
+diag pp cc
+diag pp occ
+diag pp cos
+diag pp ECMP_load_balancing
+diag pp fec all
+l2 show
+diag field res
+diag pp klkp
+diag pp dbglem
+diag pp rif
+diag pp edrop
+ps
+show c
+
+#IF OAM Enabled uncomment following lines
+#diag oam ep
+#diag oam lu
+#diag oam prge
+#diag oam count oamp

@@ -1,0 +1,54 @@
+
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_MAX_TRUNK_H_
+
+#define _DNX_DATA_MAX_TRUNK_H_
+
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX (JR2) family only!"
+#endif
+
+
+
+#define DNX_DATA_MAX_TRUNK_PARAMETERS_NOF_POOLS (2)
+
+
+#define DNX_DATA_MAX_TRUNK_PARAMETERS_MAX_NOF_MEMBERS_IN_POOL (16384)
+
+
+#define DNX_DATA_MAX_TRUNK_PARAMETERS_MAX_NOF_GROUPS_IN_POOL (8192)
+
+
+#define DNX_DATA_MAX_TRUNK_PARAMETERS_SPA_POOL_SHIFT (14)
+
+
+#define DNX_DATA_MAX_TRUNK_PARAMETERS_SPA_TYPE_SHIFT (15)
+
+
+#define DNX_DATA_MAX_TRUNK_PSC_CONSISTANT_HASHING_SMALL_GROUP_SIZE_IN_BITS (4)
+
+
+#define DNX_DATA_MAX_TRUNK_PSC_SMOOTH_DIVISION_MAX_NOF_MEMBER (16)
+
+
+#define DNX_DATA_MAX_TRUNK_PSC_SMOOTH_DIVISION_ENTRIES_PER_PROFILE (256)
+
+
+#define DNX_DATA_MAX_TRUNK_GRACEFUL_FIRST_HW_CONFIGURATION (0)
+
+
+#define DNX_DATA_MAX_TRUNK_GRACEFUL_SECOND_HW_CONFIGURATION (1)
+
+
+
+
+#endif 
+

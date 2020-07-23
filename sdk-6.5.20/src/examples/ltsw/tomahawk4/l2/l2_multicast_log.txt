@@ -1,0 +1,56 @@
+Verify MC pkt from 119 flooding to port 105, 239
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+Executing 'show c'
+XLMIB_TBYT.cd27                       :                    78                 +78
+XLMIB_RBYT.cd27                       :                    78                 +78
+XLMIB_TPOK.cd27                       :                     1                  +1
+XLMIB_RPOK.cd27                       :                     1                  +1
+XLMIB_TMCA.cd27                       :                     1                  +1
+XLMIB_RMCA.cd27                       :                     1                  +1
+XLMIB_TPKT.cd27                       :                     1                  +1
+XLMIB_RPKT.cd27                       :                     1                  +1
+XLMIB_T127.cd27                       :                     1                  +1
+XLMIB_R127.cd27                       :                     1                  +1
+XLMIB_RPRM.cd27                       :                     1                  +1
+XLMIB_RFLR.cd27                       :                     1                  +1
+RDBGC0_64.cd27                        :                     1                  +1
+XLMIB_TBYT.cd28                       :                    78                 +78
+XLMIB_RBYT.cd28                       :                    78                 +78
+XLMIB_TPOK.cd28                       :                     1                  +1
+XLMIB_RPOK.cd28                       :                     1                  +1
+XLMIB_TMCA.cd28                       :                     1                  +1
+XLMIB_RMCA.cd28                       :                     1                  +1
+XLMIB_TPKT.cd28                       :                     1                  +1
+XLMIB_RPKT.cd28                       :                     1                  +1
+XLMIB_T127.cd28                       :                     1                  +1
+XLMIB_R127.cd28                       :                     1                  +1
+XLMIB_RPRM.cd28                       :                     1                  +1
+XLMIB_RFLR.cd28                       :                     1                  +1
+RDBGC1_64.cd28                        :                     1                  +1
+XLMIB_TBYT.cd57                       :                    78                 +78
+XLMIB_RBYT.cd57                       :                    78                 +78
+XLMIB_TPOK.cd57                       :                     1                  +1
+XLMIB_RPOK.cd57                       :                     1                  +1
+XLMIB_TMCA.cd57                       :                     1                  +1
+XLMIB_RMCA.cd57                       :                     1                  +1
+XLMIB_TPKT.cd57                       :                     1                  +1
+XLMIB_RPKT.cd57                       :                     1                  +1
+XLMIB_T127.cd57                       :                     1                  +1
+XLMIB_R127.cd57                       :                     1                  +1
+XLMIB_RPRM.cd57                       :                     1                  +1
+XLMIB_RFLR.cd57                       :                     1                  +1
+RDBGC0_64.cd57                        :                     1                  +1
+
+******Port stats check******
+--------Ingress port (119) stats--------
+Rx : 1 packets
+--------Egress port1 (105) stats--------
+Tx : 1 packets
+--------Egress port2 (239) stats--------
+Tx : 1 packets
+--------Egress port3 (68) stats--------
+Tx : 0 packets
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

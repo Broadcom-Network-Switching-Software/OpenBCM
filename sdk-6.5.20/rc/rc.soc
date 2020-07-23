@@ -1,0 +1,1975 @@
+# $Id: rc.soc,v 1.192 2013/07/17 22:13:43 dkelley Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Initialization RC (run commands) file
+#
+#       These are default commands that are read and executed by default
+#       when BCM boots up.  Typically this file is called rc.soc and resides
+#       in the flash filesystem, NVRAM, or disk.
+#
+# Board Configuration Setting
+#
+#       This file uses configuration properties to know on which board
+#       it is running.  Currently one of following settings must be made:
+#
+#       BCM95670K8          config add herc8=1
+#       BCM95690K24         config add draco_b2b=1
+#       BCM95690K24S        config add draco_stk=1
+#       BCM95690R24         config add galahad=1
+#       BCM95690R24S        config add merlin=1
+#       BCM95690R48S        config add lancelot=1
+#       BCM95691K12         config add draco_k12=1
+#       White Knight        config add white_knight=1 (not shipping)
+#       Black Knight        config add black_knight=1 (not shipping)
+#       BCM95673K2S         config add twolynx=1
+#       BCM95673R8          config add herculynx=1
+#       BCM95673R24S        config add lynxalittle=1
+#       BCM95673R48S        config add lynxalot=1
+#       BCM95695P24SX_10    config add guenevere=1
+#       BCM95650K24         config add magnum=1 (automatic for 5650L)
+#       BCM95675            config add herc8_15=1
+#       BCM95650R24         config add tuc24_ref=1
+#       BCM95695P48LM       config add lm48p=1
+#       BCM95695P48LM-10    config add lm48p_B=1
+#       BCM956504P48LM-10   config add lm48p_C=1
+#       BCM956504P48LM-20   config add lm48p_C=1
+#       BCM956504P48LM-50   config add lm48p_D=1
+#       BCM956504P48POEREF  config add fbpoe=1
+#       BCM956504P24REF P0  config add fb24=1
+#       BCM956504P24    P0  config add fb24=1
+#       BCM956102P48        config add felix48=1
+#       BCM953300P24REF     config add mirage24=1
+#       BCM956800K20C       config add bradley_1g=1
+#       BCM956700K16        config add humv=1
+#       BCM956800K20        config add bradley=1
+#       BCM956580K16        config add goldwing=1
+#       BCM956314P24REF     config add bcm56314p24ref=1
+#       BCM956024P48REF     config add BCM956024P48REF=1
+#       BCM956224P48REF     config add BCM956224P48REF=1
+#       BCM956224R50T       config add BCM956224R50T=1
+#       BCM956024R50T       config add BCM956024R50T=1
+#       BCM56820K24XG       config add BCM56820K24XG=1
+#       BCM953314R24GS      config add BCM953314R24GS=1
+#       BCM953314K24        config add BCM953314K24=1
+#       BCM956820R24XG      config add BCM956820R24XG=1
+#       BCM956160R          config add bcm956160r=1
+#       BCM956970K64        config add bcm956970k64=1
+#       BCM956970K32        config add bcm956970k32=1
+#       BCM956970S          config add bcm956970s=1
+#       BCM956275K          config add bcm956275k=1
+
+if $?BCM56146_A0 \
+    'local BCM56146 1'
+
+if $?BCM56147_A0 \
+    'local BCM56147 1'
+
+
+if $?1 "echo rc: arguments not supported; exit"
+if !$?unit "echo rc: no current unit; exit"
+
+echo "rc: unit $unit device $devname"
+local quiet no
+local echo echo
+local rcdone \$rc$unit
+if !"expr $rcdone + 0" "local echo noecho; local quiet yes"
+
+# Set convenience local variables
+
+# simulation related
+#if $?plisim \
+#       "local no_bcm 1"
+if $?quickturn || $?plisim \
+	"local simulator 1"
+
+if $?simulator \
+    'echo -n "Chip init starts at: ";date'
+
+# board related
+if $?galahad \
+	"local draco_b2b 1"
+if $?black_knight || $?white_knight || $?merlin \
+	"local draco_herc4 1"
+
+#if $?QUX_A0 \
+#    'echo blablabla;der 0x40 4 ; exit'
+
+if $?FLAIR_A0 \
+    'rcload flair.soc ; exit'
+
+if $?BCM88750_A0 || $?BCM88750_B0 || $?BCM88753_A0 || $?BCM88753_B0 || $?BCM88755_B0 || $?BCM88754_A0 || $?BCM88770_A1 || $?BCM88773_A1 || $?BCM88774_A1 || $?BCM88775_A1 || $?BCM88776_A1 || $?BCM88777_A1 || $?BCM88950_A0 || $?BCM88950_A1 || $?BCM88953_A1 || $?BCM88954_A1 || $?BCM88955_A1 || $?BCM88956_A1 || $?BCM88952_A0 || $?BCM88952_A1 || $?BCM88772_A1 \
+    'rcload dfe.soc ; exit'
+
+if $?BCM_DNXF_DEV\
+    'rcload dnxf.soc ; exit'
+
+if $?ARAD_A0 || $?ARAD_B0 || $?ARAD_B1 || $?ARADPLUS_A0 || $?BCM88650_A0 || $?BCM88650_B0 || $?BCM88650_B1 || $?BCM88350_B1 || $?BCM88351_B1 || \
+   $?BCM88450_B1 || $?BCM88451_B1 || $?BCM88550_B1 || $?BCM88551_B1 || $?BCM88552_B1 || $?BCM88651_B1 || $?BCM88654_B1 || $?BCM88660_A0 || $?BCM88360_A0 || $?BCM88361_A0 || $?BCM88363_A0 ||\
+   $?BCM88460_A0 || $?BCM88461_A0 || $?BCM88560_A0 || $?BCM88561_A0 || $?BCM88562_A0 || $?BCM88661_A0 || $?BCM88664_A0  \
+    'rcload arad.soc ; exit'
+
+if $?BCM83207_A0 \
+    'rcload samar.soc ; exit'
+if $?BCM83208_A0 \
+    'rcload sinai.soc ; exit'
+
+if $?QAX_A0 || $?BCM88470_A0 || $?BCM88470P_A0 || $?BCM88471_A0 || $?BCM88473_A0 || $?BCM88474_A0 || $?BCM88474H_A0 || $?BCM88476_A0 || $?BCM88477_A0 || \
+   $?QAX_B0 || $?BCM88470_B0 || $?BCM88471_B0 ||  $?BCM88474_B0 || $?BCM88474H_B0 || $?BCM88476_B0 || $?BCM88477_B0 \
+    'setenv QAX 1'
+    
+if $?QUX_A0 || $?BCM88270_A0 || $?BCM88270_A1 || $?BCM88271_A1 || $?BCM88272_A0 || $?BCM88272_A1 || $?BCM88273_A0 || $?BCM88273_A1 || $?BCM88276_A1 || $?BCM88278_A0 || $?BCM88278_A1 || $?BCM88279_A1 || $?BCM88274_A0 || $?BCM88274_A1 \
+    'setenv QUX 1'
+
+if $?JERICHO_A0 ||  $?BCM88670_A0 || $?BCM88671_A0 || $?BCM88671M_A0 || $?BCM88672_A0 || $?BCM88673_A0 || $?BCM88674_A0 || $?BCM88675_A0 || $?BCM88675M_A0 || $?BCM88676_A0 || $?BCM88676M_A0 || $?BCM88677_A0 || $?BCM88678_A0 || $?BCM88679_A0 || \
+   $?JERICHO_A1 ||  $?BCM88670_A1 || $?BCM88671_A1 || $?BCM88671M_A1 || $?BCM88672_A1 || $?BCM88673_A1 || $?BCM88674_A1 || $?BCM88675_A1 || $?BCM88675M_A1 || $?BCM88676_A1 || $?BCM88676M_A1 || $?BCM88677_A1 || $?BCM88678_A1 || $?BCM88679_A1 || \
+   $?QMX_A0     ||  $?BCM88370_A0 || $?BCM88371_A0 || $?BCM88371M_A0 || $?BCM88375_A0 || $?BCM88376_A0 || $?BCM88376M_A0 || $?BCM88377_A0 || $?BCM88378_A0 || $?BCM88379_A0 || \
+   $?QMX_A1     ||  $?BCM88370_A1 || $?BCM88371_A1 || $?BCM88371M_A1 || $?BCM88375_A1 || $?BCM88376_A1 || $?BCM88376M_A1 || $?BCM88377_A1 || $?BCM88378_A1 || $?BCM88379_A1 || \
+   $?JERICHO_B0 ||  $?BCM88670_B0 || $?BCM88671_B0 || $?BCM88671M_B0 || $?BCM88672_B0 || $?BCM88673_B0 || $?BCM88674_B0 || $?BCM88675_B0 || $?BCM88675M_B0 || $?BCM88676_B0 || $?BCM88676M_B0 || $?BCM88677_B0 || $?BCM88678_B0 || $?BCM88679_B0 || \
+   $?QMX_B0     ||  $?BCM88370_B0 || $?BCM88371_B0 || $?BCM88371M_B0 || $?BCM88375_B0 || $?BCM88376_B0 || $?BCM88376M_B0 || $?BCM88377_B0 || $?BCM88378_B0 || $?BCM88379_B0 || $?BCM88379_A1 || \
+   $?JERPLUS    ||  $?BCM88680_A0 || $?BCM88681_A0 ||  $?BCM88682_A0 || $?BCM88683_A0 || $?BCM88684_A0 || $?BCM88685_A0 || $?BCM88687_A0 || $?BCM88380_A0 ||  $?BCM88381_A0 || $?BCM88680_A1 || \
+   $?BCM88681_A1 ||  $?BCM88682_A1 || $?BCM88683_A1 || $?BCM88684_A1 || $?BCM88685_A1 || $?BCM88687_A1 || $?BCM88380_A1 ||  $?BCM88381_A1 \
+    'rcload jer.soc ; exit'
+
+if $?BCM_DNX_DEV \
+    'rcload dnx.soc ; exit'
+
+if $?QAX || $?QUX\
+    'rcload qax.soc ; exit'
+
+
+if $?BCM88202_A0 || $?ARDON_A0 || $?BCM88202_A1 || $?ARDON_A1 || $?BCM88202_A2 || $?ARDON_A2\
+    'rcload atmf.soc ; exit'
+
+if $?ACP \
+    'exit'
+
+if $?BCM_DNX_DEV \
+    'exit'
+      
+if !"expr $pcidev + 0 == 0x5650" \
+	"local magnum 1"
+if $?drac || $?drac15 \
+	"local drac_any 1"
+if $?lynx || $?lynx15 \
+	"local lynx_any 1"
+if $?tucana || $?magnum \
+	"local tucana_any 1"
+if $?herc || $?herc15 \
+	"local herc_any 1"
+if $?firebolt || $?firebolt2 || $?helix || \
+   $?felix || $?helix15 || $?felix15 || $?raptor || $?raven || $?hawkeye\
+	"local firebolt_any 1"
+if !"expr $pcidev + 0 == 0xb501" \
+	"local firebolt_10x4 1"
+if $?easyrider \
+	"local easyrider_any 1"
+if !"expr $pcidev + 0 == 0xb602" \
+	"local easyrider_1x1 1"
+if $?bradley || $?humv || $?goldwing \
+	"local bradley_any 1"
+if $?drac_any || $?lynx_any || $?tucana_any \
+	"local xgs12_switch 1"
+if $?firebolt_any || $?easyrider_any || $?bradley_any \
+	"local xgs3_switch 1"
+if $?xgs12_switch || $?xgs3_switch \
+	"local xgs_switch 1"
+if $?herc_any \
+	"local xgs_fabric 1"
+if $?xgs_fabric || $?xgs_switch \
+	"local xgs 1"
+if !$?xgs \
+	"local strata 1"
+if $?strata && !$?gsl \
+	"local PBMP_ALL 0x0bffffff"
+if $?strata && $?gsl \
+	"local PBMP_ALL 0x080000ff"
+if $?BCM56214_A0 || $?BCM56014_A0 || $?BCM56215_A0 || \
+   $?BCM56214_A1 || $?BCM56014_A1 || $?BCM56215_A1 && \
+   !$?BCM956024P48REF \
+	"local rap24_ref 1"
+
+if $?BCM5655_A0 || $?BCM5655_B0 \
+        "local tucana_nohg 1"
+
+if $?BCM956024P48REF || $?BCM956224P48REF || $?BCM956024R50T || \
+   $?BCM956224R50T \
+        "local raven_eb_48p 1"
+
+if $?BCM953314R24GS \
+        "local hawkeye_p24 1"
+
+if $?BCM953314K24 \
+        "local hawkeye_k24 1"
+
+if $?firebolt_any && $?lm48p || $?lm48p_D \
+        "config add lmfb48=1"
+
+# Set software's wait for S-Channel response to 3 seconds for QuickTurn
+# (Recommend at least 10 seconds if the ARL is 100% busy with inserts.)
+if $?quickturn	"stimeout 3000000"
+if $?plisim	"stimeout 60000000"
+
+# Direct phy led programming: 5464 activity led becomes link/activity
+if $?drac_any && $?lancelot || $?lynxalot || $?guenevere \
+	"config add phy_led_ctrl=0x18"
+
+# Shutdown threads if system is already running
+if $?triumph3 \
+	"ibodSync off"
+counter off
+linkscan off
+if $?feature_alpm2 \
+    "alpm hitbit disable"
+if $?feature_arl_hashed && !$?simulator \
+        "l2mode off"
+if $?feature_ces && $?BCM56440_A0 \
+        "ces off"
+
+# Test on-chip memory before initializing
+#if !$?simulator "init soc; bist l3 arl cbp"
+
+# HLA license file loading
+if $?feature_hla \
+    "hla load BP3-Broadcom_CSG_HW-License-48.BCM56470AA0_A0.21436587badcfe00.bin;"
+init soc
+
+# Cancun package files are located in $SDK/rc/flex
+if $?feature_cancun \
+    "cancun load cmh;" \
+    "cancun load cch;" \
+    "cancun load ceh;" \
+
+# M0 FW MUST be loaded before "init misc"
+# For CMICx devices, default LED firmware is custom_led.bin.
+if !$?cmicx_led_fw "local cmicx_led_fw custom_led.bin"
+if $?bcm956275k "local cmicx_led_fw led_example/bcm956275k.bin"
+if $?feature_cmicx \
+    "m0 load 0 0x0 linkscan_led_fw.bin" \
+    "m0 load 0 0x3800 $cmicx_led_fw"
+
+# Initialize miscellaneous chip registers
+init misc
+
+# Cancun package files are located in $SDK/rc/flex
+if $?feature_cancun \
+   "cancun load cih;"\
+   "cancun load cfh;"\
+   "cancun stat;"
+
+# Initialize external TCAM if necessary
+# NOTE : tcam is initialized during "init misc" unless 
+#        tcam_reset_toggle = 1 is configured
+if "expr $rcdone + 0" && !"expr $tcam_reset_toggle + 0" \
+        "dispatch attach 0 esw 0"
+if !"expr $tcam_reset_toggle + 0" "muxsel 0; muxsel 0x80"
+if !"expr $tcam_reset_toggle + 0" "init tcam; $echo rc: TCAM initialized"
+
+# Initialize the StrataSwitch MMU registers
+init mmu
+if $?katana2 \
+   kt2config.soc
+
+
+# Uncomment to turn off Single-Bit Error reporting on 5670
+#if $?herc "m mmu_intcntl pp_sbe_en=0"
+
+# Initialize Cell Free Address Pool
+# NOTE: this should NOT be done unless chip is known to have bad CFAP
+# memory entries that need to be mapped out.
+if $?cfap_tests "$echo rc: Initializing CFAP; cfapinit"
+
+$echo rc: MMU initialized
+
+#
+# Load uKernel
+#
+
+# Pick default FW names if not set already by config
+if !$?fw_core_0 \
+    'local fw_core_0 ${fw_prefix}_0_bfd_bhh.srec; \
+     if $?greyhound || $?hurricane2 || $?hurricane3 "local fw_core_0 ${fw_prefix}_0_ptpfull.srec"; \
+     if $?helix4 && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?helix4 && $?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd_bhh.srec"; \
+     if $?tomahawk && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?tomahawk_plus && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?tomahawk2 && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?tomahawk3 && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?trident2plus && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?trident3 && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?maverick2 && !$?feature_bhh "local fw_core_0 ${fw_prefix}_0_bfd.srec"; \
+     if $?metrolite "local fw_core_1 ${fw_prefix}_1_ptppp.srec"; \
+     if $?monterey "local fw_core_0 ${fw_prefix}_0_ccm.srec";\
+    '
+
+if !$?fw_core_1 \
+   'local fw_core_1 ${fw_prefix}_1_ptpfull.srec; \
+    if $?monterey "local fw_core_1 ${fw_prefix}_1.srec"; \
+   '
+
+if !$?fw_core_2 \
+   'local fw_core_2 ${fw_prefix}_2_eth_lmdm.srec; \
+    if $?monterey "local fw_core_2 ${fw_prefix}_2.srec";\
+   '
+
+# Load the firmwares
+if $?feature_cmicm && !$?rcpu_only && !$ihost_mode && !$?feature_iproc \
+    "mcsload 0 ${fw_core_0} InitMCS=true; \
+     mcsload 1 ${fw_core_1};"
+
+if $?hurricane2 \
+   "mcsload 0 ${fw_core_0} InitMCS=true;"
+
+if $?feature_iproc && !$?hurricane2 && !$?hurricane3 && !$?rcpu_only && !$?feature_uc_mhost && !$ihost_mode\
+    "mcsload 0 ${fw_core_0} InitMCS=true TwoStage=true TwoStageAddr=0x60000000;\
+     mcsload 1 ${fw_core_1} TwoStage=true TwoStageAddr=0x6002c000;"
+
+if $?feature_iproc && !$?rcpu_only && $?feature_uc_mhost && $?num_ucs\
+    'if !"expr $num_ucs > 0" "mcsload 0 ${fw_core_0} InitMCS=true"; \
+     if !"expr $num_ucs > 1" "mcsload 1 ${fw_core_1}"; \
+     if !"expr $num_ucs > 2" "mcsload 2 ${fw_core_2}";'
+
+#
+# Init CLI and BCM API
+#
+# This must be done after the raw register writes to avoid having state
+# clobbered.  NOTE: Tables are cleared by "init bcm" below.  If
+# table modifications are required, put them after "init bcm".  Some
+# registers might also be affected.
+#
+
+if !$?no_bcm \
+	"init bcm; \
+	 $echo rc: BCM driver initialized"
+
+if $?no_bcm \
+	"$echo rc: *** NOT initializing BCM driver ***"
+
+if $?no_bcm && $?strata \
+    'write vtable 0 1 VLAN_TAG=0,PORT_BITMAP=0,UT_PORT_BITMAP=0; \
+     insert vtable VLAN_TAG=1,PORT_BITMAP=$PBMP_ALL,UT_PORT_BITMAP=$PBMP_ALL; \
+     local pv \
+         VLAN_TAG=1,SP_ST=3,PORT_BITMAP=$PBMP_ALL,UT_PORT_BITMAP=$PBMP_ALL; \
+	 write ptable 0 32 PTYPE=0; \
+	 if !$?gsl "write ptable 0 24 $pv,PTYPE=1"; \
+	 if !$?gsl "write ptable 24 2 $pv,PTYPE=2"; \
+	 if $?gsl  "write ptable 0 8 $pv,PTYPE=2"; \
+	 write ptable 27 1 $pv,PTYPE=3; \
+     local pv'
+
+# Turn on mirroring of hardware ARL operations into software ARL table.
+if $?feature_arl_sorted \
+	"arlmode intr_dma; \
+	 $echo rc: ARL DMA shadowing enabled"
+
+if $?feature_arl_hashed && !$?simulator && !$?rcpu_only \
+	"l2mode interval=3000000; \
+	 $echo rc: L2 Table shadowing enabled"
+
+# If running BCM library, start linkscan task and set port modes
+
+if !$?no_bcm && !$?rcpu_only \
+	"linkscan 250000; \
+	 port fe,ge linkscan=on autoneg=on \
+		speed=0 fullduplex=true txpause=true rxpause=true; \
+	 port st linkscan=on txpause=false rxpause=false; \
+         port xe,ce,cd linkscan=on autoneg=off \
+                speed=0 fullduplex=true txpause=true rxpause=true; \
+         port hg linkscan=on fullduplex=true txpause=false rxpause=false; \
+	 $echo rc: Port modes initialized"
+
+if !$?no_bcm && $?rcpu_only \
+	"linkscan 250000; \
+	 port e linkscan=on; \
+	 port st linkscan=on; \
+     port xe linkscan=on; \
+	 $echo rc: Port modes initialized"
+
+if !$?no_bcm && $?shadow \
+     "port il linkscan=on; \
+	  $echo rc: Interlaken Port mode initialized"
+
+# Selectively re-enable Auto Negotiation based on config port_force_an_list.
+#if $?port_force_an_list \
+#    "port $port_force_an_list autoneg=on"
+
+# No spanning tree is running, so put ports all in the forwarding state
+# stp support not available for shadow device.
+
+if !$?no_bcm && !$?shadow \
+	"stg stp 1 all forward"
+
+# Start counter task unless already started by "init bcm" above.
+if $?plisim "local dma false"
+if !$?plisim "local dma true"
+if $?device_eb_vli "local dma false"
+if $?no_bcm && !$?rcpu_only\
+	"counter Interval=1000 Pbm=all Dma=$dma; \
+	 $echo rc: Counter collection enabled"
+if $?rcpu_only \
+	"counter Interval=2000000 Pbm=all Dma=false; \
+	 $echo rc: Counter collection enabled"
+
+# Resynchronize the saved values kept by the 'show counter' command.
+if !$?simulator \
+    "counter sync"
+
+# Switch tx/pw commands according to pktio_driver_type.
+if !$?feature_sdklt_pktio \
+    "pktio off"
+if $?feature_sdklt_pktio \
+    "pktio on"
+
+# By default, dump data of packets that go to CPU.
+if !$?testinit \
+	"pw report +raw"
+
+# Default LED processor program for various SDKs and reference designs.
+# Source code can be found in $SDK/led/examples.
+
+if !$?p48 "local ledcode '\
+ E0 28 60 7F 67 2F 67 6B 06 7F 80 D2 1A 74 01 12 \
+ 7E 85 05 D2 0F 71 19 52 00 12 7D 85 05 D2 1F 71 \
+ 23 52 00 12 7C 85 05 D2 05 71 2D 52 00 3A 68 32 \
+ 00 97 75 3B 12 A0 FE 7F 02 0A 50 32 01 97 75 47 \
+ 12 BA FE 7F 02 0A 50 12 BA FE 7F 95 75 59 85 12 \
+ A0 FE 7F 95 75 A8 85 77 9A 12 A0 FE 7F 95 75 63 \
+ 85 77 A1 16 7C DA 02 71 A1 77 A8 32 05 97 71 76 \
+ 06 7D D2 01 71 9A 06 7F 67 93 75 9A 32 02 97 71 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 7E D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"		# sdk5605.hex
+
+if $?p48 "local ledcode '\
+ E0 28 60 7F 67 43 67 3C 67 35 67 2F 06 7F 80 D2 \
+ 18 74 01 28 60 7F 67 9B 67 89 67 BF 67 83 67 3C \
+ 67 73 67 68 67 5D 06 7F 80 D2 1A 74 13 3A 70 67 \
+ AD 71 C3 77 BF 32 03 97 71 C3 77 BF 32 05 97 71 \
+ C3 77 BF 12 BA FE 7F 32 01 97 75 4F 02 06 50 32 \
+ 00 97 75 57 02 06 50 95 75 C3 85 77 BF 67 AD 75 \
+ BF 32 04 97 71 C3 77 BF 67 AD 75 BF 32 03 97 71 \
+ C3 77 BF 67 AD 75 BF 32 03 97 71 BF 32 04 97 71 \
+ BF 77 C3 67 B6 71 C3 77 BF 12 A0 FE 7F 32 00 97 \
+ 75 95 02 06 50 95 75 C3 85 77 BF 12 BA FE 7F 32 \
+ 01 97 75 A7 02 06 50 95 75 C3 85 77 BF 06 7F 12 \
+ 80 F8 15 1A 00 57 06 7F 12 80 F8 15 1A 07 57 32 \
+ 0F 87 57 32 0E 87 57'"					# p48.hex
+
+if $?herc && !$?black_knight "local ledcode '\
+ 02 01 67 36 29 32 08 D7 87 32 07 D7 87 32 01 D7 \
+ 87 32 00 D7 87 80 D2 09 74 02 86 7F 06 7F C2 07 \
+ 74 24 86 7E 16 7E CA 07 E0 17 0D 12 08 98 27 D7 \
+ 87 91 74 2D 3A 28 10 DA 07 75 3E FA 02 57 EA 06 \
+ 57'"							# sdk5670.hex
+
+if $?herc && $?black_knight "local ledcode '\
+ 2A 03 32 08 D7 87 32 07 D7 87 32 01 D7 87 32 00 \
+ D7 87 2A 06 32 08 D7 87 32 07 D7 87 32 01 D7 87 \
+ 32 00 D7 87 3A 08'"					# knigget.hex
+
+if $?drac_any "local ledcode '\
+ E0 28 60 C3 67 4E 67 8A 06 C3 80 D2 0C 74 01 28 \
+ 60 C3 32 00 D7 87 32 01 D7 87 32 07 D7 87 32 08 \
+ D7 87 32 0F 87 32 0F 87 32 0F 87 32 0F 87 12 C2 \
+ 85 05 D2 0F 71 38 52 00 12 C1 85 05 D2 1F 71 42 \
+ 52 00 12 C0 85 05 D2 05 71 4C 52 00 3A 38 32 00 \
+ 97 75 5A 12 A0 FE C3 02 0A 50 32 01 97 75 66 12 \
+ AD FE C3 02 0A 50 12 AD FE C3 95 75 78 85 12 A0 \
+ FE C3 95 75 C0 85 77 B9 12 A0 FE C3 95 75 82 85 \
+ 77 C7 16 C0 DA 02 71 C7 77 C0 32 05 97 71 9A 32 \
+ 02 97 71 B9 06 C1 D2 01 71 B9 06 C3 67 B2 75 B9 \
+ 32 03 97 71 C0 32 04 97 75 C7 06 C2 D2 07 71 C7 \
+ 77 C0 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 \
+ 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"		# sdk5690.hex
+
+if $?draco_k12 "local ledcode '\
+ 02 0B A2 01 28 A2 01 60 C3 67 32 67 6E 06 C3 90 \
+ 75 02 12 C2 85 05 D2 0F 71 1C 52 00 12 C1 85 05 \
+ D2 1F 71 26 52 00 12 C0 85 05 D2 05 71 30 52 00 \
+ 3A 30 32 00 97 75 3E 12 A0 FE C3 02 0A 50 32 01 \
+ 97 75 4A 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 \
+ 5C 85 12 A0 FE C3 95 75 A6 85 77 9F 12 A0 FE C3 \
+ 95 75 66 85 77 AD 16 C0 DA 02 71 AD 77 A6 32 05 \
+ 97 71 7E 32 02 97 71 9F 06 C1 D2 01 71 9F 06 C3 \
+ 67 96 75 9F 32 03 97 71 A6 32 04 97 75 AD 06 C2 \
+ D2 07 71 AD 77 A6 12 80 A2 01 F8 15 1A 00 57 32 \
+ 0E 87 32 0E 87 57 32 0E 87 32 0F 87 57 32 0F 87 \
+ 32 0E 87 57'"						# k12-5690.hex
+
+if $?herc && $?white_knight "local ledcode '\
+ 2A 03 67 0A 2A 06 67 0A 3A 08 32 08 D7 87 32 07 \
+ D7 87 32 01 D7 87 32 00 D7 87 57'"			# wk5670.hex
+
+if $?herc && $?merlin "local ledcode '\
+ 2A 03 67 0A 2A 06 67 0A 3A 08 32 08 D7 87 32 00 \
+ D7 87 32 01 D7 87 32 07 D7 87 57'"			# merlin5670.hex
+
+if $?herc && $?lancelot "local ledcode '\
+ 2A 05 67 12 2A 06 67 12 2A 03 67 12 2A 04 67 12 \
+ 3A 10 32 08 D7 87 32 00 D7 87 32 01 D7 87 32 07 \
+ D7 87 57'"						# lancelot.hex
+
+if $?xgs_fabric && $?guenevere "local ledcode '\
+ 2A 04 67 0A 2A 05 67 0A 3A 04 32 07 D7 87 32 00 \
+ 32 01 B7 D7 87 57'"                                    # guenevere5670.hex
+
+if $?drac_any && $?white_knight "local ledcode '\
+ E0 28 60 C3 67 2f 67 6B 06 C3 80 D2 0C 74 01 12 \
+ C2 85 05 D2 0F 71 19 52 00 12 C1 85 05 D2 1F 71 \
+ 23 52 00 12 C0 85 05 D2 05 71 2D 52 00 3A 30 32 \
+ 00 97 75 3B 12 A0 FE C3 02 0A 50 32 01 97 75 47 \
+ 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 59 85 12 \
+ A0 FE C3 95 75 A8 85 77 9A 12 A0 FE C3 95 75 63 \
+ 85 77 A1 16 C0 DA 02 71 A1 77 A8 32 05 97 71 7B \
+ 32 02 97 71 9A 06 C1 D2 01 71 9A 06 C3 67 93 75 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 C2 D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"		# wk5690.hex
+
+if $?drac_any && $?merlin "local ledcode '\
+ E0 28 60 C3 67 2F 67 6B 06 C3 80 D2 0C 74 01 12 \
+ C2 85 05 D2 0F 71 19 52 00 12 C1 85 05 D2 1F 71 \
+ 23 52 00 12 C0 85 05 D2 05 71 2D 52 00 3A 30 32 \
+ 00 97 75 3B 12 A0 FE C3 02 0A 50 32 01 97 75 47 \
+ 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 59 85 12 \
+ A0 FE C3 95 75 A8 85 77 9A 12 A0 FE C3 95 75 63 \
+ 85 77 A1 16 C0 DA 02 71 A1 77 A8 32 05 97 71 7B \
+ 32 02 97 71 9A 06 C1 D2 01 71 9A 06 C3 67 93 75 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 C2 D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0F 87 32 0E 87 57 32 0E 87 32 0F 87 57'"		# merlin5690.hex
+
+if $?drac_any && $?galahad "local ledcode '\
+ E0 28 60 C3 67 2F 67 6B 06 C3 80 D2 0C 74 01 12 \
+ C2 85 05 D2 0F 71 19 52 00 12 C1 85 05 D2 1F 71 \
+ 23 52 00 12 C0 85 05 D2 05 71 2D 52 00 3A 30 32 \
+ 00 97 75 3B 12 A0 FE C3 02 0A 50 32 01 97 75 47 \
+ 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 59 85 12 \
+ A0 FE C3 95 75 A8 85 77 9A 12 A0 FE C3 95 75 63 \
+ 85 77 A1 16 C0 DA 02 71 A1 77 A8 32 05 97 71 7B \
+ 32 02 97 71 9A 06 C1 D2 01 71 9A 06 C3 67 93 75 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 C2 D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0F 87 32 0E 87 57 32 0E 87 32 0F 87 57'"		# galahad.hex
+
+if $?drac_any && $?lm "local ledcode '\
+E0 28 60 C3 67 2D 06 C3 80 D2 0C 74 01 12 C2 85 \
+05 D2 0F 71 17 52 00 12 C1 85 05 D2 1F 71 21 52 \
+00 12 C0 85 05 D2 05 71 2B 52 00 3A 18 32 00 97 \
+75 39 12 A0 FE C3 02 0A 50 32 01 97 75 45 12 AC \
+FE C3 02 0A 50 12 AC FE C3 95 75 5F 85 12 A0 FE \
+C3 95 71 5C 16 C0 DA 02 71 A6 77 B4 85 77 77 12 \
+A0 FE C3 95 75 6F 85 16 C0 DA 02 71 A6 77 AD 16 \
+C0 DA 02 71 AD 77 B4 32 05 97 71 82 06 C1 D2 01 \
+71 A6 06 C3 67 9F 75 A6 32 02 97 71 A6 32 03 97 \
+71 B4 32 04 97 75 AD 06 C2 D2 07 71 AD 77 B4 12 \
+80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 \
+32 0F 87 57 32 0F 87 32 0E 87 57'"      # lm5690.hex
+
+if $?twolynx "local ledcode '\
+ 2A 01 67 0A 2A 00 67 0A 3A 08 32 08 D7 87 32 00 \
+ D7 87 32 01 D7 87 32 07 D7 87 57'"                 # twolynx.hex
+
+if $?lynx_any && $?herculynx || $?lynxalot || $?lm || $?guenevere \
+	"local ledcode '\
+12 C0 85 05 D2 03 71 0A 52 00 2A 00 67 10 3A 04 \
+32 08 D7 87 06 C0 D2 01 71 22 32 0F 87 32 0F 87 \
+77 2A 32 00 D7 87 32 01 D7 87 32 07 D7 87 57'"      # herculynx.hex
+
+if $?tucana && !$?magnum "local ledcode '\
+ E0 67 23 D2 18 74 01 02 20 67 23 D2 38 74 09 02 \
+ 18 67 23 D2 1C 74 11 E9 02 80 45 80 81 DA 0D 74 \
+ 1A 3A 68 28 60 E3 67 4A 67 36 06 E4 30 87 06 E5 \
+ 30 87 06 E3 80 57 32 00 97 71 45 32 01 97 71 45 \
+ 02 0F 60 E5 57 02 0E 60 E5 57 06 E3 12 A0 F8 15 \
+ 1A 00 75 59 02 0E 60 E4 57 02 0F 60 E4 57'"        # sdk5665.hex
+
+if $?magnum && !$?tuc24_ref && !$?BCM5650_C0 "local ledcode '\
+ E0 28 60 FC 67 5A 67 9C 06 FA 67 DA 06 FB 67 DA \
+ 06 FC 80 D2 1C 74 01 12 FD 85 05 D2 0F 71 21 52 \
+ 00 12 FE 85 05 D2 1F 71 2B 52 00 12 FF 85 05 D2 \
+ 05 71 35 52 00 E9 05 98 98 98 98 C2 0F 60 F9 05 \
+ 88 88 88 88 C2 F0 B6 F9 50 81 DA 0C 74 36 E9 02 \
+ 80 45 80 81 DA 0E 74 51 3A 70 32 00 97 75 66 12 \
+ C0 FE FC 02 0A 50 32 01 97 75 72 12 DC FE FC 02 \
+ 0A 50 12 DC FE FC 95 75 86 85 12 C0 FE FC 95 02 \
+ FA 75 D7 85 77 D1 12 C0 FE FC 95 75 92 85 02 FA \
+ 77 D4 16 FF DA 02 02 FA 71 D4 77 D7 32 05 97 71 \
+ A9 06 FE D2 01 02 FB 71 D1 06 FC 67 CA 02 FB 75 \
+ D1 32 02 97 71 D1 32 03 97 71 D7 32 04 97 75 D4 \
+ 06 FD D2 07 02 FB 71 D4 77 D7 12 A0 F8 15 1A 00 \
+ 57 42 00 57 42 01 57 42 02 57 D2 02 74 E3 32 0F \
+ 87 77 E6 32 0E 87 D2 01 74 EE 32 0F 87 57 32 0E \
+ 87 57'"                                            # sdk5665.hex
+
+if $?magnum && !$?tuc24_ref && $?BCM5650_C0 "local ledcode '\
+ E0 60 FB D2 18 75 09 A2 01 60 FC 28 67 37 67 73 \
+ 06 FB 80 D2 1C 74 01 12 FD 85 05 D2 0F 71 21 52 \
+ 00 12 FE 85 05 D2 1F 71 2B 52 00 12 FF 85 05 D2 \
+ 05 71 35 52 00 3A 70 32 00 97 75 43 12 C0 FE FC \
+ 02 0A 50 32 01 97 75 4F 12 DC FE FC 02 0A 50 12 \
+ DC FE FC 95 75 61 85 12 C0 FE FC 95 75 B0 85 77 \
+ A2 12 C0 FE FC 95 75 6B 85 77 A9 16 FF DA 02 71 \
+ A9 77 B0 32 05 97 71 7E 06 FE D2 01 71 A2 06 FC \
+ 67 9B 75 A2 32 02 97 71 A2 32 03 97 71 B0 32 04 \
+ 97 75 A9 06 FD D2 07 71 A9 77 B0 12 A0 F8 15 1A \
+ 00 57 32 0F 87 32 0F 87 57 32 0E 87 32 0F 87 57 \
+ 32 0F 87 32 0E 87 57'"                            # magnum_sdk.hex
+
+if $?tuc24_ref && $?BCM5650_C0 "local ledcode '\
+ E0 60 FB D2 18 71 10 60 FC 28 67 D0 67 C0 77 19 \
+ A2 01 60 FC 28 67 40 67 7C 06 FB 80 D2 1C 74 01 \
+ 12 FD 85 05 D2 0F 71 2A 52 00 12 FE 85 05 D2 1F \
+ 71 34 52 00 12 FF 85 05 D2 05 71 3E 52 00 3A 68 \
+ 32 00 97 75 4C 12 C0 FE FC 02 0A 50 32 01 97 75 \
+ 58 12 DC FE FC 02 0A 50 12 DC FE FC 95 75 6A 85 \
+ 12 C0 FE FC 95 75 B9 85 77 AB 12 C0 FE FC 95 75 \
+ 74 85 77 B2 16 FF DA 02 71 B2 77 B9 32 05 97 71 \
+ 87 06 FE D2 01 71 AB 06 FC 67 A4 75 AB 32 02 97 \
+ 71 AB 32 03 97 71 B9 32 04 97 75 B2 06 FD D2 07 \
+ 71 B2 77 B9 12 A0 F8 15 1A 00 57 32 0F 87 32 0F \
+ 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57 \
+ 02 0E 32 00 97 71 CD 32 01 97 71 CD 80 30 87 57 \
+ 06 FC 12 A0 F8 15 1A 00 02 0F 75 DD 90 30 87 57'"  # magnum.hex
+
+if $?tuc24_ref && !$?BCM5650_C0 "local ledcode '\
+ E0 28 60 FC D2 18 71 0E 67 E9 67 D9 77 1A 67 5A \
+ 67 9C 06 FA 67 D0 06 FB 67 D0 06 FC 80 D2 1C 74 \
+ 01 12 FE 85 05 D2 1F 71 2B 52 00 12 FF 85 05 D2 \
+ 05 71 35 52 00 E9 05 98 98 98 98 C2 0F 60 F9 05 \
+ 88 88 88 88 C2 F0 B6 F9 50 81 DA 0C 74 36 E9 02 \
+ 80 45 80 81 DA 0D 74 51 3A 68 32 00 97 75 66 12 \
+ C0 FE FC 02 0A 50 32 01 97 75 72 12 DC FE FC 02 \
+ 0A 50 12 DC FE FC 95 75 86 85 12 C0 FE FC 95 02 \
+ FA 75 CD 85 77 C7 12 C0 FE FC 95 75 92 85 02 FA \
+ 77 CA 16 FF DA 02 02 FA 71 CA 77 CD 32 05 97 71 \
+ A9 06 FE D2 01 02 FB 71 C7 06 FC 67 C0 02 FB 75 \
+ C7 32 02 97 71 C7 32 03 97 71 CD 32 04 97 75 CA \
+ 12 A0 F8 15 1A 00 57 42 FF 57 42 FE 57 42 EF 57 \
+ 30 87 98 98 98 98 30 87 57 02 0E 32 00 97 71 E6 \
+ 32 01 97 71 E6 80 30 87 57 06 FC 12 A0 F8 15 1A \
+ 00 02 0F 75 F6 90 30 87 57'"                       # tuc24_ref.hex
+
+if $?herc8_15 "local ledcode '\
+ 02 01 28 32 08 D7 87 32 07 D7 87 32 01 D7 87 32 \
+ 00 D7 87 80 D2 09 74 02 86 7F 06 7F C2 07 74 22 \
+ 86 7E 16 7E CA 07 E0 17 0D 12 08 98 27 D7 87 91 \
+ 74 2B 3A 28'"                                      # sdk5675.hex
+
+if $?drac_any && $?lm "local ledcode '\
+ E0 28 60 C3 67 2D 06 C3 80 D2 0C 74 01 12 C2 85 \
+ 05 D2 0F 71 17 52 00 12 C1 85 05 D2 1F 71 21 52 \
+ 00 12 C0 85 05 D2 05 71 2B 52 00 3A 18 32 00 97 \
+ 75 39 12 A0 FE C3 02 0A 50 32 01 97 75 45 12 AC \
+ FE C3 02 0A 50 12 AC FE C3 95 75 5F 85 12 A0 FE \
+ C3 95 71 5C 16 C0 DA 02 71 A6 77 B4 85 77 77 12 \
+ A0 FE C3 95 75 6F 85 16 C0 DA 02 71 A6 77 AD 16 \
+ C0 DA 02 71 AD 77 B4 32 05 97 71 82 06 C1 D2 01 \
+ 71 A6 06 C3 67 9F 75 A6 32 02 97 71 A6 32 03 97 \
+ 71 B4 32 04 97 75 AD 06 C2 D2 07 71 AD 77 B4 12 \
+ 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 \
+ 32 0F 87 57 32 0F 87 32 0E 87 57 00 00 00 00 00'"  # lm5690.hex
+
+if $?drac_any && $?lm48p "local ledcode '\
+ E0 28 60 C3 67 7C 06 C3 80 28 60 C3 67 7C 67 40 \
+ 06 C3 90 28 60 C3 67 40 06 C3 80 80 D2 0C 74 01 \
+ 12 C2 85 05 D2 0F 71 2A 52 00 12 C1 85 05 D2 1F \
+ 71 34 52 00 12 C0 85 05 D2 05 71 3E 52 00 3A 30 \
+ 32 00 97 75 4C 12 A0 FE C3 02 0A 50 32 01 97 75 \
+ 58 12 AC FE C3 02 0A 50 12 AC FE C3 95 75 6A 85 \
+ 12 A0 FE C3 95 75 B9 85 77 AB 12 A0 FE C3 95 75 \
+ 74 85 77 B2 16 C0 DA 02 71 B2 77 B9 32 05 97 71 \
+ 8C 32 02 97 71 AB 06 C1 D2 01 71 AB 06 C3 67 A4 \
+ 75 AB 32 03 97 71 B9 32 04 97 75 B2 06 C2 D2 07 \
+ 71 B2 77 B9 12 80 F8 15 1A 00 57 32 0E 87 32 0E \
+ 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"  # lm48p5695.hex
+
+if $?drac_any && $?lm48p_B "local ledcode '\
+ E0 28 60 C3 67 79 06 C3 67 3D 06 C3 80 28 60 C3 \
+ 67 3D 06 C3 67 79 06 C3 80 D2 0C 74 01 12 C2 85 \
+ 05 D2 0F 71 27 52 00 12 C1 85 05 D2 1F 71 31 52 \
+ 00 12 C0 85 05 D2 05 71 3B 52 00 3A 30 32 00 97 \
+ 75 49 12 A0 FE C3 02 0A 50 32 01 97 75 55 12 AC \
+ FE C3 02 0A 50 12 AC FE C3 95 75 67 85 12 A0 FE \
+ C3 95 75 B6 85 77 A8 12 A0 FE C3 95 75 71 85 77 \
+ AF 16 C0 DA 02 71 AF 77 B6 32 05 97 71 89 32 02 \
+ 97 71 A8 06 C1 D2 01 71 A8 06 C3 67 A1 75 A8 32 \
+ 03 97 71 B6 32 04 97 75 AF 06 C2 D2 07 71 AF 77 \
+ B6 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 \
+ 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"  # lm48p5695_10.hex
+
+if $?firebolt_any "local ledcode '\
+ E0 28 60 E3 67 55 67 91 06 E3 80 28 60 E3 67 91 \
+ 67 55 06 E3 80 D2 18 74 01 28 60 E3 67 B9 75 26 \
+ 67 CE 67 55 77 2E 32 0E 87 32 08 87 67 C0 06 E3 \
+ 80 D2 1C 74 19 12 E2 85 05 D2 0F 71 3F 52 00 12 \
+ E1 85 05 D2 1F 71 49 52 00 12 E0 85 05 D2 05 71 \
+ 53 52 00 3A 70 32 00 97 75 61 12 A0 FE E3 02 0A \
+ 50 32 01 97 75 6D 12 BC FE E3 02 0A 50 12 BC FE \
+ E3 95 75 7F 85 12 A0 FE E3 95 75 CE 85 77 C0 12 \
+ A0 FE E3 95 75 89 85 77 C7 16 E0 DA 02 71 C7 77 \
+ CE 32 05 97 71 A1 32 02 97 71 C0 06 E1 D2 01 71 \
+ C0 06 E3 67 B9 75 C0 32 03 97 71 CE 32 04 97 75 \
+ C7 06 E2 D2 07 71 C7 77 CE 12 80 F8 15 1A 00 57 \
+ 32 0E 87 32 0E 87 57 32 0E 87 32 0F 87 57 32 0F \
+ 87 32 0E 87 57'"  # sdk56504.hex
+
+#Led program for new rev of FB SDK and Ref design
+if $?firebolt_any && !$?fb24 "local ledcode '\
+ E0 28 60 E3 67 4B 67 87 06 E3 80 D2 18 74 01 28 \
+ 60 E3 67 AF 75 1C 67 C4 67 4B 77 24 32 0E 87 32 \
+ 08 87 67 B6 06 E3 80 D2 1C 74 0F 12 E2 85 05 D2 \
+ 0F 71 35 52 00 12 E1 85 05 D2 1F 71 3F 52 00 12 \
+ E0 85 05 D2 05 71 49 52 00 3A 70 32 00 97 75 57 \
+ 12 A0 FE E3 02 0A 50 32 01 97 75 63 12 BC FE E3 \
+ 02 0A 50 12 BC FE E3 95 75 75 85 12 A0 FE E3 95 \
+ 75 C4 85 77 B6 12 A0 FE E3 95 75 7F 85 77 BD 16 \
+ E0 DA 02 71 BD 77 C4 32 05 97 71 97 32 02 97 71 \
+ B6 06 E1 D2 01 71 B6 06 E3 67 AF 75 B6 32 03 97 \
+ 71 C4 32 04 97 75 BD 06 E2 D2 07 71 BD 77 C4 12 \
+ 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 \
+ 32 0F 87 57 32 0F 87 32 0E 87 57'" # sdk56504ref.hex
+
+#Override Default Firebolt LED program for Line Module
+if $?lm && $?firebolt_any "local ledcode '\
+ E0 28 60 E3 67 79 06 E3 67 3D 06 E3 80 28 60 E3 \
+ 67 3D 06 E3 67 79 06 E3 80 D2 18 74 01 12 E2 85 \
+ 05 D2 0F 71 27 52 00 12 E1 85 05 D2 1F 71 31 52 \
+ 00 12 E0 85 05 D2 05 71 3B 52 00 3A 60 32 00 97 \
+ 75 49 12 A0 FE E3 02 0A 50 32 01 97 75 55 12 BC \
+ FE E3 02 0A 50 12 BC FE E3 95 75 67 85 12 A0 FE \
+ E3 95 75 B6 85 77 A8 12 A0 FE E3 95 75 71 85 77 \
+ AF 16 E0 DA 02 71 AF 77 B6 32 05 97 71 89 32 02 \
+ 97 71 A8 06 E1 D2 01 71 A8 06 E3 67 A1 75 A8 32 \
+ 03 97 71 B6 32 04 97 75 AF 06 E2 D2 07 71 AF 77 \
+ B6 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 \
+ 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'" # lm48p56504.hex
+
+#Override Default Firebolt LED program for Line Module -50 version
+if $?lm && $?lm48p_D && $?firebolt_any "local ledcode '\
+ E0 28 60 E3 67 6D 06 E3 67 31 06 E3 80 D2 18 74 \
+ 01 12 E2 85 05 D2 0F 71 1B 52 00 12 E1 85 05 D2 \
+ 1F 71 25 52 00 12 E0 85 05 D2 05 71 2F 52 00 3A \
+ 60 32 00 97 75 3D 12 A0 FE E3 02 0A 50 32 01 97 \
+ 75 49 12 BC FE E3 02 0A 50 12 BC FE E3 95 75 5B \
+ 85 12 A0 FE E3 95 75 AA 85 77 9C 12 A0 FE E3 95 \
+ 75 65 85 77 A3 16 E0 DA 02 71 A3 77 AA 32 05 97 \
+ 71 7D 32 02 97 71 9C 06 E1 D2 01 71 9C 06 E3 67 \
+ 95 75 9C 32 03 97 71 AA 32 04 97 75 A3 06 E2 D2 \
+ 07 71 A3 77 AA 12 80 F8 15 1A 00 57 32 0E 87 32 \
+ 0E 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 \
+ 57'" # lm48p56504_50.hex
+
+if $?lm && $?firebolt_10x4 "local ledcode '\
+ 02 18 28 32 07 67 1E 75 0A D7 87 32 01 D7 87 32 \
+ 00 D7 87 32 08 D7 87 80 D2 1C 74 02 3A 0C 12 80 \
+ F8 15 1A 00 57 '" # lm12pcx456501.hex
+
+if $?fbpoe && $?firebolt_any "local ledcode '\
+ E0 28 60 E3 67 85 67 49 06 E3 80 D2 18 74 01 28 \
+ 60 E3 67 AD 75 1A 67 C2 77 20 32 0E 87 32 08 87 \
+ 67 49 06 E3 80 D2 1A 74 0F 12 E2 85 05 D2 0F 71 \
+ 33 52 00 12 E1 85 05 D2 1F 71 3D 52 00 12 E0 85 \
+ 05 D2 05 71 47 52 00 3A 68 32 00 97 75 55 12 A0 \
+ FE E3 02 0A 50 32 01 97 75 61 12 BA FE E3 02 0A \
+ 50 12 BA FE E3 95 75 73 85 12 A0 FE E3 95 75 C2 \
+ 85 77 B4 12 A0 FE E3 95 75 7D 85 77 BB 16 E0 DA \
+ 02 71 BB 77 C2 32 05 97 71 95 32 02 97 71 B4 06 \
+ E1 D2 01 71 B4 06 E3 67 AD 75 B4 32 03 97 71 C2 \
+ 32 04 97 75 BB 06 E2 D2 07 71 BB 77 C2 12 80 F8 \
+ 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F \
+ 87 57 32 0F 87 32 0E 87 57'" # poe48p56504.hex
+
+#Override Default Firebolt LED program for felix
+if $?felix || $?felix15 "local ledcode '\
+ E0 28 60 E3 67 6B 67 A7 06 E3 80 D2 18 74 01 02 \
+ 18 28 60 E3 67 49 02 19 28 60 E3 67 49 32 0E 87 \
+ 32 0E 87 32 0E 87 32 0E 87 12 E2 85 05 D2 0F 71 \
+ 33 52 00 12 E1 85 05 D2 1F 71 3D 52 00 12 E0 85 \
+ 05 D2 05 71 47 52 00 3A 68 67 CF 75 52 32 0E 87 \
+ 77 55 32 0F 87 32 00 97 75 5E 32 0E 87 57 32 01 \
+ 97 75 67 32 0E 87 57 32 0F 87 57 32 00 97 75 77 \
+ 12 A0 FE E3 02 0A 50 32 01 97 75 83 12 BC FE E3 \
+ 02 0A 50 12 BC FE E3 95 75 95 85 12 A0 FE E3 95 \
+ 75 E4 85 77 D6 12 A0 FE E3 95 75 9F 85 77 DD 16 \
+ E0 DA 02 71 DD 77 E4 32 05 97 71 B7 32 02 97 71 \
+ D6 06 E1 D2 01 71 D6 06 E3 67 CF 75 D6 32 03 97 \
+ 71 E4 32 04 97 75 DD 06 E2 D2 07 71 DD 77 E4 12 \
+ 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 \
+ 32 0F 87 57 32 0E 87 32 0F 87 57'"  # sdk56102.hex
+
+#Override Default Felix LED program for felix48
+if $?felix48 && $?felix || $?felix15 "local ledcode '\
+ E0 28 60 E3 67 6B 67 A7 06 E3 80 D2 18 74 01 02 \
+ 18 28 60 E3 67 49 02 19 28 60 E3 67 49 32 0E 87 \
+ 32 0E 87 32 0E 87 32 0E 87 12 E2 85 05 D2 0F 71 \
+ 33 52 00 12 E1 85 05 D2 1F 71 3D 52 00 12 E0 85 \
+ 05 D2 05 71 47 52 00 3A 68 67 CF 75 52 32 0E 87 \
+ 77 55 32 0F 87 32 00 97 75 5E 32 0E 87 57 32 01 \
+ 97 75 67 32 0E 87 57 32 0F 87 57 32 00 97 75 77 \
+ 12 A0 FE E3 02 0A 50 32 01 97 75 83 12 BC FE E3 \
+ 02 0A 50 12 BC FE E3 95 75 95 85 12 A0 FE E3 95 \
+ 75 E4 85 77 D6 12 A0 FE E3 95 75 9F 85 77 DD 16 \
+ E0 DA 02 71 DD 77 E4 32 05 97 71 B7 32 02 97 71 \
+ D6 06 E1 D2 01 71 D6 06 E3 67 CF 75 D6 32 03 97 \
+ 71 E4 32 04 97 75 DD 06 E2 D2 07 71 DD 77 E4 12 \
+ 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 \
+ 32 0F 87 57 32 0F 87 32 0E 87 57'"  # felix48.hex
+
+if $?easyrider_any "local ledcode '\
+ E0 28 60 E3 67 59 67 95 06 E3 80 28 60 E3 67 95 \
+ 67 59 06 E3 80 D2 0C 74 01 28 60 E3 67 BD 75 26 \
+ 67 D2 67 59 77 2E 32 0E 87 32 08 87 67 C4 06 E3 \
+ 80 D2 0D 74 19 12 E2 85 05 D2 0F 71 3F 52 00 12 \
+ E1 85 05 D2 1F 71 49 52 00 12 E0 85 05 D2 05 71 \
+ 53 52 00 67 C4 67 C4 3A 38 32 00 97 75 65 12 A0 \
+ FE E3 02 0A 50 32 01 97 75 71 12 AD FE E3 02 0A \
+ 50 12 AD FE E3 95 75 83 85 12 A0 FE E3 95 75 D2 \
+ 85 77 C4 12 A0 FE E3 95 75 8D 85 77 CB 16 E0 DA \
+ 02 71 CB 77 D2 32 05 97 71 A5 32 02 97 71 C4 06 \
+ E1 D2 01 71 C4 06 E3 67 BD 75 C4 32 03 97 71 D2 \
+ 32 04 97 75 CB 06 E2 D2 07 71 CB 77 D2 12 80 F8 \
+ 15 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F \
+ 87 57 32 0F 87 32 0E 87 57'"   # sdk56601.hex
+
+#Override Default Easyrider LED program for 56602
+if $?easyrider_1x1 "local ledcode '\
+ E0 60 E1 67 7C 67 7C 06 E1 80 D2 0C 74 01 02 0C \
+ 28 60 E1 67 75 75 1D 67 8A 67 39 77 25 32 0E 87 \
+ 32 08 87 67 7C 06 E1 D2 00 02 00 74 10 12 E0 85 \
+ 05 D2 05 71 37 52 00 3A 38 32 00 97 75 45 12 A0 \
+ FE E1 02 0A 50 32 01 97 75 51 12 AD FE E1 02 0A \
+ 50 12 AD FE E1 95 75 63 85 12 A0 FE E1 95 75 8A \
+ 85 77 7C 12 A0 FE E1 95 75 6D 85 77 83 16 E0 DA \
+ 02 71 83 77 8A 12 80 F8 15 1A 00 57 32 0E 87 32 \
+ 0E 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 \
+ 57'"   # sdk56602.hex
+
+#Override Default  LED program for 53300
+if $?mirage24 "local ledcode '\
+ E0 28 60 E3 67 6B 67 2F 06 E3 80 D2 18 74 01 12 \
+ E2 85 05 D2 0F 71 19 52 00 12 E1 85 05 D2 1F 71 \
+ 23 52 00 12 E0 85 05 D2 05 71 2D 52 00 3A 30 32 \
+ 00 97 75 3B 12 A0 FE E3 02 0A 50 32 01 97 75 47 \
+ 12 BC FE E3 02 0A 50 12 BC FE E3 95 75 59 85 12 \
+ A0 FE E3 95 75 A2 85 77 9A 12 A0 FE E3 95 75 63 \
+ 85 77 9E 16 E0 DA 02 71 9E 77 A2 32 05 97 71 7B \
+ 32 02 97 71 9A 06 E1 D2 01 71 9A 06 E3 67 93 75 \
+ 9A 32 03 97 71 A2 32 04 97 75 9E 06 E2 D2 07 71 \
+ 9E 77 A2 12 80 F8 15 1A 00 57 32 0F 87 57 32 0E \
+ 87 57 32 0E 87 57'"  # sdk53300.hex
+
+#Override Default LED program for 56314
+if $?bcm56314p24ref "local ledcode '\
+ E0 28 60 E3 67 79 67 3D 06 E3 80 D2 18 74 01 28 \
+ 60 E3 67 79 67 A8 06 E3 80 D2 1C 74 0F 12 E2 85 \
+ 05 D2 0F 71 27 52 00 12 E1 85 05 D2 1F 71 31 52 \
+ 00 12 E0 85 05 D2 05 71 3B 52 00 3A 38 32 00 97 \
+ 75 49 12 A0 FE E3 02 0A 50 32 01 97 75 55 12 BC \
+ FE E3 02 0A 50 12 BC FE E3 95 75 67 85 12 A0 FE \
+ E3 95 75 B0 85 77 A8 12 A0 FE E3 95 75 71 85 77 \
+ AC 16 E0 DA 02 71 AC 77 B0 32 05 97 71 89 32 02 \
+ 97 71 A8 06 E1 D2 01 71 A8 06 E3 67 A1 75 A8 32 \
+ 03 97 71 B0 32 04 97 75 AC 06 E2 D2 07 71 AC 77 \
+ B0 12 80 F8 15 1A 00 57 32 0F 87 57 32 0E 87 57 \
+ 32 0E 87 57'"  # bcm956314p24ref.hex
+
+if $?bradley "local ledcode '\
+ E0 28 60 F2 67 1B 06 F2 80 D2 14 74 01 86 F3 12 \
+ F0 85 05 D2 05 71 19 52 00 3A 28 32 00 97 75 27 \
+ 12 A8 FE F2 02 0A 50 32 01 97 75 33 12 BC FE F2 \
+ 02 0A 50 12 BC FE F2 95 75 45 85 12 A8 FE F2 95 \
+ 75 91 85 77 57 12 A8 FE F2 95 75 4F 85 77 8A 16 \
+ F0 DA 02 71 8A 77 91 06 F2 12 94 F8 15 02 02 C1 \
+ 74 6E 02 04 C1 74 6E 02 08 C1 74 6E 77 74 C6 F3 \
+ 74 91 77 8A 06 F2 67 7C 75 83 77 91 12 80 F8 15 \
+ 1A 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F 87 \
+ 57 32 0F 87 32 0E 87 57'"     # sdk56800.hex
+
+if $?humv "local ledcode '\
+ E0 28 60 F2 67 21 06 F2 80 D2 08 74 0F F2 02 D2 \
+ 12 74 01 86 F3 12 F0 85 05 D2 05 71 1F 52 00 3A \
+ 20 32 00 97 75 2D 12 A8 FE F2 02 0A 50 32 01 97 \
+ 75 39 12 BA FE F2 02 0A 50 12 BA FE F2 95 75 4B \
+ 85 12 A8 FE F2 95 75 97 85 77 5D 12 A8 FE F2 95 \
+ 75 55 85 77 90 16 F0 DA 02 71 90 77 97 06 F2 12 \
+ 94 F8 15 02 02 C1 74 74 02 04 C1 74 74 02 08 C1 \
+ 74 74 77 7A C6 F3 74 97 77 90 06 F2 67 82 75 89 \
+ 77 97 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 57 \
+ 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'" # sdk56700.hex
+
+if $?bradley_1g "local ledcode '\
+ E0 28 60 E3 67 2F 67 6B 06 E3 80 D2 14 74 01 12 \
+ E2 85 05 D2 0F 71 19 52 00 12 E1 85 05 D2 1F 71 \
+ 23 52 00 12 E0 85 05 D2 05 71 2D 52 00 3A 50 32 \
+ 00 97 75 3B 12 A0 FE E3 02 0A 50 32 01 97 75 47 \
+ 12 B4 FE E3 02 0A 50 12 B4 FE E3 95 75 59 85 12 \
+ A0 FE E3 95 75 A8 85 77 9A 12 A0 FE E3 95 75 63 \
+ 85 77 A1 16 E0 DA 02 71 A1 77 A8 32 05 97 71 7B \
+ 32 02 97 71 9A 06 E1 D2 01 71 9A 06 E3 67 93 75 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 E2 D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57 '"  # sdk56800c.hex
+
+if $?goldwing "local ledcode '\
+ E0 28 60 F3 D2 10 75 0E 67 3B 67 94 77 12 67 94 \
+ 67 3B 06 F3 80 D2 14 74 01 86 F4 12 F2 85 05 D2 \
+ 0F 71 25 52 00 12 F1 85 05 D2 1F 71 2F 52 00 12 \
+ F0 85 05 D2 05 71 39 52 00 3A 50 32 00 97 75 47 \
+ 12 A8 FE F3 02 0A 50 32 01 97 75 53 12 BC FE F3 \
+ 02 0A 50 12 BC FE F3 95 75 65 85 12 A8 FE F3 95 \
+ 75 C0 85 77 77 12 A8 FE F3 95 75 6F 85 77 B9 16 \
+ F0 DA 02 71 B9 77 C0 06 F3 12 94 F8 15 02 02 C1 \
+ 74 8E 02 04 C1 74 8E 02 08 C1 74 8E 77 B2 C6 F4 \
+ 74 C0 77 B9 06 F3 67 AB 75 B2 32 04 75 B2 32 03 \
+ 97 71 C0 06 F2 D2 07 71 B9 77 C0 12 80 F8 15 1A \
+ 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F 87 57 \
+ 32 0F 87 32 0E 87 57 '"                          # sdk56580.hex
+
+if $?humv && $?lm "local ledcode '\
+ 02 04 28 D2 08 74 0A F2 02 28 32 07 67 29 75 11 \
+ D7 87 60 E4 67 30 06 E4 60 E4 67 4C 06 E4 32 08 \
+ D7 87 80 D2 12 74 02 3A 30 12 80 F8 15 1A 00 57 \
+ 06 E4 12 94 F8 15 02 10 C1 70 42 12 D2 FE E4 02 \
+ 0A 50 12 D2 FE E4 95 75 6D 85 77 68 06 E4 12 94 \
+ F8 15 02 20 C1 70 5E 12 C0 FE E4 02 0A 50 12 C0 \
+ FE E4 95 75 6D 85 77 68 32 0E D7 87 57 32 0F D7 \
+ 87 57 '"                                         # lm12p56802.hex
+
+
+if $?raptor "local ledcode '\
+ 02 06 28 60 FF 67 64 67 93 06 FF 80 D2 36 74 02 \
+ 02 04 28 60 FF 67 BB 75 1E 32 0E 87 77 21 32 0F \
+ 87 67 7D 06 FF 80 D2 06 74 12 02 01 28 60 FF 67 \
+ BB 75 38 32 0E 87 77 3B 32 0F 87 67 7D 06 FF 80 \
+ D2 03 74 2C 12 FE 85 05 D2 0F 71 4E 52 00 12 FD \
+ 85 05 D2 1F 71 58 52 00 12 FC 85 05 D2 05 71 62 \
+ 52 00 3A C8 32 01 97 75 76 32 00 97 75 C9 16 FC \
+ DA 02 71 C9 77 D0 32 00 97 75 C2 77 D0 32 00 97 \
+ 75 86 32 0E 87 57 32 01 97 75 8F 32 0E 87 57 32 \
+ 0F 87 57 32 05 97 71 A3 32 02 97 71 C2 06 FD D2 \
+ 01 71 C2 06 FF 67 BB 75 C2 32 03 97 71 D0 32 04 \
+ 97 75 C9 06 FE D2 07 71 C9 77 D0 12 A0 F8 15 1A \
+ 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F 87 57 \
+ 32 0F 87 32 0E 87 57 00 00 00 00 00 00 00 00 00'" # sdk56018.hex
+
+if $?raptor && $?rap24_ref "local ledcode '\
+ 02 06 60 E1 67 48 67 31 06 E1 80 D2 1E 71 02 02 \
+ 05 60 E1 67 48 67 31 06 E1 90 D2 03 74 11 02 02 \
+ 60 E1 67 48 67 31 06 E1 90 D2 00 74 20 86 E0 3A \
+ 38 06 E1 67 50 75 57 28 32 00 32 01 B7 97 75 57 \
+ 16 E0 CA 05 74 5B 77 57 06 E1 67 50 75 57 77 5B \
+ 12 A0 F8 15 1A 00 57 32 0F 87 57 32 0E 87 57 00'" # sdk56214.hex
+
+if $?raven_eb_48p "local ledcode '\
+ 02 06 28 60 C3 67 30 67 6C 06 C3 80 D2 1E 74 02 \
+ 12 C2 85 05 D2 0F 71 1A 52 00 12 C1 85 05 D2 1F \
+ 71 24 52 00 12 C0 85 05 D2 05 71 2E 52 00 3A 60 \
+ 32 00 97 75 3C 12 C0 FE C3 02 0A 50 32 01 97 75 \
+ 48 12 E0 FE C3 02 0A 50 12 E0 FE C3 95 75 5A 85 \
+ 12 C0 FE C3 95 75 A9 85 77 9B 12 C0 FE C3 95 75 \
+ 64 85 77 A2 16 C0 DA 02 71 A2 77 A9 32 05 97 71 \
+ 7C 32 02 97 71 9B 06 C1 D2 01 71 9B 06 C3 67 94 \
+ 75 9B 32 03 97 71 A9 32 04 97 75 A2 06 C2 D2 07 \
+ 71 A2 77 A9 12 A0 F8 15 1A 00 57 32 0E 87 32 0E \
+ 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'" #bcm956024p48ref.hex
+
+if $?BCM956024R50T "local ledcode '\
+ 02 06 28 60 C3 67 30 67 6C 06 C3 80 D2 1E 74 02 \
+ 12 C2 85 05 D2 0F 71 1A 52 00 12 C1 85 05 D2 1F \
+ 71 24 52 00 12 C0 85 05 D2 05 71 2E 52 00 3A 60 \
+ 32 00 97 75 3C 12 C0 FE C3 02 0A 50 32 01 97 75 \
+ 48 12 E0 FE C3 02 0A 50 12 E0 FE C3 95 75 5A 85 \
+ 12 C0 FE C3 95 75 A9 85 77 9B 12 C0 FE C3 95 75 \
+ 64 85 77 A2 16 C0 DA 02 71 A2 77 A9 32 05 97 75 \
+ 7C 32 02 97 71 9B 06 C1 D2 01 71 9B 06 C3 67 94 \
+ 75 9B 32 03 97 71 A9 32 04 97 75 A2 06 C2 D2 07 \
+ 71 A2 77 A9 12 A0 F8 15 1A 00 57 32 0E 87 32 0E \
+ 87 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'" #bcm956024r50t.hex
+
+if $?scorpion || $?conqueror "local ledcode '\
+ 02 18 28 60 E1 67 12 06 E1 90 D2 00 74 02 86 E0 \
+ 3A 18 67 2D 75 34 28 32 00 32 01 B7 97 75 38 16 \
+ E0 CA 05 74 38 77 34 67 2D 75 34 77 38 12 A0 F8 \
+ 15 1A 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00 \
+ 00 00 00'" #sdk56820.hex
+
+if $?scorpion && $?BCM956820R24XG "local ledcode '\
+ 02 01 28 67 D0 02 02 28 67 D6 67 D0 02 01 28 67 \
+ D6 02 04 28 67 D0 02 03 28 67 D6 67 D0 02 04 28 \
+ 67 D6 02 05 28 67 D0 02 06 28 67 D6 67 D0 02 05 \
+ 28 67 D6 02 07 28 67 D0 02 08 28 67 D6 67 D0 02 \
+ 07 28 67 D6 02 09 28 67 D0 02 0A 28 67 D6 67 D0 \
+ 02 09 28 67 D6 02 0C 28 67 D0 02 0B 28 67 D6 67 \
+ D0 02 0C 28 67 D6 02 0D 28 67 D0 02 0E 28 67 D6 \
+ 67 D0 02 0D 28 67 D6 02 0F 28 67 D0 02 10 28 67 \
+ D6 67 D0 02 0F 28 67 D6 02 11 28 67 D0 02 12 28 \
+ 67 D6 67 D0 02 11 28 67 D6 02 14 28 67 D0 02 13 \
+ 28 67 D6 67 D0 02 14 28 67 D6 02 15 28 67 D0 02 \
+ 16 28 67 D6 67 D0 02 15 28 67 D6 02 17 28 67 D0 \
+ 02 18 28 67 D6 67 D0 02 17 28 67 D6 86 E0 3A 30 \
+ 67 F1 75 F8 77 FC 67 F1 75 F8 28 32 00 32 01 B7 \
+ 97 75 F8 16 E0 CA 05 74 FC 77 F8 67 F1 75 F8 77 \
+ FC 12 A0 F8 15 1A 00 57 32 0F 87 57 32 0E 87 57 \
+ '" #bcm956820r24xg.hex
+
+if $?valkyrie "local ledcode '\
+ 02 02 67 A9 67 94 02 03 67 A9 67 94 02 05 67 A9 \
+ 67 94 02 04 67 A9 67 94 02 06 67 A9 67 94 02 07 \
+ 67 A9 67 94 02 12 67 A9 67 94 02 13 67 A9 67 94 \
+ 02 0E 67 A9 67 94 02 0F 67 A9 67 94 02 11 67 A9 \
+ 67 94 02 10 67 A9 67 94 02 1A 67 A9 67 94 02 20 \
+ 67 A9 67 94 02 21 67 A9 67 94 02 22 67 A9 67 94 \
+ 02 23 67 A9 67 94 02 24 67 A9 67 94 02 2F 67 A9 \
+ 67 94 02 2E 67 A9 67 94 02 1B 67 A9 67 94 02 2B \
+ 67 A9 67 94 02 2C 67 A9 67 94 02 2D 67 A9 67 94 \
+ 86 E0 3A 30 67 AF 75 B6 28 32 00 32 01 B7 97 75 \
+ B6 16 E0 CA 05 74 BA 77 B6 67 AF 75 B6 77 BA 12 \
+ A0 F8 15 1A 00 57 32 0F 87 57 32 0E 87 57 00 00 \
+ 00'" #sdk56680.hex
+
+if $?valkyrie2 "local ledcode '\
+ 02 1E 67 A9 67 94 02 1F 67 A9 67 94 02 21 67 A9 \
+ 67 94 02 20 67 A9 67 94 02 22 67 A9 67 94 02 23 \
+ 67 A9 67 94 02 24 67 A9 67 94 02 25 67 A9 67 94 \
+ 02 26 67 A9 67 94 02 27 67 A9 67 94 02 29 67 A9 \
+ 67 94 02 28 67 A9 67 94 02 2A 67 A9 67 94 02 2B \
+ 67 A9 67 94 02 2C 67 A9 67 94 02 2D 67 A9 67 94 \
+ 02 2E 67 A9 67 94 02 2F 67 A9 67 94 02 31 67 A9 \
+ 67 94 02 30 67 A9 67 94 02 32 67 A9 67 94 02 33 \
+ 67 A9 67 94 02 34 67 A9 67 94 02 35 67 A9 67 94 \
+ 86 E0 3A 30 67 AF 75 B6 28 32 00 32 01 B7 97 75 \
+ B6 16 E0 CA 05 74 BA 77 B6 67 AF 75 B6 77 BA 12 \
+ A0 F8 15 1A 00 57 32 0F 87 57 32 0E 87 57 00 00 \
+ 00'" #sdk56685.hex
+
+if $?hawkeye_p24 "local ledcode '\
+ 02 01 28 60 E3 67 43 67 1C 06 E3 80 D2 19 74 02 \
+ 12 E0 85 05 D2 03 71 1A 52 00 3A 60 32 00 32 01 \
+ B7 97 75 2B 12 E4 FE E3 02 01 50 12 E4 FE E3 95 \
+ 75 3B 85 06 E3 67 55 75 6A 77 5C 16 E0 DA 01 71 \
+ 6A 77 5C 06 E3 67 55 75 6A 32 03 97 71 5C 32 04 \
+ 97 75 6A 77 63 12 A0 F8 15 1A 00 57 32 0E 87 32 \
+ 0F 87 57 32 0F 87 32 0E 87 57 32 0F 87 32 0F 87 \
+ 57'"  #bcm953314p24ref.hex
+
+if $?hawkeye_k24 "local ledcode '\
+ 02 01 28 60 E1 67 3D 67 1C 06 E1 80 D2 19 74 02 \
+ 12 E0 85 05 D2 05 71 1A 52 00 3A 30 32 00 32 01 \
+ B7 97 75 2B 12 E2 FE E1 02 0A 50 12 E2 FE E1 95 \
+ 75 35 85 77 50 16 E0 DA 02 71 4C 77 50 06 E1 67 \
+ 45 75 50 77 4C 12 A0 F8 15 1A 00 57 32 0E 87 57 \
+ 32 0F 87 57 00 00 00 00 00 00 00 00 00 00 00 00'" #bcm953314k24.hex
+
+if !"expr $pcidev + 0 == 0xb624" "local ledcode '\
+ 02 1C 28 67 18 02 1D 28 67 18 02 1E 28 67 18 02 \
+ 1F 28 67 18 86 E0 3A 08 67 3B 75 20 67 46 77 24 \
+ 67 42 77 42 28 32 00 32 01 B7 97 75 42 16 E0 CA \
+ 05 74 46 77 42 67 3B 75 42 77 46 12 A0 F8 15 1A \
+ 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00 00 00'" #sdk56624.hex
+
+if !"expr $pcidev + 0 == 0xb626" "local ledcode '\
+ 02 1A 28 67 22 02 1B 28 67 22 02 1C 28 67 22 02 \
+ 1D 28 67 22 02 1E 28 67 22 02 1F 28 67 22 86 E0 \
+ 3A 08 67 3D 75 44 28 32 00 32 01 B7 97 75 48 16 \
+ E0 CA 05 74 48 77 44 67 3D 75 44 77 48 12 A0 F8 \
+ 15 1A 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00'" #sdk56626.hex
+
+if !"expr $pcidev + 0 == 0xb628" "local ledcode '\
+ 02 02 28 67 2C 02 0E 28 67 2C 02 1A 28 67 2C 02 \
+ 1B 28 67 2C 02 1C 28 67 2C 02 1D 28 67 2C 02 1E \
+ 28 67 2C 02 1F 28 67 2C 86 E0 3A 08 67 47 75 4E \
+ 28 32 00 32 01 B7 97 75 52 16 E0 CA 05 74 52 77 \
+ 4E 67 47 75 4E 77 52 12 A0 F8 15 1A 00 57 32 0F \
+ 87 57 32 0E 87 57 00 00 00 00 00 00 00 00 00 00'" #sdk56628.hex
+
+if !"expr $pcidev + 0 == 0xb629" "local ledcode '\
+ 02 02 28 67 2C 02 0E 28 67 2C 02 1A 28 67 2C 02 \
+ 1B 28 67 2C 02 1C 28 67 2C 02 1D 28 67 2C 02 1E \
+ 28 67 2C 02 1F 28 67 2C 86 E0 3A 08 67 47 75 4E \
+ 28 32 00 32 01 B7 97 75 52 16 E0 CA 05 74 52 77 \
+ 4E 67 47 75 4E 77 52 12 A0 F8 15 1A 00 57 32 0F \
+ 87 57 32 0E 87 57 00 00 00 00 00 00 00 00 00 00'" #sdk56629.hex
+
+if !"expr $pcidev + 0 == 0xb634" "local ledcode '\
+ 02 1A 28 67 18 02 1B 28 67 18 02 1C 28 67 18 02 \
+ 1D 28 67 18 86 E0 3A 08 67 3B 75 20 67 46 77 24 \
+ 67 42 77 42 28 32 00 32 01 B7 97 75 42 16 E0 CA \
+ 05 74 46 77 42 67 3B 75 42 77 46 12 A0 F8 15 1A \
+ 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00 00 00'" #sdk56634.hex
+
+if !"expr $pcidev + 0 == 0xb630" "local ledcode '\
+ 02 1A 28 67 18 02 1B 28 67 18 02 1C 28 67 18 02 \
+ 1D 28 67 18 86 E0 3A 08 67 3B 75 20 67 46 77 24 \
+ 67 42 77 42 28 32 00 32 01 B7 97 75 42 16 E0 CA \
+ 05 74 46 77 42 67 3B 75 42 77 46 12 A0 F8 15 1A \
+ 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00 00 00'" #sdk56634.hex
+
+if !"expr $pcidev + 0 == 0xb636" "local ledcode '\
+ 02 2A 28 67 22 02 32 28 67 22 02 1A 28 67 22 02 \
+ 1B 28 67 22 02 1C 28 67 22 02 1D 28 67 22 86 E0 \
+ 3A 08 67 3D 75 44 28 32 00 32 01 B7 97 75 48 16 \
+ E0 CA 05 74 48 77 44 67 3D 75 44 77 48 12 A0 F8 \
+ 15 1A 00 57 32 0F 87 57 32 0E 87 57 00 00 00 00'" #sdk56636.hex
+
+if !"expr $pcidev + 0 == 0xb638" "local ledcode '\
+ 02 1E 28 67 2C 02 26 28 67 2C 02 2A 28 67 2C 02 \
+ 32 28 67 2C 02 1A 28 67 2C 02 1B 28 67 2C 02 1C \
+ 28 67 2C 02 1D 28 67 2C 86 E0 3A 08 67 47 75 4E \
+ 28 32 00 32 01 B7 97 75 52 16 E0 CA 05 74 52 77 \
+ 4E 67 47 75 4E 77 52 12 A0 F8 15 1A 00 57 32 0F \
+ 87 57 32 0E 87 57 00 00 00 00 00 00 00 00 00 00'" #sdk56638.hex
+
+if !"expr $pcidev + 0 == 0xb639" "local ledcode '\
+ 02 1E 28 67 2C 02 26 28 67 2C 02 2A 28 67 2C 02 \
+ 32 28 67 2C 02 1A 28 67 2C 02 1B 28 67 2C 02 1C \
+ 28 67 2C 02 1D 28 67 2C 86 E0 3A 08 67 47 75 4E \
+ 28 32 00 32 01 B7 97 75 52 16 E0 CA 05 74 52 77 \
+ 4E 67 47 75 4E 77 52 12 A0 F8 15 1A 00 57 32 0F \
+ 87 57 32 0E 87 57 00 00 00 00 00 00 00 00 00 00'" #sdk56639.hex
+
+if !"expr $pcidev + 0 == 0xb334" "local ledcode '\
+ 02 02 28 60 E1 67 3D 67 1C 06 E1 80 D2 1E 74 02 \
+ 12 E0 85 05 D2 05 71 1A 52 00 3A 38 32 00 32 01 \
+ B7 97 75 2B 12 E2 FE E1 02 0A 50 12 E2 FE E1 95 \
+ 75 35 85 77 4C 16 E0 DA 02 71 50 77 4C 06 E1 67 \
+ 45 75 4C 77 50 12 A0 F8 15 1A 00 57 32 0F 87 57 \
+ 32 0E 87 57 00 00 00 00 00 00 00 00 00 00 00 00'" #sdk56334.hex
+
+if $?apollo "local ledcode '\
+ 02 1E 28 60 E0 67 58 67 73 06 E0 80 28 60 E0 67 \
+ 73 67 58 06 E0 80 D2 36 74 02 02 1A 28 60 E0 67 \
+ 9B 75 29 67 B0 67 58 77 31 32 0E 87 32 08 87 67 \
+ A2 06 E0 80 D2 1E 74 1C 12 E2 85 05 D2 0F 71 42 \
+ 52 00 12 E1 85 05 D2 1F 71 4C 52 00 12 E3 85 05 \
+ D2 05 71 56 52 00 3A 70 32 00 97 75 64 32 01 97 \
+ 71 6B 77 B0 32 01 97 71 A9 77 A2 16 E3 DA 02 71 \
+ A9 77 B0 32 05 97 75 83 32 02 97 71 A2 06 E1 D2 \
+ 01 71 A2 06 E0 67 9B 75 A2 32 03 97 71 B0 32 04 \
+ 97 75 A9 06 E2 D2 07 71 A9 77 B0 12 A0 F8 15 1A \
+ 00 57 32 0E 87 32 0E 87 57 32 0E 87 32 0F 87 57 \
+ 32 0F 87 32 0E 87 57 00 00 00 00 00 00 00 00 00'" #sdk56524.hex
+
+if $?tomahawk || $?tomahawk_plus "local ledcode '\
+ 02 00 28 60 E1 67 25 67 14 06 E1 80 D2 40 74 02 \
+ 86 E0 3A FC 28 32 00 32 01 B7 97 75 37 16 E0 CA \
+ 05 74 3E 77 37 67 2B 75 37 77 45 12 A0 F8 15 1A \
+ 00 57 28 32 07 97 57 32 0E 87 32 0E 87 57 32 0F \
+ 87 32 0E 87 57 32 0E 87 32 0F 87 57 00 00 00 00'" #sdk56960.hex
+
+if $?trident2plus "local ledcode '\
+ 02 01 28 60 E1 67 31 67 20 06 E1 80 D2 31 74 02 \
+ 86 E0 3A C0 67 37 75 1C 67 51 77 20 67 43 77 43 \
+ 28 32 00 32 01 B7 97 75 43 16 E0 CA 05 74 4A 77 \
+ 43 67 37 75 43 77 51 12 A0 F8 15 1A 00 57 28 32 \
+ 07 97 57 32 0E 87 32 0E 87 57 32 0F 87 32 0E 87 \
+ 57 32 0E 87 32 0F 87 57 00 00 00 00 00 00 00 00'" #sdk56860.hex
+
+
+if $?monterey "local ledcode '\
+ 02 00 67 24 67 0F 80 D2 3F 74 02 86 E0 3A F8 67 \
+ 34 75 16 77 1D 57 67 3C 75 62 77 44 57 67 3C 75 \
+ 4E 77 58 57 67 2C 75 62 77 70 07 57 07 12 A0 F8 \
+ 15 1A 00 57 07 12 A0 F8 15 1A 04 57 07 12 A0 F8 \
+ 15 1A 05 57 16 E0 CA 1E 74 69 77 62 07 57 16 E0 \
+ CA 1E 74 70 77 62 07 57 16 E0 CA 1E 74 69 77 70 \
+ 07 57 32 0E 87 32 0E 87 57 32 0F 87 32 0E 87 57 \
+ 32 0E 87 32 0F 87 57 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'" #sdk56670.hex
+
+if $?apache "local ledcode '\
+ 02 00 67 24 67 0F 80 D2 24 74 02 86 E0 3A F8 67 \
+ 34 75 16 77 1D 57 67 3C 75 62 77 44 57 67 3C 75 \
+ 4E 77 58 57 67 2C 75 62 77 70 07 57 07 12 A0 F8 \
+ 15 1A 00 57 07 12 A0 F8 15 1A 04 57 07 12 A0 F8 \
+ 15 1A 05 57 16 E0 CA 1E 74 69 77 62 07 57 16 E0 \
+ CA 1E 74 70 77 62 07 57 16 E0 CA 1E 74 69 77 70 \
+ 07 57 32 0E 87 32 0E 87 57 32 0F 87 32 0E 87 57 \
+ 32 0E 87 32 0F 87 57 00 00 00 00 00 00 00 00 00'" #sdk56560.hex
+
+if $?generic8led "local ledcode '\
+ 06 E1 D2 40 71 11 E0 60 E1 16 E3 DA 01 71 15 60 \
+ E3 67 5D 75 2B 12 01 61 E3 67 71 28 67 32 86 E0 \
+ 16 E2 81 61 E2 DA 1E 75 2B 3A 08 E9 61 E2 86 E1 \
+ 77 00 67 5D 75 38 77 3C 67 64 77 64 67 41 67 4F \
+ 57 28 32 01 97 75 64 16 E0 CA 05 74 68 77 64 28 \
+ 32 00 97 75 64 16 E0 CA 05 74 68 77 64 12 A0 F8 \
+ 15 1A 00 57 32 0F 87 57 32 0E 87 57 09 75 64 77 \
+ 68 12 05 67 6C 12 04 67 6C 12 03 67 6C 12 02 67 \
+ 6C 12 01 67 6C 12 00 67 6C 57 00 00 00 00 00 00'" #generic8led.hex
+
+if  $?wolfhound2 "local ledcode ' \
+ 02 1D 28 60 E0 67 2F 06 E0 28 67 28 06 E0 90 D2 \
+ 11 74 02 02 02 28 60 E0 67 2F 06 E0 28 67 28 06 \
+ E0 80 D2 0E 74 15 3A 30 32 08 97 71 39 77 3D 32 \
+ 00 32 01 B7 97 71 39 77 3D 22 00 87 57 22 01 87 \
+ 57 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'"
+ #bcm953547k.hex && bcm953548k.hex except bcm953549k.hex
+
+ if !"expr $pcidev + 0 == 0x8549" "local ledcode '\
+ 02 1D 28 60 E0 67 2F 06 E0 28 67 28 06 E0 90 D2\
+ 19 74 02 02 15 28 60 E0 67 2F 06 E0 28 67 28 06\
+ E0 90 D2 11 74 15 3A 10 32 08 97 71 39 77 3D 32\
+ 00 32 01 B7 97 71 39 77 3D 22 00 87 57 22 01 87\
+ 57 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 '" #bcm953549k.hex
+
+if  $?bcm956174r  "local ledcode ' \
+  02 39 28 60 E0 67 2B 67 24 06 E0 90 D2 29 74 02 \
+  02 21 28 60 E0 67 2B 67 24 06 E0 90 D2 19 74 12 \
+  86 1E 3A 30 32 08 97 71 4E 77 52 28 32 00 32 01 \
+  B7 97 71 46 77 52 28 32 08 97 75 52 32 00 32 01 \
+  B7 97 71 46 77 4E 16 1E CA 05 70 4E 77 52 22 00 \
+  87 57 22 01 87 57 22 01 87 22 01 87 57 22 00 87 \
+  22 00 87 57 22 01 87 22 00 87 57 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 '"
+# bcm956174r_0.hex
+
+if  $?bcm956174r  "local ledcode1 ' \
+  02 1E 28 60 E0 67 34 67 3B 06 E0 80 D2 1F 74 02 \
+  02 1A 28 60 E0 67 34 67 3B 06 E0 90 D2 19 74 12 \
+  02 15 28 60 E0 67 6D 67 55 06 E0 90 D2 11 74 22 \
+  86 1E 3A 0C 32 08 97 71 8F 77 93 32 00 32 01 B7 \
+  97 71 87 77 93 28 32 08 97 75 93 32 00 32 01 B7 \
+  97 71 87 77 8F 28 32 08 97 75 93 32 03 32 04 C7 \
+  97 75 93 32 00 32 01 B7 97 71 87 77 8F 28 32 08 \
+  97 75 93 32 04 97 75 93 32 03 97 71 93 32 00 32 \
+  01 B7 97 71 87 77 8F 16 1E CA 05 70 8F 77 93 22 \
+  00 87 57 22 01 87 57 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00'"
+# bcm956174r_1.hex
+
+if  $?bcm956170r  "local ledcode ' \
+ 02 39 28 60 E0 67 2B 67 24 06 E0 90 D2 19 74 02 \
+ 02 05 28 60 E0 67 2B 67 24 06 E0 90 D2 01 74 12 \
+ 86 FF 3A 48 32 08 97 71 4E 77 52 28 32 00 32 01 \
+ B7 97 71 46 77 52 28 32 08 97 75 52 32 00 32 01 \
+ B7 97 71 46 77 4E 16 FF CA 0A 74 4E 77 52 22 00 \
+ 87 57 22 01 87 57 22 01 87 22 01 87 57 22 00 87 \
+ 22 00 87 57 22 01 87 22 00 87 57 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 \
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 '"
+# bcm956170r_0.hex
+
+if  $?bcm956170r  "local ledcode1 ' \
+ 02 1A 28 60 E0 67 49 67 42 02 1E 28 60 E0 67 42 \
+ 67 49 02 15 28 60 E0 67 7B 67 63 06 E0 90 D2 11 \
+ 74 14 02 11 28 60 E0 67 95 06 E0 90 D2 09 74 24 \
+ 02 05 28 60 E0 67 95 06 E0 90 D2 01 74 32 86 FF \
+ 3A 24 32 08 97 71 DC 77 EE 32 00 32 01 B7 97 71 \
+ C4 77 EE 28 32 08 97 75 EE 32 00 32 01 B7 97 71 \
+ C4 77 DC 28 32 08 97 75 EE 32 03 32 04 C7 97 75 \
+ EE 32 00 32 01 B7 97 71 C4 77 DC 28 32 08 97 75 \
+ EE 32 04 97 75 EE 32 03 97 71 EE 32 00 32 01 B7 \
+ 97 71 C4 77 DC 28 32 03 97 75 AF 32 08 97 75 F2 \
+ 32 04 97 75 F2 32 00 32 01 B7 97 71 CC 77 E0 28 \
+ 32 08 97 75 F2 32 04 97 75 F2 32 00 32 01 B7 97 \
+ 71 D4 77 E7 16 FF CA 05 70 DC 77 EE 16 FF CA 05 \
+ 70 E0 77 F2 16 FF CA 05 70 E7 77 F2 22 00 87 57 \
+ 22 01 87 22 00 87 57 22 00 87 22 01 87 57 22 01 \
+ 87 57 22 01 87 22 01 87 57 00 00 00 00 00 00 00'"
+# bcm956170r_1.hex
+
+# Download LED code into LED processor and enable (if applicable).
+
+if $?feature_led_proc && $?ledcode && !$?simulator && !$?feature_cmicx \
+	"led prog $ledcode; \
+	 led auto on; led start"
+
+if $?feature_led_proc && $?ledcode1 && !$?simulator && !$?feature_cmicx \
+      "led 1 prog $ledcode1; \
+       led 1 auto on; led 1 start"
+
+# Start Hurricane4 SVK board LED processor.
+if $?feature_cmicx && $?bcm956275k && $?cmicx_led_fw \
+      "led auto on; led start"
+
+# Setup Greyhound LED processor
+if $?greyhound \
+    "rcload gh_ledup.soc"
+
+# Setup Hurricane3 LED processor
+if $?hurricane3 \
+    "rcload hr3_led.soc"
+
+# Setup Tomahawk LED processor
+if $?tomahawk && !$?simulator \
+    "led 1 prog $ledcode; \
+     led 1 auto on; led 1 start; \
+     led 2 prog $ledcode; \
+     led 2 auto on; led 2 start"
+
+# Setup Tomahawk+ LED processor
+if $?tomahawk_plus && !$?simulator \
+    "led 1 prog $ledcode; \
+     led 1 auto on; led 1 start; \
+     led 2 prog $ledcode; \
+     led 2 auto on; led 2 start"
+
+# If loading multiple rc.soc, upon loading the last unit, restart
+# all LED processors so any common blinking is in sync.
+
+if !"expr $?feature_led_proc && !$?simulator && $unit == $units - 1 && !$?feature_cmicx" \
+	"*:led stop; *:led start"
+
+# Run counter DMA task 4 times per second to achieve better
+# ctr_xaui_activity.
+if $?bradley_any \
+        "ctr interval=250000"
+
+# Initialize Hercules UC modid 0 entry to point to the CPU
+if $?herc_any \
+	"w uc 0 1 1"
+
+# Additional configuration for 48-port in Stacking mode.
+# On the 48-port platform, rc.soc is run twice; once on unit 0 and
+# then once on unit 1.  The turbo port on unit N is geN.
+# All turbo port traffic must be tagged; see vlan add below.
+# See $SDK/doc/48-port.txt for more information including how
+# to configure IPG values for line rate operation.
+
+if $?p48 && $?unit0 \
+	"local turbo_port 0; local my_modid 1;"
+
+if $?p48 && $?unit1 \
+	"local turbo_port 1; local my_modid 2;"
+
+if $?p48 \
+	"m config st_is_mirr=0 st_module=1 st_mcnt=1 st_simplex=0 st_link=0; \
+	 m config.g$turbo_port st_link=1; \
+	 m gmacc2.ge$turbo_port ipgt=8 mclkfq=1; \
+	 m fe_maxf maxfr=1560; \
+	 m maxfr maxfr=1568; \
+	 m config2 my_modid=$my_modid; \
+	 port ge$turbo_port speed=2500; \
+	 vlan add 1 pbm=ge$turbo_port ubm=none"
+
+if !$?no_bcm && $?drac_any \
+   "m modport_7_0 port_for_mod1=0xc"
+if !$?no_bcm && $?lynx_any \
+   "m modport_7_0 port_for_mod1=0x1"
+if !$?no_bcm && $?tucana \
+   "stkmode modid=0;"
+if !$?no_bcm && $?tucana && !$?magnum && !$?tucana_nohg \
+   "m modport_7_0 port_for_mod2=0x38; \
+    m imodport_7_0 port_for_mod0=0 port_for_mod1=0 port_for_mod2=0x38; \
+    stkmode modid=0"
+if !$?no_bcm && $?xgs_switch && !$?rcpu_only\
+   "stkmode modid=0; \
+    s CMIC_COS_CTRL_RX CH0_COS_BMP=0,CH1_COS_BMP=0xff, \
+        CH2_COS_BMP=0,CH3_COS_BMP=0"
+
+# Back-to-back Draco setup.
+
+# Draco chips must run at 127MHz. Some older versions
+# are not set to this frequency.
+
+if $?draco_stk && $?unit0 \
+    "i2c probe quiet; bb clock Ref125 127"
+
+# Applies to SDK Baseboard with either internal or external Higigs,
+# as well as the Galahad reference design.
+
+if $?draco_b2b && $?unit0 \
+    "stkmode modid=0; \
+     m modport_7_0 port_for_mod0=0 port_for_mod1=12; \
+     m imodport_7_0 port_for_mod0=0 port_for_mod1=12"
+
+if !$?simulator && $?draco_b2b && $?unit0 \
+     "i2c probe quiet; bb clock Ref125 127"
+
+if $?draco_b2b && $?unit1 \
+    "stkmode modid=1; \
+     m modport_7_0 port_for_mod0=12 port_for_mod1=0; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=0"
+
+# Merlin, White Knight, Black Knight setup.
+#	Draco unit 1 is on Herc port 8
+#	Draco unit 2 is on Herc port 1
+
+if $?draco_herc4 && $?unit0 \
+    "w uc.hpic7 0 1 0x0; \
+     w uc.hpic7 1 1 0x2; \
+     w uc.hpic0 0 1 0x100; \
+     w uc.hpic0 1 1 0x0"
+
+if !$?simulator && $?draco_herc4 && $?unit0 \
+     "i2c probe quiet; bb clock Ref125 127"
+
+if $?draco_herc4 && $?unit1 \
+    "stkmode modid=0; \
+     m modport_7_0 port_for_mod0=0 port_for_mod1=12; \
+     m imodport_7_0 port_for_mod0=0 port_for_mod1=12"
+
+if $?draco_herc4 && $?unit2 \
+    "stkmode modid=1; \
+     m modport_7_0 port_for_mod0=12 port_for_mod1=0; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=0"
+
+# Lancelot setup
+# (enabled by adding the property "lancelot=1")
+# Notes:
+#	Draco unit 1 is on Herc port 7
+#	Draco unit 2 is on Herc port 8
+#	Draco unit 3 is on Herc port 1
+#	Draco unit 4 is on Herc port 2
+
+if $?lancelot && $?unit0 \
+    "w uc.hpic6 0 1 0x0; \
+     w uc.hpic6 1 1 0x100; \
+     w uc.hpic6 2 1 0x2; \
+     w uc.hpic6 3 1 0x4; \
+     w uc.hpic7 0 1 0x80; \
+     w uc.hpic7 1 1 0x0; \
+     w uc.hpic7 2 1 0x2; \
+     w uc.hpic7 3 1 0x4; \
+     w uc.hpic0 0 1 0x80; \
+     w uc.hpic0 1 1 0x100; \
+     w uc.hpic0 2 1 0x0; \
+     w uc.hpic0 3 1 0x4; \
+     w uc.hpic1 0 1 0x80; \
+     w uc.hpic1 1 1 0x100; \
+     w uc.hpic1 2 1 0x2; \
+     w uc.hpic1 3 1 0x0"
+
+if !$?simulator && $?lancelot && $?unit0 \
+     "i2c probe quiet; bb clock Draco_Core 127"
+
+if $?lancelot && $?unit1 \
+    "stkmode modid=0; \
+     m modport_7_0 port_for_mod0=0 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12; \
+     m imodport_7_0 port_for_mod0=0 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12"
+
+if $?lancelot && $?unit2 \
+    "stkmode modid=1; \
+     m modport_7_0 port_for_mod0=12 port_for_mod1=0 \
+     port_for_mod2=12 port_for_mod3=12; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=0 \
+     port_for_mod2=12 port_for_mod3=12"
+
+if $?lancelot && $?unit3 \
+    "stkmode modid=2; \
+     m modport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=0 port_for_mod3=12; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=0 port_for_mod3=12"
+
+if $?lancelot && $?unit4 \
+    "stkmode modid=3; \
+     m modport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=0; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=0"
+
+# Lynx SDK (TwoLynx) setup
+# (enabled by adding the property "twolynx=1")
+
+if $?twolynx && $?unit0 \
+    "stkmode modid=0; \
+     m modport_7_0 port_for_mod0=0 port_for_mod1=1; \
+     m imodport_7_0 port_for_mod0=0 port_for_mod1=1; \
+     "
+
+if $?twolynx && $?unit1 \
+    "stkmode modid=1; \
+     m modport_7_0 port_for_mod0=1 port_for_mod1=0; \
+     m imodport_7_0 port_for_mod0=1 port_for_mod1=0; \
+     "
+# HercuLynx setup
+# (enabled by adding the property "herculynx=1")
+# Notes:
+#	Lynx unit 1 is on Herc port 1
+#	Lynx unit 2 is on Herc port 2
+#	Lynx unit 3 is on Herc port 3
+#	Lynx unit 4 is on Herc port 4
+#	Lynx unit 5 is on Herc port 5
+#	Lynx unit 6 is on Herc port 6
+#	Lynx unit 7 is on Herc port 7
+#	Lynx unit 8 is on Herc port 8
+
+if $?herculynx && $?unit0 \
+    " \
+     w uc.hpic0 0 1 0x002; \
+     w uc.hpic0 1 1 0x004; \
+     w uc.hpic0 2 1 0x008; \
+     w uc.hpic0 3 1 0x010; \
+     w uc.hpic0 4 1 0x020; \
+     w uc.hpic0 5 1 0x040; \
+     w uc.hpic0 6 1 0x080; \
+     w uc.hpic0 7 1 0x100; \
+                         ; \
+     w uc.hpic1 0 1 0x002; \
+     w uc.hpic1 1 1 0x004; \
+     w uc.hpic1 2 1 0x008; \
+     w uc.hpic1 3 1 0x010; \
+     w uc.hpic1 4 1 0x020; \
+     w uc.hpic1 5 1 0x040; \
+     w uc.hpic1 6 1 0x080; \
+     w uc.hpic1 7 1 0x100; \
+                         ; \
+     w uc.hpic2 0 1 0x002; \
+     w uc.hpic2 1 1 0x004; \
+     w uc.hpic2 2 1 0x008; \
+     w uc.hpic2 3 1 0x010; \
+     w uc.hpic2 4 1 0x020; \
+     w uc.hpic2 5 1 0x040; \
+     w uc.hpic2 6 1 0x080; \
+     w uc.hpic2 7 1 0x100; \
+                         ; \
+     w uc.hpic3 0 1 0x002; \
+     w uc.hpic3 1 1 0x004; \
+     w uc.hpic3 2 1 0x008; \
+     w uc.hpic3 3 1 0x010; \
+     w uc.hpic3 4 1 0x020; \
+     w uc.hpic3 5 1 0x040; \
+     w uc.hpic3 6 1 0x080; \
+     w uc.hpic3 7 1 0x100; \
+                         ; \
+     w uc.hpic4 0 1 0x002; \
+     w uc.hpic4 1 1 0x004; \
+     w uc.hpic4 2 1 0x008; \
+     w uc.hpic4 3 1 0x010; \
+     w uc.hpic4 4 1 0x020; \
+     w uc.hpic4 5 1 0x040; \
+     w uc.hpic4 6 1 0x080; \
+     w uc.hpic4 7 1 0x100; \
+                         ; \
+     w uc.hpic5 0 1 0x002; \
+     w uc.hpic5 1 1 0x004; \
+     w uc.hpic5 2 1 0x008; \
+     w uc.hpic5 3 1 0x010; \
+     w uc.hpic5 4 1 0x020; \
+     w uc.hpic5 5 1 0x040; \
+     w uc.hpic5 6 1 0x080; \
+     w uc.hpic5 7 1 0x100; \
+                         ; \
+     w uc.hpic6 0 1 0x002; \
+     w uc.hpic6 1 1 0x004; \
+     w uc.hpic6 2 1 0x008; \
+     w uc.hpic6 3 1 0x010; \
+     w uc.hpic6 4 1 0x020; \
+     w uc.hpic6 5 1 0x040; \
+     w uc.hpic6 6 1 0x080; \
+     w uc.hpic6 7 1 0x100; \
+                         ; \
+     w uc.hpic7 0 1 0x002; \
+     w uc.hpic7 1 1 0x004; \
+     w uc.hpic7 2 1 0x008; \
+     w uc.hpic7 3 1 0x010; \
+     w uc.hpic7 4 1 0x020; \
+     w uc.hpic7 5 1 0x040; \
+     w uc.hpic7 6 1 0x080; \
+     w uc.hpic7 7 1 0x100; \
+                         ; \
+     "
+
+if $?herculynx && $?lynx_any \
+     "m modport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     m imodport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     "
+
+if $?herculynx && $?unit1 \
+    "stkmode modid=0"
+
+if $?herculynx && $?unit2 \
+    "stkmode modid=1"
+
+if $?herculynx && $?unit3 \
+    "stkmode modid=2"
+
+if $?herculynx && $?unit4 \
+    "stkmode modid=3"
+
+if $?herculynx && $?unit5 \
+    "stkmode modid=4"
+
+if $?herculynx && $?unit6 \
+    "stkmode modid=5"
+
+if $?herculynx && $?unit7 \
+    "stkmode modid=6"
+
+if $?herculynx && $?unit8 \
+    "stkmode modid=7"
+
+# LynxaLot setup
+# (enabled by adding the property "lynxalot=1")
+# Notes:
+#	Lynx unit 0 is on Herc port 3 (hg2/hpic2) (mod 0)
+#	Lynx unit 1 is on Herc port 4 (hg3/hpic3) (mod 1)
+#	Higig conn 0 is on Herc port 5 (hg4/hpic4)
+#	Higig conn 1 is on Herc port 6 (hg5/hpic5)
+#	Draco unit 3 is on Herc port 7 (hg6/hpic6) (mod 2)
+#	Draco unit 4 is on Herc port 8 (hg7/hpic7) (mod 3)
+#	Draco unit 5 is on Herc port 1 (hg0/hpic0) (mod 4)
+#	Draco unit 6 is on Herc port 2 (hg1/hpic1) (mod 5)
+
+if $?lynxalot && $?unit2 \
+    " \
+     w uc.hpic0 0 1 0x008; \
+     w uc.hpic0 1 1 0x010; \
+     w uc.hpic0 2 1 0x080; \
+     w uc.hpic0 3 1 0x100; \
+     w uc.hpic0 4 1 0x002; \
+     w uc.hpic0 5 1 0x004; \
+                         ; \
+     w uc.hpic1 0 1 0x008; \
+     w uc.hpic1 1 1 0x010; \
+     w uc.hpic1 2 1 0x080; \
+     w uc.hpic1 3 1 0x100; \
+     w uc.hpic1 4 1 0x002; \
+     w uc.hpic1 5 1 0x004; \
+                         ; \
+     w uc.hpic2 0 1 0x008; \
+     w uc.hpic2 1 1 0x010; \
+     w uc.hpic2 2 1 0x080; \
+     w uc.hpic2 3 1 0x100; \
+     w uc.hpic2 4 1 0x002; \
+     w uc.hpic2 5 1 0x004; \
+                         ; \
+     w uc.hpic3 0 1 0x008; \
+     w uc.hpic3 1 1 0x010; \
+     w uc.hpic3 2 1 0x080; \
+     w uc.hpic3 3 1 0x100; \
+     w uc.hpic3 4 1 0x002; \
+     w uc.hpic3 5 1 0x004; \
+                         ; \
+     w uc.hpic6 0 1 0x008; \
+     w uc.hpic6 1 1 0x010; \
+     w uc.hpic6 2 1 0x080; \
+     w uc.hpic6 3 1 0x100; \
+     w uc.hpic6 4 1 0x002; \
+     w uc.hpic6 5 1 0x004; \
+                         ; \
+     w uc.hpic7 0 1 0x008; \
+     w uc.hpic7 1 1 0x010; \
+     w uc.hpic7 2 1 0x080; \
+     w uc.hpic7 3 1 0x100; \
+     w uc.hpic7 4 1 0x002; \
+     w uc.hpic7 5 1 0x004; \
+                         ; \
+     "
+
+if $?lynxalot && $?lynx_any \
+     "m modport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     m imodport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     "
+
+if $?lynxalot && $?drac_any \
+    "m modport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12 \
+     port_for_mod4=12 port_for_mod5=12 \
+     port_for_mod6=12 port_for_mod7=12; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12 \
+     port_for_mod4=12 port_for_mod5=12 \
+     port_for_mod6=12 port_for_mod7=12; \
+     "
+
+if $?lynxalot && $?unit0 \
+    "stkmode modid=0"
+     
+if $?lynxalot && $?unit1 \
+    "stkmode modid=1"
+
+if $?lynxalot && $?unit3 \
+    "stkmode modid=2"
+
+if $?lynxalot && $?unit4 \
+    "stkmode modid=3"
+
+if $?lynxalot && $?unit5 \
+    "stkmode modid=4"
+
+if $?lynxalot && $?unit6 \
+    "stkmode modid=5"
+
+# guenevere setup
+# (enabled by adding the property "guenevere=1")
+# Notes:
+#       hgX mapping based on pbmp_valid.0=0x1b7
+#	Draco unit 1 is on Herc port 1 (hg0/hpic0) (mod 0)
+#	Draco unit 2 is on Herc port 2 (hg1/hpic1) (mod 1)
+#	Lynx unit 3 is on Herc port 8 (hg5/hpic7) (mod 2)
+#	Lynx unit 4 is on Herc port 7 (hg4/hpic6) (mod 3)
+#	Higig conn 0 is on Herc port 4 (hg2/hpic3)
+#	Higig conn 1 is on Herc port 5 (hg3/hpic4)
+#       Herc port 3 - Unused (hpic2)
+#       Herc port 6 - Unused (hpic5)
+if $?guenevere && $?unit0 \
+    " \
+     w uc.hpic0 0 1 0x002; \
+     w uc.hpic0 1 1 0x004; \
+     w uc.hpic0 2 1 0x100; \
+     w uc.hpic0 3 1 0x080; \
+                         ; \
+     w uc.hpic1 0 1 0x002; \
+     w uc.hpic1 1 1 0x004; \
+     w uc.hpic1 2 1 0x100; \
+     w uc.hpic1 3 1 0x080; \
+                         ; \
+     w uc.hpic7 0 1 0x002; \
+     w uc.hpic7 1 1 0x004; \
+     w uc.hpic7 2 1 0x100; \
+     w uc.hpic7 3 1 0x080; \
+                         ; \
+     w uc.hpic6 0 1 0x002; \
+     w uc.hpic6 1 1 0x004; \
+     w uc.hpic6 2 1 0x100; \
+     w uc.hpic6 3 1 0x080; \
+                         ; \
+     "
+
+if $?guenevere && $?lynx_any \
+     "m modport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     m imodport_7_0 \
+     port_for_mod0=1 port_for_mod1=1 \
+     port_for_mod2=1 port_for_mod3=1 \
+     port_for_mod4=1 port_for_mod5=1 \
+     port_for_mod6=1 port_for_mod7=1; \
+     "
+
+if $?guenevere && $?drac_any \
+    "m modport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12 \
+     port_for_mod4=12 port_for_mod5=12 \
+     port_for_mod6=12 port_for_mod7=12; \
+     m imodport_7_0 port_for_mod0=12 port_for_mod1=12 \
+     port_for_mod2=12 port_for_mod3=12 \
+     port_for_mod4=12 port_for_mod5=12 \
+     port_for_mod6=12 port_for_mod7=12; \
+     "
+
+if $?guenevere && $?unit1 \
+    "stkmode modid=0"
+     
+if $?guenevere && $?unit2 \
+    "stkmode modid=1"
+
+if $?guenevere && $?unit3 \
+    "stkmode modid=2"
+
+if $?guenevere && $?unit4 \
+    "stkmode modid=3"
+     
+# felix48 setup
+# (enabled by adding the property "felix48=1")
+# Notes:
+#       BCM56102 unit-0 higig port (port 26) is connected
+#       to BCM56102 Unit-1 higig port (port 26)
+#
+
+if $?felix48 && $?unit0 \
+    "stkmode modid=0 ; \
+     m IEGR_PORT MY_MODID=0; \
+     m XPORT_CONFIG MY_MODID=0; \
+     w MODPORT_MAP 1 1 HIGIG_PORT_BITMAP=0x4 ; \
+     "
+
+if $?felix48 && $?unit1 \
+    "stkmode modid=1 ; \
+     m IEGR_PORT MY_MODID=1; \
+     m XPORT_CONFIG MY_MODID=1; \
+     w MODPORT_MAP 0 1 HIGIG_PORT_BITMAP=0x4 ; \
+     "
+# fbpoe setup
+# (enabled by adding the property "fbpoe=1")
+# Notes:
+#       BCM56504 unit-0 higig port (port 27,28) is connected
+#       to BCM56504 Unit-1 higig port (port 27,28)
+#
+
+if $?unit0 && $?firebolt_any && $?fbpoe     \
+  "stkmode modid=0;           \
+   w modport_map 1 1 HIGIG_PORT_BITMAP=0x4; \
+   m HIGIG_TRUNK_GROUP HIGIG_TRUNK_RTAG1=3 \
+                       HIGIG_TRUNK_ID1_PORT0=2 \
+                       HIGIG_TRUNK_ID1_PORT1=3 \
+                       HIGIG_TRUNK_ID1_PORT2=2 \
+                       HIGIG_TRUNK_ID1_PORT3=3; \
+   m HIGIG_TRUNK_CONTROL HIGIG_TRUNK_ID2=1 \
+                         HIGIG_TRUNK2=1 \
+                         HIGIG_TRUNK_ID3=1 \
+                         HIGIG_TRUNK3=1 \
+                         HIGIG_TRUNK_BITMAP1=0xc \
+                         ACTIVE_PORT_BITMAP=0xf"
+
+if $?unit1 && $?firebolt_any && $?fbpoe \
+  "stkmode modid=1; \
+   w modport_map 0 1 HIGIG_PORT_BITMAP=0x4; \
+   m HIGIG_TRUNK_GROUP HIGIG_TRUNK_RTAG1=3 \
+                       HIGIG_TRUNK_ID1_PORT0=2 \
+                       HIGIG_TRUNK_ID1_PORT1=3 \
+                       HIGIG_TRUNK_ID1_PORT2=2 \
+                       HIGIG_TRUNK_ID1_PORT3=3; \
+   m HIGIG_TRUNK_CONTROL HIGIG_TRUNK_ID2=1 \
+                         HIGIG_TRUNK2=1 \
+                         HIGIG_TRUNK_ID3=1 \
+                         HIGIG_TRUNK3=1 \
+                         HIGIG_TRUNK_BITMAP1=0xc \
+                         ACTIVE_PORT_BITMAP=0xf"
+
+# Dual Raptor/Raven boards
+if $?raven_eb_48p || $?rap24_ref \
+    "local rcpu_system 1"
+if $?unit0 && $?rcpu_system \
+   "stkmode modid=0"
+if $?unit1 && $?rcpu_system \
+   "stkmode modid=1"
+
+# LM fb48 platform setup
+# (enabled by adding the property "lm48p=1")
+#
+if $?unit0 && $?firebolt_any && $?lm48p || $?lm48p_D \
+   "stkmode modid=0"
+
+if $?unit1 && $?firebolt_any && $?lm48p || $?lm48p_D \
+   "stkmode modid=1"
+
+# Set Firebolt POE power level 170(total) - 110(switch) = 60
+if $?fbpoe \
+        "local poepower 60"
+
+# Set Draco15 POE power level 170(total) - 80(switch) = 90
+if $?drac15\
+        "local poepower 90"
+
+# Hurricane3 BCM956160R setup
+# Notes:
+#       BCM56160 unit-0 higig port (port 29,30) is connected
+#       to BCM56160 Unit-1 higig port (port 26,27)
+#
+
+if $?bcm956160r && $?unit0  \
+  "stkmode modid=0; \
+   w modport_map 1 1 HIGIG_PORT_BITMAP=0x60000000; \
+   trunk add id=128 r=3 pbm=hg0-hg1"
+
+if $?bcm956160r && $?unit1  \
+  "stkmode modid=1; \
+   w modport_map 0 1 HIGIG_PORT_BITMAP=0xc000000; \
+   trunk add id=128 r=3 pbm=hg0-hg1"
+
+# if enable_poe is set, then enable the POE processor for
+# either Firebolt or Draco15 platform
+if $?unit0 && $?enable_poe && $?fbpoe || $?drac15 \
+        "$echo rc: Enabling POE ...; \
+         poesel reset; \
+         i2c probe quiet; \
+         xpoe verbose off; \
+         xpoe power $poepower; \
+         xpoe verbose on; \
+         poesel enable"
+
+# mark this unit so that subsequent rc runs are quiet
+setenv rc$unit 1
+
+if $?macsec '\
+    macsec sync; \
+    $echo "rc: MACSEC CLI Enabled"'
+
+# cache a copy of rc.soc in memory
+rccache addq rc.soc
+
+# setup chassis if requested
+if !"expr $?autochassis2 && $unit == $units - 1" \
+    "setenv chassis2_no_rc 1; \
+     rcload c2switch.soc; \
+     setenv chassis2_no_rc; \
+    "
+
+# start stacking if requested
+if !"expr $?autostack && $unit == $units - 1" \
+	"rcload stk.soc"
+
+if !"expr $?aedev + 0" && !"expr $unit == $units - 1" \
+       "aedev init"
+
+# hurricane 48p FE platform LED setup for 56146_A0 and 56147_A0 board
+# (enabled by adding the property "fe_hu_48p=1")
+#
+if $?fe_hu_48p && $?BCM56146 || $?BCM56147 \
+    "phy fe0 0x1f 0x008b; \
+     phy fe0 0x1a 0x3f09;\
+     phy fe8 0x1f 0x008b; \
+     phy fe8 0x1a 0x3f09; \
+     phy fe16 0x1f 0x008b; \
+     phy fe16 0x1a 0x3f09"
+
+# enable LED matrix mode for PHY54292 on BCM953411K/R
+if $?bcm953411 \
+    "rcload gh_bcm953411x.soc"
+
+if $?simulator \
+    'echo -n "Chip init finishes at: ";date'

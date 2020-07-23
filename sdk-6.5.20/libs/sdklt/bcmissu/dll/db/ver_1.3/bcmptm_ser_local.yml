@@ -1,0 +1,88 @@
+#
+# file: bcmptm_ser_local.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    DEPTH_WIDE_ENTRY_BITMAP: 512
+    BCMPTM_SER_MAX_SLICE_NUM: 16
+    BCMPTM_SER_SLICE_MODE_NUM: 2
+
+
+component:
+    bcmptm_ser_local:
+        bcmptm_ser_sinfo_t:
+            type: struct
+            comment: \brief Info to be stored for SER.
+            fields:
+                ser_range_enable:
+                    comment: Enable the checking of protected ranges within the SER Engine.
+                    type: uint32_t
+
+                ser_range_in_usage:
+                    comment: The checking of protected ranges within the SER Engine is in usage.
+                    type: uint32_t
+
+                ser_log_overlaid:
+                    comment: SER_LOG is maintained as circle buffer, new SER log can overlay the old one.
+                    type: bool
+
+        bcmptm_ser_entry_view_bitmap_t:
+            type: struct
+            comment: \brief Bit position corresponds to entry view.
+            fields:
+                entry_view_bitmap:
+                    comment:  Bit position corresponds to entry view.
+                    type: uint32_t
+                    length: DEPTH_WIDE_ENTRY_BITMAP
+
+        bcmptm_ser_mode_index_t:
+            type: enum
+            fields:
+                BCMPTM_SER_NARROW_INDEX: 0
+                BCMPTM_SER_WIDE_INDEX: 1
+
+        bcmptm_ser_slice_mode_t:
+            type: struct
+            comment: \brief Information of one slice.
+            fields:
+                slice_depth:
+                    comment:  Depth of narrow and wide view slice.
+                    type: uint16_t
+                    length: BCMPTM_SER_SLICE_MODE_NUM
+
+                slice_mode:
+                    comment:  slice mode.
+                    type: uint8_t
+
+        bcmptm_ser_slices_info_t:
+            type: struct
+            comment: \brief Information of all slices.
+            fields:
+                sid_array:
+                    comment:  SIDs of wide and narrow view which share the same PT.
+                    type: uint32_t
+                    length: BCMPTM_SER_SLICE_MODE_NUM
+
+                sid_num:
+                    comment:  Number of SIDs.
+                    type: uint8_t
+
+                flags:
+                    comment:  Properties for slices.
+                    type: uint8_t
+
+                slice_num:
+                    comment:  Number of SIDs.
+                    type: uint8_t
+
+                slice_mode_array:
+                    comment:  Depth and mode of every slice.
+                    type: bcmptm_ser_slice_mode_t
+                    length: BCMPTM_SER_MAX_SLICE_NUM

@@ -1,0 +1,17 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+FEATURE_LIST := CINT TCL BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI INTR
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+
+BCM_PTL_SPT=1
+
+BCM_88950_A0 = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING

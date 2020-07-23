@@ -1,0 +1,70 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport VLAN RC (run commands) file
+#
+#       These are default commands that are for TechSupport VLAN.
+#
+
+# Show S/W state in VLAN.
+dump sw vlan
+dump sw stg
+
+# Show available VLAN handles.
+vlan show
+stg show
+
+# Show VLAN related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show VLAN LTs.
+local lt ING_VFI_TABLE;                                   $traverse_lt;
+local lt EGR_VFI;                                         $traverse_lt;
+local lt VLAN_ING_MEMBER_PROFILE;                         $traverse_lt;
+local lt VLAN_ING_EGR_MEMBER_PORTS_PROFILE;               $traverse_lt;
+local lt VLAN_EGR_MEMBER_PROFILE;                         $traverse_lt;
+local lt VLAN_EGR_UNTAG_PROFILE;                          $traverse_lt;
+
+# Show VLAN XLATE LTs.
+local lt ING_VLAN_XLATE_1_TABLE;                          $traverse_lt;
+local lt ING_VLAN_XLATE_2_TABLE;                          $traverse_lt;
+local lt ING_VLAN_XLATE_3_TABLE;                          $traverse_lt;
+local lt VLAN_XLATE_1_STRENGTH_PROFILE;                   $traverse_lt;
+local lt VLAN_XLATE_2_STRENGTH_PROFILE;                   $traverse_lt;
+local lt VLAN_XLATE_3_STRENGTH_PROFILE;                   $traverse_lt;
+local lt ING_VLAN_XLATE_3_DEFAULT_TABLE;                  $traverse_lt;
+local lt ING_VLAN_XLATE_MPLS_DEFAULT_TABLE;               $traverse_lt;
+local lt EGR_VLAN_TRANSLATION;                            $traverse_lt;
+local lt EGR_VXLT_STR_PROFILE;                            $traverse_lt;
+
+# Show VLAN range LTs.
+local lt ING_SYSTEM_PORT_TABLE;                           $traverse_lt;
+local lt VLAN_ASSIGNMENT_OUTER_VLAN_RANGE;                $traverse_lt;
+local lt VLAN_ASSIGNMENT_INNER_VLAN_RANGE;                $traverse_lt;
+
+# Show VLAN block LTs.
+local lt PORT_ING_EGR_BLOCK_1;                            $traverse_lt;
+
+# Show TPID LTs.
+local lt R_ING_INNER_TPID;                                $traverse_lt;
+local lt R_ING_OUTER_TPID_0;                              $traverse_lt;
+local lt R_ING_OUTER_TPID_1;                              $traverse_lt;
+local lt R_ING_OUTER_TPID_2;                              $traverse_lt;
+local lt R_ING_OUTER_TPID_3;                              $traverse_lt;
+
+# Show VLAN STG LTs.
+local lt VLAN_EGR_STG_PROFILE;                            $traverse_lt;
+local lt VLAN_ING_STG_PROFILE;                            $traverse_lt;
+local lt VLAN_EGR_MEMBER_PROFILE;                         $traverse_lt;
+local lt VLAN_ING_EGR_STG_MEMBER_PROFILE;                 $traverse_lt;
+
+# Show VLAN related LTs.
+local lt ING_SVP_TABLE;                                   $traverse_lt;
+local lt EGR_DVP;                                         $traverse_lt;
+local lt ING_L2_IIF_TABLE;                                $traverse_lt;
+local lt ING_L2_IIF_ATTRIBUTES_TABLE;                     $traverse_lt;
+local lt EGR_L2_OIF;                                      $traverse_lt;
+local lt PORT_PARSER_CONTROL;                             $traverse_lt;
+local lt PORT;                                            $traverse_lt;

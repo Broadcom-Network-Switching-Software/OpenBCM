@@ -1,0 +1,22 @@
+# $Id: Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run led diag and all available tests through fsanity soc script.
+
+if $?fb24mini \
+    "echo Running LED test, Press spacebar to turn all the leds to green ..; \
+    pause ;\
+    phy ge 0x1c 0xb8fe; \
+    phy ge 0x1c 0xb4fe; \
+    echo Press spacebar to turn all the leds to yellow ..; \
+    pause; \
+    phy ge 0x1c 0xb8ef; \
+    phy ge 0x1c 0xb4ef; \
+    "
+
+
+echo "Running the fsanity script .."
+fsanity
+

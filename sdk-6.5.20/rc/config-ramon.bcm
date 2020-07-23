@@ -1,0 +1,115 @@
+#########################################
+## cfg for BCM88790 (Ramon)
+#########################################
+
+# Access only
+custom_feature_access_only.BCM8879X=0
+
+# Disable lane swap
+custom_feature_lane_swap_disable.BCM8879X=0
+
+soc_family.BCM8879X=BCM8879X
+
+# Set modid value. 
+appl_param_module_id.BCM8879X=5
+
+# Real phy isn't connected. Remove on silicon arrival
+phy_simul.BCM8879X=0
+
+#Device operation
+fabric_device_mode.BCM8879X=SINGLE_STAGE_FE2
+fabric_load_balancing_mode.BCM8879X=NORMAL_LOAD_BALANCE
+
+#Fabric pipe configuration
+fabric_num_pipes.BCM8879X=1
+fabric_pipe_map.BCM8879X=0
+system_contains_multiple_pipe_device.BCM8879X=0
+
+#multicast table mode
+fabric_multicast_mode.BCM8879X=DIRECT
+fe_mc_id_range.BCM8879X=128K
+
+## Clock configurations
+# System reference clock
+system_ref_core_clock_khz.BCM8879X=1200000
+
+# Core clock speed
+core_clock_speed_khz.BCM8879X=1000000
+
+#Configure the reference clock frequencies 
+# Options:  0 - 125MHz, 1 - 156.25MHz, 3 - 312.Mhz, bypass - PLL bypass mode
+# serdes_fabric_clk_freq_in configuration: see dnxf.soc file.
+serdes_fabric_clk_freq_out.BCM8879X=bypass
+
+### Interrupts
+appl_enable_intr_init.BCM8879X=1
+polled_irq_mode.BCM8879X=0
+polled_irq_delay.BCM8879X=1000
+### Do not enable MBIST to enable the SDK to start up
+bist_enable.BCM8879X=0
+
+#High voltage driver strap.
+srd_tx_drv_hv_disable.BCM8879X=0
+
+## Firmware Load Method
+load_firmware.BCM8879X=0x102
+
+# FEC - FEC types are encoded as follows:
+# 0 - no FEC
+# 1 - BASE R - 64/66b KR FEC
+# 5 - RS 206 - 64/66b 5T RS FEC
+# 6 - RS 108 - 64/66b 5T low latency RS FEC
+# 7 - RS 545 - 64/66b 15T RS FEC
+# 8 - RS 304 - 64/66b 15T low latency RS FEC
+#port_fec.BCM8879X=5
+
+#enable\disable CL72
+port_init_cl72.BCM8879X=1
+
+#link speed
+port_init_speed.BCM8879X=53125
+
+##Fabric cell FIFO DMA
+fabric_cell_fifo_dma_enable.BCM8879X=1
+#To disable table and SLAM DMA add both of the lines below.
+#The two DMA types need to be enabled or disabled together.
+#table_dma_enable=0
+#tslam_dma_enable=0
+
+## CMIC interrupts:
+# Enable: Use interrupts completion instead of polling completion for the following operations.
+#         Options: 1 - Enable, 0 - Disable. Default: 0.
+# Timeout: delay in Microsecond between the polling,
+# SCHAN:
+schan_intr_enable.BCM8879X=0
+schan_timeout_usec.BCM8879X=300000
+# TDMA
+tdma_intr_enable.BCM8879X=0
+tdma_timeout_usec.BCM8879X=5000000
+# TSLAM
+tslam_intr_enable.BCM8879X=0
+tslam_timeout_usec.BCM8879X=5000000
+# MIIM
+miim_intr_enable.BCM8879X=0
+miim_timeout_usec.BCM8879X=300000
+# Internal MDIO divisor and divisor delay
+rate_int_mdio_divisor.BCM8879X=50
+mdio_output_delay_int.BCM8879X=25
+# External MDIO divisor and divisor delay
+rate_ext_mdio_divisor.BCM8879X=14
+mdio_output_delay_ext.BCM8879X=14
+
+# stable_size - a strict bound on the application's external storage size
+
+###High Availability
+#not in tmp folder as no tmp folder in pcid
+warmboot_support.BCM8879X=on
+sw_state_max_size.BCM8879X=250000
+stable_location.BCM8879X=3
+stable_filename.BCM8879X=warmboot_data
+stable_size.BCM8879X=350000
+
+mem_cache_enable_parity.BCM8879X=1
+
+# Set dport_map_direct.BCM8879X=1 in order to fetch correct port mapping
+dport_map_direct.BCM8879X=1

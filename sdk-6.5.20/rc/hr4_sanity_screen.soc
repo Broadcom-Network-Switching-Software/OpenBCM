@@ -1,0 +1,238 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Hurricane4 Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init soc
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#bb voltage core 0.92
+
+#Start Test
+if !$?ihost_mode \
+    'echo "tr 2: Running PCI Compliance ...";\
+     tr 2;\
+     $done;\
+     date'
+
+echo "tr 4: Running PCI S-Channel Buf ..."
+tr 4
+$done
+date
+
+echo "tr 1: Running Register reset defaults ..."
+tr 1
+$done
+date
+
+init soc
+cancun load cmh
+cancun load cch
+init misc
+echo "tr 3: Running Register read/write ..."
+tr 3 mask64
+$done
+date
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "tr 21: Running CPU Benchmarks ..."
+tr 21
+$done
+date
+
+counter off
+l2mode off
+linkscan off
+init soc
+cancun load cmh
+cancun load cch
+init misc
+
+set rct=false
+# Usage: BCM.0>hr4_sanity_screen w x y z
+# (w,x,y,z can be 50,51,52,71) and in any combination
+# By default ie. if no arguments provided, only TR 50, 52,71 are run
+echo "Running memory tests ..."
+if !"expr $1+0 == 50" || !"expr $2+0 == 50" || !"expr $3+0 == 50" || !"expr $4+0 == 50" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr50_bcm56275_a0.soc'
+if !"expr $1+0 == 51" || !"expr $2+0 == 51" || !"expr $3+0 == 51" || !"expr $4+0 == 51" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr51_bcm56275_a0.soc'
+if !"expr $1+0 == 52" || !"expr $2+0 == 52" || !"expr $3+0 == 52" || !"expr $4+0 == 52" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr52_bcm56275_a0.soc'
+if !"expr $1+0 == 71" || !"expr $2+0 == 71" || !"expr $3+0 == 71" || !"expr $4+0 == 71" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr71_bcm56275_a0.soc'
+if !"expr $1+0 == 0" && !"expr $2+0 == 0" && !"expr $3+0 == 0" && !"expr $4+0 == 0" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr50_bcm56275_a0.soc' \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr51_bcm56275_a0.soc' \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr52_bcm56275_a0.soc' \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off;sramscan off;' \
+    'rcload tr71_bcm56275_a0.soc'
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+date
+
+echo "tr 17: Testing CPU DMA loopback ..."
+rc
+tr 17
+$done
+date
+
+#MAC Loopback
+echo "tr 18: Testing MAC Loopback"
+tr 18 PortBitMap=e
+$done
+date
+
+# The PHY based tests 19 and 39 will be run below ...
+
+echo "tr 30: Running counter width verification test ..."
+tr 30
+$done
+date
+
+echo "tr 31: Running Counter/MIB test ..."
+tr 31
+$done
+date
+
+
+echo "tr 48: Running MAC loopback  - Mark 2 test ..."
+tr 48 PortBitMap=e
+$done
+date
+
+
+echo "tr 60: Running MDIO Linkscan test ..."
+tr 60
+$done
+date
+
+#Traffic Test
+
+echo "tr 72: Running Traffic Test in MAC mode..."
+tr 72 RunMode=MAC PortBitMap=e tis=5
+$done
+date
+
+echo "tr 72: Running Traffic Test in PHY mode..."
+tr 72 RunMode=PHY PortBitMap=e tis=5
+$done
+date
+
+echo "tr 72: Running Traffic Test in EXT mode..."
+tr 72 runmode=ext an=f
+$done
+date
+
+echo "tr 500: Running Traffic Test in PHY mode on XE ports test ..."
+tr 500
+$done
+date
+
+echo "tr 502: Running SBUS DMA Performance test ..."
+tr 502
+$done
+date
+
+#echo "tr 503: Running CCM DMA functionality test ..."
+#tr 503
+#$done
+#date
+
+echo "tr 504: Running FIFO DMA functionality test ..."
+tr 504
+$done
+date
+
+#echo "tr 505: Running SCHAN DMA functionality test ..."
+#tr 505
+#$done
+#date
+
+echo "Running traffic tests with Lane swap variables skipped from config ..."
+
+echo "tr 19: Testing PHY Loopback"
+tr 19 PortBitMap=e
+$done
+date
+
+echo "tr 49: Testing PHY Loopback"
+tr 49 PortBitMap=e
+$done
+date
+
+#Internal snake Loopback
+echo "tr 39: Running internal snake on all E ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=e Count=1
+$done
+date
+
+echo "tr 39: Running internal snake on all E ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=e Count=1
+$done
+date
+
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+#config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

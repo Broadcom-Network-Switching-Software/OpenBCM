@@ -1,0 +1,58 @@
+#
+# file: lb_hash_ha.yml
+# LB Hash YMAL file describing HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmi_lb_hash:
+        bcmi_lb_hash_flex_fields_sel_entry_md_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                entry_id:
+                    type: uint8_t
+                    comment: Hash Entry Identifier
+                flags:
+                    type: uint8_t
+                    comment: Flags for Hash entry
+        bcmi_lb_hash_flex_fields_sel_entry_key_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                udf_id:
+                    type: int
+                    comment: UDF Object Identifier
+                data:
+                    type: uint16_t
+                    comment: Data of Key field
+                mask:
+                    type: uint16_t
+                    comment: Mask of Key field
+                length:
+                    type: uint8_t
+                    comment: Length of valid data
+        bcmi_lb_hash_flex_fields_sel_entry_data_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                extr:
+                    type: uint8_t
+                    comment: Field Data Extraction Type
+                udf_id:
+                    type: int
+                    comment: UDF object to extract data
+                offset:
+                    type: uint8_t
+                    comment: Data relative offset from L4 header
+                mask:
+                    type: uint16_t
+                    comment: Mask to be applied to data

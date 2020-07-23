@@ -1,0 +1,105 @@
+#/*----------------------------------------------------------------------
+# * 
+# *
+# * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# * 
+# * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+# *
+# * Broadcom Corporation
+# * Proprietary and Confidential information
+# * All rights reserved
+# * This source file is the property of Broadcom Corporation, and
+# * may not be copied or distributed in any isomorphic form without the
+# * prior written consent of Broadcom Corporation.
+# *---------------------------------------------------------------------
+# * File       : an_10g_ncl72_fec.soc
+# * Description: an_10g_ncl72_fec
+# *---------------------------------------------------------------------*/
+
+#For 10G, CL72 is enabled by defaut, and FEC is off by default.
+#This soc script is to disable cl72 and enable FEC. 
+
+link off
+
+#Clear the Speed Change bit
+phy xe4,xe8 0xc050 0x001c
+
+#Clear the AN enables
+phy xe4,xe8 0xc180 
+phy xe4,xe8 0xc180 0x0000
+
+#Setup for CL73
+#cl73_nonce_match_over is set with a value zero, to disable nonce match
+Phy xe4,xe8 0xc185 0xa01
+
+#Advertise 10G and FeC
+phy xe4,xe8 0xc186 0x308
+
+#Advertise 10G and no FEC
+#phy xe4,xe8 0xc186 0x008
+
+#Write to the DataRAM, with value for AN Port
+#0x400: lane0, 0x500: lane1, 0x600: lane2 , 0x700: lane3
+#0x800d201: has the Dataram Address to Write
+#0x800d203: has the data to write
+#0x800d204: has the read data
+#The value 0x380 is byte swapped, so the data is to be analyzed as 0x8003
+phy xe4,xe8 0x800d201 0x400
+phy xe4,xe8 0x800d203 0x0380
+
+#Read the value to check 
+phy xe4,xe8 0x800d201 0x400
+phy xe4,xe8 0x800d204
+
+#Setup main0 register with refclk as 156p25MHz
+phy xe4,xe8 0x9000 0x6000
+
+#To disable cl72
+#Write to enable the cl72 override(0xc061), with a value(0xc253) of zero to disable cl72
+phy xe4,xe8 0xc061 0x2000
+phy xe4,xe8 0xc253 0x0000
+
+#Enable cl72, you can skip the next 2 lines. that no override is required, 
+#cl72 is enabled by default for 10G AN
+#phy xe4,xe8 0xc061 0x2000
+#phy xe4,xe8 0xc253 0x0000
+
+
+#The value 0x380 is byte swapped, so the data is to be analyzed as 0x8003
+phy xe4,xe8 0x800d201 0x400
+phy xe4,xe8 0x800d203 0x0380
+
+#Read the value to check
+phy xe4,xe8 0x800d201 0x400
+phy xe4,xe8 0x800d204
+
+#Setup main0 register with refclk as 156p25MHz
+phy xe4,xe8 0x9000 0x6000
+
+#Write to enable the cl72 override(0xc061), with a value(0xc253) of zero to disable cl72
+phy xe4,xe8 0xc061 0x2000
+phy xe4,xe8 0xc253 0x0000
+
+#Enable CL73
+phy xe4,xe8 0xc180 0x0101
+
+ps
+#read the cl72 status
+phy xe4,xe8 0xc072 
+phy xe4,xe8 0x8000096 
+phy xe4,xe8 0x8000097 
+
+#FEC Error injection
+#phy xe4,xe8  0x9045  0x2
+
+#inject error on lane 0/ports xe4,xe8
+#phy xe4,xe8  0x9032  0x24
+#phy xe4,xe8  0x9032  0x4
+#phy xe4,xe8  0x9032  0x24
+#phy xe4,xe8  0x9032  0x4
+#phy xe4  0x9032  0x24
+#phy xe4  0x9032  0x4
+
+#Read the clear on read,Error Counter
+#phy xe4,xe8  0xc157
+

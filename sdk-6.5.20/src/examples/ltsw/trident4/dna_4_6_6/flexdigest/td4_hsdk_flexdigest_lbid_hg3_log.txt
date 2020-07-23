@@ -1,0 +1,211 @@
+BCM.0> cd /projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master-Hsdk/src/examples/ltsw/trident4/flexdigest
+BCM.0> cint td4_hsdk_flexdigest_lbid_hg3.c
+config show; attach; cancun stat; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Unknown command: cancun
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191105 (Tue Nov  5 08:35:27 2019)
+From sdkrel@lc-sj1-4709:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_13, BCM56880_A0_DNA_4_5_0
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_flexdigest_lbid_hg3(): ** start **
+~~ #2) config_flexdigest_lbid_hg3(): ** end **
+~~ #3) verify(): ** start **
+Verify 10 UC pkts from port 143 forwarding to ing-port(hg)
+Sleeping for 2 seconds
+tx 1 pbm=143 sm=00:00:00:cc:cc:00 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:01 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:02 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:03 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:04 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:05 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:06 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:07 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:08 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:09 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+Executing 'l2 show'
+Sleeping for 2 seconds
+mac=00:00:00:bb:bb:bb vlan=11 GPORT=0x0 Trunk=0 Static Hit
+mac=00:00:00:cc:cc:00 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:01 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:02 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:03 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:04 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:05 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:06 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:08 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:09 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+mac=00:00:00:cc:cc:07 vlan=11 GPORT=0x8f modid=0 port=143/hg0 Hit
+Executing 'trunk show'
+Sleeping for 2 seconds
+Device supports 1088 trunk groups:
+  1024 front panel trunks (0..1023), 128 ports/trunk
+  64 fabric trunks (1024..1087), 128 ports/trunk
+trunk 0: (front panel, 5 ports)=cd1,cd13,cd28,xe1,cd18 dlf=any mc=any ipmc=any psc=portflow (0x9)
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.cd1                        :                   204                +204
+XLMIB_RBYT.cd1                        :                   204                +204
+XLMIB_TPOK.cd1                        :                     3                  +3
+XLMIB_RPOK.cd1                        :                     3                  +3
+XLMIB_TVLN.cd1                        :                     3                  +3
+XLMIB_RVLN.cd1                        :                     3                  +3
+XLMIB_TUCA.cd1                        :                     3                  +3
+XLMIB_RUCA.cd1                        :                     3                  +3
+XLMIB_TPKT.cd1                        :                     3                  +3
+XLMIB_RPKT.cd1                        :                     3                  +3
+XLMIB_T127.cd1                        :                     3                  +3
+XLMIB_R127.cd1                        :                     3                  +3
+XLMIB_RPRM.cd1                        :                     3                  +3
+UC_PERQ_PKT(0).cd1                    :                     3                  +3
+UC_PERQ_BYTE(0).cd1                   :                   204                +204
+XLMIB_TBYT.cd13                       :                   136                +136
+XLMIB_RBYT.cd13                       :                   136                +136
+XLMIB_TPOK.cd13                       :                     2                  +2
+XLMIB_RPOK.cd13                       :                     2                  +2
+XLMIB_TVLN.cd13                       :                     2                  +2
+XLMIB_RVLN.cd13                       :                     2                  +2
+XLMIB_TUCA.cd13                       :                     2                  +2
+XLMIB_RUCA.cd13                       :                     2                  +2
+XLMIB_TPKT.cd13                       :                     2                  +2
+XLMIB_RPKT.cd13                       :                     2                  +2
+XLMIB_T127.cd13                       :                     2                  +2
+XLMIB_R127.cd13                       :                     2                  +2
+XLMIB_RPRM.cd13                       :                     2                  +2
+UC_PERQ_PKT(0).cd13                   :                     2                  +2
+UC_PERQ_BYTE(0).cd13                  :                   136                +136
+XLMIB_TBYT.xe1                        :                   204                +204
+XLMIB_RBYT.xe1                        :                   204                +204
+XLMIB_TPOK.xe1                        :                     3                  +3
+XLMIB_RPOK.xe1                        :                     3                  +3
+XLMIB_TVLN.xe1                        :                     3                  +3
+XLMIB_RVLN.xe1                        :                     3                  +3
+XLMIB_TUCA.xe1                        :                     3                  +3
+XLMIB_RUCA.xe1                        :                     3                  +3
+XLMIB_TPKT.xe1                        :                     3                  +3
+XLMIB_RPKT.xe1                        :                     3                  +3
+XLMIB_T127.xe1                        :                     3                  +3
+XLMIB_R127.xe1                        :                     3                  +3
+XLMIB_RPRM.xe1                        :                     3                  +3
+UC_PERQ_PKT(0).xe1                    :                     3                  +3
+UC_PERQ_BYTE(0).xe1                   :                   204                +204
+XLMIB_TBYT.cd18                       :                   136                +136
+XLMIB_RBYT.cd18                       :                   136                +136
+XLMIB_TPOK.cd18                       :                     2                  +2
+XLMIB_RPOK.cd18                       :                     2                  +2
+XLMIB_TVLN.cd18                       :                     2                  +2
+XLMIB_RVLN.cd18                       :                     2                  +2
+XLMIB_TUCA.cd18                       :                     2                  +2
+XLMIB_RUCA.cd18                       :                     2                  +2
+XLMIB_TPKT.cd18                       :                     2                  +2
+XLMIB_RPKT.cd18                       :                     2                  +2
+XLMIB_T127.cd18                       :                     2                  +2
+XLMIB_R127.cd18                       :                     2                  +2
+XLMIB_RPRM.cd18                       :                     2                  +2
+UC_PERQ_PKT(0).cd18                   :                     2                  +2
+UC_PERQ_BYTE(0).cd18                  :                   136                +136
+XLMIB_TBYT.hg0                        :                   680                +680
+XLMIB_RBYT.hg0                        :                   680                +680
+XLMIB_TPOK.hg0                        :                    10                 +10
+XLMIB_RPOK.hg0                        :                    10                 +10
+XLMIB_TVLN.hg0                        :                    10                 +10
+XLMIB_RVLN.hg0                        :                    10                 +10
+XLMIB_TUCA.hg0                        :                    10                 +10
+XLMIB_RUCA.hg0                        :                    10                 +10
+XLMIB_TPKT.hg0                        :                    10                 +10
+XLMIB_RPKT.hg0                        :                    10                 +10
+XLMIB_T127.hg0                        :                    10                 +10
+XLMIB_R127.hg0                        :                    10                 +10
+XLMIB_RPRM.hg0                        :                    10                 +10
+Verify 10 Non-UC pkts from port 143 forwarding to ing-port(hg)
+Sleeping for 2 seconds
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:00 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:01 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:02 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:03 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:04 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:05 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:06 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:07 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:08 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=143 sm=00:00:00:cc:cc:cc dm=00:00:00:bb:bb:09 vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.cd1                        :                   680                +680
+XLMIB_RBYT.cd1                        :                   680                +680
+XLMIB_TPOK.cd1                        :                    10                 +10
+XLMIB_RPOK.cd1                        :                    10                 +10
+XLMIB_TVLN.cd1                        :                    10                 +10
+XLMIB_RVLN.cd1                        :                    10                 +10
+XLMIB_TUCA.cd1                        :                    10                 +10
+XLMIB_RUCA.cd1                        :                    10                 +10
+XLMIB_TPKT.cd1                        :                    10                 +10
+XLMIB_RPKT.cd1                        :                    10                 +10
+XLMIB_T127.cd1                        :                    10                 +10
+XLMIB_R127.cd1                        :                    10                 +10
+XLMIB_RPRM.cd1                        :                    10                 +10
+MC_PERQ_PKT(0).cd1                    :                    10                 +10
+MC_PERQ_BYTE(0).cd1                   :                   680                +680
+XLMIB_TBYT.hg0                        :                   680                +680
+XLMIB_RBYT.hg0                        :                   680                +680
+XLMIB_TPOK.hg0                        :                    10                 +10
+XLMIB_RPOK.hg0                        :                    10                 +10
+XLMIB_TVLN.hg0                        :                    10                 +10
+XLMIB_RVLN.hg0                        :                    10                 +10
+XLMIB_TUCA.hg0                        :                    10                 +10
+XLMIB_RUCA.hg0                        :                    10                 +10
+XLMIB_TPKT.hg0                        :                    10                 +10
+XLMIB_RPKT.hg0                        :                    10                 +10
+XLMIB_T127.hg0                        :                    10                 +10
+XLMIB_R127.hg0                        :                    10                 +10
+XLMIB_RPRM.hg0                        :                    10                 +10
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

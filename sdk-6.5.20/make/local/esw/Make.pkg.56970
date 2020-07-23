@@ -1,0 +1,29 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Tomahawk2
+# Filename Make.pkg.56970
+FEATURE_LIST=PTP CINT L3 I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE CUSTOMER TEST CHASSIS MSTP RCPU KNET TCB PSTATS ATPTRANS_SOCKET FLOWTRACKER COLLECTOR TELEMETRY KNETSYNC
+BCM_PTL_SPT = 1
+
+BCM_56970_A0 = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DALPM_ENABLE
+
+# workspace:system=56970
+# linux-user:system=56970 buildDir=systems/linux/user/gto cpu=gto
+# linux26wrs-user:system=56970 buildDir=systems/linux/user/gto-2_6 cpu=gto
+# linux37-user:system=56970 buildDir=systems/linux/user/gtr-3_7    cpu=gtr
+# linux37-user:system=56970 buildDir=systems/linux/user/wrx-3_7 cpu=WRX
+# linux44-user:system=56970 buildDir=systems/linux/user/xlr-4_4 cpu=XLR
+# linux-user:system=56970 buildDir=systems/linux/user/xlr         cpu=XLR
+# linux-user:system=56970 buildDir=systems/linux/user/gts          cpu=GTS
+# linux44-user:system=56970 buildDir=systems/linux/user/gts-4_4     cpu=GTS
+# linux-user:system=56970 buildDir=systems/linux/user/slk cpu=SLK
+# linux414-user:system=56970 buildDir=systems/linux/user/slk-4_14 cpu=SLK
+# workspace30:system=56970
+# linux26wrs30-user:system=56970 buildDir=systems/linux/user/gto-2_6 cpu=gto

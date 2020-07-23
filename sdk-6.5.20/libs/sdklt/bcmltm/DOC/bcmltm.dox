@@ -1,0 +1,48 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section intro Overview
+
+The SDK Logical Table Manager library contains the implementation of
+functions which process an individual LT entry operation specified
+via the API either individually or as part of a transaction.  These
+functions include converting the API-provided field parameters to/from
+SDK internal representations, tracking LT resources and the
+interconnection of multiple Physical Tables (PTs), and constructing and
+executing the sequence of PT operations which will trigger the
+requested LT op on the underlying device.
+
+\section shr_build Build
+
+The makefile for the BCMLTM library is built upon the make include
+files in the <tt>$SDK/make</tt> directory.
+
+\section BCMLTM design
+
+The Logical Table Manager provides a data-driven generic framework for
+converting manipulation of the LTs visible to the API methods into
+one or more operations on the physical resources of the device via the
+Physical Table Manager (BCMPTM) library.
+
+The central component of BCMLTM implementation is a set of binary trees
+containing function nodes.  The trees are prepared for each operation
+defined upon an LT.  The function nodes are designed to permit generic
+steps of an operation sequence, such as converting API fields to
+internal representation, invoking a particular operation within the PTM,
+and so forth.  A function node's exact behavior is controlled by the
+data cookie also incorporated into the binary tree for that node.
+
+The trees and associated data are created during server initialization
+by incorporating information within the Device Resource Database (BCMDRD)
+and the Logical Resource Database (BCMLRD).  The Logical Table creation
+sequence will determine the fixed metadata structure which describes
+the LT, assemble the function trees that implement each operation,
+and map the API fields to the physical resources and fields with which
+the LT is reflected in the specific device configuration.
+
+Evolving table state data is initialized during the table creation
+process.  Each operation on the LT will update this state, which is
+synchronized in the HA cache (when enabled).
+
+*/

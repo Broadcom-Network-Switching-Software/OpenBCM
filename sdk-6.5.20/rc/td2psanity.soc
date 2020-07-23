@@ -1,0 +1,86 @@
+# $Id:$
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Trident2+ Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+log file=td2psanity.txt append=yes on
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+counter off
+l2mode off
+
+#Display some useful information
+date
+ver
+soc
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+# Avoid link messages while testing
+linkscan off
+memscan off
+
+echo "init soc"
+init soc
+
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+#Start Test
+echo "Starting tr 1"
+tr 1
+echo "Starting tr 3"
+tr 3 mask64
+
+echo "init soc"
+init soc
+echo "init misc"
+init misc
+
+rcload my_tr50_bcm56860_a0.soc
+rcload my_tr51_bcm56860_a0.soc
+rcload my_tr52_bcm56860_a0.soc
+rcload my_tr71_bcm56860_a0.soc
+
+# RUN rc.soc on tr 18
+#set rct=true
+
+# do not run rc.soc on tr 18
+set rct=false
+
+#echo "init soc"
+#init soc
+#echo "init misc"
+#init misc
+#echo "init mmu"
+#init mmu
+#echo "init bcm"
+#init bcm
+
+#echo "Starting tr 18"
+#tr 18
+
+tl
+
+log off

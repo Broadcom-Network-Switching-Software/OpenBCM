@@ -1,0 +1,30 @@
+#
+# file: qos_ha.yml
+# MIRROR YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_qos:
+        qos_remark_table_chunk_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                set_bmp:
+                    type: uint64_t
+                    comment: Used bitmap for map set in the table chunk.
+                full:
+                    type: bool
+                    comment: This table chunk is full.
+                allocated:
+                    type: bool
+                    comment: This table chunk is allocated.
+                mode:
+                    type: int
+                    comment: Usage mode for this chunk. Each table chunk owns a unique mode.

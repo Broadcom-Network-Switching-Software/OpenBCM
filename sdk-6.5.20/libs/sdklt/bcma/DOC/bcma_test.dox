@@ -1,0 +1,85 @@
+/*! \page bcma_testcmd CLI Commands for Test Component
+
+\section bcma_testcmd_test Introduction
+
+The \c test command is used to maintain the Test DataBase (TDB) and run the
+test case on command line. There is a generic format on CLI for test commands.
+See below:
+
+\verbatim
+test <subcmd> [*|<group>[.<name>]|<id>[.<inst>]] [option|arguments]
+\endverbatim
+
+As part of application layer (BCMA), the TEST component provides a \c test
+command for users. There are several subcommands which can help users to create
+test instances, setup override arguments, execute the test case, manage
+controlling status of the TDB and obtain help information.
+
+\subsection Init
+
+initialize the TDB, clear all the test instances and regenerate the default
+instance.
+
+\subsection Mode
+
+configure the global options for TDB.
+
+\subsection Select
+
+select or add specific test instances to test case list.
+
+\subsection Deselect
+
+deselect or remove some test instances from test case list.
+
+\subsection List
+
+list or display the information about test instance and the test results.
+
+\subsection Clear
+
+clear the counter of each test instance.
+
+\subsection ReMove
+
+remove a list of test instances except for default instance.
+
+\subsection CLone
+
+clone a test instance from an existing test instance.
+
+\subsection Parameters
+
+set the override parameters for a specific test instance.
+
+\subsection Run
+
+run a list of test instances.
+
+\subsection Help
+
+help a specific test instance.
+
+\section bcma_testcmd_testlist List or Display Test Information
+
+\subsection TestList
+
+\c TestList (TL) is a wrapper command of \c test \c list.
+
+\section bcma_testcmd_testrun Run a list of test instances.
+
+\subsection TestRun
+
+\c TestRun (TR) is a wrapper command of \c test \c run.
+
+\b Example:
+\verbatim
+# Provide help prints for HMI sbusdma test.
+> Test Help hmi.sbusdma
+# List test instances information in TDB.
+> TestList *
+# Run a list of test instances in TDB.
+> TestRun
+\endverbatim
+
+*/

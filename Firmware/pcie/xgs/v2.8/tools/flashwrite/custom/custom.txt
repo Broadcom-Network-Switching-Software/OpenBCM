@@ -1,0 +1,54 @@
+# Custom settings Header, DO NOT alter
+0x50434945
+0x41524753
+0x00000000
+0x00000000
+# End of Custom settings Header
+
+# User Settings
+# Optional control setting. The first word is magic number
+0x4354524C
+# Controls: (ctrl1)
+#   bit[0]       - Ignore enabling hotswap
+#   bit[1]       - Ignore PERST status initial check
+#   bit[7:4]     - Link Speed (PCIE generation) override,
+#                   1 - 2.5G, 2 - 5G, 3 - 8G, 0 - unconfigured
+#   bit[11:8]    - Link width override, 1, 2 or 4 lanes are valid
+0x00000430
+# Controls: (ctrl2) for future usage
+0x00000000
+
+# Optional Pre FW load settings, to be loaded before SerDes FW loadin
+# Preload ID 0x5052454c, followed by {register type: 0 - MAC, 1 - PHY, 32bit register address and 32bit data in hexadecimal format} sets
+0x5052454c
+# Disable parity matching for Gen3 TS1s, symbols 6 through 9, required for systems with PLX switches.
+# Type
+0x00000000
+# Address
+0x00001838
+# Data
+0x82084000
+
+# Optional Post FW load settings, to be loaded after SerDes FW loading
+# Post load ID 0x504f5354, followed by {register type: 0 - MAC, 1 - PHY, 32bit register address and 32bit data in hexadecimal format} sets
+0x504f5354
+# Example for unicast(register 0xd0b0 second lane)
+# Type
+0x00000001
+# Address
+0x0001d0b0
+# Data
+0x00002480
+# Example for broadcast(register 0xd0b1 all lanes)
+# Type
+0x00000001
+#Address
+0x01ffd0b1
+# Data
+0x00000007
+#End of User Settings
+
+# Custom settings footer, DO NOT alter
+0x00454E44
+0x41524753
+# End of Custom settings footer

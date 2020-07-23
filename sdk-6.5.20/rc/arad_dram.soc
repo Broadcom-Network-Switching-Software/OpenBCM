@@ -1,0 +1,204 @@
+#
+# $Id: arad_dram.soc,v 1.0 2014/03/23 08:32:00 asher Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+if $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_800 "\
+  config add ext_ram_freq=800; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=21; \
+  config add ext_ram_t_rrd=7500; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=8; \
+  config add ext_ram_t_faw=40000; \
+  config add ext_ram_c_cas_latency=11; \
+  config add ddr3_mem_grade=0x111111"
+    
+if $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_933 "\
+  config add ext_ram_freq=933; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=25; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=9; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=13; \
+  config add ddr3_mem_grade=0x131313"
+   
+if $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_1066 "\
+  config add ext_ram_freq=1066; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=29; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=10; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=14; \
+  config add ddr3_mem_grade=0x141414"
+
+if $?dram_type_DDR3_MICRON_MT41J256M16_4GBIT_1066 "\
+  config add ext_ram_freq=1066; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=29; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46130; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=260000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=10; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=14; \
+  config add ddr3_mem_grade=0x141414"
+  
+if $?dram_type_DDR3_MICRON_MT42J64M16LA_15E_667 "\
+  config add ext_ram_freq=667; \
+  config add ext_ram_rows=8192; \
+  config add ext_ram_jedec=21; \
+  config add ext_ram_t_rrd=7500; \
+  config add ext_ram_t_rc=49500; \
+  config add ext_ram_t_rcd_rd=13500; \
+  config add ext_ram_t_rcd_wr=13500; \
+  config add ext_ram_t_rp=13500; \
+  config add ext_ram_t_rfc=110000; \
+  config add ext_ram_t_ras=36000; \
+  config add ext_ram_c_wr_latency=7; \
+  config add ext_ram_t_faw=45000; \
+  config add ext_ram_c_cas_latency=9; \
+  config add ddr3_mem_grade=0x090909"
+
+if $?dram_type_DDR3_MICRON_MT41J128M16HA_125_800 "\
+  config add ext_ram_freq=800; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=21; \
+  config add ext_ram_t_rrd=7500; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=8; \
+  config add ext_ram_t_faw=40000; \
+  config add ext_ram_c_cas_latency=11; \
+  config add ddr3_mem_grade=0x111111"
+  
+if $?dram_type_DDR3_MICRON_MT41J128M16HA_125_933 "\
+  config add ext_ram_freq=933; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=25; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=9; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=13; \
+  config add ddr3_mem_grade=0x131313"
+  
+if $?dram_type_DDR3_MICRON_MT41J128M16HA_125_1066 "\
+  config add ext_ram_freq=1066; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=29; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=160000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=10; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=14; \
+  config add ddr3_mem_grade=0x141414"
+  
+if $?dram_type_DDR3_SAMSUNG_K4B4G1646B_4GBIT_1066 "\
+  config add ext_ram_freq=1066; \
+  config add ext_ram_rows=16384; \
+  config add ext_ram_jedec=29; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=46090; \
+  config add ext_ram_t_rcd_rd=13090; \
+  config add ext_ram_t_rcd_wr=13090; \
+  config add ext_ram_t_rp=13090; \
+  config add ext_ram_t_rfc=260000; \
+  config add ext_ram_t_ras=33000; \
+  config add ext_ram_c_wr_latency=10; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=14; \
+  config add ddr3_mem_grade=0x141414"
+  
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646G_800 "\
+  config add ext_ram_freq=800; \
+  config add ext_ram_rows=8192; \
+  config add ext_ram_jedec=25; \
+  config add ext_ram_t_rrd=7500; \
+  config add ext_ram_t_rc=47910; \
+  config add ext_ram_t_rcd_rd=13910; \
+  config add ext_ram_t_rcd_wr=13910; \
+  config add ext_ram_t_rp=13910; \
+  config add ext_ram_t_rfc=110000; \
+  config add ext_ram_t_ras=34000; \
+  config add ext_ram_c_wr_latency=8; \
+  config add ext_ram_t_faw=40000; \
+  config add ext_ram_c_cas_latency=11; \
+  config add ddr3_mem_grade=0x111111"
+  
+if $?dram_type_DDR3_SAMSUNG_K4B1G1646G_933 "\
+  config add ext_ram_freq=933; \
+  config add ext_ram_rows=8192; \
+  config add ext_ram_jedec=25; \
+  config add ext_ram_t_rrd=6000; \
+  config add ext_ram_t_rc=47910; \
+  config add ext_ram_t_rcd_rd=13910; \
+  config add ext_ram_t_rcd_wr=13910; \
+  config add ext_ram_t_rp=13910; \
+  config add ext_ram_t_rfc=110000; \
+  config add ext_ram_t_ras=34000; \
+  config add ext_ram_c_wr_latency=9; \
+  config add ext_ram_t_faw=35000; \
+  config add ext_ram_c_cas_latency=13; \
+  config add ddr3_mem_grade=0x131313"
+  
+if $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_800 || \
+   $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_933 || \
+   $?dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_1066 || \
+   $?dram_type_DDR3_MICRON_MT41J256M16_4GBIT_1066 || \
+   $?dram_type_DDR3_MICRON_MT41J128M16HA_125_800 || \
+   $?dram_type_DDR3_MICRON_MT41J128M16HA_125_933 || \
+   $?dram_type_DDR3_MICRON_MT41J128M16HA_125_1066 || \
+   $?dram_type_DDR3_MICRON_MT42J64M16LA_15E_667 || \
+   $?dram_type_DDR3_SAMSUNG_K4B4G1646B_4GBIT_1066 || \
+   $?dram_type_DDR3_SAMSUNG_K4B1G1646G_933 || \
+   $?dram_type_DDR3_SAMSUNG_K4B1G1646G_800 "\
+  config add ext_ram_type=DDR3; \
+  config add ext_ram_columns=1024; \
+  config add ext_ram_banks=8; \
+  config add ext_ram_ap_bit_pos=10; \
+  config add ext_ram_burst_size=32; \
+  config add ext_ram_t_ref=3900000; \
+  config add ext_ram_t_wr=15000; \
+  config add ext_ram_t_wtr=7500; \
+  config add ext_ram_t_rtp=7500"

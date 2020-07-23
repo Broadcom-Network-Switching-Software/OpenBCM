@@ -1,0 +1,32 @@
+# $Id: Makefile.unix-solaris,v 1.7 2007/10/08 22:25:12 iakramov Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Build rules for Solaris 2.6 with PLI support
+
+include ${SDK}/make/Makefile.unix-common
+
+# When using GDB on Linux, you may want to use "setenv GDB 1" to disable
+# editline.  For best results put "set environment GDB 1" in your .gdbinit.
+
+ENDIAN_DEF = -DBE_HOST=1
+
+CC	= ${HCC}
+CXX	= g++
+LD	= ld
+AR	= ar
+ARFLAGS	= -rc
+STRIP	= strip
+RANLIB  = ranlib
+
+# Filter out features that cannot or should not be supported in Linux
+ifdef ESW_CHIPS
+_FEATURE_EXCLUDE_LIST += OOB_RCPU
+endif
+FEATURE_EXCLUDE_LIST = $(sort $(_FEATURE_EXCLUDE_LIST))
+
+# Solaris
+LIBS = -lnsl -lsocket -lpthread -lposix4 -lm
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"unix-solaris\"
+

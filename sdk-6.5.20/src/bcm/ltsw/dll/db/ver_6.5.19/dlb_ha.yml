@@ -1,0 +1,50 @@
+#
+# file: dlb_ha.yml
+# DLB YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_dlb:
+        bcmint_dlb_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: DLB flags for each Id.
+        bcmint_dlb_ctrl_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                bytes_per_cell:
+                    type: uint64_t
+                    comment: The MMU bytes per cell.
+                sample_rate:
+                    type: uint64_t
+                    comment: The dynamic load balance sample rate.
+                egress_bytes_min:
+                    type: uint64_t
+                    comment: The egress bytes minimum threshold.
+                egress_bytes_max:
+                    type: uint64_t
+                    comment: The egress bytes maximum threshold.
+                queued_bytes_min:
+                    type: uint64_t
+                    comment: The queued bytes minimum threshold.
+                queued_bytes_max:
+                    type: uint64_t
+                    comment: The queued bytes maximum threshold.
+                physical_queued_bytes_min:
+                    type: uint64_t
+                    comment: The physical queued bytes minimum threshold.
+                physical_queued_bytes_max:
+                    type: uint64_t
+                    comment: The physical queued bytes maximum threshold.

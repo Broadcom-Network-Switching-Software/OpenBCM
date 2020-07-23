@@ -1,0 +1,166 @@
+BCM.0> cint TD4_HSDK_VxLAN_ipv4_MC_BUD_NODE.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191108 (Fri Nov  8 11:51:52 2019)
+From bl921186@lc-hsoa-018:/projects/ntsw-sw5/home/whylin/sdk/hsdk-all-6.5.18-EA6/hsdk-all-6.5.18-EA6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan(): ** start **
+Creating VXLAN VPN (0x8064)... done!
+Creating Access Flow Port (0xb0000001)... done!
+Creating Access Flow Match for VPN... done!
+Creating Access Flow Match for SVP... done!
+Creating Network Interface (0x4001)... done!
+Create Network Flow Port (0xb0000002)... done!
+Create Network Egress Object (0x206a1)... done!
+Creating Flow Encap... done!
+Adding Flow Match (VNID -> VFI)... done!
+Setting Port Encap... done!
+Adding Flow Match (SIP -> SVP)... done!
+Creating Network Interface (0x1)... done!
+Create Network port for IPMC domain... done!
+Creating VXLAN init-tunnel... done!
+Creating VXLAN term-tunnel... done!
+Creating Mcast Group (0xf000002)... done!
+Adding port (0x8000002) to Mcast Group (0xf000002)... done.
+Adding port (0x8000001) to Mcast Group (0xf000002)... done.
+Adding port (0x8000002) to Mcast Group (0xf000001)... done.
+Adding port (0x8000001) to Mcast Group (0xf000001)... done.
+Creating Mcast Group (0x2000003)... done!
+Adding port (0x8000003) to Mcast Group (0x2000003)... done.
+Create network L3 ingress interface
+Config vpn(0x16) to l3_iif(0x1) mapping.
+~~~ #2) config_vxlan(): ** end **
+~~~ #3) verify(): ** start **
+
+vlan 1	ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e) 
+vlan 21	ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+vlan 22	ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+vlan 23	ports cd2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000008), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:33:33 vlan=23 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=01:00:5e:01:01:01 vlan=32868 GPORT=0x0 modid=0 port=0/cpu0 Static CPU MCast=251658242
+
+
+Group 0xf000001 (FLOW)
+	port cd0, encap id 16385
+	port cd1, encap id -1
+Group 0xf000002 (FLOW)
+	port cd0, encap id 16385
+	port cd1, encap id -1
+Group 0x2000003 (L3)
+	port cd2, encap id 1
+
+SRC IP ADDRESS: 192.168.1.1
+MC  IP ADDRESS: 225.0.0.10
+MC IP MASK LEN: 32
+VLAN          : 0
+VRF           : 0
+GROUP         : 0x3
+GROUP_L2      : 0x0
+CLASSS        : 0
+HIT           : N
+
+Sending known multicast packet to ingress_port network side: port-1
+Packet from data=<>, length=148
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {01005e00000a} {000000000002} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0082 0000 4000 3f11 98b7 c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 0101 e100 000a d903 12b5 006e d6b4 0800 
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0123 4500 0100 5e01 0101 0000 0000 
+[bcmPWN.0]Packet[1]: data[0040]: bbbb 0800 4500 0050 0001 0000 4011 9496 
+[bcmPWN.0]Packet[1]: data[0050]: 0202 0202 e101 0101 0035 0035 003c 52f5 
+[bcmPWN.0]Packet[1]: data[0060]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0090]: 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<01:00:5e:00:00:0a> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.1.1> dst<225.0.0.10> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x98b7>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {01005e00000a} {000000003333} 8100 0017
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0082 0000 4000 3e11 99b7 c0a8 
+[bcmPWN.0]Packet[2]: data[0020]: 0101 e100 000a d903 12b5 006e d6b4 0800 
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0123 4500 0100 5e01 0101 0000 0000 
+[bcmPWN.0]Packet[2]: data[0040]: bbbb 0800 4500 0050 0001 0000 4011 9496 
+[bcmPWN.0]Packet[2]: data[0050]: 0202 0202 e101 0101 0035 0035 003c 52f5 
+[bcmPWN.0]Packet[2]: data[0060]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0090]: 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<01:00:5e:00:00:0a> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<192.168.1.1> dst<225.0.0.10> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x99b7>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {01005e010101} {00000000bbbb} 8100 0001
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0001 0000 4011 9496 0202 
+[bcmPWN.0]Packet[3]: data[0020]: 0202 e101 0101 0035 0035 003c 52f5 7465 
+[bcmPWN.0]Packet[3]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465 
+[bcmPWN.0]Packet[3]: data[0060]: 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0001> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<2.2.2.2> dst<225.1.1.1> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x9496>
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   174                +174
+XLMIB_TBYT.cd0                        :                   152                +152
+XLMIB_RBYT.cd0                        :                   152                +152
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TMCA.cd0                        :                     1                  +1
+XLMIB_RMCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T255.cd0                        :                     1                  +1
+XLMIB_R255.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                    98                 +98
+XLMIB_RBYT.cd1                        :                    98                 +98
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TMCA.cd1                        :                     1                  +1
+XLMIB_RMCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+MC_PERQ_PKT(0).cd1                    :                     1                  +1
+MC_PERQ_BYTE(0).cd1                   :                    98                 +98
+XLMIB_TBYT.cd2                        :                   152                +152
+XLMIB_RBYT.cd2                        :                   152                +152
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TMCA.cd2                        :                     1                  +1
+XLMIB_RMCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T255.cd2                        :                     1                  +1
+XLMIB_R255.cd2                        :                     1                  +1
+MC_PERQ_PKT(0).cd2                    :                     1                  +1
+MC_PERQ_BYTE(0).cd2                   :                   152                +152
+mac=00:00:00:00:00:02 vlan=22 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:33:33 vlan=23 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:bb:bb vlan=1 GPORT=0x2 modid=0 port=2/cd1 Hit
+mac=00:00:00:00:bb:bb vlan=32868 GPORT=0xb0000002 port=0xb0000002(flow) Hit
+mac=01:00:5e:01:01:01 vlan=32868 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU MCast=251658242
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

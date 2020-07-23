@@ -1,0 +1,222 @@
+#!/bin/tcsh
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+# $Id$
+#
+
+setenv PMDSRC_ORIG /projects/ntsw-sw7/home/hoang/pmd-src
+setenv PMDSRC /projects/ntsw-sw7/home/hoang/pmd-exp
+set SAR=/home/hoangngo/bin/perl/sar.pl  
+
+#  Checkout SERDES API code 
+rm -rf $PMDSRC_ORIG 
+svn checkout http://svn.broadcom.com/svn/eagle_merlin_eval/trunk/api $PMDSRC_ORIG
+
+cd $PMDSRC
+
+rm -rf eagle_tsc_src eagle_tsc_include falcon_tsc_src falcon_tsc_include; 
+cp -rf $PMDSRC_ORIG/uniquify/eagle_tsc_src $PMDSRC_ORIG/uniquify/eagle_tsc_include $PMDSRC_ORIG/uniquify/falcon_tsc_include $PMDSRC_ORIG/uniquify/falcon_tsc_src .
+
+############################COMMON################################
+#===============Remove non-ASCII chars=============
+/home/hoangngo/bin/cformat.pl -f $PMDSRC/eagle_tsc_include/* $PMDSRC/eagle_tsc_src/* $PMDSRC/falcon_tsc_src/* $PMDSRC/falcon_tsc_include/* 
+
+#===============Fix Doxygen file format=============
+/home/hoangngo/bin/perl/doxyfix.pl -f $PMDSRC/eagle_tsc_include/* $PMDSRC/eagle_tsc_src/* $PMDSRC/falcon_tsc_src/* $PMDSRC/falcon_tsc_include/*
+
+#===============Edit all files to remove 'void' in function declaration=============
+$SAR -vague -text '\(void\)' '()' -f $PMDSRC/eagle_tsc_include/* $PMDSRC/eagle_tsc_src/* $PMDSRC/falcon_tsc_src/* $PMDSRC/falcon_tsc_include/*
+$SAR -vague -insertb 'stdint.h' '#ifdef LINUX' -inserta 'stdint.h' '#endif' -f $PMDSRC/eagle_tsc_include/* $PMDSRC/eagle_tsc_src/* $PMDSRC/falcon_tsc_src/* $PMDSRC/falcon_tsc_include/*
+
+#==========Change {eagle/falcon}_tsc_fields.h to include pa====================
+#_eagle_tsc_pmd_rde_field_byte
+#_eagle_tsc_pmd_rde_field_signed
+#_eagle_tsc_pmd_rde_field_signed_byte
+#_eagle_tsc_pmd_mwr_reg_byte
+#_eagle_tsc_pmd_rde_reg
+#eagle_tsc_pmd_mwr_reg
+#eagle_tsc_pmd_wr_reg
+
+#_falcon_tsc_pmd_mwr_reg_byte
+#_falcon_tsc_pmd_rde_field
+#_falcon_tsc_pmd_rde_field_byte
+#_falcon_tsc_pmd_rde_field_signed
+#_falcon_tsc_pmd_rde_field_signed_byte
+#_falcon_tsc_pmd_rde_reg
+#falcon_tsc_pmd_mwr_reg
+#falcon_tsc_pmd_wr_reg
+
+$SAR -text '_eagle_tsc_pmd_rde_field_byte\(' '_eagle_tsc_pmd_rde_field_byte(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text '_eagle_tsc_pmd_rde_field_signed\(' '_eagle_tsc_pmd_rde_field_signed(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text '_eagle_tsc_pmd_rde_field_signed_byte\(' '_eagle_tsc_pmd_rde_field_signed_byte(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text '_eagle_tsc_pmd_mwr_reg_byte\(' '_eagle_tsc_pmd_mwr_reg_byte(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text '_eagle_tsc_pmd_rde_reg\(' '_eagle_tsc_pmd_rde_reg(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text 'eagle_tsc_pmd_mwr_reg\(' 'eagle_tsc_pmd_mwr_reg(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text 'eagle_tsc_pmd_wr_reg\(' 'eagle_tsc_pmd_wr_reg(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+$SAR -text '_eagle_tsc_pmd_rde_field\(' '_eagle_tsc_pmd_rde_field(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_fields.h 
+
+$SAR -text '_falcon_tsc_pmd_mwr_reg_byte\(' '_falcon_tsc_pmd_mwr_reg_byte(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text '_falcon_tsc_pmd_rde_field\(' '_falcon_tsc_pmd_rde_field(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text '_falcon_tsc_pmd_rde_field_byte\(' '_falcon_tsc_pmd_rde_field_byte(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text '_falcon_tsc_pmd_rde_field_signed\(' '_falcon_tsc_pmd_rde_field_signed(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text '_falcon_tsc_pmd_rde_field_signed_byte\(' '_falcon_tsc_pmd_rde_field_signed_byte(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text '_falcon_tsc_pmd_rde_reg\(' '_falcon_tsc_pmd_rde_reg(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text 'falcon_tsc_pmd_mwr_reg\(' 'falcon_tsc_pmd_mwr_reg(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+$SAR -text 'falcon_tsc_pmd_wr_reg\(' 'falcon_tsc_pmd_wr_reg(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_fields.h 
+
+#==========Change {eagle/falcon}_tsc_uc_vars_rdwr_defns.h to include pa====================
+#eagle_tsc_rdbc_uc_var
+#eagle_tsc_rdbl_uc_var
+#eagle_tsc_rdwc_uc_var
+#eagle_tsc_rdwl_uc_var
+#eagle_tsc_wrbc_uc_var
+#eagle_tsc_wrbl_uc_var
+#eagle_tsc_wrwc_uc_var
+#eagle_tsc_wrwl_uc_var
+
+#falcon_tsc_rdbc_uc_var
+#falcon_tsc_rdbl_uc_var
+#falcon_tsc_rdwc_uc_var
+#falcon_tsc_rdwl_uc_var
+#falcon_tsc_wrbc_uc_var
+#falcon_tsc_wrbl_uc_var
+#falcon_tsc_wrwc_uc_var
+#falcon_tsc_wrwl_uc_var
+
+$SAR -text 'eagle_tsc_rdbc_uc_var\(' 'eagle_tsc_rdbc_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_rdbl_uc_var\(' 'eagle_tsc_rdbl_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_rdwc_uc_var\(' 'eagle_tsc_rdwc_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_rdwl_uc_var\(' 'eagle_tsc_rdwl_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_wrbc_uc_var\(' 'eagle_tsc_wrbc_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_wrbl_uc_var\(' 'eagle_tsc_wrbl_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_wrwc_uc_var\(' 'eagle_tsc_wrwc_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'eagle_tsc_wrwl_uc_var\(' 'eagle_tsc_wrwl_uc_var(pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_uc_vars_rdwr_defns.h 
+
+$SAR -text 'falcon_tsc_rdbc_uc_var\(' 'falcon_tsc_rdbc_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_rdbl_uc_var\(' 'falcon_tsc_rdbl_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_rdwc_uc_var\(' 'falcon_tsc_rdwc_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_rdwl_uc_var\(' 'falcon_tsc_rdwl_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_wrbc_uc_var\(' 'falcon_tsc_wrbc_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_wrbl_uc_var\(' 'falcon_tsc_wrbl_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_wrwc_uc_var\(' 'falcon_tsc_wrwc_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+$SAR -text 'falcon_tsc_wrwl_uc_var\(' 'falcon_tsc_wrwl_uc_var(pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_uc_vars_rdwr_defns.h 
+
+###################FALCON SECTION#################################################
+$SAR -vague -text '_display_event\s*\(' '_display_event(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_internal.c
+$SAR -vague -text '_display_event' '_falcon_display_event' -f $PMDSRC/falcon_tsc_src/* $PMDSRC/falcon_tsc_include/*
+
+###################EAGLE SECTION#################################################
+#==========Change eagle_eagle_tsc_internal.c to handle _display_event()====================
+$SAR -vague -text '_display_event\s*\(' '_display_event(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c
+$SAR -vague -text '_display_event' '_eagle_display_event' -f $PMDSRC/eagle_tsc_src/* $PMDSRC/eagle_tsc_include/*
+
+############################COMMON################################
+# Search for all functions and insert const phymod_acces_t *pa
+/home/hoangngo/bin/csrcparser.pl -f --hfile $PMDSRC/eagle_tsc_include/* --cfile $PMDSRC/eagle_tsc_src/* --replace --verbose 8 |& tee eagle-functions
+/home/hoangngo/bin/csrcparser.pl -f --hfile $PMDSRC/falcon_tsc_include/* --cfile $PMDSRC/falcon_tsc_src/* --replace --verbose 8 |& tee falcon-functions
+
+
+###################FALCON SECTION#################################################
+# These functions are missed by csrcparser.pl  
+$SAR -vague -text 'falcon_tsc_pmd_rdt_reg\s*\(' 'falcon_tsc_pmd_rdt_reg(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_dependencies.h
+$SAR -vague -text 'falcon_tsc_pmd_wr_reg\s*\(' 'falcon_tsc_pmd_wr_reg(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_dependencies.h
+$SAR -vague -text 'falcon_tsc_pmd_mwr_reg\s*\(' 'falcon_tsc_pmd_mwr_reg(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_dependencies.h
+
+$SAR -vague -text 'falcon_tsc_pmd_rdt_reg\s*\(' 'falcon_tsc_pmd_rdt_reg(pa,' -f $PMDSRC/falcon_tsc_src/*
+$SAR -vague -text 'falcon_tsc_pmd_wr_reg\s*\(' 'falcon_tsc_pmd_wr_reg(pa,' -f $PMDSRC/falcon_tsc_src/*
+$SAR -vague -text 'falcon_tsc_pmd_mwr_reg\s*\(' 'falcon_tsc_pmd_mwr_reg(pa,' -f $PMDSRC/falcon_tsc_src/*
+
+$SAR -vague -text '_trnsum_clear_and_enable\s*\(' '_trnsum_clear_and_enable(const phymod_access_t *pa' -f $PMDSRC/falcon_tsc_include/falcon_tsc_internal.h
+$SAR -vague -text 'SDK_STATIC\s*void\s*_trnsum_clear_and_enable\s*\(' 'SDK_STATIC void _trnsum_clear_and_enable(const phymod_access_t *pa' -f $PMDSRC/falcon_tsc_src/falcon_tsc_internal.c
+$SAR -vague -text '_trnsum_clear_and_enable\s*\(' '_trnsum_clear_and_enable(pa' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+
+$SAR -vague -text 'uint16_t _falcon_tsc_pmd_rde_reg\s*\(' 'uint16_t _falcon_tsc_pmd_rde_reg(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_field_access.c
+$SAR -vague -text 'uint16_t _falcon_tsc_pmd_rde_field\s*\(' 'uint16_t _falcon_tsc_pmd_rde_field(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_field_access.c
+$SAR -vague -text 'uint16_t _falcon_tsc_pmd_rde_field_signed\s*\(' 'uint16_t _falcon_tsc_pmd_rde_field_signed(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_field_access.c
+$SAR -vague -text 'int16_t _falcon_tsc_pmd_rde_field_signed\s*\(' 'int16_t _falcon_tsc_pmd_rde_field_signed(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_field_access.c
+
+$SAR -vague -text 'falcon_tsc_poll_diag_eye_data\s*\(' 'falcon_tsc_poll_diag_eye_data(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_include/falcon_tsc_dependencies.h
+$SAR -vague -text '= falcon_tsc_poll_diag_eye_data\s*\(' '= falcon_tsc_poll_diag_eye_data(pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+$SAR -vague -text 'err_code_t falcon_tsc_poll_diag_eye_data\s*\(' 'err_code_t falcon_tsc_poll_diag_eye_data(const phymod_access_t *pa,' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+
+###################EAGLE SECTION#################################################
+# These functions are missed by csrcparser.pl  
+#==========Change {eagle/falcon}_eagle_tsc_dependencies.h to include const phymod_access_t *pa====================
+$SAR -vague -text 'eagle_tsc_pmd_rdt_reg\s*\(' 'eagle_tsc_pmd_rdt_reg(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+$SAR -vague -text 'eagle_tsc_pmd_wr_reg\s*\(' 'eagle_tsc_pmd_wr_reg(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+$SAR -vague -text 'eagle_tsc_pmd_mwr_reg\s*\(' 'eagle_tsc_pmd_mwr_reg(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+
+#==========Change {eagle/falcon}_*.c to include pa====================
+$SAR -vague -text 'eagle_tsc_pmd_rdt_reg\s*\(' 'eagle_tsc_pmd_rdt_reg(pa,' -f $PMDSRC/eagle_tsc_src/*
+$SAR -vague -text 'eagle_tsc_pmd_wr_reg\s*\(' 'eagle_tsc_pmd_wr_reg(pa,' -f $PMDSRC/eagle_tsc_src/*
+$SAR -vague -text 'eagle_tsc_pmd_mwr_reg\s*\(' 'eagle_tsc_pmd_mwr_reg(pa,' -f $PMDSRC/eagle_tsc_src/*
+
+#==========Handle eagle_tsc_get_lane================
+$SAR -vague -text 'eagle_tsc_get_lane\s*\(' 'eagle_tsc_get_lane(pa' -f $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c
+$SAR -vague -text 'eagle_tsc_get_lane\s*\(' 'eagle_tsc_get_lane(pa' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text 'eagle_tsc_get_lane\s*\(' 'eagle_tsc_get_lane(const phymod_access_t *pa' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+
+#==========Handle SDK_STATIC functions================
+$SAR -vague -text '_trnsum_clear_and_enable\s*\(' '_trnsum_clear_and_enable(const phymod_access_t *pa' -f $PMDSRC/eagle_tsc_include/eagle_tsc_internal.h
+$SAR -vague -text 'SDK_STATIC\s*void\s*_trnsum_clear_and_enable\s*\(' 'SDK_STATIC void _trnsum_clear_and_enable(const phymod_access_t *pa' -f $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c
+$SAR -vague -text '_trnsum_clear_and_enable\s*\(' '_trnsum_clear_and_enable(pa' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+
+#========== Thes functions are parse correctly in the header file but missed in the c files==================
+$SAR -vague -text 'uint16_t _eagle_tsc_pmd_rde_reg\s*\(' 'uint16_t _eagle_tsc_pmd_rde_reg(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_field_access.c
+$SAR -vague -text 'uint16_t _eagle_tsc_pmd_rde_field\s*\(' 'uint16_t _eagle_tsc_pmd_rde_field(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_field_access.c
+$SAR -vague -text 'uint16_t _eagle_tsc_pmd_rde_field_signed\s*\(' 'uint16_t _eagle_tsc_pmd_rde_field_signed(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_field_access.c
+$SAR -vague -text 'int16_t _eagle_tsc_pmd_rde_field_signed\s*\(' 'int16_t _eagle_tsc_pmd_rde_field_signed(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_field_access.c
+
+$SAR -vague -text 'SDK_STATIC int16_t _ladder_setting_to_mV\s*\(' 'SDK_STATIC int16_t _ladder_setting_to_mV(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c
+$SAR -vague -text '= _ladder_setting_to_mV\s*\(' '= _ladder_setting_to_mV(pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c
+$SAR -vague -text '_ladder_setting_to_mV\s*\(' '_ladder_setting_to_mV(pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text '_ladder_setting_to_mV\s*\(' '_ladder_setting_to_mV(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_internal.h
+
+$SAR -vague -text 'err_code_t eagle_tsc_eye_margin_proj\s*\(' 'err_code_t eagle_tsc_eye_margin_proj(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text 'err_code_t eagle_tsc_eye_margin_proj\s*\(' 'err_code_t eagle_tsc_eye_margin_proj(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_interface.h
+
+$SAR -vague -text 'eagle_tsc_poll_diag_eye_data\s*\(' 'eagle_tsc_poll_diag_eye_data(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+$SAR -vague -text '= eagle_tsc_poll_diag_eye_data\s*\(' '= eagle_tsc_poll_diag_eye_data(pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text 'err_code_t eagle_tsc_poll_diag_eye_data\s*\(' 'err_code_t eagle_tsc_poll_diag_eye_data(const phymod_access_t *pa,' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+
+
+# Rename these files
+$SAR -vague -text 'eagle_tsc_field_access.c' 'eagle_tsc_field_access_c.h' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text 'eagle_tsc_internal.c' 'eagle_tsc_internal_c.h' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -vague -text 'eagle_pll_config.c' 'eagle_tsc_pll_config_c.h' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+
+$SAR -vague -text 'falcon_tsc_field_access.c' 'falcon_tsc_field_access_c.h' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+$SAR -vague -text 'falcon_tsc_internal.c' 'falcon_tsc_internal_c.h' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+$SAR -vague -text 'falcon_tsc_pll_config.c' 'falcon_tsc_pll_config_c.h' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+
+$SAR -vague -text 'logger_write' 'falcon_logger_write' -f $PMDSRC/falcon_tsc_include/falcon_tsc_internal.h
+$SAR -vague -text 'logger_write' 'falcon_logger_write' -f $PMDSRC/falcon_tsc_include/falcon_tsc_dependencies.h
+$SAR -vague -text 'logger_write' 'eagle_logger_write' -f $PMDSRC/eagle_tsc_include/eagle_tsc_internal.h
+$SAR -vague -text 'logger_write' 'eagle_logger_write' -f $PMDSRC/eagle_tsc_include/eagle_tsc_dependencies.h
+
+$SAR -inserta '#include \<math.h\>' '#include <phymod/phymod.h>' -f $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c
+$SAR -inserta '#include \<math.h\>' '#include <phymod/phymod.h>' -f $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c
+
+
+mv $PMDSRC/eagle_tsc_src/eagle_tsc_internal.c $PMDSRC/eagle_tsc_src/eagle_tsc_internal_c.h 
+mv $PMDSRC/eagle_tsc_src/eagle_tsc_field_access.c $PMDSRC/eagle_tsc_src/eagle_tsc_field_access_c.h
+mv $PMDSRC/eagle_tsc_src/eagle_pll_config.c $PMDSRC/eagle_tsc_src/eagle_tsc_pll_config_c.h 
+mv $PMDSRC/falcon_tsc_src/falcon_tsc_internal.c $PMDSRC/falcon_tsc_src/falcon_tsc_internal_c.h 
+mv $PMDSRC/falcon_tsc_src/falcon_tsc_field_access.c $PMDSRC/falcon_tsc_src/falcon_tsc_field_access_c.h
+mv $PMDSRC/falcon_tsc_src/falcon_tsc_pll_config.c $PMDSRC/falcon_tsc_src/falcon_tsc_pll_config_c.h 
+
+
+
+#/home/hoangngo/bin/mkdb.sh
+#/home/hoangngo/bin/eagledb.sh
+#/home/hoangngo/bin/falcondb.sh
+
+#===================Edit {eagle/falcon}_tsc_internal.h==========================
+#gcc -std=c89 -Wall -Wuninitialized -O3 -o eagle -lm $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c /projects/ntsw-sw7/home/hoang/pmd-common/eagle-dummy.c -I $PMDSRC/eagle_tsc_include | & tee eagle.log
+
+#gcc -std=c89 -Wall -Wuninitialized -O3 -o falcon -lm $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c /projects/ntsw-sw7/home/hoang/pmd-common/falcon-dummy.c -I $PMDSRC/falcon_tsc_include | & tee falcon.log
+
+#gcc -std=c89 -Wall -Werror -Wuninitialized -O3 -o eagle-falcon -lm $PMDSRC/eagle_tsc_src/eagle_tsc_functions.c /projects/ntsw-sw7/home/hoang/pmd-common/eagle-falcon-dummy.c -I $PMDSRC/eagle_tsc_include $PMDSRC/falcon_tsc_src/falcon_tsc_functions.c -I $PMDSRC/falcon_tsc_include | & tee eagle-falcon.log

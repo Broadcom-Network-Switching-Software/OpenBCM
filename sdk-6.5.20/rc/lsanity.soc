@@ -1,0 +1,259 @@
+# $Id: lsanity.soc,v 1.11 2007/10/08 22:25:14 iakramov Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+echo "testsuite: started: sanity"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+# Avoid link messages while testing
+linkscan off
+
+# Use expected COS configuration for tests
+config add bcm_num_cos=4
+
+init 
+init misc
+
+local done 'echo "   Done"'
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+# Tests Start Here
+
+echo Running CPU benchmarks ...
+tr 21
+$done
+
+echo Running PCI tests ...
+tr 2
+$done
+
+echo Running register tests ...
+tr 3
+$done
+
+echo Running S-Channel message buffer test ...
+tr 4
+$done
+
+echo Running Switching Memory tests
+# Note: Switching memory tests automatically put MMU in debug mode
+
+echo "   DEF_IP";		tr 50 m=DEF_IP; tr 51 m=DEF_IP
+echo "   DEF_IP_HIT";		tr 50 m=DEF_IP_HIT; tr 51 m=DEF_IP_HIT
+echo "   IP_REP_HI";		tr 50 m=IP_REP_HI; tr 51 m=IP_REP_HI
+echo "   IP_REP_LO";		tr 50 m=IP_REP_LO; tr 51 m=IP_REP_LO
+echo "   EGRESS_MASK";		tr 50 m=EGRESS_MASK; tr 51 m=EGRESS_MASK
+echo "   XFFPCOUNTERS 0-1";	tr 50 m=XFFPCOUNTERST0; tr 51 m=XFFPCOUNTERST0
+				tr 50 m=XFFPCOUNTERST1; tr 51 m=XFFPCOUNTERST1
+echo "   XFFPIPPACKETCOUNTERS 0-1"
+			      	tr 50 m=XFFPIPPACKETCOUNTERST0
+				tr 51 m=XFFPIPPACKETCOUNTERST0
+				tr 50 m=XFFPIPPACKETCOUNTERST1
+				tr 51 m=XFFPIPPACKETCOUNTERST1
+echo "   XFFPOPPACKETCOUNTERS 0-1"
+				tr 50 m=XFFPOPPACKETCOUNTERST0
+				tr 51 m=XFFPOPPACKETCOUNTERST0
+				tr 50 m=XFFPOPPACKETCOUNTERST1
+				tr 51 m=XFFPOPPACKETCOUNTERST1
+echo "   XFFPIPBYTECOUNTERS 0-1"
+				tr 50 m=XFFPIPBYTECOUNTERST0
+				tr 51 m=XFFPIPBYTECOUNTERST0
+				tr 50 m=XFFPIPBYTECOUNTERST1
+				tr 51 m=XFFPIPBYTECOUNTERST1
+echo "   XFFPOPBYTECOUNTERS 0-1"
+				tr 50 m=XFFPOPBYTECOUNTERST0
+				tr 51 m=XFFPOPBYTECOUNTERST0
+				tr 50 m=XFFPOPBYTECOUNTERST1
+				tr 51 m=XFFPOPBYTECOUNTERST1
+echo "   GIMASK";		tr 50 m=GIMASK; tr 51 m=GIMASK
+echo "   GIRULE 0-3";		tr 50 m=GIRULET0; tr 51 m=GIRULET0
+				tr 50 m=GIRULET1; tr 51 m=GIRULET1
+				tr 50 m=GIRULET2; tr 51 m=GIRULET2
+				tr 50 m=GIRULET3; tr 51 m=GIRULET3
+echo "   XMETERING 0-3";	tr 50 m=XMETERINGT0; tr 51 m=XMETERINGT0
+				tr 50 m=XMETERINGT1; tr 51 m=XMETERINGT1
+				tr 50 m=XMETERINGT2; tr 51 m=XMETERINGT2
+				tr 50 m=XMETERINGT3; tr 51 m=XMETERINGT3
+echo "   L2_TABLE";		tr 50 m=L2_TABLE; tr 51 m=L2_TABLE
+echo "   L2_HIT_BITS";		tr 50 m=L2_HIT_BITS; tr 51 m=L2_HIT_BITS
+echo "   L2MC_TABLE";		tr 50 m=L2MC_TABLE; tr 51 m=L2MC_TABLE
+echo "   L2_STATIC_BITS";	tr 50 m=L2_STATIC_BITS; tr 51 m=L2_STATIC_BITS
+echo "   L2_VALID_BITS";	tr 50 m=L2_VALID_BITS; tr 51 m=L2_VALID_BITS
+echo "   L3_TABLE";		tr 50 m=L3_TABLE; tr 51 m=L3_TABLE
+echo "   L3_HIT_BITS";		tr 50 m=L3_HIT_BITS; tr 51 m=L3_HIT_BITS
+echo "   L3_VALID_BITS";	tr 50 m=L3_VALID_BITS; tr 51 m=L3_VALID_BITS
+echo "   L3INTF";		tr 50 m=L3INTF; tr 51 m=L3INTF
+echo "   L3_IPMC";		tr 50 m=L3_IPMC; tr 51 m=L3_IPMC
+echo "   PORT_MAC_BLOCK";	tr 50 m=PORT_MAC_BLOCK; tr 51 m=PORT_MAC_BLOCK
+echo "   PORT";			tr 50 m=PORT
+echo "   PRTABLE";		tr 50 m=PRTABLE; tr 51 m=PRTABLE
+echo "   VLAN_STG";		tr 50 m=VLAN_STG; tr 51 m=VLAN_STG
+echo "   DMUXTRUNKDIST";	tr 50 m=DMUXTRUNKDIST; tr 51 m=DMUXTRUNKDIST
+echo "   TRUNK_BITMAP";		tr 50 m=TRUNK_BITMAP; tr 51 m=TRUNK_BITMAP
+echo "   PORT_TRUNK_EGRESS";	tr 50 m=PORT_TRUNK_EGRESS
+				tr 51 m=PORT_TRUNK_EGRESS
+echo "   TRUNK_GROUP";		tr 50 m=TRUNK_GROUP; tr 51 m=TRUNK_GROUP
+echo "   VLAN";			tr 50 m=VLAN; tr 51 m=VLAN
+echo "   CBPDATA 0-3";		tr 50 m=CBPDATA0; tr 51 m=CBPDATA0
+				tr 50 m=CBPDATA1; tr 51 m=CBPDATA1
+				tr 50 m=CBPDATA2; tr 51 m=CBPDATA2
+				tr 50 m=CBPDATA3; tr 51 m=CBPDATA3
+echo "   CBPHEADER";		tr 50 m=CBPHEADER; tr 51 m=CBPHEADER
+echo "   CCP";			tr 50 m=CCP; tr 51 m=CCP
+echo "   CFAP";			tr 50 m=CFAP; tr 51 m=CFAP
+echo "   XQ 0-2"
+for xq=0,2 'tr 50 m=XQ$xq; tr 51 m=XQ$xq'
+$done
+
+echo Running Table DMA Tests
+# Specify a zero count for each test to indicate entire memory.
+# Otherwise the count from the previous invocation is used.
+echo "   DEF_IP";		tr 71 m=DEF_IP c=0
+echo "   DEF_IP_HIT";		tr 71 m=DEF_IP_HIT c=0
+echo "   IP_REP_HI";		tr 71 m=IP_REP_HI c=0
+echo "   IP_REP_LO";		tr 71 m=IP_REP_LO c=0
+echo "   EGRESS_MASK";		tr 71 m=EGRESS_MASK c=0
+echo "   XFFPCOUNTERS";		tr 71 m=XFFPCOUNTERS c=0
+echo "   XFFPIPPACKETCOUNTERS";	tr 71 m=XFFPOPPACKETCOUNTERS c=0
+echo "   XFFPIPPACKETCOUNTERS";	tr 71 m=XFFPOPPACKETCOUNTERS c=0
+echo "   XFFPIPBYTECOUNTERS";	tr 71 m=XFFPOPBYTECOUNTERS c=0
+echo "   XFFPIPBYTECOUNTERS";	tr 71 m=XFFPOPBYTECOUNTERS c=0
+echo "   XMETERING";		tr 71 m=XMETERINGT0 c=0
+				tr 71 m=XMETERINGT1 c=0
+				tr 71 m=XMETERINGT2 c=0
+				tr 71 m=XMETERINGT3 c=0
+echo "   L2_TABLE";		tr 71 m=L2_TABLE c=0
+echo "   L2_HIT_BITS";		tr 71 m=L2_HIT_BITS c=0
+echo "   L2MC_TABLE";		tr 71 m=L2MC_TABLE c=0
+echo "   L2_STATIC_BITS";	tr 71 m=L2_STATIC_BITS c=0
+echo "   L2_VALID_BITS";	tr 71 m=L2_VALID_BITS c=0
+echo "   L3_TABLE";		tr 71 m=L3_TABLE c=0
+echo "   L3_HIT_BITS";		tr 71 m=L3_HIT_BITS c=0
+echo "   L3_VALID_BITS";	tr 71 m=L3_VALID_BITS c=0
+echo "   L3INTF";		tr 71 m=L3INTF c=0
+echo "   L3_IPMC";		tr 71 m=L3_IPMC c=0
+echo "   PORT_MAC_BLOCK";	tr 71 m=PORT_MAC_BLOCK c=0
+echo "   PORT";			tr 71 m=PORT c=0
+echo "   PRTABLE";		tr 71 m=PRTABLE c=0
+echo "   VLAN_STG";		tr 71 m=VLAN_STG c=0
+echo "   DMUXTRUNKDIST";	tr 71 m=DMUXTRUNKDIST c=0
+echo "   TRUNK_BITMAP";		tr 71 m=TRUNK_BITMAP c=0
+echo "   PORT_TRUNK_EGRESS";	tr 71 m=PORT_TRUNK_EGRESS c=0
+echo "   TRUNK_GROUP";		tr 71 m=TRUNK_GROUP c=0
+echo "   VLAN";			tr 71 m=VLAN c=0
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+linkscan off
+
+echo Running counter width verification test ...
+tr 30
+$done
+
+echo Running counter read/write test ...
+tr 31
+$done
+
+echo Running L2 insert/delete/lookup test ...
+tr 32
+$done
+
+echo Running L2 overflow insert test ...
+tr 33
+$done
+
+echo Running L2 hash test ...
+tr 34
+$done
+
+echo Running L2 delete by port test ...
+tr 35
+$done
+
+echo Running L2 delete by vlan test ...
+tr 36
+$done
+
+echo Running L3 overflow insert test ...
+tr 37
+$done
+
+echo Running L3 hash test ...
+tr 38
+$done
+
+# Loopback Tests
+# Each test loads rc.soc in case a previous test failed
+
+echo Testing CPU DMA loopback ...
+tr 17 c=5
+$done
+
+echo Testing CPU DMA, Scatter/Gather Reload ...
+tr 22
+$done
+
+echo Testing CPU DMA, Scatter/Gather Simple ...
+tr 23
+$done
+
+echo Testing CPU DMA, Scatter/Gather Random ...
+tr 24
+$done
+
+#--------- MAC Loopback ---------
+
+echo Testing MAC Loopback - 10000 Mb/s all XE/HG ports
+tr 18 pbm=xe,hg speed=10G
+
+$done
+
+#--------- PHY Loopback ---------
+
+echo Testing PHY Loopback - 10000 MB/s all XE/HG ports
+tr 19 pbm=xe,hg speed=10G
+$done
+
+#--------- INT snake Loopback ---------
+
+echo "Running internal snake on all ports, MAC loopback ..."
+tr 39 pbm=xe,hg loopbackmode=mac snakepath=two c=4
+
+echo "Running internal snake on all ports, PHY loopback ..."
+tr 39 pbm=xe,hg loopbackmode=phy snakepath=two c=4
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48 smi=103 dmi=42 vlan=5 pi=0x11335577 sendm=single
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49 smi=52 dmi=83 vlan=23 pi=0x01204007 sendm=array
+
+echo "Testing Filters"
+rcload rc.soc
+tr 70
+
+# Show status
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+rcload rc.soc
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"

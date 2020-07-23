@@ -1,0 +1,95 @@
+#
+# file: bcmptm_sbr_ha.yml
+# Strength Based Resolution (SBR) YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmptm_sbr_ha:
+        bcmptm_sbr_entry_state_t:
+            type: struct
+            comment: SBR profile table entry state.
+            fields:
+                ref_count:
+                    type: uint16_t
+                    comment: Number of tiles pointing to this SBR entry.
+                usage_mode:
+                    type: uint16_t
+                    comment: SBR entry usage mode.
+                ltid:
+                    type: uint32_t
+                    ltid:
+                    comment: Logical Table ID.
+                lookup_type:
+                    type: uint16_t
+                    comment: Logical Table lookup type.
+                pt_state_index:
+                    type: uint16_t
+                    comment: Parent SBR profile table state element array index.
+        bcmptm_sbr_pt_state_t:
+            type: struct
+            comment: SBR physical profile table state.
+            fields:
+                drd_sid:
+                    type: uint32_t
+                    comment: SBR main physical table DRD Source ID.
+                ext_drd_sid:
+                    type: uint32_t
+                    comment: Extension SBR physical table DRD Source ID.
+                entries_count:
+                    type: uint16_t
+                    comment: Total number of entries in this profile table.
+                free_entries_count:
+                    type: uint16_t
+                    comment: Total number of free entries in this profile table.
+                estate_base_index:
+                    type: uint16_t
+                    comment: Base index of this SBR profile table in the shared
+                             profile tables entries state array.
+        bcmptm_sbr_lt_lookup_state_tile_t:
+            type: struct
+            comment: SBR profile table entry state for a given logical table
+                     and associated lookup type.
+            fields:
+                in_use:
+                    type: bool
+                    comment: Set when this logical table lookup is in use for
+                             this tile.
+                entry_index:
+                    type: uint16_t
+                    comment: Shared SBR profile table entry state index. Actual
+                             SBR physical table entry index is computed by
+                             subtracting estate_base_index value from this entry
+                             index value.
+                spt_sid:
+                    type: uint32_t
+                    comment: SBR profile table DRD SID.
+        bcmptm_sbr_tile_state_t:
+            type: struct
+            comment: Tile logical table lookups corresponding SBR profile
+                     tables entries state.
+            fields:
+                tile_mode:
+                    type: uint32_t
+                    comment: Current tile mode of this tile.
+                lt_lookup0_base_index:
+                    type: uint32_t
+                    comment: Base index of the LT lookup0 entries of this tile
+                             in the shared tiles LT lookup state entries array.
+                lt_lookup0_count:
+                    type: uint16_t
+                    comment: Number of LT lookup0 entries in the tile lookup
+                             state array.
+                lt_lookup1_base_index:
+                    type: uint32_t
+                    comment: Base index of the LT lookup1 entries of this tile
+                             in the shared tiles LT lookup state entries array.
+                lt_lookup1_count:
+                    type: uint16_t
+                    comment: Number of LT lookup1 entries in the tile lookup
+                             state array.

@@ -1,0 +1,106 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport L3 RC (run commands) file
+#
+#       These are default commands that are for TechSupport L3.
+#
+
+# L3 commands.
+l3 ing_intf show
+l3 intf show
+l3 egress show
+l3 ecmp show
+l3 host show v6=0
+l3 host show v6=1
+l3 route show v6=0
+l3 route show v6=1
+
+# Show L3 related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Lookup Route related LTs.
+local lookup_lt 'bsh -c "lt \$lt lookup TABLE_ID\=\$ltid"'
+
+# Show Table Information of Route related LTs.
+local lt TABLE_INFO; local ltid L3_IPV4_UC_ROUTE;                    $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV4_UC_ROUTE_VRF;                $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV4_UC_ROUTE_OVERRIDE;           $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV6_UC_ROUTE;                    $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV6_UC_ROUTE_VRF;                $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV6_UC_ROUTE_OVERRIDE;           $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV4_UC_ROUTE;                $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV4_UC_ROUTE_VRF;            $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV4_UC_ROUTE_OVERRIDE;       $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV6_UC_ROUTE;                $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV6_UC_ROUTE_VRF;            $lookup_lt;
+local lt TABLE_INFO; local ltid L3_SRC_IPV6_UC_ROUTE_OVERRIDE;       $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV4_MC_ROUTE;                    $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV6_MC_ROUTE;                    $lookup_lt;
+
+# Show Table Control Information of Route related LTs.
+local lt TABLE_CONTROL; local ltid L3_IPV4_UC_ROUTE;                 $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV4_UC_ROUTE_VRF;             $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV4_UC_ROUTE_OVERRIDE;        $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV6_UC_ROUTE;                 $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV6_UC_ROUTE_VRF;             $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV6_UC_ROUTE_OVERRIDE;        $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV4_UC_ROUTE;             $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV4_UC_ROUTE_VRF;         $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV4_UC_ROUTE_OVERRIDE;    $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV6_UC_ROUTE;             $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV6_UC_ROUTE_VRF;         $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_SRC_IPV6_UC_ROUTE_OVERRIDE;    $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV4_MC_ROUTE;                 $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV6_MC_ROUTE;                 $lookup_lt;
+
+# Show Route related EM LTs.
+local lt DEVICE_EM_CONTROL;                             $traverse_lt;
+local lt DEVICE_EM_GROUP;                               $traverse_lt;
+
+# Show L3 Ingress Interface LTs.
+local lt L3_IIF;                                        $traverse_lt;
+local lt L3_IIF_PROFILE;                                $traverse_lt;
+
+# Show L3 Egress Object LTs.
+local lt L3_UC_NHOP;                       $traverse_lt;
+local lt L3_MC_NHOP;                       $traverse_lt;
+
+# Show ECMP LTs.
+local lt ECMP_CONTROL;                                  $traverse_lt;
+local lt ECMP;                                          $traverse_lt;
+local lt ECMP_WEIGHTED;                                 $traverse_lt;
+
+# Show ECMP DLB LTs.
+local lt DLB_ECMP_CONTROL;                              $traverse_lt;
+local lt DLB_ECMP;                                      $traverse_lt;
+local lt DLB_ECMP_PORT_CONTROL;                         $traverse_lt;
+local lt DLB_ECMP_MONITOR;                              $traverse_lt;
+local lt DLB_ECMP_STATS;                                $traverse_lt;
+
+# Show L3 Egress Interface LTs.
+local lt L3_EIF;                                        $traverse_lt;
+
+# Show L3 Route LTs.
+local lt L3_ALPM_CONTROL;                               $traverse_lt;
+local lt L3_IPV4_UC_ROUTE;                              $traverse_lt;
+local lt L3_IPV4_UC_ROUTE_OVERRIDE;                     $traverse_lt;
+local lt L3_IPV4_UC_ROUTE_VRF;                          $traverse_lt;
+local lt L3_SRC_IPV4_UC_ROUTE;                          $traverse_lt;
+local lt L3_SRC_IPV4_UC_ROUTE_OVERRIDE;                 $traverse_lt;
+local lt L3_SRC_IPV4_UC_ROUTE_VRF;                      $traverse_lt;
+local lt L3_IPV6_UC_ROUTE;                              $traverse_lt;
+local lt L3_IPV6_UC_ROUTE_OVERRIDE;                     $traverse_lt;
+local lt L3_IPV6_UC_ROUTE_VRF;                          $traverse_lt;
+local lt L3_SRC_IPV6_UC_ROUTE;                          $traverse_lt;
+local lt L3_SRC_IPV6_UC_ROUTE_OVERRIDE;                 $traverse_lt;
+local lt L3_SRC_IPV6_UC_ROUTE_VRF;                      $traverse_lt;
+local lt L3_IPV4_MC_ROUTE;                              $traverse_lt;
+local lt L3_IPV6_MC_ROUTE;                              $traverse_lt;
+
+# Show L3 MTU LT.
+local lt L3_MC_MTU;                                $traverse_lt;
+local lt L3_UC_MTU;                                $traverse_lt;
+local lt L3_UC_TNL_MTU;                            $traverse_lt;

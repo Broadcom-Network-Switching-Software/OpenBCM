@@ -1,0 +1,208 @@
+# $Id:
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# Dram dq swaps for BCM88270
+
+#Dram HW properties
+
+#RX polarity
+config add phy_rx_polarity_flip.BCM88270=0
+
+config add phy_rx_polarity_flip_phy1.BCM88270=0
+config add phy_rx_polarity_flip_phy2.BCM88270=1
+config add phy_rx_polarity_flip_phy3.BCM88270=1
+config add phy_rx_polarity_flip_phy4.BCM88270=0
+
+config add phy_rx_polarity_flip_phy5.BCM88270=1
+config add phy_rx_polarity_flip_phy6.BCM88270=0
+config add phy_rx_polarity_flip_phy7.BCM88270=0
+config add phy_rx_polarity_flip_phy8.BCM88270=1
+
+
+
+config add phy_rx_polarity_flip_phy9.BCM88270=0
+config add phy_rx_polarity_flip_phy10.BCM88270=1
+config add phy_rx_polarity_flip_phy11.BCM88270=1
+config add phy_rx_polarity_flip_phy12.BCM88270=1
+
+config add phy_rx_polarity_flip_phy13.BCM88270=0
+config add phy_rx_polarity_flip_phy14.BCM88270=0
+config add phy_rx_polarity_flip_phy15.BCM88270=0
+config add phy_rx_polarity_flip_phy16.BCM88270=0
+
+config add phy_rx_polarity_flip_phy17.BCM88270=1
+config add phy_rx_polarity_flip_phy18.BCM88270=0
+config add phy_rx_polarity_flip_phy19.BCM88270=0
+config add phy_rx_polarity_flip_phy20.BCM88270=0
+
+config add phy_rx_polarity_flip_phy21.BCM88270=0
+config add phy_rx_polarity_flip_phy22.BCM88270=1
+config add phy_rx_polarity_flip_phy23.BCM88270=1
+config add phy_rx_polarity_flip_phy24.BCM88270=1
+
+config add phy_rx_polarity_flip_phy25.BCM88270=1
+config add phy_rx_polarity_flip_phy26.BCM88270=0
+config add phy_rx_polarity_flip_phy27.BCM88270=0
+config add phy_rx_polarity_flip_phy28.BCM88270=0
+
+config add phy_rx_polarity_flip_phy29.BCM88270=0
+config add phy_rx_polarity_flip_phy30.BCM88270=0
+config add phy_rx_polarity_flip_phy31.BCM88270=0
+config add phy_rx_polarity_flip_phy32.BCM88270=1
+
+config add phy_rx_polarity_flip_phy33.BCM88270=0
+config add phy_rx_polarity_flip_phy34.BCM88270=0
+config add phy_rx_polarity_flip_phy35.BCM88270=1
+config add phy_rx_polarity_flip_phy36.BCM88270=0
+
+#TX polarity
+config add phy_tx_polarity_flip.BCM88270=0
+
+config add phy_tx_polarity_flip_phy1.BCM88270=0
+config add phy_tx_polarity_flip_phy2.BCM88270=1
+config add phy_tx_polarity_flip_phy3.BCM88270=1
+config add phy_tx_polarity_flip_phy4.BCM88270=0
+
+config add phy_tx_polarity_flip_phy5.BCM88270=0
+config add phy_tx_polarity_flip_phy6.BCM88270=0
+config add phy_tx_polarity_flip_phy7.BCM88270=0
+config add phy_tx_polarity_flip_phy8.BCM88270=0
+
+
+
+config add phy_tx_polarity_flip_phy9.BCM88270=1
+config add phy_tx_polarity_flip_phy10.BCM88270=0
+config add phy_tx_polarity_flip_phy11.BCM88270=1
+config add phy_tx_polarity_flip_phy12.BCM88270=1
+
+config add phy_tx_polarity_flip_phy13.BCM88270=1
+config add phy_tx_polarity_flip_phy14.BCM88270=1
+config add phy_tx_polarity_flip_phy15.BCM88270=0
+config add phy_tx_polarity_flip_phy16.BCM88270=1
+
+config add phy_tx_polarity_flip_phy17.BCM88270=0
+config add phy_tx_polarity_flip_phy18.BCM88270=0
+config add phy_tx_polarity_flip_phy19.BCM88270=0
+config add phy_tx_polarity_flip_phy20.BCM88270=1
+
+config add phy_tx_polarity_flip_phy21.BCM88270=1
+config add phy_tx_polarity_flip_phy22.BCM88270=1
+config add phy_tx_polarity_flip_phy23.BCM88270=1
+config add phy_tx_polarity_flip_phy24.BCM88270=1
+
+config add phy_tx_polarity_flip_phy25.BCM88270=1
+config add phy_tx_polarity_flip_phy26.BCM88270=1
+config add phy_tx_polarity_flip_phy27.BCM88270=1
+config add phy_tx_polarity_flip_phy28.BCM88270=1
+
+config add phy_tx_polarity_flip_phy29.BCM88270=0
+config add phy_tx_polarity_flip_phy30.BCM88270=1
+config add phy_tx_polarity_flip_phy31.BCM88270=0
+config add phy_tx_polarity_flip_phy32.BCM88270=0
+
+config add phy_tx_polarity_flip_phy33.BCM88270=0
+config add phy_tx_polarity_flip_phy34.BCM88270=0
+config add phy_tx_polarity_flip_phy35.BCM88270=0
+config add phy_tx_polarity_flip_phy36.BCM88270=0
+
+#rx lane swap
+config add phy_rx_lane_map.BCM88270=0x3210
+config add phy_rx_lane_map_quad0.BCM88270=0x3210
+config add phy_rx_lane_map_quad1.BCM88270=0x2103
+config add phy_rx_lane_map_quad2.BCM88270=0x2031
+config add phy_rx_lane_map_quad3.BCM88270=0x0213
+config add phy_rx_lane_map_quad4.BCM88270=0x0231
+config add phy_rx_lane_map_quad5.BCM88270=0x2031
+config add phy_rx_lane_map_quad6.BCM88270=0x0132
+config add phy_rx_lane_map_quad7.BCM88270=0x3210
+config add phy_rx_lane_map_quad8.BCM88270=0x3210
+
+#tx lane swap
+config add phy_tx_lane_map.BCM88270=0x3210
+config add phy_tx_lane_map_quad0.BCM88270=0x0312
+config add phy_tx_lane_map_quad1.BCM88270=0x3120
+config add phy_tx_lane_map_quad2.BCM88270=0x1302
+config add phy_tx_lane_map_quad3.BCM88270=0x0213
+config add phy_tx_lane_map_quad4.BCM88270=0x1203
+config add phy_tx_lane_map_quad5.BCM88270=0x1302
+config add phy_tx_lane_map_quad6.BCM88270=0x1023
+config add phy_tx_lane_map_quad7.BCM88270=0x3210
+config add phy_tx_lane_map_quad8.BCM88270=0x3210
+
+
+# Dram dq swaps for BCM88270
+#soc for interface = 0 byte = 0
+config add ext_ram_dq_swap_dram0_byte0_bit0.BCM88270=5
+config add ext_ram_dq_swap_dram0_byte0_bit1.BCM88270=3
+config add ext_ram_dq_swap_dram0_byte0_bit2.BCM88270=1
+config add ext_ram_dq_swap_dram0_byte0_bit3.BCM88270=7
+config add ext_ram_dq_swap_dram0_byte0_bit4.BCM88270=0
+config add ext_ram_dq_swap_dram0_byte0_bit5.BCM88270=4
+config add ext_ram_dq_swap_dram0_byte0_bit6.BCM88270=2
+config add ext_ram_dq_swap_dram0_byte0_bit7.BCM88270=6
+
+# soc for interface = 0 byte = 1
+config add ext_ram_dq_swap_dram0_byte1_bit0.BCM88270=7
+config add ext_ram_dq_swap_dram0_byte1_bit1.BCM88270=1
+config add ext_ram_dq_swap_dram0_byte1_bit2.BCM88270=5
+config add ext_ram_dq_swap_dram0_byte1_bit3.BCM88270=3
+config add ext_ram_dq_swap_dram0_byte1_bit4.BCM88270=6
+config add ext_ram_dq_swap_dram0_byte1_bit5.BCM88270=2
+config add ext_ram_dq_swap_dram0_byte1_bit6.BCM88270=4
+config add ext_ram_dq_swap_dram0_byte1_bit7.BCM88270=0
+
+# soc for interface = 0 byte = 2
+config add ext_ram_dq_swap_dram0_byte2_bit0.BCM88270=1
+config add ext_ram_dq_swap_dram0_byte2_bit1.BCM88270=5
+config add ext_ram_dq_swap_dram0_byte2_bit2.BCM88270=3
+config add ext_ram_dq_swap_dram0_byte2_bit3.BCM88270=4
+config add ext_ram_dq_swap_dram0_byte2_bit4.BCM88270=0
+config add ext_ram_dq_swap_dram0_byte2_bit5.BCM88270=7
+config add ext_ram_dq_swap_dram0_byte2_bit6.BCM88270=2
+config add ext_ram_dq_swap_dram0_byte2_bit7.BCM88270=6
+
+# soc for interface = 0 byte = 3
+config add ext_ram_dq_swap_dram0_byte3_bit0.BCM88270=3
+config add ext_ram_dq_swap_dram0_byte3_bit1.BCM88270=5
+config add ext_ram_dq_swap_dram0_byte3_bit2.BCM88270=7
+config add ext_ram_dq_swap_dram0_byte3_bit3.BCM88270=1
+config add ext_ram_dq_swap_dram0_byte3_bit4.BCM88270=6
+config add ext_ram_dq_swap_dram0_byte3_bit5.BCM88270=2
+config add ext_ram_dq_swap_dram0_byte3_bit6.BCM88270=0
+config add ext_ram_dq_swap_dram0_byte3_bit7.BCM88270=4
+
+# Dram bank addr swaps for BCM88270
+config add ext_ram_addr_bank_swap_dram0_bit12.BCM88270=4
+config add ext_ram_addr_bank_swap_dram0_bit5.BCM88270=5
+config add ext_ram_addr_bank_swap_dram0_bit9.BCM88270=15
+config add ext_ram_addr_bank_swap_dram0_bit15.BCM88270=17
+config add ext_ram_addr_bank_swap_dram0_bit7.BCM88270=6
+config add ext_ram_addr_bank_swap_dram0_bit13.BCM88270=7
+config add ext_ram_addr_bank_swap_dram0_bit6.BCM88270=8
+config add ext_ram_addr_bank_swap_dram0_bit14.BCM88270=9
+config add ext_ram_addr_bank_swap_dram0_bit10.BCM88270=10
+config add ext_ram_addr_bank_swap_dram0_bit11.BCM88270=11
+config add ext_ram_addr_bank_swap_dram0_bit8.BCM88270=12
+config add ext_ram_addr_bank_swap_dram0_bit4.BCM88270=13
+config add ext_ram_addr_bank_swap_dram0_bit2.BCM88270=0
+config add ext_ram_addr_bank_swap_dram0_bit0.BCM88270=1
+config add ext_ram_addr_bank_swap_dram0_bit1.BCM88270=2
+config add ext_ram_addr_bank_swap_dram0_bit17.BCM88270=14
+config add ext_ram_addr_bank_swap_dram0_bit16.BCM88270=16
+
+##Dram HW properties
+config add ext_ram_present.BCM88270=1
+config add dram_type_DDR4_MICRON_MT40A256M16GE_062_4GBIT=1
+config add ext_ram_freq.BCM88270=1000
+config add ext_ram_abi.BCM88270=0
+config add ext_ram_write_dbi.BCM88270=0
+config add ext_ram_read_dbi.BCM88270=0
+config add ext_ram_write_crc.BCM88270=0
+config add ext_ram_read_crc.BCM88270=0
+config add ext_ram_cmd_par_latency.BCM88270=6
+config add ext_ram_type.BCM88270=DDR4
+config add ext_ram_total_size.BCM88270=1024
+

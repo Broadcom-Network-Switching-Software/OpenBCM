@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- This XML file is for 88802 SKU Dynamic DNX DATA -->
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+             
+            <defines>
+            </defines >
+         
+            <numerics>
+                <numeric name="device_id" value="0x8802"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+    <module name="access">
+        <sub_module name="blocks">
+            <tables>
+                <table name="override">
+                    <entries>
+                        <entry index="0" block_type="ILE" block_instance="0" value="1"></entry>
+                        <entry index="1" block_type="ILE" block_instance="2" value="1"></entry>
+                        <entry index="2" block_type="ILU" block_instance="0" value="1"></entry>
+                        <entry index="3" block_type="ILU" block_instance="2" value="1"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+     </module>
+</device_data>

@@ -1,0 +1,1144 @@
+# $Id: tdsanity.soc,v 1.5 2011/06/30 23:11:31 wyuan Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Trident Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+if $?BCM56743_A0 || $?BCM56743_A1 || $?BCM56743_A2 || $?BCM56743_A3 || \
+   $?BCM56743_A4 || $?BCM56743_B0 || $?BCM56743_B1 \
+    'local titan 1'
+if $?BCM56745_A0 || $?BCM56745_A1 || $?BCM56745_A2 || $?BCM56743_A5 || \
+   $?BCM56745_A4 || $?BCM56745_B0 || $?BCM56745_B1 \
+    'local titan 1'
+if $?BCM56744_A0 || $?BCM56744_A1 \
+    'local titan 1'
+if $?BCM56746_A0 || $?BCM56746_A1 \
+    'local titan 1'
+
+echo "testsuite: started: sanity"
+rcload rc.soc
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init
+init misc
+
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+echo "Running CPU Benchmarks ..."
+tr 21
+$done
+linkscan off
+
+set rct=false
+
+echo "Running Switching Memory Tests ..."
+local name 'echo " $mem"';
+local tr50 'tr 50 Memory=$mem';
+local tr51 'tr 51 Memory=$mem';
+local tr52 'tr 52 Memory=$mem';
+
+init soc;
+local mem 'ALTERNATE_EMIRROR_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'ARB_TDM_TABLE_0'; $name; $tr50; $tr51; $tr52;
+local mem 'ARB_TDM_TABLE_1'; $name; $tr50; $tr51; $tr52;
+local mem 'BCAST_BLOCK_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'COS_MAP_SEL'; $name; $tr50; $tr51; $tr52;
+local mem 'CPU_COS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'CPU_COS_MAP_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'CPU_COS_MAP_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'CPU_PBM'; $name; $tr50;
+local mem 'CPU_PBM_2'; $name; $tr50;
+local mem 'CPU_TS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_FLOWSET_PORT_X'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_FLOWSET_PORT_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_GLB_QUANTIZE_THRESHOLDS'; $name; $tr50;
+local mem 'DLB_HGT_GROUP_CONTROL_X'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_GROUP_CONTROL_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_GROUP_MEMBERSHIP'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_GROUP_STATS_X'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_GROUP_STATS_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_LINK_CONTROL'; $name; $tr50;
+local mem 'DLB_HGT_OPTIMAL_CANDIDATE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_OPTIMAL_CANDIDATE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'DLB_HGT_PORT_QUALITY_MAPPING'; $name; $tr50; $tr51; $tr52;
+local mem 'DSCP_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'E2E_HOL_STATUS'; $name; $tr50; $tr51; $tr52;
+local mem 'E2E_HOL_STATUS_1'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_METER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_METER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_POLICY_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'EFP_TCAM'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_DSCP_ECN_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_DSCP_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_DVP_ATTRIBUTE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_EM_MTP_INDEX'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_ENABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_FRAGMENT_ID_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_FRAGMENT_ID_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_GPP_ATTRIBUTES'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_GPP_ATTRIBUTES_MODBASE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_IM_MTP_INDEX'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_ING_PORT'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_IPMC'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_IP_TUNNEL'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_IP_TUNNEL_IPV6'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_L3_INTF'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_L3_NEXT_HOP'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MAC_DA_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MAP_MH'; $name; $tr50; $tr51; $tr52;
+local mem 'EGRESS_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MASK_MODBASE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MIRROR_ENCAP_CONTROL'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MIRROR_ENCAP_DATA_1'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MIRROR_ENCAP_DATA_2'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_MOD_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PERQ_XMT_COUNTERS_BASE_ADDR'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PERQ_XMT_COUNTERS_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PERQ_XMT_COUNTERS_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PFC_CONTROL'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PORT'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PRI_CNG_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PW_INIT_COUNTERS_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_PW_INIT_COUNTERS_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_QCN_CNM_CONTROL_TABLE'; $name; $tr50;
+local mem 'EGR_SERVICE_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_SERVICE_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_TRILL_PARSE_CONTROL'; $name; $tr50;
+local mem 'EGR_TRILL_PARSE_CONTROL_2'; $name; $tr50;
+local mem 'EGR_TRILL_TREE_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VFI'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VINTF_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VINTF_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VLAN_STG'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VLAN_TAG_ACTION_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VLAN_XLATE'; $name; $tr50; $tr51; $tr52;
+local mem 'EMIRROR_CONTROL'; $name; $tr50; $tr51; $tr52;
+local mem 'EMIRROR_CONTROL1'; $name; $tr50; $tr51; $tr52;
+local mem 'EMIRROR_CONTROL2'; $name; $tr50; $tr51; $tr52;
+local mem 'EMIRROR_CONTROL3'; $name; $tr50; $tr51; $tr52;
+local mem 'EM_MTP_INDEX'; $name; $tr50; $tr51; $tr52;
+local mem 'EPC_LINK_BMAP'; $name; $tr50;
+local mem 'ESBS_PORT_TO_PIPE_MAPPING'; $name; $tr50;
+local mem 'FC_HEADER_TYPE'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_GM_FIELDS'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_METER_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_POLICY_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_PORT_FIELD_SEL'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_PORT_METER_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_RANGE_CHECK'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_SLICE_KEY_CONTROL'; $name; $tr50;
+local mem 'FP_SLICE_MAP'; $name; $tr50;
+local mem 'FP_STORM_CONTROL_METERS'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_TCAM'; $name; $tr50; $tr51; $tr52;
+local mem 'UDF_OFFSET'; $name; $tr50; $tr51; $tr52;
+local mem 'UDF_TCAM'; $name; $tr50; $tr51; $tr52;
+local mem 'HGT_DLB_CONTROL'; $name; $tr50; $tr51; $tr52;
+local mem 'HG_TRUNK_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'HG_TRUNK_FAILOVER_ENABLE'; $name; $tr50;
+local mem 'HG_TRUNK_FAILOVER_SET'; $name; $tr50; $tr51; $tr52;
+local mem 'HG_TRUNK_GROUP'; $name; $tr50; $tr51; $tr52;
+local mem 'HG_TRUNK_MEMBER'; $name; $tr50; $tr51; $tr52;
+local mem 'HIGIG_TRUNK_CONTROL'; $name; $tr50;
+local mem 'IARB_MAIN_TDM'; $name; $tr50; $tr51; $tr52;
+local mem 'ICONTROL_OPCODE_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'IFP_REDIRECTION_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'IMIRROR_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'IM_MTP_INDEX'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_DVP_2_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_DVP_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_EGRMSKBMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_EN_EFILTER_BITMAP'; $name; $tr50;
+local mem 'ING_HIGIG_TRUNK_OVERRIDE_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_L3_NEXT_HOP'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_MOD_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_OUTER_DOT1P_MAPPING_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_PHYSICAL_TO_LOGICAL_PORT_NUMBER_MAPPING_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_PRI_CNG_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_PW_TERM_SEQ_NUM_X'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_PW_TERM_SEQ_NUM_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_ROUTED_INT_PRI_MAPPING'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_SERVICE_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_SERVICE_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_TRILL_PARSE_CONTROL'; $name; $tr50;
+local mem 'ING_TRILL_PAYLOAD_PARSE_CONTROL'; $name; $tr50;
+local mem 'ING_UNTAGGED_PHB'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_VINTF_COUNTER_TABLE_X'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_VINTF_COUNTER_TABLE_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_VLAN_RANGE'; $name; $tr50; $tr51; $tr52;
+local mem 'ING_VLAN_TAG_ACTION_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'INITIAL_ING_L3_NEXT_HOP'; $name; $tr50; $tr51; $tr52;
+local mem 'INITIAL_L3_ECMP'; $name; $tr50; $tr51; $tr52;
+local mem 'INITIAL_L3_ECMP_GROUP'; $name; $tr50; $tr51; $tr52;
+local mem 'INITIAL_PROT_GROUP_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'INITIAL_PROT_NHI_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_VLAN0'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_VLAN1'; $name; $tr50; $tr51; $tr52;
+local mem 'IPV4_IN_IPV6_PREFIX_MATCH'; $name; $tr50; $tr51; $tr52;
+local mem 'ISBS_PORT_TO_PIPE_MAPPING'; $name; $tr50;
+local mem 'KNOWN_MCAST_BLOCK_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'L2MC'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_ENTRY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_BULK_MATCH_DATA'; $name; $tr50;
+local mem 'L2_BULK_MATCH_MASK'; $name; $tr50;
+local mem 'L2_BULK_REPLACE_DATA'; $name; $tr50;
+local mem 'L2_BULK_REPLACE_MASK'; $name; $tr50;
+local mem 'L2_ENTRY_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_HITDA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_HITSA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_MOD_FIFO'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_USER_ENTRY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_USER_ENTRY_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L2_USER_ENTRY_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_128'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_128_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_128_HIT_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_128_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_HIT_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_DEFIP_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ECMP'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ECMP_GROUP'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_HIT_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_IPV4_MULTICAST'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_IPV4_UNICAST'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_IPV6_MULTICAST'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_IPV6_UNICAST'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_ENTRY_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_IIF'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_IPMC'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_IPMC_1'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_IPMC_REMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_MTU_VALUES'; $name; $tr50; $tr51; $tr52;
+local mem 'L3_TUNNEL'; $name; $tr50; $tr51; $tr52;
+local mem 'LOCAL_SW_DISABLE_DEFAULT_PBM'; $name; $tr50; $tr51; $tr52;
+local mem 'LOCAL_SW_DISABLE_DEFAULT_PBM_MIRR'; $name; $tr50; $tr51; $tr52;
+local mem 'LPORT'; $name; $tr50; $tr51; $tr52;
+local mem 'PORT_MAC_BLOCK'; $name; $tr50; $tr51; $tr52;
+local mem 'MIRROR_CONTROL'; $name; $tr50; $tr51; $tr52;
+local mem 'AGING_CTR'; $name; $tr50; $tr51; $tr52;
+local mem 'AGING_EXP'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA0'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA1'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA2'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA3'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA4'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA5'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA6'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA7'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA8'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA9'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA10'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA11'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA12'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA13'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA14'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA15'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA16'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA17'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA18'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA19'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA20'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA21'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA22'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA23'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA24'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA25'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA26'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA27'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA28'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA29'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA30'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA31'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA32'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA33'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA34'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA35'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA36'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA37'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA38'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA39'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA40'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA41'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA42'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA43'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA44'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA45'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA46'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA47'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA48'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA49'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA50'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA51'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA52'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA53'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA54'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA55'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA56'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA60'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA61'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA62'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA63'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA64'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA65'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA66'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA67'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA68'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA69'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA70'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA71'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA72'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA73'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA74'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA75'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA76'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA77'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA78'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA79'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA80'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA81'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA82'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA83'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA84'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA85'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA86'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA87'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA88'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA89'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA90'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA91'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA92'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA93'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA94'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA95'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA96'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA97'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA98'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA99'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA100'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA101'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA102'; $name; $tr50; $tr51; $tr52;
+local mem 'CBPDATA103'; $name; $tr50; $tr51; $tr52;
+local mem 'CCP'; $name; $tr50; $tr51; $tr52;
+local mem 'CELLCHK0'; $name; $tr50; $tr51; $tr52;
+local mem 'CELLCHK1'; $name; $tr50; $tr51; $tr52;
+local mem 'CELLCHK2'; $name; $tr50; $tr51; $tr52;
+local mem 'CELLCHK3'; $name; $tr50; $tr51; $tr52;
+local mem 'CELLLINK'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK0'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK1'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK2'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK3'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK4'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK5'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK6'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK7'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK8'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK9'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK10'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK11'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK12'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK13'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK14'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_CFAP_BANK15'; $name; $tr50; $tr51; $tr52;
+local mem 'CPQLINK'; $name; $tr50; $tr51; $tr52;
+local mem 'CTR_COLOR_DROP'; $name; $tr50; $tr51; $tr52;
+local mem 'CTR_MC_DROP'; $name; $tr50; $tr51; $tr52;
+local mem 'CTR_UC_DROP'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP1'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP2'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP3'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP4'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP5'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP6'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP7'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP8'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP9'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP10'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP11'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP12'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP13'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP14'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP15'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP16'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP17'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP18'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP19'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP20'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP21'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP22'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP23'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP24'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP25'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP26'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP27'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP28'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP29'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP30'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP31'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP32'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP33'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP34'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP35'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP36'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP37'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP38'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP39'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP40'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP41'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP42'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP43'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP44'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP45'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP46'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP47'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP48'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP49'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP50'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP51'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP52'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP53'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP54'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP55'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP56'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP57'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP60'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP61'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP62'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP63'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP64'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_GROUP65'; $name; $tr50; $tr51; $tr52;
+local mem 'IPMC_VLAN'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO1'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO2'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO3'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO4'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO5'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO6'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO7'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO8'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO9'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO10'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO11'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO12'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO13'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO14'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO15'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO16'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO17'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO18'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO19'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO20'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO21'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO22'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO23'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO24'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO25'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO26'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO27'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO28'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO29'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO30'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO31'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO32'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO33'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO34'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO35'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO36'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO37'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO38'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO39'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO40'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO41'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO42'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO43'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO44'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO45'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO46'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO47'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO48'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO49'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO50'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO51'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO52'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO53'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO54'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO55'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO56'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO57'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO58'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO59'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO60'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO61'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO62'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO63'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO64'; $name; $tr50; $tr51; $tr52;
+local mem 'MC_FIFO65'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK0_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK0_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK0_MEM2'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK0_MEM3'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK1_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK1_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK1_MEM2'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK1_MEM3'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK2_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK2_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK2_MEM2'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK2_MEM3'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK3_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK3_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK3_MEM2'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_BANK3_MEM3'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_DISTRIBUTOR_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_DISTRIBUTOR_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_DISTRIBUTOR_MEM2'; $name; $tr50; $tr51; $tr52;
+local mem 'OVQ_DISTRIBUTOR_MEM3'; $name; $tr50; $tr51; $tr52;
+local mem 'PKTHDR'; $name; $tr50; $tr51; $tr52;
+local mem 'PKTLINK'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_PQE_MEM0'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_PQE_MEM1'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_QCN_CNM_COUNTER'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_QCN_CNM_QUEUE0'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_QCN_CNM_QUEUE1'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_CPQCFG'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_CPQST_QLEN'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_CPQST_TSSLS'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_ENABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_QFBTB'; $name; $tr50; $tr51; $tr52;
+local mem 'QCN_SITB'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_SP_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_SP_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_SP_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_SP_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_EX_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_EX_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_SP_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QDRPRST_SP_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_EX_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_EX_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_SP_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QREDRST_SP_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_EX_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_EX_1'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_SP_0'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_QYELRST_SP_1'; $name; $tr50; $tr51; $tr52;
+local mem 'UCQ_RP'; $name; $tr50; $tr51; $tr52;
+local mem 'UCQ_WP'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_0'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_1'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_2'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_3'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_4'; $name; $tr50; $tr51; $tr52;
+local mem 'MMU_WRED_DROP_CURVE_PROFILE_5'; $name; $tr50; $tr51; $tr52;
+local mem 'WRED_DROP_THD_UC_DEQ0'; $name; $tr50; $tr51; $tr52;
+local mem 'WRED_DROP_THD_UC_DEQ1'; $name; $tr50; $tr51; $tr52;
+local mem 'WRED_DROP_THD_UC_ENQ0'; $name; $tr50; $tr51; $tr52;
+local mem 'WRED_DROP_THD_UC_ENQ1'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_M0'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_M1'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_M2'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_M3'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_MIRROR'; $name; $tr50; $tr51; $tr52;
+local mem 'MODPORT_MAP_SW'; $name; $tr50; $tr51; $tr52;
+local mem 'MULTIPASS_LOOPBACK_BITMAP'; $name; $tr50;
+local mem 'MY_STATION_TCAM'; $name; $tr50; $tr51; $tr52;
+local mem 'MY_STATION_TCAM_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'MY_STATION_TCAM_ENTRY_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'NONUCAST_TRUNK_BLOCK_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'PHB2_COS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'PORT_BRIDGE_BMAP'; $name; $tr50;
+local mem 'PORT_BRIDGE_MIRROR_BMAP'; $name; $tr50;
+local mem 'PORT_CBL_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'PORT_CBL_TABLE_MODBASE'; $name; $tr50; $tr51; $tr52;
+local mem 'COS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'PORT_LAG_FAILOVER_SET'; $name; $tr50; $tr51; $tr52;
+local mem 'PORT'; $name; $tr50; $tr51; $tr52;
+local mem 'SOURCE_MOD_PROXY'; $name; $tr50; $tr51; $tr52;
+local mem 'SOURCE_TRUNK_MAP_MODBASE'; $name; $tr50; $tr51; $tr52;
+local mem 'SOURCE_TRUNK_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'SOURCE_VP'; $name; $tr50; $tr51; $tr52;
+local mem 'SRC_MODID_EGRESS'; $name; $tr50; $tr51; $tr52;
+local mem 'SRC_MODID_INGRESS_BLOCK'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_STG'; $name; $tr50; $tr51; $tr52;
+local mem 'SYSTEM_CONFIG_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'SYSTEM_CONFIG_TABLE_MODBASE'; $name; $tr50; $tr51; $tr52;
+local mem 'TCP_FN'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_0A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_0B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_1A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_1B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_0A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_0B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_1A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_CONFIG_EX_1B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_0A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_0B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_1A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_1B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_0A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_0B'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_1A'; $name; $tr50; $tr51; $tr52;
+local mem 'THDO_OFFSET_EX_1B'; $name; $tr50; $tr51; $tr52;
+local mem 'TOS_FN'; $name; $tr50; $tr51; $tr52;
+local mem 'TRILL_DROP_STATS'; $name; $tr50;
+local mem 'TRUNK_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'TRUNK_CBL_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'TRUNK_GROUP'; $name; $tr50; $tr51; $tr52;
+local mem 'TRUNK_MEMBER'; $name; $tr50; $tr51; $tr52;
+local mem 'TTL_FN'; $name; $tr50; $tr51; $tr52;
+local mem 'UNKNOWN_HGI_BITMAP'; $name; $tr50; $tr51; $tr52;
+local mem 'UNKNOWN_MCAST_BLOCK_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'UNKNOWN_UCAST_BLOCK_MASK'; $name; $tr50; $tr51; $tr52;
+local mem 'VFI'; $name; $tr50; $tr51; $tr52;
+local mem 'VFI_1'; $name; $tr50; $tr51; $tr52;
+local mem 'VFP_POLICY_TABLE'; $name; $tr50; $tr51; $tr52;
+local mem 'VFP_TCAM'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_COS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_MAC'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_PROFILE_2'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_PROFILE'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_PROTOCOL'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_PROTOCOL_DATA'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_SUBNET'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_SUBNET_DATA_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_SUBNET_ONLY'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN'; $name; $tr50; $tr51; $tr52;
+local mem 'VLAN_XLATE'; $name; $tr50; $tr51; $tr52;
+local mem 'VOQ_COS_MAP'; $name; $tr50; $tr51; $tr52;
+local mem 'VRF'; $name; $tr50; $tr51; $tr52;
+
+init soc
+init misc
+local mem 'FP_GLOBAL_MASK_TCAM_X'; $name; $tr50; $tr51; $tr52;
+local mem 'FP_GLOBAL_MASK_TCAM_Y'; $name; $tr50; $tr51; $tr52;
+local mem 'EGR_VLAN'; $name; $tr50; $tr51; $tr52;
+$done
+
+#Table DMA/Table SLAM
+echo "Running Table DMA Tests ..."
+local name 'echo " $mem"';
+local tr71_1 'tr 71 m=$mem s=0 c=0 tse=f slth=t';
+local tr71_2 'tr 71 m=$mem s=0 c=0 tse=t slth=t';
+local tr71_3 'tr 71 m=$mem s=0 c=0 tse=t slth=f';
+
+init soc
+local mem 'ALTERNATE_EMIRROR_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'BCAST_BLOCK_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'COS_MAP_SEL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_COS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_COS_MAP_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_COS_MAP_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_PBM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_PBM_2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'CPU_TS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_FLOWSET_PORT_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_FLOWSET_PORT_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GLB_QUANTIZE_THRESHOLDS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GROUP_CONTROL_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GROUP_CONTROL_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GROUP_MEMBERSHIP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GROUP_STATS_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_GROUP_STATS_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_LINK_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_OPTIMAL_CANDIDATE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_OPTIMAL_CANDIDATE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DLB_HGT_PORT_QUALITY_MAPPING'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'DSCP_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'E2E_HOL_STATUS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'E2E_HOL_STATUS_1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_METER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_METER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_POLICY_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EFP_TCAM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_DSCP_ECN_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_DSCP_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_DVP_ATTRIBUTE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_EM_MTP_INDEX'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_ENABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_FRAGMENT_ID_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_FRAGMENT_ID_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_GPP_ATTRIBUTES'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_GPP_ATTRIBUTES_MODBASE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_IM_MTP_INDEX'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_ING_PORT'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_IPMC'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_IP_TUNNEL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_IP_TUNNEL_IPV6'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_L3_INTF'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_L3_NEXT_HOP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MAC_DA_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MAP_MH'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGRESS_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MASK_MODBASE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MIRROR_ENCAP_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MIRROR_ENCAP_DATA_1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MIRROR_ENCAP_DATA_2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_MOD_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PERQ_XMT_COUNTERS_BASE_ADDR'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PERQ_XMT_COUNTERS_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PERQ_XMT_COUNTERS_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PFC_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PORT'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PRI_CNG_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PW_INIT_COUNTERS_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_PW_INIT_COUNTERS_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_QCN_CNM_CONTROL_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_SERVICE_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_SERVICE_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_TRILL_PARSE_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_TRILL_PARSE_CONTROL_2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_TRILL_TREE_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VFI'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VINTF_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VINTF_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VLAN_STG'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VLAN_TAG_ACTION_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EGR_VLAN_XLATE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EMIRROR_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EMIRROR_CONTROL1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EMIRROR_CONTROL2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EMIRROR_CONTROL3'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EM_MTP_INDEX'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'EPC_LINK_BMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ESBS_PORT_TO_PIPE_MAPPING'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FC_HEADER_TYPE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_GM_FIELDS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_METER_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_POLICY_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_PORT_FIELD_SEL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_PORT_METER_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_RANGE_CHECK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_SLICE_KEY_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_SLICE_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_STORM_CONTROL_METERS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_TCAM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'UDF_OFFSET'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'UDF_TCAM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HGT_DLB_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HG_TRUNK_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HG_TRUNK_FAILOVER_ENABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HG_TRUNK_FAILOVER_SET'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HG_TRUNK_GROUP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HG_TRUNK_MEMBER'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'HIGIG_TRUNK_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'IARB_MAIN_TDM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ICONTROL_OPCODE_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'IFP_REDIRECTION_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'IMIRROR_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'IM_MTP_INDEX'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_DVP_2_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_DVP_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_EGRMSKBMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_EN_EFILTER_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_HIGIG_TRUNK_OVERRIDE_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_L3_NEXT_HOP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_MOD_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_OUTER_DOT1P_MAPPING_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_PHYSICAL_TO_LOGICAL_PORT_NUMBER_MAPPING_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_PRI_CNG_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_PW_TERM_SEQ_NUM_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_PW_TERM_SEQ_NUM_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_ROUTED_INT_PRI_MAPPING'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_SERVICE_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_SERVICE_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_TRILL_PARSE_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_TRILL_PAYLOAD_PARSE_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_UNTAGGED_PHB'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_VINTF_COUNTER_TABLE_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_VINTF_COUNTER_TABLE_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_VLAN_RANGE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ING_VLAN_TAG_ACTION_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'INITIAL_ING_L3_NEXT_HOP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'INITIAL_L3_ECMP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'INITIAL_L3_ECMP_GROUP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'INITIAL_PROT_GROUP_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'INITIAL_PROT_NHI_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'IPV4_IN_IPV6_PREFIX_MATCH'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'ISBS_PORT_TO_PIPE_MAPPING'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'KNOWN_MCAST_BLOCK_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2MC'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_ENTRY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_BULK_MATCH_DATA'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_BULK_MATCH_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_BULK_REPLACE_DATA'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_BULK_REPLACE_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_ENTRY_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_HITDA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_HITSA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_MOD_FIFO'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_USER_ENTRY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_USER_ENTRY_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L2_USER_ENTRY_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_128'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_128_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_128_HIT_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_128_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_HIT_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_DEFIP_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ECMP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ECMP_GROUP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_HIT_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_IPV4_MULTICAST'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_IPV4_UNICAST'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_IPV6_MULTICAST'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_IPV6_UNICAST'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_ENTRY_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_IIF'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_IPMC'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_IPMC_1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_IPMC_REMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_MTU_VALUES'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'L3_TUNNEL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'LOCAL_SW_DISABLE_DEFAULT_PBM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'LOCAL_SW_DISABLE_DEFAULT_PBM_MIRR'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'LPORT'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_MAC_BLOCK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MIRROR_CONTROL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_M0'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_M1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_M2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_M3'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_MIRROR'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MODPORT_MAP_SW'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MULTIPASS_LOOPBACK_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MY_STATION_TCAM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MY_STATION_TCAM_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'MY_STATION_TCAM_ENTRY_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'NONUCAST_TRUNK_BLOCK_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PHB2_COS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_BRIDGE_BMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_BRIDGE_MIRROR_BMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_CBL_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_CBL_TABLE_MODBASE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'COS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT_LAG_FAILOVER_SET'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'PORT'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SOURCE_MOD_PROXY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SOURCE_TRUNK_MAP_MODBASE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SOURCE_TRUNK_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SOURCE_VP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SRC_MODID_EGRESS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SRC_MODID_INGRESS_BLOCK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_STG'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SYSTEM_CONFIG_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'SYSTEM_CONFIG_TABLE_MODBASE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TCP_FN'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TOS_FN'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TRILL_DROP_STATS'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TRUNK_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TRUNK_CBL_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TRUNK_GROUP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TRUNK_MEMBER'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'TTL_FN'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'UNKNOWN_HGI_BITMAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'UNKNOWN_MCAST_BLOCK_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'UNKNOWN_UCAST_BLOCK_MASK'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VFI'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VFI_1'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VFP_POLICY_TABLE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VFP_TCAM'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_COS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_MAC'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_PROFILE_2'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_PROFILE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_PROTOCOL'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_PROTOCOL_DATA'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_SUBNET'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_SUBNET_DATA_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_SUBNET_ONLY'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VLAN_XLATE'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VOQ_COS_MAP'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'VRF'; $name; $tr71_1; $tr71_2; $tr71_3;
+
+init misc
+local mem 'FP_GLOBAL_MASK_TCAM_X'; $name; $tr71_1; $tr71_2; $tr71_3;
+local mem 'FP_GLOBAL_MASK_TCAM_Y'; $name; $tr71_1; $tr71_2; $tr71_3;
+$done
+
+# Re-initialize to clean up of various read/wrires to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#L2/L3 hashing tests
+if !$?titan \
+    'echo "Running L2 insert/delete/lookup test ..." \
+     tr 32 \
+     $done'
+
+if !$?titan \
+    'echo "Running L2 overflow insert test ..." \
+     tr 33 \
+     $done'
+
+if !$?titan \
+    'echo "Running L2 hash test ..." \
+     tr 34 \
+     $done'
+
+if !$?titan \
+    'echo "Running L2 delete by port test ..." \
+     tr 35 \
+     $done'
+
+if !$?titan \
+    'echo "Running L2 delete by vlan test ..." \
+     tr 36 \
+     $done'
+
+if !$?titan \
+    'echo "Running IPV4 overflow insert test ..." \
+     tr 87 IPMCEnable=False \
+     tr 87 IPMCEnable=True \
+     $done'
+
+if !$?titan \
+    'echo "Running IPV4 hash test ..." \
+     tr 88 IPMCEnable=False \
+     tr 88 IPMCEnable=True \
+     $done'
+
+if !$?titan \
+    'echo "Running IPV6 overflow insert test ..." \
+     tr 85 IPMCEnable=False \
+     tr 85 IPMCEnable=True \
+     $done'
+
+if !$?titan \
+    'echo "Running IPV6 hash test ..." \
+     tr 86 IPMCEnable=False \
+     tr 86 IPMCEnable=True \
+     $done'
+
+echo "Running VLAN translate overflow insert test ..."
+tr 100
+
+echo "Running VLAN translate hash tests ..."
+tr 101 Hash=0
+tr 101 Hash=1
+tr 101 Hash=2
+tr 101 Hash=3
+tr 101 Hash=4
+tr 101 Hash=5
+$done
+
+echo "Running Egress VLAN translate overflow insert test ..."
+tr 102
+$done
+
+echo "Running Egress VLAN translate hash tests ..."
+tr 103 Hash=0
+tr 103 Hash=1
+tr 103 Hash=2
+tr 103 Hash=3
+tr 103 Hash=4
+tr 103 Hash=5
+$done
+
+echo "Running MDIO Linkscan test"
+tr 60
+$done
+
+if !$?titan \
+    'echo "Testing CPU DMA loopback ..." \
+     tr 17 \
+     $done'
+
+echo "Testing CPU DMA, Scatter/Gather Reload ..."
+tr 22
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Simple ..."
+tr 23
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Random ..."
+tr 24
+$done
+
+#MAC Loopback
+echo "Testing MAC Loopback - 10 Gb/s all XE ports"
+tr 18 PortBitMap=xe Speed=10G
+$done
+
+echo "Testing MAC Loopback - 10 Gb/s all HG ports"
+tr 18 PortBitMap=hg Speed=10G
+$done
+
+#PHY Loopback
+echo "Testing PHY Loopback - 10 Gb/s all XE ports"
+tr 19 PortBitMap=xe Speed=10G
+$done
+
+echo "Testing PHY Loopback - 10 Gb/s all HG ports"
+tr 19 PortBitMap=hg Speed=10G
+$done
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48
+$done
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49
+$done
+
+#Internal snake Loopback
+if !$?titan \
+    'echo "Running internal snake on all ports, MAC loopback ..." \
+     tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=xe \
+     $done'
+
+if !$?titan \
+    'echo "Running internal snake on all ports, PHY loopback ..." \
+     tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=xe \
+     $done'
+
+#Traffic Test
+echo "Running Traffic Test in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=xe
+$done
+
+echo "Running Traffic Test in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=xe
+$done
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xe2-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+#
+# tr 72 rm=external pbm=xe0,xe4 an=f sp=10g
+# tr 72 rm=external pbm=xe1,xe5 an=f sp=10g
+# tr 72 rm=external pbm=xe2,xe6 an=f sp=10g
+# tr 72 rm=external pbm=xe3,xe7 an=f sp=10g
+# tr 72 rm=external pbm=xe8,xe12 an=f sp=10g
+# tr 72 rm=external pbm=xe9,xe13 an=f sp=10g
+# tr 72 rm=external pbm=xe10,xe14 an=f sp=10g
+# tr 72 rm=external pbm=xe11,xe15 an=f sp=10g
+# ...
+# tr 72 rm=external pbm=xe56,xe60 an=f sp=10g
+# tr 72 rm=external pbm=xe57,xe61 an=f sp=10g
+# tr 72 rm=external pbm=xe58,xe62 an=f sp=10g
+# tr 72 rm=external pbm=xe59,xe63 an=f sp=10g
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xem-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+# echo "Running external loopback ..."
+# tr 20 tpbm=xe0-xe3 di=4 an=f s=10g
+# tr 20 tpbm=xe8-xe11 di=4 an=f s=10g
+# tr 20 tpbm=xe16-xe19 di=4 an=f s=10g
+# tr 20 tpbm=xe24-xe27 di=4 an=f s=10g
+# tr 20 tpbm=xe32-xe35 di=4 an=f s=10g
+# tr 20 tpbm=xe40-xe43 di=4 an=f s=10g
+# tr 20 tpbm=xe48-xe51 di=4 an=f s=10g
+# tr 20 tpbm=xe56-xe59 di=4 an=f s=10g
+# $done
+
+echo "Running Soft Error Recovery test..."
+linkscan off
+tr 144
+$done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

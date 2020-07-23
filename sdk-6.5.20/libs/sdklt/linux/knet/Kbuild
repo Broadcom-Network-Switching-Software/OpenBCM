@@ -1,0 +1,32 @@
+# -*- Kbuild -*-
+#
+# Linux KNET module.
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+obj-m := linux_ngknet.o
+
+ccflags-y := $(KNET_CPPFLAGS) $(LKM_CFLAGS) \
+             -I$(SDK)/shr/include \
+             -I$(SDK)/bcmdrd/include \
+             -I$(SDK)/linux/include \
+             -I$(SDK)/linux/knet/include \
+             -I$(SDK)/linux/knet
+
+linux_ngknet-y := $(CHIP_OBJS) \
+                  bcmcnet_cmicd_pdma_hw.o \
+                  bcmcnet_cmicd_pdma_rxtx.o \
+                  bcmcnet_cmicx_pdma_hw.o \
+                  bcmcnet_cmicx_pdma_rxtx.o \
+                  bcmcnet_core.o \
+                  bcmcnet_dev.o \
+                  bcmcnet_rxtx.o \
+                  ngknet_buff.o \
+                  ngknet_callback.o \
+                  ngknet_extra.o \
+                  ngknet_linux.o \
+                  ngknet_main.o \
+                  ngknet_procfs.o

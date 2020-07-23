@@ -1,0 +1,20 @@
+# $Id: Make.config,v 1.429.8.1.4.2 2013/07/22 01:39:00 xueming Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Helper makefile for integrating the PCIEPHY library into the SDK builds.
+#
+
+# Map pciephy library name to SDK library name
+ifeq (,$(lib))
+lib = $(LIBNAME)
+endif
+
+# Duplicate pciephy rule for C source compilation
+$(BLDDIR)/%.$(OBJSUFFIX): %.c $(BLDDIR)/.tree
+	@$(ECHO) 'Compiling $(LOCALDIR)/$<'
+	$(Q)$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+# Include SDK library rules to support Linux shared library builds
+include $(SDK)/make/Make.lib

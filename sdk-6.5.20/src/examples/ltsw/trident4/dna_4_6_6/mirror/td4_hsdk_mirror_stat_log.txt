@@ -1,0 +1,71 @@
+BCM.0> c TD4_HSDK_Mirror_stat.c
+execute(): Start
+config show; attach; version
+~~~ #1) test_setup(): ** start **
+ingress_port_setup port: 1 setup
+egress_port_setup port: 2 setup
+mtp_port_setup port: 3 setup
+Block traffic ingress from MTP to avoid continuous traffic. This is for test purpose
+~~~ #1) test_setup(): ** end **
+~~~ #2) configure_port_mirror(): ** start **
+~~~ #2) configure_port_mirror(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e) 
+vlan 21 ports cd0-cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+
+
+Sending packet to ingress_port:1, broadcast to egress_port 2, expected to be ingress and egress mirrored to port 3
+Packet from data=<>, length=98
+
+
+======== Verify Mirror Result========
+Ingress Mirror counter get: 1
+Egress Mirror counter get:  1
+Mirrored out : 2 packets from MTP: 3
+Packet verify OK.
+
+XLMIB_TBYT.cd0                        :                   102                +102
+XLMIB_RBYT.cd0                        :                   102                +102
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                   102                +102
+XLMIB_RBYT.cd1                        :                   102                +102
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+MC_PERQ_PKT(0).cd1                    :                     1                  +1
+MC_PERQ_BYTE(0).cd1                   :                   102                +102
+XLMIB_TBYT.cd2                        :                   204                +204
+XLMIB_RBYT.cd2                        :                   204                +204
+XLMIB_TPOK.cd2                        :                     2                  +2
+XLMIB_RPOK.cd2                        :                     2                  +2
+XLMIB_TVLN.cd2                        :                     2                  +2
+XLMIB_RVLN.cd2                        :                     2                  +2
+XLMIB_TUCA.cd2                        :                     2                  +2
+XLMIB_RUCA.cd2                        :                     2                  +2
+XLMIB_TPKT.cd2                        :                     2                  +2
+XLMIB_RPKT.cd2                        :                     2                  +2
+XLMIB_T127.cd2                        :                     2                  +2
+XLMIB_R127.cd2                        :                     2                  +2
+XLMIB_RPRM.cd2                        :                     2                  +2
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

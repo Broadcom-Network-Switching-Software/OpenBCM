@@ -1,0 +1,340 @@
+#
+# file: bcmptm_rm_hash_local.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    RM_HASH_MAX_GRP_INST_COUNT: 2
+    RM_HASH_BM_NUM: 4
+    RM_HASH_SHR_MAX_SLB_COUNT: 24
+    RM_HASH_SHR_MAX_BLKS_COUNT: 256
+    RM_HASH_MAX_TBL_INST_COUNT: 8
+    RM_HASH_MAX_KEY_WORDS: 12
+    RM_HASH_NARROW_ENTRY_LITD_NUM: 3
+
+component:
+    bcmptm_rm_hash_local:
+        rm_hash_ent_loc_t:
+            type: struct
+            comment: Bucket and base entry bitmap for each entry.
+            fields:
+                bb_bmp:
+                    type: uint8_t
+                    comment: Base bucket in which the entry exists.
+
+                be_bmp:
+                    type: uint8_t
+                    comment: Base entries occupied by the entry.
+
+                le_bmp:
+                    type: uint8_t
+                    comment: Logical entries occupied by the entry.
+
+        rm_hash_ent_slb_t:
+            type: struct
+            comment: Software logical bucket info for each entry.
+            fields:
+                slb_info_offset:
+                    comment: List of all the logical buckets for the entry.
+                    type: uint32_t
+
+                num_slb_info:
+                    comment: Number of valid SLBs for this entry.
+                    type: uint8_t
+
+                bm:
+                    comment: Bucket mode of the entry.
+                    type: uint8_t
+
+                num_rbanks:
+                    comment: Number of banks containing the entry currently.
+                    type: uint8_t
+
+                e_node_idx:
+                    comment: List of entry node index.
+                    type: uint8_t
+                    length: RM_HASH_MAX_GRP_INST_COUNT
+
+        rm_hash_ent_node_t:
+            type: struct
+            comment: Entry node for each hash LT entry.
+            fields:
+                sig:
+                    comment: Signature of an entry.
+                    type: uint32_t
+
+                sid:
+                    comment: Physical table sid thru which the entry was installed.
+                    type: uint32_t
+
+                ent_slb:
+                    comment: Software logical bucket info of an entry.
+                    type: rm_hash_ent_slb_t
+
+                e_loc:
+                    comment: Base bucket and base entry location of an entry.
+                    type: rm_hash_ent_loc_t
+
+                flag:
+                    comment: Flag indicating the node attribute.
+                    type: uint8_t
+
+                nm_loc:
+                    comment: Narrow mode entry location.
+                    type: uint8_t
+
+        rm_hash_bm_t:
+            type: enum
+            fields:
+                RM_HASH_BM_N: 0
+                RM_HASH_BM_0: 1
+                RM_HASH_BM_1: 2
+                RM_HASH_BM_2: 3
+                RM_HASH_BM_CNT: 4
+
+        rm_hash_entry_narrow_mode_t:
+            type: enum
+            fields:
+                BCMPTM_RM_HASH_ENTRY_NARROW_MODE_NONE: 0
+                BCMPTM_RM_HASH_ENTRY_NARROW_MODE_HALF: 1
+                BCMPTM_RM_HASH_ENTRY_NARROW_MODE_THIRD: 2
+                BCMPTM_RM_HASH_ENTRY_NARROW_MODE_COUNT: 3
+
+        rm_hash_slb_ent_bmp_t:
+            type: struct
+            comment: Base entry and logical entry usage in a logical bucket.
+            fields:
+                be_bmp:
+                    comment: Used base entries in this slb.
+                    type: uint16_t
+
+                le_bmp:
+                    comment: Used logical entries in this slb.
+                    type: uint16_t
+                    length: RM_HASH_BM_NUM
+
+        rm_hash_slb_state_t:
+            type: struct
+            comment: Information about a software logical bucket.
+            fields:
+                e_node_offset:
+                    comment: Offset of the 1st entry node belonging to this slb.
+                    type: uint32_t
+
+                e_bmp:
+                    comment: Entry base entry and logical entry info.
+                    type: rm_hash_slb_ent_bmp_t
+
+                ve_cnt:
+                    comment: Count of existing valid entries.
+                    type: uint8_t
+
+        rm_hash_ent_slb_info_t:
+            type: struct
+            comment: Software logical buckets an entry can reside.
+            fields:
+                slb:
+                    comment: Software logical bucket index.
+                    type: uint32_t
+
+                vbb_bmp:
+                    comment: Valid hardware base bucket bitmap for this entry.
+                    type: uint8_t
+
+                map:
+                    comment: Group of the slb.
+                    type: uint8_t
+
+        rm_hash_nme_bmp_t:
+            type: struct
+            comment: Narrow mode entry bitmap.
+            fields:
+                bmp:
+                    comment: Bitmap of sixth base entry.
+                    type: uint8_t
+
+                ltid:
+                    comment: Ltid of the narrow entry.
+                    type: uint32_t
+                    enum: LTID_T
+                    length: RM_HASH_NARROW_ENTRY_LITD_NUM
+
+                nm:
+                    comment: Narrow mode of the entry.
+                    type: rm_hash_entry_narrow_mode_t
+                    length: RM_HASH_NARROW_ENTRY_LITD_NUM
+
+        rm_hash_trans_state_t:
+            type: enum
+            fields:
+                BCMPTM_RM_HASH_STATE_IDLE: 0
+                BCMPTM_RM_HASH_STATE_UC_A: 1
+                BCMPTM_RM_HASH_STATE_INVALIDATING_U: 2
+                BCMPTM_RM_HASH_STATE_RESTORING_U: 4
+
+        rm_hash_trans_record_t:
+            type: struct
+            comment: Information about transaction maintained by rm hash.
+            fields:
+                cseq_id:
+                    comment: Current transaction sequence id.
+                    type: uint32_t
+
+                trans_state:
+                    comment: Current transaction state.
+                    type: rm_hash_trans_state_t
+
+        rm_hash_trans_undo_opcode_t:
+            type: enum
+            fields:
+                BCMPTM_RM_HASH_UNDO_ENT_INSERT: 0
+                BCMPTM_RM_HASH_UNDO_ENT_DELETE: 1
+
+        rm_hash_trans_undo_node_t:
+            type: struct
+            comment: Information about an undo operation in the undo list.
+            fields:
+                opcode:
+                    comment: Opcode of an undo operation.
+                    type: rm_hash_trans_undo_opcode_t
+
+                b_state_offset:
+                    comment: Offset of the bucket state in which the undo will operate.
+                    type: uint32_t
+
+                e_node:
+                    comment: Entry node for which the undo operation will be performed.
+                    type: rm_hash_ent_node_t
+
+                num_slb_info:
+                    comment: Number of valid SLBs for this entry.
+                    type: uint8_t
+
+                slb_info:
+                    comment: Record the SLB information.
+                    type: rm_hash_ent_slb_info_t
+                    length: RM_HASH_SHR_MAX_SLB_COUNT
+
+                pipe:
+                    comment: Pipe instance.
+                    type: uint8_t
+
+        rm_hash_trans_undo_ctrl_t:
+            type: struct
+            comment: Information about transaction undo list control.
+            fields:
+                used_node_cnt:
+                    comment: Count of undo instructions in the current non-full chunk.
+                    type: uint32_t
+
+                full_chunk_cnt:
+                    comment: Count of full chunks.
+                    type: uint32_t
+
+                num_chunks:
+                    comment: Number of undo list chunks.
+                    type: uint32_t
+
+        rm_hash_state_blk_t:
+            type: struct
+            comment: Information about a HA block for hash resource manager.
+            fields:
+                sid:
+                    comment: Physical table sid of the slb block.
+                    type: uint32_t
+
+                bank:
+                    comment: Bank number of the slb block.
+                    type: uint16_t
+
+                tbl_inst:
+                    comment: Table instance or pipe of the slb block.
+                    type: uint16_t
+
+                blk:
+                    comment: Block id of the slb block.
+                    type: uint16_t
+
+        rm_hash_bkt_state_blk_ctrl_t:
+            type: struct
+            comment: Per unit information about HA blocks for software logical buckets.
+            fields:
+                curr:
+                    comment: Current count of blocks for software logical buckets.
+                    type: uint16_t
+
+                array:
+                    comment: Array of blocks for software logical buckets.
+                    type: rm_hash_state_blk_t
+                    length: RM_HASH_SHR_MAX_BLKS_COUNT
+
+        rm_hash_ent_node_blk_ctrl_t:
+            type: struct
+            comment: Per unit information about HA blocks for entry nodes.
+            fields:
+                curr:
+                    comment: Current count of blocks for entry nodes.
+                    type: uint16_t
+
+                array:
+                    comment: Array of blocks for entry nodes.
+                    type: rm_hash_state_blk_t
+                    length: RM_HASH_SHR_MAX_BLKS_COUNT
+
+        rm_hash_slb_info_blk_ctrl_t:
+            type: struct
+            comment: Per unit information about HA blocks for software logical bucket info.
+            fields:
+                curr:
+                    comment: Current count of blocks for software logical bucket info.
+                    type: uint16_t
+
+                array:
+                    comment: Array of blocks for software logical bucket info.
+                    type: rm_hash_state_blk_t
+                    length: RM_HASH_SHR_MAX_BLKS_COUNT
+
+        rm_hash_nme_bmp_blk_ctrl_t:
+            type: struct
+            comment: Per unit information about HA blocks for narrow mode entry bitmap.
+            fields:
+                curr:
+                    comment: Current count of blocks for narrow mode entry bitmap.
+                    type: uint16_t
+
+                array:
+                    comment: Array of blocks for narrow mode entry bitmap.
+                    type: rm_hash_state_blk_t
+                    length: RM_HASH_SHR_MAX_BLKS_COUNT
+
+        rm_hash_store_hdr_t:
+            type: struct
+            comment: Per unit information about HA blocks for header of hash store entry block.
+            fields:
+                count:
+                    comment: Real count of hash store entry block.
+                    type: uint32_t
+
+                size:
+                    comment: Array size of hash store entry block.
+                    type: uint32_t
+
+        rm_hash_store_ent_t:
+            type: struct
+            comment: Per unit information for hash store entry of a LT.
+            fields:
+                store_val:
+                    comment: Hash store value.
+                    type: uint32_t
+
+                full_key:
+                    comment: Related full key.
+                    type: uint32_t
+                    length: RM_HASH_MAX_KEY_WORDS
+

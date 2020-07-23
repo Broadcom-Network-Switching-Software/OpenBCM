@@ -1,0 +1,38 @@
+#
+# file: mon_int_ha.yml
+# YAML file describing the HA data structures for Inband Telemetry.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   OPER_STATE_COUNT: 6
+
+component:
+   bcmcth_mon:
+       bcmcth_mon_int_ha_t:
+           type: struct
+           fields:
+               init:
+                   type: bool
+                   comment: Indicates that the embedded app was initialized or not.
+               run:
+                   type: bool
+                   comment: Indicates if the embedded app is running or not. If this field is true, then it implies init is also true.
+               collector:
+                   type: bool
+                   comment: Indicates that the collector has been created in the app. If this field is true, then it implies run is also true.
+               uc_num:
+                   type: uint8_t
+                   comment: The microcontroller number on which the embedded app is running.
+               oper_states:
+                   type: bool
+                   length: OPER_STATE_COUNT
+                   comment: Mapping of the operational states and their current status.
+               ipfix_enterprise_number:
+                   type: uint32_t
+                   comment: IPFIX enterprise number.

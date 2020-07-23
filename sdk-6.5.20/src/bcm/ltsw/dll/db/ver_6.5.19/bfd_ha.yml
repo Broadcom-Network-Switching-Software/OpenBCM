@@ -1,0 +1,43 @@
+#
+# file: bfd_ha.yml
+# BFD YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMI_BFD_ENDPOINT_ID_MAX:   (0x00000800)
+   BCMI_BFD_BITWID: 32
+   BCMI_BFD_HA_EID_BMP_SIZE:  (((BCMI_BFD_ENDPOINT_ID_MAX) + BCMI_BFD_BITWID - 1) / BCMI_BFD_BITWID)
+
+component:
+    bcmi_bfd:
+        bcmi_bfd_epid_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMI_BFD_HA_EID_BMP_SIZE
+                    comment: Endpoint ID bitmap array.
+        bcmi_bfd_ep_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ep_type:
+                    type: int
+                    comment: Endpoint type.
+                egress_if:
+                    type: int
+                    comment: Egress interface.
+                gport:
+                    type: int
+                    comment: Gport.
+                tx_gport:
+                    type: int
+                    comment: TX Gport.

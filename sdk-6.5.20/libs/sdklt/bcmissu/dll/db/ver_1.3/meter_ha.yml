@@ -1,0 +1,139 @@
+#
+# file: meter_ha.yml
+# METER YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    MAX_CONTAINERS: 4
+    METER_PAIR_NUM: 2
+
+component:
+    bcmcth_meter:
+        bcmcth_meter_action_pdd_offset_t:
+            type: struct
+            fields:
+                en:
+                    type: bool
+                    comment: Flag to indicate if the action is enabled in PDD.
+                in_use:
+                    type: bool
+                    length: MAX_CONTAINERS
+                    comment: Indicator if the container is being used.
+                offset:
+                    type: uint32_t
+                    length: MAX_CONTAINERS
+                    comment: Offsets of the containers in the policy table.
+
+        bcmcth_meter_hw_params_t:
+            type: struct
+            fields:
+                meter_pair_index:
+                    type: uint32_t
+                    comment: Meter pair index.
+                meter_hw_index:
+                    type: uint32_t
+                    comment: Meter hw index.
+                meter_pair_mode:
+                    type: uint8_t
+                    comment: Meter mode.
+                mode_modifier:
+                    type: uint8_t
+                    comment: Meter mode modifier.
+                meter_update_odd:
+                    type: uint8_t
+                    comment:  Meter update odd.
+                meter_test_odd:
+                    type: uint8_t
+                    comment: Meter test odd.
+                meter_update_even:
+                    type: uint8_t
+                    comment: Meter update even.
+                meter_test_even:
+                    type: uint8_t
+                    comment: Meter test even.
+                byte_mode:
+                    type: uint8_t
+                    comment: Meter mode, bytes or packets.
+                refresh_mode:
+                    type: uint8_t
+                    comment: Meter refresh mode.
+                gran:
+                    type: uint8_t
+                    length: METER_PAIR_NUM
+                    comment: Meter granularity.
+                refresh_count:
+                    type: uint32_t
+                    length: METER_PAIR_NUM
+                    comment: Meter refresh count.
+                bucket_size:
+                    type: uint32_t
+                    length: METER_PAIR_NUM
+                    comment: Meter bucket size.
+                bucket_count:
+                    type: uint32_t
+                    length: METER_PAIR_NUM
+                    comment: Meter bucket count.
+
+        bcmcth_meter_fp_entry_t:
+            type: struct
+            fields:
+                meter_in_use:
+                    type: bool
+                    comment: Flag to indicate if the meter is in use.
+                meter_installed:
+                    type: bool
+                    comment: Meter installed in hardware.
+                pool:
+                    type: uint8_t
+                    comment: Meter pool instance.
+                pipe:
+                    type: uint8_t
+                    comment: Meter pipe ID.
+                hw_fields:
+                    type: bcmcth_meter_hw_params_t
+                    comment: Meter entry hardware fields.
+                ref_count:
+                    type: uint32_t
+                    comment: Meter entry reference count.
+
+        bcmcth_meter_sc_entry_t:
+            type: struct
+            fields:
+                port_id:
+                    type: uint32_t
+                    comment: Port number.
+                meter_id:
+                    type: uint32_t
+                    comment: Per port storm control meter id.
+                meter_in_use:
+                    type: bool
+                    comment: Flag to indicate if meter is currently in use.
+                meter_rate_kbps:
+                    type: uint64_t
+                    comment: Metering rate in kbps.
+                burst_size_kbits:
+                    type: uint32_t
+                    comment: Burst size in kbits.
+                meter_rate_pps:
+                    type: uint64_t
+                    comment: Metering rate in pps.
+                burst_size_pkts:
+                    type: uint32_t
+                    comment: Burst size in packets.
+                meter_rate_kbps_oper:
+                    type: uint64_t
+                    comment: Operational metering rate in kbps.
+                burst_size_kbits_oper:
+                    type: uint32_t
+                    comment: Operational burst size in kbits.
+                meter_rate_pps_oper:
+                    type: uint64_t
+                    comment: Operational metering rate in pps.
+                burst_size_pkts_oper:
+                    type: uint32_t
+                    comment: Operational burst size in packets.

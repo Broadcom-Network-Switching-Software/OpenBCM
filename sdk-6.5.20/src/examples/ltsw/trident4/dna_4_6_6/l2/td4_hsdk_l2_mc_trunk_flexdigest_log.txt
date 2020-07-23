@@ -1,0 +1,805 @@
+
+BCM.0> init all
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmcth_mon_st_init: uKernel Telemetry application not available
+BCM.0>
+BCM.0> c td4_hsdk_l2_mc_trunk_flexdigest.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 18:45:20 2019)
+From sdkrel@lc-sj1-3890:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_9, BCM56880_A0_IDNA_4_4_9
+~~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+~~~ #1) test_setup(): ** end **
+~~~ #2) setup_l2_forwarding(): ** start **
+create vlan 20
+Trunk ports configuration
+Trunk Create, tid=1, rv=0x0
+Trunk Set 0x0
+~~~ #2) setup_l2_forwarding(): ** end **
+~~~ #3) verify(): ** start **
+vlan show
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 20 ports cd0-cd2 (0x0000000000000000000000000000000000000000000000000000000000000000000000000000000e), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+l2 show
+mac=01:00:5e:00:00:11 vlan=20 GPORT=0x0 modid=0 port=0/cpu0 Static CPU MCast=20
+trunk show
+Device supports 1088 trunk groups:
+  1024 front panel trunks (0..1023), 128 ports/trunk
+  64 fabric trunks (1024..1087), 128 ports/trunk
+trunk 1: (front panel, 2 ports)=cd1,cd2 dlf=any mc=any ipmc=any psc=portflow (0x9)
+multicast show
+Group 0x1000014 (L2)
+        port cd1, encap id -1
+        port cd2, encap id -1
+
+Sending 10 multicast packets with increment source mac on ingress port:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {01005e000011} {000000000005} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[1]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:05> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {01005e000011} {000000000005} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[2]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x3
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x3
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:05> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {01005e000011} {000000000006} 8100 0014
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[3]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[3]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[3]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:06> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {01005e000011} {000000000006} 8100 0014
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[4]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[4]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x2
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:06> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {01005e000011} {000000000007} 8100 0014
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[5]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[5]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[5]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:07> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {01005e000011} {000000000007} 8100 0014
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[6]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[6]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[6]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x3
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x3
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:07> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {01005e000011} {000000000008} 8100 0014
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[7]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[7]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[7]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:08> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {01005e000011} {000000000008} 8100 0014
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[8]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[8]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[8]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x3
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x3
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:08> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {01005e000011} {000000000009} 8100 0014
+[bcmPWN.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[9]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[9]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[9]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[9]:
+Packet[9]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:09> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {01005e000011} {000000000009} 8100 0014
+[bcmPWN.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[10]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[10]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[10]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x2
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[10]:
+Packet[10]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:09> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {01005e000011} {00000000000a} 8100 0014
+[bcmPWN.0]Packet[11]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[11]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[11]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[11]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[11]:
+Packet[11]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0a> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {01005e000011} {00000000000a} 8100 0014
+[bcmPWN.0]Packet[12]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[12]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[12]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[12]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x3
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x3
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[12]:
+Packet[12]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0a> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[12]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {01005e000011} {00000000000b} 8100 0014
+[bcmPWN.0]Packet[13]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[13]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[13]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[13]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+
+[bcmPWN.0]Packet[13]:
+Packet[13]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0b> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[13]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: data[0000]: {01005e000011} {00000000000b} 8100 0014
+[bcmPWN.0]Packet[14]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[14]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[14]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[14]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x2
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[14]:
+Packet[14]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0b> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[14]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: data[0000]: {01005e000011} {00000000000c} 8100 0014
+[bcmPWN.0]Packet[15]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[15]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[15]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[15]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[15]:
+Packet[15]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0c> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[15]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]: data[0000]: {01005e000011} {00000000000c} 8100 0014
+[bcmPWN.0]Packet[16]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[16]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[16]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[16]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x2
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[16]:
+Packet[16]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0c> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[16]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]: data[0000]: {01005e000011} {00000000000d} 8100 0014
+[bcmPWN.0]Packet[17]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[17]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[17]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[17]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[17]:
+Packet[17]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0d> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[17]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]: data[0000]: {01005e000011} {00000000000d} 8100 0014
+[bcmPWN.0]Packet[18]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[18]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[18]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[18]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3(3)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x3
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x3
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[18]:
+Packet[18]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0d> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[18]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[19]: data[0000]: {01005e000011} {00000000000e} 8100 0014
+[bcmPWN.0]Packet[19]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[19]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[19]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[19]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x1(1)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0x1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x1
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x1
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[19]:
+Packet[19]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0e> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[19]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[20]: data[0000]: {01005e000011} {00000000000e} 8100 0014
+[bcmPWN.0]Packet[20]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPWN.0]Packet[20]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[20]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[20]: data[0040]: 4fc0 f25e
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x401222(4198946)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        L2_IIF_10_0                     :0xa1
+        VFI_15_0                        :0x14
+        INGRESS_PP_PORT_7_0             :0x2
+        EFFECTIVE_TTL_7_0               :0x40
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1818
+        PARSER_VHLEN_0_15_0             :0x8a
+        SYSTEM_SOURCE_15_0              :0x2
+        SYSTEM_DESTINATION_15_0         :0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[20]:
+Packet[20]:   Ethernet: dst<01:00:5e:00:00:11> src<00:00:00:00:00:0e> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[20]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+show c
+XLMIB_TBYT.cd0                        :                   720                +720
+XLMIB_RBYT.cd0                        :                   720                +720
+XLMIB_TPOK.cd0                        :                    10                 +10
+XLMIB_RPOK.cd0                        :                    10                 +10
+XLMIB_TVLN.cd0                        :                    10                 +10
+XLMIB_RVLN.cd0                        :                    10                 +10
+XLMIB_TMCA.cd0                        :                    10                 +10
+XLMIB_RMCA.cd0                        :                    10                 +10
+XLMIB_TPKT.cd0                        :                    10                 +10
+XLMIB_RPKT.cd0                        :                    10                 +10
+XLMIB_T127.cd0                        :                    10                 +10
+XLMIB_R127.cd0                        :                    10                 +10
+XLMIB_TBYT.cd1                        :                   360                +360
+XLMIB_RBYT.cd1                        :                   360                +360
+XLMIB_TPOK.cd1                        :                     5                  +5
+XLMIB_RPOK.cd1                        :                     5                  +5
+XLMIB_TVLN.cd1                        :                     5                  +5
+XLMIB_RVLN.cd1                        :                     5                  +5
+XLMIB_TMCA.cd1                        :                     5                  +5
+XLMIB_RMCA.cd1                        :                     5                  +5
+XLMIB_TPKT.cd1                        :                     5                  +5
+XLMIB_RPKT.cd1                        :                     5                  +5
+XLMIB_T127.cd1                        :                     5                  +5
+XLMIB_R127.cd1                        :                     5                  +5
+MC_PERQ_PKT(0).cd1                    :                     5                  +5
+MC_PERQ_BYTE(0).cd1                   :                   360                +360
+XLMIB_TBYT.cd2                        :                   360                +360
+XLMIB_RBYT.cd2                        :                   360                +360
+XLMIB_TPOK.cd2                        :                     5                  +5
+XLMIB_RPOK.cd2                        :                     5                  +5
+XLMIB_TVLN.cd2                        :                     5                  +5
+XLMIB_RVLN.cd2                        :                     5                  +5
+XLMIB_TMCA.cd2                        :                     5                  +5
+XLMIB_RMCA.cd2                        :                     5                  +5
+XLMIB_TPKT.cd2                        :                     5                  +5
+XLMIB_RPKT.cd2                        :                     5                  +5
+XLMIB_T127.cd2                        :                     5                  +5
+XLMIB_R127.cd2                        :                     5                  +5
+MC_PERQ_PKT(0).cd2                    :                     5                  +5
+MC_PERQ_BYTE(0).cd2                   :                   360                +360
+
+verify l2 learning:
+l2 show
+mac=00:00:00:00:00:05 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:06 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:07 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:08 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:09 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:0a vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:0b vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:0c vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:0d vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:0e vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=01:00:5e:00:00:11 vlan=20 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU MCast=20
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

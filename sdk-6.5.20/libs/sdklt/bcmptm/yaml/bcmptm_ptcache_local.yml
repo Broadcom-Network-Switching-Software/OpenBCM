@@ -1,0 +1,145 @@
+#
+# file: bcmptm_ptcache_local.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmptm_ptcache_local:
+        bcmptm_ptcache_sinfo_t:
+            type: struct
+            comment: Info to be stored for every physical SID.
+            fields:
+                cw_index:
+                    type: uint32_t
+                    comment: Index into seds/cwme array for SE/ME PTs.  cci_map_id for CCI_ONLY type PTs.
+                index_en:
+                    type: bool
+                    comment: Ignore index in pt_dyn_info when en = FALSE.
+                tbl_inst_en:
+                    type: bool
+                    comment: Ignore tbl_inst in pt_dyn_info when en = FALSE.
+                ptcache_type:
+                    type: uint8_t
+                    comment: Identifies type of PT.
+
+        bcmptm_ptcache_pt_group_info_t:
+            type: struct
+            comment: Info to be stored for every physical table (PT) group.
+            fields:
+                num_banks:
+                    type: uint32_t
+                    comment: Number of banks in pt_group. Not applicable for group_0.
+
+                start_bank:
+                    type: uint32_t
+                    comment: Start bank. For group_0, Not applicable for group_0.
+
+                valid_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in valid_seg (vinfo_array).
+
+                data_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in vinfo_array.data_seg.
+
+                dfid_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in vinfo_array.dfid_seg.
+
+                info_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in vinfo_array.info_seg.
+
+                tc_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in vinfo_array.tc_seg.
+
+                ltid_seg_word_count:
+                    type: uint32_t
+                    comment: Number of words in ltid_seg.
+
+        bcmptm_ptcache_xinfo_t:
+            type: struct
+            comment: Extended info for every physical SID with multiple entries..
+            fields:
+                data_seg_en:
+                    type: bool
+                    comment: TRUE => data_seg avail.
+
+                info_seg_en:
+                    type: bool
+                    comment: TRUE => info_seg avail.
+
+                tc_seg_en:
+                    type: bool
+                    comment: TRUE => tcam_corrupt_seg avail.
+
+                dfid_seg_en:
+                    type: uint8_t
+                    comment: 0 means no dfid_seg. 1,2 specify number of bytes per dfid.
+
+                ltid_seg_en:
+                    type: bool
+                    comment: TRUE => ltid_seg avail.
+
+                overlay_mode:
+                    type: uint8_t
+                    comment: non-zero => is overlay (narrow view) of another (wider view) sid and implies there is no 'explicit' data_seg for this sid. Instead, we implicitly have data_seg to store overlay_info_words.
+
+                num_we_field:
+                    type: uint8_t
+                    comment: Number of wide_entry field words in data_seg.
+
+                pt_group:
+                    type: uint8_t
+                    comment: Support up to 256 PT groups. 0 is the DEFAULT (fixed) group.
+
+        bcmptm_ptcache_cwme_t:
+            type: struct
+            comment: Control word for PTs with multiple entries.
+            fields:
+                xinfo:
+                    type: bcmptm_ptcache_xinfo_t
+                    comment: Extended info.
+
+                vs_base:
+                    type: uint32_t
+                    comment: Points to 1st word in valid_seg.
+
+                ds_base:
+                    type: uint32_t
+                    comment: Points to 1st word in data_seg.
+
+                dfs_base:
+                    type: uint32_t
+                    comment: Points to 1st word in dfid_seg.
+
+                is_base:
+                    type: uint32_t
+                    comment: Points to 1st word in info_seg.
+
+                tcs_base:
+                    type: uint32_t
+                    comment: Points to 1st word in tcam_corrupt_seg.
+
+                ls_base:
+                    type: uint32_t
+                    comment: Points to 1st word in ltid_seg.
+
+                pt_index_count:
+                    type: uint32_t
+                    comment: index_count for one instance of multi-entry mem.
+
+                pt_index_min:
+                    type: uint32_t
+                    comment: index_min.
+
+                tbl_inst_max:
+                    type: int16_t
+                    comment: Last instance for tables with multiple instances.

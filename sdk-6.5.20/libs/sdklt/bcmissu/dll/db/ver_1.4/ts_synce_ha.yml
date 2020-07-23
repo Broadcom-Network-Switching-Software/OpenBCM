@@ -1,0 +1,37 @@
+#
+# file: bcmcth_synce_ha.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    SYNCE_CLK_TYPE_MAX: 2
+component:
+    bcmcth_synce:
+        bcmcth_ts_synce_ha_t:
+            type: struct
+            fields:
+                clk_recovery:
+                    type: bool
+                    length: SYNCE_CLK_TYPE_MAX
+                    comment: Indicate if SYNEC clk configs are taking effect
+                port_oper:
+                    type: uint16_t
+                    length: SYNCE_CLK_TYPE_MAX
+                    comment: Operational value of port ID
+                clk_divisor_oper:
+                    type: uint16_t
+                    length: SYNCE_CLK_TYPE_MAX
+                    comment: Operational value of clock divisor
+                ovr_valid_oper:
+                    type: bool
+                    length: SYNCE_CLK_TYPE_MAX
+                    comment: Operational value of valid status in override mode
+                override_oper:
+                    type: bool
+                    comment: Operational value of override mode

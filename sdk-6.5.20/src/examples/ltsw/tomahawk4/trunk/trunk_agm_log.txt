@@ -1,0 +1,114 @@
+[BEGIN] 2/27/2020 12:04:30
+cint
+
+Entering C Interpreter. Type 'exit;' to quit.
+
+cint> int unit = 0;
+
+cint> int options = 0, rv;
+
+cint> uint32_t stat_counter_id;
+
+cint> bcm_trunk_t tid;
+
+cint> bcm_trunk_info_t t_add_info;
+
+cint> bcm_trunk_member_t member_array;
+
+cint> bcm_flexctr_action_t action = {0};
+
+cint> bcm_flexctr_index_operation_t *index_op = &action.index_operation;
+
+cint> bcm_flexctr_value_operation_t *value_a_op = &action.operation_a;
+
+cint> bcm_flexctr_value_operation_t *value_b_op = &action.operation_b;
+
+cint> action.source = bcmFlexctrSourceTrunk;
+
+cint> action.mode = bcmFlexctrCounterModeNormal;
+
+cint> action.index_num = 1;
+
+cint> 
+
+cint> index_op->object[0] = bcmFlexctrObjectConstZero;
+
+cint> index_op->mask_size[0] = 15;
+
+cint> index_op->shift[0] = 0;
+
+cint> index_op->object[1] = bcmFlexctrObjectConstZero;
+
+cint> index_op->mask_size[1] = 1;
+
+cint> index_op->shift[1] = 0;
+
+cint> value_a_op->select = bcmFlexctrValueSelectCounterValue;
+
+cint> value_a_op->object[0] = bcmFlexctrObjectConstOne;
+
+cint> value_a_op->mask_size[0] = 15;
+
+cint> value_a_op->shift[0] = 0;
+
+cint> value_a_op->object[1] = bcmFlexctrObjectConstZero;
+
+cint> value_a_op->mask_size[1] = 1;
+
+cint> value_a_op->shift[1] = 0;
+
+cint> value_a_op->type = bcmFlexctrValueOperationTypeInc;
+
+cint> 
+
+cint> value_b_op->select = bcmFlexctrValueSelectPacketLength;
+
+cint> value_b_op->type = bcmFlexctrValueOperationTypeInc;
+
+cint> print bcm_flexctr_action_create(unit, options, &action, &stat_counter_id);
+
+int $$ = 0 (0x0)
+cint> print bcm_trunk_create(unit, 0, &tid);
+
+int $$ = 0 (0x0)
+cint> bcm_trunk_info_t_init(&t_add_info);
+
+cint> t_add_info.dlf_index = BCM_TRUNK_UNSPEC_INDEX;
+
+cint> t_add_info.mc_index = BCM_TRUNK_UNSPEC_INDEX;
+
+cint> t_add_info.ipmc_index = BCM_TRUNK_UNSPEC_INDEX;
+
+cint> 
+
+cint> bcm_trunk_member_t_init(&member_array);
+
+cint> BCM_GPORT_MODPORT_SET(member_array.gport, 0, 1)
+
+print bcm_trunk_set(unit, tid, &t_add_info, 1, &member_array);
+
+^^^^^ syntax error, unexpected PRINT, expecting ',' or ';'
+cint> BCM_GPORT_MODPORT_SET(member_array.gport, 0, 1);
+
+cint> print bcm_trunk_set(unit, tid, &t_add_info, 1, &member_array);
+
+int $$ = 0 (0x0)
+cint> 
+
+cint> print bcm_trunk_stat_attach(unit, tid, stat_counter_id);
+
+int $$ = 0 (0x0)
+cint> print bcm_trunk_stat_id_get(unit, tid, &stat_counter_id);
+
+int $$ = 0 (0x0)
+cint> print stat_counter_id;
+
+uint32 stat_counter_id = 268435457 (0x10000001)
+cint> print bcm_trunk_stat_detach(unit, tid, stat_counter_id);
+
+int $$ = 0 (0x0)
+cint> print bcm_flexctr_action_destroy(unit, stat_counter_id);
+
+int $$ = 0 (0x0)
+cint> 
+[END] 2/27/2020 12:07:55

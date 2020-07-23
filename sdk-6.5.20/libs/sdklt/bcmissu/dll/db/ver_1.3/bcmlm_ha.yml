@@ -1,0 +1,41 @@
+#
+# file: bcmlm_ha.yml
+# LM YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    BCMLM_PBMP_WORD_MAX: 18
+
+component:
+    bcmlm:
+        bcmlm_pbmp_t:
+            type: struct
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMLM_PBMP_WORD_MAX
+                    comment: Bitmap of ports.
+
+        bcmlm_pbm_ha_t:
+            type: struct
+            fields:
+                pbm_logical_link:
+                    type: bcmlm_pbmp_t
+                    comment: Logical link state for ports.
+                pbm_fault:
+                    type: bcmlm_pbmp_t
+                    comment: Ports receiving/transmitting fault.
+                pbm_physical_link:
+                    type: bcmlm_pbmp_t
+                    comment: Physical link state for ports.
+                pbm_force:
+                    type: bcmlm_pbmp_t
+                    comment: Force up/down ports.
+                pbm_force_link:
+                    type: bcmlm_pbmp_t
+                    comment: Force up/down state.

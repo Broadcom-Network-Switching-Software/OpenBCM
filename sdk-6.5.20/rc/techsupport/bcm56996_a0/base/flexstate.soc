@@ -1,0 +1,42 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport FLEXSTATE RC (run commands) file
+#
+#       These are default commands that are for TechSupport FLEXSTATE.
+#
+
+# Show S/W state in FLEXSTATE.
+dump sw flexstate
+
+# Show FLEXSTATE related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+local lt FLEX_STATE_CONFIG;                                        $traverse_lt;
+
+# Show FLEXSTATE related Inress State LTs.
+local lt FLEX_STATE_ING_ACTION_PROFILE;                            $traverse_lt;
+local lt FLEX_STATE_ING_ACTION_PROFILE_INFO;                       $traverse_lt;
+local lt FLEX_STATE_ING_ERROR_STATS;                               $traverse_lt;
+local lt FLEX_STATE_ING_GROUP_ACTION_PROFILE;                      $traverse_lt;
+local lt FLEX_STATE_ING_OBJ_QUANTIZATION;                          $traverse_lt;
+local lt FLEX_STATE_ING_OPERAND_PROFILE;                           $traverse_lt;
+local lt FLEX_STATE_ING_POOL_INFO;                                 $traverse_lt;
+local lt FLEX_STATE_ING_RANGE_CHK_PROFILE;                         $traverse_lt;
+local lt FLEX_STATE_ING_STATS;                                     $traverse_lt;
+local lt FLEX_STATE_ING_TRIGGER;                                   $traverse_lt;
+
+# Show FLEXSTATE related Egress State LTs.
+local lt FLEX_STATE_EGR_ACTION_PROFILE;                            $traverse_lt;
+local lt FLEX_STATE_EGR_ACTION_PROFILE_INFO;                       $traverse_lt;
+local lt FLEX_STATE_EGR_ERROR_STATS;                               $traverse_lt;
+local lt FLEX_STATE_EGR_GROUP_ACTION_PROFILE;                      $traverse_lt;
+local lt FLEX_STATE_EGR_OBJ_QUANTIZATION;                          $traverse_lt;
+local lt FLEX_STATE_EGR_OPERAND_PROFILE;                           $traverse_lt;
+local lt FLEX_STATE_EGR_POOL_INFO;                                 $traverse_lt;
+local lt FLEX_STATE_EGR_RANGE_CHK_PROFILE;                         $traverse_lt;
+local lt FLEX_STATE_EGR_STATS;                                     $traverse_lt;
+local lt FLEX_STATE_EGR_TRIGGER;                                   $traverse_lt;
+

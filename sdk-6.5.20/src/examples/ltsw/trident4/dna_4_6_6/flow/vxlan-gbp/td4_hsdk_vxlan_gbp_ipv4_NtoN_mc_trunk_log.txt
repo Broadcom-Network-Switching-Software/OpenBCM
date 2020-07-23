@@ -1,0 +1,529 @@
+BCM.0> c td4_hsdk_vxlan_gbp_ipv4_NtoN_mc_trunk.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200306 (Fri Mar  6 02:23:03 2020)
+From bs953961@lvnvda0056:/projects/faes_ext/bsonti/sdk-master
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Configure Vxlan Global Configuration.
+Get flow-handler for Classic_Vxlan
+Create Multicast group for UUC/MC/BC.
+Create Flow VPN.
+int $$ = 201326593 (0xc000001)
+Configure Vxlan Network Port Configuration.
+Configure Vxlan Network Port Configuration.
+Configure Vxlan Network Port Configuration.
+Configure Vxlan Network Port Configuration.
+Configure Vxlan Network Port Configuration.
+Create network L3 interface
+Create network L3 Egress object.
+Create Network Flow Port.
+Create Flow VP.
+Network: encap add, VFI-->VNID
+Network: Configure match condition to derive VPN (Match: {VN_ID}, Derive: VFI (VPN))
+Network; Set Encapsulation. VP=>egress-obj{Device,Port}.
+Network: Add flow match (match: SIP => network SVP)
+int $$ = 134217729 (0x8000001)
+Configure Vxlan Network Port Configuration.
+Create network L3 interface
+Create network L3 Egress object.
+Create Network Flow Port.
+Create Flow VP.
+Network: encap add, VFI-->VNID
+Network: Configure match condition to derive VPN (Match: {VN_ID}, Derive: VFI (VPN))
+Network; Set Encapsulation. VP=>egress-obj{Device,Port}.
+Network: Add flow match (match: SIP => network SVP)
+Tunnel_init: Create Flow Tunnel Initiator.
+Tunnel_term: Create Flow Tunnel Terminator.
+Tunnel_init: Create Flow Tunnel Initiator.
+Tunnel_term: Create Flow Tunnel Terminator.
+Create network L3 interface (OL).
+~~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1	ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e) 
+vlan 22	ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+vlan 23	ports cd1-cd5 (0x0000000000000000000000000000000000000000000000000000000000000000000000000030001c), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:33:33 vlan=23 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+Device supports 1088 trunk groups:
+  1024 front panel trunks (0..1023), 128 ports/trunk
+  64 fabric trunks (1024..1087), 128 ports/trunk
+trunk 1: (front panel, 5 ports)=cd1,cd2,cd3,cd4,cd5 dlf=any mc=any ipmc=any psc=portflow (0x9)
+INTF  VID   MAC Address       
+----------------------------------------------
+1     23    00:00:00:00:33:33  OverLay  
+
+16385 23    00:00:00:00:33:33  UnderLay 
+
+16386 22    00:00:00:00:22:22  UnderLay 
+
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+132769  01:00:5e:01:01:01  16385     1 trunk      0     0   underlay   no
+
+132770  01:00:5e:01:01:01  16386     1            0     0   underlay   no
+
+Group 0x2000002 (L3)
+	port cd1, encap id 1
+	port cd2, encap id 1
+	port cd3, encap id 1
+	port cd4, encap id 1
+	port cd5, encap id 1
+SRC IP ADDRESS : 0.0.0.0
+MC  IP ADDRESS : 224.1.1.1
+MC IP MASK LEN : 32
+VLAN           : 0
+VRF            : 1
+GROUP          : 0x2000002
+GROUP_L2       : 0x0
+CLASSS         : 0
+HIT            : N
+Ingress L3_IIF : 2
+Expected L3_IIF: 0
+
+Sending known unicast packet No.[1] to ingress_port :1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {01005e010101} {000000000002} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0082 0000 4000 3f11 465e 0a0a 
+[bcmPWN.0]Packet[1]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[1]: data[0030]: 0fab 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[1]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[1]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[1]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x465e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {01005e010101} {000000003333} 8100 0017
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0082 0000 4000 3e11 475e 0a0a 
+[bcmPWN.0]Packet[2]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[2]: data[0030]: 0fab 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[2]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[2]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[2]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[2]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x475e>
+XLMIB_TBYT.cd0                        :                   156                +156
+XLMIB_RBYT.cd0                        :                   156                +156
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TMCA.cd0                        :                     1                  +1
+XLMIB_RMCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T255.cd0                        :                     1                  +1
+XLMIB_R255.cd0                        :                     1                  +1
+XLMIB_TBYT.cd4                        :                   156                +156
+XLMIB_RBYT.cd4                        :                   156                +156
+XLMIB_TPOK.cd4                        :                     1                  +1
+XLMIB_RPOK.cd4                        :                     1                  +1
+XLMIB_TVLN.cd4                        :                     1                  +1
+XLMIB_RVLN.cd4                        :                     1                  +1
+XLMIB_TMCA.cd4                        :                     1                  +1
+XLMIB_RMCA.cd4                        :                     1                  +1
+XLMIB_TPKT.cd4                        :                     1                  +1
+XLMIB_RPKT.cd4                        :                     1                  +1
+XLMIB_T255.cd4                        :                     1                  +1
+XLMIB_R255.cd4                        :                     1                  +1
+MC_PERQ_PKT(0).cd4                    :                     1                  +1
+MC_PERQ_BYTE(0).cd4                   :                   156                +156
+
+Sending known unicast packet No.[2] to ingress_port :1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {01005e010101} {000000000002} 8100 0016
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0082 0000 4000 3f11 465e 0a0a 
+[bcmPWN.0]Packet[3]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[3]: data[0030]: 0fac 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[3]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[3]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[3]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[3]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[3]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[3]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x465e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {01005e010101} {000000003333} 8100 0017
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0082 0000 4000 3e11 475e 0a0a 
+[bcmPWN.0]Packet[4]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[4]: data[0030]: 0fac 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[4]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[4]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[4]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[4]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[4]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[4]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x475e>
+XLMIB_TBYT.cd0                        :                   312                +156
+XLMIB_RBYT.cd0                        :                   312                +156
+XLMIB_TPOK.cd0                        :                     2                  +1
+XLMIB_RPOK.cd0                        :                     2                  +1
+XLMIB_TVLN.cd0                        :                     2                  +1
+XLMIB_RVLN.cd0                        :                     2                  +1
+XLMIB_TMCA.cd0                        :                     2                  +1
+XLMIB_RMCA.cd0                        :                     2                  +1
+XLMIB_TPKT.cd0                        :                     2                  +1
+XLMIB_RPKT.cd0                        :                     2                  +1
+XLMIB_T255.cd0                        :                     2                  +1
+XLMIB_R255.cd0                        :                     2                  +1
+XLMIB_TBYT.cd1                        :                   156                +156
+XLMIB_RBYT.cd1                        :                   156                +156
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TMCA.cd1                        :                     1                  +1
+XLMIB_RMCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T255.cd1                        :                     1                  +1
+XLMIB_R255.cd1                        :                     1                  +1
+MC_PERQ_PKT(0).cd1                    :                     1                  +1
+MC_PERQ_BYTE(0).cd1                   :                   156                +156
+
+Sending known unicast packet No.[3] to ingress_port :1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {01005e010101} {000000000002} 8100 0016
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 0082 0000 4000 3f11 465e 0a0a 
+[bcmPWN.0]Packet[5]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[5]: data[0030]: 0fad 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[5]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[5]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[5]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[5]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[5]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[5]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x465e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {01005e010101} {000000003333} 8100 0017
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 0082 0000 4000 3e11 475e 0a0a 
+[bcmPWN.0]Packet[6]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[6]: data[0030]: 0fad 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[6]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[6]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[6]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[6]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[6]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[6]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x475e>
+XLMIB_TBYT.cd0                        :                   468                +156
+XLMIB_RBYT.cd0                        :                   468                +156
+XLMIB_TPOK.cd0                        :                     3                  +1
+XLMIB_RPOK.cd0                        :                     3                  +1
+XLMIB_TVLN.cd0                        :                     3                  +1
+XLMIB_RVLN.cd0                        :                     3                  +1
+XLMIB_TMCA.cd0                        :                     3                  +1
+XLMIB_RMCA.cd0                        :                     3                  +1
+XLMIB_TPKT.cd0                        :                     3                  +1
+XLMIB_RPKT.cd0                        :                     3                  +1
+XLMIB_T255.cd0                        :                     3                  +1
+XLMIB_R255.cd0                        :                     3                  +1
+XLMIB_TBYT.cd2                        :                   156                +156
+XLMIB_RBYT.cd2                        :                   156                +156
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TMCA.cd2                        :                     1                  +1
+XLMIB_RMCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T255.cd2                        :                     1                  +1
+XLMIB_R255.cd2                        :                     1                  +1
+MC_PERQ_PKT(0).cd2                    :                     1                  +1
+MC_PERQ_BYTE(0).cd2                   :                   156                +156
+
+Sending known unicast packet No.[4] to ingress_port :1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {01005e010101} {000000000002} 8100 0016
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 0082 0000 4000 3f11 465e 0a0a 
+[bcmPWN.0]Packet[7]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[7]: data[0030]: 0fae 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[7]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[7]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[7]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[7]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[7]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[7]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x465e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {01005e010101} {000000003333} 8100 0017
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 0082 0000 4000 3e11 475e 0a0a 
+[bcmPWN.0]Packet[8]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[8]: data[0030]: 0fae 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[8]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[8]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[8]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[8]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[8]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[8]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x475e>
+XLMIB_TBYT.cd0                        :                   624                +156
+XLMIB_RBYT.cd0                        :                   624                +156
+XLMIB_TPOK.cd0                        :                     4                  +1
+XLMIB_RPOK.cd0                        :                     4                  +1
+XLMIB_TVLN.cd0                        :                     4                  +1
+XLMIB_RVLN.cd0                        :                     4                  +1
+XLMIB_TMCA.cd0                        :                     4                  +1
+XLMIB_RMCA.cd0                        :                     4                  +1
+XLMIB_TPKT.cd0                        :                     4                  +1
+XLMIB_RPKT.cd0                        :                     4                  +1
+XLMIB_T255.cd0                        :                     4                  +1
+XLMIB_R255.cd0                        :                     4                  +1
+XLMIB_TBYT.cd5                        :                   156                +156
+XLMIB_RBYT.cd5                        :                   156                +156
+XLMIB_TPOK.cd5                        :                     1                  +1
+XLMIB_RPOK.cd5                        :                     1                  +1
+XLMIB_TVLN.cd5                        :                     1                  +1
+XLMIB_RVLN.cd5                        :                     1                  +1
+XLMIB_TMCA.cd5                        :                     1                  +1
+XLMIB_RMCA.cd5                        :                     1                  +1
+XLMIB_TPKT.cd5                        :                     1                  +1
+XLMIB_RPKT.cd5                        :                     1                  +1
+XLMIB_T255.cd5                        :                     1                  +1
+XLMIB_R255.cd5                        :                     1                  +1
+MC_PERQ_PKT(0).cd5                    :                     1                  +1
+MC_PERQ_BYTE(0).cd5                   :                   156                +156
+
+Sending known unicast packet No.[5] to ingress_port :1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {01005e010101} {000000000002} 8100 0016
+[bcmPWN.0]Packet[9]: data[0010]: 0800 4500 0082 0000 4000 3f11 465e 0a0a 
+[bcmPWN.0]Packet[9]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[9]: data[0030]: 0aab 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[9]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[9]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[9]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[9]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[9]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[9]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x465e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {01005e010101} {000000003333} 8100 0017
+[bcmPWN.0]Packet[10]: data[0010]: 0800 4500 0082 0000 4000 3e11 475e 0a0a 
+[bcmPWN.0]Packet[10]: data[0020]: 0a01 e001 0101 dfbb 12b5 006e 790b 8800 
+[bcmPWN.0]Packet[10]: data[0030]: 0aab 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[10]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000 
+[bcmPWN.0]Packet[10]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035 
+[bcmPWN.0]Packet[10]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[10]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[10]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[10]: data[0090]: 7465 7374 7465 7374 
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<10.10.10.1> dst<224.1.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<62> > chk-sum<0x475e>
+XLMIB_TBYT.cd0                        :                   780                +156
+XLMIB_RBYT.cd0                        :                   780                +156
+XLMIB_TPOK.cd0                        :                     5                  +1
+XLMIB_RPOK.cd0                        :                     5                  +1
+XLMIB_TVLN.cd0                        :                     5                  +1
+XLMIB_RVLN.cd0                        :                     5                  +1
+XLMIB_TMCA.cd0                        :                     5                  +1
+XLMIB_RMCA.cd0                        :                     5                  +1
+XLMIB_TPKT.cd0                        :                     5                  +1
+XLMIB_RPKT.cd0                        :                     5                  +1
+XLMIB_T255.cd0                        :                     5                  +1
+XLMIB_R255.cd0                        :                     5                  +1
+XLMIB_TBYT.cd3                        :                   156                +156
+XLMIB_RBYT.cd3                        :                   156                +156
+XLMIB_TPOK.cd3                        :                     1                  +1
+XLMIB_RPOK.cd3                        :                     1                  +1
+XLMIB_TVLN.cd3                        :                     1                  +1
+XLMIB_RVLN.cd3                        :                     1                  +1
+XLMIB_TMCA.cd3                        :                     1                  +1
+XLMIB_RMCA.cd3                        :                     1                  +1
+XLMIB_TPKT.cd3                        :                     1                  +1
+XLMIB_RPKT.cd3                        :                     1                  +1
+XLMIB_T255.cd3                        :                     1                  +1
+XLMIB_R255.cd3                        :                     1                  +1
+MC_PERQ_PKT(0).cd3                    :                     1                  +1
+MC_PERQ_BYTE(0).cd3                   :                   156                +156
+
+ Vpn :32768 
+
+ VpnInfo : 
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 0 (0x0)
+        int igmp_query_action = 0 (0x0)
+        int igmp_unknown_msg_action = 0 (0x0)
+        int mld_report_done_action = 0 (0x0)
+        int mld_query_action = 0 (0x0)
+        int ip4_rsvd_mc_action = 0 (0x0)
+        int ip6_rsvd_mc_action = 0 (0x0)
+        int ip4_mc_router_adv_action = 0 (0x0)
+        int ip6_mc_router_adv_action = 0 (0x0)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 2
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177279 (0xb0000001)
+    unsigned int flags = 2 (0x2)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 2 (0x2)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+
+----------------------------------------------
+Distribution of 5 Packets on Trunk member ports:
+----------------------------------------------
+XLMIB_TBYT.cd0                        :                   780                  +0
+XLMIB_RBYT.cd0                        :                   780                  +0
+XLMIB_TPOK.cd0                        :                     5                  +0
+XLMIB_RPOK.cd0                        :                     5                  +0
+XLMIB_TVLN.cd0                        :                     5                  +0
+XLMIB_RVLN.cd0                        :                     5                  +0
+XLMIB_TMCA.cd0                        :                     5                  +0
+XLMIB_RMCA.cd0                        :                     5                  +0
+XLMIB_TPKT.cd0                        :                     5                  +0
+XLMIB_RPKT.cd0                        :                     5                  +0
+XLMIB_T255.cd0                        :                     5                  +0
+XLMIB_R255.cd0                        :                     5                  +0
+XLMIB_TBYT.cd1                        :                   156                  +0
+XLMIB_RBYT.cd1                        :                   156                  +0
+XLMIB_TPOK.cd1                        :                     1                  +0
+XLMIB_RPOK.cd1                        :                     1                  +0
+XLMIB_TVLN.cd1                        :                     1                  +0
+XLMIB_RVLN.cd1                        :                     1                  +0
+XLMIB_TMCA.cd1                        :                     1                  +0
+XLMIB_RMCA.cd1                        :                     1                  +0
+XLMIB_TPKT.cd1                        :                     1                  +0
+XLMIB_RPKT.cd1                        :                     1                  +0
+XLMIB_T255.cd1                        :                     1                  +0
+XLMIB_R255.cd1                        :                     1                  +0
+MC_PERQ_PKT(0).cd1                    :                     1                  +0
+MC_PERQ_BYTE(0).cd1                   :                   156                  +0
+XLMIB_TBYT.cd2                        :                   156                  +0
+XLMIB_RBYT.cd2                        :                   156                  +0
+XLMIB_TPOK.cd2                        :                     1                  +0
+XLMIB_RPOK.cd2                        :                     1                  +0
+XLMIB_TVLN.cd2                        :                     1                  +0
+XLMIB_RVLN.cd2                        :                     1                  +0
+XLMIB_TMCA.cd2                        :                     1                  +0
+XLMIB_RMCA.cd2                        :                     1                  +0
+XLMIB_TPKT.cd2                        :                     1                  +0
+XLMIB_RPKT.cd2                        :                     1                  +0
+XLMIB_T255.cd2                        :                     1                  +0
+XLMIB_R255.cd2                        :                     1                  +0
+MC_PERQ_PKT(0).cd2                    :                     1                  +0
+MC_PERQ_BYTE(0).cd2                   :                   156                  +0
+XLMIB_TBYT.cd3                        :                   156                  +0
+XLMIB_RBYT.cd3                        :                   156                  +0
+XLMIB_TPOK.cd3                        :                     1                  +0
+XLMIB_RPOK.cd3                        :                     1                  +0
+XLMIB_TVLN.cd3                        :                     1                  +0
+XLMIB_RVLN.cd3                        :                     1                  +0
+XLMIB_TMCA.cd3                        :                     1                  +0
+XLMIB_RMCA.cd3                        :                     1                  +0
+XLMIB_TPKT.cd3                        :                     1                  +0
+XLMIB_RPKT.cd3                        :                     1                  +0
+XLMIB_T255.cd3                        :                     1                  +0
+XLMIB_R255.cd3                        :                     1                  +0
+MC_PERQ_PKT(0).cd3                    :                     1                  +0
+MC_PERQ_BYTE(0).cd3                   :                   156                  +0
+XLMIB_TBYT.cd4                        :                   156                  +0
+XLMIB_RBYT.cd4                        :                   156                  +0
+XLMIB_TPOK.cd4                        :                     1                  +0
+XLMIB_RPOK.cd4                        :                     1                  +0
+XLMIB_TVLN.cd4                        :                     1                  +0
+XLMIB_RVLN.cd4                        :                     1                  +0
+XLMIB_TMCA.cd4                        :                     1                  +0
+XLMIB_RMCA.cd4                        :                     1                  +0
+XLMIB_TPKT.cd4                        :                     1                  +0
+XLMIB_RPKT.cd4                        :                     1                  +0
+XLMIB_T255.cd4                        :                     1                  +0
+XLMIB_R255.cd4                        :                     1                  +0
+MC_PERQ_PKT(0).cd4                    :                     1                  +0
+MC_PERQ_BYTE(0).cd4                   :                   156                  +0
+XLMIB_TBYT.cd5                        :                   156                  +0
+XLMIB_RBYT.cd5                        :                   156                  +0
+XLMIB_TPOK.cd5                        :                     1                  +0
+XLMIB_RPOK.cd5                        :                     1                  +0
+XLMIB_TVLN.cd5                        :                     1                  +0
+XLMIB_RVLN.cd5                        :                     1                  +0
+XLMIB_TMCA.cd5                        :                     1                  +0
+XLMIB_RMCA.cd5                        :                     1                  +0
+XLMIB_TPKT.cd5                        :                     1                  +0
+XLMIB_RPKT.cd5                        :                     1                  +0
+XLMIB_T255.cd5                        :                     1                  +0
+XLMIB_R255.cd5                        :                     1                  +0
+MC_PERQ_PKT(0).cd5                    :                     1                  +0
+MC_PERQ_BYTE(0).cd5                   :                   156                  +0
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

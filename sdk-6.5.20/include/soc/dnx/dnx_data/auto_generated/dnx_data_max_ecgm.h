@@ -1,0 +1,66 @@
+
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_MAX_ECGM_H_
+
+#define _DNX_DATA_MAX_ECGM_H_
+
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX (JR2) family only!"
+#endif
+
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_NOF_SP (2)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_NOF_INTERFACE_PROFILES (8)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_NOF_PORT_PROFILES (16)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_TOTAL_PDS (76000)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_TOTAL_PDS_NOF_BITS (17)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_TOTAL_DBS (32000)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_TOTAL_DBS_NOF_BITS (15)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_MAX_ALPHA_VALUE (7)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_MIN_ALPHA_VALUE (0)
+
+
+#define DNX_DATA_MAX_ECGM_CORE_RESOURCES_MAX_CORE_BANDWIDTH_MBPS (5000000)
+
+
+#define DNX_DATA_MAX_ECGM_PORT_RESOURCES_MAX_NOF_PORTS (160)
+
+
+#define DNX_DATA_MAX_ECGM_INFO_NOF_DROPPED_REASONS_RQP (11)
+
+
+#define DNX_DATA_MAX_ECGM_INFO_NOF_DROPPED_REASONS_PQP (16)
+
+
+#define DNX_DATA_MAX_ECGM_INFO_NOF_BITS_IN_PD_COUNT (16)
+
+
+
+
+#endif 
+

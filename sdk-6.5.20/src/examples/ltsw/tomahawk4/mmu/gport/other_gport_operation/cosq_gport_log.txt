@@ -1,0 +1,2240 @@
+xl-sj1-32{sg944605}206: ./bcm.sim -y $SDKLT/INTERNAL/examples/bcm56990_a0/config/bcm56990_a0-generic-64x400.config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190422 (Mon Apr 22 22:23:35 2019)
+From sg944605@xl-sj1-27:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[39948]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[49382]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+0:bcmi_ltsw_sbr_init: Feature unavailable
+0:bcmpkt_gih_fid_support_get: null
+0:bcmpkt_higig3_fid_support_get: null
+0:bcmpkt_rxpmd_flex_fid_support_get: null
+0:mbcm_virtual_index_get: Feature unavailable
+0:bcmi_ltsw_virtual_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished cosq part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished THD part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished cosq STAT part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished BST part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished PFC part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished OBM part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished ECN part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished OOB part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished for all cosq sub modules init for unit 0!!!
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_multicast_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_field_clear: Feature unavailable
+0:bcmint_field_clear: Feature unavailable
+0:bcmint_field_detach: Feature unavailable
+0:bcmint_field_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_stack_init: Feature unavailable
+0:bcm_ltsw_stk_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_ipmc_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_flowtracker_init: Feature unavailable
+0:ltsw_flowtracker_resource_free: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+rc: BCM driver initialized
+rc: Port modes initialized
+STG: ERROR: Feature unavailable
+Error: file ./ltsw.soc: line 48 (error code -1): script terminated
+ERROR loading rc script on unit 0
+BCM.0> c cosq_gport.c
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190422 (Mon Apr 22 22:23:35 2019)
+From sg944605@xl-sj1-27:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     BCM56990_A0_BASE, BCM56880_A0_BASE
+cosq_gport_traverse_callback: local_port = 1
+cosq_gport_traverse_callback: local_port = 2
+cosq_gport_traverse_callback: local_port = 3
+cosq_gport_traverse_callback: local_port = 4
+cosq_gport_traverse_callback: local_port = 17
+cosq_gport_traverse_callback: local_port = 18
+cosq_gport_traverse_callback: local_port = 19
+cosq_gport_traverse_callback: local_port = 20
+cosq_gport_traverse_callback: local_port = 34
+cosq_gport_traverse_callback: local_port = 35
+cosq_gport_traverse_callback: local_port = 36
+cosq_gport_traverse_callback: local_port = 37
+cosq_gport_traverse_callback: local_port = 50
+cosq_gport_traverse_callback: local_port = 51
+cosq_gport_traverse_callback: local_port = 52
+cosq_gport_traverse_callback: local_port = 53
+cosq_gport_traverse_callback: local_port = 54
+cosq_gport_traverse_callback: local_port = 68
+cosq_gport_traverse_callback: local_port = 69
+cosq_gport_traverse_callback: local_port = 70
+cosq_gport_traverse_callback: local_port = 71
+cosq_gport_traverse_callback: local_port = 85
+cosq_gport_traverse_callback: local_port = 86
+cosq_gport_traverse_callback: local_port = 87
+cosq_gport_traverse_callback: local_port = 88
+cosq_gport_traverse_callback: local_port = 102
+cosq_gport_traverse_callback: local_port = 103
+cosq_gport_traverse_callback: local_port = 104
+cosq_gport_traverse_callback: local_port = 105
+cosq_gport_traverse_callback: local_port = 119
+cosq_gport_traverse_callback: local_port = 120
+cosq_gport_traverse_callback: local_port = 121
+cosq_gport_traverse_callback: local_port = 122
+cosq_gport_traverse_callback: local_port = 136
+cosq_gport_traverse_callback: local_port = 137
+cosq_gport_traverse_callback: local_port = 138
+cosq_gport_traverse_callback: local_port = 139
+cosq_gport_traverse_callback: local_port = 152
+cosq_gport_traverse_callback: local_port = 153
+cosq_gport_traverse_callback: local_port = 154
+cosq_gport_traverse_callback: local_port = 155
+cosq_gport_traverse_callback: local_port = 156
+cosq_gport_traverse_callback: local_port = 170
+cosq_gport_traverse_callback: local_port = 171
+cosq_gport_traverse_callback: local_port = 172
+cosq_gport_traverse_callback: local_port = 173
+cosq_gport_traverse_callback: local_port = 187
+cosq_gport_traverse_callback: local_port = 188
+cosq_gport_traverse_callback: local_port = 189
+cosq_gport_traverse_callback: local_port = 190
+cosq_gport_traverse_callback: local_port = 204
+cosq_gport_traverse_callback: local_port = 205
+cosq_gport_traverse_callback: local_port = 206
+cosq_gport_traverse_callback: local_port = 207
+cosq_gport_traverse_callback: local_port = 221
+cosq_gport_traverse_callback: local_port = 222
+cosq_gport_traverse_callback: local_port = 223
+cosq_gport_traverse_callback: local_port = 224
+cosq_gport_traverse_callback: local_port = 238
+cosq_gport_traverse_callback: local_port = 239
+cosq_gport_traverse_callback: local_port = 240
+cosq_gport_traverse_callback: local_port = 241
+cosq_gport_traverse_callback: local_port = 255
+cosq_gport_traverse_callback: local_port = 256
+cosq_gport_traverse_callback: local_port = 257
+cosq_gport_traverse_callback: local_port = 258
+cosq_gport_traverse_callback: local_port = 0
+cpu_queues[0](0x30000000) was attached to sched_nodes=0x37800000
+cpu_queues[1](0x30000001) was attached to sched_nodes=0x37800000
+cpu_queues[2](0x30000002) was attached to sched_nodes=0x37800000
+cpu_queues[3](0x30000003) was attached to sched_nodes=0x37800000
+cpu_queues[4](0x30000004) was attached to sched_nodes=0x37800000
+cpu_queues[5](0x30000005) was attached to sched_nodes=0x37800000
+cpu_queues[6](0x30000006) was attached to sched_nodes=0x37800000
+cpu_queues[7](0x30000007) was attached to sched_nodes=0x37800000
+cpu_queues[8](0x30000008) was attached to sched_nodes=0x37800000
+cpu_queues[9](0x30000009) was attached to sched_nodes=0x37800000
+cpu_queues[10](0x3000000a) was attached to sched_nodes=0x37800000
+cpu_queues[11](0x3000000b) was attached to sched_nodes=0x37800000
+cpu_queues[12](0x3000000c) was attached to sched_nodes=0x37800000
+cpu_queues[13](0x3000000d) was attached to sched_nodes=0x37800000
+cpu_queues[14](0x3000000e) was attached to sched_nodes=0x37800000
+cpu_queues[15](0x3000000f) was attached to sched_nodes=0x37800000
+cpu_queues[16](0x30000010) was attached to sched_nodes=0x37800000
+cpu_queues[17](0x30000011) was attached to sched_nodes=0x37800000
+cpu_queues[18](0x30000012) was attached to sched_nodes=0x37800000
+cpu_queues[19](0x30000013) was attached to sched_nodes=0x37800000
+cpu_queues[20](0x30000014) was attached to sched_nodes=0x37800000
+cpu_queues[21](0x30000015) was attached to sched_nodes=0x37800000
+cpu_queues[22](0x30000016) was attached to sched_nodes=0x37800000
+cpu_queues[23](0x30000017) was attached to sched_nodes=0x37800000
+cpu_queues[24](0x30000018) was attached to sched_nodes=0x37800000
+cpu_queues[25](0x30000019) was attached to sched_nodes=0x37800000
+cpu_queues[26](0x3000001a) was attached to sched_nodes=0x37800000
+cpu_queues[27](0x3000001b) was attached to sched_nodes=0x37800000
+cpu_queues[28](0x3000001c) was attached to sched_nodes=0x37800000
+cpu_queues[29](0x3000001d) was attached to sched_nodes=0x37800000
+cpu_queues[30](0x3000001e) was attached to sched_nodes=0x37800000
+cpu_queues[31](0x3000001f) was attached to sched_nodes=0x37800000
+cpu_queues[32](0x30000020) was attached to sched_nodes=0x37800000
+cpu_queues[33](0x30000021) was attached to sched_nodes=0x37800000
+cpu_queues[34](0x30000022) was attached to sched_nodes=0x37800000
+cpu_queues[35](0x30000023) was attached to sched_nodes=0x37800000
+cpu_queues[36](0x30000024) was attached to sched_nodes=0x37800000
+cpu_queues[37](0x30000025) was attached to sched_nodes=0x37800000
+cpu_queues[38](0x30000026) was attached to sched_nodes=0x37800000
+cpu_queues[39](0x30000027) was attached to sched_nodes=0x37800000
+cpu_queues[40](0x30000028) was attached to sched_nodes=0x37800000
+cpu_queues[41](0x30000029) was attached to sched_nodes=0x37800000
+cpu_queues[42](0x3000002a) was attached to sched_nodes=0x37800000
+cpu_queues[43](0x3000002b) was attached to sched_nodes=0x37800000
+cpu_queues[44](0x3000002c) was attached to sched_nodes=0x37800000
+cpu_queues[45](0x3000002d) was attached to sched_nodes=0x37800000
+cpu_queues[46](0x3000002e) was attached to sched_nodes=0x37800000
+cpu_queues[47](0x3000002f) was attached to sched_nodes=0x37800000
+cpu_queues->sched_nodes[0]=0x37800000
+cpu_queues->sched_nodes[1]=0x37810000
+cpu_queues->sched_nodes[2]=0x37820000
+cpu_queues->sched_nodes[3]=0x37830000
+cpu_queues->sched_nodes[4]=0x37840000
+cpu_queues->sched_nodes[5]=0x37850000
+cpu_queues->sched_nodes[6]=0x37860000
+cpu_queues->sched_nodes[7]=0x37870000
+cpu_queues->sched_nodes[8]=0x37880000
+cpu_queues->sched_nodes[9]=0x37890000
+cpu_queues->sched_nodes[10]=0x378a0000
+cpu_queues->sched_nodes[11]=0x378b0000
+cpu_gport_get cpu_queues[0](0x30000000) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[1](0x30000001) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[2](0x30000002) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[3](0x30000003) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[4](0x30000004) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[5](0x30000005) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[6](0x30000006) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[7](0x30000007) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[8](0x30000008) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[9](0x30000009) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[10](0x3000000a) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[11](0x3000000b) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[12](0x3000000c) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[13](0x3000000d) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[14](0x3000000e) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[15](0x3000000f) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[16](0x30000010) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[17](0x30000011) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[18](0x30000012) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[19](0x30000013) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[20](0x30000014) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[21](0x30000015) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[22](0x30000016) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[23](0x30000017) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[24](0x30000018) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[25](0x30000019) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[26](0x3000001a) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[27](0x3000001b) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[28](0x3000001c) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[29](0x3000001d) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[30](0x3000001e) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[31](0x3000001f) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[32](0x30000020) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[33](0x30000021) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[34](0x30000022) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[35](0x30000023) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[36](0x30000024) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[37](0x30000025) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[38](0x30000026) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[39](0x30000027) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[40](0x30000028) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[41](0x30000029) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[42](0x3000002a) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[43](0x3000002b) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[44](0x3000002c) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[45](0x3000002d) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[46](0x3000002e) was attached to sched_nodes[0]=0x37800000
+cpu_gport_get cpu_queues[47](0x3000002f) was attached to sched_nodes[0]=0x37800000
+Map CPU COS 0 to rx channel 0
+rx_queue_channel_set:cpu_queues->cpu_queues[0].input_cos: 0, chan_id: 0
+rx_queue_channel_set: Attached the 0th CPU queue 0x30000000 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach get: The 0th child of the 0th sch node 0x37800000 is 0x30000000
+Map CPU COS 1 to rx channel 1
+rx_queue_channel_set:cpu_queues->cpu_queues[1].input_cos: 0, chan_id: 1
+rx_queue_channel_set: Attached the 1th CPU queue 0x30000001 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach get: The 1th child of the 1th sch node 0x37810000 is 0x30000001
+Map CPU COS 2 to rx channel 2
+rx_queue_channel_set:cpu_queues->cpu_queues[2].input_cos: 0, chan_id: 2
+rx_queue_channel_set: Attached the 2th CPU queue 0x30000002 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach get: The 2th child of the 2th sch node 0x37820000 is 0x30000002
+Map CPU COS 3 to rx channel 3
+rx_queue_channel_set:cpu_queues->cpu_queues[3].input_cos: 0, chan_id: 3
+rx_queue_channel_set: Attached the 3th CPU queue 0x30000003 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach get: The 3th child of the 3th sch node 0x37830000 is 0x30000003
+Map CPU COS 4 to rx channel 4
+rx_queue_channel_set:cpu_queues->cpu_queues[4].input_cos: 0, chan_id: 4
+rx_queue_channel_set: Attached the 4th CPU queue 0x30000004 to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach get: The 4th child of the 4th sch node 0x37840000 is 0x30000004
+Map CPU COS 5 to rx channel 5
+rx_queue_channel_set:cpu_queues->cpu_queues[5].input_cos: 0, chan_id: 5
+rx_queue_channel_set: Attached the 5th CPU queue 0x30000005 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach get: The 5th child of the 5th sch node 0x37850000 is 0x30000005
+Map CPU COS 6 to rx channel 6
+rx_queue_channel_set:cpu_queues->cpu_queues[6].input_cos: 0, chan_id: 6
+rx_queue_channel_set: Attached the 6th CPU queue 0x30000006 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach get: The 6th child of the 6th sch node 0x37860000 is 0x30000006
+Map CPU COS 7 to rx channel 7
+rx_queue_channel_set:cpu_queues->cpu_queues[7].input_cos: 0, chan_id: 7
+rx_queue_channel_set: Attached the 7th CPU queue 0x30000007 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach get: The 7th child of the 7th sch node 0x37870000 is 0x30000007
+Map CPU COS 8 to rx channel 8
+rx_queue_channel_set:cpu_queues->cpu_queues[8].input_cos: 0, chan_id: 8
+rx_queue_channel_set: Attached the 8th CPU queue 0x30000008 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach get: The 8th child of the 8th sch node 0x37880000 is 0x30000008
+Map CPU COS 9 to rx channel 9
+rx_queue_channel_set:cpu_queues->cpu_queues[9].input_cos: 0, chan_id: 9
+rx_queue_channel_set: Attached the 9th CPU queue 0x30000009 to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach get: The 9th child of the 9th sch node 0x37890000 is 0x30000009
+Map CPU COS 10 to rx channel 10
+rx_queue_channel_set:cpu_queues->cpu_queues[10].input_cos: 0, chan_id: 10
+rx_queue_channel_set: Attached the 10th CPU queue 0x3000000a to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach get: The 10th child of the 10th sch node 0x378a0000 is 0x3000000a
+Map CPU COS 11 to rx channel 0
+rx_queue_channel_set:cpu_queues->cpu_queues[11].input_cos: 0, chan_id: 0
+rx_queue_channel_set: Attached the 11th CPU queue 0x3000000b to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach get: The 11th child of the 0th sch node 0x37800000 is 0x3000000b
+Map CPU COS 12 to rx channel 1
+rx_queue_channel_set:cpu_queues->cpu_queues[12].input_cos: 0, chan_id: 1
+rx_queue_channel_set: Attached the 12th CPU queue 0x3000000c to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach get: The 12th child of the 1th sch node 0x37810000 is 0x3000000c
+Map CPU COS 13 to rx channel 2
+rx_queue_channel_set:cpu_queues->cpu_queues[13].input_cos: 0, chan_id: 2
+rx_queue_channel_set: Attached the 13th CPU queue 0x3000000d to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach get: The 13th child of the 2th sch node 0x37820000 is 0x3000000d
+Map CPU COS 14 to rx channel 3
+rx_queue_channel_set:cpu_queues->cpu_queues[14].input_cos: 0, chan_id: 3
+rx_queue_channel_set: Attached the 14th CPU queue 0x3000000e to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach get: The 14th child of the 3th sch node 0x37830000 is 0x3000000e
+Map CPU COS 15 to rx channel 4
+rx_queue_channel_set:cpu_queues->cpu_queues[15].input_cos: 0, chan_id: 4
+rx_queue_channel_set: Attached the 15th CPU queue 0x3000000f to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach get: The 15th child of the 4th sch node 0x37840000 is 0x3000000f
+Map CPU COS 16 to rx channel 5
+rx_queue_channel_set:cpu_queues->cpu_queues[16].input_cos: 0, chan_id: 5
+rx_queue_channel_set: Attached the 16th CPU queue 0x30000010 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach get: The 16th child of the 5th sch node 0x37850000 is 0x30000010
+Map CPU COS 17 to rx channel 6
+rx_queue_channel_set:cpu_queues->cpu_queues[17].input_cos: 0, chan_id: 6
+rx_queue_channel_set: Attached the 17th CPU queue 0x30000011 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach get: The 17th child of the 6th sch node 0x37860000 is 0x30000011
+Map CPU COS 18 to rx channel 7
+rx_queue_channel_set:cpu_queues->cpu_queues[18].input_cos: 0, chan_id: 7
+rx_queue_channel_set: Attached the 18th CPU queue 0x30000012 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach get: The 18th child of the 7th sch node 0x37870000 is 0x30000012
+Map CPU COS 19 to rx channel 8
+rx_queue_channel_set:cpu_queues->cpu_queues[19].input_cos: 0, chan_id: 8
+rx_queue_channel_set: Attached the 19th CPU queue 0x30000013 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach get: The 19th child of the 8th sch node 0x37880000 is 0x30000013
+Map CPU COS 20 to rx channel 9
+rx_queue_channel_set:cpu_queues->cpu_queues[20].input_cos: 0, chan_id: 9
+rx_queue_channel_set: Attached the 20th CPU queue 0x30000014 to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach get: The 20th child of the 9th sch node 0x37890000 is 0x30000014
+Map CPU COS 21 to rx channel 10
+rx_queue_channel_set:cpu_queues->cpu_queues[21].input_cos: 0, chan_id: 10
+rx_queue_channel_set: Attached the 21th CPU queue 0x30000015 to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach get: The 21th child of the 10th sch node 0x378a0000 is 0x30000015
+Map CPU COS 22 to rx channel 0
+rx_queue_channel_set:cpu_queues->cpu_queues[22].input_cos: 0, chan_id: 0
+rx_queue_channel_set: Attached the 22th CPU queue 0x30000016 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach get: The 22th child of the 0th sch node 0x37800000 is 0x30000016
+Map CPU COS 23 to rx channel 1
+rx_queue_channel_set:cpu_queues->cpu_queues[23].input_cos: 0, chan_id: 1
+rx_queue_channel_set: Attached the 23th CPU queue 0x30000017 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach get: The 23th child of the 1th sch node 0x37810000 is 0x30000017
+Map CPU COS 24 to rx channel 2
+rx_queue_channel_set:cpu_queues->cpu_queues[24].input_cos: 0, chan_id: 2
+rx_queue_channel_set: Attached the 24th CPU queue 0x30000018 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach get: The 24th child of the 2th sch node 0x37820000 is 0x30000018
+Map CPU COS 25 to rx channel 3
+rx_queue_channel_set:cpu_queues->cpu_queues[25].input_cos: 0, chan_id: 3
+rx_queue_channel_set: Attached the 25th CPU queue 0x30000019 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach get: The 25th child of the 3th sch node 0x37830000 is 0x30000019
+Map CPU COS 26 to rx channel 4
+rx_queue_channel_set:cpu_queues->cpu_queues[26].input_cos: 0, chan_id: 4
+rx_queue_channel_set: Attached the 26th CPU queue 0x3000001a to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach get: The 26th child of the 4th sch node 0x37840000 is 0x3000001a
+Map CPU COS 27 to rx channel 5
+rx_queue_channel_set:cpu_queues->cpu_queues[27].input_cos: 0, chan_id: 5
+rx_queue_channel_set: Attached the 27th CPU queue 0x3000001b to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach get: The 27th child of the 5th sch node 0x37850000 is 0x3000001b
+Map CPU COS 28 to rx channel 6
+rx_queue_channel_set:cpu_queues->cpu_queues[28].input_cos: 0, chan_id: 6
+rx_queue_channel_set: Attached the 28th CPU queue 0x3000001c to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach get: The 28th child of the 6th sch node 0x37860000 is 0x3000001c
+Map CPU COS 29 to rx channel 7
+rx_queue_channel_set:cpu_queues->cpu_queues[29].input_cos: 0, chan_id: 7
+rx_queue_channel_set: Attached the 29th CPU queue 0x3000001d to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach get: The 29th child of the 7th sch node 0x37870000 is 0x3000001d
+Map CPU COS 30 to rx channel 8
+rx_queue_channel_set:cpu_queues->cpu_queues[30].input_cos: 0, chan_id: 8
+rx_queue_channel_set: Attached the 30th CPU queue 0x3000001e to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach get: The 30th child of the 8th sch node 0x37880000 is 0x3000001e
+Map CPU COS 31 to rx channel 9
+rx_queue_channel_set:cpu_queues->cpu_queues[31].input_cos: 0, chan_id: 9
+rx_queue_channel_set: Attached the 31th CPU queue 0x3000001f to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach get: The 31th child of the 9th sch node 0x37890000 is 0x3000001f
+Map CPU COS 32 to rx channel 10
+rx_queue_channel_set:cpu_queues->cpu_queues[32].input_cos: 0, chan_id: 10
+rx_queue_channel_set: Attached the 32th CPU queue 0x30000020 to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach get: The 32th child of the 10th sch node 0x378a0000 is 0x30000020
+Map CPU COS 33 to rx channel 0
+rx_queue_channel_set:cpu_queues->cpu_queues[33].input_cos: 0, chan_id: 0
+rx_queue_channel_set: Attached the 33th CPU queue 0x30000021 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach get: The 33th child of the 0th sch node 0x37800000 is 0x30000021
+Map CPU COS 34 to rx channel 1
+rx_queue_channel_set:cpu_queues->cpu_queues[34].input_cos: 0, chan_id: 1
+rx_queue_channel_set: Attached the 34th CPU queue 0x30000022 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach get: The 34th child of the 1th sch node 0x37810000 is 0x30000022
+Map CPU COS 35 to rx channel 2
+rx_queue_channel_set:cpu_queues->cpu_queues[35].input_cos: 0, chan_id: 2
+rx_queue_channel_set: Attached the 35th CPU queue 0x30000023 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach get: The 35th child of the 2th sch node 0x37820000 is 0x30000023
+Map CPU COS 36 to rx channel 3
+rx_queue_channel_set:cpu_queues->cpu_queues[36].input_cos: 0, chan_id: 3
+rx_queue_channel_set: Attached the 36th CPU queue 0x30000024 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach get: The 36th child of the 3th sch node 0x37830000 is 0x30000024
+Map CPU COS 37 to rx channel 4
+rx_queue_channel_set:cpu_queues->cpu_queues[37].input_cos: 0, chan_id: 4
+rx_queue_channel_set: Attached the 37th CPU queue 0x30000025 to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach get: The 37th child of the 4th sch node 0x37840000 is 0x30000025
+Map CPU COS 38 to rx channel 5
+rx_queue_channel_set:cpu_queues->cpu_queues[38].input_cos: 0, chan_id: 5
+rx_queue_channel_set: Attached the 38th CPU queue 0x30000026 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach get: The 38th child of the 5th sch node 0x37850000 is 0x30000026
+Map CPU COS 39 to rx channel 6
+rx_queue_channel_set:cpu_queues->cpu_queues[39].input_cos: 0, chan_id: 6
+rx_queue_channel_set: Attached the 39th CPU queue 0x30000027 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach get: The 39th child of the 6th sch node 0x37860000 is 0x30000027
+Map CPU COS 40 to rx channel 7
+rx_queue_channel_set:cpu_queues->cpu_queues[40].input_cos: 0, chan_id: 7
+rx_queue_channel_set: Attached the 40th CPU queue 0x30000028 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach get: The 40th child of the 7th sch node 0x37870000 is 0x30000028
+Map CPU COS 41 to rx channel 8
+rx_queue_channel_set:cpu_queues->cpu_queues[41].input_cos: 0, chan_id: 8
+rx_queue_channel_set: Attached the 41th CPU queue 0x30000029 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach get: The 41th child of the 8th sch node 0x37880000 is 0x30000029
+Map CPU COS 42 to rx channel 9
+rx_queue_channel_set:cpu_queues->cpu_queues[42].input_cos: 0, chan_id: 9
+rx_queue_channel_set: Attached the 42th CPU queue 0x3000002a to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach get: The 42th child of the 9th sch node 0x37890000 is 0x3000002a
+Map CPU COS 43 to rx channel 10
+rx_queue_channel_set:cpu_queues->cpu_queues[43].input_cos: 0, chan_id: 10
+rx_queue_channel_set: Attached the 43th CPU queue 0x3000002b to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach get: The 43th child of the 10th sch node 0x378a0000 is 0x3000002b
+Map CPU COS 44 to rx channel 0
+rx_queue_channel_set:cpu_queues->cpu_queues[44].input_cos: 0, chan_id: 0
+rx_queue_channel_set: Attached the 44th CPU queue 0x3000002c to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach get: The 44th child of the 0th sch node 0x37800000 is 0x3000002c
+Map CPU COS 45 to rx channel 1
+rx_queue_channel_set:cpu_queues->cpu_queues[45].input_cos: 0, chan_id: 1
+rx_queue_channel_set: Attached the 45th CPU queue 0x3000002d to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach get: The 45th child of the 1th sch node 0x37810000 is 0x3000002d
+Map CPU COS 46 to rx channel 2
+rx_queue_channel_set:cpu_queues->cpu_queues[46].input_cos: 0, chan_id: 2
+rx_queue_channel_set: Attached the 46th CPU queue 0x3000002e to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach get: The 46th child of the 2th sch node 0x37820000 is 0x3000002e
+Map CPU COS 47 to rx channel 3
+rx_queue_channel_set:cpu_queues->cpu_queues[47].input_cos: 0, chan_id: 3
+rx_queue_channel_set: Attached the 47th CPU queue 0x3000002f to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach get: The 47th child of the 3th sch node 0x37830000 is 0x3000002f
+
+SW Information COSQ - Unit 0
+=== CPU PORT ===
+L0 Nodes
+    LO.0: GPORT=0x37800000 MODE=SP WT=0
+    LO.1: GPORT=0x37810000 MODE=SP WT=0
+    LO.2: GPORT=0x37820000 MODE=SP WT=0
+    LO.3: GPORT=0x37830000 MODE=SP WT=0
+    LO.4: GPORT=0x37840000 MODE=SP WT=0
+    LO.5: GPORT=0x37850000 MODE=SP WT=0
+    LO.6: GPORT=0x37860000 MODE=SP WT=0
+    LO.7: GPORT=0x37870000 MODE=SP WT=0
+    LO.8: GPORT=0x37880000 MODE=SP WT=0
+    LO.9: GPORT=0x37890000 MODE=SP WT=0
+    LO.10: GPORT=0x378a0000 MODE=SP WT=0
+    LO.11: GPORT=0x378b0000 MODE=SP WT=0
+
+MC Queues
+    MC.0: GPORT=0x30000000 MODE=WRR WT=1 PARENT=L0.0
+    MC.1: GPORT=0x30000001 MODE=WRR WT=1 PARENT=L0.1
+    MC.2: GPORT=0x30000002 MODE=WRR WT=1 PARENT=L0.2
+    MC.3: GPORT=0x30000003 MODE=WRR WT=1 PARENT=L0.3
+    MC.4: GPORT=0x30000004 MODE=WRR WT=1 PARENT=L0.4
+    MC.5: GPORT=0x30000005 MODE=WRR WT=1 PARENT=L0.5
+    MC.6: GPORT=0x30000006 MODE=WRR WT=1 PARENT=L0.6
+    MC.7: GPORT=0x30000007 MODE=WRR WT=1 PARENT=L0.7
+    MC.8: GPORT=0x30000008 MODE=WRR WT=1 PARENT=L0.8
+    MC.9: GPORT=0x30000009 MODE=WRR WT=1 PARENT=L0.9
+    MC.10: GPORT=0x3000000a MODE=WRR WT=1 PARENT=L0.10
+    MC.11: GPORT=0x3000000b MODE=WRR WT=1 PARENT=L0.0
+    MC.12: GPORT=0x3000000c MODE=WRR WT=1 PARENT=L0.1
+    MC.13: GPORT=0x3000000d MODE=WRR WT=1 PARENT=L0.2
+    MC.14: GPORT=0x3000000e MODE=WRR WT=1 PARENT=L0.3
+    MC.15: GPORT=0x3000000f MODE=WRR WT=1 PARENT=L0.4
+    MC.16: GPORT=0x30000010 MODE=WRR WT=1 PARENT=L0.5
+    MC.17: GPORT=0x30000011 MODE=WRR WT=1 PARENT=L0.6
+    MC.18: GPORT=0x30000012 MODE=WRR WT=1 PARENT=L0.7
+    MC.19: GPORT=0x30000013 MODE=WRR WT=1 PARENT=L0.8
+    MC.20: GPORT=0x30000014 MODE=WRR WT=1 PARENT=L0.9
+    MC.21: GPORT=0x30000015 MODE=WRR WT=1 PARENT=L0.10
+    MC.22: GPORT=0x30000016 MODE=WRR WT=1 PARENT=L0.0
+    MC.23: GPORT=0x30000017 MODE=WRR WT=1 PARENT=L0.1
+    MC.24: GPORT=0x30000018 MODE=WRR WT=1 PARENT=L0.2
+    MC.25: GPORT=0x30000019 MODE=WRR WT=1 PARENT=L0.3
+    MC.26: GPORT=0x3000001a MODE=WRR WT=1 PARENT=L0.4
+    MC.27: GPORT=0x3000001b MODE=WRR WT=1 PARENT=L0.5
+    MC.28: GPORT=0x3000001c MODE=WRR WT=1 PARENT=L0.6
+    MC.29: GPORT=0x3000001d MODE=WRR WT=1 PARENT=L0.7
+    MC.30: GPORT=0x3000001e MODE=WRR WT=1 PARENT=L0.8
+    MC.31: GPORT=0x3000001f MODE=WRR WT=1 PARENT=L0.9
+    MC.32: GPORT=0x30000020 MODE=WRR WT=1 PARENT=L0.10
+    MC.33: GPORT=0x30000021 MODE=WRR WT=1 PARENT=L0.0
+    MC.34: GPORT=0x30000022 MODE=WRR WT=1 PARENT=L0.1
+    MC.35: GPORT=0x30000023 MODE=WRR WT=1 PARENT=L0.2
+    MC.36: GPORT=0x30000024 MODE=WRR WT=1 PARENT=L0.3
+    MC.37: GPORT=0x30000025 MODE=WRR WT=1 PARENT=L0.4
+    MC.38: GPORT=0x30000026 MODE=WRR WT=1 PARENT=L0.5
+    MC.39: GPORT=0x30000027 MODE=WRR WT=1 PARENT=L0.6
+    MC.40: GPORT=0x30000028 MODE=WRR WT=1 PARENT=L0.7
+    MC.41: GPORT=0x30000029 MODE=WRR WT=1 PARENT=L0.8
+    MC.42: GPORT=0x3000002a MODE=WRR WT=1 PARENT=L0.9
+    MC.43: GPORT=0x3000002b MODE=WRR WT=1 PARENT=L0.10
+    MC.44: GPORT=0x3000002c MODE=WRR WT=1 PARENT=L0.0
+    MC.45: GPORT=0x3000002d MODE=WRR WT=1 PARENT=L0.1
+    MC.46: GPORT=0x3000002e MODE=WRR WT=1 PARENT=L0.2
+    MC.47: GPORT=0x3000002f MODE=WRR WT=1 PARENT=L0.3
+=========== 
+=== PORT 1
+LO.0: GPORT=0x37800001 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810001 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820001 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830001 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840001 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850001 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860001 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870001 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880001 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890001 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0001 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0001 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24004000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24004001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24004002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24004003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24004004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24004005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24004006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24004007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30004000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30004001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30004002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30004003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 2
+LO.0: GPORT=0x37800002 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810002 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820002 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830002 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840002 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850002 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860002 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870002 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880002 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890002 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0002 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0002 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24008000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24008001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24008002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24008003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24008004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24008005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24008006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24008007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30008000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30008001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30008002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30008003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 3
+LO.0: GPORT=0x37800003 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810003 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820003 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830003 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840003 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850003 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860003 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870003 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880003 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890003 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0003 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0003 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2400c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2400c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2400c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2400c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2400c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2400c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2400c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2400c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3000c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3000c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3000c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3000c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 4
+LO.0: GPORT=0x37800004 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810004 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820004 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830004 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840004 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850004 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860004 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870004 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880004 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890004 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0004 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0004 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24010000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24010001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24010002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24010003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24010004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24010005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24010006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24010007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30010000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30010001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30010002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30010003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 17
+LO.0: GPORT=0x37800011 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810011 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820011 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830011 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840011 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850011 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860011 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870011 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880011 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890011 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0011 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0011 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24044000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24044001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24044002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24044003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24044004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24044005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24044006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24044007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30044000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30044001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30044002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30044003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 18
+LO.0: GPORT=0x37800012 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810012 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820012 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830012 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840012 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850012 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860012 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870012 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880012 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890012 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0012 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0012 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24048000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24048001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24048002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24048003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24048004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24048005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24048006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24048007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30048000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30048001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30048002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30048003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 19
+LO.0: GPORT=0x37800013 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810013 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820013 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830013 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840013 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850013 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860013 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870013 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880013 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890013 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0013 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0013 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2404c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2404c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2404c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2404c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2404c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2404c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2404c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2404c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3004c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3004c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3004c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3004c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 20
+LO.0: GPORT=0x37800014 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810014 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820014 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830014 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840014 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850014 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860014 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870014 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880014 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890014 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0014 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0014 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24050000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24050001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24050002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24050003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24050004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24050005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24050006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24050007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30050000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30050001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30050002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30050003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 34
+LO.0: GPORT=0x37800022 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810022 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820022 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830022 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840022 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850022 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860022 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870022 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880022 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890022 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0022 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0022 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24088000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24088001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24088002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24088003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24088004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24088005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24088006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24088007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30088000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30088001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30088002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30088003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 35
+LO.0: GPORT=0x37800023 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810023 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820023 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830023 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840023 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850023 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860023 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870023 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880023 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890023 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0023 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0023 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2408c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2408c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2408c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2408c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2408c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2408c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2408c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2408c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3008c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3008c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3008c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3008c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 36
+LO.0: GPORT=0x37800024 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810024 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820024 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830024 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840024 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850024 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860024 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870024 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880024 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890024 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0024 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0024 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24090000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24090001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24090002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24090003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24090004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24090005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24090006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24090007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30090000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30090001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30090002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30090003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 37
+LO.0: GPORT=0x37800025 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810025 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820025 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830025 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840025 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850025 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860025 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870025 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880025 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890025 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0025 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0025 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24094000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24094001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24094002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24094003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24094004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24094005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24094006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24094007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30094000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30094001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30094002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30094003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 50
+LO.0: GPORT=0x37800032 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810032 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820032 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830032 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840032 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850032 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860032 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870032 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880032 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890032 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0032 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0032 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x240c8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x240c8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x240c8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x240c8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x240c8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x240c8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x240c8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x240c8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x300c8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x300c8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x300c8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x300c8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 51
+LO.0: GPORT=0x37800033 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810033 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820033 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830033 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840033 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850033 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860033 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870033 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880033 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890033 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0033 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0033 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x240cc000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x240cc001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x240cc002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x240cc003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x240cc004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x240cc005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x240cc006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x240cc007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x300cc000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x300cc001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x300cc002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x300cc003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 52
+LO.0: GPORT=0x37800034 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810034 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820034 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830034 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840034 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850034 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860034 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870034 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880034 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890034 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0034 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0034 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x240d0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x240d0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x240d0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x240d0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x240d0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x240d0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x240d0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x240d0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x300d0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x300d0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x300d0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x300d0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 53
+LO.0: GPORT=0x37800035 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810035 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820035 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830035 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840035 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850035 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860035 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870035 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880035 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890035 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0035 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0035 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x240d4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x240d4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x240d4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x240d4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x240d4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x240d4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x240d4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x240d4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x300d4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x300d4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x300d4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x300d4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 54
+LO.0: GPORT=0x37800036 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810036 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820036 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830036 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840036 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850036 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860036 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870036 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880036 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890036 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0036 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0036 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x240d8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x240d8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x240d8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x240d8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x240d8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x240d8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x240d8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x240d8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x300d8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x300d8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x300d8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x300d8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 68
+LO.0: GPORT=0x37800044 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810044 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820044 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830044 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840044 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850044 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860044 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870044 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880044 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890044 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0044 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0044 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24110000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24110001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24110002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24110003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24110004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24110005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24110006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24110007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30110000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30110001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30110002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30110003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 69
+LO.0: GPORT=0x37800045 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810045 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820045 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830045 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840045 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850045 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860045 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870045 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880045 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890045 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0045 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0045 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24114000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24114001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24114002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24114003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24114004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24114005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24114006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24114007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30114000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30114001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30114002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30114003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 70
+LO.0: GPORT=0x37800046 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810046 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820046 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830046 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840046 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850046 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860046 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870046 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880046 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890046 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0046 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0046 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24118000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24118001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24118002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24118003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24118004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24118005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24118006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24118007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30118000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30118001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30118002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30118003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 71
+LO.0: GPORT=0x37800047 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810047 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820047 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830047 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840047 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850047 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860047 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870047 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880047 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890047 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0047 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0047 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2411c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2411c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2411c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2411c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2411c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2411c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2411c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2411c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3011c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3011c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3011c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3011c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 85
+LO.0: GPORT=0x37800055 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810055 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820055 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830055 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840055 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850055 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860055 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870055 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880055 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890055 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0055 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0055 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24154000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24154001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24154002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24154003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24154004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24154005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24154006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24154007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30154000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30154001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30154002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30154003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 86
+LO.0: GPORT=0x37800056 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810056 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820056 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830056 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840056 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850056 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860056 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870056 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880056 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890056 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0056 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0056 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24158000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24158001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24158002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24158003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24158004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24158005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24158006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24158007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30158000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30158001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30158002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30158003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 87
+LO.0: GPORT=0x37800057 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810057 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820057 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830057 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840057 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850057 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860057 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870057 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880057 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890057 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0057 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0057 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2415c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2415c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2415c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2415c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2415c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2415c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2415c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2415c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3015c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3015c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3015c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3015c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 88
+LO.0: GPORT=0x37800058 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810058 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820058 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830058 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840058 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850058 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860058 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870058 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880058 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890058 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0058 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0058 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24160000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24160001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24160002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24160003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24160004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24160005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24160006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24160007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30160000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30160001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30160002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30160003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 102
+LO.0: GPORT=0x37800066 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810066 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820066 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830066 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840066 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850066 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860066 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870066 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880066 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890066 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0066 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0066 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24198000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24198001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24198002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24198003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24198004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24198005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24198006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24198007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30198000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30198001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30198002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30198003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 103
+LO.0: GPORT=0x37800067 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810067 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820067 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830067 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840067 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850067 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860067 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870067 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880067 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890067 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0067 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0067 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2419c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2419c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2419c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2419c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2419c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2419c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2419c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2419c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3019c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3019c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3019c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3019c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 104
+LO.0: GPORT=0x37800068 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810068 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820068 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830068 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840068 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850068 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860068 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870068 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880068 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890068 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0068 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0068 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241a0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241a0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241a0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241a0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241a0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241a0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241a0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241a0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301a0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301a0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301a0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301a0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 105
+LO.0: GPORT=0x37800069 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810069 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820069 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830069 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840069 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850069 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860069 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870069 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880069 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890069 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0069 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0069 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241a4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241a4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241a4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241a4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241a4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241a4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241a4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241a4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301a4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301a4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301a4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301a4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 119
+LO.0: GPORT=0x37800077 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810077 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820077 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830077 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840077 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850077 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860077 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870077 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880077 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890077 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0077 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0077 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241dc000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241dc001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241dc002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241dc003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241dc004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241dc005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241dc006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241dc007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301dc000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301dc001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301dc002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301dc003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 120
+LO.0: GPORT=0x37800078 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810078 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820078 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830078 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840078 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850078 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860078 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870078 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880078 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890078 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0078 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0078 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241e0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241e0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241e0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241e0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241e0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241e0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241e0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241e0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301e0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301e0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301e0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301e0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 121
+LO.0: GPORT=0x37800079 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810079 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820079 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830079 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840079 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850079 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860079 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870079 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880079 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890079 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0079 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0079 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241e4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241e4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241e4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241e4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241e4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241e4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241e4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241e4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301e4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301e4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301e4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301e4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 122
+LO.0: GPORT=0x3780007a MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781007a MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782007a MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783007a MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784007a MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785007a MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786007a MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787007a MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788007a MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789007a MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a007a MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b007a MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x241e8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x241e8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x241e8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x241e8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x241e8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x241e8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x241e8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x241e8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x301e8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x301e8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x301e8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x301e8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 136
+LO.0: GPORT=0x37800088 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810088 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820088 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830088 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840088 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850088 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860088 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870088 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880088 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890088 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0088 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0088 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24220000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24220001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24220002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24220003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24220004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24220005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24220006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24220007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30220000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30220001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30220002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30220003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 137
+LO.0: GPORT=0x37800089 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810089 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820089 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830089 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840089 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850089 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860089 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870089 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880089 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890089 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0089 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0089 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24224000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24224001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24224002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24224003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24224004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24224005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24224006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24224007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30224000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30224001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30224002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30224003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 138
+LO.0: GPORT=0x3780008a MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781008a MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782008a MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783008a MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784008a MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785008a MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786008a MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787008a MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788008a MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789008a MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a008a MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b008a MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24228000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24228001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24228002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24228003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24228004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24228005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24228006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24228007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30228000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30228001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30228002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30228003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 139
+LO.0: GPORT=0x3780008b MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781008b MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782008b MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783008b MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784008b MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785008b MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786008b MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787008b MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788008b MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789008b MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a008b MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b008b MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2422c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2422c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2422c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2422c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2422c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2422c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2422c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2422c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3022c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3022c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3022c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3022c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 152
+LO.0: GPORT=0x37800098 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810098 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820098 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830098 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840098 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850098 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860098 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870098 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880098 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890098 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0098 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0098 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24260000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24260001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24260002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24260003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24260004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24260005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24260006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24260007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30260000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30260001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30260002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30260003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 153
+LO.0: GPORT=0x37800099 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810099 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820099 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830099 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840099 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850099 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860099 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870099 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880099 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890099 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0099 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0099 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24264000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24264001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24264002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24264003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24264004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24264005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24264006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24264007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30264000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30264001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30264002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30264003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 154
+LO.0: GPORT=0x3780009a MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781009a MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782009a MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783009a MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784009a MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785009a MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786009a MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787009a MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788009a MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789009a MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a009a MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b009a MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24268000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24268001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24268002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24268003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24268004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24268005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24268006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24268007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30268000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30268001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30268002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30268003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 155
+LO.0: GPORT=0x3780009b MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781009b MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782009b MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783009b MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784009b MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785009b MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786009b MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787009b MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788009b MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789009b MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a009b MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b009b MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2426c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2426c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2426c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2426c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2426c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2426c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2426c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2426c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3026c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3026c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3026c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3026c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 156
+LO.0: GPORT=0x3780009c MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x3781009c MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x3782009c MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x3783009c MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x3784009c MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x3785009c MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x3786009c MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x3787009c MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x3788009c MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x3789009c MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a009c MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b009c MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24270000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24270001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24270002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24270003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24270004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24270005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24270006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24270007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30270000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30270001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30270002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30270003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 170
+LO.0: GPORT=0x378000aa MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100aa MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200aa MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300aa MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400aa MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500aa MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600aa MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700aa MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800aa MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900aa MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00aa MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00aa MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242a8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242a8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242a8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242a8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242a8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242a8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242a8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242a8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302a8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302a8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302a8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302a8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 171
+LO.0: GPORT=0x378000ab MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ab MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ab MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ab MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ab MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ab MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ab MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ab MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ab MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ab MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ab MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ab MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242ac000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242ac001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242ac002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242ac003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242ac004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242ac005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242ac006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242ac007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302ac000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302ac001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302ac002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302ac003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 172
+LO.0: GPORT=0x378000ac MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ac MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ac MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ac MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ac MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ac MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ac MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ac MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ac MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ac MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ac MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ac MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242b0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242b0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242b0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242b0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242b0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242b0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242b0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242b0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302b0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302b0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302b0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302b0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 173
+LO.0: GPORT=0x378000ad MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ad MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ad MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ad MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ad MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ad MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ad MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ad MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ad MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ad MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ad MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ad MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242b4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242b4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242b4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242b4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242b4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242b4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242b4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242b4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302b4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302b4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302b4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302b4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 187
+LO.0: GPORT=0x378000bb MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100bb MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200bb MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300bb MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400bb MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500bb MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600bb MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700bb MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800bb MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900bb MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00bb MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00bb MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242ec000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242ec001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242ec002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242ec003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242ec004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242ec005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242ec006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242ec007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302ec000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302ec001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302ec002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302ec003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 188
+LO.0: GPORT=0x378000bc MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100bc MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200bc MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300bc MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400bc MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500bc MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600bc MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700bc MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800bc MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900bc MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00bc MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00bc MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242f0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242f0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242f0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242f0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242f0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242f0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242f0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242f0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302f0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302f0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302f0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302f0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 189
+LO.0: GPORT=0x378000bd MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100bd MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200bd MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300bd MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400bd MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500bd MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600bd MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700bd MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800bd MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900bd MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00bd MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00bd MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242f4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242f4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242f4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242f4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242f4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242f4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242f4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242f4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302f4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302f4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302f4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302f4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 190
+LO.0: GPORT=0x378000be MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100be MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200be MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300be MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400be MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500be MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600be MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700be MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800be MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900be MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00be MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00be MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x242f8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x242f8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x242f8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x242f8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x242f8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x242f8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x242f8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x242f8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x302f8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x302f8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x302f8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x302f8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 204
+LO.0: GPORT=0x378000cc MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100cc MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200cc MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300cc MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400cc MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500cc MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600cc MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700cc MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800cc MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900cc MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00cc MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00cc MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24330000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24330001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24330002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24330003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24330004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24330005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24330006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24330007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30330000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30330001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30330002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30330003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 205
+LO.0: GPORT=0x378000cd MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100cd MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200cd MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300cd MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400cd MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500cd MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600cd MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700cd MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800cd MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900cd MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00cd MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00cd MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24334000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24334001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24334002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24334003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24334004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24334005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24334006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24334007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30334000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30334001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30334002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30334003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 206
+LO.0: GPORT=0x378000ce MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ce MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ce MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ce MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ce MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ce MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ce MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ce MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ce MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ce MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ce MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ce MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24338000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24338001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24338002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24338003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24338004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24338005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24338006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24338007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30338000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30338001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30338002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30338003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 207
+LO.0: GPORT=0x378000cf MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100cf MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200cf MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300cf MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400cf MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500cf MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600cf MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700cf MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800cf MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900cf MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00cf MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00cf MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2433c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2433c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2433c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2433c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2433c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2433c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2433c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2433c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3033c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3033c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3033c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3033c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 221
+LO.0: GPORT=0x378000dd MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100dd MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200dd MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300dd MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400dd MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500dd MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600dd MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700dd MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800dd MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900dd MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00dd MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00dd MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24374000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24374001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24374002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24374003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24374004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24374005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24374006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24374007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30374000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30374001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30374002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30374003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 222
+LO.0: GPORT=0x378000de MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100de MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200de MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300de MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400de MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500de MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600de MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700de MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800de MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900de MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00de MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00de MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24378000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24378001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24378002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24378003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24378004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24378005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24378006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24378007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30378000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30378001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30378002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30378003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 223
+LO.0: GPORT=0x378000df MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100df MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200df MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300df MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400df MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500df MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600df MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700df MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800df MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900df MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00df MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00df MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x2437c000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x2437c001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x2437c002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x2437c003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x2437c004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x2437c005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x2437c006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x2437c007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x3037c000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x3037c001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x3037c002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x3037c003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 224
+LO.0: GPORT=0x378000e0 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100e0 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200e0 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300e0 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400e0 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500e0 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600e0 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700e0 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800e0 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900e0 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00e0 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00e0 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24380000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24380001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24380002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24380003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24380004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24380005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24380006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24380007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30380000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30380001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30380002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30380003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 238
+LO.0: GPORT=0x378000ee MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ee MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ee MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ee MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ee MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ee MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ee MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ee MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ee MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ee MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ee MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ee MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x243b8000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x243b8001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x243b8002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x243b8003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x243b8004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x243b8005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x243b8006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x243b8007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x303b8000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x303b8001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x303b8002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x303b8003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 239
+LO.0: GPORT=0x378000ef MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ef MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ef MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ef MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ef MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ef MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ef MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ef MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ef MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ef MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ef MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ef MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x243bc000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x243bc001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x243bc002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x243bc003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x243bc004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x243bc005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x243bc006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x243bc007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x303bc000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x303bc001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x303bc002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x303bc003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 240
+LO.0: GPORT=0x378000f0 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100f0 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200f0 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300f0 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400f0 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500f0 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600f0 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700f0 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800f0 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900f0 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00f0 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00f0 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x243c0000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x243c0001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x243c0002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x243c0003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x243c0004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x243c0005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x243c0006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x243c0007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x303c0000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x303c0001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x303c0002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x303c0003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 241
+LO.0: GPORT=0x378000f1 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100f1 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200f1 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300f1 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400f1 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500f1 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600f1 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700f1 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800f1 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900f1 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00f1 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00f1 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x243c4000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x243c4001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x243c4002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x243c4003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x243c4004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x243c4005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x243c4006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x243c4007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x303c4000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x303c4001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x303c4002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x303c4003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 255
+LO.0: GPORT=0x378000ff MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x378100ff MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x378200ff MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x378300ff MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x378400ff MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x378500ff MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x378600ff MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x378700ff MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x378800ff MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x378900ff MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a00ff MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b00ff MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x243fc000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x243fc001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x243fc002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x243fc003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x243fc004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x243fc005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x243fc006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x243fc007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x303fc000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x303fc001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x303fc002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x303fc003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 256
+LO.0: GPORT=0x37800100 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810100 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820100 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830100 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840100 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850100 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860100 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870100 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880100 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890100 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0100 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0100 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24400000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24400001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24400002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24400003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24400004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24400005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24400006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24400007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30400000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30400001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30400002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30400003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 257
+LO.0: GPORT=0x37800101 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810101 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820101 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830101 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840101 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850101 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860101 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870101 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880101 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890101 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0101 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0101 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24404000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24404001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24404002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24404003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24404004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24404005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24404006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24404007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30404000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30404001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30404002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30404003 MODE=SP WT=0 PARENT=11
+=========== 
+=== PORT 258
+LO.0: GPORT=0x37800102 MODE=WRR WT=1, COS=0
+LO.1: GPORT=0x37810102 MODE=WRR WT=1, COS=1
+LO.2: GPORT=0x37820102 MODE=WRR WT=1, COS=2
+LO.3: GPORT=0x37830102 MODE=WRR WT=1, COS=3
+LO.4: GPORT=0x37840102 MODE=WRR WT=1, COS=4
+LO.5: GPORT=0x37850102 MODE=WRR WT=1, COS=5
+LO.6: GPORT=0x37860102 MODE=WRR WT=1, COS=6
+LO.7: GPORT=0x37870102 MODE=WRR WT=1, COS=7
+LO.8: GPORT=0x37880102 MODE=WRR WT=1, COS=8
+LO.9: GPORT=0x37890102 MODE=WRR WT=1, COS=9
+LO.10: GPORT=0x378a0102 MODE=WRR WT=1, COS=10
+LO.11: GPORT=0x378b0102 MODE=WRR WT=1, COS=11
+UC.0: GPORT=0x24408000 MODE=SP WT=0 PARENT=0
+UC.1: GPORT=0x24408001 MODE=SP WT=0 PARENT=1
+UC.2: GPORT=0x24408002 MODE=SP WT=0 PARENT=2
+UC.3: GPORT=0x24408003 MODE=SP WT=0 PARENT=3
+UC.4: GPORT=0x24408004 MODE=SP WT=0 PARENT=4
+UC.5: GPORT=0x24408005 MODE=SP WT=0 PARENT=5
+UC.6: GPORT=0x24408006 MODE=SP WT=0 PARENT=6
+UC.7: GPORT=0x24408007 MODE=SP WT=0 PARENT=7
+MC.0: GPORT=0x30408000 MODE=SP WT=0 PARENT=8
+MC.1: GPORT=0x30408001 MODE=SP WT=0 PARENT=9
+MC.2: GPORT=0x30408002 MODE=SP WT=0 PARENT=10
+MC.3: GPORT=0x30408003 MODE=SP WT=0 PARENT=11
+=========== 
+
+TIME_DOMAIN[0] - refcnt 797
+
+TIME_DOMAIN[1] - refcnt 0
+
+TIME_DOMAIN[2] - refcnt 0
+
+TIME_DOMAIN[3] - refcnt 0
+=========== 
+
+WRED_RESOLUTION[0] - refcnt 1
+
+WRED_RESOLUTION[1] - refcnt 0
+
+WRED_RESOLUTION[2] - refcnt 0
+
+WRED_RESOLUTION[3] - refcnt 0
+=========== 
+bcm_error_t $$ = BCM_E_NONE (0)
+

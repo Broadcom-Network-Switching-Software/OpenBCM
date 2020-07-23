@@ -1,0 +1,24 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Make.chip.88650
+FEATURE_LIST=INTR CINT BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI
+
+BCM_PTL_SPT=1
+
+BCM_88650_B0 = 1
+BCM_88650_A0 = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+
+# Target: 00 systems/linux/user/gto-2_6 
+# Target: 00 systems/linux/user/gto-2_6.wrl3
+
+# workspace:system=88650 
+# linux26wrs-user:system=88650 buildDir=systems/linux/user/gto-2_6 cpu=gto
+# workspace30:system=88650
+# linux26wrs30-user:system=88650 buildDir=systems/linux/user/gto-2_6 cpu=gto
+

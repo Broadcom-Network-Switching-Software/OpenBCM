@@ -1,0 +1,171 @@
+# $Id: dnxf.soc,v 1.18 2013/02/11 13:31:04 moshikor Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+#Debug level
+debug info
+debug soc tests warn
+debug appl rcload warn
+debug appl symtab warn
+debug soc phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,physim warn
+debug sys verinet warn
+debug bcm attach warn
+debug bcm rx,tx warn
+debug soc rx warn
+debug socdnx DbalDnx warn
+debug socdnx DiagDbalDnx warn
+debug socdnx DbalAccessDnx warn
+
+if !$?custom_feature_lane_swap_disable "\
+    local local_custom_feature_lane_swap_disable 0" \
+else "\
+    local local_custom_feature_lane_swap_disable $custom_feature_lane_swap_disable"
+
+# Loading the board configuration file according to the board type, which is encoded on the EEPROM.
+# Boards types: Negev, Pizza box and DVT.
+# This board loading script can be replaced by the user with a simple command to load the board file that they are using.
+# 0x87900101 - Ramon Negev.
+# 0x87900201 - Ramon pizza box.
+# 0x87900301 - Ramon DVT.
+# 0x86908790 - mgmt system of JR2 and Ramon (all are pizza boxes).
+# 0x86918790 - mgmt system of JR2 with revB board and Ramon pizza box.
+# 0x86928790 - mgmt system of JR2 pizza box, Ramon Negev and Jer (JR2: 156.25MHz, Ramon: 312.5MHz).
+# 0x86938790 - mgmt system of JR2, Ramon and J2C (all are pizza boxes).
+
+# 0x480d0000 - mgmt system consisting of Jer_plus and Ramon devices (Negev).
+# 0x88008790 - mgmt system of J2C and Ramon (all are pizza boxes, all have ref clock of 156.25MHz).
+#
+# Note 1: default is Ramon Negev board file.
+# Note 2: 'expr' can't be too long, otherwise it will return wrong result. So split it to several conditions if needed.
+expr $local_custom_feature_lane_swap_disable != 1
+if $?BCM_8879X_DEV && !$?plisim && $?\
+    'cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x87900101"\
+        "rcload bcm88790_board.soc"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x87900201"\
+        "rcload bcm88790_pizza_board.soc"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x86908790 || $i2c_result == 0x86918790 || $i2c_result == 0x86938790 || $i2c_result == 0x86948790"\
+        "rcload bcm88790_pizza_board.soc"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x88008790"\
+        "rcload bcm88790_pizza_board.soc"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x87900301"\
+        "rcload bcm88790_dvt_board.soc"\
+        "local board_file_loaded 1";\
+    if !"expr $i2c_result == 0x86928790 || $i2c_result == 0x480d0000"\
+        "rcload bcm88790_board.soc"\
+        "rcload bcm88790_legacy_interop_board.soc"\
+        "local board_file_loaded 1";\
+    if !"$board_file_loaded"\
+        "rcload bcm88790_board.soc";'
+        
+expr $local_custom_feature_lane_swap_disable != 1
+if $?BCM_8879X_DEV && $?plisim && $?\
+  'rcload bcm88790_board.soc;'
+  
+expr $local_custom_feature_lane_swap_disable == 1
+if $?BCM_8879X_DEV && $?\
+  'rcload bcm88790_board_no_swap.soc;' 
+
+######## Configuring LCPLL input reference clock based on a value encoded on the board (Silab).
+# Note the different configuration between the following cases:
+# 1. 8879X standalone or 8879X in a Negev mgmt with legacy FAPs - the Silab value is read from 8879X unit.
+# 2, 8879X in a pizza-box mgmt system - the Silab value is read from the master unit (which will usually be 8869X unit).
+# This script can be deleted by the user and replaced by serdes_fabric_clk_freq_in SoC property configuration with the relevant frequency value.
+
+local pll_freq -1
+local standalone_system 0
+local negev_mgmt_system 0
+local pizza_mgmt_system 0
+local hybrid_mgmt_system 0
+local pll_freq_156_mgmt_system 0
+local ramon_pll_freq_312 0
+
+if $?BCM_8879X_DEV && !$?plisim \
+    'cpu_i2c read 0x14 0x52 0x0; \
+    if !"expr $i2c_result == 0x87900101 || $i2c_result == 0x87900201 || $i2c_result == 0x87900301" \
+        "local standalone_system 1"; \
+    if !"expr $i2c_result == 0x480d0000" \
+        "local negev_mgmt_system 1"; \
+    if !"expr $i2c_result == 0x86908790 || $i2c_result == 0x86918790 || $i2c_result == 0x86938790" \
+        "local pizza_mgmt_system 1"; \
+    if !"expr $i2c_result == 0x86928790" \
+        "local hybrid_mgmt_system 1"; \
+    if !"expr $i2c_result == 0x86948790" \
+        "local ramon_pll_freq_312 1"; \
+    if !"expr $i2c_result == 0x88008790" \
+        "local pll_freq_156_mgmt_system 1";'
+
+expr $standalone_system || $negev_mgmt_system || $pizza_mgmt_system || $hybrid_mgmt_system
+if $?BCM_8879X_DEV && !$?plisim && $? \
+    'if $negev_mgmt_system \
+        "cpu_i2c write 0x11 0x77 0x0 0x04"; \
+    cpu_i2c write 0x11 0x70 0x0 0x02; \
+    cpu_i2c write 0x11 0x74 0x1 0x02; \
+    cpu_i2c read 0x11 0x74 0x50; \
+    local pll_freq $i2c_result; \
+    cpu_i2c write 0x11 0x70 0x0 0x0; \
+    if $negev_mgmt_system \
+        "cpu_i2c write 0x11 0x77 0x0 0x0";'
+
+# 8879X configuration in standalone or in Negev mgmt with legacy devices.
+# i2c read from 8879X unit.
+expr $?plisim || $standalone_system || $negev_mgmt_system || $hybrid_mgmt_system
+if $?BCM_8879X_DEV && $? \
+    'if !"expr $pll_freq != 0x1 && $pll_freq != 0x3" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=3"; \
+    if !"expr $pll_freq == 0x1" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=3"; \
+    if !"expr $pll_freq == 0x3" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=1";'
+
+# 8879X configuration in a pizza-box mgmt system containing 8869X
+# i2c read from master unit (8869X device).
+if $?BCM_8879X_DEV && !$?plisim && $pizza_mgmt_system \
+    'if !"expr $pll_freq != 0x0 && $pll_freq != 0x1" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=3"; \
+    if !"expr $pll_freq == 0x0" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=3"; \
+    if !"expr $pll_freq == 0x1" \
+        "config add serdes_fabric_clk_freq_in.BCM8879X=1";'
+
+# 8879X configuration in a pizza-box mgmt system containing
+# devices which all have 156.25MHz ref clock
+if $?BCM_8879X_DEV && !$?plisim && $pll_freq_156_mgmt_system \
+    "config add serdes_fabric_clk_freq_in.BCM8879X=1"
+
+# 8879X configuration in a pizza-box mgmt system where the Ramon
+# device have 312.5MHz ref clock
+if $?BCM_8879X_DEV && !$?plisim && $ramon_pll_freq_312 \
+    "config add serdes_fabric_clk_freq_in.BCM8879X=3"
+
+########
+
+if !$?warmboot "\
+   local warmboot 0"
+
+if !$?custom_feature_access_only "\
+    local local_custom_feature_access_only 0" \
+else "\
+    local local_custom_feature_access_only $custom_feature_access_only"
+
+m0 load 0 0x0 linkscan_led_fw.bin
+m0 load 0 0x3800 custom_led.bin
+
+
+# For access only set sbus_access_only
+if $local_custom_feature_access_only \
+  "der 0x40 0x4" \
+else "\
+  if !$?diag_parallel \
+    INIT_DNX"
+
+if $?diag_parallel \
+    exit     
+
+echo "dnxf.soc: Done."

@@ -1,0 +1,265 @@
+BCM.0> c TD4-ipv4_vxlan_riot_NtoA_Inner_ttl_error.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 08:36:59 2019)
+From sdkrel@lc-sj1-4391:/projects/ntsw_sw18_scratch/sdkrel/regress/sdk-6.5.18-EA6/src/sdk.hsdk.release.56880-release
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+~~~ #1) test_setup(): ** start **
+egress_port_multi_setup port: 1
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Get flow handler for CLASSIC_VXLAN
+
+Setup access VP on port 1
+Access: create VPN
+create multicast group for UUC/MC/BC
+Access: create flow port vp
+Access: flow port=0xb0000001
+Access: egr_l3_intf: 0x1
+Access: L3 ingress interface: 0x1b3
+Access: Egress obj access: 0x186a1
+Add L3 Host entry for RIOT
+
+Setup network VP on port 2
+int $$ = 0 (0x0)
+Configure Vxlan network port configuration
+Access: create VPN
+create multicast group for UUC/MC/BC
+Network: create flow port vp
+Network: flow port=0xb0000002
+int $$ = 0 (0x0)
+Network: Network egr_l3_intf: 0x2
+Network: L3 ingress interface: 0x1b0
+Network: Egress obj access: 0x186a2
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Tunnel_init: create flow tunnel initiator
+Tunnel_term: create flow tunnel terminator
+~~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 10 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 11 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+mac=00:00:00:00:04:01 vlan=11 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+     VRF Net Addr            INTF UL_INTF
+--------------------------------------------
+0    10   30.30.30.1          100001 0
+EgrID        MAC Address   Intf      Port Module   MTU       Type
+---------------------------------------------------------------
+100001  00:00:00:00:00:01      1     1            0 16383    overlay
+
+100002  00:00:00:00:02:01      2     2            0 16383    overlay
+
+INTF  VID   MAC Address
+----------------------------------------------
+1     10    00:00:00:22:22:22  OverLay
+
+2     11    00:00:00:00:04:01  OverLay
+
+
+Sending TTL=1 packet to ingress network side:2
+Packet from data=<>, length=118
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000301} {000000000101} 8100 001e
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0068 0000 4000 0a11 3466 1414
+[bcmPWN.0]Packet[1]: data[0020]: 1401 0a0a 0a01 d234 12b5 0054 7d88 0800
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0123 4500 0000 0000 0401 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 0201 0800 4500 002e 0000 0000 0106 2d83
+[bcmPWN.0]Packet[1]: data[0050]: 2828 2801 1e1e 1e01 8181 5151 b1b2 b3b4
+[bcmPWN.0]Packet[1]: data[0060]: a1a2 a3a4 500f 01f5 3a9f 0000 1112 1314
+[bcmPWN.0]Packet[1]: data[0070]: 1516 1718 191a
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x7a(122)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x80905222(-2138025438)
+        MATCH_ID_HI                     :0x40c(1036)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_15_0         :0x4000
+        DROP_CODE_15_0                  :0x1010
+        PARSER_VHLEN_0_15_0             :0x8a8a
+        VFI_15_0                        :0xb
+        SVP_15_0                        :0x2
+        L2_IIF_10_0                     :0x2
+        SYSTEM_SOURCE_15_0              :0x2
+        L3_IIF_13_0                     :0x1b0
+        L3_OIF_1_13_0                   :0x1
+        L2_OIF_10_0                     :0x1
+        INGRESS_PP_PORT_7_0             :0x2
+        SYSTEM_DESTINATION_15_0         :0x1
+        NHOP_INDEX_1_14_0               :0x1
+        EFFECTIVE_TTL_7_0               :0x1
+        TUNNEL_PROCESSING_RESULTS_1_3_0 :0x5
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x3
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        L3_TTL_ERROR
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:03:01> src<00:00:00:00:01:01> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<20.20.20.1> dst<10.10.10.1> hl<5> service-type<0> tl<104> id<0> frg-off<16384> ttl<10> > chk-sum<0x3466>
+
+Sending TTL=0 packet to ingress network side:2
+Packet from data=<>, length=118
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000301} {000000000101} 8100 001e
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0068 0000 4000 0a11 3466 1414
+[bcmPWN.0]Packet[2]: data[0020]: 1401 0a0a 0a01 d234 12b5 0054 7d88 0800
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0000 0401 0000 0000
+[bcmPWN.0]Packet[2]: data[0040]: 0201 0800 4500 002e 0000 0000 0006 2e83
+[bcmPWN.0]Packet[2]: data[0050]: 2828 2801 1e1e 1e01 8181 5151 b1b2 b3b4
+[bcmPWN.0]Packet[2]: data[0060]: a1a2 a3a4 500f 01f5 3a9f 0000 1112 1314
+[bcmPWN.0]Packet[2]: data[0070]: 1516 1718 191a
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x7a(122)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x80905222(-2138025438)
+        MATCH_ID_HI                     :0x40c(1036)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_15_0         :0x4000
+        DROP_CODE_15_0                  :0x1010
+        PARSER_VHLEN_0_15_0             :0x8a8a
+        VFI_15_0                        :0xb
+        SVP_15_0                        :0x2
+        L2_IIF_10_0                     :0x2
+        SYSTEM_SOURCE_15_0              :0x2
+        L3_IIF_13_0                     :0x1b0
+        L3_OIF_1_13_0                   :0x1
+        L2_OIF_10_0                     :0x1
+        INGRESS_PP_PORT_7_0             :0x2
+        SYSTEM_DESTINATION_15_0         :0x1
+        NHOP_INDEX_1_14_0               :0x1
+        TUNNEL_PROCESSING_RESULTS_1_3_0 :0x5
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x3
+        SYSTEM_OPCODE_3_0               :0x1
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        L3_TTL_ERROR
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:03:01> src<00:00:00:00:01:01> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.1> dst<10.10.10.1> hl<5> service-type<0> tl<104> id<0> frg-off<16384> ttl<10> > chk-sum<0x3466>
+XLMIB_TBYT.cd1                        :                   244                +244
+XLMIB_RBYT.cd1                        :                   244                +244
+XLMIB_TPOK.cd1                        :                     2                  +2
+XLMIB_RPOK.cd1                        :                     2                  +2
+XLMIB_TVLN.cd1                        :                     2                  +2
+XLMIB_RVLN.cd1                        :                     2                  +2
+XLMIB_TUCA.cd1                        :                     2                  +2
+XLMIB_RUCA.cd1                        :                     2                  +2
+XLMIB_TPKT.cd1                        :                     2                  +2
+XLMIB_RPKT.cd1                        :                     2                  +2
+XLMIB_T127.cd1                        :                     2                  +2
+XLMIB_R127.cd1                        :                     2                  +2
+XLMIB_RPRM.cd1                        :                     2                  +2
+
+verify l2 learning:
+mac=00:00:00:00:04:01 vlan=11 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+
+verify l3 route
+     VRF Net Addr            INTF UL_INTF
+--------------------------------------------
+0    10   30.30.30.1          100001 0
+
+ Vpn :32768
+
+ VpnInfo :
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 0 (0x0)
+        int igmp_query_action = 0 (0x0)
+        int igmp_unknown_msg_action = 0 (0x0)
+        int mld_report_done_action = 0 (0x0)
+        int mld_query_action = 0 (0x0)
+        int ip4_rsvd_mc_action = 0 (0x0)
+        int ip6_rsvd_mc_action = 0 (0x0)
+        int ip4_mc_router_adv_action = 0 (0x0)
+        int ip6_mc_router_adv_action = 0 (0x0)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 1
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177279 (0xb0000001)
+    unsigned int flags = 0 (0x0)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+
+ Vpn :32769
+
+ VpnInfo :
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658242 (0xf000002)
+    int unknown_unicast_group = 251658242 (0xf000002)
+    int unknown_multicast_group = 251658242 (0xf000002)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 0 (0x0)
+        int igmp_query_action = 0 (0x0)
+        int igmp_unknown_msg_action = 0 (0x0)
+        int mld_report_done_action = 0 (0x0)
+        int mld_query_action = 0 (0x0)
+        int ip4_rsvd_mc_action = 0 (0x0)
+        int ip6_rsvd_mc_action = 0 (0x0)
+        int ip4_mc_router_adv_action = 0 (0x0)
+        int ip6_mc_router_adv_action = 0 (0x0)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 1
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 2 (0x2)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

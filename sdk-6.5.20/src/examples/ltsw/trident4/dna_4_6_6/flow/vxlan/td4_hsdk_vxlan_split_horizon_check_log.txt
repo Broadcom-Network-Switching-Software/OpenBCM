@@ -1,0 +1,54 @@
+BCM.0> c VXLAN_Split_Horizon_Check.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 08:40:53 2019)
+From sdkrel@lc-sj1-4870:/projects/ntsw_sw18_scratch/sdkrel/regress/sdk-6.5.18-EA6/src/sdk.hsdk.release.build
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+Access port: 2
+Network port 1: 61
+Network port 2: 140
+vpn: 0x8064
+acc_flow_port: 0xb0000001
+net_flow_port_1: 0xb0000002
+net_flow_port_2: 0xb0000003
+network egr L3 intf1: 0x4001
+network egr L3 intf2: 0x4002
+network egr object1: 0x206a1
+network egr object2: 0x206a2
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+DLF Packet comes into network port 61, expect to foward to access port 2 and network port 140
+tx 1 pbm=61 data=0xE8A2D93A7E952CEBD792C76A81002092080045E800A0000000002211B886495FB3DB76C66ADE000012B5008CAAE0080000000339D1008A77BAB322C618BFA3C4124408004500006E00000000B5064D59C2F433C69B412635006F00DEEDAC9872229431E4500000001D1300004B75E96BE516F4E596D17C37310FA37001B0622F8355815A174E471EC33F2443C869F9809CDBADDE241B8E0E69080A425988F62608F150F3EAA952356A35D3C71BB4E751000135F29D6D;sleep 5
+Packet from data=<>, length=182
+Sleeping for 5 seconds
+
+******Port stats check******
+--------Network port (61) stats--------
+Rx : 1 packets / 186 bytes
+--------Network port (140) stats--------
+Tx : 1 packets / 186 bytes
+--------Access port (2) stats--------
+Tx : 1 packets / 136 bytes
+
+Clear counter and enable split horizon checking
+DLF Packet comes into network port 61, expect to foward to access port 2
+tx 1 pbm=61 data=0xE8A2D93A7E952CEBD792C76A81002092080045E800A0000000002211B886495FB3DB76C66ADE000012B5008CAAE0080000000339D1008A77BAB322C618BFA3C4124408004500006E00000000B5064D59C2F433C69B412635006F00DEEDAC9872229431E4500000001D1300004B75E96BE516F4E596D17C37310FA37001B0622F8355815A174E471EC33F2443C869F9809CDBADDE241B8E0E69080A425988F62608F150F3EAA952356A35D3C71BB4E751000135F29D6D;sleep 5
+Packet from data=<>, length=182
+Sleeping for 5 seconds
+
+******Port stats check******
+--------Network port (61) stats--------
+Rx : 1 packets / 186 bytes
+--------Access port (2) stats--------
+Tx : 1 packets / 136 bytes
+--------Network port (140) stats--------
+Tx : 0 packets / 0 bytes
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

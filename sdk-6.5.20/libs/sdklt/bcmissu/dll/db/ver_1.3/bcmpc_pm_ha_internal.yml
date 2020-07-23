@@ -1,0 +1,170 @@
+#
+# file: bcmpc_pm_ha.yml
+# PC YAML file describing the Port Macro (PM) related HA data structure.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    PM_MAX_PORTS_PER_CORE: 8
+    BCMPC_NUM_PHYSICAL_PORTS: 576
+
+component:
+    bcmpc_ha:
+        pm_port_fec_t:
+            type: enum
+            fields:
+                PM_PORT_FEC_NONE: 0
+                PM_PORT_FEC_BASE_R:
+                PM_PORT_FEC_RS_528:
+                PM_PORT_FEC_RS_544:
+                PM_PORT_FEC_RS_272:
+                PM_PORT_FEC_RS_544_2XN:
+                PM_PORT_FEC_RS_272_2XN:
+                PM_PORT_FEC_COUNT:
+
+        pm_port_autoneg_mode_t:
+            type: enum
+            fields:
+                PM_PORT_AUTONEG_MODE_NONE: 0
+                PM_PORT_AUTONEG_MODE_CL37:
+                PM_PORT_AUTONEG_MODE_CL37_BAM:
+                PM_PORT_AUTONEG_MODE_CL73:
+                PM_PORT_AUTONEG_MODE_CL73_BAM:
+                PM_PORT_AUTONEG_MODE_CL73_MSA:
+                PM_PORT_AUTONEG_MODE_SGMII:
+                PM_PORT_AUTONEG_MODE_COUNT:
+
+        bcmpc_phymod_pause_type_t:
+            type: enum
+            fields:
+                BCMPC_PHYMOD_PAUSE_NONE: 0
+                BCMPC_PHYMOD_PAUSE_SYMM:
+                BCMPC_PHYMOD_PAUSE_ASYMM:
+                BCMPC_PHYMOD_PAUSE_SYMM_ASYMM:
+                BCMPC_PHYMOD_PAUSE_COUNT:
+
+        pm_ha_info_t:
+            comment: Port Macro (PM) specific software state information.
+            type: struct
+            fields:
+                is_pm_initialized:
+                    type: bool
+                    comment: Indicates PM initialization is done. True when the first port is attached.
+                is_master_pm:
+                    type: bool
+                    comment: True is this Port Macro is generating clock for slave Port Macro.
+                firmware_downloaded:
+                    type: bool
+                    comment: Firmware is downloaded.
+                ovco_active_lane_bmap:
+                    type: uint8_t
+                    comment: Lane bit map which are actively using OVCO.
+                tvco_active_lane_bmap:
+                    type: uint8_t
+                    comment: Lane bit map which are actively using OVCO.
+                ovco_advert_lane_bmap:
+                    type: uint8_t
+                    comment: Lane bit map which have advertising abilities using OVCO.
+                tvco_advert_lane_bmap:
+                    type: uint8_t
+                    comment: Lane bit map which have advertising abilities using TVCO.
+                an_enable_lane_bmap:
+                    type: uint8_t
+                    comment: Lane bit map which have auto-negotiation enabled.
+                lane_port_map:
+                    type: int
+                    comment: Lane to port mapping array.
+                    length: PM_MAX_PORTS_PER_CORE
+                max_speed:
+                    type: int
+                    comment: Maximum speed for each port.
+                    length: PM_MAX_PORTS_PER_CORE
+                lane_fec_map:
+                    type: pm_port_fec_t
+                    comment: Auto-negotiation lane to FEC type mapping array.
+                    length: PM_MAX_PORTS_PER_CORE
+                an_lane_fec_map:
+                    type: pm_port_fec_t
+                    comment: Auto-negotiation lane to FEC type mapping array.
+                    length: PM_MAX_PORTS_PER_CORE
+                an_mode:
+                    type: pm_port_autoneg_mode_t
+                    comment: Autonegotiation mode for each ports.
+                    length: PM_MAX_PORTS_PER_CORE
+                ts_enable_port_count:
+                    type: int
+                    comment: Number of ports that enabling time-stamping on the Port Macro.
+                timesync_enable:
+                    type: int
+                    comment: Time-stamping enable status for each ports.
+                    length: PM_MAX_PORTS_PER_CORE
+                rlm_enable:
+                    type: uint32_t
+                    comment: Reduce Lane Mode (RLM) enable status for each ports.
+                    length: PM_MAX_PORTS_PER_CORE
+                rlm_initiator:
+                    type: uint32_t
+                    comment: RLM initiator status for each ports.
+                    length: PM_MAX_PORTS_PER_CORE
+                pcs_reconfigured:
+                    type: uint32_t
+                    comment: PCS reconfigured status for each ports. Used in RLM.
+                    length: PM_MAX_PORTS_PER_CORE
+                rlm_active_lane_bmap:
+                    type: uint32_t
+                    comment: RLM active lane bitmap.
+                    length: PM_MAX_PORTS_PER_CORE
+                rlm_state:
+                    type: uint32_t
+                    comment: RLM status for each ports.
+                    length: PM_MAX_PORTS_PER_CORE
+                original_fec:
+                    type: pm_port_fec_t
+                    comment: Original FEC type for each ports. Used in RLM.
+                    length: PM_MAX_PORTS_PER_CORE
+                rlm_original_tx_lane_swap:
+                    type: uint32_t
+                    comment: Original TX lane swap configuration.
+                rlm_original_rx_lane_swap:
+                    type: uint32_t
+                    comment: Original RX lane swap configuration.
+                is_400g_an:
+                    type: uint32_t
+                    comment: Indicator for 400G autonegotiation.
+                an_state_400g:
+                    type: uint32_t
+                    comment: 400G autonegotiation status.
+                an_wait_link_count:
+                    type: int
+                    comment: Count for the state machine waiting for link up.
+                an_400g_remote_pause:
+                    type: bcmpc_phymod_pause_type_t
+                    comment: Remote pause request in 400G auto-negotiation.
+                is_100g_2lane_sw_war_is_done:
+                    type: bool
+                    comment: Indicate if 100G 2 lane SW WAR is done or not.
+                three_cw_bad_enable:
+                    type: uint32_t
+                    comment: Indicator for three cw bad recover.
+                    length: PM_MAX_PORTS_PER_CORE
+                three_cw_bad_state:
+                    type: uint32_t
+                    comment: Three cw bad status.
+                    length: PM_MAX_PORTS_PER_CORE
+                three_cw_bad_tick_cnt:
+                    type: uint32_t
+                    comment: Count for the state machine waiting for recover completed.
+                    length: PM_MAX_PORTS_PER_CORE
+
+        bcmpc_ha_link_state_info_t:
+            comment: Port link state information.
+            type: struct
+            fields:
+                link_state:
+                    type: bool
+                    length: BCMPC_NUM_PHYSICAL_PORTS
+                    comment: Port link state.

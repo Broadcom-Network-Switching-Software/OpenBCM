@@ -1,0 +1,129 @@
+#
+# $Id$
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+echo "syssnake.rc : Initializing system snake on unit $unit"
+
+# fbpoe setup
+# (enabled by adding the property "fbpoe=1")
+# Notes:
+#       BCM56504 unit-0 higig port (port 27,28) is connected
+#       to BCM56504 Unit-1 higig port (port 27,28)
+#
+if $?BCM56147_A0 \
+    'local BCM56147 1'
+
+if $?unit0 && $?firebolt_any && $?fbpoe \
+  "mod port_tab 24 2 PORT_BRIDGE=1; \
+   w modport_map 1 1 HIGIG_PORT_BITMAP=0xC; \
+   w egress_mask 0 12 EGRESS_MASK=0x8000000; \
+   w egress_mask 12 12 EGRESS_MASK=0x4000000; \
+   w egress_mask 24 1 EGRESS_MASK=0x8000000; \
+   w egress_mask 25 1 EGRESS_MASK=0x4000000"
+
+if $?unit1 && $?firebolt_any && $?fbpoe \
+   "mod port_tab 24 2 PORT_BRIDGE=1; \
+   w modport_map 0 1 HIGIG_PORT_BITMAP=0xC; \
+   w egress_mask 32 12 EGRESS_MASK=0x8000000; \
+   w egress_mask 44 12 EGRESS_MASK=0x4000000; \
+   w egress_mask 56 1 EGRESS_MASK=0x8000000; \
+   w egress_mask 57 1 EGRESS_MASK=0x4000000"
+
+# LM fb48 platform setup
+# (enabled by adding the property "lm48p=1")
+#
+if $?unit0 && $?firebolt_any && $?lm48p || $?lm48p_D \
+   "w modport_map 1 1 HIGIG_PORT_BITMAP=0xC; \
+    w egress_mask 0 12 EGRESS_MASK=0x8000000; \
+    w egress_mask 12 12 EGRESS_MASK=0x4000000"
+
+
+if $?unit1 && $?firebolt_any && $?lm48p || $?lm48p_D \
+   "w modport_map 0 1 HIGIG_PORT_BITMAP=0xC; \
+    w egress_mask 32 12 EGRESS_MASK=0x8000000; \
+    w egress_mask 44 12 EGRESS_MASK=0x4000000"
+
+# Raptor dual Eb platforms
+if $?raptor && $?unit0 && $?ics_eb \
+  "modify PORT 1 29 MY_MODID=0 ;            \
+   modify IPORT_TABLE 1 1 MY_MODID=0 ;      \
+   w modport_map 1 1 HIGIG_PORT_BITMAP=0x1; \
+   "
+
+if $?raptor && $?unit1 && $?ics_eb \
+   "modify PORT 1 29 MY_MODID=1 ;           \
+    modify IPORT_TABLE 1 1 MY_MODID=1 ;     \
+    w modport_map 0 1 HIGIG_PORT_BITMAP=0x1;\
+    "
+
+# Raptor dual Eb platforms
+if $?raven && $?unit0 && $?ics_eb \
+  "modify PORT 1 29 MY_MODID=0 ;            \
+   modify IPORT_TABLE 1 1 MY_MODID=0 ;      \
+   w modport_map 1 1 HIGIG_PORT_BITMAP=0x2; \
+   port ge0 AN=off SP=1000 FD=True;        \
+   "
+
+if $?raven && $?unit1 && $?ics_eb \
+   "modify PORT 1 29 MY_MODID=1 ;           \
+    modify IPORT_TABLE 1 1 MY_MODID=1 ;     \
+    w modport_map 0 1 HIGIG_PORT_BITMAP=0x2;\
+    port ge0 AN=off SP=1000 FD=True;        \
+    "
+
+# hurricane 48p GE platform setup
+# (enabled by adding the property "ge_hu_48p=1")
+#
+if $?unit0 && $?ge_hu_48p \
+   "stkmode modid=0; \
+    w modport_map 1 1 HIGIG_PORT_BITMAP=0x3; \
+    w egress_mask 0 12 EGRESS_MASK=0x8000000; \
+    w egress_mask 12 12 EGRESS_MASK=0x4000000; \
+    w egress_mask 24 1 EGRESS_MASK=0x8000000; \
+    w egress_mask 25 1 EGRESS_MASK=0x4000000"
+
+if $?unit1 && $?ge_hu_48p \
+   "stkmode modid=1; \
+    w modport_map 0 1 HIGIG_PORT_BITMAP=0xc; \
+    w egress_mask 64 12 EGRESS_MASK=0x20000000; \
+    w egress_mask 76 12 EGRESS_MASK=0x10000000; \
+    w egress_mask 88 1 EGRESS_MASK=0x20000000; \
+    w egress_mask 89 1 EGRESS_MASK=0x10000000"
+
+# hurricane 48p FE platform setup
+# (enabled by adding the property "fe_hu_48p=1")
+#
+if $?unit0 && $?fe_hu_48p && !$?BCM56147 \
+   "stkmode modid=0; \
+    port ge0-ge1 sp=2500 an=f encap=higig2; \
+    w modport_map 1 1 HIGIG_PORT_BITMAP=0x3; \
+    w egress_mask 0 12 EGRESS_MASK=0x8000000; \
+    w egress_mask 12 12 EGRESS_MASK=0x4000000; \
+    w egress_mask 24 1 EGRESS_MASK=0x8000000; \
+    w egress_mask 25 1 EGRESS_MASK=0x4000000"
+
+if $?unit1 && $?fe_hu_48p && !$?BCM56147 \
+   "stkmode modid=1; \
+    port ge2-ge3 sp=2500 an=f encap=higig2; \
+    w modport_map 0 1 HIGIG_PORT_BITMAP=0xc; \
+    w egress_mask 64 12 EGRESS_MASK=0x20000000; \
+    w egress_mask 76 12 EGRESS_MASK=0x10000000; \
+    w egress_mask 88 1 EGRESS_MASK=0x20000000; \
+    w egress_mask 89 1 EGRESS_MASK=0x10000000"
+
+# hurricane 48p FE platform setup for 56147_A0 devices
+# (enabled by adding the property "fe_hu_48p=1")
+#
+if $?unit0 && $?fe_hu_48p && $?BCM56147 \
+   "stkmode modid=0; \
+    w modport_map 1 1 HIGIG_PORT_BITMAP=0x3; \
+    w egress_mask 2 27 EGRESS_MASK=0x8000000"
+
+if $?unit1 && $?fe_hu_48p && $?BCM56147 \
+   "stkmode modid=1; \
+    w modport_map 0 1 HIGIG_PORT_BITMAP=0xc; \
+    w egress_mask 66 91 EGRESS_MASK=0x20000000"
+                                                

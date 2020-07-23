@@ -1,0 +1,166 @@
+# $Id: Makefile.linux-keystone_le-2_6,v 1.10 2012/03/02 15:09:08 yaronm Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# User must select one platform from below.By default WR_LINUX is selected. .
+ifeq (,$(BUILD_PLATFORM))
+BUILD_PLATFORM=WR_LINUX
+endif
+
+# Specify the Windriver Linux version here.For example '2.0' as shown below.
+ifeq (WR_LINUX,$(BUILD_PLATFORM))
+ifeq (,$(WRS_LINUX_VERSION))
+WRS_LINUX_VERSION=2.0
+endif
+endif
+
+#glibc_small and glibc_std have their own cross-compilation tools and and path for these tools are different as implemented below. To enable glibc_small build, line given below should be uncommented.
+#To enable glibc_small uncomment the following line.
+#WRL_GLIBC_SMALL=TRUE
+
+# Default Linux Kernel directory
+ifeq (2.0,$(WRS_LINUX_VERSION))
+ifeq ($(WRL_GLIBC_SMALL),TRUE)
+
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := mips-wrs-linux-gnu-mipsel_74k_softfp-glibc_small-
+endif
+
+ifeq (,$(KS_HIGHMEM))
+KERNDIR:= /projects/ntsw-tools/linux/wrslinux_2.0/key/soc/systems/linux/keystone/glibc_small_le/build/linux-2.6.21-standard
+else
+KERNDIR:= /projects/ntsw-tools/linux/wrslinux_2.0/key/key_highmem/glibc_small_le/build/linux-2.6.21-standard
+endif
+else
+
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := mips-wrs-linux-gnu-mipsel_74k_softfp-glibc_std-
+endif
+
+ifeq (,$(KS_HIGHMEM))
+KERNDIR:= /projects/ntsw-tools/linux/wrslinux_2.0/key/soc/systems/linux/keystone/glibc_std_debug_le/build/linux-2.6.21-standard
+else
+KERNDIR:= /projects/ntsw-tools/linux/wrslinux_2.0/key/key_highmem/glibc_std_debug_le/build/linux-2.6.21-standard
+endif
+
+endif
+
+# After this point glibc_std and glibc_small share these flags
+WRLINUX_BASE=/tools/windriver/linux_ed/2.0_GA/Linux
+TOOLCHAIN_EXEC_PREFIX=$(WRLINUX_BASE)/gnu/4.1-wrlinux-2.0/x86-linux2
+TOOLCHAIN_BIN_DIR=$(KERNDIR)/../../host-cross/mips-wrs-linux-gnu/bin
+WIND_LIC_PROXY=$(WRLINUX_BASE)/setup/x86-linux2/bin
+WRLINUX_GNU_PATH=$(WRLINUX_BASE)/gnu/4.1-wrlinux-2.0/x86-linux2/bin
+override PATH:=$(KERNDIR)/../../host-cross/bin:$(KERNDIR)/../../host-cross/mips-wrs-linux-gnu/bin:$(WRLINUX_GNU_PATH):$(PATH)
+export TOOLCHAIN_EXEC_PREFIX TOOLCHAIN_BIN_DIR WIND_LIC_PROXY
+
+endif
+
+ifeq (3.0,$(WRS_LINUX_VERSION))
+ifeq ($(WRL_GLIBC_SMALL),TRUE)
+
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := mips-wrs-linux-gnu-mipsel_74k_softfp-glibc_small-
+endif
+
+ifeq (,$(KS_HIGHMEM))
+KERNDIR ?=/projects/ntsw-tools/linux/wrslinux_3.0/key/bcm95300x_30x_glibc_small_le/build/linux-broadcom_bcm_530001_3_be-standard-build
+KERNDIR_STD ?=/projects/ntsw-tools/linux/wrslinux_3.0/key/bcm95300x_30_glibc_small_le/build/linux
+else
+KERNDIR ?= /projects/ntsw-tools/linux/wrslinux_3.0/key/key_highmem/bcm95300x_30x_glibc_small_le/build/linux-broadcom_bcm_530001_3_be-standard-build
+KERNDIR_STD ?= /projects/ntsw-tools/linux/wrslinux_3.0/key/key_highmem/bcm95300x_30_glibc_small_le/build/linux
+endif
+
+else
+
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := mips-wrs-linux-gnu-mipsel_74k_softfp-glibc_std-
+endif
+
+ifeq (,$(KS_HIGHMEM))
+KERNDIR ?=/projects/ntsw-tools/linux/wrslinux_3.0/key/bcm95300x_30x_glibc_std_le/build/linux-broadcom_bcm_530001_3_be-standard-build
+KERNDIR_STD ?=/projects/ntsw-tools/linux/wrslinux_3.0/key/bcm95300x_30_glibc_std_debug_le/build/linux
+else
+KERNDIR ?= /projects/ntsw-tools/linux/wrslinux_3.0/key/key_highmem/bcm95300x_30x_glibc_std_le/build/linux-broadcom_bcm_530001_3_be-standard-build
+KERNDIR_STD ?= /projects/ntsw-tools/linux/wrslinux_3.0/key/key_highmem/bcm95300x_30_glibc_std_debug_le/build/linux
+endif
+
+endif 
+
+export WRL_GLIBC_SMALL
+
+# After this point glibc_std and glibc_small share these flags
+
+WRLINUX_BASE ?=/tools/windriver/linux_ed/3.0.3/Linux
+TOOLCHAIN_EXEC_PREFIX=$(WRLINUX_BASE)/wrlinux-3.0/layers/wrll-toolchain-4.3a-291/mips/toolchain/x86-linux2/
+TOOLCHAIN_BIN_DIR=$(TOOLCHAIN_EXEC_PREFIX)
+WIND_LIC_PROXY=$(WRLINUX_BASE)/setup/x86-linux2/bin
+WRLINUX_GNU_PATH = $(WRLINUX_BASE)/wrlinux-3.0/layers/wrll-toolchain-4.3a-291/mips/toolchain/x86-linux2/bin
+override PATH := $(TOOLCHAIN_EXEC_PREFIX):$(KERNDIR_STD)/../../host-cross/bin:$(KERNDIR_STD)/../../host-cross/mips-wrs-linux-gnu/bin:$(WRLINUX_GNU_PATH):$(PATH)
+export TOOLCHAIN_EXEC_PREFIX TOOLCHAIN_BIN_DIR WIND_LIC_PROXY
+
+LINUX_INCLUDE_STD := $(KERNDIR_STD)/include
+
+endif
+
+
+# Default Linux include directory
+ifeq (,$(LINUX_INCLUDE))
+LINUX_INCLUDE := $(KERNDIR)/include
+endif
+
+CFGFLAGS += -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0
+ENDIAN = LE_HOST=1
+CFGFLAGS += -D$(ENDIAN) -DKEYSTONE
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"KEYSTONE\"
+
+ARCH = mips
+KBUILD_VERBOSE = 1
+
+export ARCH KBUILD_VERBOSE
+
+
+comma = ,
+basetarget = $(basename $(notdir $@))
+modname = $(basetarget)
+
+# Extra variables.
+EXTRA_CFLAGS = -D"KBUILD_STR(s)=\#s" $(basename_flags) $(modname_flags)
+
+name-fix = $(subst $(comma),_,$(subst -,_,$1))
+basename_flags = -D"KBUILD_BASENAME=KBUILD_STR($(call name-fix,$(basetarget)))"
+modname_flags  = $(if $(filter 1,$(words $(modname))),\
+                 -D"KBUILD_MODNAME=KBUILD_STR($(call name-fix,$(modname)))")
+
+ifeq (2.0,$(WRS_LINUX_VERSION))
+KFLAG_INCLD = $(WRLINUX_GNU_PATH)/../lib/gcc/mips-wrs-linux-gnu/4.1.2/include
+endif
+
+ifeq (3.0,$(WRS_LINUX_VERSION))
+KFLAG_INCLD = $(WRLINUX_GNU_PATH)/../lib/gcc/mips-wrs-linux-gnu/4.3.2/include
+endif
+
+
+
+ifeq (,$(KFLAGS))
+KFLAGS := -D__KERNEL__  -nostdinc  -isystem $(KFLAG_INCLD) -I$(LINUX_INCLUDE) -include $(LINUX_INCLUDE)/linux/version.h -include $(LINUX_INCLUDE)/linux/autoconf.h -I$(KERNDIR)/arch/mips -I$(KERNDIR)/arch/mips -I$(KERNDIR)/arch/mips/include -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding -march=mips32r2 -Wa,-mips32r2 -Wa,--trap -fomit-frame-pointer -g -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign -mlong-calls
+endif
+
+
+ifeq (ELDK,$(BUILD_PLATFORM))
+KFLAGS += -I$(LINUX_INCLUDE)/asm-mips/mach-bcm5300x
+endif
+ifeq (2.0,$(WRS_LINUX_VERSION))
+KFLAGS += -Iinclude/asm-mips/mach-bcm947xx -Iinclude/asm-mips/mach-generic
+endif
+#Wind river Linux 3.0 needs addtional flags
+ifeq (3.0,$(WRS_LINUX_VERSION))
+KFLAGS +=  -I$(LINUX_INCLUDE_STD) -I$(KERNDIR_STD)/arch/mips -I$(KERNDIR_STD)/arch/mips/include -I$(LINUX_INCLUDE_STD)/asm-mips/mach-generic  -I$(KERNDIR_STD)/include/asm-mips/mach-bcm5300x -I$(KERNDIR_STD)/include/asm-mips -I$(KERNDIR)/include2
+endif
+
+ifneq ($(targetplat),user)
+include ${SDK}/make/Makefile.linux-kernel-2_6
+endif
+
+

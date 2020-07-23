@@ -1,0 +1,82 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+FEATURE_LIST := CINT L3 CPU_I2C I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE CUSTOMER TEST CHASSIS MSTP RCPU ATPTRANS_SOCKET DUNE_UI INTR APIMODE PTP KBP AUTOCOMPLETE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+DEBUG_CFLAGS += -Werror=sizeof-pointer-memaccess
+
+BCM_PTL_SPT=1
+
+ALL_DNXF_CHIPS = 1
+ALL_DNX_CHIPS = 1
+#
+# This compilation involves optimization for code size because, currently, there is
+# an issue with code size of SLK.
+# This means that debugging with GDB is, essentially, blocked.
+# When this SLK issue is removed, this optimization may also be removed.
+# To optimize,           set MAKE_CUSTOM_SLK_CODE_SIZE = OPTIMIZE_CODE
+# To optimize partially, set MAKE_CUSTOM_SLK_CODE_SIZE = PARTIAL_OPT_CODE
+# To NOT optimize,       set MAKE_CUSTOM_SLK_CODE_SIZE = NO_OPTIMIZE
+#
+MAKE_CUSTOM_SLK_CODE_SIZE = PARTIAL_OPT_CODE
+
+#tool-chain and kernel directories for NS2 DNX builds
+ENDIAN_MODE = BE
+TOOLCHAIN_BASE_DIR = /projects/NTSW_SW_USRS_4/tools/SLK/5.3.0
+#tool-chain used for the kernel, if not specified TOOLCHAIN_BASE_DIR is used
+KERNEL_TOOLCHAIN_BASE_DIR = /projects/NTSW_SW_USRS_4/tools/SLK/gcc-linaro-aarch64_be-linux-gnu-4.9-2014.09_linux
+# Kernel directory
+KERNDIR = /projects/NTSW_SW_USRS_4/tools/SLK/LDK-4.1.10_BE_kernel-source
+
+ifeq ($(ALLOC_DEBUG_SUPPORT),1)
+    #
+    # To only display memory consumption, comment the following two lines
+    #
+    CFGFLAGS += -DAGGRESSIVE_ALLOC_DEBUG_TESTING=1
+    #
+    # To display some info on sal alloc/free during initialization, set
+    # DISPLAY_MEM_USAGE
+    # to a non-zero value
+    #
+    CFGFLAGS += -DDISPLAY_MEM_USAGE=1
+endif
+DEBUG_PEDANTIC=TRUE
+
+CFGFLAGS += -DSTATIC=static -DSAND_PEDANTIC -std=gnu99
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_API_TEST
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DSERDES_API_FLOATING_POINT
+#handled by the slk makefile: CFGFLAGS += -D__DUNE_LINUX_BCM_CPU_PCIE__
+#handled by the slk makefile: CFGFLAGS += -DPHYS_ADDRS_ARE_64BITS -DPTRS_ARE_64BITS -DLONGS_ARE_64BITS
+CFGFLAGS += -D_SIMPLE_MEMORY_ALLOCATION_=0 -DUSE_LINUX_BDE_MMAP=1
+CFGFLAGS += -DBROADCOM_SVK
+CFGFLAGS += -DKBP_BIG_ENDIAN
+
+OPTFLAGS += -fsanitize=integer-divide-by-zero -static-libubsan
+
+CFGFLAGS += -DCINT_CONFIG_INCLUDE_LONGLONGS
+#
+# Activate code to test out of bound access to BARs
+#
+CFGFLAGS += -DIPROC_ACCESS_DEBUG
+CFGFLAGS += -DSOC_PCI_DEBUG
+
+CFGFLAGS += -fno-reorder-functions
+CFGFLAGS += -fno-unwind-tables
+CFGFLAGS += -fno-asynchronous-unwind-tables
+#
+# This is one more way to reduce code size. 
+# This will drop register/memory descriptions (quite a few Ascii strings)
+# Keep here in case of emergency
+#
+#CFGFLAGS += -DSOC_NO_DESC
+
+#Add this to bring up all VLA usage cases:
+DEBUG_CFLAGS += -Werror=vla
+KBP_DEVICE := KBP_ALG
+

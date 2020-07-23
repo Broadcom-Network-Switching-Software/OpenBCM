@@ -1,0 +1,20 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56883_A0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56883, BCM56883_VENDOR_ID, BCM56883_DEVICE_ID, BCM56883_REV_A0, \
+                     0, 0, \
+                     bcm56880_a0, bcm56883_a0, bcm56883_a0, \
+                     "Trident4", "BCM56880", \
+                     "8.0 Tb/s Switch Fabric 80x100G/40x200G/20x400G Multilayer Switch", 0, 0)
+#endif
+#endif
+
+#if BCMDRD_CONFIG_INCLUDE_BCM56883_B0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56883, BCM56883_VENDOR_ID, BCM56883_DEVICE_ID, BCM56883_REV_B0, \
+                     0, 0, \
+                     bcm56880_a0, bcm56883_a0, bcm56883_b0, \
+                     "Trident4", "BCM56880", \
+                     "8.0 Tb/s Switch Fabric 80x100G/40x200G/20x400G Multilayer Switch", 0, 0)
+#endif
+#endif
+

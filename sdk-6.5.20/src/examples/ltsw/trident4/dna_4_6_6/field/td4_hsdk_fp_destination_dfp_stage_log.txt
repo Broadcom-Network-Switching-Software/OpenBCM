@@ -1,0 +1,392 @@
+BCM.0> 
+BCM.0> 
+BCM.0> cint fp_destination_dfp_stage.c
+int ARGC = 1 (0x1)
+int opt_TestWithPresel = 0 (0x0)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageIngress (5)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageIngress (68)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 1 (0x1)
+int opt_IsEfp = 0 (0x0)
+int opt_IsEM = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+int egr_port2 = 5 (0x5)
+execute(): Start
+Doing L2 entry add
+Doing port loopbacks...
+[New Thread 0x7ffff5535700 (LWP 189686)]
+Doing group config create...
+Doing entry create to group 0x00000001...
+Doing qualify SrcPort...
+Doing action add AssignOpaqueObject2...5
+Doing entry install...
+Doing gport get on 5...
+Doing DestFP entry add...
+>>	 stat_action_id=0x10000006
+Doing flexctr create to group...
+>>	 stat_action_id=0x10000007
+Doing flexctr stat attach to DFP. StatID for 1st entry:0x10000007:0...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200225 (Tue Feb 25 11:57:51 2020)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+
+
+##########  Sending Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE=1
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x406a22
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	PARSER_VHLEN_0_15_0=0x8a
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=5
+	EFFECTIVE_TTL_7_0=0x40
+	INGRESS_PP_PORT_7_0=1
+	L2_OIF_10_0=5
+	VFI_15_0=0x64
+	SYSTEM_OPCODE_3_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	DST_FP
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE=1
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=5
+	SWITCH=1
+	MATCH_ID_LO=0x406a22
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	DROP_CODE_15_0=0x909
+	PARSER_VHLEN_0_15_0=0x8a
+	SYSTEM_SOURCE_15_0=5
+	SYSTEM_DESTINATION_15_0=5
+	EFFECTIVE_TTL_7_0=0x40
+	INGRESS_PP_PORT_7_0=5
+	L2_OIF_10_0=5
+	VFI_15_0=1
+	SYSTEM_OPCODE_3_0=3
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	DST_FP
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+
+------- Registered Statids = 1 -------
+Ctr:0x10000007-0x00000000: VAL0LO:2(2)-VAL1LO:0x000000D4
+--------------------------
+
+
+B_CM.0> show c
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   178+18,446,744,073,709,551,438
+XLMIB_TBYT.ce0                        :                   106                +106
+XLMIB_RBYT.ce0                        :                   106                +106
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TVLN.ce0                        :                     1                  +1
+XLMIB_RVLN.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T127.ce0                        :                     1                  +1
+XLMIB_R127.ce0                        :                     1                  +1
+XLMIB_TBYT.ce4                        :                   106                +106
+XLMIB_RBYT.ce4                        :                   106                +106
+XLMIB_TPOK.ce4                        :                     1                  +1
+XLMIB_RPOK.ce4                        :                     1                  +1
+XLMIB_TVLN.ce4                        :                     1                  +1
+XLMIB_RVLN.ce4                        :                     1                  +1
+XLMIB_TUCA.ce4                        :                     1                  +1
+XLMIB_RUCA.ce4                        :                     1                  +1
+XLMIB_TPKT.ce4                        :                     1                  +1
+XLMIB_RPKT.ce4                        :                     1                  +1
+XLMIB_T127.ce4                        :                     1                  +1
+XLMIB_R127.ce4                        :                     1                  +1
+UC_PERQ_PKT(0).ce4                    :                     1                  +1
+UC_PERQ_BYTE(0).ce4                   :                   106                +106
+#####################################################
+
+##########  Sending Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[3]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[3]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE=1
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x406a22
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	PARSER_VHLEN_0_15_0=0x8a
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=5
+	EFFECTIVE_TTL_7_0=0x40
+	INGRESS_PP_PORT_7_0=1
+	L2_OIF_10_0=5
+	VFI_15_0=0x64
+	SYSTEM_OPCODE_3_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	DST_FP
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[4]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[4]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[4]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[4]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	UNICAST_QUEUE=1
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=5
+	SWITCH=1
+	MATCH_ID_LO=0x406a22
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	DROP_CODE_15_0=0x909
+	PARSER_VHLEN_0_15_0=0x8a
+	SYSTEM_SOURCE_15_0=5
+	SYSTEM_DESTINATION_15_0=5
+	EFFECTIVE_TTL_7_0=0x40
+	INGRESS_PP_PORT_7_0=5
+	L2_OIF_10_0=5
+	VFI_15_0=1
+	SYSTEM_OPCODE_3_0=3
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	DST_FP
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+
+------- Registered Statids = 1 -------
+Ctr:0x10000007-0x00000000: VAL0LO:2(4)-VAL1LO:0x000000D4
+--------------------------
+
+
+B_CM.0> show c
+MC_PERQ_PKT(0).cpu0                   :                     2                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   356                +178
+XLMIB_TBYT.ce0                        :                   212                +106
+XLMIB_RBYT.ce0                        :                   212                +106
+XLMIB_TPOK.ce0                        :                     2                  +1
+XLMIB_RPOK.ce0                        :                     2                  +1
+XLMIB_TVLN.ce0                        :                     2                  +1
+XLMIB_RVLN.ce0                        :                     2                  +1
+XLMIB_TUCA.ce0                        :                     2                  +1
+XLMIB_RUCA.ce0                        :                     2                  +1
+XLMIB_TPKT.ce0                        :                     2                  +1
+XLMIB_RPKT.ce0                        :                     2                  +1
+XLMIB_T127.ce0                        :                     2                  +1
+XLMIB_R127.ce0                        :                     2                  +1
+XLMIB_TBYT.ce4                        :                   212                +106
+XLMIB_RBYT.ce4                        :                   212                +106
+XLMIB_TPOK.ce4                        :                     2                  +1
+XLMIB_RPOK.ce4                        :                     2                  +1
+XLMIB_TVLN.ce4                        :                     2                  +1
+XLMIB_RVLN.ce4                        :                     2                  +1
+XLMIB_TUCA.ce4                        :                     2                  +1
+XLMIB_RUCA.ce4                        :                     2                  +1
+XLMIB_TPKT.ce4                        :                     2                  +1
+XLMIB_RPKT.ce4                        :                     2                  +1
+XLMIB_T127.ce4                        :                     2                  +1
+XLMIB_R127.ce4                        :                     2                  +1
+UC_PERQ_PKT(0).ce4                    :                     2                  +1
+UC_PERQ_BYTE(0).ce4                   :                   212                +106
+#####################################################
+
+##########  Sending Non-Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DE0000000000CD810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+
+
+B_CM.0> show c
+XLMIB_TBYT.ce0                        :                   318                +106
+XLMIB_RBYT.ce0                        :                   318                +106
+XLMIB_TPOK.ce0                        :                     3                  +1
+XLMIB_RPOK.ce0                        :                     3                  +1
+XLMIB_TVLN.ce0                        :                     3                  +1
+XLMIB_RVLN.ce0                        :                     3                  +1
+XLMIB_TUCA.ce0                        :                     3                  +1
+XLMIB_RUCA.ce0                        :                     3                  +1
+XLMIB_TPKT.ce0                        :                     3                  +1
+XLMIB_RPKT.ce0                        :                     3                  +1
+XLMIB_T127.ce0                        :                     3                  +1
+XLMIB_R127.ce0                        :                     3                  +1
+XLMIB_TBYT.ce1                        :                   106                +106
+XLMIB_RBYT.ce1                        :                   106                +106
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+MC_PERQ_PKT(0).ce1                    :                     1                  +1
+MC_PERQ_BYTE(0).ce1                   :                   106                +106
+XLMIB_TBYT.ce2                        :                   106                +106
+XLMIB_RBYT.ce2                        :                   106                +106
+XLMIB_TPOK.ce2                        :                     1                  +1
+XLMIB_RPOK.ce2                        :                     1                  +1
+XLMIB_TVLN.ce2                        :                     1                  +1
+XLMIB_RVLN.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :                     1                  +1
+XLMIB_RUCA.ce2                        :                     1                  +1
+XLMIB_TPKT.ce2                        :                     1                  +1
+XLMIB_RPKT.ce2                        :                     1                  +1
+XLMIB_T127.ce2                        :                     1                  +1
+XLMIB_R127.ce2                        :                     1                  +1
+MC_PERQ_PKT(0).ce2                    :                     1                  +1
+MC_PERQ_BYTE(0).ce2                   :                   106                +106
+XLMIB_TBYT.ce3                        :                   106                +106
+XLMIB_RBYT.ce3                        :                   106                +106
+XLMIB_TPOK.ce3                        :                     1                  +1
+XLMIB_RPOK.ce3                        :                     1                  +1
+XLMIB_TVLN.ce3                        :                     1                  +1
+XLMIB_RVLN.ce3                        :                     1                  +1
+XLMIB_TUCA.ce3                        :                     1                  +1
+XLMIB_RUCA.ce3                        :                     1                  +1
+XLMIB_TPKT.ce3                        :                     1                  +1
+XLMIB_RPKT.ce3                        :                     1                  +1
+XLMIB_T127.ce3                        :                     1                  +1
+XLMIB_R127.ce3                        :                     1                  +1
+MC_PERQ_PKT(0).ce3                    :                     1                  +1
+MC_PERQ_BYTE(0).ce3                   :                   106                +106
+XLMIB_TBYT.ce4                        :                   318                +106
+XLMIB_RBYT.ce4                        :                   318                +106
+XLMIB_TPOK.ce4                        :                     3                  +1
+XLMIB_RPOK.ce4                        :                     3                  +1
+XLMIB_TVLN.ce4                        :                     3                  +1
+XLMIB_RVLN.ce4                        :                     3                  +1
+XLMIB_TUCA.ce4                        :                     3                  +1
+XLMIB_RUCA.ce4                        :                     3                  +1
+XLMIB_TPKT.ce4                        :                     3                  +1
+XLMIB_RPKT.ce4                        :                     3                  +1
+XLMIB_T127.ce4                        :                     3                  +1
+XLMIB_R127.ce4                        :                     3                  +1
+MC_PERQ_PKT(0).ce4                    :                     1                  +1
+MC_PERQ_BYTE(0).ce4                   :                   106                +106
+#####################################################
+
+##########  Sending Non-Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DE0000000000CD810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+
+
+B_CM.0> show c
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> ps 1-6
+              ena/        speed/ link auto    STP                  lrn             max    cut            loop
+        port  link  Lns   duplex scan neg?   state   pause  discrd ops   medium  frame   thru       FEC  back
+    ce0(  1)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN   MAC
+    ce1(  2)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN   MAC
+    ce2(  3)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN   MAC
+    ce3(  4)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN   MAC
+    ce4(  5)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN   MAC
+    ce5(  6)  up     2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN      
+BCM.0> 

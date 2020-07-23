@@ -1,0 +1,102 @@
+#/*----------------------------------------------------------------------
+#* 
+#* This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+#* 
+#* Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#*
+#* Broadcom Corporation
+#* Proprietary and Confidential information
+#* All rights reserved
+#* This source file is the property of Broadcom Corporation, and
+#* may not be copied or distributed in any isomorphic form without the
+#* prior written consent of Broadcom Corporation.
+#*---------------------------------------------------------------------
+#* File       : xfi_10g_pmd_gloop_10p3125.soc
+#* Description: xfi_10g_pmd_gloop_10p3125
+#*---------------------------------------------------------------------*/
+
+# reg_name=Reg_tsc_pmd_x1_control, dev_adr=0, reg_adr=0x1089010, reg_width=0x10, reg_data=0x3
+#core/dp and core power release
+local port 0xb1
+local portV xe1
+
+phy $portV 0x9010 0x0000 
+
+sleep 1;
+phy $portV 0x9010 0x0003 
+phy $portV 0x9010 
+
+# reg_name=Reg_tsc_pmd_x4_control, dev_adr=0, reg_adr=0x108c010, reg_width=0x10, reg_data=0x0
+#x4 reset release
+phy $portV 0x6c010 0x0000 
+phy $portV 0x6c010 0x0003 
+phy $portV 0xc010 
+
+# ln_dp_s_rstb release, reg_adr=0x908d081 reg_data=0x2
+phy $portV 0x806d081 0x0002
+phy $portV 0x806d081 
+
+# core_dp_s_rstb = 1, heartbeat_count_1us = 0x271, reg_adr=0x908d0f4 reg_data=0x2000
+phy $portV 0x806d0f4 0x2271
+phy $portV 0xd0f4 
+
+# 0xr_mode_frc = 1, reg_adr=0x908d080 reg_data=0x8000
+phy $portV 0x806d080 0x8000
+phy $portV 0x806d080 
+
+# pll_mode = a, reg_adr=0x908d127 reg_data=0xa
+phy raw sbus $port 1.0 0xd127 0x000a
+phy raw sbus $port 1.0 0xd127 
+
+# reg_name=Reg_tsc_main0_setup, dev_adr=0, reg_adr=0x1089000, reg_width=0x10, reg_data=0x6400
+# phy raw sbus $port 0.0 0x9000 0x6400
+phy raw sbus $port 0.0 0x9000 0x6440
+phy raw sbus $port 0.0 0x9000 
+
+# release RXP reset ??, reg_name=Reg_tsc_rx_x4_control0_pma_control_0, dev_adr=0, reg_adr=0x108c137, reg_width=0x10, reg_data=0x1
+phy raw sbus $port 0.0 0xc137 0x0001
+phy raw sbus $port 0.0 0xc137 
+
+# reg_name=Reg_tsc_tx_x4_control0_misc, dev_adr=0, reg_adr=0x108c113, reg_width=0x10, reg_data=0x1
+phy raw sbus $port 0.0 0xc113 0xc1c8
+phy raw sbus $port 0.0 0xc113 
+
+# Default value is not ok TX_X2_CONTROL0_MLD_SWAP_COUNT
+phy raw sbus 0xb1 0.0 0xa000 0xfffc
+
+# Reg_tsc_sc_x4_control_control, dev_adr=0, reg_adr=0x108c050, reg_width=0x10, reg_data=0x1c
+# phy raw sbus $port 0.0 0xc050 0x001c
+phy raw sbus $port 0.0 0xc050 0x0021
+phy raw sbus $port 0.0 0xc050 
+
+# phy raw sbus $port 0.0 0xc050 0x011c
+phy raw sbus $port 0.0 0xc050 0x0121
+phy raw sbus $port 0.0 0xc050 
+
+# RX_X4_Control (setup decode mode, deskew mode and descrambler mode)
+phy raw sbus $port 0.0 0xc130 0x33c0
+phy raw sbus $port 0.0 0xc130 
+
+# Set up RX_X4_Control0_decode_control setup block_sync_mode
+phy raw sbus $port 0.0 0xc134 0x2872
+phy raw sbus $port 0.0 0xc134 
+
+# release TXP reset, reg_name=Reg_tsc_tx_x4_control0_misc, dev_adr=0, reg_adr=0x108c113, reg_width=0x10, reg_data=0x2
+phy raw sbus $port 0.0 0xc113 0xc1ca
+phy raw sbus $port 0.0 0xc113 
+
+# reg_name=Reg_tsc_tx_x4_control0_misc, dev_adr=0, reg_adr=0x108c113, reg_width=0x10, reg_data=0x1
+phy raw sbus $port 0.0 0xc113 0xc1cb
+phy raw sbus $port 0.0 0xc113 
+
+# PMD LOOPBACK
+phy raw sbus $port 1.0 0xd0d2
+
+phy $portV 0x806d0d2 0x7
+phy raw sbus $port 1.0 0xd0d2
+
+phy raw sbus $port 0.0 0x9009 # PCS loop back (not set)
+sleep 1;
+#pcs live link status 0x1b is good link AM Lock - Deskew - 0 - link status - sync status
+phy raw sbus $port 0.0 0xc154
+

@@ -1,0 +1,26 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Make.local for python binding client.
+
+# workspace:system=64bit
+CFGFLAGS += -DLONGS_ARE_64BITS
+CFGFLAGS += -DPTRS_ARE_64BITS
+
+# Enable CPU transport sockets.
+CFGFLAGS += -DINCLUDE_LIB_CPUDB
+CFGFLAGS += -DINCLUDE_LIB_CPUTRANS
+
+# Build SDK as shared library.
+LINUX_MAKE_SHARED_LIB=1
+
+# Uncomment the following option if undefined reference link error is observed.
+# CFLAGS += -DSTATIC=static
+
+# Feature list.
+FEATURE_LIST=ATPTRANS_SOCKET L3 TELNET DRIVERS CUSTOMER DIAG
+
+# Driver version (optional).
+#SHAREDLIBVER=6.5.14

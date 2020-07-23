@@ -1,0 +1,59 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+FEATURE_LIST := CINT L3 I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE CUSTOMER TEST CHASSIS MSTP RCPU ATPTRANS_SOCKET DUNE_UI INTR APIMODE PTP KBP
+
+DEBUG_PEDANTIC=TRUE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+
+ifneq ($(DEBUG_OPTIMIZE),FALSE)
+DEBUG_CFLAGS += -Wuninitialized -O
+endif
+
+BCM_PTL_SPT=1
+
+ALL_DPP_CHIPS  = 1
+ALL_DFE_CHIPS  = 1
+ALL_DNXF_CHIPS = 1
+
+KERN_VER=3.7.10
+
+ifeq ($(ALLOC_DEBUG_SUPPORT),1)
+    #
+    # To only display memory consumption, comment the following two lines
+    #
+    CFGFLAGS += -DAGGRESSIVE_ALLOC_DEBUG_TESTING=1
+    #
+    # To display some info on sal alloc/free during initialization, set
+    # DISPLAY_MEM_USAGE
+    # to a non-zero value
+    #
+    CFGFLAGS += -DDISPLAY_MEM_USAGE=1
+    CFGFLAGS += -fexceptions
+    CFGFLAGS += -rdynamic
+    CFGFLAGS += -O0
+endif
+
+CFGFLAGS += -DSTATIC=static
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -D__DUNE_LINUX_BCM_CPU_PCIE__
+CFGFLAGS += -DPHYS_ADDRS_ARE_64BITS -DSAL_BDE_32BIT_USER_64BIT_KERNEL
+CFGFLAGS += -D_SIMPLE_MEMORY_ALLOCATION_=0 -DUSE_LINUX_BDE_MMAP=1
+CFGFLAGS += -DSCACHE_CRC_CHECK
+CFGFLAGS += -DDNX_INTERNAL
+
+CFGFLAGS += -DBROADCOM_SVK
+
+# Pay attention that when using gnu99 with PEDANTIC above SAND_PEDANTIC should be always present 
+CFGFLAGS += -DSAND_PEDANTIC -DCINT_CONFIG_INCLUDE_LONGLONGS -std=gnu99
+CFGFLAGS += -Wno-overlength-strings -DINCLUDE_MBIST_COMMENTS
+
+
+KBP_DEVICE := KBP_ALG
+

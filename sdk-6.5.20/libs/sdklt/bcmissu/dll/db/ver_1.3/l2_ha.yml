@@ -1,0 +1,70 @@
+#
+# file: l2_ha.yml
+# L2 YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    MAC_ADDR_LEN: 6
+    
+component:
+    bcmcth_l2:
+        bcmcth_l2_learn_cache_t:
+            type: struct
+            fields:
+                mac:
+                    type: uint8_t
+                    length: MAC_ADDR_LEN
+                    comment: Mac address.
+                vid:
+                    type: uint16_t
+                    comment: VLAN ID.
+                dest_type:
+                    type: uint8_t
+                    comment: Destination type.
+                modid:
+                    type: uint8_t
+                    comment: Module ID.
+                port:
+                    type: uint16_t
+                    comment: Port ID.
+                trunk_id:
+                    type: uint16_t
+                    comment: Trunk group ID.
+        bcmcth_l2_learn_cache_offset_t:
+            type: struct
+            fields:
+                offset:
+                    type: bool
+                    comment: Offset of IMM table.
+        bcmcth_l2_vfi_learn_cache_t:
+            type: struct
+            fields:
+                mac:
+                    type: uint8_t
+                    length: MAC_ADDR_LEN
+                    comment: Mac address.
+                vfi:
+                    type: uint16_t
+                    comment: VFI.
+                svp:
+                    type: uint16_t
+                    comment: SVP.
+                src_type:
+                    type: uint8_t
+                    comment: Source type.
+                source:
+                    type: uint16_t
+                    comment: Source value.
+        bcmcth_l2_learn_report_ctrl_t:
+            type: struct
+            fields:
+                enable:
+                    type: bool
+                    comment: Enable or disable report.
+

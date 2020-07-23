@@ -1,0 +1,42 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+FEATURE_LIST := CINT BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI INTR APIMODE PTP KBP AUTOCOMPLETE
+
+#DEBUG_OPTIMIZE=FALSE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+DL_ENABLE=TRUE
+
+BCM_PTL_SPT=1
+
+ALL_DPP_CHIPS = 1
+ALL_DFE_CHIPS = 1
+#
+# Specify that, in addition to DPP, we want to compile for the new DNX line, starting
+# with JR2
+#
+ALL_DNX_CHIPS = 1
+ALL_DNXF_CHIPS = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -DSCACHE_CRC_CHECK
+CFGFLAGS += -DINCLUDE_AUTOCOMPLETE
+CFGFLAGS += -fstack-protector-all
+
+CFGFLAGS += -Werror=all
+
+KBP_DEVICE := KBP_ALG
+
+#Assaf - 2/4/14, commneted out - this Makefile is used at many regression tests ant can not be changed
+#        in case we want to add vendor flags a new Makefile should be created.
+#VENDOR_LIST=BROADCOM
+
+export GCCVER=4.2.1
+HCC=/tools/bin/gcc
+$(info $(shell GCCVER=$(GCCVER) $(HCC) --version))

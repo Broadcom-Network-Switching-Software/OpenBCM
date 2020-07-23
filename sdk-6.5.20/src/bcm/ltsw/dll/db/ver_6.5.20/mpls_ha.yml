@@ -1,0 +1,117 @@
+#
+# file: mpls_ha.yml
+# MPLS YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_mpls:
+        vpws_vpn_member_state_t:
+            type: enum
+            attrib:
+                version: 1
+            fields:
+                STATE_INVALID:          0
+                STATE_INIT:             1
+                STATE_ACC:              2
+                STATE_ACC_ACC:          3
+                STATE_PRIMARY:          4
+                STATE_ACC_PRIMARY:      5
+                STATE_PRIMARY_BACKUP:   6
+                STATE_ALL:              7
+            comment: VPWS vpn member state.
+                     STATE_INVALID        = 0,  Invalid state.
+                     STATE_INIT           = 1,  Init.
+                     STATE_ACC            = 2,  Only the access port is created.
+                     STATE_ACC_ACC        = 3,  Two access ports are created.
+                     STATE_PRIMARY        = 4,  Only the primary port is created.
+                     STATE_ACC_PRIMARY    = 5,  Access and primary port are created.
+                     STATE_PRIMARY_BACKUP = 6,  Primary and backup port are created.
+                     STATE_ALL            = 7   All three ports are created.
+        vpws_vpn_member_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                acc_id:
+                    type: int
+                    comment: Access port ID.
+                acc_id2:
+                    type: int
+                    comment: Access port ID 2.
+                primary_id:
+                    type: int
+                    comment: Primary port ID.
+                backup_id:
+                    type: int
+                    comment: Backup port ID.
+                state:
+                    type: vpws_vpn_member_state_t
+                    comment: Member state.
+            comment: VPWS vpn information.
+        xfs_mpls_vp_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                criteria:
+                    type: int
+                    comment: Match criteria.
+                label:
+                    type: uint32_t
+                    comment: Access port ID 2.
+                outer_vlan:
+                    type: uint16_t
+                    comment: Match outer VLAN.
+                inner_vlan:
+                    type: uint16_t
+                    comment: Match inner VLAN.
+                port:
+                    type: int
+                    comment: Port/trunk.
+                port_group:
+                    type: int
+                    comment: Port group.
+                vpless_port:
+                    type: int
+                    comment: Port of the second port in VPLESS case.
+                             flags/criteria and label must be same as primary.
+                vpless_port_group:
+                    type: int
+                    comment: Port group of the second port in VPLESS case.
+                vpless:
+                    type: int
+                    comment: Vp has a vpless vp.
+                failover_vp:
+                    type: int
+                    comment: Failover vp.
+                vpless_egress_if:
+                    type: int
+                    comment: Egress object if associated with the vpless vp.
+                match_count:
+                    type: int
+                    comment: Match count.
+                vpn:
+                    type: int
+                    comment: VPN ID.
+            comment: XFS mpls vp information.
+        xfs_mpls_special_label_control_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                mpls_hdr:
+                    type: uint32_t
+                    comment: MPLS header.
+                mpls_hdr_mask:
+                    type: uint32_t
+                    comment: Mask of MPLS header.
+                used:
+                    type: int
+                    comment: Used status.
+            comment: XFS mpls special label control.

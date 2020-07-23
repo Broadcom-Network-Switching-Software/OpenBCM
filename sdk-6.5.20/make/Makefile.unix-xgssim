@@ -1,0 +1,91 @@
+# $Id: Makefile.unix-xgssim,$
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Build rules for Linux/x86 (Little Endian) with XGSSIM support
+
+include ${SDK}/make/Makefile.unix-common
+
+# When using GDB on Linux, you may want to use "setenv GDB 1" to disable
+# editline.  For best results put "set environment GDB 1" in your .gdbinit.
+
+# Linux-specific Configuration Flags
+
+ENDIAN_DEF = -DLE_HOST=1
+
+CC = ${HCC}
+CXX = g++
+
+# Currently, this LD definitely seems to only be used for building
+# the SBX FE-2000 simulation target
+LD	= ld
+AR	= ar
+ARFLAGS	= -rc
+STRIP	= strip
+RANLIB  = ranlib
+OBJCOPY = objcopy
+
+# Filter out features that cannot or should not be supported in Linux
+ifdef ESW_CHIPS
+_FEATURE_EXCLUDE_LIST += OOB_RCPU
+endif
+FEATURE_EXCLUDE_LIST = $(sort $(_FEATURE_EXCLUDE_LIST))
+
+ifdef LTSW_CHIPS
+# Default open source target build
+OPENSRC_BUILD ?= $(shell uname -m)
+ifeq ($(OPENSRC_BUILD),x86_64)
+else
+OPENSRC_LIB32=1
+endif
+
+# Default open source root directory
+ifdef OPENSRC_BUILD
+OPENSRC ?= /projects/ntsw-sw/opensrc/build/$(OPENSRC_BUILD)
+endif
+
+ifdef OPENSRC
+YAML ?= $(wildcard $(OPENSRC)/yaml)
+endif
+
+# Hardware interface (see $SDKLT/bcma/sys/probe directory)
+export SYSTEM_INTERFACE = xgssim
+
+# Exclude the shareable pli library (see $SDKLT/sim/pli/posix directory)
+export SIM_EXCLUDE_TARGETS = pli
+endif
+
+# Linux
+LIBS =-lnsl -pthread -lm -lrt
+ifeq ($(LINK_DL),1)
+LIBS += -ldl
+endif
+
+ifdef LTSW_CHIPS
+ifneq ($(YAML),)
+# Only export YAML if the library exists
+export YAML
+ifeq ($(OPENSRC_LIB32),)
+YAML_LDFLAGS += -L$(YAML)/lib64 -Xlinker -R$(YAML)/lib64
+endif
+YAML_LDFLAGS += -L$(YAML)/lib -Xlinker -R$(YAML)/lib
+YAML_LDLIBS  += -lyaml
+endif
+LIBS += $(YAML_LDFLAGS) $(YAML_LDLIBS)
+endif
+
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"unix-xgssim\"
+
+# For GCC 4.2.x, add -Wno-address
+GCC_MAJOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f1)
+GCC_MINOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f2)
+ifeq (${GCC_MAJOR_VER}, 4)
+ifeq (${GCC_MINOR_VER}, 2)
+BCM_EXTRA_CC_CFLAGS   = -Wno-address
+endif
+endif
+
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+BCM_EXTRA_CC_CFLAGS += -fPIC
+endif

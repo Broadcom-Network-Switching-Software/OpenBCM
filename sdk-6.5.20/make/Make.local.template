@@ -1,0 +1,571 @@
+# $Id: Make.local.template,v 1.181 2013/07/18 07:27:42 assafz Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# Usage for Make.local.template and Make.local:
+#
+# Make.local.template is checked into the tree, but Make.local is never
+# checked in.  Copy Make.local.template to Make.local, then change
+# Make.local to select the desired compilation options (mostly debugging
+# features).
+#
+# Note on CFGFLAGS usage:
+#
+#   Because CFGFLAGS may be used with other source preprocessing tools,
+#   please limit the values added to CFGFLAGS to -D defines.
+#
+#
+# Table of Contents:
+#
+#     Compiler Related Options
+#     Boot and Debug Related Options
+#     Operational and Policy Options
+#     System Management and Multiple CPU Options
+#     Selective Device Support (Switches and PHYs)
+#     Miscellaneous Options
+#
+
+################################################################
+#
+# Compiler Related Options
+#
+################################################################
+
+# Compiling out #ifdef DEBUG code saves about 1.3% on executable size.
+# It is recommended to leave debug enabled when developing applications.
+#DEBUG_IFDEFS=FALSE
+
+# SAL resource usage tracking #ifdef control
+# DEBUG_IFDEFS should also be  TRUE for this switch to take effect.
+#BCM_RESOURCE_USAGE_PROFILE_IFDEFS=TRUE
+
+# Uncomment to build without debug symbols
+#DEBUG_SYMBOLS=FALSE
+
+# Uncomment to add private CFLAGS
+#DEBUG_CFLAGS=
+
+# Uncomment to turn off the optimizer when debugging (recommended)
+#DEBUG_OPTIMIZE=FALSE
+
+# Compiling out assert() saves about 1.1% on executable size,
+# however do so is VERY MUCH discouraged.
+#DEBUG_ASSERTS=FALSE
+
+# Controlling GCC -pedantic flag
+#DEBUG_PEDANTIC=TRUE
+
+# compiler.h overrides, these disable various compiler
+# related features even if the compiler normally supports them
+
+# Enable use of the double for serdes
+#CFGFLAGS += -DSERDES_API_FLOATING_POINT
+
+# Disable use of long long for uint64
+#CFGFLAGS += -DCOMPILER_OVERRIDE_NO_LONGLONG
+
+# Disable use of doubles
+#CFGFLAGS += -DCOMPILER_OVERRIDE_NO_DOUBLE
+
+# Disable inlining of functions
+#CFGFLAGS += -DCOMPILER_OVERRIDE_NO_INLINE
+
+# Disable use of const
+#CFGFLAGS += -DCOMPILER_OVERRIDE_NO_CONST
+
+# Disable use of static functions
+#CFGFLAGS += -DCOMPILER_OVERRIDE_NO_STATIC
+
+# Disable RPC flexible (long) bitmaps.
+# Warning: Disabling this changes the RPC version to 2 and
+# makes systems running this code incompatible with systems
+# running previous versions of BCM RPC code.
+#CFGFLAGS += -DBCM_RPC_PBMP_64
+
+#
+# Define if longs are 64 bits on your compiler;
+# this is typically true ONLY for 64-bit processors.
+#CFGFLAGS += -DLONGS_ARE_64BITS
+
+#
+# Define if pointers are 64 bits on your compiler;
+# this is typically true ONLY for 64-bit processors.
+# NOTE: This support works ONLY under conditions where the
+# upper 32 bits for ALL pointers are ZERO.
+#CFGFLAGS += -DPTRS_ARE_64BITS
+
+
+################################################################
+#
+# Boot and Debug Related Options
+#
+################################################################
+
+# Define this to add debug code for RX pool buffer tracking
+#CFGFLAGS += -DBCM_RXP_DEBUG
+
+# Allow debugging of PCI reads/writes (debug +pci)
+#CFGFLAGS += -DSOC_PCI_DEBUG
+
+# Make default debugging settings be 0 (very very quiet)
+#CFGFLAGS += -DNO_DEBUG_OUTPUT_DEFAULT
+
+# Don't use vxMemProbe
+#CFGFLAGS += -DVX_NO_MEM_PROBE
+
+# Allow debugging of Memory Allocation/Deallocation logging
+#CFGFLAGS += -DMEMLOG_SUPPORT
+
+# Enable "Trace" sync for the BSL
+#CFGFLAGS += -DBSL_TRACE_INCLUDE
+
+################################################################
+################################################################
+#
+# Operational and Policy Options
+#
+################################################################
+
+# VLAN policy control:
+#	NO_DEFAULT_ETHER	do not init ether ports into vlan 1
+#	NO_DEFAULT_CPU		do not init cpu ports into vlan 1
+#	NO_DEFAULT_SPI_SUBPORT	do not init spi subports into vlan 1
+#	NO_AUTO_STACK		do not init stack/HG ports into created vlans
+#CFGFLAGS += -DBCM_VLAN_NO_DEFAULT_ETHER
+#CFGFLAGS += -DBCM_VLAN_NO_DEFAULT_CPU
+#CFGFLAGS += -DBCM_VLAN_NO_DEFAULT_SPI_SUBPORT
+#CFGFLAGS += -DBCM_VLAN_NO_AUTO_STACK
+
+# VLAN multicast flood Policy Control:
+# BCM_VLAN_MCAST_FLOOD_ALL      Flood all multicast packets to the VLAN
+# BCM_VLAN_MCAST_FLOOD_UNKNOWN  Flood unknown multicast packets to the vlan
+# BCM_VLAN_MCAST_FLOOD_NONE     Forward multicast packets with known
+#                               destination addresses to the appropriate ports.
+#                               All packets destined to an unknown multicast
+#                               address are dropped.
+#CFGFLAGS += -DBCM_MCAST_FLOOD_DEFAULT=BCM_VLAN_MCAST_FLOOD_ALL
+#CFGFLAGS += -DBCM_MCAST_FLOOD_DEFAULT=BCM_VLAN_MCAST_FLOOD_UNKNOWN
+#CFGFLAGS += -DBCM_MCAST_FLOOD_DEFAULT=BCM_VLAN_MCAST_FLOOD_NONE
+
+#Port Enable/Disable Policy control:
+#       PORT_DEFAULT_DISABLE       disable ports during switch initialization
+#CFGFLAGS += -DBCM_PORT_DEFAULT_DISABLE
+
+# sal thread priority override (this value used for all threads if defined)
+#CFGFLAGS += -DSAL_THREAD_PRIORITY=255
+
+# disable printing of thread name in messages
+#CFGFLAGS += -DSAL_THREAD_NAME_PRINT_DISABLE
+
+# disable runtime reading of flash config.bcm file (even if !NO_FILEIO)
+#CFGFLAGS += -DSAL_CONFIG_FILE_DISABLE
+
+# Ensure minimum required pthread stack size is satisfied
+# CFGFLAGS += -DSAL_THREAD_STACK_MIN=<stack_min>
+
+# disable all Application SAL dependencies
+#NO_SAL_APPL=1
+
+
+# Prevent scheduling in SPL locks when interrupt code is run as a thread.
+# This option should not be necessary if all locks are implemented correctly,
+# however, some locks may still rely on the assumption that scheduling does
+# not occur when interrupts are disabled. If you experience any locking
+# problems in e.g. Linux User Mode, try enabling this option.
+# Please note that turning on this option will reduce performance by an
+# estimated 5 to 10 %.
+#CFGFLAGS += -DSAL_SPL_NO_PREEMPT
+
+# disable mapping of higig cosq when mapping priority to cosq
+# (use identity mapping instead : map prio0->cos0, prio1->cos1, ... , prio7->cos7)
+#CFGFLAGS += -DBCM_COSQ_HIGIG_MAP_DISABLE
+
+# Enable ukernel debugging module
+#CFGFLAGS += -DSOC_UKERNEL_DEBUG
+
+
+################################################################
+#
+# System Management and Multiple CPU Options
+#
+################################################################
+
+# Telekinesis suite applications for CPU to CPU communication and discovery
+#     CPUDB:         Simple CPU data base manager
+#     CPUTRANS:      CPU to CPU communication mechanisms
+#     DISCOVER:      Simple discovery; will also include CPUTRANS
+#     STKTASK:       Stack manager application
+#
+#CFGFLAGS += -DINCLUDE_LIB_CPUDB
+#CFGFLAGS += -DINCLUDE_LIB_CPUTRANS
+#CFGFLAGS += -DINCLUDE_LIB_DISCOVER
+#CFGFLAGS += -DINCLUDE_LIB_STKTASK
+
+# Option for discovery to use the application-data field in routing
+# packets for Board-ID and CPU base flag information.
+#CFGFLAGS += -DDISCOVER_APP_DATA_BOARDID
+
+# Optionally override list of included dispatch modules
+# Note: including RPC automatically includes the Telekinesis suite libs
+# ESW is the enterprise platforms.
+# LTSW is the SDKLT-based switch platforms
+#DISPATCH_LIST = RPC ESW ASYNC LTSW
+
+# Define to have end-to-end flow control enabled on boards that
+# support it
+#CFGFLAGS += -DBCM_BOARD_AUTO_E2E
+
+# Define the following to support per-CPU transmit pointers.
+# This allows the TX setup and send functions to be defined on a
+# per-CPU basis, allowing mixed in-band and out-of-band communication.
+#CFGFLAGS += -DBCM_C2C_TRANSPORT_SWITCHING
+
+# Options for ATP performance optmization.
+# If this is defined, callback function can be used to free packet buffer.
+# This will result in better ATP performance.
+#CFGFLAGS += -DBCM_RPC_ATP_TX_CALLBACK
+
+# Options for feature list (INCLUDE_XXX)
+# If FEATURE_LIST is defined, it is a list of features to include.
+# See Make.config for the default feature list.
+#
+# Avaliable features:
+#
+#     CHASSIS
+#     CUSTOMER
+#     DRIVERS
+#     EDITLINE
+#     I2C
+#     L3
+#     MEM_SCAN
+#     ATPTRANS_SOCKET
+#     TELNET
+#     TEST
+#     RCPU
+#     KNET - Linux user mode kernel network support
+#     BCM_SAL_PROFILE - make available an API to track SAL usage.
+#     CINT - Include the C Interpreter in the diagnostic shell. 
+#            Please note this cannot be used in Linux kernel mode. 
+#     C_UNIT - Include the C unit testing framework.  If CINT is also included
+#              then hooks will be provided for use from it.
+#     PHY_SYM_DBG - PHY GUI MDIO read/write support. Socket interface
+#                   to PHY GUI for Symbolic debugging.
+#     APIMODE - call SDK API functions from shell, requires CINT
+#     DUNE_UI - dune legacy user interface. For debug only. Tested
+#               on linux-user-gto-2.6 only.
+#     KBP   -   include nlm2(11K)/nlm3(12K) KBP support
+#     BHH   -   Include Support for BHH Application (MPLS-TP OAM based on Y.1731) 
+#               using BTE on select devices.
+#     FLOWTRACKER   -   Include Support for Flowtracker Application using BTE on 
+#                       select devices.
+#     GDPLL   -   Include Support for GDPLL on select devices.
+#     AVS   - Include AVS support
+#     MPLS_LM_DM - Include Support for MPLS LM/DM Application (based on RFC 6374)
+#                  using BTE on select devices.
+#     ETH_LM_DM - Include Support for Ethernet LM/DM Application 
+#                   (ETH-OAM based on Y.1731) using BTE on select devices.
+#     UC_ULINK - Include Support for maintaining port link status on BTE
+#     OAM_FAULTS_MULTI_GET - Include support for faults_get for multiple endpoints
+#                            through single API
+#     CCM   - Include support for CCM Application using BTE on select devices
+#     TCB   - Include support for Transient Capture Buffer Application 
+#     PSTATS - Include support for Packetized Statistic Application 
+#     IFA    - Include Support for In-band flow analyzer Embedded Application
+#     TELEMETRY - Includes Support for Telemetry embedded applications
+#     INT    - Include Support for INT Turnaround Embedded Application
+#     SUM    - Include Support for Switch Utilization Monitor Embedded Application
+#     PKTIO - Include support for new streamlined PKTIO driver based on SDKLT PKTIO library
+#FEATURE_LIST=ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE \
+#    CUSTOMER TELNET DRIVERS CHASSIS TEST RCPU BCM_SAL_PROFILE CINT \
+#    PTP CES FCMAP BOARD KNET REGEX MACSEC APIMODE BFD KBP AVS TCB PSTATS \
+#    PKTIO
+
+###############################################################
+#              KBP supported devices
+#
+#Enable this for 11K device support
+#KBP_DEVICE = KBP_11K
+#
+#Enable this for 12K device support
+#KBP_DEVICE = KBP_ALG
+#
+###############################################################
+
+################################################################
+#
+# Selective Device Support (Switches and PHYs)
+#
+################################################################
+
+# Multiple Chip Support
+#
+# By default, the driver supports all Strata switch and fabric chips
+# included in this software release.  It checks device IDs at runtime
+# to run the correct driver modules.
+#
+# To save space, the driver can be compiled to support just a subset of
+# the chips.  To do this, uncomment the line for BCM_PTL_SPT (partial
+# support) and uncomment one line for each chip to support.
+#
+# Note that there are a lot more chips than drivers.
+# For example, the BCM5615 driver is also used for BCM5625 and BCM5645.
+#
+
+#BCM_PTL_SPT = 1
+
+#BCM_5675_A0 = 1
+#BCM_56102_A0 = 1
+#BCM_56112_A0 = 1
+#BCM_56304_B0 = 1
+#BCM_56314_A0 = 1
+#BCM_56504_A0 = 1
+#BCM_56504_B0 = 1
+#BCM_56514_A0 = 1
+#BCM_56624_A0 = 1
+#BCM_56624_B0 = 1
+#BCM_56680_A0 = 1
+#BCM_56680_B0 = 1
+#BCM_56580_A0 = 1
+#BCM_56700_A0 = 1
+#BCM_56800_A0 = 1
+#BCM_56218_A0 = 1
+#BCM_56224_A0 = 1
+#BCM_56224_B0 = 1
+#BCM_56725_A0 = 1
+#BCM_56820_A0 = 1
+#BCM_53314_A0 = 1
+#BCM_53324_A0 = 1
+#BCM_56634_A0 = 1
+#BCM_56634_B0 = 1
+#BCM_56524_A0 = 1
+#BCM_56524_B0 = 1
+#BCM_56685_A0 = 1
+#BCM_56685_B0 = 1
+#BCM_56334_A0 = 1
+#BCM_56334_B0 = 1
+#BCM_56840_A0 = 1
+#BCM_56840_B0 = 1
+#BCM_56850_A0 = 1
+#BCM_56142_A0 = 1
+#BCM_56150_A0 = 1
+#BCM_56836_A0 = 1
+#BCM_56640_A0 = 1
+#BCM_56440_A0 = 1
+#BCM_56440_B0 = 1
+#BCM_56450_A0 = 1
+#BCM_56150_A0 = 1
+#BCM_53400_A0 = 1
+#BCM_56160_A0 = 1
+#BCM_53570_A0 = 1
+#BCM_53570_B0 = 1
+#BCM_53540_A0 = 1
+#BCM_56960_A0 = 1
+#BCM_56965_A0 = 1
+#BCM_56980_A0 = 1
+#BCM_56860_A0 = 1
+#BCM_56560_A0 = 1
+#BCM_56260_A0 = 1
+#BCM_56260_B0 = 1
+#BCM_56870_A0 = 1
+#BCM_56275_A0 = 1
+#BCM_56370_A0 = 1
+#BCM_56770_A0 = 1
+#BCM_56560_B0 = 1
+#BCM_56670_A0 = 1
+#BCM_56670_B0 = 1
+#BCM_56270_A0 = 1
+#BCM_56670_B0 = 1
+#BCM_56970_A0 = 1
+#BCM_56470_A0 = 1
+
+#BCM_56780_A0 = 1
+#BCM_56880_A0 = 1
+#BCM_56990_A0 = 1
+#BCM_56990_B0 = 1
+#BCM_56996_A0 = 1
+
+# Options for multiple PHY support
+# If BCM_PHY_LIST is defined, it is a list of PHYs to include.
+# The default is to include all of them.
+# If none of them should be included specify BCM_PHY_LIST=EMPTY
+#BCM_PHY_LIST=522X 54XX 5464 5421S 5482 54616 54680 54680E 52681E 54880E 54682 54684 54640 54640E 54880 SERDES SIMUL 8703 8705 8706 8072 8040 8481 8750 8729 84740 84756 84328 8806X EMPTY
+
+# Support for phy simulation
+#CFGFLAGS += -DINCLUDE_PHY_SIMUL
+#CFGFLAGS += -DSIM_ALL_PHYS        # All phys use simulation driver
+#CFGFLAGS += -DSIM_CMIC_LINK_STAT  # Get link status from CMIC register
+
+# Support for BOARD library
+# if BOARD_LIST is defined, it is a list of Board drivers to include.
+# The default is to include all board drivers appropriate for the devices
+# included in the build. If none of them should be included specify
+# BOARD_LIST=EMPTY.
+#BOARD_LIST=GENERIC
+
+# Support for event logging
+#CFGFLAGS += -DINCLUDE_SHARED_EVLOG
+
+# Support for BCM API port translation
+#CFGFLAGS += -DINCLUDE_BCM_API_XLATE_PORT
+
+# Support for callback error checks and abort in traverse api's
+#CFGFLAGS += -DBCM_CB_ABORT_ON_ERR
+################################################################
+#
+# Misc Options
+#
+################################################################
+#CFGFLAGS += -DSOC_MEM_L3_DEFIP_WAR
+
+# Compile out Register/Table descriptive strings to generate a
+# compact image
+#CFGFLAGS +=-DSOC_NO_NAMES
+#CFGFLAGS +=-DSOC_NO_ALIAS
+#CFGFLAGS +=-DSOC_NO_DESC
+
+# Reload/WarmBoot Support
+#
+#CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+#
+# Need this for validation using SOC scripts; Will move to tcl 
+# someday
+#CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+#
+# Adds a CRC check on scache buffer: Calculate when saving,
+# and verify when loading.
+# When doing ISSU, both source and destination versions should either have
+# this flag enabled or disabled.
+#CFGFLAGS += -DSCACHE_CRC_CHECK
+
+# Use software byte-swap when primary internal iProc CPU is run
+# in big-endian mode. Intended for use with little-endian iProc firmware
+# images when the primary internal iProc CPU is run in big-endian mode.
+# In this case we cannot use hardware byte-swap, because it affects both
+# the primary internal CPU (big endian) and the firmware CPU (little endian).
+#CFGFLAGS += -DCMIC_SOFT_BYTE_SWAP
+
+################################################################
+# Enable BINFS update during compilation.
+################################################################
+#BINFS_UPDATE = TRUE
+
+################################################################
+#
+# Enable Easy Reload Support
+#
+################################################################
+#CFGFLAGS += -DBCM_EASY_RELOAD_SUPPORT
+# For validation purposes
+#CFGFLAGS += -DBCM_EASY_RELOAD_SUPPORT_SW_DUMP
+
+# Software Trunk failover Support
+#
+#CFGFLAGS += -DBCM_TRUNK_FAILOVER_SUPPORT
+
+################################################################
+#
+# Override default VXWORKS thread options to make set 
+# VX_UNBREAKABLE flag in task creation.
+#
+################################################################
+#CFGFLAGS += -DVX_THREAD_OPT_UNBREAKABLE
+
+
+################################################################
+#
+# Use default priority for BDE interrupt thread.
+#
+################################################################
+#CFGFLAGS += -DSAL_BDE_THREAD_PRIO_DEFAULT
+
+################################################################
+#
+# Use cached DMA memory when mapping kernel DMA memory to user
+# mode. Should only be enabled on cache-coherent platforms.
+#
+################################################################
+#CFGFLAGS += -DSAL_BDE_USE_CACHED_DMA_MEM
+
+################################################################
+#
+# Take the spl lock upon entering an ISR
+#
+################################################################
+#CFGFLAGS += -DSAL_SPL_LOCK_ON_IRQ
+
+################################################################
+#
+# Silently ignore NULL pointer free in sal_free API
+# Default behaviour is to assert if a NULL pointer is passed to sal_free
+#
+################################################################
+#CFGFLAGS += -DSAL_FREE_NULL_IGNORE
+
+################################################################
+# For historical reasons the PCI probe function skips device 12
+# by default to prevent a system hang on certain platforms.
+# Set this value to zero to probe all PCI devices.
+################################################################
+#CFGFLAGS += -DOVERRIDE_PCI_SKIP_DEV_MASK=0
+
+################################################################
+# Override max devices supported by PLI BDE
+################################################################
+#CFGFLAGS += -DPLI_MAX_DEVICES
+
+################################################################
+# Track BCM API calls to avoid deinitialization while calls active
+# This will incur a small time penalty for each BCM API call
+################################################################
+#CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+
+################################################################
+# Override default retry time for detach to wait for executing
+# APIs to complete.
+################################################################
+#CFGFLAGS += -DBCM_DETACH_POLL_INTERVAL_USECS_DEFAULT=100000
+#CFGFLAGS += -DBCM_DETACH_NUM_RETRIES_DEFAULT=3000
+
+################################################################
+# Disable the RX module initialization
+################################################################
+#CFGFLAGS += -DBCM_RX_DISABLE
+
+################################################################
+# Enable TX callback in interrupt thread
+################################################################
+#CFGFLAGS += -DTX_CB_INTR
+
+################################################################
+# When sal_sem_take wait for semaphore, system will use 
+# monotonic time instead of real time to computer how long 
+# one thread has been waiting. 
+################################################################
+#CFGFLAGS += BCM_MONOTONIC_TIME
+
+################################################################
+# Enable multiple SDK-based applications to run on top of a 
+# single BDE (see $SDK/doc/multi-instance.txt for more 
+# information).
+################################################################
+#CFGFLAGS += -DBCM_INSTANCE_SUPPORT
+
+################################################################
+#
+# Disable SW dumps routines from compilation.
+# SW dumps are enabled by default in SDK.
+#
+################################################################
+#CFGFLAGS += -DBCM_SW_STATE_DUMP_DISABLE
+
+################################################################
+# Specify the SDK start version for ISSU.
+################################################################
+#SDK_VER_START = 6.5.13
+
+################################################################
+# Specify the SDKLT start version for ISSU.
+################################################################
+#SDKLT_VER_START = 1.2

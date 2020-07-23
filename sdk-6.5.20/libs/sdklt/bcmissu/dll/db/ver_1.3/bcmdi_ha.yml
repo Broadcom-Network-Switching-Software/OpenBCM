@@ -1,0 +1,97 @@
+#
+# file: bcmdi_ha.yml
+# BCMDI HA memory YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMDI_CHIP_ID_BYTES: 16
+   BCMDI_CHIP_REV_BYTES: 8
+   BCMDI_FID_BYTES: 33
+   BCMDI_DESC_BYTES: 1024
+   BCMDI_DEFAULT_STR_BYTES: 128
+
+component:
+   bcmdi_ha:
+      dvc_ha_info_t:
+         type: struct
+         fields:
+            loaded:
+               type: bool
+               comment: DeviceCode was successfully loaded
+            chip_id:
+               type: char
+               length: BCMDI_CHIP_ID_BYTES
+               comment: Device identifier for this file
+            chip_rev:
+               type: char
+               length: BCMDI_CHIP_REV_BYTES
+               comment: Device revision for this file
+            fid:
+               type: uint32_t
+               comment: DeviceCode file identifier
+            entry_num:
+               type: uint32_t
+               comment: Entry number in this file
+            desc:
+               type: char
+               length: BCMDI_DESC_BYTES
+               comment: DeviceCode file description
+      flc_ha_info_t:
+         type: struct
+         fields:
+            loaded:
+               type: bool
+               comment: Flexcode was successfully loaded
+            be:
+               type: bool
+               comment: File is in big endianess
+            f_size:
+               type: uint32_t
+               comment: File size in byte
+            fid:
+               type: char
+               length: BCMDI_FID_BYTES
+               comment: Flexcode file identifier
+            entry_num:
+               type: uint32_t
+               comment: Entry number in this file
+            chip_id:
+               type: char
+               length: BCMDI_CHIP_ID_BYTES
+               comment: Device identifier for this file
+            chip_rev:
+               type: char
+               length: BCMDI_CHIP_REV_BYTES
+               comment: Device revision for this file
+            app:
+               type: char
+               length: BCMDI_DEFAULT_STR_BYTES
+               comment: NPL application for this file
+            app_ver:
+               type: char
+               length: BCMDI_DEFAULT_STR_BYTES
+               comment: NPL application file version
+            app_build_time:
+               type: char
+               length: BCMDI_DEFAULT_STR_BYTES
+               comment: NPL application build time
+            pid:
+               type: char
+               length: BCMDI_DEFAULT_STR_BYTES
+               comment: Publisher ID string
+            ncs_ver:
+               type: char
+               length: BCMDI_DEFAULT_STR_BYTES
+               comment: NCS version
+            desc:
+               type: char
+               length: BCMDI_DESC_BYTES
+               comment: NPL file description
+
+
+

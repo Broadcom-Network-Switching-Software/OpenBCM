@@ -1,0 +1,120 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56780 PC_PM_CORE configuration for S board.
+#
+---
+device:
+    0:
+        PC_PM_CORE:
+            ?
+                PC_PM_ID: 4
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x74125630
+                TX_LANE_MAP: 0x31470265
+                RX_POLARITY_FLIP: 0xaa
+                TX_POLARITY_FLIP: 0xa8
+            ?
+                PC_PM_ID: 6
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x12743056
+                TX_LANE_MAP: 0x57306412
+                RX_POLARITY_FLIP: 0xd1
+                TX_POLARITY_FLIP: 0xa2
+            ?
+                PC_PM_ID: 8
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x03562147
+                TX_LANE_MAP: 0x57306412
+                RX_POLARITY_FLIP: 0xaa
+                TX_POLARITY_FLIP: 0xa2
+            ?
+                PC_PM_ID: 10
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x65034721
+                TX_LANE_MAP: 0x21470365
+                RX_POLARITY_FLIP: 0xaa
+                TX_POLARITY_FLIP: 0x55
+            ?
+                PC_PM_ID: 11
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x03652147
+                TX_LANE_MAP: 0x47216503
+                RX_POLARITY_FLIP: 0x55
+                TX_POLARITY_FLIP: 0xaa
+            ?
+                PC_PM_ID: 13
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x56034721
+                TX_LANE_MAP: 0x30571264
+                RX_POLARITY_FLIP: 0x55
+                TX_POLARITY_FLIP: 0x57
+            ?
+                PC_PM_ID: 15
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x74125630
+                TX_LANE_MAP: 0x30571264
+                RX_POLARITY_FLIP: 0x8b
+                TX_POLARITY_FLIP: 0x57
+            ?
+                PC_PM_ID: 17
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x12743056
+                TX_LANE_MAP: 0x47316502
+                RX_POLARITY_FLIP: 0x55
+                TX_POLARITY_FLIP: 0x5d
+            ?
+                PC_PM_ID: 21
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP_AUTO: 0
+                TX_LANE_MAP_AUTO: 0
+                RX_POLARITY_FLIP_AUTO: 0
+                TX_POLARITY_FLIP_AUTO: 0
+                RX_LANE_MAP: 0x3012
+                TX_LANE_MAP: 0x2031
+                RX_POLARITY_FLIP: 0x0d
+                TX_POLARITY_FLIP: 0x02
+...

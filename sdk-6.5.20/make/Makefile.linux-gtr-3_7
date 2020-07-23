@@ -1,0 +1,149 @@
+# $Id: Makefile.linux-gtr-3_7,v 1.5 2013/02/25 17:11:27 mason Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# User must select one platform from below.By default WR_LINUX is selected. .
+ifeq (,$(BUILD_PLATFORM))
+BUILD_PLATFORM=WR_LINUX
+endif
+
+
+# Specify the KERNEL VERSION  you want to use for building SDK.
+ifeq (,$(KERN_VER))
+KERN_VER=3.10.59
+endif
+
+
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := mips64-nlm-linux-
+endif
+
+ifeq (3.7.10,$(KERN_VER))
+XMC ?= /projects/ntsw-tools/toolchains/xlp/sdk-3.0.2/xlp3xx/sdk-base/buildroot/output/build
+else
+XMC ?= /projects/ntsw-tools/toolchains/xlp/sdk-3.2.0/xlp3xx/sdk-base/buildroot/output/build
+endif
+
+KERNDIR ?= $(XMC)/linux
+LINUX_USPACE ?= $(XMC)/linux-userspace
+export LINUX_USPACE
+KBUILD_OUTPUT=xmc3xx
+export KBUILD_OUTPUT
+
+LD_LIBRARY_PATH = $(XMC)/toolchains_bin/mipscross/linux/mips64-nlm-linux/lib/el
+export LD_LIBRARY_PATH
+
+TOOLCHAINS_DIR=$(XMC)/toolchains_bin
+TOOLCHAIN_EXEC_PREFIX=$(XMC)/toolchains_bin/mipscross/linux
+TOOLCHAIN_BIN_DIR=$(TOOLCHAIN_EXEC_PREFIX)/bin
+TOOLCHAIN_INC_DIR=$(TOOLCHAIN_EXEC_PREFIX)/lib/gcc/mips64-nlm-linux/4.6.3/include
+
+override PATH := $(TOOLCHAIN_EXEC_PREFIX)/bin:$(TOOLCHAINS_DIR)/mipscross/linux/bin:$(PATH)
+export TOOLCHAIN_EXEC_PREFIX TOOLCHAIN_BIN_DIR
+
+# Default Linux include directory
+ifeq (,$(LINUX_INCLUDE))
+LINUX_INCLUDE := $(KERNDIR)/include
+LINUX_INCLUDE_BUILD := $(KERNDIR)/$(KBUILD_OUTPUT)/include
+endif
+
+CFGFLAGS += -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=1
+ENDIAN = BE_HOST=1
+CFGFLAGS += -D$(ENDIAN) 
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"GTR_XLP316\"
+CFGFLAGS += -DSAL_BDE_XLP
+CFGFLAGS += -DSAL_BDE_DMA_MEM_DEFAULT=16
+
+# Enable cached DMA memory by default
+ifeq (,$(SAL_BDE_USE_CACHED_DMA_MEM))
+SAL_BDE_USE_CACHED_DMA_MEM = 1
+endif
+ifeq ($(SAL_BDE_USE_CACHED_DMA_MEM),1)
+CFGFLAGS += -DSAL_BDE_CACHE_DMA_MEM
+endif
+
+# Extra variables.
+EXTRA_CFLAGS = -D"KBUILD_STR(s)=\#s" $(basename_flags) $(modname_flags)
+
+ARCH = mips
+KBUILD_VERBOSE = 1
+
+export ARCH KBUILD_VERBOSE 
+
+# From linux/arch/ppc/Makefile
+comma = ,
+basetarget = $(basename $(notdir $@))
+modname = $(basetarget)
+
+name-fix = $(subst $(comma),_,$(subst -,_,$1))
+basename_flags = -D"KBUILD_BASENAME=KBUILD_STR($(call name-fix,$(basetarget)))"
+modname_flags  = $(if $(filter 1,$(words $(modname))),\
+                 -D"KBUILD_MODNAME=KBUILD_STR($(call name-fix,$(modname)))")
+
+
+ifeq (,$(GTR_64BIT))
+CFLAGS += -mabi=32
+CFGFLAGS += -DSAL_BDE_32BIT_USER_64BIT_KERNEL
+CFGFLAGS += -DSAL_BDE_USE_MMAP2
+else
+CFLAGS += -mabi=64 -DPTRS_ARE_64BITS -DLONGS_ARE_64BITS
+#CFGFLAGS += -DSAL_BDE_USE_MMAP64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
+#KFLAG_INCLD = $(XMC)/toolchains_bin/mipscross/elf/lib/gcc/mips64-nlm-elf/4.4.5/include
+endif
+CFLAGS += -DPHYS_ADDRS_ARE_64BITS
+
+MODULE_LDFLAGS += -m elf64btsmip
+
+ifdef DPP_CHIPS
+CFLAGS += -DDUNE_BCM -D__DUNE_LINUX_BCM_CPU_PCP_DMA__
+CFGFLAGS += -DSOC_CM_FUNCTION
+endif
+
+ifdef DFE_CHIPS
+CFLAGS += -DDUNE_BCM
+CFGFLAGS += -DSOC_CM_FUNCTION
+endif
+
+ifdef SAND_CHIPS
+CFLAGS += -D__DUNE_GTR_BCM_CPU__ -D__DUNE_LINUX_BCM_CPU_PCIE__
+endif
+
+ifdef SHADOW_PLX
+CFLAGS += -DBCM_PLX9656_LOCAL_BUS -DBDE_LINUX_NON_INTERRUPTIBLE -DSHADOW_SVK
+endif
+
+ifeq (,$(KFLAGS))
+KFLAGS := -march=xlp -mabi=64 -msym32 -fno-pic -G 0 -mno-abicalls -mlong-calls -O2
+KFLAGS += -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -Wdeclaration-after-statement -Wno-pointer-sign
+KFLAGS += -fno-strict-aliasing -fno-common -msoft-float -pipe -funit-at-a-time -fomit-frame-pointer
+ifeq (,$(GTR_64BIT))
+KFLAGS += -DSAL_BDE_XLP -DSAL_BDE_32BIT_USER_64BIT_KERNEL -DPTRS_ARE_64BITS -DLONGS_ARE_64BITS
+else
+KFLAGS += -DSAL_BDE_XLP -DPTRS_ARE_64BITS -DLONGS_ARE_64BITS
+endif
+KFLAGS += -D__KERNEL__ -nostdinc
+
+KFLAGS += -isystem $(TOOLCHAIN_INC_DIR)
+
+KFLAGS += -include $(LINUX_INCLUDE_BUILD)/generated/uapi/linux/version.h
+KFLAGS += -include $(LINUX_INCLUDE_BUILD)/generated/autoconf.h
+KFLAGS += -include $(LINUX_INCLUDE)/linux/kconfig.h
+
+KFLAGS += -I$(LINUX_INCLUDE)
+KFLAGS += -I$(LINUX_INCLUDE_BUILD)
+KFLAGS += -I$(LINUX_INCLUDE_BUILD)/config
+KFLAGS += -I$(LINUX_INCLUDE_BUILD)/generated/uapi
+KFLAGS += -I$(LINUX_INCLUDE)/uapi
+KFLAGS += -I$(LINUX_INCLUDE)/uapi/asm-generic
+
+KFLAGS += -I$(KERNDIR)/arch/mips
+KFLAGS += -I$(KERNDIR)/arch/mips/include
+KFLAGS += -I$(KERNDIR)/arch/mips/include/uapi
+KFLAGS += -I$(KERNDIR)/arch/mips/include/asm/mach-netlogic
+KFLAGS += -I$(KERNDIR)/arch/mips/include/asm/mach-generic
+endif
+
+ifneq ($(targetplat),user)
+include ${SDK}/make/Makefile.linux-kernel-2_6
+endif

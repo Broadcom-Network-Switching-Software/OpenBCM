@@ -1,0 +1,20 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56991_A0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56991, BCM56991_VENDOR_ID, BCM56991_DEVICE_ID, BCM56991_REV_A0, \
+                     0, 0, \
+                     bcm56990_a0, bcm56991_a0, bcm56991_a0, \
+                     "Tomahawk4", "BCM56990", \
+                     "12.8 Tbps Multilayer Switch", 0, 0)
+#endif
+#endif
+
+#if BCMDRD_CONFIG_INCLUDE_BCM56991_B0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56991, BCM56991_VENDOR_ID, BCM56991_DEVICE_ID, BCM56991_REV_B0, \
+                     0, 0, \
+                     bcm56990_b0, bcm56991_b0, bcm56991_b0, \
+                     "Tomahawk4", "BCM56990", \
+                     "12.8 Tbps Multilayer Switch", 0, 0)
+#endif
+#endif
+

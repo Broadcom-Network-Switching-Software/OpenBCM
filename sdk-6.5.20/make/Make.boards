@@ -1,0 +1,79 @@
+# $Id: Make.boards,v 1.3 2010/04/30 19:52:00 zhongx Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Board support
+#
+
+ifneq (,$(findstring BOARD,$(FEATURE_LIST)))
+
+# board feature is defined
+
+ifdef ESW_CHIPS
+NEEDS_I2C=1
+endif
+
+ifndef NEEDS_I2C
+FEATURE_EXCLUDE_LIST += I2C
+endif
+
+ifndef BOARD_LIST
+
+# if BOARD_LIST is not defined, create one based on the devices
+# available
+
+BOARD_LIST  = 
+
+#
+# device architecture dependent generic board drivers
+#
+ifdef ESW_CHIPS
+ESW_GENERIC_BOARD=1
+endif
+
+ifdef ESW_GENERIC_BOARD
+BOARD_LIST += GENERIC
+endif
+
+#
+# BCM956504R24, BCM956504R48 and other similar designs
+#
+ifdef BCM_56504_A0
+BCM956504R24=1
+endif
+
+ifdef BCM_56504_B0
+BCM956504R24=1
+endif
+
+ifdef BCM_56514_A0
+BCM956504R24=1
+endif
+
+ifdef BCM_56102_A0
+BCM956504R24=1
+endif
+
+ifdef BCM_56112_A0
+BCM956504R24=1
+endif
+
+ifdef BCM_56304_B0
+BCM956504R24=1
+endif
+
+#
+# single and dual device boards
+#
+ifdef BCM956504R24
+BOARD_LIST += BCM956504R24
+BOARD_LIST += BCM956504R48
+endif
+
+# expand board list to defines
+CFGFLAGS += $(foreach board,$(BOARD_LIST), -DINCLUDE_BOARD_$(board))
+
+endif # ifndef BOARD_LIST
+
+endif # if BOARD FEATURE

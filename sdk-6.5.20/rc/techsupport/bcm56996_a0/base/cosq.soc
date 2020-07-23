@@ -1,0 +1,165 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Cosq RC (run commands) file
+#
+#       These are default commands that are for TechSupport Cosq.
+#
+
+# Show S/W state in Cosq.
+dump sw cosq
+
+# Cosq commands.
+cos show
+cos port show
+cos bandwidth_show
+cos discard_show
+
+# Show Cosq related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+local lt TM_DEVICE_INFO;                                         $traverse_lt;
+local lt TM_PIPE_MAP_INFO;                                       $traverse_lt;
+local lt TM_PORT_MAP_INFO;                                       $traverse_lt;
+
+# Show Cosq scheduler and shaper related LTs.
+local lt TM_SCHEDULER_CONFIG;                                    $traverse_lt;
+local lt TM_SCHEDULER_CPU_PORT;                                  $traverse_lt;
+local lt TM_SCHEDULER_NODE;                                      $traverse_lt;
+local lt TM_SCHEDULER_PORT_PROFILE;                              $traverse_lt;
+local lt TM_SCHEDULER_PROFILE;                                   $traverse_lt;
+local lt TM_SCHEDULER_PROFILE_Q_INFO;                            $traverse_lt;
+local lt TM_SCHEDULER_SHAPER_CPU_NODE;                           $traverse_lt;
+local lt TM_SCHEDULER_SHAPER_NODE;                               $traverse_lt;
+local lt TM_SCHEDULER_SP_PROFILE;                                $traverse_lt;
+local lt TM_SHAPER_CONFIG;                                       $traverse_lt;
+local lt TM_SHAPER_NODE;                                         $traverse_lt;
+local lt TM_SHAPER_PORT;                                         $traverse_lt;
+
+# Show Cosq cos map related LTs.
+local lt TM_Q_ASSIGNMENT_PROFILE;                                $traverse_lt;
+local lt TM_COS_Q_CPU_MAP;                                       $traverse_lt;
+local lt TM_COS_Q_CPU_STRENGTH_PROFILE;                          $traverse_lt;
+local lt PORT_COS_Q_MAP;                                         $traverse_lt;
+local lt PORT_COS_Q_STRENGTH_PROFILE;                            $traverse_lt;
+local lt FP_ING_COS_Q_MAP;                                       $traverse_lt;
+local lt FP_ING_COS_Q_STRENGTH_PROFILE;                          $traverse_lt;
+local lt FP_DESTINATION_COS_Q_STRENGTH_PROFILE;                  $traverse_lt;
+
+# Show Cosq wred related LTs.
+local lt TM_WRED_CNG_NOTIFICATION_PROFILE;                       $traverse_lt;
+local lt TM_WRED_CONTROL;                                        $traverse_lt;
+local lt TM_WRED_DROP_CURVE_SET_PROFILE;                         $traverse_lt;
+local lt TM_WRED_PIPE_SERVICE_POOL;                              $traverse_lt;
+local lt TM_WRED_PORT_SERVICE_POOL;                              $traverse_lt;
+local lt TM_WRED_SERVICE_POOL;                                   $traverse_lt;
+local lt TM_WRED_TIME_PROFILE;                                   $traverse_lt;
+local lt TM_WRED_UC_Q;                                           $traverse_lt;
+
+# Show Cosq threshold related LTs.
+local lt TM_EGR_THD_MC_PORT_SERVICE_POOL;                        $traverse_lt;
+local lt TM_EGR_THD_SERVICE_POOL;                                $traverse_lt;
+local lt TM_EGR_THD_UC_PORT_SERVICE_POOL;                        $traverse_lt;
+local lt TM_ING_NONUC_ING_PRI_MAP;                               $traverse_lt;
+local lt TM_ING_PORT;                                            $traverse_lt;
+local lt TM_ING_PORT_PRI_GRP;                                    $traverse_lt;
+local lt TM_ING_THD_HEADROOM_POOL;                               $traverse_lt;
+local lt TM_ING_THD_PORT_PRI_GRP;                                $traverse_lt;
+local lt TM_ING_THD_PORT_SERVICE_POOL;                           $traverse_lt;
+local lt TM_ING_THD_SERVICE_POOL;                                $traverse_lt;
+local lt TM_ING_UC_ING_PRI_MAP;                                  $traverse_lt;
+local lt TM_PORT_MC_Q_TO_SERVICE_POOL;                           $traverse_lt;
+local lt TM_PORT_UC_Q_TO_SERVICE_POOL;                           $traverse_lt;
+local lt TM_PRI_GRP_POOL_MAP;                                    $traverse_lt;
+local lt TM_SERVICE_POOL_OVERRIDE;                               $traverse_lt;
+local lt TM_THD_CONFIG;                                          $traverse_lt;
+local lt TM_THD_MC_EGR_SERVICE_POOL;                             $traverse_lt;
+local lt TM_THD_MC_Q;                                            $traverse_lt;
+local lt TM_THD_PORT_INT_PRI_TO_PRI_GRP;                         $traverse_lt;
+local lt TM_THD_PORT_PRI_GRP_TO_HEADROOM_POOL;                   $traverse_lt;
+local lt TM_THD_PORT_PRI_GRP_TO_SERVICE_POOL;                    $traverse_lt;
+local lt TM_THD_Q_GRP;                                           $traverse_lt;
+local lt TM_THD_UC_Q;                                            $traverse_lt;
+local lt TM_THD_UC_Q_TO_UC_Q_GRP;                                $traverse_lt;
+
+# Show Cosq counter related LTs.
+local lt CTR_EGR_MC_Q;                                           $traverse_lt;
+local lt CTR_EGR_TM_PORT_DROP;                                   $traverse_lt;
+local lt CTR_EGR_UC_Q;                                           $traverse_lt;
+local lt CTR_ING_TM_PORT_PRI_GRP;                                $traverse_lt;
+local lt CTR_ING_TM_PORT_UC_DROP;                                $traverse_lt;
+local lt CTR_ING_TM_THD_HEADROOM_POOL_LOSSLESS_UC_DROP;          $traverse_lt;
+local lt CTR_ING_TM_THD_PORT_SERVICE_POOL;                       $traverse_lt;
+local lt CTR_TM_MC_Q_DROP;                                       $traverse_lt;
+local lt CTR_TM_MIRROR_ON_DROP_BUFFER_POOL;                      $traverse_lt;
+local lt CTR_TM_OBM_PORT_DROP;                                   $traverse_lt;
+local lt CTR_TM_OBM_PORT_FLOW_CTRL;                              $traverse_lt;
+local lt CTR_TM_OBM_PORT_USAGE;                                  $traverse_lt;
+local lt CTR_TM_REPL_Q_DROP;                                     $traverse_lt;
+local lt CTR_TM_THD_MC_Q;                                        $traverse_lt;
+local lt CTR_TM_THD_UC_Q;                                        $traverse_lt;
+local lt CTR_TM_UC_Q_DROP;                                       $traverse_lt;
+
+# Show Cosq bst related LTs.
+local lt TM_BST_CONTROL;                                         $traverse_lt;
+local lt TM_BST_DEVICE_THD;                                      $traverse_lt;
+local lt TM_BST_EVENT_SOURCE_EGR;                                $traverse_lt;
+local lt TM_BST_EVENT_SOURCE_ING;                                $traverse_lt;
+local lt TM_BST_EVENT_SOURCE_REPL_Q;                             $traverse_lt;
+local lt TM_BST_EVENT_STATE;                                     $traverse_lt;
+local lt TM_BST_EVENT_STATE_CONTROL;                             $traverse_lt;
+local lt TM_BST_REPL_Q_PRI_QUEUE_THD;                            $traverse_lt;
+local lt TM_BST_REPL_Q_SERVICE_POOL_THD;                         $traverse_lt;
+local lt TM_BST_SERVICE_POOL_THD;                                $traverse_lt;
+local lt TM_EGR_BST_THD_MC_PORT_SERVICE_POOL_PROFILE;            $traverse_lt;
+local lt TM_EGR_BST_THD_Q_PROFILE;                               $traverse_lt;
+local lt TM_EGR_BST_THD_UC_PORT_SERVICE_POOL_PROFILE;            $traverse_lt;
+local lt TM_ING_BST_THD_PORT_SERVICE_POOL_PROFILE;               $traverse_lt;
+local lt TM_ING_BST_THD_PRI_GRP_PROFILE;                         $traverse_lt;
+
+# Show Cosq ebst related LTs.
+local lt TM_EBST_CONTROL;                                        $traverse_lt;
+local lt TM_EBST_DATA;                                           $traverse_lt;
+local lt TM_EBST_MC_Q;                                           $traverse_lt;
+local lt TM_EBST_PORT;                                           $traverse_lt;
+local lt TM_EBST_PORT_SERVICE_POOL;                              $traverse_lt;
+local lt TM_EBST_PROFILE;                                        $traverse_lt;
+local lt TM_EBST_SERVICE_POOL;                                   $traverse_lt;
+local lt TM_EBST_STATUS;                                         $traverse_lt;
+local lt TM_EBST_UC_Q;                                           $traverse_lt;
+
+# Show mod related LTs.
+local lt TM_MIRROR_ON_DROP_CONTROL;                              $traverse_lt;
+local lt TM_MIRROR_ON_DROP_DESTINATION;                          $traverse_lt;
+local lt TM_MIRROR_ON_DROP_ENCAP_PROFILE;                        $traverse_lt;
+local lt TM_MIRROR_ON_DROP_PROFILE;                              $traverse_lt;
+
+# Show obm related LTs.
+local lt TM_OBM_PC_PM_MAX_USAGE_MODE;                            $traverse_lt;
+local lt TM_OBM_PC_PM_PKT_PARSE;                                 $traverse_lt;
+local lt TM_OBM_PORT_FLOW_CTRL;                                  $traverse_lt;
+local lt TM_OBM_PORT_PKT_PARSE;                                  $traverse_lt;
+local lt TM_OBM_PORT_PKT_PRI_TC_MAP;                             $traverse_lt;
+
+# Show oob related LTs.
+local lt TM_OOBFC_CONTROL;                                       $traverse_lt;
+local lt TM_OOBFC_INFO;                                          $traverse_lt;
+local lt TM_OOBFC_MC_Q_MAP_PROFILE;                              $traverse_lt;
+local lt TM_OOBFC_PORT;                                          $traverse_lt;
+local lt TM_OOBFC_UC_Q_MAP_PROFILE;                              $traverse_lt;
+local lt TM_EGR_SERVICE_POOL;                                    $traverse_lt;
+
+# Show pfc related LTs.
+local lt TM_PFC_DEADLOCK_RECOVERY;                               $traverse_lt;
+local lt TM_PFC_DEADLOCK_RECOVERY_CONTROL;                       $traverse_lt;
+local lt TM_PFC_DEADLOCK_RECOVERY_STATUS;                        $traverse_lt;
+local lt TM_PFC_EGR;                                             $traverse_lt;
+local lt TM_PFC_PRI_PROFILE;                                     $traverse_lt;
+local lt TM_PFC_PRI_TO_PRI_GRP_MAP;                              $traverse_lt;
+local lt TM_PORT_INFO;                                           $traverse_lt;
+
+# Show asf related LTs.
+local lt TM_CUT_THROUGH_PORT;                                    $traverse_lt;
+

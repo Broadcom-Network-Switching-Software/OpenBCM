@@ -1,0 +1,21 @@
+PROJECT_NAME            = "Application Library"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INCLUDE_PATH            = include
+
+INPUT                   = DOC/bcma.dox \
+                          DOC/bcma_comp.dox \
+                          DOC/bcma_bsl.dox \
+                          DOC/bcma_cli.dox \
+                          DOC/bcma_clicmd.dox \
+                          DOC/bcma_bcmlt.dox \
+                          DOC/bcma_bcmbd.dox \
+                          DOC/bcma_test.dox \
+                          DOC/bcma_qspi.dox \
+                          DOC/bcma_io.dox \
+                          DOC/bcma_sys.dox \
+                          include/bcma
+
+EXCLUDE                 = include/bcma/editline \
+                          include/bcma/ha \
+                          include/bcma/cfgdb

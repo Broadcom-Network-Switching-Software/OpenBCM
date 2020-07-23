@@ -1,0 +1,55 @@
+/*! \page bcma_sys System Configuration
+
+The system configuration component is used by the SDK example
+applications to initialize the core SDK as well as the CLI. The code
+can be reused in customer applications to a certain extent, but it
+mainly serves as example code.
+
+Please refer to \ref bcma_sys_conf.h for a description of the
+available system configuration APIs.
+
+\section sys_probe Device probing
+
+The SDK provides device probing code for three different system
+environments:
+
+1. Linux application running on real hardware.
+2. Linux application connected to BCMSIM.
+3. Linux application running on simple built-in simulator.
+
+The SDK can currently only be compiled for one of these methods at a
+time.
+
+Please refer to \ref bcma_sys_probe.h for a description of the probing
+API.
+
+\subsection sys_probe_bde Probing real hardware
+
+This probing function will use a Linux kernel module (part of SDK) to
+probe for switch devices on a PCI bus. The probe function implements
+HAL functions for both I/O, DMA and interrupts.
+
+\subsection sys_probe_bcmsim Probing BCMSIM
+
+This probing function will use a network connection to connect to a
+BCMSIM swicth simulator. The probe function implements HAL functions
+for both I/O, DMA and interrupts.
+
+\subsection sys_probe_xgssim Probing built-in simulator
+
+The built-in simulator can be used to verify many aspects of switch
+table configuration, but the model is very basic and does not support
+any kind of packet processing.
+
+\section sys_drd DRD initialization
+
+The DRD system configuration module is built upon the probing
+functions described above, but it also provides CLI integration and
+clean-up functionality.
+
+\section sys_cli CLI initialization
+
+The CLI system configuration module initializes a complete CLI with
+basic scripting commands, environment variables, Ctrl-C support, etc.
+
+*/

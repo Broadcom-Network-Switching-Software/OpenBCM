@@ -1,0 +1,183 @@
+/*! \page bcmbd_fwm Firmware Management
+
+\section fwm_intro Overview
+
+The Firmware Management (FWM) component provides a uniform means of managing
+different types of firmware supported by SDKLT. Customer applications can use
+FWM APIs to load firmware into the system, control firmware behavior via the
+operations provided by the firmware, or work with the processors that are used
+for running firmware.
+
+FWM APIs work with the following three targets:
+- Firmware packages: A firmware package file contains information of the
+firmware, signature (to protect the integrity) and the firmware executables.
+- Firmware instances: Once a firmware is loaded into the system, the behavior
+of this firmware instance can be controlled using operations described later.
+- Processors: Processors are used for running firmware. APIs are provided to
+control the processors or inspect processor state.
+
+\section fwm_fpkg Firmware Packages
+
+In SDKLT, firmware images are packaged as firmware packages (usually with
+extension <tt>.fpkg</tt>) for loading to the system. FWM provides the following
+APIs to work with firmware packages.
+
+- \ref bcmbd_fwm_fpkg_open - Open a firmware package
+- \ref bcmbd_fwm_fpkg_info_get - Get information of this firmware
+- \ref bcmbd_fwm_fpkg_load - Load the firmware to the system
+- \ref bcmbd_fwm_fpkg_close - Close the firmware package
+
+\subsection fwm_fpkg_open Open a firmware package
+
+To open a firmware package, the file content must be first loaded into a
+buffer as the parameter to call \ref bcmbd_fwm_fpkg_open since this API is
+designed to work with systems that may not have a file system. The sample code
+below depicts how to open a firmware package using BCMA APIs.
+
+\code{.c}
+
+    /* Open the file for reading */
+    fh = bcma_io_file_open(filename, "r");
+    if (fh == 0) {
+        /* Error handling */
+    }
+
+    /* Get the file size */
+    fsize = bcma_io_file_size(fh);
+    if (bcma_io_file_read(fh, (void *)buffer, 1, fsize) != fsize) {
+        /* Error handling */
+    }
+
+    /* Open this firmware package */
+    if (bcmbd_fwm_fpkg_open(buffer, fsize, &fpkg_id) < 0) {
+        /* Error handling */
+    }
+
+    ... Do something (eg. load) on the firmware using the fpkg_id ...
+
+    /* Close the firmware package when done with it */
+    bcmbd_fwm_fpkg_close(fpkg_id);
+
+    /* Close the file */
+    bcma_io_file_close(fh);
+
+\endcode
+
+The \c fpkg_id retrieved from this API is the handle to the firmware package
+and can be used for further operations on the firmware package until closed by
+\ref bcmbd_fwm_fpkg_close. Please note that the buffer supplied to this API
+must be kept intact until closed.
+
+\subsection fwm_fpkg_query Get information from the firmware package
+
+Information contained in the firmware package is used by the FWM for proper
+handling on firmware loading. Applications can also use
+\ref bcmbd_fwm_fpkg_info_get to examine the information contained in the
+firmware package. See \ref bcmbd_fwm_fwinfo_s for the detailed firmware
+information. The most important information is \c fw_type, the firmware type,
+which can be used to identify a firmware instance for further operations. See
+\ref fwm_fw_inst for how to specify a firmware instance.
+
+\subsection fwm_fpkg_load Load the firmware to the system
+
+Call \ref bcmbd_fwm_fpkg_load to load the firmware image contained in the
+firmware package to the system. The \c processor parameter is used to specify
+the processor for this firmware to be running on. In most cases you can simply
+specify \c NULL and it will load the firmware to the default processor specified
+in the firmware information. See \ref fwm_proc_inst for how to specify a
+processor instance. Please note that if the firmware is not designed to run on
+that processor, the result is unpredicable.
+
+The FWM loader will first check whether the firmware is applicable for the
+current system based on the information contained in the firmware package and
+validate the signature to ensure the image is not corrupted, then load the
+firmware image to the memory of the specified processor.
+
+Please note that the firmware is not automatically started after being loaded.
+See \ref fwm_fw_op for how to control the firmware behavior, including starting
+it.
+
+After the firmware has been loaded to a specific processor, it becomes an
+instance of that firmware within the system. The returned \c instance parameter
+is the instance number of this loaded firmware. If this is the first time the
+firmware of that name is loaded, the instance number is 0. If the firmware
+package is loaded (into a different processor) for a second time, or another
+firmware package with the same firmware name is loaded (into a different
+processor), the instance number will be 1. The instance number is important
+since it is needed for controlling the firmware (such as starting it). See
+\ref fwm_fw_inst for how to specify a firmware instance.
+
+\subsection fwm_fpkg_close Close the firmware package
+
+Call \ref bcmbd_fwm_fpkg_close to close the firmware package handle when done
+with it (eg. after firmware has been loaded).
+
+\section fwm_fw Controlling Firmware Instances
+
+The FWM component provides a flexible way to control the behavior of firmware.
+Each firmware provides its own set of "operations" for applications to control
+it. Call \ref bcmbd_fwm_fw_op_exec API to perform a specific operation on a
+firmware instance, such as starting or stopping the firmware.
+
+\subsection fwm_fw_inst Specifying a firmware instance
+
+When calling \ref bcmbd_fwm_fw_op_exec, the firmware instance parameter is a
+string specified in the format of <tt>"<firmware_type>.<instance>", </tt>
+eg. \c "LED.0". When loading a firmware from the firmware package, the firmware
+type can be retrieved by \ref bcmbd_fwm_fpkg_info_get and the instance number
+can be gotten after calling \ref bcmbd_fwm_fpkg_load. For convenience, the
+string is not case sensitive and <tt>".0"</tt> can be omitted if instance number
+is 0. For example, both \c "LED.0" and \c "led" refer to the first instance of
+firmware type \c "LED".
+
+To get a list of all the firmware instances that have been loaded in the system,
+call \ref bcmbd_fwm_fw_instance_count_get to get the number of firmware
+instances, then call \ref bcmbd_fwm_fw_instance_get to get them one by one.
+
+\subsection fwm_fw_op Operations on a firmware instance
+
+Depending on what the firmware does, each firmware may provide a different set
+of operations that can be performed on instances of that firmware type. To get
+the list of supported operations for a given firmware type, call
+\ref bcmbd_fwm_fw_op_count_get to get the number of operations, then call
+\ref bcmbd_fwm_fw_op_get to get the operations one by one. Note that the
+\c feature parameter is a firmware type, not a firmware instance. See
+\ref bcmbd_fwm_fw_op_s for the definition of an operation, in which the \c
+op_name field is the name of the operation that can be used for calling
+\ref bcmbd_fwm_fw_op_exec and \c op_help provides the description of the
+operation.
+
+It is recommended to always use firmware operations to control firmware behavior
+instead of controlling the processor directly, since most operations do more
+than just starting/stopping the processor.
+
+\section fwm_proc Processors
+
+Processors are hardware resources in the system that firmware instances are
+running on. Different devices may have different processors for firmware and
+some processors defined in FWM may not be directly linked to the real hardware
+processors.
+
+\subsection fwm_proc_inst Processor instances
+
+Some systems have multiple processors of the same type, eg. 2 x Cortex-R5. In
+the FWM component, these are instances of the same processor type and each
+instance can be specified by a string in the format of
+<tt>"<processor_type>.<instance>", </tt> eg. \c "R5.0". For convenience, the
+string is not case sensitive and <tt>".0"</tt> can be omitted if instance number
+is 0. For example, both \c "M0.0" and \c "m0" refer to the first instance of
+Cortex-M0.
+
+To get the list of all processors in the system, call
+\ref bcmbd_fwm_proc_count_get to get the number of processors, then call
+\ref bcmbd_fwm_proc_get to get the processors one by one.
+
+\subsection fwm_proc_ctrl Controlling processors
+
+Applications can access or control processors for debugging or diagnostic
+purpose.
+- Call \ref bcmbd_fwm_proc_control to start/stop/reset the processor instance.
+- Call \ref bcmbd_fwm_proc_state_get to get current state of the processor
+instance.
+
+*/

@@ -1,0 +1,31 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+This directory contains assembler code examples for the 5605 LED
+processor.  Contained herein are:
+
+Directory Contents
+
+    ex1.asm to ex5.asm --
+	Progressively more complicated examples of LED driver programs.
+	Note: Each example assumes a hypothetical LED scan chain length
+	and configuration.  These examples will run on the 5605 SDK, but
+	will not light LEDs as expected.
+
+    testasm.asm --
+	Test source.  Contains all legal instruction variations in
+	numeric order.  Assemble the source, look at the listing and
+	make sure all opcodes are assigned properly.
+
+    sdk5605.asm --
+	Default LED program for the BCM5605 SDK.
+	This program is correct for the BCM5605 SDK where there are
+	104 bits in the LED scan chain, two per tri-color LED.
+	Link up/down information is derived from special memory
+	locations written by the main CPU.
+	See comments in the source code for a description of LED functions.

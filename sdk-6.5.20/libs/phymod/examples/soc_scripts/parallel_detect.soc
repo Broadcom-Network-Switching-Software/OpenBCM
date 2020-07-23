@@ -1,0 +1,83 @@
+#/*----------------------------------------------------------------------
+#* 
+#* This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+#* 
+#* Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#*
+#* Broadcom Corporation
+#* Proprietary and Confidential information
+#* All rights reserved
+#* This source file is the property of Broadcom Corporation, and
+#* may not be copied or distributed in any isomorphic form without the
+#* prior written consent of Broadcom Corporation.
+#*---------------------------------------------------------------------
+#* File       : parallel_detect.soc
+#* Description: parallel detect testing soc script
+#*---------------------------------------------------------------------*/
+
+#09.03
+#BCM.0> config
+#   serdes_fiber_pref_xe4=1
+#   serdes_fiber_pref_xe5=1
+#   serdes_1000x_at_6250_vco_xe=1
+#   pbmp_xport_xe=0x3fc4444
+#   pci_delay_val13=0x83000000
+#   os=unix
+#   pci_override_dev=0x8406
+#   pci_delay_val=0x0f00d711
+#   parity_enable=0
+#   pci_delay_val0=0x840601
+#   pci_delay_val1=0x478180a
+#   pci_delay_val2=0x6064d0
+#   serdes_fiber_pref=0
+#   pci_delay_val3=0x600650
+#   pci_delay_val4=0x101fe1
+#   pci_delay_val6=0xff0
+#   pci_delay_val7=0x54400000
+#   bcm53400_init_port_config=2
+#   pci_delay_val8=0x4
+
+
+#working PD to 1G
+init all
+phy xe4 0x6c050 0x001c
+phy xe8 0x6c050 0x001c
+phy xe4 0x0c188 0x2
+port xe8 speed=1000
+port xe4 an=t adv=10g
+phy xe4 0x0c1ac 
+
+
+#working PD to 1G-cl37
+config add phy_an_c37_xe8=1
+config add phy_an_c73_xe8=0
+init all
+phy xe4 0x6c050 0x001c
+phy xe8 0x6c050 0x001c
+port xe8 an=t adv=1000full
+port xe4 an=t adv=10g
+phy xe4 0x0c188 0x2
+phy xe4 0x0c181 0x1c16
+phy xe4 0x0c180 0x0
+phy xe4 0x0c180 0x101
+#check PD status bit 07: PD Done, bit 01: PD in progress
+phy xe4 0x0c1ac
+#bit 8 should be set to indicate pc_cl37_completed
+phy xe4 0x0c1ac
+
+#Working PD to 10GXAUI
+#xe0/xe1 are both xaui ports
+init all
+phy xe0 0x6c050 0x001c
+phy xe1 0x6c050 0x001c
+phy xe0 0x0c188 0x3
+port xe1 speed=10000
+port xe0 an=t adv=10g
+phy xe0 0x9000 0x6008
+phy xe0 0x0c180 0x0
+phy xe0 0x0c180 0x101
+#check PD status bit 07: PD Done, bit 01: PD in progress
+phy xe0 0x0c1ac
+
+
+

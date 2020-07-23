@@ -1,0 +1,64 @@
+BCM.0> c td4_hsdk_flexctr_vxlan_decap.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191031 (Thu Oct 31 09:45:53 2019)
+From root@lc-sj1-6399:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_13, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0
+     BCM56880_A0_IDNA_4_4_9
+Choosing port 2 as access port
+Choosing port 61 as network port
+vpn: 0x8064
+acc_flow_port: 0xb0000001
+net_flow_port: 0xb0000002
+network egr L3 intf: 0x4001
+network egr object: 0x206a1
+Stat Counter Id 268435462
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+Packet comes into network port 61
+tx 1 pbm=61 data=0xE8A2D93A7E952CEBD792C76A81002092080045E800A0000000002211B886495FB3DB76C66ADE000012B5008CAAE0080000000339D1008A77BAB322C618BFA3C4124408004500006E00000000B5064D59C2F433C69B412635006F00DEEDAC9872229431E4500000001D1300004B75E96BE516F4E596D17C37310FA37001B0622F8355815A174E471EC33F2443C869F9809CDBADDE241B8E0E69080A425988F62608F150F3EAA952356A35D3C71BB4E751000135F29D6D ;sleep 5
+Packet from data=<>, length=182
+Sleeping for 5 seconds
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   208                +208
+XLMIB_TBYT.cd1                        :                   136                +136
+XLMIB_RBYT.cd1                        :                   136                +136
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T255.cd1                        :                     1                  +1
+XLMIB_R255.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+UC_PERQ_PKT(1).cd1                    :                     1                  +1
+UC_PERQ_BYTE(1).cd1                   :                   136                +136
+XLMIB_TBYT.cd13                       :                   186                +186
+XLMIB_RBYT.cd13                       :                   186                +186
+XLMIB_TPOK.cd13                       :                     1                  +1
+XLMIB_RPOK.cd13                       :                     1                  +1
+XLMIB_TVLN.cd13                       :                     1                  +1
+XLMIB_RVLN.cd13                       :                     1                  +1
+XLMIB_TUCA.cd13                       :                     1                  +1
+XLMIB_RUCA.cd13                       :                     1                  +1
+XLMIB_TPKT.cd13                       :                     1                  +1
+XLMIB_RPKT.cd13                       :                     1                  +1
+XLMIB_T255.cd13                       :                     1                  +1
+XLMIB_R255.cd13                       :                     1                  +1
+XLMIB_RPRM.cd13                       :                     1                  +1
+Flex Counters collected on ING VPN 32868  Packets / Bytes : 0x00000001 / 0x000000ba 
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+

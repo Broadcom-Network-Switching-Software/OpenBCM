@@ -1,0 +1,176 @@
+# $Id: fsanitypcid.soc,v 1.2 2005/01/04 04:20:02 miyarn Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+if !@?1 "local 1 fsanitylog.txt"
+set rctest=f
+set rcerror=f
+
+log file=@1 append=yes on 
+
+date
+ver
+soc
+
+rc.soc
+
+counter i=1000000 dma=f pbm=all
+sleep 10
+counter i=1000000 dma=t pbm=all
+sleep 10
+counter i=0
+
+tc *
+
+echo "Register reset defaults "
+tr 1
+echo "Done"
+
+echo "Register read/write"
+tr 3
+echo "Done"
+
+# The following tests are shortened for PLI mode.
+
+echo "XGS L2 Ins/Lookup/Del"
+if $?plisim "tr 32 count=4"
+if !$?plisim "tr 32"
+
+echo "Done"
+
+echo "XGS L2 Overflow Ins"
+if $?plisim "tr 33 count=4"
+if !$?plisim "tr 33"
+echo "Done"
+
+echo "XGS L2 Hashing"
+if $?plisim "tr 34 count=256"
+if !$?plisim "tr 34"
+echo "Done"
+
+echo "XGS L3 IPV6 Ins/Lookup/Del"
+if $?plisim "tr 85 C=4 V=t R=f BIP=1122:3344:5566:7788:9900:aabb:ccdd:eeff \
+             SIP=9988:aabb:ccdd:eeff:1122:3344:5566:7788 IPMCE=t; \
+             tr 85 C=4 V=t R=f BIP=1122:3344:5566:7788:9900:aabb:ccdd:eeff \
+             SIP=9988:aabb:ccdd:eeff:1122:3344:5566:7788 IPMCE=f; \
+             "
+if !$?plisim "tr 85"
+echo "Done"
+
+echo "XGS L3 IPV6 Overflow Ins"
+if $?plisim "tr 86 C=4 V=t R=f BIP=1122:3344:5566:7788:9900:aabb:ccdd:eeff \
+             SIP=9988:aabb:ccdd:eeff:1122:3344:5566:7788 IPMCE=f; \
+             tr 86 C=4 V=t R=f BIP=1122:3344:5566:7788:9900:aabb:ccdd:eeff \
+             SIP=9988:aabb:ccdd:eeff:1122:3344:5566:7788 IPMCE=f; \
+            "
+if !$?plisim "tr 86"
+
+echo "Done"
+echo "XGS L3 IPV4 Ins/Lookup/Del"
+if $?plisim "tr 87 count=4"
+if !$?plisim "tr 87"
+echo "Done"
+
+echo "XGS L3 IPV4 Overflow Ins"
+if $?plisim "tr 88 count=4"
+if !$?plisim "tr 88"
+echo "Done"
+
+if !$?plisim "\
+    echo 'XGS L2 Delete by Port'; \
+    tr 35; \
+    echo 'Done'; \
+ \
+    echo 'XGS L2 Delete by VLAN'; \
+    tr 36; \
+    echo 'Done'; \
+ \
+    echo 'Memory Fill/Verify'; \
+    tr50fb.soc; \
+    echo 'Done'"
+
+echo "Memory Random Addr/Data"
+tr51fb.soc
+echo "Done"
+
+echo "CPU Benchmarks"
+tr 21
+echo "Done"
+
+echo "Counter widths"
+tr 30
+echo "Done"
+
+echo "Counter read/write"
+tr 31
+echo "Done"
+
+echo "Table DMA"
+tdmafb.soc
+echo "Done"
+
+echo "Linkscan MDIO"
+#5 for PCID/QT. Make it 10000 for chip 
+if $?plisim "tr 60 R=5"
+if !$?plisim "tr 60"
+echo "Done"
+
+testmode +override
+set rctest=t
+echo "MAC loopback on Ethernet ports"
+tr 18 pbm=e PPC=2 C=2 dmi=1
+echo "Done"
+
+echo "MAC loopback on HG ports"
+tr 18 pbm=hg PPC=2 C=2 dmi=1
+echo "Done"
+
+if !$?plisim "\
+    echo 'PHY loopback on Ethernet ports'; \
+    tr 19 pbm=e PPC=2 C=1; \
+    echo 'Done'; \
+     \
+    echo 'PHY loopback on HG ports'; \
+    tr 19 pbm=hg PPC=2 C=1; \
+    echo 'Done'"
+
+echo 'CPU S/G, Reload'
+tr 22 LE=512 LI=192 DI=3 C=1
+echo 'Done'
+
+echo 'CPU S/G, Simple'
+tr 23 LE=512 LI=192 PPCI=3 DPPI=4 C=1
+echo 'Done'
+
+echo 'CPU S/G, Random'
+tr 24 LE=512 LI=192 PPCI=3 DVI=3 DI=3 C=1
+echo 'Done'
+
+echo "MAC loopback V2 on all ports ..."
+tr 48 smi=103 dmi=42 vlan=5 pi=0x11335577 sendm=single
+
+echo "PHY loopback V2 on all ports ..."
+tr 49 smi=52 dmi=83 vlan=23 pi=0x01204007 sendm=array
+
+if !$?plisim "\
+    echo 'Running Traffic test on all ports for one minute in MAC Mode ...'; \
+    tr 72 TIS=60 CPI=5 RM=Phy SP=MAX L=1500 PBM=e; \
+    echo 'Running Traffic test on all ports for one minute in PHY Mode ...'; \
+    tr 72 TIS=60 CPI=5 RM=Phy SP=MAX L=1500 PBM=e; \
+    echo 'Running internal snake on all ports, MAC loopback ...'; \
+    tr 39 loopbackmode=mac snakepath=two; \
+    echo 'Done'; \
+    echo 'Running internal snake on all ports, PHY loopback ...'; \
+    tr 39 loopbackmode=phy snakepath=two; \
+    echo 'Done'"
+
+date
+
+#Print the final summary information 
+tl
+
+log off

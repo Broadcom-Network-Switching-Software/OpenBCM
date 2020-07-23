@@ -1,0 +1,419 @@
+/*! \page bcma_cli Command Line Interface (CLI)
+
+\section cli CLI Core
+
+The CLI is an extensible shell which can be used to interact with the
+core SDK, i.e. the APIs which control the switch hardware.
+
+For a complete description, please refer to \ref bcma_cli.h.
+
+\subsection cli_init Initialization and Cleanup
+
+The CLI object can be initialized and cleaned up by calling
+\ref bcma_cli_create and \ref bcma_cli_destroy respectively.
+
+\b Example:
+
+\code{.c}
+bcma_cli_t *cli;
+
+void cli_init(void)
+{
+    cli = bcma_cli_create();
+}
+
+void cli_cleanup(void)
+{
+    bcma_cli_destroy(cli);
+}
+\endcode
+
+\subsection cli_io Terminal I/O
+
+The CLI object is designed to be system-independent. The user needs to
+register callback functions to hook the system terminal I/O to the CLI
+by \ref bcma_cli_input_cb_set.
+
+The CLI output is done through the BSL module using
+layer/source/severity=APPL/SHELL/INFO. The BSL output can be initialized
+first by calling bcma_bslmgmt_init function. The user can use the
+printf-like cli_out function to output strings to the CLI.
+
+\b Example:
+
+\code{.c}
+int io_gets(bcma_cli_t *cli, const char *prompt, int max, char *buf)
+{
+    /*
+     * Use GNU readline library for example here.
+     */
+    char *str = readline(prompt);
+    int len;
+
+    if (str == NULL) {
+        *buf = 0;
+        return 0;
+    }
+
+    len = sal_strlen(str) + 1;
+    if (len <= max) {
+        /* Copy the line input to buffer provided by CLI. */
+        sal_memcpy(buf, str, len);
+    } else {
+        /* Output some errors */
+    }
+    sal_free(str);
+
+    return 0;
+}
+
+void io_history_add(int max, char *buf)
+{
+    /* Use GNU history library for example here. */
+    add_history(buf);
+}
+
+void cli_init(void)
+{
+    /* Initialize BSL output. */
+    bcma_bslmgmt_init();
+
+    cli = bcma_cli_create();
+    /*
+     * Hook the system terminal I/O to the CLI.
+     */
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+
+    /* Display a string in the CLI */
+    cli_out("Hello World\n");
+}
+\endcode
+
+\subsection cli_var Environment Variables
+
+The CLI supports environment variables in stacked scopes.
+The stacked scopes allow an individual CLI command to create local
+environment variables that exist only while the command is being executed.
+Environment variables can be referenced on the command line using
+a $ (dollar) prefix. e.g. \c \$myvar.
+
+Function \ref bcma_cli_var_cb_set is used to add the environment variables
+support to the CLI by registering a set of callback functions to perform
+the CLI environment variables operations.
+Detailed description about CLI environment variables support can be found
+in section \ref env.
+
+\section env CLI Environment (ENV)
+
+The environment component can be used to add support for environment
+variables in the CLI.
+Functions \ref bcma_env_create and \ref bcma_env_destroy can be used to
+initialize and clean up the environment object respectively.
+
+For a complete description, please refer to \ref bcma_env.h.
+
+The example below shows how to add environment variables support in the CLI
+by the environment component.
+
+\b Example:
+
+\code{.c}
+const char *var_get(void *cookie, const char *name)
+{
+    return bcma_env_var_get((bcma_env_handle_t)cookie, name);
+}
+
+int var_set(void *cookie, const char *name, char *value, int local)
+{
+    if (value == NULL) {
+        return bcma_env_var_unset((bcma_env_handle_t)cookie, name, local, !local);
+    }
+
+    return bcma_env_var_set((bcma_env_handle_t)cookie, name, value, local);
+}
+
+int var_scope_push(void *cookie)
+{
+    return bcma_env_scope_push((bcma_env_handle_t)cookie);
+}
+
+int var_scope_pop(void *cookie)
+{
+    return bcma_env_scope_pop((bcma_env_handle_t)cookie);
+}
+
+bcma_cli_var_cb_t var_cb = {
+    var_get,
+    var_set,
+    var_scope_push,
+    var_scope_pop
+};
+bcma_env_handle_t eh;
+
+void cli_init(void)
+{
+    cli = bcma_cli_create();
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+
+    /* Add support for CLI environment variables */
+    eh = bcma_env_create(0);
+    bcma_cli_var_cb_set(cli, &var_cb, eh);
+}
+
+void cli_cleanup(void)
+{
+    bcma_env_destroy(eh);
+    bcma_cli_destroy(cli);
+}
+\endcode
+
+\section clicmd CLI Command
+
+Various kinds of CLI commands are supported in the CLI for user operations
+to interact with the core SDK.
+
+More description can be found in different CLI command categories
+listed below.
+
+- \subpage bcma_clicmd
+
+- \subpage bcma_bcmltcmd
+
+- \subpage bcma_bcmbdcmd
+
+- \subpage bcma_testcmd
+
+- \subpage bcma_qspicmd
+
+CLI command user can always use <tt>help \<cmd\></tt> in the CLI shell
+to query a CLI command <tt>\<cmd\></tt> usage.\n
+For example, execute <tt>help if</tt> will get the usage information
+of CLI command \c if.
+
+\section cli_adv Advanced Features in the CLI
+
+\subsection cli_ctrlc Ctrl-C Exceptions
+
+The CLI Ctrl-C exception can be used to break the currently running CLI command
+by pressing the Ctrl-C key. To add the CLI Ctrl-C exception support to
+the underlying system, the user needs to use \ref bcma_cli_ctrlc_cb_set
+function to register the system dependent Ctrl-C related functions.
+
+\b Example:
+
+\code{.c}
+int ctrlc_enable_set(void *cookie, int mode)
+{
+    return bcma_io_ctrlc_enable_set(mode);
+}
+
+int ctrlc_exec(void *cookie, int (*func)(void *), void *data, int rv_intr)
+{
+    return bcma_io_ctrlc_exec(func, data, rv_intr);
+}
+
+bcma_cli_ctrlc_cb_t ctrlc_cb = {
+    ctrlc_enable_set,
+    ctrlc_exec
+};
+
+void cli_init(void)
+{
+    cli = bcma_cli_create();
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+
+    /* Add support for Ctrl-C exceptions in CLI */
+    bcma_cli_ctrlc_cb_set(cli, &ctrlc_cb, NULL);
+}
+\endcode
+
+\subsection cli_cmdexcpt Command Exceptions
+
+The user can register a CLI command exception function to customize
+the unrecognized commands handler by \ref bcma_cli_cmd_exception_set.
+
+\b Example:
+
+\code{.c}
+/*
+ * This command exception handler tries to load the unrecognized command
+ * as the run commands script file name.
+ */
+int cmd_exception(bcma_cli_t *cli, bcma_cli_args_t *args)
+{
+    const char *filename = BCMA_CLI_ARG_GET(args);
+
+    return bcma_clicmd_rcload_file(cli, args, filename, true);
+}
+
+void cli_init(void)
+{
+    cli = bcma_cli_create();
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+
+    /* Add support for command exceptions in CLI */
+    bcma_cli_cmd_exception_set(cli, cmd_exception);
+}
+\endcode
+
+\subsection cli_redir I/O Redirection
+
+The CLI can be configured to redirect the command output for additional
+processing.
+This feature is adopted by the \c grep command to filter the CLI output
+by system provided grep command via the redirection of I/O in the CLI.
+
+\b Example:
+
+\code{.c}
+#define REDIR_INPUT_NAME        "/tmp/bcmcli.input.txt"
+#define REDIR_OUTPUT_NAME       "/tmp/bcmcli.output.txt"
+
+#define REDIR_LINE_SIZE_MAX     1024
+
+int redir_enable;
+
+int redir_enable_set(void *cookie, int enable)
+{
+    /* Update status */
+    redir_enable = enable;
+
+    return 0;
+}
+
+int redir_cmd_done(void *cookie)
+{
+    bcma_io_file_handle_t ofile;
+    size_t bufsz;
+    char *buf;
+
+    if (redir_enable) {
+        /* Repurpose any existing output as input */
+        bcma_io_file_move(REDIR_OUTPUT_NAME, REDIR_INPUT_NAME);
+    } else {
+        /* Dump output and remove temporary files */
+        ofile = bcma_io_file_open(REDIR_OUTPUT_NAME, "r");
+        if (ofile) {
+            /* Allocate temporary message buffer */
+            bufsz = REDIR_LINE_SIZE_MAX;
+            buf = sal_alloc(bufsz, "redir");
+            if (buf) {
+                sal_memset(buf, 0, bufsz);
+                /* Dump most recent CLI command output */
+                while (bcma_io_file_gets(ofile, buf, bufsz - 1) != NULL) {
+                    cli_out("%s", buf);
+                }
+                sal_free(buf);
+            }
+            bcma_io_file_close(ofile);
+        }
+        bcma_io_file_delete(REDIR_INPUT_NAME);
+        bcma_io_file_delete(REDIR_OUTPUT_NAME);
+    }
+
+    return 0;
+}
+
+const char *redir_input_name_get(void *cookie)
+{
+    return REDIR_INPUT_NAME;
+}
+
+const char *redir_output_name_get(void *cookie)
+{
+    return REDIR_OUTPUT_NAME;
+}
+
+static bcma_cli_redir_cb_t redir_cb = {
+    redir_enable_set,
+    redir_cmd_done,
+    redir_input_name_get,
+    redir_output_name_get
+};
+
+int redir_out_hook(bsl_meta_t *meta, const char *format, va_list args)
+{
+    bcma_io_file_handle_t ofile;
+
+    /* We only redirect output from the CLI */
+    if (redir_enable == 0 || meta->source != BSL_SRC_SHELL) {
+        return -1;
+    }
+
+    /* Append log message to output file */
+    ofile = bcma_io_file_open(REDIR_OUTPUT_NAME, "a");
+    if (ofile) {
+        bcma_io_file_vprintf(ofile, format, args);
+        bcma_io_file_close(ofile);
+    }
+
+    return 0;
+}
+
+void cli_init(void)
+{
+    cli = bcma_cli_create();
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+
+    /* Add support for redirection in CLI */
+    bcma_cli_redir_cb_set(cli, &redir_cb, cli);
+    bcma_bslmgmt_redir_hook_set(redir_out_hook);
+}
+\endcode
+
+\section cli_appl CLI Application Sample Code
+
+The sample code below depicts how to add the CLI as well as the basic
+CLI commands support in an application by collecting the examples above.
+
+\code{.c}
+void cli_init(void)
+{
+    /* Create basic CLI */
+    cli = bcma_cli_create();
+    bcma_cli_input_cb_set(cli, "SDK", io_gets, io_history_add);
+    bcma_clicmd_add_basic_cmds(cli);
+    bcma_clicmd_add_script_cmds(cli);
+    bcma_clicmd_add_rc_cmds(cli);
+    bcma_clicmd_add_dir_cmds(cli);
+    bcma_clicmd_add_system_cmds(cli);
+
+    /* Add support for CLI environment variables */
+    eh = bcma_env_create(0);
+    bcma_cli_var_cb_set(cli, &var_cb, eh);
+    bcma_envcmd_add_cmds(cli);
+
+    /* Add support for Ctrl-C exceptions in CLI */
+    bcma_cli_ctrlc_cb_set(cli, &ctrlc_cb, NULL);
+
+    /* Add support for redirection in CLI */
+    bcma_cli_redir_cb_set(cli, &redir_cb, cli);
+    bcma_bslmgmt_redir_hook_set(redir_out_hook);
+
+    /* Add support for command exceptions in CLI */
+    bcma_cli_cmd_exception_set(cli, cmd_excption);
+
+    /* Add CLI commands for controlling the system log */
+    bcma_bslcmd_add_cmds(cli);
+}
+
+void cli_cleanup(void)
+{
+    bcma_env_destroy(eh);
+    bcma_cli_destroy(cli);
+}
+
+int main(void)
+{
+    bcma_bslmgmt_init();
+
+    cli_init()
+
+    /* CLI main loop */
+    bcma_cli_cmd_loop(cli);
+
+    cli_cleanup();
+}
+\endcode
+
+*/

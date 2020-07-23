@@ -1,0 +1,46 @@
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 239, expect to forward to port 155
+tx 1 pbm=239 data=0x0000030001FF0000030000FF81002002910000145555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555;sleep 5
+Packet from data=<>, length=85
+Sleeping for 5 seconds
+XLMIB_TBYT.cd38                       :                    89                 +89
+XLMIB_RBYT.cd38                       :                    89                 +89
+XLMIB_TPOK.cd38                       :                     1                  +1
+XLMIB_RPOK.cd38                       :                     1                  +1
+XLMIB_TVLN.cd38                       :                     1                  +1
+XLMIB_RVLN.cd38                       :                     1                  +1
+XLMIB_TUCA.cd38                       :                     1                  +1
+XLMIB_RUCA.cd38                       :                     1                  +1
+XLMIB_TPKT.cd38                       :                     1                  +1
+XLMIB_RPKT.cd38                       :                     1                  +1
+XLMIB_T127.cd38                       :                     1                  +1
+XLMIB_R127.cd38                       :                     1                  +1
+XLMIB_RPRM.cd38                       :                     1                  +1
+RUC_64.cd38                           :                     1                  +1
+RDBGC0_64.cd38                        :                     1                  +1
+XLMIB_TBYT.cd57                       :                    89                 +89
+XLMIB_RBYT.cd57                       :                    89                 +89
+XLMIB_TPOK.cd57                       :                     1                  +1
+XLMIB_RPOK.cd57                       :                     1                  +1
+XLMIB_TVLN.cd57                       :                     1                  +1
+XLMIB_RVLN.cd57                       :                     1                  +1
+XLMIB_TUCA.cd57                       :                     1                  +1
+XLMIB_RUCA.cd57                       :                     1                  +1
+XLMIB_TPKT.cd57                       :                     1                  +1
+XLMIB_RPKT.cd57                       :                     1                  +1
+XLMIB_T127.cd57                       :                     1                  +1
+XLMIB_R127.cd57                       :                     1                  +1
+XLMIB_RPRM.cd57                       :                     1                  +1
+RUC_64.cd57                           :                     1                  +1
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

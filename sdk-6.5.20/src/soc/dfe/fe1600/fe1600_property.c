@@ -1,0 +1,196 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ *
+ * SOC FE1600 PROPERTY
+ */
+#include <shared/bsl.h>
+#include <soc/dfe/fe1600/fe1600_property.h>
+#include <soc/dfe/cmn/dfe_property.h>
+#include <soc/dfe/cmn/dfe_drv.h>
+
+
+
+#ifdef _ERR_MSG_MODULE_NAME
+  #error "_ERR_MSG_MODULE_NAME redefined"
+#endif
+
+#define _ERR_MSG_MODULE_NAME BSL_SOC_STAT
+
+soc_dfe_property_info_t soc_fe1600_property_info[]={
+
+	{
+		spn_MIIM_TIMEOUT_USEC,
+		NULL,
+		2000,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_MIIM_INTR_ENABLE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_DEVICE_MODE,
+		"SINGLE_STAGE_FE2",
+		-1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_STRING,
+	},
+	{
+		spn_IS_DUAL_MODE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SYSTEM_IS_VCS_128_IN_SYSTEM,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SYSTEM_IS_DUAL_MODE_IN_SYSTEM,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SYSTEM_IS_SINGLE_MODE_IN_SYSTEM,
+		NULL,
+		1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+    {
+		spn_SYSTEM_CONTAINS_MULTIPLE_PIPE_DEVICE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SYSTEM_IS_FE600_IN_SYSTEM,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_MERGE_CELLS,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+
+	{
+		spn_SERDES_MIXED_RATE_ENABLE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_MULTICAST_MODE,
+		"DIRECT",
+		-1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_STRING
+	},
+	{
+		spn_FABRIC_LOAD_BALANCING_MODE,
+		"NORMAL_LOAD_BALANCE",
+		-1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_STRING
+	},
+    {
+		spn_FABRIC_CELL_FORMAT,
+		"VSC256",
+		FALSE,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_STRING
+	},
+	{
+		spn_FABRIC_TDM_FRAGMENT,
+		NULL,
+		0x181,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_TDM_OVER_PRIMARY_PIPE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_BIST_ENABLE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_OPTIMIZE_PARTIAL_LINKS,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_VCS128_UNICAST_PRIORITY,
+		NULL,
+		-1 , 
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_FABRIC_MAC_BUCKET_FILL_RATE,
+		NULL,
+		DFE_FABRIC_MAC_BUCKET_FILL_RATE_DEFAULT,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SCHAN_TIMEOUT_USEC,
+		NULL,
+		-1, 
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SCHAN_INTR_ENABLE,
+		NULL,
+		0,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+	{
+		spn_SYSTEM_REF_CORE_CLOCK,
+		NULL,
+		1200,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+    {
+		spn_CORE_CLOCK_SPEED,
+		NULL,
+		533,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+    {
+		spn_REPEATER_LINK_DEST,
+		NULL,
+		-1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_INT
+	},
+    {
+		spn_BACKPLANE_SERDES_ENCODING,
+		"KR_FEC",
+		-1,
+		SOC_DFE_PROPERTY_DEFAULT_TYPE_STRING,
+	},
+	{
+		NULL,
+		NULL,
+		-1,
+		-1,
+	}
+
+};
+
+void
+soc_fe1600_soc_properties_array_get(int unit,soc_dfe_property_info_t** soc_dfe_property_info_array )
+{
+	*soc_dfe_property_info_array=soc_fe1600_property_info;
+}
+#undef _ERR_MSG_MODULE_NAME

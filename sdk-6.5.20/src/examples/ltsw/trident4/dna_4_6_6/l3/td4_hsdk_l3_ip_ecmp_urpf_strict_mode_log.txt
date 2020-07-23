@@ -1,0 +1,296 @@
+BCM.0> init all
+BCM.0> cint /projects/ntsw-sw3/home/yveeraba/code/HEAD/MASTER/lt/hsdk2/src/examples/ltsw/trident4/l3/td4_hsdk_l3_ip_ecmp_urpf_strict_mode.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200217 (Mon Feb 17 09:26:07 2020)
+From sdkrel@lc-sj1-3803:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_4, BCM56880_A0_DNA_4_5_5
+     BCM56880_A0_DNA_4_5_6, BCM56880_A0_DNA_4_5_8, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+~~~ #1) test_setup(): ** start **
+ingress_port_setup configured for ingress_port : 1
+ingress_port_setup configured for ingress_port : 2
+egress_port_setup configured for egress_port : 3
+egress_port_setup configured for egress_port : 4
+~~~ #1) test_setup(): ** end **
+~~~ #2) configure_ip_urpf_mode(): ** start **
+int ecmp_obj_in_1 = 200001 (0x30d41)
+int ecmp_obj_in_2 = 200002 (0x30d42)
+int ecmp_obj_out = 200003 (0x30d43)
+~~~ #2) configure_ip_urpf_mode(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 11 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 12 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 13 ports cd2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000008), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 14 ports cd3 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000010), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+INTF  Flag       VRF   URPF_MODE INTF_CLASS QOS_MAP_ID
+-----------------------------------------------------------
+100   0x0          1     2         0         0
+
+200   0x0          1     2         0         0
+
+300   0x0          1     2         0         0
+
+400   0x0          1     2         0         0
+
+INTF  VID   MAC Address
+----------------------------------------------
+100   11    00:00:00:00:00:01  OverLay
+
+200   12    00:00:00:00:00:03  OverLay
+
+300   13    00:00:00:00:00:02  OverLay
+
+400   14    00:00:00:00:00:04  OverLay
+
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:fe:01    100     1            0  1500    overlay   no
+
+100002  00:00:00:00:fe:03    200     2            0  1500    overlay   no
+
+100003  00:00:00:00:fe:02    300     3            0  1500    overlay   no
+
+100004  00:00:00:00:fe:04    400     4            0  1500    overlay   no
+
+ECMP group 200001(OverLay):
+        Dynamic mode 0, Flags 0x8, Max path 64
+        Interfaces: (member count 1)
+        {100001}
+ECMP group 200002(OverLay):
+        Dynamic mode 0, Flags 0x8, Max path 64
+        Interfaces: (member count 1)
+        {100002}
+ECMP group 200003(OverLay):
+        Dynamic mode 0, Flags 0x8, Max path 64
+        Interfaces: (member count 2)
+        {100003} {100004}
+     VRF Net Addr            INTF UL_INTF
+--------------------------------------------
+0    1    10.58.64.1          200001 0
+1    1    10.58.66.115        200003 0
+
+IP Urpf Strict mode check ====> Expected SIP
+
+Sending IPv4 unicast packet to ingress_port : 1
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000001} {002a10777700} 8100 000b
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 ff01 bd76 0a3a
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x52
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x400a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0xff
+        L3_OIF_1_13_0=0x12c
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0x64
+        L2_OIF_10_0=3
+        VFI_15_0=0xb
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=3
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:01> src<00:2a:10:77:77:00> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<255> > chk-sum<0xbd76>
+Packet[1]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[1]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000fe02} {000000000002} 8100 000d
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[2]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[2]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x52
+        SRC_PORT_NUM=3
+        SWITCH=1
+        MATCH_ID_LO=0x400a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=3
+        SYSTEM_DESTINATION_15_0=0xf03
+        EFFECTIVE_TTL_7_0=0xfe
+        INGRESS_PP_PORT_7_0=3
+        L3_IIF_13_0=0x12c
+        VFI_15_0=0xd
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000d> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[2]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[2]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+XLMIB_TBYT.cd0                        :                    82                 +82
+XLMIB_RBYT.cd0                        :                    82                 +82
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd2                        :                    82                 +82
+XLMIB_RBYT.cd2                        :                    82                 +82
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T127.cd2                        :                     1                  +1
+XLMIB_R127.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+
+IP Urpf Strict mode check ====> Uxpected SIP
+
+Sending IPv4 unicast packet to ingress_port : 1
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000001} {002a10777700} 8100 000b
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 003c 6762 0000 ff01 9d76 0a3a
+[bcmPWN.0]Packet[3]: data[0020]: 6001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[3]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x52
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x400a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x5a5a
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0xff
+        L3_OIF_1_13_0=0x12c
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0x64
+        L2_OIF_10_0=3
+        VFI_15_0=0xb
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=3
+[RX reasons]
+        IFP
+        URPF_CHECK_FAILED
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:01> src<00:2a:10:77:77:00> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.58.96.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<255> > chk-sum<0x9d76>
+Packet[3]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[3]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+UC_PERQ_PKT(0).cd2                    :                     1                  +1
+UC_PERQ_BYTE(0).cd2                   :                    82                 +82
+
+IP Urpf Strict mode check ====> Uxpected L3_IIF
+
+Sending IPv4 unicast packet to ingress_port : 2
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000001} {002a10777700} 8100 000c
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 003c 6762 0000 ff01 bd76 0a3a
+[bcmPWN.0]Packet[4]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[4]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[4]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x52
+        SRC_PORT_NUM=2
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x400a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x5a5a
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=2
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0xff
+        L3_OIF_1_13_0=0x12c
+        INGRESS_PP_PORT_7_0=2
+        L3_IIF_13_0=0xc8
+        L2_OIF_10_0=3
+        VFI_15_0=0xc
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=3
+[RX reasons]
+        IFP
+        URPF_CHECK_FAILED
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:01> src<00:2a:10:77:77:00> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<255> > chk-sum<0xbd76>
+Packet[4]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[4]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+XLMIB_TBYT.cd0                        :                   164                 +82
+XLMIB_RBYT.cd0                        :                   164                 +82
+XLMIB_TPOK.cd0                        :                     2                  +1
+XLMIB_RPOK.cd0                        :                     2                  +1
+XLMIB_TVLN.cd0                        :                     2                  +1
+XLMIB_RVLN.cd0                        :                     2                  +1
+XLMIB_TUCA.cd0                        :                     2                  +1
+XLMIB_RUCA.cd0                        :                     2                  +1
+XLMIB_TPKT.cd0                        :                     2                  +1
+XLMIB_RPKT.cd0                        :                     2                  +1
+XLMIB_T127.cd0                        :                     2                  +1
+XLMIB_R127.cd0                        :                     2                  +1
+XLMIB_RPRM.cd0                        :                     2                  +1
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+

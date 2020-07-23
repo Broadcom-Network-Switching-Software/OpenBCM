@@ -1,0 +1,62 @@
+/*  
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+			SDK Linux User Support
+
+
+The Broadcom SDK can be compiled as part of a user space application, 
+for development flexibility and debugging purposes. 
+
+In this configuration, the entire driver is compiled as a user space 
+library, which you can link with your application. It will provide all 
+regular driver features, but at some cost in performance. 
+
+The core of the user space support is in the Linux User Mode BDE 
+(Broadcom Device Enumerator). This BDE provides all chip virtualization 
+for user mode execution, which includes device PCI access, register 
+address space mmapping, and interrupt virtualization. 
+
+When running in this mode, the entire driver, including interrupt 
+handling, can be debugged from user space using GDB, and you should 
+never crash your machine. 
+
+The user space support requires a couple of kernel modules to provide
+the virtualization services:
+
+linux-kernel-bde.o
+------------------
+
+source: sdk/systems/bde/linux/kernel
+
+See the ../kernel/README file for information on the use the 
+linux-kernel-bde module. 
+
+linux-user-bde.o
+----------------
+
+source: sdk/systems/bde/linux/user/kern
+
+The Linux user BDE implentation is comprised of two parts -- a kernel 
+module, and a user space library. The linux-user-bde is the kernel 
+portion and it relies upon the linux-kernel-bde module to access the 
+devices in the system, and it then provides PCI, DMA, register, and 
+interrupt virtualization to the user space library, which provides the 
+actual BDE interface pointer. 
+
+You must load both the linux-kernel-bde and the linux-user-bde 
+modules before running your user space BCM application. 
+
+Configurations for building the BCM diag shell application for 
+specific BRCM platforms are available in the subdirectories of this
+directory. For example, building the user space BCM diag shell for the 
+BRCM 8245 CPCI board (BMW) is done by:
+	
+	cd bmw; gmake
+
+The products of this build will be the linux-kernel-bde.o and 
+linux-user-bde.o modules, and the bcm.user application.

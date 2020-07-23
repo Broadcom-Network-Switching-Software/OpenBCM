@@ -1,0 +1,53 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Mirror RC (run commands) file
+#
+#       These are default commands that are for TechSupport Mirror.
+#
+
+# Show S/W state in Mirror.
+dump sw mirror
+
+# Mirror commands.
+mirror dest show
+mirror port show
+
+# Show Mirror related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Mirror counter related LTs.
+local lt CTR_MIRROR;                                               $traverse_lt;
+
+# Show Mirror control related LTs.
+local lt MIRROR_CONTROL;                                           $traverse_lt;
+local lt MIRROR_EGR_SEQ;                                           $traverse_lt;
+
+# Show Mirror encap related LTs.
+local lt MIRROR_ENCAP_ERSPAN;                                      $traverse_lt;
+local lt MIRROR_ENCAP_ERSPAN_IPV6;                                 $traverse_lt;
+local lt MIRROR_ENCAP_INSTANCE;                                    $traverse_lt;
+local lt MIRROR_ENCAP_INSTANCE_ATTR;                               $traverse_lt;
+local lt MIRROR_ENCAP_PSAMP_METADATA;                              $traverse_lt;
+local lt MIRROR_ENCAP_PSAMP_METADATA_IPV6;                         $traverse_lt;
+local lt MIRROR_ENCAP_RSPAN;                                       $traverse_lt;
+local lt MIRROR_ENCAP_SFLOW_SEQ;                                   $traverse_lt;
+local lt MIRROR_ENCAP_SFLOW_SEQ_IPV6;                              $traverse_lt;
+local lt MIRROR_ENCAP_TM_MIRROR_ON_DROP;                           $traverse_lt;
+local lt MIRROR_ENCAP_TM_MIRROR_ON_DROP_IPV6;                      $traverse_lt;
+local lt MIRROR_ENCAP_VXLAN;                                       $traverse_lt;
+local lt MIRROR_ENCAP_VXLAN_IPV6;                                  $traverse_lt;
+
+# Show Port Mirror related LTs.
+local lt PORT_EGR_MIRROR;                                          $traverse_lt;
+local lt PORT_MIRROR;                                              $traverse_lt;
+
+# Show Mirror session related LTs.
+local lt MIRROR_SESSION;                                           $traverse_lt;
+
+# Show Sample related LTs.
+local lt MIRROR_PORT_ENCAP_SFLOW;                                  $traverse_lt;
+local lt MIRROR_SFLOW;                                             $traverse_lt;
+local lt MIRROR_SFLOW_CONTROL;                                     $traverse_lt;

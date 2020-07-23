@@ -1,0 +1,211 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+################################################################################
+#
+# Purpose: Sanity test script
+# Usage:   BCM.0> rcload th4g_sanity.soc
+################################################################################
+
+echo "testsuite: started: sanity"
+
+local done 'local returnCode $?; echo -n "$testdesc "; if !"expr $returnCode + 0 == 0" "echo PASSED" else "echo FAILED"'
+
+#Display some useful information
+date
+ver
+
+#Start Test
+#dsh -c "debug appl test"
+dsh -c "test mode Progress=yes"
+date
+
+
+local testcmds "tr 4"
+local testname "Running PCI S-Channel Buf ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 1"
+local testname "Running Register reset defaults ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 3"
+local testname "Running Register read/write ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 50"
+local testname "Running memory fill and verify ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 51"
+local testname "Running memory random addr/data ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 52"
+local testname "Running memory random address set, write all ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 71 ie=16384"
+local testname "Running memory fill and verify in DMA mode ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 10"
+local testname "Running interrupt test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 21 ds=1"
+local testname "Running CPU Benchmark test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 30"
+local testname "Running counter width verification test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 31"
+local testname "Running counter read/write test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 500 v=1 tt=0"
+local testname "Running Packet DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 500 v=1 tt=1"
+local testname "Running Packet DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 500 v=1 tt=2"
+local testname "Running Packet DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 500 v=1 tt=3"
+local testname "Running Packet DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 500 v=1 tt=4"
+local testname "Running Packet DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 502 tm=1 mr=0 mw=0"
+local testname "Running SBUS DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 502 tm=1 mr=0 mw=1"
+local testname "Running SBUS DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 502 tm=1 mr=1 mw=0"
+local testname "Running SBUS DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 502 tm=1 mr=1 mw=1"
+local testname "Running SBUS DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 503 im=0"
+local testname "Running CCM DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+local testcmds "tr 503 im=1"
+local testname "Running CCM DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 504 d=1"
+local testname "Running FIFO DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 12 NumMem=8 ccmdma=1"
+local testname "Running SCHAN DMA test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 17"
+local testname "Testing CPU DMA loopback ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 18"
+local testname "Traffic testing with MAC Loopback on front panel ports..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 19"
+local testname "Traffic testing with PHY Loopback on front panel ports..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 72 rm=phy"
+local testname "Running Traffic Test in PHY mode ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 72 rm=mac"
+local testname "Running Traffic Test in MAC mode ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 39 rm=phy"
+local testname "Running Snake Traffic Test in PHY mode ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 39 rm=mac"
+local testname "Running Snake Traffic Test in MAC mode ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 143"
+local testname "Running SER test for internal buffer and bus ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+local testcmds "tr 144"
+local testname "Running SER test ..."
+local testdesc "$testcmds: $testname"; echo $testdesc; dsh -c "$testcmds"; $done
+date
+
+
+# Show status
+echo
+dsh -c "testlist *"
+local returnCode $?
+
+echo Tests Complete.
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

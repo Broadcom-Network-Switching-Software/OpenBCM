@@ -1,0 +1,50 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+KIDRON_DIR = ../pp_app
+INC_DIR = -I. -I$(KIDRON_DIR)/infrastructure -I$(KIDRON_DIR)/infrastructure/db -I$(KIDRON_DIR)/infrastructure/primitives -I$(KIDRON_DIR)/global_utils
+LIB_DIR = ../lib/unix
+ARCHIVE_NAME = libcfg_api.a
+OBJ_DIR = ./obj
+
+CC  = gcc
+CFLAGS += -g  -o0 -Wall -Werror -ansi
+AR_FLAGS = rcvs
+AR = ar
+
+
+SRCS := $(wildcard *.c) $(wildcard *.cpp)
+
+OBJS_1 := $(SRCS:.c=.o)
+OBJS := $(OBJS_1:.cpp=.o) 
+
+
+all:  $(ARCHIVE_NAME)
+
+$(OBJ_DIR)/%.o: %.c   
+	@echo -n "Making $@: "
+	-@test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c  $< -o $(OBJ_DIR)/$(notdir $@)
+	@echo Done.
+
+$(OBJ_DIR)/%.o: %.cpp  
+	@echo -n "Making $@: "
+	-@test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INC_DIR) -c  $< -o $(OBJ_DIR)/$(notdir $@)
+	@echo Done.
+
+$(ARCHIVE_NAME): $(addprefix $(OBJ_DIR)/,$(OBJS))
+	@echo -n "Adding object file $? to library $@: "
+	-@test -d $(LIB_DIR) || mkdir -p $(LIB_DIR)
+	@echo -n "Making static library $(ARHCIVE_NAME): "
+	$(foreach obj,$?, $(AR) $(AR_FLAGS) $(ARCHIVE_NAME) $(OBJ_DIR)/$(notdir $(obj)); )
+	cp $@ $(LIB_DIR)
+	@echo Done.
+
+
+clean:
+	@echo -n "Cleaning library ... "
+	@rm -f obj/* $(OBJ_DIR)/$(ARCHIVE_NAME)
+	@echo Done.

@@ -1,0 +1,146 @@
+# $Id: kt2config.soc,v 1.192 2013/07/17 22:13:43 hariv Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# kt2 configuration file
+
+
+
+#g TOP_MISC_CONTROL_1 WC0_8_XFI_MODE_SEL
+#local xfi_0 $last_field0
+#g TOP_MISC_CONTROL_1 WC1_8_XFI_MODE_SEL
+#local xfi_1 $last_field0
+
+#echo xfi_0: $xfi_0
+#echo xfi_1: $xfi_1
+
+config delete pattern=phy_xaui
+config delete pattern=portgroup
+
+#echo ==========================================
+#echo Setting Polarity flips for Katana2:$pcidev
+#echo ==========================================
+
+if "expr $pcidev + 0 == 0xb455" \
+   'for port=1,16 \'config add phy_xaui_tx_polarity_flip_$port=1\'' \
+   'for port=17,24 \'config add phy_xaui_rx_polarity_flip_$port=1\'' \
+
+config add phy_xaui_rx_polarity_flip_35=1
+config add phy_xaui_rx_polarity_flip_37=1
+config add phy_xaui_rx_polarity_flip_38=1
+
+if !$olp_port && "expr $pcidev + 0 == 0xb455"\
+   'config add phy_xaui_rx_polarity_flip_40=1'
+
+#if !$xfi_0 && "expr $pcidev + 0 == 0xb455"\
+#   'config add phy_xaui_rx_polarity_flip_25=1;config add phy_xaui_rx_polarity_flip_36=1'
+
+if !"$xfi_1" && "expr $pcidev + 0 == 0xb455" \
+   'config add phy_xaui_rx_polarity_flip_26=1;config add phy_xaui_rx_polarity_flip_39=1'
+
+if !"expr $pcidev + 0 == 0xb456" || !"expr $pcidev + 0 == 0xb455" \
+   'config add phy_xaui_rx_polarity_flip_28=0xF00F' else \
+   'config add phy_xaui_rx_polarity_flip_28=0x000F' 
+
+
+#echo ==============================
+#echo Setting PortGroup settings
+#echo ==============================
+
+if !"expr $BCM56248_CFG_OFFSET + 0 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 0 == $config"  \
+   'for port=27,34 \'config add portgroup_$port=1\''
+
+if !"expr $BCM56248_CFG_OFFSET + 1 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 1 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 2 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 2 == $config"  \
+   'for port=27,28 \'config add portgroup_$port=1\''
+
+if !"expr $BCM56248_CFG_OFFSET + 3 == $config"  || !"expr $BCM56450_CFG_OFFSET + 3 == $config"  \
+   'for port=27,28 \'config add portgroup_$port=1\'' \
+   'config add portgroup_30=1'
+
+if !"expr $BCM56248_CFG_OFFSET + 4 == $config"  || !"expr $BCM56450_CFG_OFFSET + 4 == $config"  \
+   'for port=27,28 \'config add portgroup_$port=1\'' \
+   'for port=30,33,3 \'config add portgroup_$port=1\'' 
+
+if !"expr $BCM56248_CFG_OFFSET + 5 == $config"  || !"expr $BCM56450_CFG_OFFSET + 5 == $config"  \
+   'for port=27,33,6 \'config add portgroup_$port=1\'' \
+   'for port=25,36,11 \'config add portgroup_$port=1\'' \
+   'for port=28,30,2 \'config add portgroup_$port=1\'' 
+
+if !"expr $BCM56248_CFG_OFFSET + 6 == $config"  || !"expr $BCM56450_CFG_OFFSET + 6 == $config"  \
+   'for port=27,33,6 \'config add portgroup_$port=1\'' \
+   'for port=25,36,11 \'config add portgroup_$port=1\'' \
+   'for port=28,30,2 \'config add portgroup_$port=1\'' \
+   'for port=26,39,13 \'config add portgroup_$port=1\'' 
+
+if !"expr $BCM56248_CFG_OFFSET + 7 == $config"  || !"expr $BCM56450_CFG_OFFSET + 7 == $config"  \
+   'for port=27,33,6 \'config add portgroup_$port=1\'' \
+   'for port=28,30,2 \'config add portgroup_$port=1\'' \
+   'for port=26,39,13 \'config add portgroup_$port=1\'' 
+
+if !"expr $BCM56248_CFG_OFFSET + 8 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 8 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 9 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 9 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 10 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 10 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 11 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 11 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 12 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 12 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 13 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 13 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 14 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 14 == $config"  || \
+   !"expr $BCM56248_CFG_OFFSET + 15 == $config"  || \
+   !"expr $BCM56450_CFG_OFFSET + 15 == $config" \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56248_CFG_OFFSET + 16 == $config"  \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56450_CFG_OFFSET + 16 == $config"  \
+   'config add portgroup_27=1' \
+   'config add portgroup_28=4' 
+
+if !"expr $BCM56248_CFG_OFFSET + 17 == $config"  \
+   'for port=27,28,1 \'config add portgroup_$port=1\'' \
+   'config add portgroup_30=1' 
+
+if !"expr $BCM56452_CFG_OFFSET + 1 == $config"  || \
+   !"expr $BCM56452_CFG_OFFSET + 2 == $config"  || \
+   !"expr $BCM56452_CFG_OFFSET + 3 == $config"  || \
+   !"expr $BCM56452_CFG_OFFSET + 4 == $config" \
+   'for port=25,28,1 \'config add portgroup_$port=4\'' \
+
+if !"expr $BCM56452_CFG_OFFSET + 5 == $config" \
+   'config add portgroup_25=4' \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56452_CFG_OFFSET + 6 == $config" || \
+   !"expr $BCM56452_CFG_OFFSET + 7 == $config" \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56452_CFG_OFFSET + 8 == $config" \
+   'for port=25,26,1 \'config add portgroup_$port=4\'' \
+   'config add portgroup_27=4' \
+   'config add portgroup_28=4' 
+
+if !"expr $BCM56452_CFG_OFFSET + 9 == $config" \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56452_CFG_OFFSET + 10 == $config" \
+   'for port=28,30,2 \'config add portgroup_$port=1\'' 
+
+if !"expr $BCM56454_CFG_OFFSET + 1 == $config" \
+   'for port=27,28,1 \'config add portgroup_$port=4\'' 
+
+if !"expr $BCM56454_CFG_OFFSET + 2 == $config" \
+   'for port=25,26,1 \'config add portgroup_$port=4\'' 
+
+
+

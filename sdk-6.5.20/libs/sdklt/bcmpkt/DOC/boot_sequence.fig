@@ -1,0 +1,62 @@
+ +--------------------------------+
+ |c9B3Attach KNET/SOCKET driver   |
+ |    bcmlu_knet/socket_attach    |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7Attach driver to device     |
+ |   bcmpkt_dev/socket_drv_attach |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7Create packet buffer pool   |
+ |    bcmpkt_bpool/ppool_create   |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7  Initial net device        |
+ |       bcmpkt_dev_init          |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7 Configure DMA channel      |
+ |      bcmpkt_dma_chan_set       |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7   Enable net device        |
+ |       bcmpkt_dev_enable        |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c9B3Create network interface    |
+ |      bcmpkt_netif_create       |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c9B3 Enable packet filter       |
+ |     bcmpkt_filter_create       |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c9B3 Create SOCKET on netif     |
+ |      bcmpkt_socket_create      |
+ +--------------------------------+
+                 |
+                 v
+ +--------------------------------+
+ |c5B7  Register RX callback      |
+ |   Send packets from bcmpkt_tx  |
+ +--------------------------------+
+
+ +----+        +----+
+ |c5B7| Common |c9B3| KNET mode only
+ +----+        +----+

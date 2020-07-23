@@ -1,0 +1,28 @@
+PROJECT_NAME            = "Physical Table Manager Library (BCMPTM)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+SORT_MEMBER_DOCS        = no
+
+INPUT                   = DOC/bcmptm.dox \
+                          include/bcmptm/bcmptm.h \
+                          include/bcmptm/bcmptm_types.h \
+                          include/bcmptm/bcmptm_cmdproc_internal.h \
+                          include/bcmptm/bcmptm_ptcache_internal.h \
+                          include/bcmptm/bcmptm_chip_internal.h \
+                          include/bcmptm/bcmptm_wal_internal.h \
+                          include/bcmptm/bcmptm_internal.h \
+                          include/bcmptm/bcmptm_rm_tcam_internal.h \
+                          include/bcmptm/bcmptm_rm_tcam_um_internal.h \
+                          include/bcmptm/bcmptm_rm_alpm_internal.h \
+                          include/bcmptm/bcmptm_scor_internal.h \
+                          include/bcmptm/bcmlrd_ptrm.h \
+                          include/bcmptm/bcmptm_rm_hash_internal.h \
+                          include/bcmptm/bcmptm_sysm.h \
+                          include/bcmptm/bcmptm_ser_internal.h \
+                          include/bcmptm/bcmptm_uft.h \
+                          include/bcmptm/bcmptm_uft_internal.h
+
+EXCLUDE                 = include/bcmptm/generated/bcmptm_ha.h \
+                          include/bcmptm/bcmptm_cci_internal.h \
+                          include/bcmptm/bcmptm_cci.h \
+                          include/bcmptm/bcmptm_rm_tcam_fp.h

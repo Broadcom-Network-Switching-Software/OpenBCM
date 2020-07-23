@@ -1,0 +1,237 @@
+BCM.0> init all
+BCM.0> cint /projects/ntsw-sw3/home/yveeraba/code/HEAD/MASTER/lt/hsdk2/src/examples/ltsw/trident4/l3/td4_hsdk_l3_ip_tunnel_ip6in4.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200217 (Mon Feb 17 09:26:07 2020)
+From sdkrel@lc-sj1-3803:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_4, BCM56880_A0_DNA_4_5_5
+     BCM56880_A0_DNA_4_5_6, BCM56880_A0_DNA_4_5_8, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+ingress_port_setup configured for ingress_port : 1
+egress_port_setup configured for egress_port : 2
+Completed test setup successfully.
+Completed configuration(i.e executing config_l3_tunnel_ip6in4()) successfully.
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 21 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 22 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+INTF  Flag       VRF   URPF_MODE INTF_CLASS QOS_MAP_ID
+-----------------------------------------------------------
+434   0x0          1     0         0         0
+
+435   0x0          1     0         0         0
+
+INTF  VID   MAC Address
+----------------------------------------------
+1     21    00:00:00:00:11:11  OverLay
+
+2     22    00:00:00:00:22:22  OverLay
+
+16386 22    00:00:00:00:22:22  UnderLay
+
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:00      2    -1 BlackHole     -1 16383    overlay  yes
+
+100002  00:00:00:00:00:01      1     1            0 16383    overlay   no
+
+100003  00:00:00:00:00:02      2     2            0 16383    overlay   no
+
+132769  00:00:00:00:00:02  16386     2            0     0   underlay   no
+
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+0       1        0000:0000:0000:0000:0000:0000:0000:0000/0 100001 0
+1       1        aa00:0000:0000:0000:0000:0000:0000:0000/120 100003 132769
+2       1        bb00:0000:0000:0000:0000:0000:0000:0000/120 100002 0
+
+Sending packet to access_port:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000001111} {000000000001} 8100 0015
+[bcmPWN.0]Packet[1]: data[0010]: 86dd 6030 0000 0006 3bff bb00 0000 0000
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0001 aa00 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0001 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 114c 3f26
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x501222
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=2
+        EFFECTIVE_TTL_7_0=0xff
+        L3_OIF_1_13_0=2
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0x1b2
+        L2_OIF_10_0=2
+        VFI_15_0=0x15
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_2_OR_ECMP_GROUP_INDEX_1_15_0=0x8001
+        NHOP_INDEX_1_15_0=3
+        INGRESS_QOS_REMAP_VALUE_15_0=3
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> IP version 6
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0042 21da 0000 0a29 6894 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0909 0909 6030 0000 0006 3bfe bb00
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 0001 aa00
+[bcmPWN.0]Packet[2]: data[0040]: 0000 0000 0000 0000 0000 0000 0001 0000
+[bcmPWN.0]Packet[2]: data[0050]: 0000 0000 114c 3f26
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x5c
+        SRC_PORT_NUM=2
+        SWITCH=1
+        MATCH_ID_LO=0xa22
+        MATCH_ID_HI=0x1404
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=2
+        SYSTEM_DESTINATION_15_0=0xf02
+        EFFECTIVE_TTL_7_0=0xa
+        INGRESS_PP_PORT_7_0=2
+        L3_IIF_13_0=0x1b3
+        VFI_15_0=0x16
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.10> dst<9.9.9.9> hl<5> service-type<0> tl<66> id<8666> frg-off<0> ttl<10> > chk-sum<0x6894>
+XLMIB_TBYT.cd0                        :                    72                 +72
+XLMIB_RBYT.cd0                        :                    72                 +72
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                    92                 +92
+XLMIB_RBYT.cd1                        :                    92                 +92
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+
+Sending packet to network_port:2
+Packet from data=<>, length=88
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000002222} {000000000002} 8100 0016
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0042 0000 0000 4029 546e 0909
+[bcmPWN.0]Packet[3]: data[0020]: 0909 0a0a 0a0a 6030 0000 0006 3bff aa00
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 0001 bb00
+[bcmPWN.0]Packet[3]: data[0040]: 0000 0000 0000 0000 0000 0000 0001 0000
+[bcmPWN.0]Packet[3]: data[0050]: 0000 0000 014b 4d98
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x5c
+        SRC_PORT_NUM=2
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0xa22
+        MATCH_ID_HI=0x1404
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=2
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=2
+        SYSTEM_DESTINATION_15_0=1
+        EFFECTIVE_TTL_7_0=0xff
+        L3_OIF_1_13_0=1
+        INGRESS_PP_PORT_7_0=2
+        L3_IIF_13_0=0x1b3
+        L2_OIF_10_0=1
+        VFI_15_0=0x16
+        TUNNEL_PROCESSING_RESULTS_1_3_0=3
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=2
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<9.9.9.9> dst<10.10.10.10> hl<5> service-type<0> tl<66> id<0> frg-off<0> ttl<64> > chk-sum<0x546e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000001} {000000001111} 8100 0015
+[bcmPWN.0]Packet[4]: data[0010]: 86dd 6030 0000 0006 3bfe aa00 0000 0000
+[bcmPWN.0]Packet[4]: data[0020]: 0000 0000 0000 0000 0001 bb00 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0001 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0040]: 014b 4d98
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        SWITCH=1
+        MATCH_ID_LO=0x501222
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=1
+        EFFECTIVE_TTL_7_0=0xfe
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0x1b2
+        L2_OIF_10_0=1
+        VFI_15_0=0x15
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        INGRESS_QOS_REMAP_VALUE_15_0=3
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> IP version 6
+UC_PERQ_PKT(0).cd0                    :                     1                  +1
+UC_PERQ_BYTE(0).cd0                   :                    72                 +72
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                    92                 +92
+bcm_error_t $$ = BCM_E_NONE (0)
+

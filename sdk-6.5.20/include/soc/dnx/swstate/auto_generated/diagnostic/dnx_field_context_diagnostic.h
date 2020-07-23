@@ -1,0 +1,327 @@
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+#ifndef __DNX_FIELD_CONTEXT_DIAGNOSTIC_H__
+#define __DNX_FIELD_CONTEXT_DIAGNOSTIC_H__
+
+#include <soc/dnxc/swstate/dnxc_sw_state_h_includes.h>
+#include <soc/dnxc/swstate/dnx_sw_state_dump.h>
+#include <soc/dnxc/swstate/dnx_sw_state_size.h>
+#include <soc/dnxc/swstate/dnx_sw_state_diagnostic_operation_counters.h>
+#include <soc/dnx/swstate/auto_generated/types/dnx_field_context_types.h>
+#include <include/soc/dnx/dbal/dbal_structures.h>
+#include <soc/dnxc/swstate/types/sw_state_string.h>
+#include <soc/dnx/swstate/auto_generated/types/dnx_field_types.h>
+#include <soc/dnx/swstate/auto_generated/types/dnx_field_key_types.h>
+#if defined(DNX_SW_STATE_DIAGNOSTIC)
+typedef enum {
+    DNX_FIELD_CONTEXT_SW_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_MODE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_IS_SET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_QUAL_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_LSB_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_TEMPLATE_KEY_SIZE_IN_BITS_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_FULL_KEY_ALLOCATED_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_BIT_RANGE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_VALID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_ATTACH_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_ATTACH_INFO_INPUT_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_ATTACH_INFO_INPUT_ARG_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_1_KEY_INFO_ATTACH_INFO_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_MODE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_IS_SET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_QUAL_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_LSB_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_TEMPLATE_KEY_SIZE_IN_BITS_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_FULL_KEY_ALLOCATED_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_BIT_RANGE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_VALID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_ATTACH_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_ATTACH_INFO_INPUT_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_ATTACH_INFO_INPUT_ARG_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_COMPARE_INFO_PAIR_2_KEY_INFO_ATTACH_INFO_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_MODE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_IS_SET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_QUAL_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_LSB_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_KEY_QUAL_MAP_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_TEMPLATE_KEY_SIZE_IN_BITS_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_ID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_FULL_KEY_ALLOCATED_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_BIT_RANGE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_VALID_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_KEY_ID_BIT_RANGE_BIT_RANGE_SIZE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_ATTACH_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_ATTACH_INFO_INPUT_TYPE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_ATTACH_INFO_INPUT_ARG_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF1_INFO_HASHING_INFO_KEY_INFO_ATTACH_INFO_OFFSET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF2_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_CONTEXT_IPMF2_INFO_CASCADED_FROM_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_STATE_TABLE_INFO_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_STATE_TABLE_INFO_MODE_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_STATE_TABLE_INFO_IS_SET_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_NAME_INFO,
+    DNX_FIELD_CONTEXT_SW_CONTEXT_INFO_NAME_VALUE_INFO,
+    DNX_FIELD_CONTEXT_SW_INFO_NOF_ENTRIES
+} sw_state_dnx_field_context_sw_layout_e;
+
+
+extern dnx_sw_state_diagnostic_info_t dnx_field_context_sw_info[SOC_MAX_NUM_DEVICES][DNX_FIELD_CONTEXT_SW_INFO_NOF_ENTRIES];
+
+extern const char* dnx_field_context_sw_layout_str[DNX_FIELD_CONTEXT_SW_INFO_NOF_ENTRIES];
+int dnx_field_context_sw_dump(
+    int unit, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_mode_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_is_set_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_key_qual_map_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_key_qual_map_qual_type_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_key_qual_map_lsb_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_key_qual_map_size_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_template_key_size_in_bits_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_id_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int id_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_full_key_allocated_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_bit_range_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_bit_range_bit_range_valid_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_bit_range_bit_range_offset_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_key_id_bit_range_bit_range_size_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_attach_info_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_attach_info_input_type_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_attach_info_input_arg_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_1_key_info_attach_info_offset_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_mode_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_is_set_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_key_qual_map_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_key_qual_map_qual_type_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_key_qual_map_lsb_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_key_qual_map_size_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_template_key_size_in_bits_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_id_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int id_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_full_key_allocated_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_bit_range_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_bit_range_bit_range_valid_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_bit_range_bit_range_offset_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_key_id_bit_range_bit_range_size_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_attach_info_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_attach_info_input_type_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_attach_info_input_arg_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_compare_info_pair_2_key_info_attach_info_offset_dump(
+    int unit, int context_info_idx_0, int key_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_mode_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_is_set_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_key_qual_map_dump(
+    int unit, int context_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_key_qual_map_qual_type_dump(
+    int unit, int context_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_key_qual_map_lsb_dump(
+    int unit, int context_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_key_qual_map_size_dump(
+    int unit, int context_info_idx_0, int key_qual_map_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_template_key_size_in_bits_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_id_dump(
+    int unit, int context_info_idx_0, int id_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_full_key_allocated_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_bit_range_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_bit_range_bit_range_valid_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_bit_range_bit_range_offset_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_key_id_bit_range_bit_range_size_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_attach_info_dump(
+    int unit, int context_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_attach_info_input_type_dump(
+    int unit, int context_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_attach_info_input_arg_dump(
+    int unit, int context_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf1_info_hashing_info_key_info_attach_info_offset_dump(
+    int unit, int context_info_idx_0, int attach_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf2_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_context_ipmf2_info_cascaded_from_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_state_table_info_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_state_table_info_mode_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_state_table_info_is_set_dump(
+    int unit, int context_info_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_name_dump(
+    int unit, int context_info_idx_0, int name_idx_0, dnx_sw_state_dump_filters_t filters);
+
+int dnx_field_context_sw_context_info_name_value_dump(
+    int unit, int context_info_idx_0, int name_idx_0, dnx_sw_state_dump_filters_t filters);
+
+#endif 
+
+#endif 

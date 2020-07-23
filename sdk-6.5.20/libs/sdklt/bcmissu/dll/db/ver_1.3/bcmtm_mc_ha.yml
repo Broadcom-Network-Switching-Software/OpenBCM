@@ -1,0 +1,152 @@
+#
+# file: bcmtm_mc_ha.yml
+# TM YAML file describing the HA data structures for BCMTM multicast.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    MAX_REPL_LIST_NHOP: 6
+    MAX_REPL_HEAD_COUNT: 147456
+    MAX_REPL_LIST_WORD_COUNT: 4609 #(MAX_REPL_HEAD_COUNT/WORD_SIZE) + 1
+    MAX_REPL_HEAD_WORD_COUNT: 4609 #(MAX_REPL_HEAD_COUNT/WORD_SIZE) + 1
+    MAX_REPL_GROUP_COUNT: 16384
+
+component:
+    bcmtm_mc:
+        bcmtm_mc_repl_head_info_t:
+            comment: Multicast replication head information table.
+            type: struct
+            fields:
+                index:
+                    type: int
+                    comment: Repl head index.
+                repl_count:
+                    type: uint32_t
+                    comment: Replication count.
+                port_agg_valid:
+                    type: bool
+                    comment: Port Agg ID valid.
+                port_agg_id:
+                    type: uint32_t
+                    comment: Port Aggregate ID.
+                mc_group_valid:
+                    type: bool
+                    comment: MC Group ID valid.
+                mc_group_id:
+                    type: uint32_t
+                    comment: MC group id.
+                repl_chain:
+                    type: uint32_t
+                    comment: Repl List Info chain.
+                num_cfg_repl:
+                    type: int
+                    comment: Maximum number of configured replication per index.
+                prev_shared_head:
+                    type: int
+                    comment: Previous head ID sharing the replication chain.
+                next_shared_head:
+                    type: int
+                    comment: Next head ID sharing the replication chain.
+        bcmtm_mc_repl_list_entry_t:
+            comment: Multicast replication list entry.
+            type: struct
+            fields:
+                entry_ptr:
+                    type: int
+                    comment: The current index.
+                sparse_mode:
+                    type: bool
+                    comment: Sparse Mode.
+                nhop:
+                    type: uint32_t
+                    comment: Lower 64 NHOP bitmap for the entry.
+                    length: MAX_REPL_LIST_NHOP
+                msb:
+                    type: uint32_t
+                    comment: MSB in multiples of 64.
+                mode_bitmap:
+                    type: uint32_t
+                    comment: Sparse mode bitmap.
+                remaining_reps:
+                    type: int
+                    comment: Remaining replication count. Invalid during a get operation.
+                next_ptr:
+                    type: int
+                    comment: Next index in the chain.
+
+        bcmtm_repl_list_chain_t:
+            comment: Multicast replication list chain.
+            type: struct
+            fields:
+                start_ptr:
+                    type: int
+                    comment: Repl List start ptr.
+                ref_count:
+                    type: int
+                    comment: Reference count per Repl list chain.
+                hash:
+                    type: uint32_t
+                    comment: Hash value of all NHOP IDs in this repl list chain.
+                prev:
+                    type: uint32_t
+                    comment: Previous replication list chain
+                next:
+                    type: uint32_t
+                    comment: Next replication list chain.
+                prev_shared_head:
+                    type: uint32_t
+                    comment: Previous shared head using this replication list.
+                num_list_used:
+                    type: uint32_t
+                    comment: Number of list used for the chain.
+
+        bcmtm_mc_dev_info_t:
+            comment: Multicast device information.
+            type: struct
+            fields:
+                max_mc_nhop:
+                    type: int
+                    comment: Max Next Hop indices (EGR_L3_NEXT_HOP).
+                max_repl_head:
+                    type: int
+                    comment: Max Repl Head entries (REPL_HEAD_INFO).
+                active_list_chain:
+                    type: uint32_t
+                    comment: List of active Repl list chains.
+                recycle_list_chain:
+                    type: uint32_t
+                    comment: List of recycled Repl list chains.
+                free_list_chain:
+                    type: uint32_t
+                    comment: List of free Repl list chains.
+                recycle_list_size:
+                    type: int
+                    comment: Size of the recycle list.
+                repl_chain_alloc_entries:
+                    type: int
+                    comment: Number of entries allocated in the Repl List chain block.
+                repl_chain_initial_use_count:
+                    type: int
+                    comment: Count of initial list of chains in use. Once it is exhausted, free chains should be derived from free_list_chain.
+                used_list_bmp:
+                    type: uint32_t
+                    length: MAX_REPL_LIST_WORD_COUNT
+                    comment: Used Replication list entries bitmap.
+                head_info_list:
+                    type: bcmtm_mc_repl_head_info_t
+                    length: MAX_REPL_HEAD_COUNT
+                    comment: Array of Repl Head information.
+                nhops_per_repl_index:
+                    type: int
+                    comment: No of nexthops that can be programmed in on repl_list table index.
+                repl_count_mc_grp:
+                    type: int
+                    comment: Maximum replication count for a mc group.
+                    length: MAX_REPL_GROUP_COUNT
+                max_packet_replications:
+                    type: int
+                    comment: Maximum number of replication for a multicast group ID.

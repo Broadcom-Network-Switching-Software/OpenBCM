@@ -1,0 +1,368 @@
+BCM.0> init all
+BCM.0> cint /projects/ntsw-sw3/home/yveeraba/code/HEAD/MASTER/lt/hsdk2/src/examples/ltsw/trident4/l3/td4_hsdk_l3_ip_ecmp_host.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200217 (Mon Feb 17 09:26:07 2020)
+From sdkrel@lc-sj1-3803:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_4, BCM56880_A0_DNA_4_5_5
+     BCM56880_A0_DNA_4_5_6, BCM56880_A0_DNA_4_5_8, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+~~~ #1) test_setup(): ** start **
+ingress_port_setup configured for ingress_port : 1
+egress_port_setup configured for egress_port : 2
+egress_port_setup configured for egress_port : 3
+egress_port_setup configured for egress_port : 4
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_ip_ecmp(): ** start **
+int ecmp_obj_out = 200001 (0x30d41)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+~~~ #2) config_ip_ecmp(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 11 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 12 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 13 ports cd2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000008), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 14 ports cd3 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000010), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+INTF  Flag       VRF   URPF_MODE INTF_CLASS QOS_MAP_ID
+-----------------------------------------------------------
+10    0x0          1     0         0         0
+
+INTF  VID   MAC Address
+----------------------------------------------
+100   11    00:00:00:00:00:01  OverLay
+
+200   12    00:00:00:00:00:02  OverLay
+
+300   13    00:00:00:00:00:03  OverLay
+
+400   14    00:00:00:00:00:04  OverLay
+
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:11    100     1            0  1500    overlay   no
+
+100002  00:00:00:00:00:22    200     2            0  1500    overlay   no
+
+100003  00:00:00:00:00:33    300     3            0  1500    overlay   no
+
+100004  00:00:00:00:00:44    400     4            0  1500    overlay   no
+
+ECMP group 200001(OverLay):
+        Dynamic mode 0, Flags 0x8, Max path 64
+        Interfaces: (member count 3)
+        {100002} {100003} {100004}
+     VRF Net Addr            INTF UL_INTF
+--------------------------------------------
+0    1    10.10.10.10         200001 0
+
+IP PKT SMAC=0xa1 SIP=20.20.20.21
+
+Sending IPv4 unicast packet to ingress_port : 1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000001} {0000000000a1} 8100 000b
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 3d95 1414
+[bcmPWN.0]Packet[1]: data[0020]: 1415 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 9951 bab9
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0x40
+        L3_OIF_1_13_0=0x12c
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0xa
+        L2_OIF_10_0=3
+        VFI_15_0=0xb
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=3
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:a1> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<20.20.20.21> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3d95>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000033} {000000000003} 8100 000d
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 3fff 3e95 1414
+[bcmPWN.0]Packet[2]: data[0020]: 1415 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0040]: 9951 bab9
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=3
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=3
+        SYSTEM_DESTINATION_15_0=0xf03
+        EFFECTIVE_TTL_7_0=0x3f
+        INGRESS_PP_PORT_7_0=3
+        VFI_15_0=0xd
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:33> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x000d> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.21> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x3e95>
+XLMIB_TBYT.cd0                        :                    72                 +72
+XLMIB_RBYT.cd0                        :                    72                 +72
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd2                        :                    72                 +72
+XLMIB_RBYT.cd2                        :                    72                 +72
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T127.cd2                        :                     1                  +1
+XLMIB_R127.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+UC_PERQ_PKT(0).cd2                    :                     1                  +1
+UC_PERQ_BYTE(0).cd2                   :                    72                 +72
+
+IP PKT SMAC=0xa2 SIP=20.20.20.101
+
+Sending IPv4 unicast packet to ingress_port : 1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000001} {0000000000a2} 8100 000b
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 40ff 3d45 1414
+[bcmPWN.0]Packet[3]: data[0020]: 1465 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0040]: 5453 1a65
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=4
+        EFFECTIVE_TTL_7_0=0x40
+        L3_OIF_1_13_0=0x190
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0xa
+        L2_OIF_10_0=4
+        VFI_15_0=0xb
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=4
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:a2> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<20.20.20.101> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3d45>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000044} {000000000004} 8100 000e
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 3fff 3e45 1414
+[bcmPWN.0]Packet[4]: data[0020]: 1465 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0040]: 5453 1a65
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=4
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        DROP_CODE_15_0=0x1818
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=4
+        SYSTEM_DESTINATION_15_0=0xf04
+        EFFECTIVE_TTL_7_0=0x3f
+        INGRESS_PP_PORT_7_0=4
+        VFI_15_0=0xe
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:44> src<00:00:00:00:00:04> Tagged Packet ProtID<0x8100> Ctrl<0x000e> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<20.20.20.101> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x3e45>
+XLMIB_TBYT.cd0                        :                   144                 +72
+XLMIB_RBYT.cd0                        :                   144                 +72
+XLMIB_TPOK.cd0                        :                     2                  +1
+XLMIB_RPOK.cd0                        :                     2                  +1
+XLMIB_TVLN.cd0                        :                     2                  +1
+XLMIB_RVLN.cd0                        :                     2                  +1
+XLMIB_TUCA.cd0                        :                     2                  +1
+XLMIB_RUCA.cd0                        :                     2                  +1
+XLMIB_TPKT.cd0                        :                     2                  +1
+XLMIB_RPKT.cd0                        :                     2                  +1
+XLMIB_T127.cd0                        :                     2                  +1
+XLMIB_R127.cd0                        :                     2                  +1
+XLMIB_RPRM.cd0                        :                     2                  +1
+XLMIB_TBYT.cd3                        :                    72                 +72
+XLMIB_RBYT.cd3                        :                    72                 +72
+XLMIB_TPOK.cd3                        :                     1                  +1
+XLMIB_RPOK.cd3                        :                     1                  +1
+XLMIB_TVLN.cd3                        :                     1                  +1
+XLMIB_RVLN.cd3                        :                     1                  +1
+XLMIB_TUCA.cd3                        :                     1                  +1
+XLMIB_RUCA.cd3                        :                     1                  +1
+XLMIB_TPKT.cd3                        :                     1                  +1
+XLMIB_RPKT.cd3                        :                     1                  +1
+XLMIB_T127.cd3                        :                     1                  +1
+XLMIB_R127.cd3                        :                     1                  +1
+XLMIB_RPRM.cd3                        :                     1                  +1
+UC_PERQ_PKT(0).cd3                    :                     1                  +1
+UC_PERQ_BYTE(0).cd3                   :                    72                 +72
+
+IP PKT SMAC=0xa3 SIP=20.20.20.23
+
+Sending IPv4 unicast packet to ingress_port : 1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000001} {0000000000a3} 8100 000b
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 40ff 3d93 1414
+[bcmPWN.0]Packet[5]: data[0020]: 1417 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0040]: ca9a 1395
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0x500a22
+        MPB_FLEX_DATA_TYPE=5
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        EFFECTIVE_TTL_7_0=0x40
+        L3_OIF_1_13_0=0x12c
+        INGRESS_PP_PORT_7_0=1
+        L3_IIF_13_0=0xa
+        L2_OIF_10_0=3
+        VFI_15_0=0xb
+        SYSTEM_OPCODE_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        NHOP_INDEX_1_15_0=3
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:a3> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<20.20.20.23> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3d93>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000033} {000000000003} 8100 000d
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 3fff 3e93 1414
+[bcmPWN.0]Packet[6]: data[0020]: 1417 0a0a 0a0a 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[6]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[6]: data[0040]: ca9a 1395
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT3
+        VFI_15_0=0xd
+        SYSTEM_OPCODE_3_0=3
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:00:33> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x000d> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<20.20.20.23> dst<10.10.10.10> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x3e93>
+XLMIB_TBYT.cd0                        :                   216                 +72
+XLMIB_RBYT.cd0                        :                   216                 +72
+XLMIB_TPOK.cd0                        :                     3                  +1
+XLMIB_RPOK.cd0                        :                     3                  +1
+XLMIB_TVLN.cd0                        :                     3                  +1
+XLMIB_RVLN.cd0                        :                     3                  +1
+XLMIB_TUCA.cd0                        :                     3                  +1
+XLMIB_RUCA.cd0                        :                     3                  +1
+XLMIB_TPKT.cd0                        :                     3                  +1
+XLMIB_RPKT.cd0                        :                     3                  +1
+XLMIB_T127.cd0                        :                     3                  +1
+XLMIB_R127.cd0                        :                     3                  +1
+XLMIB_RPRM.cd0                        :                     3                  +1
+XLMIB_TBYT.cd2                        :                   144                 +72
+XLMIB_RBYT.cd2                        :                   144                 +72
+XLMIB_TPOK.cd2                        :                     2                  +1
+XLMIB_RPOK.cd2                        :                     2                  +1
+XLMIB_TVLN.cd2                        :                     2                  +1
+XLMIB_RVLN.cd2                        :                     2                  +1
+XLMIB_TUCA.cd2                        :                     2                  +1
+XLMIB_RUCA.cd2                        :                     2                  +1
+XLMIB_TPKT.cd2                        :                     2                  +1
+XLMIB_RPKT.cd2                        :                     2                  +1
+XLMIB_T127.cd2                        :                     2                  +1
+XLMIB_R127.cd2                        :                     2                  +1
+XLMIB_RPRM.cd2                        :                     2                  +1
+UC_PERQ_PKT(0).cd2                    :                     2                  +1
+UC_PERQ_BYTE(0).cd2                   :                   144                 +72
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

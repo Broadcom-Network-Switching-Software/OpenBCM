@@ -1,0 +1,76 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Hash Output Selection RC (run commands) file
+#
+#       These are default commands that are for TechSupport Hash Output Selection.
+#
+
+# Show Hash Output Selection related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Hash Output Selection instance related LTs.
+local lt LB_HASH_PKT_HDR_SELECTION;                               $traverse_lt;
+local lt LB_HASH_L2_FIELDS_SELECTION;                             $traverse_lt;
+local lt LB_HASH_TUNNEL_FIELDS_SELECTION;                         $traverse_lt;
+local lt LB_HASH_PORT_DLB_ECMP_OUTPUT_SELECTION;                  $traverse_lt;
+local lt LB_HASH_FLOW_DLB_ECMP_OUTPUT_SELECTION;                  $traverse_lt;
+local lt LB_HASH_PORT_TRUNK_OUTPUT_SELECTION;                     $traverse_lt;
+local lt LB_HASH_IPV4_TCP_UDP_PORTS_EQUAL_FIELDS_SELECTION;       $traverse_lt;
+local lt LB_HASH_FLOW_LBID_OR_ENTROPY_LABEL_OUTPUT_SELECTION;     $traverse_lt;
+local lt LB_HASH_FLEX_FIELDS_SELECTION;                           $traverse_lt;
+local lt LB_HASH_L3MPLS_PAYLOAD_FIELDS_SELECTION;                 $traverse_lt;
+local lt LB_HASH_FLOW_ECMP_OUTPUT_SELECTION;                      $traverse_lt;
+local lt LB_HASH_PORT_RH_ECMP_OUTPUT_SELECTION;                   $traverse_lt;
+local lt LB_HASH_PORT_ENTROPY_LABEL_OUTPUT_SELECTION;             $traverse_lt;
+local lt LB_HASH_IPV6_COLLAPSE_SELECTION;                         $traverse_lt;
+local lt LB_HASH_IPV6_TCP_UDP_PORTS_EQUAL_FIELDS_SELECTION;       $traverse_lt;
+local lt LB_HASH_IPV4_TCP_UDP_FIELDS_SELECTION;                   $traverse_lt;
+local lt LB_HASH_FLOW_ID_SELECTION;                               $traverse_lt;
+local lt LB_HASH_FLOW_TRUNK_OUTPUT_SELECTION;                     $traverse_lt;
+local lt LB_HASH_PORT_PLFS_OUTPUT_SELECTION;                      $traverse_lt;
+local lt LB_HASH_IPV4_FIELDS_SELECTION;                           $traverse_lt;
+local lt LB_HASH_PORT_L3_ECMP_OUTPUT_SELECTION;                   $traverse_lt;
+local lt LB_HASH_VXLAN_L2_PAYLOAD_FIELDS_SELECTION;               $traverse_lt;
+local lt LB_HASH_IPV6_FIELDS_SELECTION;                           $traverse_lt;
+local lt LB_HASH_IPV6_TCP_UDP_FIELDS_SELECTION;                   $traverse_lt;
+local lt LB_HASH_VXLAN_L3_PAYLOAD_FIELDS_SELECTION;               $traverse_lt;
+local lt LB_HASH_TNL_MPLS_TRANSIT_FIELDS_SELECTION;               $traverse_lt;
+local lt LB_HASH_PORT_MPLS_ECMP_OUTPUT_SELECTION;                 $traverse_lt;
+
+# Related switch controls.
+if $?1 " \
+local sctrl ECMPMplsHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl EcmpResilientHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl ECMPWeightedHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl EcmpDynamicHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl TrunkFailoverHashOffset; echo scn pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+" \
+else " \
+local sctrl HashUseFlowSelTrunkUc; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelEcmp; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelMplsEcmp; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelTrunkNonUnicast; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelEntropy; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelEcmpWeighted; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowLoadBalanceHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpUnderlayHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpDynamicHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpWeightedHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowLoadBalanceHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpUnderlayHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpDynamicHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpWeightedHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowLoadBalanceHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpUnderlayHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpDynamicHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowEcmpWeightedHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+"

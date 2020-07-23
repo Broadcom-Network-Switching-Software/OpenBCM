@@ -1,0 +1,104 @@
+/*! \page ha_mem HA Memory Management
+
+\section ha_mem_intro Introduction
+
+In order to support warm-boot and ISSU (In-Service Software Upgrade),
+the SDK needs to store large amounts of data in some form of
+non-volatile memory, which will survive a restart of the application,
+and optionally a restart of the entire system.
+
+Each device has its own HA memory manager instance, i.e. HA memory is
+not shared between devices, except for a special 'generic' HA memory
+manager instance, which is used for HA memory allocations that are not
+tied to a specific unit.
+
+Please refer to bcmha_mem.h for the complete HA memory API reference.
+
+\section ha_mem_init Initialization
+
+An HA memory manager instance is created by calling \ref
+bcmha_mem_init, which takes the following paramters:
+
+ - A unit number (use -1 or \ref BCMHA_GEN_UNIT for the generic HA
+   memory manager instance).
+
+ - A callback function for allocating HA memory pools.
+
+ - An optional callback for releasing HA memory pools.
+
+ - A context pointer, which will provided with each callback.
+
+ - An initial HA memory pool (if warm-booting).
+
+ - The size of of the initial HA memory pool.
+
+The application must initialize the generic HA memory manager instance
+followed by a device-specific HA memory manager instance for each
+device, which has been probed and added to the Device Resource
+Database (DRD).
+
+\section ha_mem_alloc Allocation Callback
+
+The HA memory pool allocation callback will be invoked at least once
+during a cold-boot initialization sequence. If the HA memory manager
+runs out of HA memory, the allocation callback will be invoked again.
+
+Note that during a cold-boot, the initial HA memory pool size
+parameter will be used as a hint for the size of the first HA memory
+pool allocation.
+
+\section ha_mem_shutdown Shutdown
+
+After a device is detached, the application must call the \ref
+bcmha_mem_cleanup API to release all resources associated with the HA
+memory manager instance for this device. If the optional HA memory
+pool release callback was provided during initialization, it will now
+be invoked for each allocated HA memory pool, including the initial
+pool (if system was warm-booted).
+
+If the entire system is shut down, \ref bcmha_mem_cleanup must also be
+called for the generic HA memory manager instance (\ref
+BCMHA_GEN_UNIT).
+
+\section ha_mem_warmboot Warm-boot Initialization
+
+When warm-booting, the application must once again call \ref
+bcmha_mem_init, but for warm-boot it is manadatory to provide a
+pointer to the consolidated HA memory pool of the previous run.
+
+Note that it is the responsibility of the application to ensure that
+all HA memory pools for a given HA memory manager instance is
+consolidated into a single consecutive block of HA memory.
+
+For example, if a cold-boot run resulted in three allocation callbacks
+for a given device like this:
+
+\image html pool_alloc.png
+
+Depending on the implementation, the HA memory map could in theory
+look like below, when the system is shut down:
+
+\image html non_contiguous.png
+
+Before the same device can be warm-booted, the HA memory pools must be
+consolidated into a single consecutive HA memory pool:
+
+\image html pool_warmboot.png
+
+\section ha_mem_example Example Implementation
+
+The SDK application helper component (BCMA) contains a sample
+implementation of the HA memory manager callbacks based on the POSIX
+\c shm API, a.k.a. POSIX shared files.
+
+The sample implementation uses a separate shared file for each HA
+memory manager instance, and for each HA memory pool callback request,
+the shared file is extended in size, and the newly added file segment
+is mapped as a separate HA memory pool. This approach ensures that
+multiple HA memory pools can easily be remapped as a single
+consecutive HA memory pool, if the system is warm-booted.
+
+Please refer to the \c bcma_ha_init_all API for a convenient way to
+initialize all HA memory in a single function call.
+
+*/

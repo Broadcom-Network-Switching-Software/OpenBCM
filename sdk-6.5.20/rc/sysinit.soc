@@ -1,0 +1,35 @@
+#
+# $Id$
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# sysinit.soc
+#
+# This file is optional.  For VxWorks, it normally resides in
+# flash:sysinit.soc, and is activated by setting the value of the
+# "boot script" boot ROM parameter to "flash:sysinit.soc".
+#
+# If activated, sysinit.soc is executed a single time when the BCM
+# image boots, before the rc.soc file is loaded on each unit.
+#
+# See below for sample contents (must be customized per installation).
+# A typical use is to make host table entries, NFS mounts, and/or change
+# the SAL home directory (see $SDK/doc/NFS.txt for more info).
+#
+
+host add fs-sj1-20 10.16.128.50
+host add fs-sj1-35 10.16.128.65
+host add fs-sj1-07 10.16.128.37
+host add fs-sj1-15 10.16.128.45
+nfs auth fs-sj1-35 10011 20
+nfs auth fs-sj1-20 10012 20
+nfs auth fs-sj1-07 4059 20
+nfs auth fs-sj1-15 4059 20
+nfs mount fs-sj1-35:/vol/vol3/ntsw-labguy /home/labguy
+#nfs mount fs-sj1-20:/vol/vol2/home2/sdk /home/sdk
+nfs mount fs-sj1-07:/vol/vol6/ntsw-sw2 /projects/ntsw-sw2
+nfs mount fs-sj1-15:/vol/vol0/ntsw-sw /projects/ntsw-sw
+cd -sethome /home/sdk
+

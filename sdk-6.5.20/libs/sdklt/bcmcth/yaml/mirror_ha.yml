@@ -1,0 +1,69 @@
+#
+# file: mirror_ha.yml
+# MIRROR YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    BCMCTH_MIRROR_INSTANCE_MAX: 16
+    BCMCTH_MIRROR_FLEXHDR_SIZE_WORD: 20
+
+component:
+    bcmcth_mirror:
+        bcmcth_mirror_encap_type_t:
+            comment: Mirror encapsulation type.
+            type: enum
+            fields:
+                BCMCTH_MIRROR_ENCAP_NONE: 0
+                BCMCTH_MIRROR_ENCAP_BASIC: 1
+                BCMCTH_MIRROR_ENCAP_RSPAN: 2
+                BCMCTH_MIRROR_ENCAP_ERSPAN: 3
+                BCMCTH_MIRROR_ENCAP_ERSPAN_IPV6: 4
+                BCMCTH_MIRROR_ENCAP_PSAMP: 5
+                BCMCTH_MIRROR_ENCAP_PSAMP_IPV6: 6
+                BCMCTH_MIRROR_ENCAP_PSAMP_METADATA: 7
+                BCMCTH_MIRROR_ENCAP_PSAMP_METADATA_IPV6: 8
+                BCMCTH_MIRROR_ENCAP_SFLOW: 9
+                BCMCTH_MIRROR_ENCAP_SFLOW_IPV6: 10
+                BCMCTH_MIRROR_ENCAP_SFLOW_SEQ: 11
+                BCMCTH_MIRROR_ENCAP_SFLOW_SEQ_IPV6: 12
+                BCMCTH_MIRROR_ENCAP_MIRROR_ON_DROP: 13
+                BCMCTH_MIRROR_ENCAP_MIRROR_ON_DROP_IPV6: 14
+                BCMCTH_MIRROR_ENCAP_VXLAN: 15
+                BCMCTH_MIRROR_ENCAP_VXLAN_IPV6: 16
+                BCMCTH_MIRROR_ENCAP_IFA_1_PROBE: 17
+                BCMCTH_MIRROR_ENCAP_TYPE_COUNT: 18
+        bcmcth_mirror_encap_state_t:
+            type: struct
+            fields:
+                type:
+                    type: bcmcth_mirror_encap_type_t
+                    length: BCMCTH_MIRROR_INSTANCE_MAX
+                    comment: Mirror encap type.
+        bcmcth_mirror_flexhdr_data_buffer_t:
+            type: struct
+            fields:
+                data:
+                    type: uint32_t
+                    length: BCMCTH_MIRROR_FLEXHDR_SIZE_WORD
+                    comment: Maximum flexhdr data buffer.
+        bcmcth_mirror_flexhdr_state_t:
+            type: struct
+            fields:
+                flexhdr_encap:
+                    type: bool
+                    length: BCMCTH_MIRROR_INSTANCE_MAX
+                    comment: Enable to insert flexhdr ahead of mirror encapsulation header.
+                flexhdr_size:
+                    type: uint32_t
+                    length: BCMCTH_MIRROR_INSTANCE_MAX
+                    comment: Size of flexhdr data buffer.
+                flexhdr:
+                    type: bcmcth_mirror_flexhdr_data_buffer_t
+                    length: BCMCTH_MIRROR_INSTANCE_MAX
+                    comment: Flexhdr data buffer.
+

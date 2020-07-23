@@ -1,0 +1,16 @@
+#
+# $Id: dnx_sku.soc,v 1.90 2019/09/02 08:32:00 Asher Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+if $?BCM_JR2_DEV\
+    'rcload dnx_sku/jer2_sku.soc; exit'
+
+if $?BCM_J2C_DEV\
+    'rcload dnx_sku/j2c_sku.soc; exit'
+
+if $?BCM_Q2A_DEV\
+    'rcload dnx_sku/q2a_sku.soc; rcload dnx_sku/q2u_sku.soc; exit'

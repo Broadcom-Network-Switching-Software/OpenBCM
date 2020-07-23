@@ -1,0 +1,66 @@
+
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_MAX_SNIF_H_
+
+#define _DNX_DATA_MAX_SNIF_H_
+
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX (JR2) family only!"
+#endif
+
+
+
+#define DNX_DATA_MAX_SNIF_GENERAL_CUD_TYPE (2)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_NOF_PROFILES (32)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_MIRROR_NOF_PROFILES (16)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_NOF_MIRROR_ON_DROP_PROFILES (8)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_MIRROR_NOF_VLAN_PROFILES (6)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_MIRROR_DEFAULT_TAGGED_PROFILE (6)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_MIRROR_UNTAGGED_PROFILES (7)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_PROB_MAX_VAL (16777215)
+
+
+#define DNX_DATA_MAX_SNIF_INGRESS_CROP_SIZE (256)
+
+
+#define DNX_DATA_MAX_SNIF_EGRESS_MIRROR_SNOOP_NOF_PROFILES (8)
+
+
+#define DNX_DATA_MAX_SNIF_EGRESS_MIRROR_NOF_VLAN_PROFILES (7)
+
+
+#define DNX_DATA_MAX_SNIF_EGRESS_MIRROR_DEFAULT_PROFILE (7)
+
+
+#define DNX_DATA_MAX_SNIF_EGRESS_PROB_MAX_VAL (0)
+
+
+#define DNX_DATA_MAX_SNIF_EGRESS_CROP_SIZE (128)
+
+
+
+
+#endif 
+

@@ -1,0 +1,90 @@
+<<<<<<<<<<<<<<<<below parts are log of other cosq control related APIs>>>>>>>>>>>>>>>>>
+BCM.0> c cosq_control_misc.c
+** error: bad initializer
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20190821 (Wed Aug 21 01:07:48 2019)
+From sg944605@xl-sj1-32:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56990_A0_BASE, BCM56880_A0_BASE, BCM56880_A0_DNA_4_3_3
+     BCM56880_A0_DNA_4_4_1, BCM56880_A0_DNA_4_4_6, BCM56880_A0_DNA_4_4_7, BCM56880_A0_IDNA_4_4_3
+     BCM56880_A0_IDNA_4_4_7
+cosq_control_misc_test() started.
+service_pool_test() started.
+service_pool_test() end.
+priority_group_mapping_profile_test() started.
+priority_group_mapping_profile_test() end.
+service_pool_override_test() started.
+service_pool_override_test() end.
+port_priority_group_property_test() started.
+***port_priority_group_property_test for type: bcmCosqPriorityGroupLossless=***
+***port_priority_group_property_test for type: bcmCosqPauseEnable=***
+port_priority_group_property_test() end.
+buffer_id_get_test() started.
+***buffer_id_get_test for direction: bcmCosqIngress=***
+Ingress buffer id of port 1, cosq 2 is: 0, -1
+***buffer_id_get_test for direction: bcmCosqEgress=***
+Egress buffer id of port 1, cosq 2 is: 0, 1
+buffer_id_get_test() end.
+profile_info_portlist_get_test() started.
+***profile_info_portlist_get_test for type: bcmCosqProfilePFCAndQueueHierarchy***
+port_count 72
+port list:
+   1,   2,   3,   4,  17,  18,  19,  20,  33,  34,  35,  36,  37,  51,  52,  53,  54,  67,  68,  69,
+  70,  71,  85,  86,  87,  88, 101, 102, 103, 104, 105, 119, 120, 121, 122, 135, 136, 137, 138, 139,
+ 153, 154, 155, 156, 169, 170, 171, 172, 173, 187, 188, 189, 190, 203, 204, 205, 206, 207, 221, 222,
+ 223, 224, 237, 238, 239, 240, 241, 255, 256, 257, 258, 271,
+
+***profile_info_portlist_get_test for type: bcmCosqProfilePGProperties***
+port_count 72
+port list:
+   1,   2,   3,   4,  17,  18,  19,  20,  33,  34,  35,  36,  37,  51,  52,  53,  54,  67,  68,  69,
+  70,  71,  85,  86,  87,  88, 101, 102, 103, 104, 105, 119, 120, 121, 122, 135, 136, 137, 138, 139,
+ 153, 154, 155, 156, 169, 170, 171, 172, 173, 187, 188, 189, 190, 203, 204, 205, 206, 207, 221, 222,
+ 223, 224, 237, 238, 239, 240, 241, 255, 256, 257, 258, 271,
+
+***profile_info_portlist_get_test for type: bcmCosqProfilePGProperties***
+port_count 72
+port list:
+   1,   2,   3,   4,  17,  18,  19,  20,  33,  34,  35,  36,  37,  51,  52,  53,  54,  67,  68,  69,
+  70,  71,  85,  86,  87,  88, 101, 102, 103, 104, 105, 119, 120, 121, 122, 135, 136, 137, 138, 139,
+ 153, 154, 155, 156, 169, 170, 171, 172, 173, 187, 188, 189, 190, 203, 204, 205, 206, 207, 221, 222,
+ 223, 224, 237, 238, 239, 240, 241, 255, 256, 257, 258, 271,
+
+***profile_info_portlist_get_test for type: bcmCosqProfileIntPriToPGMap***
+port_count 72
+port list:
+   1,   2,   3,   4,  17,  18,  19,  20,  33,  34,  35,  36,  37,  51,  52,  53,  54,  67,  68,  69,
+  70,  71,  85,  86,  87,  88, 101, 102, 103, 104, 105, 119, 120, 121, 122, 135, 136, 137, 138, 139,
+ 153, 154, 155, 156, 169, 170, 171, 172, 173, 187, 188, 189, 190, 203, 204, 205, 206, 207, 221, 222,
+ 223, 224, 237, 238, 239, 240, 241, 255, 256, 257, 258, 271,
+
+profile_info_portlist_get_test() end.
+profile_info_inuse_get_test() started.
+***profile_info_inuse_get_test for type: bcmCosqProfilePFCAndQueueHierarchy***
+Profile 0 is in use
+***profile_info_inuse_get_test for type: bcmCosqProfilePGProperties***
+Profile 0 is in use
+***profile_info_inuse_get_test for type: bcmCosqProfilePGProperties***
+Profile 0 is in use
+***profile_info_inuse_get_test for type: bcmCosqProfileIntPriToPGMap***
+Profile 0 is in use
+profile_info_inuse_get_test() end.
+profile_property_dynamic_get_test() started.
+***profile_property_dynamic_get_test for type: bcmCosqProfilePFCAndQueueHierarchy***
+Profile type is: bcmCosqDynamicTypeConditional
+***profile_property_dynamic_get_test for type: bcmCosqProfilePGProperties***
+Profile type is: bcmCosqDynamicTypeFixed
+***profile_property_dynamic_get_test for type: bcmCosqProfilePGProperties***
+Profile type is: bcmCosqDynamicTypeFixed
+***profile_property_dynamic_get_test for type: bcmCosqProfileIntPriToPGMap***
+Profile type is: bcmCosqDynamicTypeFlexible
+profile_property_dynamic_get_test() end.
+cpu_cosq_enable_test() started.
+cpu_cosq_enable_test() end.
+cosq_control_misc_test() end.
+bcm_error_t $$ = BCM_E_NONE (0)

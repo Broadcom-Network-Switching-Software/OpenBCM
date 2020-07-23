@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<!-- This XML file is for 88821 SKU Dynamic DNX DATA -->
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <numerics>
+                <numeric name="max_nof_fap_ids_per_core" value="4"></numeric>
+                <numeric name="device_id" value="0x8821"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="port">
+        <sub_module name="general">
+
+            <numerics>
+                <numeric name="nof_tm_ports" value="1024"></numeric>
+                <numeric name="nof_pp_ports" value="1024"></numeric>
+                <numeric name="reserved_tm_port" value="1022"></numeric>
+                <numeric name="nof_vlan_membership_if" value="1024"></numeric>
+                <numeric name="max_vlan_membership_if" value="1023"></numeric>
+            </numerics>
+
+        <defines>
+        </defines>
+
+        </sub_module>
+
+        <sub_module name="static_add">
+            <tables>
+                <table name="fabric_quad_info">
+                    <value name="quad_enable" default="0"></value>
+                </table>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="access">
+        <sub_module name="blocks">
+            <tables>
+                <table name="override">
+                    <entries>
+                        <entry index="0" block_type="ILE" block_instance="0" value="1"></entry>
+                        <entry index="1" block_type="ILE" block_instance="2" value="1"></entry>
+                        <entry index="2" block_type="ILU" block_instance="0" value="1"></entry>
+                        <entry index="3" block_type="ILU" block_instance="2" value="1"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+     </module>
+
+     <module name="fabric">
+         <sub_module name="general">
+
+            <features>
+                <feature name="blocks_exist" value="1"></feature>
+            </features>
+
+            <numerics>
+                <numeric name="connect_mode" value="DNX_FABRIC_NOF_CONNECT_MODES">
+                    <property name="fabric_connect_mode" method="direct_map">
+                        <map name="SINGLE_FAP"></map>
+                    </property>
+                </numeric>
+            </numerics>
+        </sub_module>
+
+        <sub_module name="links">
+            <defines>
+                <define name="nof_links" value="0"></define>
+            </defines>
+
+        </sub_module>
+
+        <sub_module name="blocks">
+            <defines>
+                <define name="nof_pms" value="0"></define>
+            </defines>
+         </sub_module>
+     </module>
+
+     <module name="mdb">
+        <sub_module name="dh">
+            <features>
+                <feature name="macro_A_75_nof_clusters_enable" value="1"></feature>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+     </module>
+
+     <module name="nif">
+        <sub_module name="ilkn">
+
+            <defines>
+                <define name="is_nif_56G_speed_supported" value="0"></define>
+                <define name="is_fabric_56G_speed_supported" value="0"></define>
+            </defines>
+
+            <tables>
+                <table name="ilkn_cores">
+                    <entries>
+                        <entry ilkn_core_id="0" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="1" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="2" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="3" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="4" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="5" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="6" is_elk_supported="0" is_data_supported="1" fec_disable_by_bypass="1"></entry>
+                        <entry ilkn_core_id="7" is_elk_supported="0" is_data_supported="1" fec_disable_by_bypass="1"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+     </module>
+</device_data>

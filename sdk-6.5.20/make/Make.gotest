@@ -1,0 +1,122 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Go Test Framework Builds
+
+# Get version and build info
+VERSION_FILE=$(SDK)/RELEASE
+VERSION_INFO=`cat $(VERSION_FILE)`
+
+# Command for generating dynamic build information
+SCM_INFO_CMD = git log --pretty=format:'%h' -n 1
+SCM_INFO = "$(shell echo `$(SCM_INFO_CMD)`)"
+
+# Date Info
+DATE_INFO_CMD = date '+%Y-%m-%d_%H:%M:%S'
+DATE_INFO="$(shell echo `$(DATE_INFO_CMD)`)"
+
+SWIG := /projects/ntsw-tools/swig-4.0.0/bin/swig
+ifndef GOCACHE
+export GOCACHE = $(SDK)/build/.cache/go-build
+endif
+
+# Always set GOVER to the version of tools we are currently supporting
+ifdef GOVER_OVERRIDE
+export GOVER=$(GOVER_OVERRIDE)
+else
+export GOVER=1.12.5
+endif
+GOROOT=  # GOROOT is automatically setup based on GOVER
+
+GO_SRC := $(SDK)/regress/go/src
+GO_TEST = $(GO_SRC)/bcm/htest
+
+ifndef GO_OUTDIR
+export GO_OUTDIR=$(DEST_DIR)
+endif
+C_OUTDIR = $(SDK)/build/test/c
+
+ifndef SUITE
+SUITE = example
+endif
+
+PRG = $(GO_OUTDIR)/$(SUITE).test
+
+#######   GO COMPILER VARIABLES  #######
+
+GOARCH = amd64
+
+ifneq (,$(filter $(platform),gts xlr xgssim))
+GOARCH = amd64
+else ifneq (,$(filter $(platform),slkle slk slkbe))
+GOARCH = arm64
+endif
+
+export GOARCH
+export CGO_ENABLED = 1
+
+CGO_CFLAGS := $(shell go env CGO_CFLAGS)
+CGO_LDFLAGS := $(shell go env CGO_LDFLAGS)
+
+LD_FILTER = -Wl,--relax -Wl,--export-dynamic  # Flags the Go compiler does not understand
+EXTRA_LD_FLAGS := $(filter-out  $(LD_FILTER),$(LDFLAGS))
+
+CGO_CFLAGS += -I$(SDK)/include -I$(C_OUTDIR)
+
+GCFLAGS = "-N -l"
+
+GOVARS = -X gopkg.in/check.v1.Version=${VERSION_INFO} -X gopkg.in/check.v1.Build=${SCM_INFO} -X gopkg.in/check.v1.BuildDate=${DATE_INFO} -X bcm/corelib/cinfra.tgtCpuStr=${platform}
+
+SOC_DIAG_OBJ := $(BLDDIR)/socdiag_go.o
+VER_OBJ := $(BLDDIR)/version.o
+PLATFORM_DEFINES_OBJ := $(BLDDIR)/platform_defines.o
+
+CGO_LDFLAGS += \
+     $(SOC_DIAG_OBJ) \
+     $(VER_OBJ) \
+     $(PLATFORM_DEFINES_OBJ) \
+     -Wl,--start-group $(BCM_LIBS_BLD) -Wl,--end-group \
+     $(EXTRA_LD_FLAGS)
+CGO_LDFLAGS += -Wl,--allow-multiple-definition # alternative flag: -zmuldefs
+
+#######   END GO COMPILER VARIABLES  #######
+
+#all: go_image
+
+go-swig:
+	@echo "Building Go SWIG"
+	mkdir -p $(C_OUTDIR)
+	$(SWIG) -go -cgo -intgosize 64 \
+		-I$(SDK)/include -I- -w314,305,462 \
+		-outdir $(GO_SRC)/bcm/hsdk \
+		-o $(C_OUTDIR)/hsdk_wrap.tmp \
+		$(SDK)/tools/mkbinding/swig_lib_4/hsdk_h.i
+
+	# Delete the intgo variable
+	sed '/typedef long long intgo;/ d' $(C_OUTDIR)/hsdk_wrap.tmp > $(C_OUTDIR)/hsdk_wrap.h
+	$(RM) $(C_OUTDIR)/hsdk_wrap.tmp
+
+go-image:
+	@echo "Version ${VERSION_INFO}"
+	@echo "Build ${SCM_INFO}"
+	@echo "Build Date ${DATE_INFO}"
+	@echo CC=$(CC)
+	@echo PLATFORM=$(platform)
+	@echo GOCACHE=$(GOCACHE)
+	@echo GOARCH=$(GOARCH)
+	@echo GOROOT=$(shell go env GOROOT)
+	@echo "GOVER=$(GOVER) [$(shell go version)]"
+	@echo "GO OUTDIR: $(GO_OUTDIR)"
+
+	rm -f $(PRG)  # Remove the go test file. To ensure the old binary gets removed
+	@echo "Building ${SUITE}.test application for the ${platform} target..."
+	cd $(GO_TEST)/$(SUITE) && CC_FOR_TARGET="$(CC)" CGO_CFLAGS="$(CGO_CFLAGS)" CGO_LDFLAGS="$(CGO_LDFLAGS)" GOCACHE="$(GOCACHE)" go test -gcflags $(GCFLAGS) -c -ldflags "${GOVARS}" -o $(PRG)
+	@echo "    ...${SUITE} build complete"
+
+go-clean:
+	@echo "Cleaning Go"
+	$(RM) $(BLDDIR)/socdiag_go.o
+	$(RM) $(C_OUTDIR)/hsdk_wrap.h
+	$(RM) $(GO_SRC)/bcm/hsdk/hsdk.go

@@ -1,0 +1,159 @@
+/*! \page bcma_bcmltcmd CLI Commands for Logical Tables (LT)
+
+\tableofcontents
+
+\section bcma_bcmltcmd_intro Introduction
+
+Switch device behavior is configured through logical table
+views in the core SDK. The logical tables (LT) are mapped to
+physical tables (PT) which are implemented as hardware registers
+and memories.
+The CLI provides the commands \c lt and \c pt to access
+logical tables (LT) and physical tables (PT) respectively.
+The two table commands use similar command syntax.
+
+The \c lt and \c pt commands can be added to the CLI by calling
+\ref bcma_bcmltcmd_add_cmds.
+
+\section bcma_bcmltcmd_tbllist Table Enumeration
+
+The logical tables (LT) or physical tables (PT) are composed of different
+fields. The table commands can list all fields information of tables by
+adding \c list argument to the table (\c lt or \c pt) commands.
+
+The option \c -b can be used with the \c list argument to list only
+the table names.
+
+The option \c -l can be used to list extended field information.
+
+\b Example:
+\verbatim
+# List all LT and associated field names for the device
+> lt list
+
+# List all LT names and detailed field information for the device
+> lt list -l
+
+# List all PT names for the device
+> pt list -b
+\endverbatim
+
+Additional arguments can be added to filter the tables with specific names
+for advanced search. Special characters like ^ or \@ can be added in
+the beginning of the table name to limit the search criteria.
+
+\b Example:
+\verbatim
+# List all LT names containing VLAN and their associated field names
+> lt list VLAN
+
+# List all LT names that start with VLAN and their associated fields names
+> lt list ^VLAN
+
+# List LT whose name exactly matches to VLAN and its associated field information
+> lt list -l @VLAN
+
+# List all LTs whose names contain EGR or start with ING
+> lt list -b EGR ^ING
+\endverbatim
+
+The CLI \c grep command can also be used for filtering the \c list
+command output.
+
+The CLI \c sort command can also be used for sorting the \c list
+command output.
+
+\section bcma_bcmltcmd_tblmapping Table Mapping Information
+
+The option \c -m can be used with the \c list argument to display
+logical to physical mapping information.
+
+\section bcma_bcmltcmd_tblop Table Access
+
+The CLI provides the ability to perform specific table access operations
+on logical and physical tables.
+
+The \c lt and \c pt commands each support a separate set of table
+access operations, of which only a subset is applicable for any given
+table, all depending on the type of underlying physical table. The user
+is expected to be familiar with the characteristics of a given table
+and perform access operations accordingly.
+
+\subsection bcma_bcmltcmd_tblop_lt Access to Logical Tables (LT)
+
+The operations supported by the \c lt command are:\n
+\a insert, \a lookup, \a delete, \a update and \a traverse.
+
+\b Example:
+\verbatim
+# Insert an entry with VLAN_ID=11 to logical table VLAN
+> lt VLAN insert VLAN_ID=11 EGR_MEMBER_PORTS=1 UNTAGGED_MEMBER_PORTS=1 VLAN_STG_ID=1
+
+# Values of field-width > 64-bits should be assigned in hexadecimal format
+> lt VLAN update VLAN_ID=11 EGR_MEMBER_PORTS=0xffffffffffffffffffffffffffffffffff
+
+# Look up an entry with VLAN_ID=11 in logical table VLAN
+> lt VLAN lookup VLAN_ID=11
+
+# delete an entry with VLAN_ID=11 in logical table VLAN
+> lt VLAN delete VLAN_ID=11
+\endverbatim
+
+Some types of fields in logical tables (LT) are enumerated values, which can be
+represented as symbol strings. For these kind of fields, the user can
+directly assign a symbol string to the field instead of a scalar value.
+
+\b Example:
+\verbatim
+# Assign field UT_OTAG via a symbol string
+> lt VLAN_ING_TAG_ACTION_PROFILE insert VLAN_ING_TAG_ACTION_PROFILE_ID=1 UT_OTAG=ADD
+\endverbatim
+
+Furthermore, a field might be represented as an array of elements, either
+in scalar values or in symbol strings.
+When assigning values to such fields, the array index must also be specified.
+
+\b Example:
+\verbatim
+# Assign field STATE via a symbol string with an array index
+> lt VLAN_STG insert VLAN_STG_ID=11 STATE[1]=FORWARD
+
+# Assign field STATE via a symbol string in a range of array indices
+> lt VLAN_STG update VLAN_STG_ID=11 STATE[4-6]=FORWARD
+
+# Assign field STATE with multiple symbol strings
+> lt VLAN_STG update VLAN_STG_ID=11 STATE[0-135]=FORWARD,STATE[33]=DISABLE,STATE[60-70]=DISABLE
+
+# Assign field SPEED_MAX with multiple scalar values
+> lt PC_PM insert PC_PM_ID=0 SPEED_MAX[0-3]=10000 PM_OPMODE[0]=PC_PM_OPMODE_DEFAULT LANE_MAP[0]=0x1,LANE_MAP[1]=0x2,LANE_MAP[2]=0x4,LANE_MAP[3]=0x8
+\endverbatim
+
+\subsection bcma_bcmltcmd_tblop_pt Access to Physical Tables (PT)
+
+The operations supported by the \c pt command are:\n
+\a get, \a modify and \a set.
+
+\b Caution: Writes to physical tables should only used in a debugging scenarios
+and will invalidate table modeling for the physical tables that are written.
+
+\b Example:
+\verbatim
+# Get from physical table VRFm index 0
+> pt VRFm get BCMLT_PT_INDEX=0
+
+# Set to physical table VRFm index 0
+> pt VRFm set BCMLT_PT_INDEX=0 EVEN_PARITY=1
+\endverbatim
+
+\subsection bcma_bcmltcmd_tblop_adv Advanced Usage
+
+CLI script commands can be utilized to execute the table commands for
+advanced usage.
+
+\b Example:
+\verbatim
+# Get physical table VRFm index from 0 to 3
+> for i=0,3 'pt VRFm get BCMLT_PT_INDEX=$i'
+\endverbatim
+
+*/

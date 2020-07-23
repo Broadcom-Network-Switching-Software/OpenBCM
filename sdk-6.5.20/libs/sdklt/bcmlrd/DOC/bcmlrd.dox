@@ -1,0 +1,33 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section intro Overview
+
+The SDK BCMLRD library contains API to access the Device Logical Table
+Resource Database.
+
+\section bcmlrd_build Build
+
+The makefile for the BCMLRD library is built upon the make include
+files in the <tt>$SDK/make</tt> directory.
+
+\section bcmlrd_api BCMLRD Logical Table API
+
+Defines the interface to the Logical Table descriptions, metadata and
+mapping to hardware resources.
+
+\section bcmlrd_device Adding a device
+
+The following steps are required when adding a new device to BCMLRD:
+
+1: Add a probe function in bcmlrd/probe/\<dev\>_probe.c .
+
+2: Add a configuration stub in bcmlrd/stub/\<dev\>_dev_conf.c .
+
+3: Add a TABLE_OP_PT_INFO map in
+     INTERNAL/fltg/xgs/table/\<dev\>/\<dev\>_a0_TABLE_OP_PT_INFO.map.ltl
+
+4: Rerun FLTG
+
+*/

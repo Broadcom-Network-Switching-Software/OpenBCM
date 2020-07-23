@@ -1,0 +1,83 @@
+#!/bin/sh
+#
+# Script to package firmware files into a single .fpkg file
+#
+# Usage: ./fwpack <info-yaml-file> <firmware-image-file> <output-file>
+#
+# Note: Currently it only supports .bin image format and checksum.
+#
+# Sample YAML file content for a firmware:
+#
+#   ---
+#   # Firmware type
+#   firmware-type:          LED
+#
+#   # Firmware version
+#   firmware-version:       1.1
+#
+#   # Supported chips
+#   supported-chips:
+#                           - BCMxxxxx
+#
+#   # Default processor to load into
+#   default-processor:      M0.0
+#
+#   # Default processor address for loading (if not specified in the image)
+#   default-address:        0x00000000
+#
+#
+
+# Default values
+FPKG_MAGIC=BCMFWPKG
+FPKG_VERSION=01
+
+# Argument checking
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <info-yaml-file> <firmware-image-file> <output-file>"
+    exit 22
+fi
+INF_FILE=$1
+IMG_FILE=$2
+OUT_FILE=$3
+if [ ! -f $INF_FILE ]; then
+    echo "Error: File not found - $INF_FILE"
+    exit 2
+fi
+if [ ! -f $IMG_FILE ]; then
+    echo "Error: File not found - $IMG_FILE"
+    exit 2
+fi
+
+# Create file with magic and version
+echo -n "$FPKG_MAGIC" >$OUT_FILE
+echo -n "$FPKG_VERSION" >>$OUT_FILE
+if [ ! -f $OUT_FILE ]; then
+    echo "Error: Failed to create file $OUT_FILE"
+    exit 5
+fi
+
+# Currently we embed 3 files: INFO, IMAG, SIGN
+echo -n "03" >>$OUT_FILE
+
+# Embed information file (current format: YAML)
+echo -n "INFO" >>$OUT_FILE                  # file type (max 4 chars)
+echo -n "YAML    "  >>$OUT_FILE             # file info (max 8 chars)
+echo -n "$(printf "%08x" $(stat --printf="%s" $INF_FILE))" >>$OUT_FILE
+cat $INF_FILE >>$OUT_FILE
+
+# Embed image file (current format: BIN)
+echo -n "IMAG" >>$OUT_FILE                  # file type (max 4 chars)
+echo -n "BIN     "  >>$OUT_FILE             # file info (max 8 chars)
+echo -n "$(printf "%08x" $(stat --printf="%s" $IMG_FILE))" >>$OUT_FILE
+cat $IMG_FILE >>$OUT_FILE
+
+# Embed a pseudo file for image signature
+echo -n "SIGN" >>$OUT_FILE                  # file type (max 4 chars)
+echo -n "checksum"  >>$OUT_FILE             # file info (max 8 chars)
+echo -n "$(printf "%08x" 4)" >>$OUT_FILE
+IMG_CHKSUM=$(echo $(echo $(sum $IMG_FILE) | cut -d " " -f 1) | awk '{print $1 + 0}')
+echo -n "$(printf "%04x" $IMG_CHKSUM)" >>$OUT_FILE
+
+# Final checksum for the whole fpkg file
+FPKG_CHKSUM=$(echo $(echo $(sum $OUT_FILE) | cut -d " " -f 1) | awk '{print $1 + 0}')
+echo -n "$(printf "%04x" $FPKG_CHKSUM)" >>$OUT_FILE

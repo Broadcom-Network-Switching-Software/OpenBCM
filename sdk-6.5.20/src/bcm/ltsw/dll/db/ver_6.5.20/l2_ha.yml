@@ -1,0 +1,85 @@
+#
+# file: l2_ha.yml
+# L2 YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_l2:
+        bcmint_l2_station_control_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                sid:
+                    type: int
+                    comment: Station ID.
+                dst_mac:
+                    type: uint8_t
+                    length: 6
+                    comment: Destination MAC address.
+                dst_mac_mask:
+                    type: uint8_t
+                    length: 6
+                    comment: Destination MAC address mask value.
+                vlan:
+                    type: uint16_t
+                    comment: VLAN.
+                vlan_mask:
+                    type: uint16_t
+                    comment: VLAN mask value.
+                ivlan:
+                    type: uint16_t
+                    comment: Inner VLAN.
+                ivlan_mask:
+                    type: uint16_t
+                    comment: Inner VLAN mask.
+                vfi:
+                    type: uint16_t
+                    comment: Port-default VFI.
+                vfi_mask:
+                    type: uint16_t
+                    comment: Port-default VFI mask.
+                src_port:
+                    type: int
+                    comment: Ingress port.
+                src_port_mask:
+                    type: int
+                    comment: Ingress port mask value.
+                tnl:
+                    type: bool
+                    comment: The entry is added by tunnel API or not.
+                installed:
+                    type: bool
+                    comment: Entry installed.
+                forwarding_domain:
+                    type: uint16_t
+                    comment: Forwarding domain for the packet with matched VLAN.
+                underlay:
+                    type: bool
+                    comment: Underlay entry.
+                use_underlay_flag:
+                    type: bool
+                    comment: User uses underlay flag.
+        bcmint_l2_opaque_tag_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ethertype:
+                    type: int
+                    comment: EtherType to match when parsing for opaque tag.
+                tag_size:
+                    type: int
+                    comment: Size of opaque tag.
+                tag_type:
+                    type: int
+                    comment: User specified 2-bit value.
+                valid:
+                    type: int
+                    comment: Make config active or not actrive in h/w.

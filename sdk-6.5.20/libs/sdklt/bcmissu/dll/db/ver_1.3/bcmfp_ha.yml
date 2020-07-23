@@ -1,0 +1,848 @@
+#
+# file: bcmfp_ha.yml
+# BCMFP HA memory YAML file describing the HA data structures
+# for bcmfp component.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   BCMFP_ENTRY_PARTS_MAX: 6
+   BCMFP_HA_BLK_ID_ARRAY_SIZE: 8
+   BCMFP_COMPRESS_TYPES_MAX: 4
+   BCMFP_EM_MAX_BANKS: 12
+   BCMFP_MAX_EXTRACTORS_PER_LEVEL: 64
+
+component:
+    bcmfp:
+       bcmfp_stage_oper_mode_t:
+           type: enum
+           fields:
+            BCMFP_STAGE_OPER_MODE_GLOBAL: 0
+            BCMFP_STAGE_OPER_MODE_PIPE_UNIQUE: 1
+            BCMFP_STAGE_OPER_MODE_GLOBAL_PIPE_AWARE: 2
+            BCMFP_STAGE_OPER_MODE_COUNT: 3
+       bcmfp_group_mode_t:
+            type: enum
+            fields:
+             BCMFP_GROUP_MODE_HALF: 0
+             BCMFP_GROUP_MODE_SINGLE: 1
+             BCMFP_GROUP_MODE_SINGLE_ASET_NARROW: 2
+             BCMFP_GROUP_MODE_SINGLE_ASET_WIDE: 3
+             BCMFP_GROUP_MODE_DBLINTRA: 4
+             BCMFP_GROUP_MODE_DBLINTER: 5
+             BCMFP_GROUP_MODE_TRIPLE: 6
+             BCMFP_GROUP_MODE_QUAD: 7
+             BCMFP_GROUP_MODE_AUTO: 8
+             BCMFP_GROUP_MODE_NONE: 9
+             BCMFP_GROUP_MODE_COUNT: 10
+       bcmfp_group_slice_mode_t:
+            type: enum
+            fields:
+             BCMFP_GROUP_SLICE_MODE_L2_SINGLE_WIDE: 0
+             BCMFP_GROUP_SLICE_MODE_L3_SINGLE_WIDE: 1
+             BCMFP_GROUP_SLICE_MODE_L3_DOUBLE_WIDE: 2
+             BCMFP_GROUP_SLICE_MODE_L3_ANY_SINGLE_WIDE: 3
+             BCMFP_GROUP_SLICE_MODE_L3_ANY_DOUBLE_WIDE: 4
+             BCMFP_GROUP_SLICE_MODE_L3_ALT_DOUBLE_WIDE: 5
+             BCMFP_GROUP_SLICE_MODE_COUNT: 6
+       bcmfp_trans_state_t:
+            type: enum
+            fields:
+             BCMFP_TRANS_STATE_IDLE: 0
+             BCMFP_TRANS_STATE_UC_A: 1
+             BCMFP_TRANS_STATE_COPY_A_TO_B: 2
+             BCMFP_TRANS_STATE_COPY_B_TO_A: 3
+       bcmfp_ha_blk_type_t:
+            type: enum
+            fields:
+             BCMFP_HA_BLK_TYPE_NONE: 0
+             BCMFP_HA_BLK_TYPE_GENERIC_TV: 1
+             BCMFP_HA_BLK_TYPE_DYNAMIC_CKEY: 2
+             BCMFP_HA_BLK_TYPE_STAGE_OPER: 3
+             BCMFP_HA_BLK_TYPE_PDD_ACTIONS_INFO: 4
+             BCMFP_HA_BLK_TYPE_FID_OFFSET_INFO: 5
+             BCMFP_HA_BLK_TYPE_COMPRESS_OPER_INFO: 6
+             BCMFP_HA_BLK_TYPE_COUNT: 7
+       bcmfp_group_state_t:
+            type: enum
+            fields:
+              BCMFP_GROUP_STATE_NONE: 0
+              BCMFP_GROUP_STATE_SUCCESS: 1
+              BCMFP_GROUP_STATE_ASET_WIDER: 2
+              BCMFP_GROUP_STATE_QSET_WIDER: 3
+              BCMFP_GROUP_STATE_NON_COMPRESSIBLE: 4
+              BCMFP_GROUP_STATE_COUNT: 7
+       bcmfp_pdd_oper_type_t:
+            type: enum
+            fields:
+              BCMFP_PDD_OPER_TYPE_NONE: 0
+              BCMFP_PDD_OPER_TYPE_PDD_SBR_GROUP: 1
+              BCMFP_PDD_OPER_TYPE_PDD_SBR_ENTRY: 2
+              BCMFP_PDD_OPER_TYPE_PDD_GROUP_SBR_ENTRY: 3
+              BCMFP_PDD_OPER_TYPE_PDD_ENTRY_SBR_GROUP: 4
+              BCMFP_PDD_OPER_TYPE_DEFAULT_POLICY: 5
+              BCMFP_PDD_OPER_TYPE_PDD_GROUP: 6
+              BCMFP_PDD_OPER_TYPE_COUNT: 7
+       bcmfp_group_slice_type_t:
+           type: enum
+           fields:
+             BCMFP_GROUP_SLICE_TYPE_NONE: 0
+             BCMFP_GROUP_SLICE_TYPE_SMALL: 1
+             BCMFP_GROUP_SLICE_TYPE_LARGE: 2
+             BCMFP_GROUP_SLICE_TYPE_COUNT: 3
+       bcmfp_ha_blk_id_bmp_t:
+           type: struct
+           fields:
+               w:
+                   type: uint32_t
+                   length: BCMFP_HA_BLK_ID_ARRAY_SIZE
+                   comment: HA Blk ID bitmap array.
+       bcmfp_ha_root_blk_t:
+           type: struct
+           fields:
+               min_ha_blk_id:
+                   type: uint8_t
+                   comment: Minimum HA block id allowed.
+               max_ha_blk_id:
+                   type: uint8_t
+                   comment: Maximum HA block id allowed.
+               in_use_ha_blk_id_bmp:
+                   type: bcmfp_ha_blk_id_bmp_t
+                   comment: HA - used blk ID bitmap.
+       bcmfp_ha_blk_hdr_t:
+           type: struct
+           fields:
+               blk_size:
+                   type: uint32_t
+                   comment: HA block size
+               blk_type:
+                   type: bcmfp_ha_blk_type_t
+                   comment: HA block type.
+               backup_blk_id:
+                   type: uint8_t
+                   comment:  Back up block ID.
+               free_blk_offset:
+                   type: uint32_t
+                   comment: Free HA element in this HA block. This is used to
+                        maintain list of free HA elements in this HA block.
+               free_ha_element_count:
+                   type: uint32_t
+                   comment: Number of free HA elements.
+               signature:
+                   type: uint32_t
+                   comment: Signature.
+               trans_state:
+                   type: bcmfp_trans_state_t
+                   comment: Transaction state of the stage.
+               bucket_size:
+                   type: uint8_t
+                   comment: Number of HA elements at each HA block offset.
+               ctype:
+                   type: uint8_t
+                   comment: FP ALPM Compression type.
+               stage_id:
+                   type: uint8_t
+                   comment: FP stage ID.
+       bcmfp_ha_blk_info_t:
+           type: struct
+           fields:
+               blk_id:
+                   type: uint16_t
+                   comment: Unique Id assigned to HA block created by BCMFP.
+                         This will be same as sub component id used while
+                         creating the HA block using bcmfp_ha_mem_alloc API.
+               blk_offset:
+                   type: uint32_t
+                   comment: Block info will be derived for a certain s/w state
+                         during run time. This block offset is the offset in
+                         the HA block of "blk_id". This is multiples of size
+                         of bcmfp_ha_element_t.
+       bcmfp_generic_data_t:
+           type: struct
+           fields:
+               value:
+                   type: uint32_t
+                   comment: Actual value saved in this element.
+               next_blk_id:
+                   type: uint16_t
+                   comment: Next HA block ID. If this is 0, that means
+                            the end of the chain.
+               next_blk_offset:
+                   type: uint32_t
+                   comment: Offset in the next HA block ID
+       bcmfp_ext_codes_t:
+           type: struct
+           fields:
+               keygen_index:
+                   type: int
+                   comment: LT keygen program profile index.
+               ipbm_source:
+                   type: int
+                   comment: Ingress Port Bitmap Source.
+               ltid:
+                   type: int
+                   comment: Hardware LTID(not SDKLT) assigned to the group.
+               key_type:
+                   type: int
+                   comment: EM key mode.
+               default_policy_enable:
+                   type: int8_t
+                   comment: EM Default Policy Enable.
+               l1_e32_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 1 32b extractors.
+               l1_e16_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 1 16b extractors.
+               l1_e8_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 1 8b extractors.
+               l1_e4_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 1 4b extractors.
+               l1_e2_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 1 2b extractors.
+               l2_e1_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 2 1b extractors.
+               l2_e2_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 2 2b extractors.
+               l2_e4_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 2 4b extractors.
+               l2_e16_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 2 16b extractors.
+               l3_e1_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 3 1b extractors.
+               l3_e2_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 3 2b extractors.
+               l3_e4_sel:
+                   type: int16_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Level 3 4b extractors.
+               pmux_sel:
+                   type: int8_t
+                   length: BCMFP_MAX_EXTRACTORS_PER_LEVEL
+                   comment: Post muxing extractors.
+               intraslice:
+                   type: int8_t
+                   comment: Intraslice double wide selection.
+               secondary:
+                   type: int8_t
+                   comment: Secondary selector.
+               ipbm_present:
+                   type: int8_t
+                   comment: Post mux IPBM in final key.
+               normalize_l3_l4_sel:
+                   type: int8_t
+                   comment: Normalize L3 and L4 address.
+               normalize_mac_sel:
+                   type: int8_t
+                   comment: Normalize L2 SA & DA.
+               aux_tag_a_sel:
+                   type: int8_t
+                   comment: Auxiliary Tag A Selector.
+               aux_tag_b_sel:
+                   type: int8_t
+                   comment: Auxiliary Tag B Selector.
+               aux_tag_c_sel:
+                   type: int8_t
+                   comment: Auxiliary Tag C Selector.
+               aux_tag_d_sel:
+                   type: int8_t
+                   comment: Auxiliary Tag D Selector.
+               tcp_fn_sel:
+                   type: int8_t
+                   comment: TCP function selector.
+               tos_fn_sel:
+                   type: int8_t
+                   comment: TOS function selector.
+               ttl_fn_sel:
+                   type: int8_t
+                   comment: TOS function selector.
+               class_id_cont_a_sel:
+                   type: int8_t
+                   comment: Class ID container A selector.
+               class_id_cont_b_sel:
+                   type: int8_t
+                   comment: Class ID container B selector.
+               class_id_cont_c_sel:
+                   type: int8_t
+                   comment: Class ID container C selector.
+               class_id_cont_d_sel:
+                   type: int8_t
+                   comment: Class ID container D selector.
+               src_cont_a_sel:
+                   type: int8_t
+                   comment: SRC container A selector.
+               src_cont_b_sel:
+                   type: int8_t
+                   comment: SRC container B selector.
+               dst_cont_a_sel:
+                   type: int8_t
+                   comment: DST container A selector.
+               dst_cont_b_sel:
+                   type: int8_t
+                   comment: DST container B selector.
+               src_dest_cont_0_sel:
+                   type: int8_t
+                   comment: SRC or DST container 0 selector.
+               src_dest_cont_1_sel:
+                   type: int8_t
+                   comment: SRC or DST container 0 selector.
+               fpf0:
+                   type: int8_t
+                   comment: FPF0 field(s) select.
+               fpf1:
+                   type: int8_t
+                   comment: FPF1 field(s) select.
+               fpf2:
+                   type: int8_t
+                   comment: FPF2 field(s) select.
+               fpf3:
+                   type: int8_t
+                   comment: FPF3 field(s) select.
+               fpf4:
+                   type: int8_t
+                   comment: FPF4 field(s) select.
+               src_sel:
+                   type: int8_t
+                   comment: Src port/trunk entity selection.
+               ip_header_sel:
+                   type: int8_t
+                   comment: Inner/Outer Ip header selection.
+               egr_key1_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY1 Class ID selector.
+               egr_key2_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY2 Class ID selector.
+               egr_key3_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY3 Class ID selector.
+               egr_key4_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY4 Class ID selector.
+               egr_key6_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY6 Class ID selector.
+               egr_key7_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY7 Class ID selector.
+               egr_key8_classid_sel:
+                   type: int8_t
+                   comment: EFP KEY8 Class ID selector.
+               egr_key4_dvp_sel:
+                   type: int8_t
+                   comment: EFP KEY4 DVP Secondary selector.
+               egr_key8_dvp_sel:
+                   type: int8_t
+                   comment: EFP KEY8 DVP Secondary selector
+               egr_key4_mdl_sel:
+                   type: int8_t
+                   comment: EFP KEY4 MDL Secondary selector.
+               egr_ip_addr_sel:
+                   type: int8_t
+                   comment: Ip6 address format selection.
+               pdd_prof_index:
+                   type: int8_t
+                   comment: Index to PDD profile table.
+               default_pdd_prof_index:
+                   type: int8_t
+                   comment: Index to default PDD profile table.
+               default_sbr_prof_index:
+                   type: int8_t
+                   comment: Index to default SBR profile table.
+               qos_prof_index:
+                   type: int8_t
+                   comment: Index to QOS profile table.
+               default_qos_prof_index:
+                   type: int8_t
+                   comment: Index to default QOS profile table.
+               udf_sel:
+                   type: int8_t
+                   comment: UDF selector.
+               alt_ttl_fn_sel:
+                   type: int8_t
+                   comment: ALT TTL function selector.
+               sbr_prof_index:
+                   type: int8_t
+                   comment: SBR(StrengthBased Resolution) profile index.
+               psg_prof_index:
+                   type: int8_t
+                   comment: Presel Group index.
+               em_class_id:
+                   type: uint16_t
+                   comment: Exact match entry  class ID.
+               default_em_class_id:
+                   type: uint16_t
+                   comment: Default exact match entry  class ID.
+               em_key_attrib_index:
+                   type: int16_t
+                   comment: Exact match entry key attribute profile index.
+               num_base_entries:
+                   type: uint16_t
+                   comment: Number of base entries occupied by EM entry.
+               num_key_fields:
+                   type: uint16_t
+                   comment: Number of key fields.
+               key_field_sbit:
+                   type: uint16_t
+                   length: 8
+                   comment: Start bit of key fields in each entry.
+               key_field_width:
+                   type: uint16_t
+                   length: 8
+                   comment: Width of key fields in each entry.
+       bcmfp_fid_offset_info_t:
+           type: struct
+           fields:
+               sid:
+                   type: uint32_t
+                   ltid:
+                   comment: Logical Table ID
+               fid:
+                   type: uint32_t
+                   fid: sid
+                   comment: LT field ID
+               fidx:
+                   type: uint16_t
+                   comment: Index of LT field ID if it is array.
+               offset_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Offset and width information of a  Qlifier( unique
+                            field ID and field index cobination) in different
+                            parts with in the group. Each unique qualifier may
+                            take minimum one HA element and upto the number of
+                            offset and width pairs belongs to the qualifier.
+                            Number of offset, width pairs of a qualifer depends
+                            on the keygen algorithm.
+               next_blk_id:
+                   type: uint8_t
+                   comment: HA block ID of next fid offset information.
+               next_blk_offset:
+                   type: uint32_t
+                   comment: HA block ID of next fid offset information.
+       bcmfp_group_oper_info_t:
+           type: struct
+           fields:
+               valid:
+                   type: bool
+                   comment: Valid/Invalid indicator.
+               state:
+                   type: bcmfp_group_state_t
+                   comment: State of the group operational information.
+               default_presel:
+                   type: bool
+                   comment: Set if the group use default presel.
+               presel_not_exists:
+                   type: bool
+                   comment: Set if any associated presel not exists.
+               aset_error:
+                   type: bool
+                   comment: Set if aset processing is a failure.
+               qset_error:
+                   type: bool
+                   comment: Set if qset processing is a failure.
+               default_aset_error:
+                   type: bool
+                   comment: Set if default aset processing is a failure.
+               group_id:
+                   type: uint32_t
+                   comment: Group idenfifier.
+               group_prio:
+                   type: uint32_t
+                   comment: Group priority.
+               group_mode:
+                   type: bcmfp_group_mode_t
+                   comment: Group mode.
+               group_slice_mode:
+                   type: bcmfp_group_slice_mode_t
+                   comment: Group slice mode.
+               flex_mode:
+                   type: bool
+                   comment: Flex mode operation.
+               key_size:
+                   type: uint32_t
+                   comment: Size of key field.
+               data_size:
+                   type: uint32_t
+                   comment: Size of data field.
+               tbl_inst:
+                   type: int
+                   comment: Pipe to which group belongs to.
+               flags:
+                   type: uint32_t
+                   comment: Group flags.
+               num_presel_ids:
+                   type: uint32_t
+                   comment: Number of presel IDs.
+               port_pkt_type:
+                   type: uint8_t
+                   comment: Physical slice id assigned to the group.
+               slice_id:
+                   type: uint8_t
+                   comment:  Physical slice id assigned to the group.
+               ref_count:
+                   type: uint32_t
+                   comment:  Number of entries created in the group.
+               action_res_id:
+                   type: uint16_t
+                   comment: Action resolution Id used in resolving conflicting actions b/w groups.
+                            Each action_res_id will be assigned one unique priority.
+               qual_offset_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Offset and width information of all qualifiers in
+                           different parts with in the group. Each qualifier
+                           may take minimum one HA element and upto the number
+                           of offset and width pairs belongs to the qualifier.
+                           Number of offset, width pairs of a qualifer depends
+                           on the keygen algorithm.
+               ext_ctrl_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Extractor identification details(part, level, granularity
+                            and extractor number) and value assigned to it.
+                            This information is maintained only for in use extractors.
+                            Each extractor takes two HA elemenets, one to hold the
+                            extractor identification details and one for keeping
+                            the container id extracted by it.
+               ext_codes:
+                   type: bcmfp_ext_codes_t
+                   length: BCMFP_ENTRY_PARTS_MAX
+                   comment: Extractors(in use) Information in all parts of a group.
+               compress:
+                   type: bool
+                   comment: Compression enable/disable indicator.
+               compress_types:
+                   type: bool
+                   length: BCMFP_COMPRESS_TYPES_MAX
+                   comment: Types of compressions expected to be applied to entries
+                            associated to this group.
+               enable:
+                   type: bool
+                   comment: Group is enabled/disabled.
+               sbr_id:
+                   type: uint8_t
+                   comment: SBR Id of the SBR profile created for the group.
+               sbr_template_id:
+                   type: uint32_t
+                   comment: SBR LT Template Id of the SBR profile created for the group.
+               def_sbr_id:
+                   type: uint8_t
+                   comment: Default SBR Id of the SBR profile created for the group.
+               def_sbr_template_id:
+                   type: uint32_t
+                   comment: Default SBR LT Template Id of the SBR profile created for the group.
+               pdd_type:
+                   type: bcmfp_pdd_oper_type_t
+                   comment: Operational mode of PDD to be used for this group.
+               group_slice_type:
+                   type: bcmfp_group_slice_type_t
+                   comment: Group hint.
+       bcmfp_em_bank_blk_info_t:
+           type: struct
+           fields:
+               bank_id:
+                   type: uint32_t
+                   comment: ID of the bank assigned to FP exact match.
+               bank_sid:
+                   type: uint32_t
+                   comment: Physical table ID of the bank assigned to FP exact match.
+               valid:
+                   type: bool
+                   comment: Indicator if backup of EM bank is valid.
+               blk_id:
+                   type: uint32_t
+                   comment: HA block ID used to backup this EM bank.
+       bcmfp_stage_oper_info_t:
+           type: struct
+           fields:
+               trans_state:
+                   type: bcmfp_trans_state_t
+                   comment: Transaction state of the stage.
+               oper_mode:
+                   type: bcmfp_stage_oper_mode_t
+                   comment: Stage operational mode.
+               num_groups:
+                   type: uint16_t
+                   comment: Number of groups created in the stage.
+               group_oper_info_seg:
+                   type: uint32_t
+                   comment: Per Group operational information.
+               presel_group_oper_info_seg:
+                   type: uint32_t
+                   comment: Per presel group operational information.
+               num_keygen_prof:
+                   type: uint16_t
+                   comment:  Number of entries in keygen profile table.
+               keygen_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in keygen profile table.
+                            Applicable if all slices in a stage share the same keygen program profile table.
+               num_action_prof:
+                   type: uint16_t
+                   comment: Number of entries in action profile table.
+               action_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in action profile table.
+                            This is applicable for stages which have PDD style
+                            policy table.
+               num_qos_prof:
+                   type: uint16_t
+                   comment: Number of entries in QOS profile table.
+               qos_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in QOS action profile table.
+                            This is applicable for stages which have PDD style
+                            policy table.
+               num_em_key_attrib_profile:
+                   type: uint16_t
+                   comment:  Number of entries in key attributes profile table.
+               em_key_attrib_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in Exact match key attributes table.
+                            This is applicable for exact match stage.
+               num_sbr_profiles:
+                   type: uint16_t
+                   comment:  Number of entries in SBR profile table.
+               sbr_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in EM SBR profile table.
+                            This is applicable for exact match stage.
+               num_psg_profiles:
+                   type: uint16_t
+                   comment:  Number of entries in Presel Group profile table.
+               psg_prof_ref_count_seg:
+                   type: uint32_t
+                   comment: Reference Count for entries in presel group profile table.
+                            This is applicable for exact match stage.
+               group_entry_map_seg:
+                   type: uint32_t
+                   comment: Group template id to entry id(s) mapping.
+               group_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in group_entry_map_seg array.
+               rule_entry_map_seg:
+                   type: uint32_t
+                   comment: Rule template ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               rule_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in rule_entry_map_seg array.
+               policy_entry_map_seg:
+                   type: uint32_t
+                   comment: Policy template ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               policy_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in policy_entry_map_seg array.
+               pse_group_map_seg:
+                   type: uint32_t
+                   comment: Presel entry ID to group ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               pse_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in pse_group_map_seg array.
+               meter_entry_map_seg:
+                   type: uint32_t
+                   comment: Meter template ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               meter_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in meter_entry_map_seg array.
+               psg_group_map_seg:
+                   type: uint32_t
+                   comment: Presel group ID to group ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               psg_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in psg_group_map_seg array.
+               sbr_group_map_seg:
+                   type: uint32_t
+                   comment: SBR template ID to group ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               sbr_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in sbr_group_map_seg array.
+               sbr_entry_map_seg:
+                   type: uint32_t
+                   comment: SBR template ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               sbr_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in sbr_entry_map_seg array.
+               pdd_group_map_seg:
+                   type: uint32_t
+                   comment: PDD template ID to group ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               pdd_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in pdd_group_map_seg array.
+               pdd_entry_map_seg:
+                   type: uint32_t
+                   comment: PDD template ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg.
+               pdd_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in pdd_entry_map_seg array.
+               dsbr_group_map_seg:
+                   type: uint32_t
+                   comment: Default SBR template ID to group ID mapping. For more
+                            information refer comments mentioned for group_entry_map_seg.
+               dsbr_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in dsbr_group_map_seg array.
+               dpdd_group_map_seg:
+                   type: uint32_t
+                   comment: Default PDD template ID to group ID mapping. For more
+                            information refer comments mentioned for group_entry_map_seg.
+               dpdd_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in dpdd_group_map_seg array.
+               dpolicy_group_map_seg:
+                   type: uint32_t
+                   comment: Default policy template ID to group ID mapping. For more
+                            information refer comments mentioned for group_entry_map_seg.
+               dpolicy_group_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in dpolicy_group_map_seg array.
+               ctr_hw_index_bitmap_seg:
+                   type: uint32_t
+                   comment:  Counter HW index is allocated during counter
+                              configuration based on the COLOR and POOL_ID.
+               ctr_id_to_hw_index_map_seg:
+                   type: uint32_t
+                   comment:  Counter entry ID to HW index mapping.
+               ctr_egr_stats_id_bmp_seg:
+                   type: uint32_t
+                   comment: Counter stat ID bitmap to check if the STAT
+                            is inserted or not.
+               ctr_egr_stat_byte_count_map_seg:
+                   type: uint32_t
+                   comment: Counter stat ID to byte count mapping.
+               ctr_egr_stat_pkt_count_map_seg:
+                   type: uint32_t
+                   comment: Counter stat ID to packet count mapping.
+               ctr_entry_map_seg:
+                   type: uint32_t
+                   comment: Counter entry ID to entry ID mapping. For more information
+                            refer comments mentioned for group_entry_map_seg. This
+                            segment is created only for stages with legacy counters
+                            support.
+               ctr_entry_map_size:
+                   type: uint32_t
+                   comment: Number of array elements in ctr_entry_map_seg array.
+               pdd_oper_info_seg:
+                   type: uint32_t
+                   comment: PDD profiles operational information. PDD operational
+                             information consists of
+                             1. offsets, widths in each part for each action.
+                             2. PDD profile bitmap of all parts.
+                             3. PDD to group/entry association.
+                             All stages may not support the PDD style policy.
+               sbr_oper_info_seg:
+                   type: uint32_t
+                   comment: SBR profiles operational information. It contains
+                            SBR profile to group/entry association. All stages may not
+                            support the SBR style action resolution.
+               num_em_banks:
+                   type: uint16_t
+                   comment: Number of banks assigned to FP exact match.
+               em_bank_blk_info:
+                   type: bcmfp_em_bank_blk_info_t
+                   length: BCMFP_EM_MAX_BANKS
+                   comment: Operational information of FP exact match banks.
+               compress_oper_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Operational information of ALPM compression.
+               sbr_uftmgr_allocated:
+                   type: bool
+                   comment: used to indicate that sbr hw index is allocated 
+                            by the UFT MGR
+       bcmfp_compress_oper_info_t:
+           type: struct
+           fields:
+               entry_child_entry_map_seg:
+                   type: uint32_t
+                   comment: Maps FP entry IDs that are list compressed with given
+                            FP entry ID.
+               entry_child_entry_map_size:
+                   type: uint32_t
+                   comment: Size of entry_list_compress_chile_entry_map_seg size
+                            in number of bcmfp_ha_blk_info_t elements.
+               entry_parent_entry_map_seg:
+                   type: uint32_t
+                   comment: Maps FP entry ID to emtry ID  with which it is list
+                            compressed.
+               entry_parent_entry_map_size:
+                   type: uint32_t
+                   comment: Size of entry_list_compress_parent_entry_map_seg size
+                            in number of bcmfp_ha_blk_info_t elements.
+       bcmfp_pdd_actions_info_t:
+           type: struct
+           fields:
+               bitmap_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: PDD bitmap used to encode and decode the raw policy
+                             when PDD is attached to an entry.
+               offset_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Offset, width information of all actions in the
+                            the PDD profile when it is associated to a group.
+                            Each action may take minimum one HA element and
+                            upto the number of offset and width pairs belongs
+                            to the action.
+               num_parts:
+                   type: uint8_t
+                   comment: Number of parts(1X/2X/3X) PDD occupies when PDD is
+                            attached to an entry.
+               section_offset:
+                   type: bcmfp_ha_blk_info_t
+                   comment: PDD section offsets when the PDD is attached to an entry.
+               policy_width:
+                   type: uint32_t
+                   comment: Width of the policy data associated with this PDD.
+               pdd_mode:
+                   type: bcmfp_group_mode_t
+                   comment: PDD operational mode.
+               pdd_type:
+                   type: bcmfp_pdd_oper_type_t
+                   comment: PDD operational information type
+               next_actions_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: Next actions info block id and block offset.
+       bcmfp_pdd_oper_info_t:
+           type: struct
+           fields:
+               actions_info:
+                   type: bcmfp_ha_blk_info_t
+                   comment: PDD actions operational information
+       bcmfp_ref_count_t:
+           type: struct
+           fields:
+               ref_count:
+                   type: uint32_t
+                   comment: Reference count of an object. Used mailnly to track
+                            number of times a physical table index is
+                            referenced.

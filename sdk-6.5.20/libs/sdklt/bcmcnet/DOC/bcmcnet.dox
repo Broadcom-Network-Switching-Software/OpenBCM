@@ -1,0 +1,68 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section intro Overview
+
+The SDK Core Network Driver (CNET) library contains Packet DMA driver
+functions and APIs for accessing device and transmitting packets.
+
+\section cnet_build Build
+
+The makefile for the CNET library is built upon the make include files
+in the <tt>$SDK/make</tt> directory.
+
+\section work_mode Work Modes
+
+The CNET component can work in four modes:
+- UNET, CNET works in user space.
+- KNET, CNET works in kernel space.
+- VNET, CNET works in user space as a virtual network subsystem.
+- HNET, CNET works in kernel space as a hypervisor.
+
+With multiple work modes, various packet processing solutions can be
+provided to satisfy different customer application scenarios.
+
+\subsection unet_mode UNET Standalone Mode
+
+Working in UNET mode, CNET exists in the same context as the SDK and delivers
+all traffic between SDK and switch hardware bypassing the kernel. In this
+scenario, the highest performance can be achieved due to the true zero-copy
+mode based on private DMA buffers in user space.
+
+\image html cnet_in_unet.svg "Figure 1"
+
+\subsection knet_mode KNET Mode
+When the Linux kernel network stack is required, CNET can work in KNET mode.
+In this scenario, CNET and KNET are combined to one loadable kernel module
+working just like a regular Linux network device driver which can support
+multiple virtual network devices with flow classification based on BPF
+(Broadcom Packet Filter).
+
+\image html cnet_in_knet.svg "Figure 2"
+
+\subsection unet_knet_mode UNET+KNET Mode
+This bifurcated model needs to split all available DMA channels into two
+groups: one can be handled by CNET in UNET mode for control packets going
+directly to the SDK, the other one is handled by CNET in KNET mode for protocol
+packets going through the Linux kernel network stack such as arp, udp, etc. In
+this scenario, a hardware-assisted feature that can perform flow classification
+needs to be enabled to direct specific flows to a given Rx channel.
+
+\image html cnet_in_unet_and_knet.svg "Figure 3"
+
+\subsection vnet_hnet_mode VNET+HNET Mode
+
+Not constrained by hardware resources, this scenario can satify the most
+requirments taking into account the perfomance, flexibility and security.
+CNET in HNET mode works in the kernel as a hypervisor managing all the hardware
+resources and emulating DMA hardware behavior. CNET in VNET mode acts as
+a virtual network subsystem in user space for processing traffic from/to
+the hypervisor. BPF splits the incoming traffic between the SDK and the Linux
+network stack. In this scenario, the legacy tools such as ethtool, ifconfig and
+so on can be used to configure network interfaces.
+
+\image html cnet_in_vnet_and_hnet.svg "Figure 4"
+
+*/
+

@@ -1,0 +1,33 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+FEATURE_LIST := CINT I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE CUSTOMER TEST CHASSIS MSTP RCPU ATPTRANS_SOCKET DUNE_UI INTR APIMODE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+
+BCM_PTL_SPT=1
+
+ALL_DNXF_CHIPS = 1
+
+#tool-chain and kernel directories for NS2 DNX builds
+ENDIAN_MODE = BE
+TOOLCHAIN_BASE_DIR = /projects/NTSW_SW_USRS_4/tools/SLK/5.3.0
+#tool-chain used for the kernel, if not specified TOOLCHAIN_BASE_DIR is used
+KERNEL_TOOLCHAIN_BASE_DIR = /projects/NTSW_SW_USRS_4/tools/SLK/gcc-linaro-aarch64_be-linux-gnu-4.9-2014.09_linux
+# Kernel directory
+KERNDIR = /projects/NTSW_SW_USRS_4/tools/SLK/LDK-4.1.10_BE_kernel-source
+
+CFGFLAGS += -DSTATIC=static
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_API_TEST
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+#handled by the slk makefile: CFGFLAGS += -D__DUNE_LINUX_BCM_CPU_PCIE__
+#handled by the slk makefile: CFGFLAGS += -DPHYS_ADDRS_ARE_64BITS -DPTRS_ARE_64BITS -DLONGS_ARE_64BITS
+CFGFLAGS += -D_SIMPLE_MEMORY_ALLOCATION_=0 -DUSE_LINUX_BDE_MMAP=1
+CFGFLAGS += -DSCACHE_CRC_CHECK
+CFGFLAGS += -DBROADCOM_SVK
+
+VENDOR_LIST=BROADCOM DNX

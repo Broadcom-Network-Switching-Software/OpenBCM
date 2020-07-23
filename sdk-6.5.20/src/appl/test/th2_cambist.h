@@ -1,0 +1,303 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */ 
+
+#define TH2_CPU_COS_PIPE0 {th2_cpu_cos_pipe0_name, NO_MODE, NO_MODE_FIELD, CPU_COS_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, CPU_COS_CAM_BIST_STATUS_PIPE0r}
+#define TH2_CPU_COS_PIPE1 {th2_cpu_cos_pipe1_name, NO_MODE, NO_MODE_FIELD, CPU_COS_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, CPU_COS_CAM_BIST_STATUS_PIPE1r}
+#define TH2_CPU_COS_PIPE2 {th2_cpu_cos_pipe2_name, NO_MODE, NO_MODE_FIELD, CPU_COS_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, CPU_COS_CAM_BIST_STATUS_PIPE2r}
+#define TH2_CPU_COS_PIPE3 {th2_cpu_cos_pipe3_name, NO_MODE, NO_MODE_FIELD, CPU_COS_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, CPU_COS_CAM_BIST_STATUS_PIPE3r}
+#define TH2_DST_COMPRESSION_PIPE0 {th2_dst_compression_pipe0_name, NO_MODE, NO_MODE_FIELD, DST_COMPRESSION_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, DST_COMPRESSION_CAM_BIST_STATUS_PIPE0r}
+#define TH2_DST_COMPRESSION_PIPE1 {th2_dst_compression_pipe1_name, NO_MODE, NO_MODE_FIELD, DST_COMPRESSION_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, DST_COMPRESSION_CAM_BIST_STATUS_PIPE1r}
+#define TH2_DST_COMPRESSION_PIPE2 {th2_dst_compression_pipe2_name, NO_MODE, NO_MODE_FIELD, DST_COMPRESSION_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, DST_COMPRESSION_CAM_BIST_STATUS_PIPE2r}
+#define TH2_DST_COMPRESSION_PIPE3 {th2_dst_compression_pipe3_name, NO_MODE, NO_MODE_FIELD, DST_COMPRESSION_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, DST_COMPRESSION_CAM_BIST_STATUS_PIPE3r}
+#define TH2_EFP_PIPE0_SLICE0 {th2_efp_pipe0_slice0_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_0_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_0_CAM_BIST_STATUS_PIPE0r}
+#define TH2_EFP_PIPE0_SLICE1 {th2_efp_pipe0_slice1_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_1_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_1_CAM_BIST_STATUS_PIPE0r}
+#define TH2_EFP_PIPE0_SLICE2 {th2_efp_pipe0_slice2_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_2_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_2_CAM_BIST_STATUS_PIPE0r}
+#define TH2_EFP_PIPE0_SLICE3 {th2_efp_pipe0_slice3_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_3_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_3_CAM_BIST_STATUS_PIPE0r}
+#define TH2_EFP_PIPE1_SLICE0 {th2_efp_pipe1_slice0_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_0_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_0_CAM_BIST_STATUS_PIPE1r}
+#define TH2_EFP_PIPE1_SLICE1 {th2_efp_pipe1_slice1_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_1_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_1_CAM_BIST_STATUS_PIPE1r}
+#define TH2_EFP_PIPE1_SLICE2 {th2_efp_pipe1_slice2_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_2_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_2_CAM_BIST_STATUS_PIPE1r}
+#define TH2_EFP_PIPE1_SLICE3 {th2_efp_pipe1_slice3_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_3_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_3_CAM_BIST_STATUS_PIPE1r}
+#define TH2_EFP_PIPE2_SLICE0 {th2_efp_pipe2_slice0_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_0_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_0_CAM_BIST_STATUS_PIPE2r}
+#define TH2_EFP_PIPE2_SLICE1 {th2_efp_pipe2_slice1_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_1_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_1_CAM_BIST_STATUS_PIPE2r}
+#define TH2_EFP_PIPE2_SLICE2 {th2_efp_pipe2_slice2_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_2_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_2_CAM_BIST_STATUS_PIPE2r}
+#define TH2_EFP_PIPE2_SLICE3 {th2_efp_pipe2_slice3_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_3_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_3_CAM_BIST_STATUS_PIPE2r}
+#define TH2_EFP_PIPE3_SLICE0 {th2_efp_pipe3_slice0_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_0_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_0_CAM_BIST_STATUS_PIPE3r}
+#define TH2_EFP_PIPE3_SLICE1 {th2_efp_pipe3_slice1_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_1_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_1_CAM_BIST_STATUS_PIPE3r}
+#define TH2_EFP_PIPE3_SLICE2 {th2_efp_pipe3_slice2_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_2_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_2_CAM_BIST_STATUS_PIPE3r}
+#define TH2_EFP_PIPE3_SLICE3 {th2_efp_pipe3_slice3_name, NO_MODE, NO_MODE_FIELD, EFP_SLICE_3_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EFP_SLICE_3_CAM_BIST_STATUS_PIPE3r}
+#define TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE0 {th2_exact_match_logical_table_select_pipe0_name, NO_MODE, NO_MODE_FIELD, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE0r}
+#define TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE1 {th2_exact_match_logical_table_select_pipe1_name, NO_MODE, NO_MODE_FIELD, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE1r}
+#define TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE2 {th2_exact_match_logical_table_select_pipe2_name, NO_MODE, NO_MODE_FIELD, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE2r}
+#define TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE3 {th2_exact_match_logical_table_select_pipe3_name, NO_MODE, NO_MODE_FIELD, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, EXACT_MATCH_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE3r}
+#define TH2_IFP_TCAM_POOL0_PIPE0 {th2_ifp_tcam_pool0_pipe0_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL0_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL0_BIST_STATUS_PIPE0r}
+#define TH2_IFP_TCAM_POOL1_PIPE0 {th2_ifp_tcam_pool1_pipe0_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL1_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL1_BIST_STATUS_PIPE0r}
+#define TH2_IFP_TCAM_POOL2_PIPE0 {th2_ifp_tcam_pool2_pipe0_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL2_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL2_BIST_STATUS_PIPE0r}
+#define TH2_IFP_TCAM_POOL3_PIPE0 {th2_ifp_tcam_pool3_pipe0_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL3_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL3_BIST_STATUS_PIPE0r}
+#define TH2_IFP_TCAM_POOL0_PIPE1 {th2_ifp_tcam_pool0_pipe1_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL0_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL0_BIST_STATUS_PIPE1r}
+#define TH2_IFP_TCAM_POOL1_PIPE1 {th2_ifp_tcam_pool1_pipe1_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL1_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL1_BIST_STATUS_PIPE1r}
+#define TH2_IFP_TCAM_POOL2_PIPE1 {th2_ifp_tcam_pool2_pipe1_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL2_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL2_BIST_STATUS_PIPE1r}
+#define TH2_IFP_TCAM_POOL3_PIPE1 {th2_ifp_tcam_pool3_pipe1_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL3_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL3_BIST_STATUS_PIPE1r}
+#define TH2_IFP_TCAM_POOL0_PIPE2 {th2_ifp_tcam_pool0_pipe2_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL0_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL0_BIST_STATUS_PIPE2r}
+#define TH2_IFP_TCAM_POOL1_PIPE2 {th2_ifp_tcam_pool1_pipe2_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL1_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL1_BIST_STATUS_PIPE2r}
+#define TH2_IFP_TCAM_POOL2_PIPE2 {th2_ifp_tcam_pool2_pipe2_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL2_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL2_BIST_STATUS_PIPE2r}
+#define TH2_IFP_TCAM_POOL3_PIPE2 {th2_ifp_tcam_pool3_pipe2_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL3_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL3_BIST_STATUS_PIPE2r}
+#define TH2_IFP_TCAM_POOL0_PIPE3 {th2_ifp_tcam_pool0_pipe3_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL0_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL0_BIST_STATUS_PIPE3r}
+#define TH2_IFP_TCAM_POOL1_PIPE3 {th2_ifp_tcam_pool1_pipe3_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL1_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL1_BIST_STATUS_PIPE3r}
+#define TH2_IFP_TCAM_POOL2_PIPE3 {th2_ifp_tcam_pool2_pipe3_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL2_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL2_BIST_STATUS_PIPE3r}
+#define TH2_IFP_TCAM_POOL3_PIPE3 {th2_ifp_tcam_pool3_pipe3_name, NO_MODE, NO_MODE_FIELD, IFP_TCAM_POOL3_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_TCAM_POOL3_BIST_STATUS_PIPE3r}
+#define TH2_IFP_LOGICAL_TABLE_SELECT_PIPE0 {th2_ifp_logical_table_select_pipe0_name, NO_MODE, NO_MODE_FIELD, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE0r}
+#define TH2_IFP_LOGICAL_TABLE_SELECT_PIPE1 {th2_ifp_logical_table_select_pipe1_name, NO_MODE, NO_MODE_FIELD, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE1r}
+#define TH2_IFP_LOGICAL_TABLE_SELECT_PIPE2 {th2_ifp_logical_table_select_pipe2_name, NO_MODE, NO_MODE_FIELD, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE2r}
+#define TH2_IFP_LOGICAL_TABLE_SELECT_PIPE3 {th2_ifp_logical_table_select_pipe3_name, NO_MODE, NO_MODE_FIELD, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IFP_LOGICAL_TABLE_SELECT_CAM_BIST_STATUS_PIPE3r}
+#define TH2_ING_SNAT_PIPE0 {th2_ing_snat_pipe0_name, NO_MODE, NO_MODE_FIELD, ING_SNAT_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, ING_SNAT_CAM_BIST_STATUS_PIPE0r}
+#define TH2_ING_SNAT_PIPE1 {th2_ing_snat_pipe1_name, NO_MODE, NO_MODE_FIELD, ING_SNAT_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, ING_SNAT_CAM_BIST_STATUS_PIPE1r}
+#define TH2_ING_SNAT_PIPE2 {th2_ing_snat_pipe2_name, NO_MODE, NO_MODE_FIELD, ING_SNAT_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, ING_SNAT_CAM_BIST_STATUS_PIPE2r}
+#define TH2_ING_SNAT_PIPE3 {th2_ing_snat_pipe3_name, NO_MODE, NO_MODE_FIELD, ING_SNAT_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, ING_SNAT_CAM_BIST_STATUS_PIPE3r}
+#define TH2_IP_MULTICAST_PIPE0 {th2_ip_multicast_pipe0_name, NO_MODE, NO_MODE_FIELD, IP_MULTICAST_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IP_MULTICAST_CAM_BIST_STATUS_PIPE0r}
+#define TH2_IP_MULTICAST_PIPE1 {th2_ip_multicast_pipe1_name, NO_MODE, NO_MODE_FIELD, IP_MULTICAST_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IP_MULTICAST_CAM_BIST_STATUS_PIPE1r}
+#define TH2_IP_MULTICAST_PIPE2 {th2_ip_multicast_pipe2_name, NO_MODE, NO_MODE_FIELD, IP_MULTICAST_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IP_MULTICAST_CAM_BIST_STATUS_PIPE2r}
+#define TH2_IP_MULTICAST_PIPE3 {th2_ip_multicast_pipe3_name, NO_MODE, NO_MODE_FIELD, IP_MULTICAST_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, IP_MULTICAST_CAM_BIST_STATUS_PIPE3r}
+#define TH2_L2_USER_ENTRY_PIPE0 {th2_l2_user_entry_pipe0_name, NO_MODE, NO_MODE_FIELD, L2_USER_ENTRY_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, L2_USER_ENTRY_CAM_BIST_STATUS_PIPE0r}
+#define TH2_L2_USER_ENTRY_PIPE1 {th2_l2_user_entry_pipe1_name, NO_MODE, NO_MODE_FIELD, L2_USER_ENTRY_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, L2_USER_ENTRY_CAM_BIST_STATUS_PIPE1r}
+#define TH2_L2_USER_ENTRY_PIPE2 {th2_l2_user_entry_pipe2_name, NO_MODE, NO_MODE_FIELD, L2_USER_ENTRY_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, L2_USER_ENTRY_CAM_BIST_STATUS_PIPE2r}
+#define TH2_L2_USER_ENTRY_PIPE3 {th2_l2_user_entry_pipe3_name, NO_MODE, NO_MODE_FIELD, L2_USER_ENTRY_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, L2_USER_ENTRY_CAM_BIST_STATUS_PIPE3r}
+#define TH2_L3_DEFIP_PIPE0_MODE0 {th2_l3_defip_pipe0_mode0_name, 0, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE0r}
+#define TH2_L3_DEFIP_PIPE1_MODE0 {th2_l3_defip_pipe1_mode0_name, 0, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE1r}
+#define TH2_L3_DEFIP_PIPE2_MODE0 {th2_l3_defip_pipe2_mode0_name, 0, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE2r}
+#define TH2_L3_DEFIP_PIPE3_MODE0 {th2_l3_defip_pipe3_mode0_name, 0, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE3r}
+#define TH2_L3_DEFIP_PIPE0_MODE1 {th2_l3_defip_pipe0_mode1_name, 1, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE0r}
+#define TH2_L3_DEFIP_PIPE1_MODE1 {th2_l3_defip_pipe1_mode1_name, 1, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE1r}
+#define TH2_L3_DEFIP_PIPE2_MODE1 {th2_l3_defip_pipe2_mode1_name, 1, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE2r}
+#define TH2_L3_DEFIP_PIPE3_MODE1 {th2_l3_defip_pipe3_mode1_name, 1, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE3r}
+#define TH2_L3_DEFIP_PIPE0_MODE2 {th2_l3_defip_pipe0_mode2_name, 2, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE0r}
+#define TH2_L3_DEFIP_PIPE1_MODE2 {th2_l3_defip_pipe1_mode2_name, 2, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE1r}
+#define TH2_L3_DEFIP_PIPE2_MODE2 {th2_l3_defip_pipe2_mode2_name, 2, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE2r}
+#define TH2_L3_DEFIP_PIPE3_MODE2 {th2_l3_defip_pipe3_mode2_name, 2, NO_MODE_FIELD, L3_DEFIP_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_DEFIP_CAM_BIST_STATUS_PIPE3r}
+#define TH2_L3_TUNNEL_PIPE0 {th2_l3_tunnel_pipe0_name, NO_MODE, NO_MODE_FIELD, L3_TUNNEL_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_TUNNEL_CAM_BIST_STATUS_PIPE0r}
+#define TH2_L3_TUNNEL_PIPE1 {th2_l3_tunnel_pipe1_name, NO_MODE, NO_MODE_FIELD, L3_TUNNEL_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_TUNNEL_CAM_BIST_STATUS_PIPE1r}
+#define TH2_L3_TUNNEL_PIPE2 {th2_l3_tunnel_pipe2_name, NO_MODE, NO_MODE_FIELD, L3_TUNNEL_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_TUNNEL_CAM_BIST_STATUS_PIPE2r}
+#define TH2_L3_TUNNEL_PIPE3 {th2_l3_tunnel_pipe3_name, NO_MODE, NO_MODE_FIELD, L3_TUNNEL_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 16, L3_TUNNEL_CAM_BIST_STATUS_PIPE3r}
+#define TH2_MY_STATION_CAM_PIPE0 {th2_my_station_cam_pipe0_name, NO_MODE, NO_MODE_FIELD, MY_STATION_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, MY_STATION_CAM_BIST_STATUS_PIPE0r}
+#define TH2_MY_STATION_CAM_PIPE1 {th2_my_station_cam_pipe1_name, NO_MODE, NO_MODE_FIELD, MY_STATION_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, MY_STATION_CAM_BIST_STATUS_PIPE1r}
+#define TH2_MY_STATION_CAM_PIPE2 {th2_my_station_cam_pipe2_name, NO_MODE, NO_MODE_FIELD, MY_STATION_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, MY_STATION_CAM_BIST_STATUS_PIPE2r}
+#define TH2_MY_STATION_CAM_PIPE3 {th2_my_station_cam_pipe3_name, NO_MODE, NO_MODE_FIELD, MY_STATION_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 2, MY_STATION_CAM_BIST_STATUS_PIPE3r}
+#define TH2_SRC_COMPRESSION_PIPE0 {th2_src_compression_pipe0_name, NO_MODE, NO_MODE_FIELD, SRC_COMPRESSION_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, SRC_COMPRESSION_CAM_BIST_STATUS_PIPE0r}
+#define TH2_SRC_COMPRESSION_PIPE1 {th2_src_compression_pipe1_name, NO_MODE, NO_MODE_FIELD, SRC_COMPRESSION_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, SRC_COMPRESSION_CAM_BIST_STATUS_PIPE1r}
+#define TH2_SRC_COMPRESSION_PIPE2 {th2_src_compression_pipe2_name, NO_MODE, NO_MODE_FIELD, SRC_COMPRESSION_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, SRC_COMPRESSION_CAM_BIST_STATUS_PIPE2r}
+#define TH2_SRC_COMPRESSION_PIPE3 {th2_src_compression_pipe3_name, NO_MODE, NO_MODE_FIELD, SRC_COMPRESSION_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, SRC_COMPRESSION_CAM_BIST_STATUS_PIPE3r}
+#define TH2_UDF_PIPE0 {th2_udf_pipe0_name, NO_MODE, NO_MODE_FIELD, UDF_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, UDF_CAM_BIST_STATUS_PIPE0r}
+#define TH2_UDF_PIPE1 {th2_udf_pipe1_name, NO_MODE, NO_MODE_FIELD, UDF_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, UDF_CAM_BIST_STATUS_PIPE1r}
+#define TH2_UDF_PIPE2 {th2_udf_pipe2_name, NO_MODE, NO_MODE_FIELD, UDF_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, UDF_CAM_BIST_STATUS_PIPE2r}
+#define TH2_UDF_PIPE3 {th2_udf_pipe3_name, NO_MODE, NO_MODE_FIELD, UDF_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, UDF_CAM_BIST_STATUS_PIPE3r}
+#define TH2_VFP_PIPE0 {th2_vfp_pipe0_name, NO_MODE, NO_MODE_FIELD, VFP_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 8, VFP_CAM_BIST_STATUS_PIPE0r}
+#define TH2_VFP_PIPE1 {th2_vfp_pipe1_name, NO_MODE, NO_MODE_FIELD, VFP_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 8, VFP_CAM_BIST_STATUS_PIPE1r}
+#define TH2_VFP_PIPE2 {th2_vfp_pipe2_name, NO_MODE, NO_MODE_FIELD, VFP_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 8, VFP_CAM_BIST_STATUS_PIPE2r}
+#define TH2_VFP_PIPE3 {th2_vfp_pipe3_name, NO_MODE, NO_MODE_FIELD, VFP_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 8, VFP_CAM_BIST_STATUS_PIPE3r}
+#define TH2_VLAN_SUBNET_PIPE0 {th2_vlan_subnet_pipe0_name, NO_MODE, NO_MODE_FIELD, VLAN_SUBNET_CAM_BIST_CONFIG_64_PIPE0r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, VLAN_SUBNET_CAM_BIST_STATUS_PIPE0r}
+#define TH2_VLAN_SUBNET_PIPE1 {th2_vlan_subnet_pipe1_name, NO_MODE, NO_MODE_FIELD, VLAN_SUBNET_CAM_BIST_CONFIG_64_PIPE1r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, VLAN_SUBNET_CAM_BIST_STATUS_PIPE1r}
+#define TH2_VLAN_SUBNET_PIPE2 {th2_vlan_subnet_pipe2_name, NO_MODE, NO_MODE_FIELD, VLAN_SUBNET_CAM_BIST_CONFIG_64_PIPE2r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, VLAN_SUBNET_CAM_BIST_STATUS_PIPE2r}
+#define TH2_VLAN_SUBNET_PIPE3 {th2_vlan_subnet_pipe3_name, NO_MODE, NO_MODE_FIELD, VLAN_SUBNET_CAM_BIST_CONFIG_64_PIPE3r, NO_CONTROL_REGISTER, NO_CONTROL_ENABLE_FIELD, 1, VLAN_SUBNET_CAM_BIST_STATUS_PIPE3r}
+
+#define TH2_TOTAL_CAMBIST_COUNT 96
+
+#define TH2_DONE_BIT_MASK 0x00000001
+#define TH2_BIST_SUCCESS_MASK 0x00000002
+
+static char th2_cpu_cos_pipe0_name[] = "CPU_COS_PIPE0";
+static char th2_cpu_cos_pipe1_name[] = "CPU_COS_PIPE1";
+static char th2_cpu_cos_pipe2_name[] = "CPU_COS_PIPE2";
+static char th2_cpu_cos_pipe3_name[] = "CPU_COS_PIPE3";
+static char th2_dst_compression_pipe0_name[] = "DST_COMPRESSION_PIPE0";
+static char th2_dst_compression_pipe1_name[] = "DST_COMPRESSION_PIPE1";
+static char th2_dst_compression_pipe2_name[] = "DST_COMPRESSION_PIPE2";
+static char th2_dst_compression_pipe3_name[] = "DST_COMPRESSION_PIPE3";
+static char th2_efp_pipe0_slice0_name[] = "EFP_PIPE0_SLICE0";
+static char th2_efp_pipe0_slice1_name[] = "EFP_PIPE0_SLICE1";
+static char th2_efp_pipe0_slice2_name[] = "EFP_PIPE0_SLICE2";
+static char th2_efp_pipe0_slice3_name[] = "EFP_PIPE0_SLICE3";
+static char th2_efp_pipe1_slice0_name[] = "EFP_PIPE1_SLICE0";
+static char th2_efp_pipe1_slice1_name[] = "EFP_PIPE1_SLICE1";
+static char th2_efp_pipe1_slice2_name[] = "EFP_PIPE1_SLICE2";
+static char th2_efp_pipe1_slice3_name[] = "EFP_PIPE1_SLICE3";
+static char th2_efp_pipe2_slice0_name[] = "EFP_PIPE2_SLICE0";
+static char th2_efp_pipe2_slice1_name[] = "EFP_PIPE2_SLICE1";
+static char th2_efp_pipe2_slice2_name[] = "EFP_PIPE2_SLICE2";
+static char th2_efp_pipe2_slice3_name[] = "EFP_PIPE2_SLICE3";
+static char th2_efp_pipe3_slice0_name[] = "EFP_PIPE3_SLICE0";
+static char th2_efp_pipe3_slice1_name[] = "EFP_PIPE3_SLICE1";
+static char th2_efp_pipe3_slice2_name[] = "EFP_PIPE3_SLICE2";
+static char th2_efp_pipe3_slice3_name[] = "EFP_PIPE3_SLICE3";
+static char th2_exact_match_logical_table_select_pipe0_name[] = "EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE0";
+static char th2_exact_match_logical_table_select_pipe1_name[] = "EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE1";
+static char th2_exact_match_logical_table_select_pipe2_name[] = "EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE2";
+static char th2_exact_match_logical_table_select_pipe3_name[] = "EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE3";
+static char th2_ifp_tcam_pool0_pipe0_name[] = "IFP_TCAM_POOL0_PIPE0";
+static char th2_ifp_tcam_pool1_pipe0_name[] = "IFP_TCAM_POOL1_PIPE0";
+static char th2_ifp_tcam_pool2_pipe0_name[] = "IFP_TCAM_POOL2_PIPE0";
+static char th2_ifp_tcam_pool3_pipe0_name[] = "IFP_TCAM_POOL3_PIPE0";
+static char th2_ifp_tcam_pool0_pipe1_name[] = "IFP_TCAM_POOL0_PIPE1";
+static char th2_ifp_tcam_pool1_pipe1_name[] = "IFP_TCAM_POOL1_PIPE1";
+static char th2_ifp_tcam_pool2_pipe1_name[] = "IFP_TCAM_POOL2_PIPE1";
+static char th2_ifp_tcam_pool3_pipe1_name[] = "IFP_TCAM_POOL3_PIPE1";
+static char th2_ifp_tcam_pool0_pipe2_name[] = "IFP_TCAM_POOL0_PIPE2";
+static char th2_ifp_tcam_pool1_pipe2_name[] = "IFP_TCAM_POOL1_PIPE2";
+static char th2_ifp_tcam_pool2_pipe2_name[] = "IFP_TCAM_POOL2_PIPE2";
+static char th2_ifp_tcam_pool3_pipe2_name[] = "IFP_TCAM_POOL3_PIPE2";
+static char th2_ifp_tcam_pool0_pipe3_name[] = "IFP_TCAM_POOL0_PIPE3";
+static char th2_ifp_tcam_pool1_pipe3_name[] = "IFP_TCAM_POOL1_PIPE3";
+static char th2_ifp_tcam_pool2_pipe3_name[] = "IFP_TCAM_POOL2_PIPE3";
+static char th2_ifp_tcam_pool3_pipe3_name[] = "IFP_TCAM_POOL3_PIPE3";
+static char th2_ifp_logical_table_select_pipe0_name[] = "IFP_LOGICAL_TABLE_SELECT_PIPE0";
+static char th2_ifp_logical_table_select_pipe1_name[] = "IFP_LOGICAL_TABLE_SELECT_PIPE1";
+static char th2_ifp_logical_table_select_pipe2_name[] = "IFP_LOGICAL_TABLE_SELECT_PIPE2";
+static char th2_ifp_logical_table_select_pipe3_name[] = "IFP_LOGICAL_TABLE_SELECT_PIPE3";
+static char th2_ing_snat_pipe0_name[] = "ING_SNAT_PIPE0";
+static char th2_ing_snat_pipe1_name[] = "ING_SNAT_PIPE1";
+static char th2_ing_snat_pipe2_name[] = "ING_SNAT_PIPE2";
+static char th2_ing_snat_pipe3_name[] = "ING_SNAT_PIPE3";
+static char th2_ip_multicast_pipe0_name[] = "IP_MULTICAST_PIPE0";
+static char th2_ip_multicast_pipe1_name[] = "IP_MULTICAST_PIPE1";
+static char th2_ip_multicast_pipe2_name[] = "IP_MULTICAST_PIPE2";
+static char th2_ip_multicast_pipe3_name[] = "IP_MULTICAST_PIPE3";
+static char th2_l2_user_entry_pipe0_name[] = "L2_USER_ENTRY_PIPE0";
+static char th2_l2_user_entry_pipe1_name[] = "L2_USER_ENTRY_PIPE1";
+static char th2_l2_user_entry_pipe2_name[] = "L2_USER_ENTRY_PIPE2";
+static char th2_l2_user_entry_pipe3_name[] = "L2_USER_ENTRY_PIPE3";
+static char th2_l3_defip_pipe0_mode0_name[] = "L3_DEFIP_PIPE0_MODE0";
+static char th2_l3_defip_pipe1_mode0_name[] = "L3_DEFIP_PIPE1_MODE0";
+static char th2_l3_defip_pipe2_mode0_name[] = "L3_DEFIP_PIPE2_MODE0";
+static char th2_l3_defip_pipe3_mode0_name[] = "L3_DEFIP_PIPE3_MODE0";
+static char th2_l3_defip_pipe0_mode1_name[] = "L3_DEFIP_PIPE0_MODE1";
+static char th2_l3_defip_pipe1_mode1_name[] = "L3_DEFIP_PIPE1_MODE1";
+static char th2_l3_defip_pipe2_mode1_name[] = "L3_DEFIP_PIPE2_MODE1";
+static char th2_l3_defip_pipe3_mode1_name[] = "L3_DEFIP_PIPE3_MODE1";
+static char th2_l3_defip_pipe0_mode2_name[] = "L3_DEFIP_PIPE0_MODE2";
+static char th2_l3_defip_pipe1_mode2_name[] = "L3_DEFIP_PIPE1_MODE2";
+static char th2_l3_defip_pipe2_mode2_name[] = "L3_DEFIP_PIPE2_MODE2";
+static char th2_l3_defip_pipe3_mode2_name[] = "L3_DEFIP_PIPE3_MODE2";
+static char th2_l3_tunnel_pipe0_name[] = "L3_TUNNEL_PIPE0";
+static char th2_l3_tunnel_pipe1_name[] = "L3_TUNNEL_PIPE1";
+static char th2_l3_tunnel_pipe2_name[] = "L3_TUNNEL_PIPE2";
+static char th2_l3_tunnel_pipe3_name[] = "L3_TUNNEL_PIPE3";
+static char th2_my_station_cam_pipe0_name[] = "MY_STATION_CAM_PIPE0";
+static char th2_my_station_cam_pipe1_name[] = "MY_STATION_CAM_PIPE1";
+static char th2_my_station_cam_pipe2_name[] = "MY_STATION_CAM_PIPE2";
+static char th2_my_station_cam_pipe3_name[] = "MY_STATION_CAM_PIPE3";
+static char th2_src_compression_pipe0_name[] = "SRC_COMPRESSION_PIPE0";
+static char th2_src_compression_pipe1_name[] = "SRC_COMPRESSION_PIPE1";
+static char th2_src_compression_pipe2_name[] = "SRC_COMPRESSION_PIPE2";
+static char th2_src_compression_pipe3_name[] = "SRC_COMPRESSION_PIPE3";
+static char th2_udf_pipe0_name[] = "UDF_PIPE0";
+static char th2_udf_pipe1_name[] = "UDF_PIPE1";
+static char th2_udf_pipe2_name[] = "UDF_PIPE2";
+static char th2_udf_pipe3_name[] = "UDF_PIPE3";
+static char th2_vfp_pipe0_name[] = "VFP_PIPE0";
+static char th2_vfp_pipe1_name[] = "VFP_PIPE1";
+static char th2_vfp_pipe2_name[] = "VFP_PIPE2";
+static char th2_vfp_pipe3_name[] = "VFP_PIPE3";
+static char th2_vlan_subnet_pipe0_name[] = "VLAN_SUBNET_PIPE0";
+static char th2_vlan_subnet_pipe1_name[] = "VLAN_SUBNET_PIPE1";
+static char th2_vlan_subnet_pipe2_name[] = "VLAN_SUBNET_PIPE2";
+static char th2_vlan_subnet_pipe3_name[] = "VLAN_SUBNET_PIPE3";
+
+static cambist_t th2_cambist_array[] = {
+                                        TH2_CPU_COS_PIPE0,
+                                        TH2_CPU_COS_PIPE1,
+                                        TH2_CPU_COS_PIPE2,
+                                        TH2_CPU_COS_PIPE3,
+                                        TH2_DST_COMPRESSION_PIPE0,
+                                        TH2_DST_COMPRESSION_PIPE1,
+                                        TH2_DST_COMPRESSION_PIPE2,
+                                        TH2_DST_COMPRESSION_PIPE3,
+                                        TH2_EFP_PIPE0_SLICE0,
+                                        TH2_EFP_PIPE0_SLICE1,
+                                        TH2_EFP_PIPE0_SLICE2,
+                                        TH2_EFP_PIPE0_SLICE3,
+                                        TH2_EFP_PIPE1_SLICE0,
+                                        TH2_EFP_PIPE1_SLICE1,
+                                        TH2_EFP_PIPE1_SLICE2,
+                                        TH2_EFP_PIPE1_SLICE3,
+                                        TH2_EFP_PIPE2_SLICE0,
+                                        TH2_EFP_PIPE2_SLICE1,
+                                        TH2_EFP_PIPE2_SLICE2,
+                                        TH2_EFP_PIPE2_SLICE3,
+                                        TH2_EFP_PIPE3_SLICE0,
+                                        TH2_EFP_PIPE3_SLICE1,
+                                        TH2_EFP_PIPE3_SLICE2,
+                                        TH2_EFP_PIPE3_SLICE3,
+                                        TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE0,
+                                        TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE1,
+                                        TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE2,
+                                        TH2_EXACT_MATCH_LOGICAL_TABLE_SELECT_PIPE3,
+                                        TH2_IFP_TCAM_POOL0_PIPE0,
+                                        TH2_IFP_TCAM_POOL1_PIPE0,
+                                        TH2_IFP_TCAM_POOL2_PIPE0,
+                                        TH2_IFP_TCAM_POOL3_PIPE0,
+                                        TH2_IFP_TCAM_POOL0_PIPE1,
+                                        TH2_IFP_TCAM_POOL1_PIPE1,
+                                        TH2_IFP_TCAM_POOL2_PIPE1,
+                                        TH2_IFP_TCAM_POOL3_PIPE1,
+                                        TH2_IFP_TCAM_POOL0_PIPE2,
+                                        TH2_IFP_TCAM_POOL1_PIPE2,
+                                        TH2_IFP_TCAM_POOL2_PIPE2,
+                                        TH2_IFP_TCAM_POOL3_PIPE2,
+                                        TH2_IFP_TCAM_POOL0_PIPE3,
+                                        TH2_IFP_TCAM_POOL1_PIPE3,
+                                        TH2_IFP_TCAM_POOL2_PIPE3,
+                                        TH2_IFP_TCAM_POOL3_PIPE3,
+                                        TH2_IFP_LOGICAL_TABLE_SELECT_PIPE0,
+                                        TH2_IFP_LOGICAL_TABLE_SELECT_PIPE1,
+                                        TH2_IFP_LOGICAL_TABLE_SELECT_PIPE2,
+                                        TH2_IFP_LOGICAL_TABLE_SELECT_PIPE3,
+                                        TH2_ING_SNAT_PIPE0,
+                                        TH2_ING_SNAT_PIPE1,
+                                        TH2_ING_SNAT_PIPE2,
+                                        TH2_ING_SNAT_PIPE3,
+                                        TH2_IP_MULTICAST_PIPE0,
+                                        TH2_IP_MULTICAST_PIPE1,
+                                        TH2_IP_MULTICAST_PIPE2,
+                                        TH2_IP_MULTICAST_PIPE3,
+                                        TH2_L2_USER_ENTRY_PIPE0,
+                                        TH2_L2_USER_ENTRY_PIPE1,
+                                        TH2_L2_USER_ENTRY_PIPE2,
+                                        TH2_L2_USER_ENTRY_PIPE3,
+                                        TH2_L3_DEFIP_PIPE0_MODE0,
+                                        TH2_L3_DEFIP_PIPE1_MODE0,
+                                        TH2_L3_DEFIP_PIPE2_MODE0,
+                                        TH2_L3_DEFIP_PIPE3_MODE0,
+                                        TH2_L3_DEFIP_PIPE0_MODE1,
+                                        TH2_L3_DEFIP_PIPE1_MODE1,
+                                        TH2_L3_DEFIP_PIPE2_MODE1,
+                                        TH2_L3_DEFIP_PIPE3_MODE1,
+                                        TH2_L3_DEFIP_PIPE0_MODE2,
+                                        TH2_L3_DEFIP_PIPE1_MODE2,
+                                        TH2_L3_DEFIP_PIPE2_MODE2,
+                                        TH2_L3_DEFIP_PIPE3_MODE2,
+                                        TH2_L3_TUNNEL_PIPE0,
+                                        TH2_L3_TUNNEL_PIPE1,
+                                        TH2_L3_TUNNEL_PIPE2,
+                                        TH2_L3_TUNNEL_PIPE3,
+                                        TH2_MY_STATION_CAM_PIPE0,
+                                        TH2_MY_STATION_CAM_PIPE1,
+                                        TH2_MY_STATION_CAM_PIPE2,
+                                        TH2_MY_STATION_CAM_PIPE3,
+                                        TH2_SRC_COMPRESSION_PIPE0,
+                                        TH2_SRC_COMPRESSION_PIPE1,
+                                        TH2_SRC_COMPRESSION_PIPE2,
+                                        TH2_SRC_COMPRESSION_PIPE3,
+                                        TH2_UDF_PIPE0,
+                                        TH2_UDF_PIPE1,
+                                        TH2_UDF_PIPE2,
+                                        TH2_UDF_PIPE3,
+                                        TH2_VFP_PIPE0,
+                                        TH2_VFP_PIPE1,
+                                        TH2_VFP_PIPE2,
+                                        TH2_VFP_PIPE3,
+                                        TH2_VLAN_SUBNET_PIPE0,
+                                        TH2_VLAN_SUBNET_PIPE1,
+                                        TH2_VLAN_SUBNET_PIPE2,
+                                        TH2_VLAN_SUBNET_PIPE3
+                                    };

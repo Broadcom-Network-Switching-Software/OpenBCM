@@ -1,0 +1,2811 @@
+#include <soc/mcm/memregs.h>
+#if defined(BCM_88650_A0)
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ * $
+*/
+#ifdef _ERR_MSG_MODULE_NAME
+  #error "_ERR_MSG_MODULE_NAME redefined"
+#endif
+
+#define _ERR_MSG_MODULE_NAME BSL_SOC_FP
+
+
+
+#include <shared/bsl.h>
+#include <shared/swstate/access/sw_state_access.h>
+
+#include <soc/dcmn/error.h>
+#include <soc/mem.h>
+#include <soc/dpp/SAND/Utils/sand_header.h>
+
+#include <soc/dpp/SAND/Management/sand_general_macros.h>
+#include <soc/dpp/SAND/Management/sand_error_code.h>
+#include <soc/dpp/SAND/Utils/sand_os_interface.h>
+
+#include <soc/dpp/ARAD/arad_action_cmd.h>
+#include <soc/dpp/ARAD/arad_pmf_low_level.h>
+#include <soc/dpp/ARAD/arad_pmf_low_level_ce.h>
+#include <soc/dpp/ARAD/arad_pmf_low_level_db.h>
+#include <soc/dpp/ARAD/arad_pmf_low_level_fem_tag.h>
+#include <soc/dpp/ARAD/arad_pmf_low_level_pgm.h>
+#include <soc/dpp/ARAD/arad_api_ports.h>
+#include <soc/dpp/ARAD/arad_sw_db.h>
+#include <soc/dpp/ARAD/arad_reg_access.h>
+#include <soc/dpp/ARAD/arad_api_ports.h>
+#include <soc/dpp/ARAD/arad_init.h>
+#include <soc/dpp/ARAD/arad_ports.h>
+#include <soc/dpp/ARAD/arad_parser.h>
+#include <soc/dpp/ARAD/arad_pmf_prog_select.h>
+#include <soc/dpp/drv.h>
+#include <soc/dpp/ARAD/ARAD_PP/arad_pp_trap_mgmt.h>
+
+
+
+
+
+
+#define ARAD_PMF_DESTINATION_MULTICAST_ID_PREFIX    (SOC_IS_JERICHO(unit)? 0x2: 0x5) 
+#define ARAD_PMF_DESTINATION_FLOW_ID_PREFIX         (0x6) 
+#define ARAD_PMF_DESTINATION_SYSTEM_PORT_PREFIX     (0x1) 
+
+
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+
+#define ARAD_PMF_CPU_TO_CPU_HEADER_PROFILE_OFFSET   (8) 
+#endif 
+#define ARAD_PMF_SNOOP_TRAP_ID_BASE_OFFSET   (12) 
+#define ARAD_PMF_TM_PGM_SYSTEM_PORT_OFFSET   (24) 
+
+
+#define ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS (2 * SOC_DPP_DEFS_GET(unit, ihb_pmf_program_selection_cam_mask_nof_bits)) 
+
+
+
+
+
+
+
+
+
+typedef enum
+{
+    ARAD_PMF_KEY_A = 0,
+    ARAD_PMF_KEY_B,
+    ARAD_PMF_KEY_C,
+    ARAD_PMF_KEY_D
+} ARAD_PMF_KEY;
+
+typedef enum
+{
+    ARAD_PMF_KEY_LSB_0 = 0,
+    ARAD_PMF_KEY_LSB_16 = 16,
+    ARAD_PMF_KEY_LSB_32 = 32,
+    ARAD_PMF_KEY_LSB_48 = 48,
+    ARAD_PMF_KEY_LSB_80 = 80,
+    ARAD_PMF_KEY_LSB_96 = 96,
+    ARAD_PMF_KEY_LSB_112 = 112,
+    ARAD_PMF_KEY_LSB_128 = 128
+} ARAD_PMF_KEY_LSB;
+
+typedef struct
+{
+    
+    uint32 in_port_profile;
+
+    
+    uint32 is_msb;
+
+    
+    uint32 ce_id;
+
+  
+  SOC_PPC_FP_QUAL_TYPE   qual_type;
+
+   
+  uint32 qual_nof_bits;
+
+   
+  uint32 qual_lsb;
+
+  
+  uint32 key_supported_bitmap;
+
+} ARAD_PMF_KEY_CONSTR;
+
+typedef struct
+{
+    
+    uint32 in_port_profile;
+
+    
+    uint32 fes_id;
+   
+  ARAD_PMF_FES_INPUT_INFO fes_info;
+
+  
+  uint32 input_key_id;
+
+  
+  ARAD_PMF_KEY_LSB input_key_lsb;
+
+} ARAD_PMF_FES_CONSTR;
+
+
+
+
+
+
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_stacking[] = {
+            
+            
+    
+#ifdef BCM_88660_A0
+    {2, 0,  8, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_EXT_AFTER_FTMH,  8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 0,  9, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_EXT_AFTER_FTMH,  8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#ifdef BCM_88660_A0
+    {2, 0, 10, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_START_OF_PACKET, 8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    
+    
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+    {2, 1, 10, SOC_PPC_FP_QUAL_HDR_FTMH,                       16, 52,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 1,  2, SOC_PPC_FP_QUAL_HDR_DSP_EXTENSION_AFTER_FTMH,   16,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+     
+    {2, 0, 11, SOC_PPC_FP_QUAL_HDR_FTMH,                        8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 14, SOC_PPC_FP_QUAL_HDR_FTMH,                       32,  8,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_FTMH,                       32, 40,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    {2, 1,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)},  
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 2,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1,  3, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT, 16,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    
+    {2, 0,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  2, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  3, SOC_PPC_FP_QUAL_HDR_FTMH,                       16, 52,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 1,  4, SOC_PPC_FP_QUAL_IRPP_SRC_TM_PORT,                 8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT,   8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  6, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,         4, 8,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  7, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT,   8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+#endif 
+
+
+
+    
+    {2, 1,  8, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,  9, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 7,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    
+
+        };
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Jer_pmf_key_construction_info_stacking[] = {
+            
+            
+    
+#ifdef BCM_88660_A0
+    {2, 0,  8, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_EXT_AFTER_FTMH,  8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 0,  9, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_EXT_AFTER_FTMH,  8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#ifdef BCM_88660_A0
+    {2, 0, 10, SOC_PPC_FP_QUAL_HDR_FTMH_LB_KEY_START_OF_PACKET, 8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    
+    
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+    {2, 1, 10, SOC_PPC_FP_QUAL_HDR_FTMH,                       16, 52,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 1,  2, SOC_PPC_FP_QUAL_HDR_DSP_EXTENSION_AFTER_FTMH,   16,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+     
+    {2, 0, 11, SOC_PPC_FP_QUAL_HDR_FTMH,                        8,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 14, SOC_PPC_FP_QUAL_HDR_FTMH,                       32,  8,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_FTMH,                       32, 40,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    {2, 1,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 2,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1,  3, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT, 16,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    {2, 0,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  2, SOC_PPC_FP_QUAL_HDR_FTMH,                        1, 51,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  3, SOC_PPC_FP_QUAL_HDR_FTMH,                       16, 52,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 1,  4, SOC_PPC_FP_QUAL_IRPP_SRC_PP_PORT           ,      9, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT,   8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  6, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,         4, 8,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  7, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT,   8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+#endif 
+
+    
+    {2, 1,  8, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,  9, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 7,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    
+        };
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_stacking_petra_mode[] = {
+            
+            
+     
+    {2, 0, 11, SOC_PPC_FP_QUAL_HDR_FTMH,                        1, 19,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 12, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 3,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 13, SOC_PPC_FP_QUAL_HDR_FTMH,                       12, 20,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 14, SOC_PPC_FP_QUAL_HDR_FTMH,                       32,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_FTMH,                       32, 32,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1,  6, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT_PETRA, 16,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+
+    {2, 0,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 6,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0,  2, SOC_PPC_FP_QUAL_HDR_FTMH,                       12, 52,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+    {2, 1,  0, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  2, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  3, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 2,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  4, SOC_PPC_FP_QUAL_HDR_FTMH,                       14, 50,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_HDR_FTMH,                        1, 47,  SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+    {2, 0,  3, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   2,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,  4, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 2,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,  5, SOC_PPC_FP_QUAL_HDR_FTMH,                       15, 49,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,  6, SOC_PPC_FP_QUAL_HDR_FTMH,                        8, 48,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 0,  7, SOC_PPC_FP_QUAL_IRPP_SRC_TM_PORT,                    8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,  8, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT_PETRA,8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,  9, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,            4, 8,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 10, SOC_PPC_FP_QUAL_HDR_STACKING_EXT_AFTER_DSP_EXT_PETRA,8, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+#endif 
+
+    {2, 1,  8, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                   1,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,  9, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                 7,  0,  SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+        };
+
+        
+ 
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_xgs_7_modid_8_port[] = {
+            
+            
+
+    
+    {0, 0, 8 , SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT, 2 ,  2, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+    {0, 0, 14, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 32,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 0, 15, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 32, 32, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    
+    {0, 1, 0,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+    {0, 1, 1,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 3 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 1, 2,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 15, 17, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 1, 3, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    
+    {0, 0, 0,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES           , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 0, 1,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES         , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 0, 2,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES           , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 6,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 11, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 1 , 11, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 12, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 20, 8 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    
+    {0, 1, 4,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES     , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 1, 8,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES   , 2 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 1, 9,  SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 1, 10, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC     , 2 , 58, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+    {0, 0, 3,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES  , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 0, 7,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES, 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)},  
+    {0, 0, 13, SOC_PPC_FP_QUAL_HDR_HIGIG_PPD  , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    {0, 1, 11, SOC_PPC_FP_QUAL_IRPP_ALL_ONES          , 2 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_C)},   
+    {0, 1, 12, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES        , 3 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 1, 13, SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT, 14, 18, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 1, 15, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 6 , 58, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+    
+     
+     
+    {0, 0, 4,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    {0, 1, 5,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 8, 48, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {0, 1, 7,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 8, 48, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {0, 1, 14, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 1,  32, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+     
+        };
+
+
+ 
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_xgs_8_modid_7_port[] = {
+            
+            
+
+         
+    {0, 0, 8 , SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT, 2 ,  2, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+    {0, 0, 14, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 32,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 0, 15, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 32, 32, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    
+    {0, 1, 0,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+    {0, 1, 1,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 3 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 1, 2,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 8,   16, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 1, 3,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 7,   25, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {0, 1, 6, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    
+    
+    {0, 0, 0,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES           , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 0, 1,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES         , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 0, 2,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES           , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 6,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 11, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 1 , 11, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 0, 12, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 20, 8 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    
+    {0, 1, 4,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES     , 1 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 1, 8,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES   , 2 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {0, 1, 9,  SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_B)},
+    {0, 1, 10, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC     , 2 , 58, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+    {0, 0, 3,  SOC_PPC_FP_QUAL_IRPP_ALL_ONES  , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 0, 7,  SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES, 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)},  
+    {0, 0, 13, SOC_PPC_FP_QUAL_HDR_HIGIG_PPD  , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    {0, 1, 11, SOC_PPC_FP_QUAL_IRPP_ALL_ONES          , 2 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_C)},   
+    {0, 1, 12, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES        , 3 , 0 , SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 1, 13, SOC_PPC_FP_QUAL_HDR_HIGIG_PPD_EXT, 14, 18, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {0, 1, 15, SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 6 , 58, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+  
+   
+   
+    {0, 0, 4,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC    , 16, 16, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    {0, 1, 5,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 8, 48, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {0, 1, 7,  SOC_PPC_FP_QUAL_HDR_HIGIG_FRC           , 8, 48, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {0, 1, 14, SOC_PPC_FP_QUAL_IRPP_IN_PORT_KEY_GEN_VAR, 1,  32, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+     
+        };
+
+
+
+
+
+
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_tm[] = {
+            
+            
+     
+    {2, 0, 3, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 80, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 4, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32, 96, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 5, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,128, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1, 9, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,12, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,16, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,13, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,48, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+     
+
+    {2, 0, 6, SOC_PPC_FP_QUAL_HDR_ITMH,                 32, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 9, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,        20, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,  8,12, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  2, SOC_PPC_FP_QUAL_HDR_ITMH,                  5, 3, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_IRPP_PTC_KEY_GEN_VAR,      8, 8, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 0, 0, SOC_PPC_FP_QUAL_HDR_PTCH_RESERVE_LSB,        1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+        
+    {2, 0, 1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,            15, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+#if (ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED || ARAD_PMF_OAM_TS_ITMH_USER_HEADER_WA_ENABLED)
+    {2, 0, 2, SOC_PPC_FP_QUAL_PACKET_FORMAT_QUALIFIER0,    1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B) | SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 0,  13, SOC_PPC_FP_QUAL_HDR_ITMH,                  17, 31-16, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,  14, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         3, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+
+    {2, 1,  0, SOC_PPC_FP_QUAL_HDR_ITMH,                   4,31-19, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  3, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,   4, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  8, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,          16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1, 10, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,          2, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+    {2, 0, 7, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,            24, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 8, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          6, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C) | SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,10, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,            1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,11, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          5, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,12, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     0, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    {2, 1, 4, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR, 4, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 6, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,        16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 7, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,               20, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,11, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+};
+
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        JerichoAsArad_pmf_key_construction_info_tm[] = {
+            
+            
+     
+    {2, 0, 3, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 80, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 4, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32, 96, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 5, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,128, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1, 9, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,12, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,16, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,13, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,48, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+     
+
+    {2, 0,  6, SOC_PPC_FP_QUAL_HDR_ITMH,                 32, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 14, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,        20, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,  8,12, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  2, SOC_PPC_FP_QUAL_HDR_ITMH,                  5, 3, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_IRPP_PTC_KEY_GEN_VAR,      8, 8, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 0, 0, SOC_PPC_FP_QUAL_HDR_PTCH_RESERVE_LSB,        1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+        
+    {2, 0, 1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,            15, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+#if (ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED || ARAD_PMF_OAM_TS_ITMH_USER_HEADER_WA_ENABLED)
+    {2, 0, 2, SOC_PPC_FP_QUAL_PACKET_FORMAT_QUALIFIER0,    1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B) | SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 0, 12, SOC_PPC_FP_QUAL_HDR_ITMH,                  17,15, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0, 13, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         3, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+
+    {2, 1,  0, SOC_PPC_FP_QUAL_HDR_ITMH,                   4,31-19, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  3, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,   4, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  8, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,          16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1, 10, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,          2, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+    {2, 0, 7, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,            24, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 8, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          6, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 9, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,            1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,10, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          5, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D) | SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,11, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     0, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    {2, 1, 4, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR, 2, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 6, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,       17, 3, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 7, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR, 3,24, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,11, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,       16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,14, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,            20, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,15, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+};
+
+
+#if 0
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Jericho_pmf_key_construction_info_tm[] = {
+            
+            
+     
+    {2, 0, 3, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 80, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 4, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32, 96, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 0, 5, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,128, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+    {2, 1, 9, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     16, 0, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,12, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,16, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+    {2, 1,13, SOC_PPC_FP_QUAL_HDR_ITMH_PMF_HDR_EXT,     32,48, SOC_SAND_BIT(ARAD_PMF_KEY_A)}, 
+
+     
+
+    {2, 0,  6, SOC_PPC_FP_QUAL_HDR_ITMH,                 32, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 14, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 0, 15, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,        20, 0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    {2, 1,  1, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,  8,12, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  2, SOC_PPC_FP_QUAL_HDR_ITMH,                  5, 3, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+    {2, 1,  5, SOC_PPC_FP_QUAL_IRPP_PTC_KEY_GEN_VAR,      8, 8, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+    
+    {2, 0, 0, SOC_PPC_FP_QUAL_HDR_PTCH_RESERVE_LSB,        1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+        
+    {2, 0, 1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,            15, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+#if (ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED || ARAD_PMF_OAM_TS_ITMH_USER_HEADER_WA_ENABLED)
+    {2, 0, 2, SOC_PPC_FP_QUAL_PACKET_FORMAT_QUALIFIER0,    1, 0,  SOC_SAND_BIT(ARAD_PMF_KEY_B) | SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+#endif 
+    {2, 0, 12, SOC_PPC_FP_QUAL_HDR_ITMH,                  17,15, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0, 13, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,         3, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+
+    {2, 1,  0, SOC_PPC_FP_QUAL_HDR_ITMH,                   4,31-19 - 8, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  3, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR,   4, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1,  8, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,          16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 1, 10, SOC_PPC_FP_QUAL_IRPP_PKT_HDR_TYPE,          2, 0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+    
+    {2, 0, 7, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,            24, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 8, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          6, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0, 9, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,            1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 0,10, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,          5, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D) | SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+    {2, 0,11, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     0, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+
+    {2, 1, 4, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR, 2, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 6, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,       17, 3, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1, 7, SOC_PPC_FP_QUAL_IRPP_PMF_PGM_KEY_GEN_VAR, 3,24, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,11, SOC_PPC_FP_QUAL_HDR_ITMH_DEST_FWD,       16, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,14, SOC_PPC_FP_QUAL_HDR_ITMH_EXT,            20, 4, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+    {2, 1,15, SOC_PPC_FP_QUAL_IRPP_PARSER_LEAF_CONTEXT,     1, 0, SOC_SAND_BIT(ARAD_PMF_KEY_D)}, 
+};
+#endif
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_mh[] = {
+            
+
+	
+	{5, 0, 15, SOC_PPC_FP_QUAL_HDR_MH_FLOW	  	, 16,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0, 14, SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0, 13, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0, 12, SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0, 11, SOC_PPC_FP_QUAL_HDR_MH_CAST      , 8 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+    {5, 0, 10, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 4 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  9, SOC_PPC_FP_QUAL_HDR_MH_FLOW	  	, 16,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  8, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  7, SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 3 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+																					
+																					
+
+      																	
+	{5, 1,11, SOC_PPC_FP_QUAL_HDR_MH_TC10      , 2 ,  6, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1,10, SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1, 9, SOC_PPC_FP_QUAL_IRPP_SRC_TM_PORT , 5 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1, 8, SOC_PPC_FP_QUAL_HDR_MH_TC10      , 2 ,  6, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1, 7, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 1 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1, 6, SOC_PPC_FP_QUAL_IRPP_SRC_TM_PORT , 5 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 1, 5, SOC_PPC_FP_QUAL_HDR_MH_TC2       , 5 ,  3, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	  														
+	{5, 1, 4, SOC_PPC_FP_QUAL_HDR_MH_DP0       , 6 ,  2, SOC_SAND_BIT(ARAD_PMF_KEY_C)},
+	{5, 1, 3, SOC_PPC_FP_QUAL_IRPP_ALL_ONES    , 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+	{5, 1, 2, SOC_PPC_FP_QUAL_HDR_MH_DP0       , 6 ,  2, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+	{5, 1, 1, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES  , 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+	{5, 1, 0, SOC_PPC_FP_QUAL_HDR_MH_DP1       , 5 ,  3, SOC_SAND_BIT(ARAD_PMF_KEY_C)}, 
+
+	
+    
+    
+
+        };
+
+CONST STATIC
+    ARAD_PMF_KEY_CONSTR
+        Arad_pmf_key_construction_info_inpHeader[] = {        
+            
+
+	
+	{5, 0, 11, SOC_PPC_FP_QUAL_HDR_INPHEADER_UC	  	, 4,   0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0, 10, SOC_PPC_FP_QUAL_HDR_INPHEADER_UC_TC  , 3 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  9, SOC_PPC_FP_QUAL_HDR_INPHEADER_TB     , 8 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  6, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES      , 6 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  5, SOC_PPC_FP_QUAL_IRPP_ALL_ONES        , 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+	{5, 0,  3, SOC_PPC_FP_QUAL_HDR_INPHEADER_DP	  	, 5,   0, SOC_SAND_BIT(ARAD_PMF_KEY_A)},
+																					
+																			
+	{5, 0, 13, SOC_PPC_FP_QUAL_HDR_INPHEADER_MC_TC   , 3 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 0,  9, SOC_PPC_FP_QUAL_HDR_INPHEADER_TB      , 8 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 0,  6, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES       , 6 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+	{5, 0,  5, SOC_PPC_FP_QUAL_IRPP_ALL_ONES         , 2 ,  0, SOC_SAND_BIT(ARAD_PMF_KEY_B)}, 
+
+    
+    
+
+        };
+
+
+CONST STATIC 
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_stacking[] = {
+            
+  
+            
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+  {2, 0,  {SOC_SAND_MAGIC_NUM_VAL,    0, SOC_PPC_FP_ACTION_TYPE_OUTLIF, TRUE},                      ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80}, 
+#endif 
+            
+  {2, 1,  {SOC_SAND_MAGIC_NUM_VAL,    16, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80},
+  {2, 2,  {SOC_SAND_MAGIC_NUM_VAL,    23, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {2, 3,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80},
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  {2, 4,  {SOC_SAND_MAGIC_NUM_VAL,    23, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0}, 
+  {2, 5,  {SOC_SAND_MAGIC_NUM_VAL,    7, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2, 6,  {SOC_SAND_MAGIC_NUM_VAL,    23, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0}, 
+  {2, 7,  {SOC_SAND_MAGIC_NUM_VAL,   19, SOC_PPC_FP_ACTION_TYPE_OUTLIF, FALSE},                    ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+#endif 
+
+  {2, 8,  {SOC_SAND_MAGIC_NUM_VAL,     9, SOC_PPC_FP_ACTION_TYPE_PPH_TYPE,      TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2, 9,  {SOC_SAND_MAGIC_NUM_VAL,    13, SOC_PPC_FP_ACTION_TYPE_DP,            TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2, 10,  {SOC_SAND_MAGIC_NUM_VAL,     7, SOC_PPC_FP_ACTION_TYPE_SRC_SYST_PORT, TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_32},
+  {2, 11,  {SOC_SAND_MAGIC_NUM_VAL,    23, SOC_PPC_FP_ACTION_TYPE_TC,            TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_32},
+  {2, 12,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_DEST,          TRUE},              ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0},
+  {2, 13,  {SOC_SAND_MAGIC_NUM_VAL,    23, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {2, 14,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_DEST,          TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_96},
+  {2, 15, {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_FWD_OFFSET,    TRUE},              ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80},
+  {2, 16, {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_LAG_LB,    TRUE},              ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0},
+        };
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_stacking_petra_mode[] = {
+            
+  
+      
+
+  {2, 1,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80},
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  {2, 2,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80}, 
+  {2, 3,  {SOC_SAND_MAGIC_NUM_VAL,    0, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, FALSE},  ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0}, 
+  {2, 4,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80}, 
+  {2, 5,  {SOC_SAND_MAGIC_NUM_VAL,   19, SOC_PPC_FP_ACTION_TYPE_OUTLIF, FALSE},                    ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0}, 
+#endif 
+  
+
+  {2, 6,  {SOC_SAND_MAGIC_NUM_VAL,     1, SOC_PPC_FP_ACTION_TYPE_EXC_SRC,       TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2, 7,  {SOC_SAND_MAGIC_NUM_VAL,    29, SOC_PPC_FP_ACTION_TYPE_TC,            TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2, 8,  {SOC_SAND_MAGIC_NUM_VAL,     6, SOC_PPC_FP_ACTION_TYPE_DP,            TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2, 9,  {SOC_SAND_MAGIC_NUM_VAL,     2, SOC_PPC_FP_ACTION_TYPE_MIR_DIS,       TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {2,10,  {SOC_SAND_MAGIC_NUM_VAL,     3, SOC_PPC_FP_ACTION_TYPE_PPH_TYPE,      TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16}, 
+  {2,11,  {SOC_SAND_MAGIC_NUM_VAL,    16, SOC_PPC_FP_ACTION_TYPE_SRC_SYST_PORT, TRUE},              ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_48},
+  {2,12,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_DEST,          TRUE},              ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2,13,  {SOC_SAND_MAGIC_NUM_VAL,     7, SOC_PPC_FP_ACTION_TYPE_DEST,         FALSE},              ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+  {2,14,  {SOC_SAND_MAGIC_NUM_VAL,     0, SOC_PPC_FP_ACTION_TYPE_DEST,         FALSE},              ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+
+        };
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_xgs[] = {
+            
+  
+  {0, 0, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_OUTLIF,                TRUE},   ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0},
+  {0, 1, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_TC,                    TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_48},
+  {0, 2, {SOC_SAND_MAGIC_NUM_VAL,     6,  SOC_PPC_FP_ACTION_TYPE_DP,                    TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {0, 3, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_SRC_SYST_PORT,         TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {0, 4, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_DEST,                  TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0},
+  {0, 5, {SOC_SAND_MAGIC_NUM_VAL,     5,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80},
+  {0, 6, {SOC_SAND_MAGIC_NUM_VAL,     17, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,          FALSE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_48},
+  {0, 7, {SOC_SAND_MAGIC_NUM_VAL,     1,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {0, 8, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,          FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {0, 9, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_DEST,                  TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0},
+  {0, 10, {SOC_SAND_MAGIC_NUM_VAL,    0,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80},
+  {0, 11, {SOC_SAND_MAGIC_NUM_VAL,    4,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {0, 12, {SOC_SAND_MAGIC_NUM_VAL,    16, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2,         TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {0, 13, {SOC_SAND_MAGIC_NUM_VAL,    1,  SOC_PPC_FP_ACTION_TYPE_LAG_LB,                TRUE},   ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80},
+
+        };
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Jericho_pmf_fes_construction_info_xgs[] = {
+            
+  
+  {0, 0, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_OUTLIF,                TRUE},   ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0},
+  {0, 1, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_TC,                    TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_48},
+  {0, 2, {SOC_SAND_MAGIC_NUM_VAL,     6,  SOC_PPC_FP_ACTION_TYPE_DP,                    TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {0, 3, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_SRC_SYST_PORT,         TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {0, 4, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_DEST,                  TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0},
+  {0, 5, {SOC_SAND_MAGIC_NUM_VAL,     5,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80},
+  {0, 6, {SOC_SAND_MAGIC_NUM_VAL,     17, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,          FALSE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_48},
+  {0, 7, {SOC_SAND_MAGIC_NUM_VAL,     1,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {0, 8, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,          FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {0, 9, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_DEST,                  TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0},
+  {0, 10, {SOC_SAND_MAGIC_NUM_VAL,    1,  SOC_PPC_FP_ACTION_TYPE_DEST,                  TRUE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_80},
+  {0, 11, {SOC_SAND_MAGIC_NUM_VAL,    4,  SOC_PPC_FP_ACTION_TYPE_DEST,                  FALSE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {0, 12, {SOC_SAND_MAGIC_NUM_VAL,    16, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2,         TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_16},
+  {0, 13, {SOC_SAND_MAGIC_NUM_VAL,    1,  SOC_PPC_FP_ACTION_TYPE_LAG_LB,                TRUE},   ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80},
+};
+
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_tm[] = {
+            
+  
+  {2, 0, {SOC_SAND_MAGIC_NUM_VAL,        9, SOC_PPC_FP_ACTION_TYPE_SNP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2, 1, {SOC_SAND_MAGIC_NUM_VAL,       27, SOC_PPC_FP_ACTION_TYPE_TC, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {2, 2, {SOC_SAND_MAGIC_NUM_VAL,       25, SOC_PPC_FP_ACTION_TYPE_DP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {2, 3, {SOC_SAND_MAGIC_NUM_VAL,         18, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 4, {SOC_SAND_MAGIC_NUM_VAL,        31, SOC_PPC_FP_ACTION_TYPE_MIRROR, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_128}, 
+  {2, 5, {SOC_SAND_MAGIC_NUM_VAL,       19, SOC_PPC_FP_ACTION_TYPE_PPH_TYPE, TRUE},                 ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 6, {SOC_SAND_MAGIC_NUM_VAL,          4, SOC_PPC_FP_ACTION_TYPE_IS, FALSE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16}, 
+  {2, 7, {SOC_SAND_MAGIC_NUM_VAL,          0, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2, 8, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_FWD_OFFSET, TRUE},                 ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0},  
+  {2, 9, {SOC_SAND_MAGIC_NUM_VAL,          0, SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE, TRUE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2,10, {SOC_SAND_MAGIC_NUM_VAL,          5, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, TRUE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16}, 
+  {2,11, {SOC_SAND_MAGIC_NUM_VAL,          0, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},             ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80}, 
+  {2,12, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_OUTLIF, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+  {2,13, {SOC_SAND_MAGIC_NUM_VAL,          1, SOC_PPC_FP_ACTION_TYPE_DEST, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80}, 
+  {2,14, {SOC_SAND_MAGIC_NUM_VAL,          19, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2,15, {SOC_SAND_MAGIC_NUM_VAL,          5, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_96}, 
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  {2,16, {SOC_SAND_MAGIC_NUM_VAL,        3+17+6-16, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, FALSE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_16}, 
+#endif 
+  {2,17, {SOC_SAND_MAGIC_NUM_VAL,        7, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, TRUE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_96}, 
+  {2,18, {SOC_SAND_MAGIC_NUM_VAL,        4, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, FALSE}, ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_48}, 
+  {2,19, {SOC_SAND_MAGIC_NUM_VAL,        2, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},           ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+
+  
+  
+	  
+};
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        JerichoAsArad_pmf_fes_construction_info_tm[] = {
+            
+  
+  {2, 0, {SOC_SAND_MAGIC_NUM_VAL,        9, SOC_PPC_FP_ACTION_TYPE_SNP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2, 1, {SOC_SAND_MAGIC_NUM_VAL,       27, SOC_PPC_FP_ACTION_TYPE_TC, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {2, 2, {SOC_SAND_MAGIC_NUM_VAL,       25, SOC_PPC_FP_ACTION_TYPE_DP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {2, 3, {SOC_SAND_MAGIC_NUM_VAL,       18, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 4, {SOC_SAND_MAGIC_NUM_VAL,       31, SOC_PPC_FP_ACTION_TYPE_MIRROR, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_128}, 
+  {2, 5, {SOC_SAND_MAGIC_NUM_VAL,       19, SOC_PPC_FP_ACTION_TYPE_PPH_TYPE, TRUE},                 ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 6, {SOC_SAND_MAGIC_NUM_VAL,        4, SOC_PPC_FP_ACTION_TYPE_IS, FALSE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16}, 
+  {2, 7, {SOC_SAND_MAGIC_NUM_VAL,        0, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2, 8, {SOC_SAND_MAGIC_NUM_VAL,       17, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2, 9, {SOC_SAND_MAGIC_NUM_VAL,        5, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_96}, 
+  {2,10, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_FWD_OFFSET, TRUE},                 ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0},  
+  {2,11, {SOC_SAND_MAGIC_NUM_VAL,          0, SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE, TRUE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2,12, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_OUTLIF, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+  {2,13, {SOC_SAND_MAGIC_NUM_VAL,          1, SOC_PPC_FP_ACTION_TYPE_DEST, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80}, 
+  {2,14, {SOC_SAND_MAGIC_NUM_VAL,          19, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+  {2,15, {SOC_SAND_MAGIC_NUM_VAL,          8, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_112}, 
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  {2,16, {SOC_SAND_MAGIC_NUM_VAL,         0+3+1+5, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, FALSE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_16}, 
+#endif 
+  {2,17, {SOC_SAND_MAGIC_NUM_VAL,        7, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, TRUE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_96}, 
+  {2,18, {SOC_SAND_MAGIC_NUM_VAL,        4, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, FALSE}, ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_48}, 
+  {2,19, {SOC_SAND_MAGIC_NUM_VAL,        5, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, TRUE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16}, 
+  {2,20, {SOC_SAND_MAGIC_NUM_VAL,        0, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},             ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80}, 
+  {2,21, {SOC_SAND_MAGIC_NUM_VAL,        2, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},           ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+};
+
+
+#if 0
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Jericho_pmf_fes_construction_info_tm[] = {
+            
+  
+  {2, 2, {SOC_SAND_MAGIC_NUM_VAL,       16, SOC_PPC_FP_ACTION_TYPE_DP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32},
+  {2, 3, {SOC_SAND_MAGIC_NUM_VAL,       18, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT, FALSE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 4, {SOC_SAND_MAGIC_NUM_VAL,       31, SOC_PPC_FP_ACTION_TYPE_MIRROR, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_128}, 
+  {2, 5, {SOC_SAND_MAGIC_NUM_VAL,        9, SOC_PPC_FP_ACTION_TYPE_SNP, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2, 6, {SOC_SAND_MAGIC_NUM_VAL,       6, SOC_PPC_FP_ACTION_TYPE_TC, TRUE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16},
+  {2, 7, {SOC_SAND_MAGIC_NUM_VAL,       19, SOC_PPC_FP_ACTION_TYPE_PPH_TYPE, TRUE},                 ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_32}, 
+  {2, 8, {SOC_SAND_MAGIC_NUM_VAL,        4, SOC_PPC_FP_ACTION_TYPE_IS, FALSE},                         ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_16}, 
+  {2, 9, {SOC_SAND_MAGIC_NUM_VAL,        0, SOC_PPC_FP_ACTION_TYPE_DEST, TRUE},                     ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0}, 
+
+
+  {2,12, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_FWD_OFFSET, TRUE},                 ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_0},  
+  {2,13, {SOC_SAND_MAGIC_NUM_VAL,          0, SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE, TRUE},             ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {2,14, {SOC_SAND_MAGIC_NUM_VAL,          2, SOC_PPC_FP_ACTION_TYPE_OUTLIF, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+  {2,15, {SOC_SAND_MAGIC_NUM_VAL,          1, SOC_PPC_FP_ACTION_TYPE_DEST, FALSE},                     ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80}, 
+ 
+ 
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  {2,18, {SOC_SAND_MAGIC_NUM_VAL,         0+3+1+5, SOC_PPC_FP_ACTION_TYPE_STACK_RT_HIST, FALSE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_16}, 
+#endif 
+  {2,19, {SOC_SAND_MAGIC_NUM_VAL,        7, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, TRUE}, ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_96}, 
+  {2,20, {SOC_SAND_MAGIC_NUM_VAL,        4, SOC_PPC_FP_ACTION_TYPE_SYSTEM_HEADER_PROFILE_ID, FALSE}, ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_48}, 
+  {2,21, {SOC_SAND_MAGIC_NUM_VAL,        5, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, TRUE},             ARAD_PMF_KEY_B,  ARAD_PMF_KEY_LSB_0}, 
+  {2,22, {SOC_SAND_MAGIC_NUM_VAL,        0, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},             ARAD_PMF_KEY_D, ARAD_PMF_KEY_LSB_80}, 
+  {2,23, {SOC_SAND_MAGIC_NUM_VAL,        2, SOC_PPC_FP_ACTION_TYPE_USER_HEADER_2, FALSE},           ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_0}, 
+};
+#endif
+
+
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_mh[] = {
+            
+  
+
+  {5, 0, {SOC_SAND_MAGIC_NUM_VAL,     5,  SOC_PPC_FP_ACTION_TYPE_DP,                   TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80},
+  {5, 1, {SOC_SAND_MAGIC_NUM_VAL,    18,  SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,        FALSE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80},
+  {5, 2, {SOC_SAND_MAGIC_NUM_VAL,    13,  SOC_PPC_FP_ACTION_TYPE_DP,                   TRUE},   ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_80},
+  {5, 3, {SOC_SAND_MAGIC_NUM_VAL,     0 , SOC_PPC_FP_ACTION_TYPE_DEST,                 TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 4, {SOC_SAND_MAGIC_NUM_VAL,    27 , SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,        FALSE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 5, {SOC_SAND_MAGIC_NUM_VAL,     0 , SOC_PPC_FP_ACTION_TYPE_DEST,                 TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_32},
+  {5, 6, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_TC,                   TRUE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {5, 7, {SOC_SAND_MAGIC_NUM_VAL,     18, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,        FALSE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {5, 8, {SOC_SAND_MAGIC_NUM_VAL,     8,  SOC_PPC_FP_ACTION_TYPE_TC,                   TRUE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},       
+  {5, 9, {SOC_SAND_MAGIC_NUM_VAL,     0,  SOC_PPC_FP_ACTION_TYPE_VSQ_PTR,              TRUE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+  {5,10, {SOC_SAND_MAGIC_NUM_VAL,     18, SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,        FALSE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80}, 
+  {5,11, {SOC_SAND_MAGIC_NUM_VAL,     8,  SOC_PPC_FP_ACTION_TYPE_VSQ_PTR,              TRUE},   ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_80},
+};
+
+
+
+CONST STATIC
+    ARAD_PMF_FES_CONSTR
+        Arad_pmf_fes_construction_info_inpHeader[] = {
+            
+  
+  {5, 0, {SOC_SAND_MAGIC_NUM_VAL,    3 , SOC_PPC_FP_ACTION_TYPE_DEST,            FALSE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 1, {SOC_SAND_MAGIC_NUM_VAL,    3 , SOC_PPC_FP_ACTION_TYPE_TC,              FALSE},  ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 2, {SOC_SAND_MAGIC_NUM_VAL,    26 , SOC_PPC_FP_ACTION_TYPE_DP,             TRUE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 3, {SOC_SAND_MAGIC_NUM_VAL,    3,  SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,    FALSE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},
+  {5, 4, {SOC_SAND_MAGIC_NUM_VAL,    0, SOC_PPC_FP_ACTION_TYPE_DEST,             TRUE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0},
+  {5, 5, {SOC_SAND_MAGIC_NUM_VAL,    3,  SOC_PPC_FP_ACTION_TYPE_INVALID_NEXT,    FALSE},   ARAD_PMF_KEY_A, ARAD_PMF_KEY_LSB_0},   
+  {5, 6, {SOC_SAND_MAGIC_NUM_VAL,    0,  SOC_PPC_FP_ACTION_TYPE_TC,              TRUE},  ARAD_PMF_KEY_B, ARAD_PMF_KEY_LSB_0},
+
+};
+
+
+STATIC
+uint32
+  arad_pmf_low_level_ce_key_construction_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx,
+    SOC_SAND_IN  uint32                in_port_profile, 
+    SOC_SAND_IN  uint32                pmf_key_construction_info_length,
+    SOC_SAND_IN  ARAD_PMF_KEY_CONSTR   *pmf_key_construction_info
+  )
+{
+    uint32      
+      table_line,      
+      pmf_key,
+      res = SOC_SAND_OK;
+    uint8
+      is_second_lookup,
+      found;
+    ARAD_PMF_CE_IRPP_QUALIFIER_INFO     
+      qual_info;
+    ARAD_PMF_CE_HEADER_QUAL_INFO          
+      header_qual_info;
+    ARAD_PMF_CE_PACKET_HEADER_INFO
+      ce_packet_header_info;
+    soc_reg_t
+      global_f = SOC_IS_JERICHO(unit)? ECI_GLOBAL_SYS_HEADER_CFGr: ECI_GLOBALFr;
+
+    SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+
+
+  is_second_lookup = TRUE; 
+  for (table_line = 0; table_line < pmf_key_construction_info_length; ++table_line) {
+#ifdef BCM_88660_A0
+      
+      if (in_port_profile == ARAD_PMF_PORT_PROFILE_FTMH) {
+          uint32 headers_mode;
+
+          
+          SOC_SAND_SOC_IF_ERROR_RETURN_ERR_VAL(res,  20,  exit, ARAD_REG_ACCESS_ERR,soc_reg_above_64_field32_read(unit, global_f, REG_PORT_ANY, 0, SYSTEM_HEADERS_MODEf, &headers_mode));
+          if (headers_mode ==  ARAD_PP_SYSTEM_HEADERS_MODE_ARAD) {
+              if ((table_line == 0) && (!(SOC_DPP_CONFIG(unit)->arad->init.fabric.trunk_hash_format == ARAD_MGMT_TRUNK_HASH_FORMAT_DUPLICATED))) {
+                  
+                  continue;
+              }
+              if ((table_line == 2) && (!(SOC_DPP_CONFIG(unit)->arad->init.fabric.ftmh_lb_ext_mode == ARAD_MGMT_FTMH_LB_EXT_MODE_FULL_HASH))) {
+                  
+                  continue;
+              }
+          }
+      }
+#endif 
+      
+
+      found = FALSE;
+      
+      res = arad_pmf_ce_internal_field_info_find(
+                unit,
+                pmf_key_construction_info[table_line].qual_type,
+                SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF,
+                pmf_key_construction_info[table_line].is_msb,
+                &found,
+                &qual_info
+            );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 10, exit);
+
+      if (found) {
+          
+          for (pmf_key = 0; pmf_key <= ARAD_PMF_KEY_D; pmf_key ++) {
+              if ((1 << pmf_key) & pmf_key_construction_info[table_line].key_supported_bitmap) {
+                  res = arad_pmf_ce_internal_info_entry_set_unsafe(
+                            unit,
+                            SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF,
+                            pmf_pgm_ndx,
+                            pmf_key,
+                            pmf_key_construction_info[table_line].ce_id,
+                            pmf_key_construction_info[table_line].is_msb,
+                            is_second_lookup,
+                            FALSE, 
+                            pmf_key_construction_info[table_line].qual_lsb, 
+                            0, 
+                            pmf_key_construction_info[table_line].qual_nof_bits,
+                            pmf_key_construction_info[table_line].qual_type
+                        );
+                  SOC_SAND_CHECK_FUNC_RESULT(res, 20, exit);
+              }
+          }
+          
+          continue;
+      }
+
+      
+
+      found = FALSE;
+      res = arad_pmf_ce_header_info_find(
+                unit,
+                pmf_key_construction_info[table_line].qual_type,
+                SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF,
+                &found,
+                &header_qual_info
+            );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 25, exit);
+
+      if (found) {
+          ARAD_PMF_CE_PACKET_HEADER_INFO_clear(&ce_packet_header_info);
+          ce_packet_header_info.sub_header = header_qual_info.header_ndx_0;
+          ce_packet_header_info.offset = header_qual_info.msb + pmf_key_construction_info[table_line].qual_lsb;
+          
+          ce_packet_header_info.nof_bits = (pmf_key_construction_info[table_line].qual_nof_bits != 0)? 
+              pmf_key_construction_info[table_line].qual_nof_bits: (header_qual_info.lsb - header_qual_info.msb + 1);
+
+          
+          for (pmf_key = 0; pmf_key <= ARAD_PMF_KEY_D; pmf_key ++) {
+              if ((1 << pmf_key) & pmf_key_construction_info[table_line].key_supported_bitmap) {
+              res = arad_pmf_ce_packet_header_entry_set_unsafe(
+                        unit,
+                        SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF,
+                        pmf_pgm_ndx,
+                        pmf_key,
+                        pmf_key_construction_info[table_line].ce_id,
+                        pmf_key_construction_info[table_line].is_msb,
+                        is_second_lookup,
+                        &ce_packet_header_info
+                    );
+                  SOC_SAND_CHECK_FUNC_RESULT(res, 30, exit);
+              }
+          }
+          
+          continue;
+      }
+
+
+      if (!found) {
+          LOG_ERROR(BSL_LS_SOC_FP,
+                    (BSL_META_U(unit,
+                                "Invalid Qualifier %d.\n\r"), pmf_key_construction_info[table_line].qual_type));
+          SOC_SAND_SET_ERROR_CODE(ARAD_PMF_LOW_LEVEL_INCORRECT_INSTRUCTION_ERR, 40, exit);
+      }
+  }
+
+exit:
+    SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_ce_key_construction_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_fes_action_construction_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx,
+    SOC_SAND_IN  uint32                in_port_profile,
+    SOC_SAND_IN  uint32                pmf_fes_construction_info_length,
+    SOC_SAND_IN  ARAD_PMF_FES_CONSTR   *pmf_fes_construction_info
+  )
+{
+    uint32
+      table_line,    
+      res = SOC_SAND_OK;
+    ARAD_PMF_FEM_INPUT_INFO
+      fem_input_info;
+    ARAD_PMF_FES
+        fes_sw_db_info;
+    
+    SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+  ARAD_PMF_FEM_INPUT_INFO_clear(&fem_input_info);
+  fem_input_info.is_16_lsb_overridden = FALSE;
+  fem_input_info.src_arad.is_key_src = TRUE;
+  fem_input_info.src_arad.lookup_cycle_id = 0;
+
+  for (table_line = 0; table_line < pmf_fes_construction_info_length; ++table_line) {
+      
+      fem_input_info.src_arad.key_tcam_id = pmf_fes_construction_info[table_line].input_key_id;
+      fem_input_info.src_arad.key_lsb = pmf_fes_construction_info[table_line].input_key_lsb;
+      res = arad_pmf_db_fem_input_set_unsafe(
+                unit,
+                pmf_pgm_ndx,
+                TRUE, 
+                pmf_fes_construction_info[table_line].fes_id,
+                &fem_input_info
+            );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 50, exit);
+
+      res = arad_pmf_db_fes_set_unsafe(
+                unit,
+                pmf_pgm_ndx,
+                pmf_fes_construction_info[table_line].fes_id,
+                &(pmf_fes_construction_info[table_line].fes_info)
+            );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 60, exit);
+
+      res = soc_sand_os_memset(&fes_sw_db_info, 0, sizeof(fes_sw_db_info));
+      SOC_SAND_CHECK_FUNC_RESULT(res, 99, exit);
+
+      
+      fes_sw_db_info.is_used = 1;
+      fes_sw_db_info.db_id = (~0); 
+      fes_sw_db_info.action_type = pmf_fes_construction_info[table_line].fes_info.action_type;
+      res = sw_state_access[unit].dpp.soc.arad.tm.pmf.pgm_fes.set(
+                unit,
+                SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF,
+                pmf_pgm_ndx,
+                pmf_fes_construction_info[table_line].fes_id,
+                &fes_sw_db_info
+              );
+      SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 70, exit);
+  }
+
+exit:
+    SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_fes_action_construction_unsafe()", 0, 0);
+}
+
+
+
+
+uint32
+  arad_pmf_low_level_init_unsafe(
+    SOC_SAND_IN  int                                 unit
+  )
+{
+  uint32
+      pmf_pgm_ndx,
+      reserved_progs,
+    res = SOC_SAND_OK;
+  ARAD_PMF_PGM_TYPE
+    pmf_pgm_type_ndx;
+  ARAD_PMF_SEL_INIT_INFO  
+      init_info;
+  uint8
+      is_tm_pmf_per_port_mode = FALSE,
+      is_oam_snoop_ftmh_pmf_pgm_to_build = FALSE,
+      is_oam_stats_with_stacking = FALSE;
+  soc_port_t local_port;
+  CONST char* CONST default_pgm_string[ARAD_NOF_PMF_PGM_TYPES+1] = {
+                        "raw",
+                        "mirror_raw",
+                        "stack",
+                        "prog",
+                        "xgs",
+                        "tm",
+                        "eth"
+                    };
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_INIT_UNSAFE);
+
+  res = arad_mgmt_ihb_tbls_init(unit);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 10, exit);
+
+  res = arad_pmf_low_level_ce_init_unsafe(unit);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 20, exit);
+
+
+  res = arad_pmf_low_level_fem_tag_init_unsafe(unit);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 30, exit);
+
+  res = arad_pmf_low_level_pgm_init_unsafe(unit);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 40, exit);
+
+  res = arad_pmf_prog_select_init(unit);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 50, exit);
+
+   
+  
+  ARAD_PMF_SEL_INIT_INFO_clear(&init_info);
+  
+  for (local_port = 0; (local_port < ARAD_NOF_LOCAL_PORTS(unit)) && (!is_tm_pmf_per_port_mode); local_port++) {
+      if (soc_property_port_get((unit), local_port, spn_POST_HEADERS_SIZE,  FALSE)) {
+          is_tm_pmf_per_port_mode = TRUE;
+      } 
+  }
+
+  init_info.pmf_pgm_default[ARAD_PMF_PSL_TYPE_TM] = ARAD_PMF_PROG_SELECT_TM_PMF_PGM_MIN;
+  init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM] = 1 + 1 
+      + (is_tm_pmf_per_port_mode? 8 : 0);
+  init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH] = init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM];
+  reserved_progs = 0;
+
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+  if (soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "egress_snooping_advanced", 0)) {
+      
+      is_oam_snoop_ftmh_pmf_pgm_to_build = 1;
+  }
+#endif 
+
+  
+  pmf_pgm_ndx = ARAD_PMF_PROGRAM_STATIC_INDEX_GET(init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM], ARAD_PMF_PROG_SELECT_TM_PMF_PGM_MIN, 0);
+
+  
+  is_oam_stats_with_stacking = soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "oam_statistics_with_stacking", 0);
+
+  for (pmf_pgm_type_ndx = 0; pmf_pgm_type_ndx < (ARAD_PMF_PGM_TYPE_TM + is_oam_snoop_ftmh_pmf_pgm_to_build); pmf_pgm_type_ndx++)
+  {
+      if (soc_property_suffix_num_get(unit, -1, spn_FIELD_INGRESS_DEFAULT_PGM_LOAD_DISABLE, default_pgm_string[pmf_pgm_type_ndx], 0)) {
+          
+          if ( pmf_pgm_type_ndx == ARAD_PMF_PGM_TYPE_XGS && is_oam_stats_with_stacking ) {
+              res = arad_pmf_low_level_oam_stats_pgm_set_unsafe(
+                    unit,
+                    pmf_pgm_ndx
+                  );
+              SOC_SAND_CHECK_FUNC_RESULT(res, 55, exit);
+
+              
+              ++init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH];
+              reserved_progs |= (1 << pmf_pgm_ndx);
+              ++pmf_pgm_ndx;
+          }
+          continue;
+      }
+
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+      if (pmf_pgm_type_ndx == ARAD_PMF_PGM_TYPE_TM) {
+           res = arad_pmf_low_level_stack_pgm_set_unsafe(
+                  unit,
+                  pmf_pgm_ndx,
+                  TRUE 
+                );
+          SOC_SAND_CHECK_FUNC_RESULT(res, 60, exit);
+
+      } else
+#endif 
+      {
+          res = arad_pmf_low_level_pgm_set(
+              unit,
+                  pmf_pgm_ndx, 
+                  pmf_pgm_type_ndx
+                );
+          SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+      }
+
+      
+      ++init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH];
+      reserved_progs |= (1 << pmf_pgm_ndx);
+      ++pmf_pgm_ndx;
+  }
+  
+  res = sw_state_access[unit].dpp.soc.arad.tm.pmf.rsources.progs.set(unit, SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF, 0, reserved_progs);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 80, exit);
+
+  
+  init_info.pmf_pgm_default[ARAD_PMF_PSL_TYPE_ETH] = init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH];
+  res = arad_pmf_prog_select_eth_init(unit, SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF, is_tm_pmf_per_port_mode, &init_info);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  
+  res = arad_pmf_low_level_mirror_raw_pgm_update(unit, init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM]);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+    
+  
+  init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH] = 0;
+  init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM] = 0;
+  
+  init_info.pmf_pgm_default[ARAD_PMF_PSL_TYPE_ETH] = init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_ETH]; 
+  init_info.pmf_pgm_default[ARAD_PMF_PSL_TYPE_TM] = init_info.nof_reserved_lines[ARAD_PMF_PSL_TYPE_TM];
+  res = arad_pmf_prog_select_eth_init(unit, SOC_PPC_FP_DATABASE_STAGE_EGRESS, FALSE, &init_info);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 110, exit);
+
+#ifdef BCM_88660_A0
+  if (SOC_IS_ARADPLUS(unit) && (!(SOC_IS_ARDON(unit)))) {
+      
+      res = arad_pmf_prog_select_eth_init(unit, SOC_PPC_FP_DATABASE_STAGE_INGRESS_SLB, FALSE, &init_info);
+      SOC_SAND_CHECK_FUNC_RESULT(res, 120, exit);
+  }
+#endif 
+
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_init_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_tm_pgm_set_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                   oam_test,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx
+  )
+{
+  uint32
+      fld_val = 0,
+	  mask_five_bit = ((1<<5) - 1),
+      pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      table_line,
+      tm_pfc_idx,
+      bit_idx,
+      res = SOC_SAND_OK;
+  uint32 pmf_key_construction_info_length=0;
+  uint32 pmf_fes_construction_info_length=0;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  uint8
+      in_port_profile;
+  soc_reg_above_64_val_t
+      reg_data;
+   ARAD_PMF_KEY_CONSTR   
+      *pmf_key_construction_info = NULL;
+  ARAD_PMF_FES_CONSTR   
+      *pmf_fes_construction_info = NULL;
+  uint32 pfc_pmf, pfc_pmf_mask;
+ 
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_TM_PGM_SET_UNSAFE);
+
+  
+  in_port_profile = ARAD_PMF_PORT_PROFILE_TM;
+  if (oam_test) {
+      in_port_profile = ARAD_PMF_PORT_PROFILE_TM_OAM_TEST;
+  }
+
+  
+  SOC_REG_ABOVE_64_CLEAR(reg_data);
+  for (tm_pfc_idx = 0; tm_pfc_idx < mask_five_bit; tm_pfc_idx++) {
+      
+      fld_val = (tm_pfc_idx & 0x3) + 1;
+      SHR_BITCOPY_RANGE(reg_data, (3 * tm_pfc_idx), &fld_val, 0, 3);
+  }
+  
+  fld_val = 0x2;
+  SHR_BITCOPY_RANGE(reg_data, (3 * (ARAD_PARSER_PFC_TM_OUT_LIF & mask_five_bit)), &fld_val, 0, 3);
+  
+  SHR_BITCOPY_RANGE(reg_data, (3 * (ARAD_PARSER_PFC_TM_IS & mask_five_bit)), &fld_val, 0, 3);
+  
+  fld_val = 0x1;
+  SHR_BITCOPY_RANGE(reg_data, (3 * (ARAD_PARSER_PFC_TM_MC_FLOW & mask_five_bit)), &fld_val, 0, 3);
+  res = WRITE_IHP_TM_FORWARDING_OFFSET_INDEX_MAPPINGr(unit, REG_PORT_ANY, reg_data);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 372, exit);
+
+
+  
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+      SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+
+  
+  if (in_port_profile != ARAD_PMF_PORT_PROFILE_TM) {
+      
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, in_port_profile);
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  }
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  if(SOC_IS_JERICHO_PLUS(unit)) {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+  }
+  else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+  }
+
+  
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+      pgm_sel_tbl_data
+      );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+
+  
+  if ((SOC_DPP_CONFIG(unit)->pp.oam_statistics)&&(soc_property_get(unit, spn_ITMH_PROGRAMMABLE_MODE_ENABLE, FALSE) == 0)) {
+
+      if (SOC_IS_JERICHO(unit) &&
+          !soc_property_get(unit, spn_ITMH_ARAD_MODE_ENABLE, 0)) {
+          
+          LOG_ERROR(
+              BSL_LS_SOC_FP,
+              (BSL_META_U(
+                  unit,
+                  "\n\r"
+                  "%s(): The soc property ITMH_PROGRAMMABLE_MODE_ENABLE must be set for Jericho in 'non-Arad' mode.\n\r"
+                  "Static programs are NOT supported for Jericho\n\r"
+                  ),__func__
+              )
+          );
+          SOC_SAND_SET_ERROR_CODE(ARAD_PMF_LOW_LEVEL_INCORRECT_INSTRUCTION_ERR, 55, exit);
+          
+      }
+      pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_tm) / sizeof(ARAD_PMF_FES_CONSTR));
+      ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length+1, "Allocation of stacking PMF FES");
+      sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_tm, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_tm) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_tm, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+
+      pmf_key_construction_info[2].qual_type = SOC_PPC_FP_QUAL_LEM_1ST_LOOKUP_FOUND;
+      pmf_key_construction_info[2].qual_nof_bits = 1;
+      pmf_key_construction_info[2].qual_lsb = 0;
+      pmf_key_construction_info[2].is_msb = 0; 
+
+
+      pmf_key_construction_info[1].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+      pmf_key_construction_info[1].qual_nof_bits = 1;
+      pmf_key_construction_info[1].qual_lsb = 0;
+      pmf_key_construction_info[1].is_msb = 0;
+
+      pmf_key_construction_info[0].qual_type = SOC_PPC_FP_QUAL_LEM_1ST_LOOKUP_RESULT;
+      pmf_key_construction_info[0].qual_nof_bits = 16;
+      pmf_key_construction_info[0].qual_lsb = 0;
+      pmf_key_construction_info[0].is_msb = 0;
+
+      ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+      pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 25;
+      
+      if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==1){
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER;
+      }
+      if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==2){
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER_B;
+      }
+      pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = FALSE;
+      pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 4; 
+      pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_A;
+      pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_0;
+      pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+
+      
+      res = arad_pmf_low_level_ce_key_construction_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          in_port_profile,
+          pmf_key_construction_info_length,
+          pmf_key_construction_info
+          );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+
+
+      
+      res = arad_pmf_low_level_fes_action_construction_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          in_port_profile,
+          pmf_fes_construction_info_length + 1,
+          pmf_fes_construction_info
+          );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+
+  }
+
+  if ((soc_property_get(unit, spn_ITMH_PROGRAMMABLE_MODE_ENABLE, FALSE) == 0) && (soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "support_petra_itmh", 0)==0)) {
+      
+      ARAD_PMF_KEY_CONSTR
+          *pmf_key_construction_info ;
+      uint32
+          pmf_key_construction_info_length ;
+      ARAD_PMF_FES_CONSTR
+          *pmf_fes_construction_info ;
+      uint32
+          pmf_fes_construction_info_length ;
+      if (SOC_IS_JERICHO(unit)) {
+          if (!soc_property_get(unit, spn_ITMH_ARAD_MODE_ENABLE, 0)) {
+              
+              LOG_ERROR(
+                  BSL_LS_SOC_FP,
+                  (BSL_META_U(
+                      unit,
+                      "\n\r"
+                      "%s(): The soc property ITMH_PROGRAMMABLE_MODE_ENABLE must be set for Jericho in 'non-Arad' mode.\n\r"
+                      "Static programs are NOT supported for Jericho\n\r"
+                      ),__func__
+                  )
+              );
+              SOC_SAND_SET_ERROR_CODE(ARAD_PMF_LOW_LEVEL_INCORRECT_INSTRUCTION_ERR, 40, exit) ;
+              
+#if (0)
+
+              pmf_key_construction_info = Jericho_pmf_key_construction_info_tm ;
+              pmf_key_construction_info_length =
+                  sizeof(Jericho_pmf_key_construction_info_tm) / sizeof(Jericho_pmf_key_construction_info_tm[0]) ;
+              pmf_fes_construction_info = Jericho_pmf_fes_construction_info_tm ;
+              pmf_fes_construction_info_length =
+                  sizeof(Jericho_pmf_fes_construction_info_tm) / sizeof(Jericho_pmf_fes_construction_info_tm[0]) ;
+
+#endif
+          } else {
+              
+              pmf_key_construction_info = (ARAD_PMF_KEY_CONSTR *)JerichoAsArad_pmf_key_construction_info_tm ;
+              pmf_key_construction_info_length =
+                  sizeof(JerichoAsArad_pmf_key_construction_info_tm) / sizeof(JerichoAsArad_pmf_key_construction_info_tm[0]) ;
+              pmf_fes_construction_info = (ARAD_PMF_FES_CONSTR *)JerichoAsArad_pmf_fes_construction_info_tm ;
+              pmf_fes_construction_info_length =
+                  sizeof(JerichoAsArad_pmf_fes_construction_info_tm) / sizeof(JerichoAsArad_pmf_fes_construction_info_tm[0]) ;
+          }
+      } else {
+          
+          pmf_key_construction_info = (ARAD_PMF_KEY_CONSTR *)Arad_pmf_key_construction_info_tm ;
+          pmf_key_construction_info_length =
+              sizeof(Arad_pmf_key_construction_info_tm) / sizeof(Arad_pmf_key_construction_info_tm[0]) ;
+          pmf_fes_construction_info = (ARAD_PMF_FES_CONSTR *)Arad_pmf_fes_construction_info_tm ;
+          pmf_fes_construction_info_length =
+              sizeof(Arad_pmf_fes_construction_info_tm) / sizeof(Arad_pmf_fes_construction_info_tm[0]) ;
+      }
+
+      if (SOC_DPP_CONFIG(unit)->pp.oam_statistics == 0) {
+          res = arad_pmf_low_level_ce_key_construction_unsafe(
+              unit,
+              pmf_pgm_ndx,
+              in_port_profile,
+              pmf_key_construction_info_length,
+              pmf_key_construction_info
+              );
+          SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+
+          
+          res = arad_pmf_low_level_fes_action_construction_unsafe(
+              unit,
+              pmf_pgm_ndx,
+              in_port_profile,
+              pmf_fes_construction_info_length,
+              pmf_fes_construction_info
+              );
+          SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+
+      }
+
+  }
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+      unit,
+      pmf_pgm_ndx,
+      &pgm_info
+      );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_POST_FWDING; 
+  pgm_info.bytes_to_rmv.nof_bytes = 0; 
+  
+
+  
+  pgm_info.copy_pgm_var = ARAD_PMF_DESTINATION_MULTICAST_ID_PREFIX + (ARAD_PMF_DESTINATION_FLOW_ID_PREFIX << 4)
+                            + (ARAD_PMF_DESTINATION_SYSTEM_PORT_PREFIX << ARAD_PMF_TM_PGM_SYSTEM_PORT_OFFSET); 
+  
+
+  
+  pgm_info.copy_pgm_var += (((0x3 << 4 ) + (SOC_PPC_TRAP_CODE_INTERNAL_IHP_TIMNA_PREFIX >> 4 )) 
+                                << ARAD_PMF_SNOOP_TRAP_ID_BASE_OFFSET);
+
+  pgm_info.header_type = ARAD_PORT_HEADER_TYPE_TM;
+  pgm_info.header_profile = 11; 
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  ARAD_FREE(pmf_fes_construction_info);
+  ARAD_FREE(pmf_key_construction_info);
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_tm_pgm_set_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_raw_pgm_set_unsafe(
+    SOC_SAND_IN  int                 unit,
+    SOC_SAND_IN  uint32                 pmf_pgm_ndx
+  )
+{
+  uint32
+    table_line,
+    bit_idx,
+    pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  uint32 pfc_pmf, pfc_pmf_mask;
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_RAW_PGM_SET_UNSAFE);
+  
+
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+      SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, ARAD_PMF_PORT_PROFILE_RAW); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_RAW);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_MATCH_ONE);
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  if(SOC_IS_JERICHO_PLUS(unit))
+  {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+  } else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+  }
+
+  
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+          pgm_sel_tbl_data
+        );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+
+  
+
+  
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_FWDING; 
+  pgm_info.bytes_to_rmv.nof_bytes = 0; 
+  pgm_info.header_profile = 9;
+
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_raw_pgm_set_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_mirror_raw_pgm_set_unsafe(
+    SOC_SAND_IN  int                 unit,
+    SOC_SAND_IN  uint32                 pmf_pgm_ndx
+  )
+{
+  uint32
+    table_line,
+    bit_idx,
+    pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+    ARAD_PMF_PSL_LEVEL_INFO
+      dflt_level_info;
+  uint32 pfc_pmf, pfc_pmf_mask;
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_RAW_PGM_SET_UNSAFE);
+  
+
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+      SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, ARAD_PMF_PORT_PROFILE_MIRROR_RAW); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_RAW);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_MATCH_ONE);
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  
+  res = sw_state_access[unit].dpp.soc.arad.tm.pmf.psl_info.levels_info.get(unit, SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF , 0x0 , 0, &dflt_level_info);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 60, exit);
+
+
+  if(SOC_IS_JERICHO_PLUS(unit)){
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, dflt_level_info.lines[0].prog_id ); 
+  } else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, dflt_level_info.lines[0].prog_id ); 
+  }
+
+  
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+          pgm_sel_tbl_data
+        );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+
+  
+
+  
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_1ST;
+  pgm_info.fc_type = SOC_TMC_PORTS_FC_TYPE_NONE;
+  pgm_info.header_profile = ARAD_PMF_PGM_HEADER_PROFILE_ETHERNET;
+
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_mirror_raw_pgm_set_unsafe()", 0, 0);
+}
+
+uint32 arad_pmf_low_level_mirror_raw_pgm_update(int unit, int nof_reserved_lines)
+{
+    uint32
+        table_line,
+        pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+        res = SOC_SAND_OK;
+    ARAD_PMF_PSL_LEVEL_INFO dflt_level_info;
+
+    SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_RAW_PGM_SET_UNSAFE);
+
+    table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) 
+                                        - ARAD_PMF_PROGRAM_STATIC_INDEX_GET(nof_reserved_lines, ARAD_PMF_PROG_SELECT_TM_PMF_PGM_MIN, ARAD_PMF_PGM_TYPE_MIRROR_RAW) 
+                                        - 1;
+    res = soc_mem_read(unit, IHB_PMF_PROGRAM_SELECTION_CAMm, MEM_BLOCK_ANY, table_line, &pgm_sel_tbl_data);
+    SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 10, exit);
+    
+    res = sw_state_access[unit].dpp.soc.arad.tm.pmf.psl_info.levels_info.get(unit, SOC_PPC_FP_DATABASE_STAGE_INGRESS_PMF , 0x0 , 0, &dflt_level_info);
+    SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 20, exit);
+    
+    if(SOC_IS_JERICHO_PLUS(unit)) {
+        soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, dflt_level_info.lines[0].prog_id ); 
+    } else {
+        soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, dflt_level_info.lines[0].prog_id ); 
+    }
+    
+    
+    res = soc_mem_write(unit, IHB_PMF_PROGRAM_SELECTION_CAMm, MEM_BLOCK_ANY, table_line, pgm_sel_tbl_data);
+    SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 30, exit);
+    
+exit:
+    SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_mirror_raw_pgm_set_unsafe()", 0, 0);
+}
+
+
+uint32
+  arad_pmf_low_level_stack_pgm_set_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx,
+    SOC_SAND_IN  uint8              is_for_oam_snoop_was
+  )
+{
+  uint32
+      pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      table_line,
+      bit_idx,
+      headers_mode,
+      pmf_key_construction_info_length,
+      pmf_fes_construction_info_length,
+      nof_fes_actions_skip_no_stacking = 0,
+      nof_fes_actions_skip_no_oam_snoop,
+      line_ndx,
+      line_min_ndx,
+      ce_ndx,
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  ARAD_PMF_KEY_CONSTR   
+      *pmf_key_construction_info = NULL;
+  ARAD_PMF_FES_CONSTR   
+      *pmf_fes_construction_info = NULL;
+  soc_reg_t
+    global_f = SOC_IS_JERICHO(unit)? ECI_GLOBAL_SYS_HEADER_CFGr: ECI_GLOBALFr;
+  uint32 pfc_pmf, pfc_pmf_mask;
+  uint8 is_oam_stats_with_stacking = soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "oam_statistics_with_stacking", 0);
+  int i = 0;
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+
+  
+  if (is_for_oam_snoop_was == 0) {
+      
+      sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+      
+      for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+          SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+      }
+
+      
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, ARAD_PMF_PORT_PROFILE_FTMH); 
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+      res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+      SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+      
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+      if(SOC_IS_JERICHO_PLUS(unit))
+      {
+          soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+      } else {
+          soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+      }
+
+      
+      table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+      res = soc_mem_write(
+              unit,
+              IHB_PMF_PROGRAM_SELECTION_CAMm,
+              MEM_BLOCK_ANY,
+              table_line,
+              pgm_sel_tbl_data
+            );
+      SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+  }
+
+  
+  line_min_ndx = 0;
+  
+  SOC_SAND_SOC_IF_ERROR_RETURN_ERR_VAL(res,  20,  exit, ARAD_REG_ACCESS_ERR,soc_reg_above_64_field32_read(unit, global_f, REG_PORT_ANY, 0, SYSTEM_HEADERS_MODEf, &headers_mode));
+  if (headers_mode == ARAD_PP_SYSTEM_HEADERS_MODE_ARAD || headers_mode == ARAD_PP_SYSTEM_HEADERS_MODE_JERICHO)
+  {
+      if (SOC_IS_JERICHO(unit)) {
+          pmf_key_construction_info_length = (sizeof(Jer_pmf_key_construction_info_stacking) / sizeof(ARAD_PMF_KEY_CONSTR));
+          if (is_for_oam_snoop_was && (soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "egress_snooping_advanced", 0))) {
+              pmf_key_construction_info_length += 2;
+          }
+          ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+          sal_memcpy(pmf_key_construction_info, Jer_pmf_key_construction_info_stacking, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+      }
+      else {
+          
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_stacking) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_stacking, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+      }
+
+
+      if ((SOC_DPP_CONFIG(unit)->pp.oam_statistics) && !(is_for_oam_snoop_was) && !is_oam_stats_with_stacking) {
+          
+          ce_ndx = pmf_key_construction_info_length - 1;
+           
+          ce_ndx -= 2;
+          
+          pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+          pmf_key_construction_info[ce_ndx].qual_nof_bits = 2;
+          pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          pmf_key_construction_info[ce_ndx].key_supported_bitmap = SOC_SAND_BIT(ARAD_PMF_KEY_B);
+
+          
+          if(SOC_IS_JERICHO(unit))
+          {
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 1;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_TRAP_QUALIFIER_FHEI;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 13;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          } else {
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_TRAP_QUALIFIER_FHEI;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 13;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 1;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          }
+
+          
+          --ce_ndx;
+          pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES;
+          pmf_key_construction_info[ce_ndx].qual_nof_bits = 8;
+          pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length + 2, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 24;
+          
+          if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==1){
+              pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER;
+          }
+          if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==2){
+              pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER_B;
+          }
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = FALSE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 0;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+
+          pmf_fes_construction_info_length++;
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 25;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = TRUE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 16;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+          pmf_fes_construction_info_length++;
+
+      } else if (((SOC_DPP_CONFIG(unit)->pp.port_extender_map_lc_exists) == 1) && !(is_for_oam_snoop_was)) {
+
+          pmf_key_construction_info[15].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES;
+          pmf_key_construction_info[15].qual_nof_bits = 8;
+          pmf_key_construction_info[15].qual_lsb = 0;
+
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length + 1, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 25;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = TRUE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 16;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+          pmf_fes_construction_info_length++;
+
+      } else {
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          if (SOC_IS_JERICHO(unit) && is_for_oam_snoop_was && (soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "egress_snooping_advanced", 0))) {
+              pmf_fes_construction_info_length += 1;
+          }
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+          
+          if (SOC_IS_JERICHO(unit) && soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "two_pass_mc_dest_flow", 0)){
+              for (i = 0; i < pmf_fes_construction_info_length; i++) {
+                  if (pmf_fes_construction_info[i].fes_info.action_type == SOC_PPC_FP_ACTION_TYPE_DEST) {
+                      
+                      pmf_fes_construction_info[i].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_FWD_OFFSET;
+                  }
+              }
+          }
+      }
+
+
+
+
+      nof_fes_actions_skip_no_stacking = 7;
+      nof_fes_actions_skip_no_oam_snoop = 1;
+#ifdef ARAD_PMF_OAM_MIRROR_WA_SNOOP_OUT_LIF_IN_DSP_EXT_ENABLED
+      if (is_for_oam_snoop_was && (soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "egress_snooping_advanced", 0))) {
+          
+          line_min_ndx = 1;
+          nof_fes_actions_skip_no_oam_snoop = 0;
+          pmf_key_construction_info[4].qual_type = SOC_PPC_FP_QUAL_HDR_FTMH; 
+          pmf_key_construction_info[4].qual_nof_bits = 16;
+          pmf_key_construction_info[4].qual_lsb = 52;
+
+          if (SOC_IS_JERICHO(unit)) {
+              ARAD_PMF_KEY_CONSTR  outlif_lookup_key =
+                  {2, 1, 15, SOC_PPC_FP_QUAL_LEM_1ST_LOOKUP_RESULT,          21, 16,  SOC_SAND_BIT(ARAD_PMF_KEY_C)};    
+              ARAD_PMF_KEY_CONSTR  fwd_code_key[2] = {                                                                  
+                  {2, 1, 14, SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES,                2,   0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)},        
+                  {2, 1, 13, SOC_PPC_FP_QUAL_IRPP_ALL_ONES,                  2,   0,  SOC_SAND_BIT(ARAD_PMF_KEY_C)}};       
+              ARAD_PMF_FES_CONSTR fwd_code_fes =
+                  {2, 17,  {SOC_SAND_MAGIC_NUM_VAL,   5, SOC_PPC_FP_ACTION_TYPE_FWD_CODE, TRUE},                    ARAD_PMF_KEY_C, ARAD_PMF_KEY_LSB_96};
+
+              sal_memcpy((pmf_key_construction_info+3), &outlif_lookup_key, sizeof(ARAD_PMF_KEY_CONSTR));
+              sal_memcpy((pmf_key_construction_info+pmf_key_construction_info_length-2), fwd_code_key, 2*sizeof(ARAD_PMF_KEY_CONSTR));
+
+              pmf_fes_construction_info[0].fes_info.shift = 3;
+              sal_memcpy((pmf_fes_construction_info+pmf_fes_construction_info_length-1), &fwd_code_fes, sizeof(ARAD_PMF_FES_CONSTR));
+          } else {
+              pmf_key_construction_info[3].qual_type = SOC_PPC_FP_QUAL_HDR_DSP_EXTENSION_AFTER_FTMH;
+              pmf_key_construction_info[3].qual_nof_bits = 16;
+              pmf_key_construction_info[3].qual_lsb = 0;
+          }
+      }
+#endif 
+
+      
+  }
+  else {
+      
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_stacking_petra_mode) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_stacking_petra_mode, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+
+      pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking_petra_mode) / sizeof(ARAD_PMF_FES_CONSTR));
+      ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length, "Allocation of stacking PMF FES");
+      sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking_petra_mode, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+      nof_fes_actions_skip_no_stacking = 6;
+      nof_fes_actions_skip_no_oam_snoop = 0;
+  }
+  
+  if ((SOC_DPP_CONFIG((unit))->arad->init.ports.is_stacking_system)) {
+      nof_fes_actions_skip_no_stacking = 0;
+  }
+  for (line_ndx = line_min_ndx; line_ndx < nof_fes_actions_skip_no_stacking + nof_fes_actions_skip_no_oam_snoop; line_ndx++) {
+      
+      pmf_fes_construction_info[line_ndx].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_NOP;
+  }
+
+
+  
+
+  
+  res = arad_pmf_low_level_ce_key_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_FTMH,
+            pmf_key_construction_info_length,
+            pmf_key_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+  
+
+  
+  res = arad_pmf_low_level_fes_action_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_FTMH,
+            pmf_fes_construction_info_length,
+            pmf_fes_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+  
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  if (SOC_IS_JERICHO(unit) && is_for_oam_snoop_was) {
+      
+      pgm_info.header_profile = SOC_TMC_PMF_PGM_HEADER_PROFILE_ETHERNET;
+      pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_1ST; 
+      pgm_info.bytes_to_rmv.nof_bytes = 11;
+  } else if (SOC_IS_JERICHO(unit) && soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "two_pass_mc_dest_flow", 0)){
+       
+      pgm_info.header_profile = SOC_TMC_PMF_PGM_HEADER_PROFILE_TM_UNICAST;
+      pgm_info.bytes_to_rmv.header_type = SOC_TMC_PMF_PGM_BYTES_TO_RMV_HDR_1ST; 
+      pgm_info.bytes_to_rmv.nof_bytes = 11;
+  } else {
+      pgm_info.header_profile = ARAD_PMF_PGM_HEADER_PROFILE_STACKING;
+      pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_1ST; 
+      pgm_info.bytes_to_rmv.nof_bytes = 0;
+  }
+
+#ifdef ARAD_PMF_CPU_TO_CPU_WA_STACKING_ENABLED
+  
+  pgm_info.copy_pgm_var = (ARAD_PMF_HEADER_PROFILE_CPU_TO_CPU_FTMH_RESERVED << ARAD_PMF_CPU_TO_CPU_HEADER_PROFILE_OFFSET);
+#endif 
+
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  ARAD_FREE(pmf_key_construction_info);
+  ARAD_FREE(pmf_fes_construction_info);
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_stack_pgm_set_unsafe()", 0, 0);
+}
+
+
+uint32
+  arad_pmf_low_level_oam_stats_pgm_set_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32             pmf_pgm_ndx
+  )
+{
+  uint32
+      pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      table_line,
+      bit_idx,
+      headers_mode,
+      pmf_key_construction_info_length,
+      pmf_fes_construction_info_length,
+      nof_fes_actions_skip_no_stacking = 0,
+      nof_fes_actions_skip_no_oam_snoop,
+      line_ndx,
+      line_min_ndx,
+      ce_ndx,
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  ARAD_PMF_KEY_CONSTR
+      *pmf_key_construction_info = NULL;
+  ARAD_PMF_FES_CONSTR
+      *pmf_fes_construction_info = NULL;
+  soc_reg_t
+    global_f = SOC_IS_JERICHO(unit)? ECI_GLOBAL_SYS_HEADER_CFGr: ECI_GLOBALFr;
+  uint32 pfc_pmf, pfc_pmf_mask;
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+
+  
+  
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+      SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, ARAD_PMF_PORT_PROFILE_XGS_TM); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+  
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, CPU_TRAP_CODEf, 0xed);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_CPU_TRAP_CODEf, 0x03);
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  if(SOC_IS_JERICHO_PLUS(unit))
+  {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+  } else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+  }
+
+  
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+          pgm_sel_tbl_data
+        );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  
+  line_min_ndx = 0;
+  
+  SOC_SAND_SOC_IF_ERROR_RETURN_ERR_VAL(res,  20,  exit, ARAD_REG_ACCESS_ERR,soc_reg_above_64_field32_read(unit, global_f, REG_PORT_ANY, 0, SYSTEM_HEADERS_MODEf, &headers_mode));
+  if (headers_mode == ARAD_PP_SYSTEM_HEADERS_MODE_ARAD || headers_mode == ARAD_PP_SYSTEM_HEADERS_MODE_JERICHO)
+  {
+      if (SOC_IS_JERICHO(unit)) {
+          pmf_key_construction_info_length = (sizeof(Jer_pmf_key_construction_info_stacking) / sizeof(ARAD_PMF_KEY_CONSTR));
+          ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+          sal_memcpy(pmf_key_construction_info, Jer_pmf_key_construction_info_stacking, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+      }
+      else {
+          
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_stacking) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_stacking, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+      }
+
+
+      if ((SOC_DPP_CONFIG(unit)->pp.oam_statistics)) {
+          
+          ce_ndx = pmf_key_construction_info_length - 1;
+          
+          ce_ndx -= 2;
+          
+          pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+          pmf_key_construction_info[ce_ndx].qual_nof_bits = 2;
+          pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          pmf_key_construction_info[ce_ndx].key_supported_bitmap = SOC_SAND_BIT(ARAD_PMF_KEY_B);
+
+          
+          if(SOC_IS_JERICHO(unit))
+          {
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 1;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_TRAP_QUALIFIER_FHEI;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 13;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          } else {
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_TRAP_QUALIFIER_FHEI;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 13;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+              --ce_ndx;
+              pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ONES;
+              pmf_key_construction_info[ce_ndx].qual_nof_bits = 1;
+              pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+          }
+
+          
+          --ce_ndx;
+          pmf_key_construction_info[ce_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES;
+          pmf_key_construction_info[ce_ndx].qual_nof_bits = 8;
+          pmf_key_construction_info[ce_ndx].qual_lsb = 0;
+
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length + 2, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 24;
+          
+          if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==1){
+              pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER;
+          }
+          if (SOC_DPP_CONFIG(unit)->pp.oam_statistics==2){
+              pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_COUNTER_B;
+          }
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = FALSE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 0;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+
+          pmf_fes_construction_info_length++;
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 25;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = TRUE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 16;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+          pmf_fes_construction_info_length++;
+
+      } else if (((SOC_DPP_CONFIG(unit)->pp.port_extender_map_lc_exists) == 1)) {
+
+          pmf_key_construction_info[15].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES;
+          pmf_key_construction_info[15].qual_nof_bits = 8;
+          pmf_key_construction_info[15].qual_lsb = 0;
+
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length + 1, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+          ARAD_PMF_FES_INPUT_INFO_clear(&pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info);
+
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_id = 25;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_BYTES_TO_REMOVE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.is_action_always_valid = TRUE;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].fes_info.shift = 16;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_id = ARAD_PMF_KEY_B;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].input_key_lsb = ARAD_PMF_KEY_LSB_80;
+          pmf_fes_construction_info[pmf_fes_construction_info_length].in_port_profile = 2;
+          pmf_fes_construction_info_length++;
+
+      } else {
+          pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking) / sizeof(ARAD_PMF_FES_CONSTR));
+          ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length, "Allocation of stacking PMF FES");
+          sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+      }
+
+
+
+
+      nof_fes_actions_skip_no_stacking = 7;
+      nof_fes_actions_skip_no_oam_snoop = 1;
+  }
+  else {
+      
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_stacking_petra_mode) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_stacking_petra_mode, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+
+      pmf_fes_construction_info_length = (sizeof(Arad_pmf_fes_construction_info_stacking_petra_mode) / sizeof(ARAD_PMF_FES_CONSTR));
+      ARAD_ALLOC(pmf_fes_construction_info, ARAD_PMF_FES_CONSTR, pmf_fes_construction_info_length, "Allocation of stacking PMF FES");
+      sal_memcpy(pmf_fes_construction_info, Arad_pmf_fes_construction_info_stacking_petra_mode, pmf_fes_construction_info_length * sizeof(ARAD_PMF_FES_CONSTR));
+
+      nof_fes_actions_skip_no_stacking = 6;
+      nof_fes_actions_skip_no_oam_snoop = 0;
+  }
+  
+  if ((SOC_DPP_CONFIG((unit))->arad->init.ports.is_stacking_system)) {
+      nof_fes_actions_skip_no_stacking = 0;
+  }
+  for (line_ndx = line_min_ndx; line_ndx < nof_fes_actions_skip_no_stacking + nof_fes_actions_skip_no_oam_snoop; line_ndx++) {
+      
+      pmf_fes_construction_info[line_ndx].fes_info.action_type = SOC_PPC_FP_ACTION_TYPE_NOP;
+  }
+
+
+
+
+  
+  res = arad_pmf_low_level_ce_key_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_XGS_TM,
+            pmf_key_construction_info_length,
+            pmf_key_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+
+
+  
+  res = arad_pmf_low_level_fes_action_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_XGS_TM,
+            pmf_fes_construction_info_length,
+            pmf_fes_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_1ST; 
+  pgm_info.bytes_to_rmv.nof_bytes = 0;
+  pgm_info.header_profile = ARAD_PMF_PGM_HEADER_PROFILE_STACKING;
+
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  ARAD_FREE(pmf_key_construction_info);
+  ARAD_FREE(pmf_fes_construction_info);
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_oam_stats_pgm_set_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_xgs_pgm_set_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx
+  )
+{
+  uint32
+      pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      line_ndx,
+      pmf_key_construction_info_length,
+      pmf_fes_info_length,
+      table_line,
+      bit_idx,
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  ARAD_PMF_KEY_CONSTR *pmf_key_construction_info = NULL;
+  CONST ARAD_PMF_FES_CONSTR *pmf_fes_construction_info = NULL;
+  uint32 pfc_pmf, pfc_pmf_mask;
+ 
+  SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+
+  
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+      SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, ARAD_PMF_PORT_PROFILE_XGS_TM); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_RAW);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PARSER_LEAF_CONTEXTf, ARAD_PARSER_PLC_MATCH_ONE);
+
+  
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  if(SOC_IS_JERICHO_PLUS(unit))
+  {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+  } else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+  }
+
+  
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+          pgm_sel_tbl_data
+        );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  
+  if (SOC_DPP_CONFIG((unit))->arad->xgs_compatability_tm_system_port_encoding == SOC_DPP_XGS_TM_7_MODID_8_PORT ) 
+  {
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_xgs_7_modid_8_port) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_xgs_7_modid_8_port, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+  } 
+  else
+  { 
+    
+      pmf_key_construction_info_length = (sizeof(Arad_pmf_key_construction_info_xgs_8_modid_7_port) / sizeof(ARAD_PMF_KEY_CONSTR));
+      ARAD_ALLOC(pmf_key_construction_info, ARAD_PMF_KEY_CONSTR, pmf_key_construction_info_length, "Allocation of stacking PMF key");
+      sal_memcpy(pmf_key_construction_info, Arad_pmf_key_construction_info_xgs_8_modid_7_port, pmf_key_construction_info_length * sizeof(ARAD_PMF_KEY_CONSTR));
+  }
+  
+  if (SOC_IS_JERICHO(unit)) {
+      
+      for (line_ndx = 0; line_ndx < pmf_key_construction_info_length; line_ndx++) {
+          if (((pmf_key_construction_info[line_ndx].is_msb == 1) && (pmf_key_construction_info[line_ndx].ce_id == 1))
+              || ((pmf_key_construction_info[line_ndx].is_msb == 0) && (pmf_key_construction_info[line_ndx].ce_id == 7))
+              || ((pmf_key_construction_info[line_ndx].is_msb == 1) && (pmf_key_construction_info[line_ndx].ce_id == 8))) {
+              
+              pmf_key_construction_info[line_ndx].qual_nof_bits = 1;
+          }
+          else if ((pmf_key_construction_info[line_ndx].is_msb == 0) && (pmf_key_construction_info[line_ndx].ce_id == 2)) {
+              
+              pmf_key_construction_info[line_ndx].qual_type = SOC_PPC_FP_QUAL_IRPP_ALL_ZEROES;
+          }
+      }
+  }
+
+  res = arad_pmf_low_level_ce_key_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_RAW,
+            pmf_key_construction_info_length,
+            pmf_key_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 72, exit);
+
+  
+  if (SOC_IS_JERICHO(unit)) {
+      pmf_fes_info_length = sizeof(Jericho_pmf_fes_construction_info_xgs) / sizeof(ARAD_PMF_FES_CONSTR);
+      pmf_fes_construction_info = Jericho_pmf_fes_construction_info_xgs;
+  } else {
+      pmf_fes_info_length = sizeof(Arad_pmf_fes_construction_info_xgs) / sizeof(ARAD_PMF_FES_CONSTR);
+      pmf_fes_construction_info = Arad_pmf_fes_construction_info_xgs;
+  }
+  res = arad_pmf_low_level_fes_action_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_RAW,
+            pmf_fes_info_length,
+            pmf_fes_construction_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+  
+
+  
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_START; 
+  pgm_info.bytes_to_rmv.nof_bytes = 6;  
+  pgm_info.header_profile = 11;
+
+  res = arad_pmf_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+
+exit:
+  ARAD_FREE(pmf_key_construction_info);
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_xgs_pgm_set_unsafe()", 0, 0);
+}
+
+
+STATIC
+uint32
+  arad_pmf_low_level_mh_pgm_set_unsafe(
+    SOC_SAND_IN  int                unit,
+    SOC_SAND_IN  uint32                pmf_pgm_ndx
+  )
+{
+  uint32
+      pgm_sel_tbl_data[SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS)],
+      table_line,
+      bit_idx,
+      res = SOC_SAND_OK;
+  ARAD_PMF_PGM_INFO
+      pgm_info;
+  uint8
+	  in_port_profile;
+    soc_port_t 
+		local_port;
+	 CONST ARAD_PMF_FES_CONSTR* feses  ; 
+	 CONST ARAD_PMF_KEY_CONSTR* keys  ;
+	int fes_array_size ;
+	int key_array_size ;
+	uint32 pfc_pmf, pfc_pmf_mask;
+
+	SOC_SAND_INIT_ERROR_DEFINITIONS(0);
+
+
+	feses = Arad_pmf_fes_construction_info_mh ; 
+	keys = Arad_pmf_key_construction_info_mh ;
+	fes_array_size = sizeof(Arad_pmf_fes_construction_info_mh);
+	key_array_size = sizeof(Arad_pmf_key_construction_info_mh); 
+    for (local_port = 0; local_port < ARAD_NOF_LOCAL_PORTS(unit) ; local_port++) {
+		if (soc_property_port_suffix_num_get(unit, local_port, -1, spn_CUSTOM_FEATURE, "vendor_custom_tm_port", FALSE)){
+			feses = Arad_pmf_fes_construction_info_inpHeader ; 
+			keys  = Arad_pmf_key_construction_info_inpHeader ;
+			fes_array_size = sizeof(Arad_pmf_fes_construction_info_inpHeader);
+			key_array_size = sizeof(Arad_pmf_key_construction_info_inpHeader); 
+			break ;
+		}
+	}
+
+  
+  in_port_profile = ARAD_PMF_PORT_PROFILE_MH;
+  sal_memset(pgm_sel_tbl_data, 0x0, SOC_DPP_IMP_DEFS_MAX(IHB_PMF_PROGRAM_SELECTION_CAM_NOF_LONGS) * sizeof(uint32));
+  for (bit_idx = 0; bit_idx < ARAD_PMF_PGM_SEL_TBL_LENGTH_BITS; bit_idx++) {
+	  SHR_BITSET(pgm_sel_tbl_data, bit_idx);
+  }
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, IN_PORT_PROFILEf, in_port_profile);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_IN_PORT_PROFILEf, 0x0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PTC_PROFILEf, 0); 
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PTC_PROFILEf, 0x0); 
+
+  res = dpp_parser_pfc_get_pmf_by_sw(unit, DPP_PFC_ANY_TM, &pfc_pmf, &pfc_pmf_mask);
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PACKET_FORMAT_CODEf, pfc_pmf);
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, MASK_PACKET_FORMAT_CODEf, pfc_pmf_mask); 
+
+  soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, VALIDf, 0x1); 
+  if(SOC_IS_JERICHO_PLUS(unit))
+  {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAM_DATAf, pmf_pgm_ndx); 
+  } else {
+      soc_IHB_PMF_PROGRAM_SELECTION_CAMm_field32_set(unit, pgm_sel_tbl_data, PROGRAMf, pmf_pgm_ndx); 
+  }
+  table_line = SOC_DPP_DEFS_GET(unit, nof_ingress_pmf_program_selection_lines) - pmf_pgm_ndx - 1;
+  res = soc_mem_write(
+          unit,
+          IHB_PMF_PROGRAM_SELECTION_CAMm,
+          MEM_BLOCK_ANY,
+          table_line,
+          pgm_sel_tbl_data
+        );
+  SOC_SAND_SOC_CHECK_FUNC_RESULT(res, 50, exit);
+  res = arad_pmf_low_level_ce_key_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_MH,
+            (key_array_size / sizeof(ARAD_PMF_KEY_CONSTR)),
+            keys
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+  res = arad_pmf_low_level_fes_action_construction_unsafe(
+            unit,
+            pmf_pgm_ndx,
+            ARAD_PMF_PORT_PROFILE_MH,
+            (fes_array_size / sizeof(ARAD_PMF_FES_CONSTR)),
+            feses
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  res = arad_pmf_pgm_get_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 90, exit);
+  pgm_info.lkp_profile_id[0] = 0;
+  pgm_info.lkp_profile_id[1] = 0;
+  pgm_info.tag_profile_id = 0;
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_START; 
+  pgm_info.bytes_to_rmv.nof_bytes = 0; 
+  pgm_info.header_type = ARAD_PORT_HEADER_TYPE_PROG;
+  pgm_info.header_profile = 9; 
+  res = arad_pmf_pgm_set_unsafe(
+		  unit,
+		  pmf_pgm_ndx,
+		  &pgm_info
+		);
+  SOC_SAND_CHECK_FUNC_RESULT(res, 100, exit);
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_mh_pgm_set_unsafe()", 0, 0);
+}
+
+STATIC
+uint32
+  arad_pmf_low_level_eth_pgm_set_unsafe(
+    SOC_SAND_IN  int                 unit,
+    SOC_SAND_IN  uint32                 pmf_pgm_ndx
+  )
+{
+    uint32
+      res = SOC_SAND_OK;
+    ARAD_PMF_PGM_INFO          
+        pgm_info;
+
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_LOW_LEVEL_ETH_PGM_SET_UNSAFE);
+
+  ARAD_PMF_PGM_INFO_clear(&pgm_info);
+  
+  pgm_info.bytes_to_rmv.header_type = ARAD_PMF_PGM_BYTES_TO_RMV_HDR_1ST;
+  pgm_info.fc_type = SOC_TMC_PORTS_FC_TYPE_NONE;
+  pgm_info.header_profile = ARAD_PMF_PGM_HEADER_PROFILE_ETHERNET;
+
+  
+  res = arad_pmf_pgm_set_unsafe(
+           unit,
+           pmf_pgm_ndx,
+           &pgm_info
+        );
+  SOC_SAND_CHECK_FUNC_RESULT(res, 60, exit);
+
+
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_eth_pgm_set_unsafe()", 0, 0);
+}
+
+
+uint32
+  arad_pmf_low_level_pgm_set(
+    SOC_SAND_IN  int                         unit,
+    SOC_SAND_IN  uint32                      pmf_pgm_ndx,
+    SOC_SAND_IN  ARAD_PMF_PGM_TYPE           pmf_pgm_type
+   )
+{
+  uint32
+    res = SOC_SAND_OK;
+
+  SOC_SAND_INIT_ERROR_DEFINITIONS(ARAD_PMF_PGM_MGMT_SET);
+
+  
+  switch (pmf_pgm_type)
+  {
+  case ARAD_PMF_PGM_TYPE_RAW:
+    res = arad_pmf_low_level_raw_pgm_set_unsafe(
+            unit,
+            pmf_pgm_ndx
+          );
+    SOC_SAND_CHECK_FUNC_RESULT(res, 30, exit);
+    break;
+
+  case ARAD_PMF_PGM_TYPE_ETH: 
+    res = arad_pmf_low_level_eth_pgm_set_unsafe(
+            unit,
+            pmf_pgm_ndx
+          );
+    SOC_SAND_CHECK_FUNC_RESULT(res, 40, exit);
+    break;
+
+  case ARAD_PMF_PGM_TYPE_XGS:
+    res = arad_pmf_low_level_xgs_pgm_set_unsafe(
+            unit,
+            pmf_pgm_ndx
+          );
+    SOC_SAND_CHECK_FUNC_RESULT(res, 45, exit);
+    break;
+      
+  case ARAD_PMF_PGM_TYPE_STACK:
+      res = arad_pmf_low_level_stack_pgm_set_unsafe(
+          unit,
+          pmf_pgm_ndx,
+          FALSE
+          );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 60, exit);
+      break;
+
+  case ARAD_PMF_PGM_TYPE_TM:
+      if ((soc_property_suffix_num_get(unit, -1, spn_CUSTOM_FEATURE, "support_petra_itmh", 0)) == 0) {
+          res = arad_pmf_low_level_tm_pgm_set_unsafe(
+              unit,
+              0, 
+              pmf_pgm_ndx
+              );
+          SOC_SAND_CHECK_FUNC_RESULT(res, 70, exit);
+      }
+
+      break;
+
+  case ARAD_PMF_PGM_TYPE_MH: 
+      res = arad_pmf_low_level_mh_pgm_set_unsafe(
+                unit,
+                pmf_pgm_ndx
+                );
+      SOC_SAND_CHECK_FUNC_RESULT(res, 80, exit);
+      break;
+  case ARAD_PMF_PGM_TYPE_MIRROR_RAW:
+    res = arad_pmf_low_level_mirror_raw_pgm_set_unsafe(
+            unit,
+            pmf_pgm_ndx
+          );
+    SOC_SAND_CHECK_FUNC_RESULT(res, 30, exit);
+    break;
+  default:
+      LOG_ERROR(BSL_LS_SOC_FP,
+                (BSL_META_U(unit,
+                            "Unit %d Pmf Program index %d Header type %d - Failed to set program. Header type out of range.\n\r"),
+                 unit, pmf_pgm_ndx, pmf_pgm_type));
+    SOC_SAND_SET_ERROR_CODE(ARAD_PMF_LOW_LEVEL_PORT_HEADER_TYPE_OUT_OF_RANGE_ERR, 100, exit);
+  }
+exit:
+  SOC_SAND_EXIT_AND_SEND_ERROR("error in arad_pmf_low_level_pgm_set()", 0, 0);
+}
+
+
+
+
+#include <soc/dpp/SAND/Utils/sand_footer.h>
+
+#undef _ERR_MSG_MODULE_NAME 
+
+#endif 

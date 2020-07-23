@@ -1,0 +1,190 @@
+# Holds rules for ASE.
+#
+# $Id: Make.ase,v 1.39 2011/10/11 00:10:16 dkelley Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+ifeq (,$(findstring TCL,$(FEATURE_LIST)))
+  $(warning "features: $(FEATURE_LIST)")
+  $(error "Loading ASE without TCL defined")
+endif
+
+$(info "TCL/ASE bindings")
+
+export CC
+export PATH
+
+# ASE Interrupt support issues warning because of setjmp/longjmp
+#
+ifneq (,$(findstring -DINCLUDE_ASE_INTERRUPT,$(CFGFLAGS)))
+CFLAGS += -fno-strict-aliasing -Wno-uninitialized
+# Option required for GCC version used in 'metrocore' build
+ifneq (,$(findstring -DBCM_METROCORE_LOCAL_BUS,$(CFGFLAGS)))
+CFLAGS += -Wno-pointer-sign
+endif
+endif
+
+# Built by broadcom only because we need a specific version.
+RUBY=/projects/ntsw-tools/bin/ruby
+SWIG=/projects/ntsw-tools/bin/swig
+
+#  Here are the tools in the SDK tree that ASE requires.
+MKBND=$(SDK)/tools/mkbinding
+MKDSP=$(SDK)/tools/mkdispatch
+
+ASE=$(MKBND)/ase
+SOCGEN=$(MKBND)/socgen
+
+# SWIG configuration
+LOCALSWIGLIB=$(MKBND)/swig_lib
+ASE_LANGUAGE=tcl
+ASE_CFG=-fvirtual -tcl 
+
+# Extract just -D and -I from CFLAGS
+ASE_CPPFLAGS := $(filter -D%, $(CFLAGS))
+
+# Some platforms need to define TRUE on the CC command line to work
+# around problems with the target compiler headers. However, this
+# causes the "TRUE" constant to not get defined in TCL, so filter out
+# the definition here.
+ASE_CPPFLAGS := $(filter-out -DTRUE=1,$(ASE_CPPFLAGS))
+
+ASE_CPPFLAGS += $(filter -I%, $(CFLAGS))
+ASE_CPPFLAGS += -I${MKBND}/include -I${XFLOW_MACSEC_HOME}/include
+
+# SWIG TCL generation
+SWIG_TCLOPT=-I- -Wall \
+            -I${LOCALSWIGLIB} -I${LOCALSWIGLIB}/tcl \
+            -outdir ${BLDDIR} ${ASE_CFG}
+# SWIG XML header analysis
+# analysis file must be a .c file that eventually includes sal/types.h
+# some versions of gcc will object to doing this on a header file directly
+
+SWIG_XMLOPT := -importall -ignoremissing -xml -o /dev/null 
+
+export SWIG
+export SWIG_TCLOPT
+export SWIG_XMLOPT
+
+# SWIG Dependency generation
+SWIG_DEPOPT=${SWIG_TCLOPT} -I${BLDDIR}  ${ASE_CFG} -DSWIG_MAKEDEPEND -MM
+
+#
+# Build configuration file.
+ASE_CONFIG= ${MKBND}/ase.conf 
+MKDSP_CONFIG= ${MKDSP}/mkdispatch.cf
+PAPI_CONFIG= ${MKDSP}/bcmpapi.cf
+
+# ASE configuration
+ASE_TCLOPT=--swig --mkdispatch-config ${MKDSP_CONFIG} --mkdispatch-config ${PAPI_CONFIG}
+
+ASE_FILE=sdk_wrap
+
+# This file is auto-generated. The rules required are following.
+# We need this in order for clean and the final library link.
+BOBJS += ${BLDDIR}/${ASE_FILE}.o
+
+$(BLDDIR)/.tree:
+	@$(MKDIR) $(BLDDIR)/
+	@/bin/touch $(BLDDIR)/.tree
+
+#
+# ASE Wrapper Build
+#
+
+# stage 1 - analyze headers
+#   input: sdk_h.i
+#   output: sdk_xml.xml
+#   deps: <ase -M>
+#   prog: swig
+#
+
+${BLDDIR}/sdk_xml.xml: $(BLDDIR)/.tree ${MKBND}/swig_lib/sdk_h.i
+	@date
+	$Q$(RUBY) $(ASE) --swig-xml \
+                 $(ASE_CPPFLAGS) \
+                 --compiler-defs ${SDK}/include/sal/compiler.h \
+	         --compiler-includes ${SDK}/src/sal/core/libc.c \
+	         --output $@ sdk_h.i
+	@date
+
+#${BLDDIR}/sdk_xml.d: ${MKBND}/swig_lib/sdk_h.i
+	@$(ECHO) Dependencies for $@
+# Keep swig dep action for debugging
+#	$Q${SWIG} ${SWIG_DEPOPT} -o $(*D)/$(*F).d ${MKBND}/swig_lib/sdk_h.i
+# Postprocess the dependency file to add empty rules to prevent errors when a file is removed
+	$Q$(RUBY) $(ASE) ${ASE_CPPFLAGS} -M -n $@ -o $(@:%.xml=%.d)
+	$Qcp $(@:%.xml=%.d) $(@:%.xml=%.P)
+	$Qsed -e 's/\#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.xml=%.d) >> $(@:%.xml=%.P)
+	$Qrm $(@:%.xml=%.d)
+
+# stage 2 - create public SDK SWIG interface sdk_gen.i
+#   input: sdk_xml.xml ase.conf mkdispatch.cf bcmpapi.cf
+#   output: sdk_gen.i
+#   deps: <input> + ase-typemap-template-files + ase-prog-files
+#   prog: ase
+#
+
+${BLDDIR}/sdk_gen.i : ${BLDDIR}/sdk_xml.xml ${ASE_CONFIG} ${ASE} \
+                      ${MKDSP_CONFIG} ${PAPI_CONFIG} \
+                      ${MKBND}/lib/*.rb \
+                      ${MKBND}/lib/ase/*.rb \
+                      ${MKBND}/lib/tcl/*.ii
+	@date
+	$Q$(RUBY) $(ASE) ${ASE_TCLOPT} --config ${ASE_CONFIG} -o $@ $<
+	@date
+
+# stage 3 - create SOC SWIG interface soc_gen.i
+#   input: <none>
+#   output: soc_gen.i
+#   deps: socgen-prog-files + socgen -M
+#   prog: socgen 
+#
+
+${BLDDIR}/soc_gen.i: ${SOCGEN}
+	rm -f ${@}
+	$Q$(RUBY) $(SOCGEN) -o $@
+	@$(ECHO) Dependencies for $@
+	$Q$(RUBY) $(SOCGEN) -M -n $@ -o $(@:%.i=%.d)
+# Postprocess the dependency file to add empty rules to prevent errors when a file is removed
+	$Qcp $(@:%.i=%.d) $(@:%.i=%.P)
+	$Qsed -e 's/\#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.i=%.d) >> $(@:%.i=%.P)
+	$Qrm $(@:%.i=%.d)
+
+# stage 4 - create sdk_wrap.c/sdk_wrap.o
+#   input: sdk.i
+#   output: sdk_wrap.c
+#   deps: <swig -MM sdk.i> sdk_gen.i sdk_soc.i swig_lib/tcl/swigtcl8.swg
+#   prog: swig
+#
+#   Note:swig -MM does not include the generated swig interfaces 
+
+${BLDROOT}/${lib}.${LIBSUFFIX}: ${BLDDIR}/${ASE_FILE}.o
+
+${BLDDIR}/${ASE_FILE}.o: ${BLDDIR}/${ASE_FILE}.c \
+        ${MKBND}/include/*.h ${MKBND}/src/*/*.[ch]
+
+${BLDDIR}/${ASE_FILE}.c: ${BLDDIR}/soc_gen.i ${BLDDIR}/sdk_gen.i \
+                         ${MKBND}/swig_lib/tcl/swigtcl8.swg \
+                         ${MKBND}/src/tcl/*.c
+	@date
+	$Q$(SWIG) ${ASE_CPPFLAGS} ${SWIG_TCLOPT} -I${BLDDIR} -o $@ sdk.i
+	@date
+	@$(ECHO) Dependencies for $@
+	@date
+	$Q$(SWIG) ${SWIG_DEPOPT} -o $@ ${MKBND}/swig_lib/sdk.i
+	@date
+# Postprocess the dependency file to add empty rules to prevent errors when a file is removed
+	$Qcp $(@:%.c=%.d) $(@:%.c=%.P)
+	$Qsed -e 's/\#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.c=%.d) >> $(@:%.c=%.P)
+	$Qrm $(@:%.c=%.d)
+
+#
+# include generated dependencies
+#
+ifeq (,$(findstring clean,$(MAKECMDGOALS)))
+-include ${BLDDIR}/sdk_xml.P
+-include ${BLDDIR}/soc_gen.P
+-include ${BLDDIR}/${ASE_FILE}.P
+endif

@@ -1,0 +1,8 @@
+config delete flexe_device_mode*
+config delete ucode_port_13.*
+config delete ucode_port_14.*
+config delete ucode_port_15.*
+config delete ucode_port_16.*
+
+if $?flexe \
+    "config add flexe_device_mode=distributed"

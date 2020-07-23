@@ -1,0 +1,27 @@
+component:
+   bcmptm_rm_tcam_trans_info_ha:
+      bcmptm_rm_tcam_trans_info_t:
+         type: struct
+         fields:
+            trans_state:
+               type: uint8_t
+               comment: Transaction state of the HA block
+            next_sub_id:
+               type: uint8_t
+               comment: Next valid subcomponent ID.
+            active:
+               type: bool
+               comment: Indicates HA block is active or backup.
+            tbl_inst:
+               type: uint8_t
+               comment: Logical Table instance(pipe) ID.
+            tbl_id:
+               type: uint32_t
+               ltid:
+               comment: Logical Table ID.
+            state_size:
+               type: uint32_t
+               comment: HA block size.
+            sign_word:
+               type: uint32_t
+               comment: Signature word. During warmboot, signature word should match

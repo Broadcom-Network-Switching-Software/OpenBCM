@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+                <numeric name="device_id" value="0x8284"></numeric>
+                <numeric name="core_clock_khz" value="450000"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="nif">
+        <sub_module name="phys">
+            <defines>
+                <define name="is_pam4_speed_supported" value="0"></define>
+            </defines>
+            <tables>
+                <table name="general">
+                    <value name="supported_phys" default="0x0FFFFFFF,0x00000FFF"></value>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="flexe">
+            <defines>
+                <define name="nof_phy_speeds" value="3"></define>
+                <define name="max_flexe_core_speed" value="200000"></define>
+            </defines>
+
+            <numerics>
+                <numeric name="nof_pms_per_feu" value="2"></numeric>
+            </numerics>
+            <tables>
+                <table name="phy_info">
+                <value name="speed" default="-1"></value>
+                    <value name="min_logical_phy_id" default="-1"></value>
+                    <value name="max_logical_phy_id" default="-1"></value>
+                    <value name="flexe_core_port" default="-1"></value>
+                    <entries>
+                        <entry idx="0" speed="50000" min_logical_phy_id="1" max_logical_phy_id="126" flexe_core_port="0,1,2,3,4,5,6,7"></entry>
+                        <entry idx="1" speed="100000" min_logical_phy_id="1" max_logical_phy_id="254" flexe_core_port="0,2,4,6"></entry>
+                        <entry idx="2" speed="200000" min_logical_phy_id="1" max_logical_phy_id="126" flexe_core_port="0,4"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="ilkn">
+            <features>
+                <feature name="is_supported" value="0"></feature>
+            </features>
+
+            <numerics>
+                <numeric name="max_nof_ifs" value="0"></numeric>
+                <numeric name="max_nof_elk_ifs" value="0"></numeric>
+            </numerics>
+
+            <defines>
+                <define name="is_nif_56G_speed_supported" value="0"></define>
+                <define name="is_fabric_56G_speed_supported" value="0"></define>
+            </defines>
+
+            <tables>
+                <table name="supported_phys">
+                    <value name="is_supported" default="0"></value>
+                    <value name="max_phys" default="0"></value>
+                    <value name="nif_phys" default="0"></value>
+                    <value name="fabric_phys" default="0"></value>
+                    <entries>
+                    </entries>
+                </table>
+
+                <table name="ilkn_cores">
+                    <value name="is_elk_supported" default="0"></value>
+                    <value name="is_data_supported" default="0"></value>
+                    <value name="fec_disable_by_bypass" default="0"></value>
+                    <entries>
+                    </entries>
+                </table>
+
+                <table name="nif_lanes_map">
+                    <value name="first_phy" default="-1"></value>
+                    <value name="ilkn_lane_offset" default="-1"></value>
+                    <value name="nof_lanes" default="-1"></value>
+                    <entries>
+                    </entries>
+                </table>
+            </tables>
+
+        </sub_module>
+
+    </module>
+
+    <module name="egr_queuing">
+        <sub_module name="common_max_val">
+            <features>
+            </features>
+
+            <defines>
+                <define name="slow_port_speed" value="7500"></define>
+            </defines >
+
+
+            <numerics>
+            </numerics>
+
+        </sub_module>
+    </module>
+
+</device_data>

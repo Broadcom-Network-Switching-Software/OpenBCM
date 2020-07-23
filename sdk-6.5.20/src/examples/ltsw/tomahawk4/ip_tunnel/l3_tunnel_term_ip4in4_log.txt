@@ -1,0 +1,78 @@
+BCM.0> c l3_tunnel_term_ip4in4.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int l3_egr_obj_id = 100001 (0x186a1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+[New Thread 0x7ffff4a6e700 (LWP 10571)]
+tx 1 pbm=3 data=000000002222000000000002810000160800450000420000000040045493090909090A0A0A0A4500002E0000000040FF73CC010101010202020200000000000000000000000000000000000000000000000000008856EEF7;sleep 5
+Packet from data=<>, length=88
+Sleeping for 5 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000001} {000000001111} 8100 0015
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 3fff 74cc 0101
+[bcmPWN.0]Packet[1]: data[0020]: 0101 0202 0202 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 8856 eef7
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        UNICAST_QUEUE                   :0x1(1)
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        OUTER_VID                       :0x15(21)
+        TIMESTAMP_TYPE                  :0x3(3)
+        SWITCH                          :0x1(1)
+        ING_TAG_TYPE                    :0x1(1)
+[RX reasons]
+        MY_STATION
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x74cc>
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+RUC_64.cd1                            :                     1                  +1
+RIPD4_64.cd1                          :                     1                  +1
+RDBGC0_64.cd1                         :                     1                  +1
+TDBGC4_64.cd1                         :                     1                  +1
+XLMIB_TBYT.cd2                        :                    92                 +92
+XLMIB_RBYT.cd2                        :                    92                 +92
+XLMIB_TPOK.cd2                        :                     1                  +1
+XLMIB_RPOK.cd2                        :                     1                  +1
+XLMIB_TVLN.cd2                        :                     1                  +1
+XLMIB_RVLN.cd2                        :                     1                  +1
+XLMIB_TUCA.cd2                        :                     1                  +1
+XLMIB_RUCA.cd2                        :                     1                  +1
+XLMIB_TPKT.cd2                        :                     1                  +1
+XLMIB_RPKT.cd2                        :                     1                  +1
+XLMIB_T127.cd2                        :                     1                  +1
+XLMIB_R127.cd2                        :                     1                  +1
+XLMIB_RPRM.cd2                        :                     1                  +1
+RTUN_64.cd2                           :                     1                  +1
+RUC_64.cd2                            :                     1                  +1
+RIPC4_64.cd2                          :                     1                  +1

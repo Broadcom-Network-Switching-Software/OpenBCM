@@ -1,0 +1,163 @@
+#
+# file: bcmtm_ha.yml
+# TM YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    NUM_PORTS: 576
+    NUM_ITMS: 2
+    NUM_PFC_PRI: 8
+    NUM_PMS: 64
+    NUM_PORT_BMP_WIDTH: 18 #(Number of ports / 32)
+    NUM_PORT_MC_QUEUE_BMP_WIDTH: 2 #(Number of port MC queue % 32)
+
+component:
+    bcmtm:
+        bcmtm_thd_info_t:
+            comment: BCMTM threshold information
+            type: struct
+            fields:
+                itm_buf_size:
+                    type: uint32_t
+                    length: NUM_ITMS
+                    comment: Shared buffer space in each ITM.
+
+        bcmtm_obm_thd_info_t:
+            comment: BCMTM OBM threshold information
+            type: struct
+            fields:
+                obm_port_max_bytes:
+                    type: uint32_t
+                    length: NUM_PORTS
+                    comment: OBM maximum threshold for bytes per port.
+                obm_lossy_max_bytes:
+                    type: uint32_t
+                    length: NUM_PORTS
+                    comment: OBM maximum threshold for combined lossy-low and lossy-high bytes.
+                obm_lossy_low_max_bytes:
+                    type: uint32_t
+                    length: NUM_PORTS
+                    comment: OBM maximum threshold for lossy-low bytes.
+
+        bcmtm_lport_map_t:
+            type: struct
+            fields:
+                pport:
+                    type: int
+                    comment: Physical port number.
+                mport:
+                    type: int
+                    comment: MMU port number.
+                mlocal_port:
+                    type: int
+                    comment: MMU local port (IDB port number).
+                pipe:
+                    type: int
+                    comment: Pipe number.
+                mchip_port:
+                    type: int
+                    comment: MMU chip port number.
+                flags:
+                    type: int
+                    comment: Port flags.
+                num_mcq:
+                    type: int
+                    comment: Number of multicast queue.
+                num_ucq:
+                    type: int
+                    comment: Number of unicast queue.
+                base_mcq:
+                    type: int
+                    comment: Multicast base queue number.
+                base_ucq:
+                    type: int
+                    comment: Unicast base queue number.
+                num_lanes:
+                    type: int
+                    comment: Number of lanes in use.
+                max_speed:
+                    type: int
+                    comment: Maximum speed for the port.
+                cur_speed:
+                    type: int
+                    comment: Current port speed.
+
+        bcmtm_pport_map_t:
+            type: struct
+            fields:
+                lport:
+                    type: int
+                    comment: Logical port number.
+                mport:
+                    type: int
+                    comment: Global MMU port.
+                mlocal_port:
+                    type: int
+                    comment: MMU local port number.
+
+        bcmtm_mport_map_t:
+            type: struct
+            fields:
+                lport:
+                    type: int
+                    comment: Logical port number.
+
+        bcmtm_drv_info_t:
+            comment: BCMTM driver information. It holds the port mapping information as well.
+            type: struct
+            fields:
+                frequency:
+                    type: int
+                    comment: Clock frequency.
+                fabric_port_enable:
+                    type: int
+                    comment: Port fabric enable.
+                dpr_clock_frequency:
+                    type: int
+                    comment: DPR clock frequency.
+                oobfc_clock_ns:
+                    type: uint8_t
+                    comment: OOBFC clock in nano seconds.
+                flexport:
+                    type: uint8_t
+                    comment: Enable flexport operations.
+                lossless:
+                    type: uint8_t
+                    comment: Lossless mode.
+                flex_eligible:
+                    type: uint8_t
+                    length: NUM_PMS
+                    comment: The PM is eligibal for flexport operations. For some devices, non-zero values indicate max number of subports in the PM.
+
+        bcmtm_pfc_ddr_info_t:
+            comment: PFC deadlock recovery information.
+            type: struct
+            fields:
+                recovery_count_cfg:
+                    type: uint8_t
+                    length: NUM_PFC_PRI
+                    comment: Per PFC priority deadlock recovery timer value.
+                ddr_enable:
+                    type: uint8_t
+                    comment: Per PFC priority deadlock recovery enable info.
+                in_recovery:
+                    type: uint8_t
+                    comment: PFC priorities under deadlock recovery.
+                recovery_count_acc:
+                    type: uint32_t
+                    length: NUM_PFC_PRI
+                    comment: Accumulated deadlock recovery time across all recovery events.
+
+        bcmtm_obm_usage_info_t:
+            comment: OBM usage information.
+            type: struct
+            fields:
+                obm_usage:
+                    type: uint32_t
+                    length: NUM_PORT_BMP_WIDTH
+                    comment: Obm usage bitmap array.

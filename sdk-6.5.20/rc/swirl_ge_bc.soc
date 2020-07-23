@@ -1,0 +1,36 @@
+#
+# $Id$
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+#Ports 0-1 configuration
+set rcerror=F
+vlan destroy 10
+vlan destroy 20
+
+port ge0 SP=1000 LB=MAC AF=F EN=T
+port ge1 SP=1000 LB=MAC AF=F EN=T
+
+s epc_link 0xffffffff
+#m config tag_en=1
+#clear vtable
+#clear ptable
+#modify pvlan 0 1 vlan_tag=10 port_bitmap=0x3 ut_port_bitmap=0x3 sp_st=3 cml=2
+#modify pvlan 1 1 vlan_tag=10 port_bitmap=0x3 ut_port_bitmap=0x3 sp_st=3 cml=2
+#l2 add PBM=ge0 MAC=00:00:00:00:00:01 V=10 ST=T
+#l2 add PBM=ge1 MAC=00:00:00:00:00:01 V=10 ST=T
+
+vlan create 10 PBM=ge0,ge1 UBM=ge0,ge1
+pvlan set ge0 10
+pvlan set ge1 10
+
+tx 1 PBM=0x1 UBM=0x1 L=68 VL=10 P=0x12345678 PI=1 SM=00:00:00:00:00:02 SMI=0 DM=ff:ff:ff:ff:ff:ff DMI=0 COS=0 CRC=Recompute
+tx 1 PBM=0x2 UBM=0x2 L=68 VL=10 P=0x12345678 PI=1 SM=00:00:00:00:00:02 SMI=0 DM=ff:ff:ff:ff:ff:ff DMI=0 COS=0 CRC=Recompute
+
+loop * "show counters"
+
+
+
+

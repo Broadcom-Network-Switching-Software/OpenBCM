@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+                <numeric name="device_id" value="0x8280"></numeric>
+                <numeric name="core_clock_khz" value="450000"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="egr_queuing">
+        <sub_module name="common_max_val">
+            <features>
+            </features>
+
+            <defines>
+                <define name="slow_port_speed" value="7500"></define>
+            </defines >
+
+
+            <numerics>
+            </numerics>
+
+        </sub_module>
+    </module>
+
+    <module name="nif">
+        <sub_module name="phys">
+            <defines>
+                <define name="is_pam4_speed_supported" value="0"></define>
+            </defines>
+            <tables>
+                <table name="general">
+                    <value name="supported_phys" default="0x0F0FFFFF,0x00000FFF"></value>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="flexe">
+            <features>
+                <feature name="disable_l1" value="0"></feature>
+                <feature name="disable_oam_over_flexe" value="0"></feature>
+            </features>
+
+            <defines>
+                <define name="nof_phy_speeds" value="3"></define>
+                <define name="max_flexe_core_speed" value="200000"></define>
+            </defines>
+
+            <numerics>
+                <numeric name="nof_pms_per_feu" value="2"></numeric>
+            </numerics>
+            <tables>
+                <table name="phy_info">
+                <value name="speed" default="-1"></value>
+                    <value name="min_logical_phy_id" default="-1"></value>
+                    <value name="max_logical_phy_id" default="-1"></value>
+                    <value name="flexe_core_port" default="-1"></value>
+                    <entries>
+                        <entry idx="0" speed="50000" min_logical_phy_id="1" max_logical_phy_id="126" flexe_core_port="0,1,2,3,4,5,6,7"></entry>
+                        <entry idx="1" speed="100000" min_logical_phy_id="1" max_logical_phy_id="254" flexe_core_port="0,2,4,6"></entry>
+                        <entry idx="2" speed="200000" min_logical_phy_id="1" max_logical_phy_id="126" flexe_core_port="0,4"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="ilkn">
+
+            <numerics>
+                <numeric name="max_nof_elk_ifs" value="0"></numeric>
+            </numerics>
+
+            <tables>
+
+                <table name="supported_phys">
+                    <value name="is_supported" default="0"></value>
+                    <value name="max_phys" default="0"></value>
+                    <value name="nif_phys" default="0"></value>
+                    <value name="fabric_phys" default="0"></value>
+                    <entries>
+                        <entry ilkn_id="0" is_supported="1" max_phys="12" nif_phys="0x0000fff0" fabric_phys="0x0"></entry>
+                        <entry ilkn_id="1" is_supported="1" max_phys="12" nif_phys="0x0000fff0" fabric_phys="0x0"></entry>
+                    </entries>
+                </table>
+
+                <table name="ilkn_cores">
+                    <value name="is_elk_supported" default="0"></value>
+                    <value name="is_data_supported" default="0"></value>
+                    <value name="fec_disable_by_bypass" default="0"></value>
+                    <entries>
+                        <entry ilkn_core_id="0" is_elk_supported="0" is_data_supported="1"></entry>
+                    </entries>
+                </table>
+
+                <table name="nif_lanes_map">
+                    <value name="first_phy" default="-1"></value>
+                    <value name="ilkn_lane_offset" default="-1"></value>
+                    <value name="nof_lanes" default="-1"></value>
+                    <entries>
+                        <!-- Entries for core 0  -->
+                        <entry ilkn_core="0" range_id="0" first_phy="4" ilkn_lane_offset="12" nof_lanes="12"></entry>
+                    </entries>
+                </table>
+
+            </tables>
+        </sub_module>
+
+    </module>
+
+    <module name="sat">
+    <sub_module name="generator">
+        <features>
+        </features>
+        <defines>
+            <define name="max_bit_rate_in_64B"      value="53000000"></define>
+            <define name="max_bit_rate_in_128B"     value="72000000"></define>
+            <define name="max_bit_rate_in_256B"     value="84000000"></define>
+            <define name="max_bit_rate_in_512B"     value="91700000"></define>
+            <define name="max_bit_rate_in_1024B"    value="96000000"></define>
+            <define name="max_bit_rate_in_1280B"    value="97000000"></define>
+            <define name="max_bit_rate_in_1518B"    value="97600000"></define>
+            <define name="max_bit_rate_in_9000B"    value="99800000"></define>
+            <define name="max_packet_rate_in_64B"   value="143600000"></define>
+            <define name="max_packet_rate_in_128B"  value="83320000"></define>
+            <define name="max_packet_rate_in_256B"  value="44960000"></define>
+            <define name="max_packet_rate_in_512B"  value="23400000"></define>
+            <define name="max_packet_rate_in_1024B" value="11940000"></define>
+            <define name="max_packet_rate_in_1280B" value="9600000"></define>
+            <define name="max_packet_rate_in_1518B" value="8110000"></define>
+            <define name="max_packet_rate_in_9000B" value="1380000"></define>
+            <define name="max_ctf_recv_packet_rate_in_64B"   value="99000000"></define>
+            <define name="max_ctf_recv_packet_rate_in_128B"  value="68900000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_256B"  value="40500000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_512B"  value="22200000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_1024B" value="11600000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_1280B" value="9450000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_1518B" value="8020000 "></define>
+            <define name="max_ctf_recv_packet_rate_in_9000B" value="1380000"></define>
+        </defines>
+
+        <numerics>
+        </numerics>
+
+        <tables>
+        </tables>
+    </sub_module>
+    </module>
+</device_data>

@@ -1,0 +1,32 @@
+#
+# file: port_ha.yml
+# Port YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_port:
+        bcmint_port_ha_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: Port HA flags HA_xxx.
+        bcmint_port_xfs_ha_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                vlan_check_disable:
+                    type: uint16_t
+                    comment: Flags to disable VLAN membership check. BCMI_LTSW_VLAN_CHK_XXX.
+                stg_check_disable:
+                    type: uint16_t
+                    comment: Flags to disable STG check. BCMI_LTSW_STG_CHK_XXX.

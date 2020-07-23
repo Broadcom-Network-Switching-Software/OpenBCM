@@ -1,0 +1,1784 @@
+xl-sj1-30{sg944605}204: ./bcm.sim -y $SDKLT/INTERNAL/examples/bcm56990_a0/config/bcm56990_a0-generic-64x400.config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190418 (Thu Apr 18 18:18:10 2019)
+From sg944605@xl-sj1-30:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[53113]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[51913]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+0:bcmi_ltsw_sbr_init: Feature unavailable
+0:bcmpkt_gih_fid_support_get: null
+0:bcmpkt_higig3_fid_support_get: null
+0:bcmpkt_rxpmd_flex_fid_support_get: null
+0:mbcm_virtual_index_get: Feature unavailable
+0:bcmi_ltsw_virtual_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished cosq part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished THD part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished cosq STAT part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished BST part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished PFC part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished OBM part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished ECN part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished OOB part init for unit 0
+0:bcm_ltsw_cosq_init: bcm_ltsw_cosq_init: Finished for all cosq sub modules init for unit 0!!!
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_multicast_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_field_clear: Feature unavailable
+0:bcmint_field_clear: Feature unavailable
+0:bcmint_field_detach: Feature unavailable
+0:bcmint_field_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_stack_init: Feature unavailable
+0:bcm_ltsw_stk_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_ipmc_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_flowtracker_init: Feature unavailable
+0:ltsw_flowtracker_resource_free: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+rc: BCM driver initialized
+rc: Port modes initialized
+STG: ERROR: Feature unavailable
+Error: file ./ltsw.soc: line 48 (error code -1): script terminated
+ERROR loading rc script on unit 0
+BCM.0> c cosq_gport_traverse.c
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190418 (Thu Apr 18 18:18:10 2019)
+From sg944605@xl-sj1-30:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     BCM56990_A0_BASE, BCM56880_A0_BASE
+cosq_gport_traverse_callback: gport for local_port: 1
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004000
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004001
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004002
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004003
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004004
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004005
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004006
+cosq_gport_traverse_callback ucast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x24004007
+cosq_gport_traverse_callback mcast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x30004000
+cosq_gport_traverse_callback mcast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x30004001
+cosq_gport_traverse_callback mcast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x30004002
+cosq_gport_traverse_callback mcast queue: local_port=1,mod_port=0x8000001, numq=1, gport=0x30004003
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37800001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37810001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37820001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37830001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37840001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37850001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37860001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37870001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37880001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x37890001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x378a0001
+cosq_gport_traverse_callback scheduler: local_port=1,mod_port=0x8000001, numq=1, gport=0x378b0001
+cosq_gport_traverse_callback: gport for local_port: 2
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008000
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008001
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008002
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008003
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008004
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008005
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008006
+cosq_gport_traverse_callback ucast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x24008007
+cosq_gport_traverse_callback mcast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x30008000
+cosq_gport_traverse_callback mcast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x30008001
+cosq_gport_traverse_callback mcast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x30008002
+cosq_gport_traverse_callback mcast queue: local_port=2,mod_port=0x8000002, numq=1, gport=0x30008003
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37800002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37810002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37820002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37830002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37840002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37850002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37860002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37870002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37880002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x37890002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x378a0002
+cosq_gport_traverse_callback scheduler: local_port=2,mod_port=0x8000002, numq=1, gport=0x378b0002
+cosq_gport_traverse_callback: gport for local_port: 3
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c000
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c001
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c002
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c003
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c004
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c005
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c006
+cosq_gport_traverse_callback ucast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x2400c007
+cosq_gport_traverse_callback mcast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x3000c000
+cosq_gport_traverse_callback mcast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x3000c001
+cosq_gport_traverse_callback mcast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x3000c002
+cosq_gport_traverse_callback mcast queue: local_port=3,mod_port=0x8000003, numq=1, gport=0x3000c003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37800003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37810003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37820003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37830003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37840003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37850003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37860003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37870003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37880003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x37890003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x378a0003
+cosq_gport_traverse_callback scheduler: local_port=3,mod_port=0x8000003, numq=1, gport=0x378b0003
+cosq_gport_traverse_callback: gport for local_port: 4
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010000
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010001
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010002
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010003
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010004
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010005
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010006
+cosq_gport_traverse_callback ucast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x24010007
+cosq_gport_traverse_callback mcast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x30010000
+cosq_gport_traverse_callback mcast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x30010001
+cosq_gport_traverse_callback mcast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x30010002
+cosq_gport_traverse_callback mcast queue: local_port=4,mod_port=0x8000004, numq=1, gport=0x30010003
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37800004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37810004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37820004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37830004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37840004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37850004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37860004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37870004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37880004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x37890004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x378a0004
+cosq_gport_traverse_callback scheduler: local_port=4,mod_port=0x8000004, numq=1, gport=0x378b0004
+cosq_gport_traverse_callback: gport for local_port: 17
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044000
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044001
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044002
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044003
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044004
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044005
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044006
+cosq_gport_traverse_callback ucast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x24044007
+cosq_gport_traverse_callback mcast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x30044000
+cosq_gport_traverse_callback mcast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x30044001
+cosq_gport_traverse_callback mcast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x30044002
+cosq_gport_traverse_callback mcast queue: local_port=17,mod_port=0x8000808, numq=1, gport=0x30044003
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37800011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37810011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37820011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37830011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37840011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37850011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37860011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37870011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37880011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x37890011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x378a0011
+cosq_gport_traverse_callback scheduler: local_port=17,mod_port=0x8000808, numq=1, gport=0x378b0011
+cosq_gport_traverse_callback: gport for local_port: 18
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048000
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048001
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048002
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048003
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048004
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048005
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048006
+cosq_gport_traverse_callback ucast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x24048007
+cosq_gport_traverse_callback mcast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x30048000
+cosq_gport_traverse_callback mcast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x30048001
+cosq_gport_traverse_callback mcast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x30048002
+cosq_gport_traverse_callback mcast queue: local_port=18,mod_port=0x8001000, numq=1, gport=0x30048003
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37800012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37810012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37820012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37830012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37840012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37850012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37860012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37870012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37880012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x37890012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x378a0012
+cosq_gport_traverse_callback scheduler: local_port=18,mod_port=0x8001000, numq=1, gport=0x378b0012
+cosq_gport_traverse_callback: gport for local_port: 19
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c000
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c001
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c002
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c003
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c004
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c005
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c006
+cosq_gport_traverse_callback ucast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x2404c007
+cosq_gport_traverse_callback mcast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x3004c000
+cosq_gport_traverse_callback mcast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x3004c001
+cosq_gport_traverse_callback mcast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x3004c002
+cosq_gport_traverse_callback mcast queue: local_port=19,mod_port=0x8001001, numq=1, gport=0x3004c003
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37800013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37810013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37820013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37830013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37840013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37850013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37860013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37870013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37880013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x37890013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x378a0013
+cosq_gport_traverse_callback scheduler: local_port=19,mod_port=0x8001001, numq=1, gport=0x378b0013
+cosq_gport_traverse_callback: gport for local_port: 20
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050000
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050001
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050002
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050003
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050004
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050005
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050006
+cosq_gport_traverse_callback ucast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x24050007
+cosq_gport_traverse_callback mcast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x30050000
+cosq_gport_traverse_callback mcast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x30050001
+cosq_gport_traverse_callback mcast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x30050002
+cosq_gport_traverse_callback mcast queue: local_port=20,mod_port=0x8001002, numq=1, gport=0x30050003
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37800014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37810014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37820014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37830014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37840014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37850014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37860014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37870014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37880014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x37890014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x378a0014
+cosq_gport_traverse_callback scheduler: local_port=20,mod_port=0x8001002, numq=1, gport=0x378b0014
+cosq_gport_traverse_callback: gport for local_port: 34
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088000
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088001
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088002
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088003
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088004
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088005
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088006
+cosq_gport_traverse_callback ucast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x24088007
+cosq_gport_traverse_callback mcast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x30088000
+cosq_gport_traverse_callback mcast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x30088001
+cosq_gport_traverse_callback mcast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x30088002
+cosq_gport_traverse_callback mcast queue: local_port=34,mod_port=0x8001807, numq=1, gport=0x30088003
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37800022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37810022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37820022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37830022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37840022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37850022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37860022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37870022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37880022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x37890022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x378a0022
+cosq_gport_traverse_callback scheduler: local_port=34,mod_port=0x8001807, numq=1, gport=0x378b0022
+cosq_gport_traverse_callback: gport for local_port: 35
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c000
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c001
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c002
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c003
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c004
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c005
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c006
+cosq_gport_traverse_callback ucast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x2408c007
+cosq_gport_traverse_callback mcast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x3008c000
+cosq_gport_traverse_callback mcast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x3008c001
+cosq_gport_traverse_callback mcast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x3008c002
+cosq_gport_traverse_callback mcast queue: local_port=35,mod_port=0x8001808, numq=1, gport=0x3008c003
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37800023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37810023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37820023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37830023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37840023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37850023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37860023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37870023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37880023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x37890023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x378a0023
+cosq_gport_traverse_callback scheduler: local_port=35,mod_port=0x8001808, numq=1, gport=0x378b0023
+cosq_gport_traverse_callback: gport for local_port: 36
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090000
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090001
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090002
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090003
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090004
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090005
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090006
+cosq_gport_traverse_callback ucast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x24090007
+cosq_gport_traverse_callback mcast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x30090000
+cosq_gport_traverse_callback mcast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x30090001
+cosq_gport_traverse_callback mcast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x30090002
+cosq_gport_traverse_callback mcast queue: local_port=36,mod_port=0x8002000, numq=1, gport=0x30090003
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37800024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37810024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37820024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37830024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37840024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37850024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37860024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37870024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37880024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x37890024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x378a0024
+cosq_gport_traverse_callback scheduler: local_port=36,mod_port=0x8002000, numq=1, gport=0x378b0024
+cosq_gport_traverse_callback: gport for local_port: 37
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094000
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094001
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094002
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094003
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094004
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094005
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094006
+cosq_gport_traverse_callback ucast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x24094007
+cosq_gport_traverse_callback mcast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x30094000
+cosq_gport_traverse_callback mcast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x30094001
+cosq_gport_traverse_callback mcast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x30094002
+cosq_gport_traverse_callback mcast queue: local_port=37,mod_port=0x8002001, numq=1, gport=0x30094003
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37800025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37810025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37820025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37830025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37840025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37850025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37860025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37870025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37880025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x37890025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x378a0025
+cosq_gport_traverse_callback scheduler: local_port=37,mod_port=0x8002001, numq=1, gport=0x378b0025
+cosq_gport_traverse_callback: gport for local_port: 50
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8000
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8001
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8002
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8003
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8004
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8005
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8006
+cosq_gport_traverse_callback ucast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x240c8007
+cosq_gport_traverse_callback mcast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x300c8000
+cosq_gport_traverse_callback mcast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x300c8001
+cosq_gport_traverse_callback mcast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x300c8002
+cosq_gport_traverse_callback mcast queue: local_port=50,mod_port=0x8002805, numq=1, gport=0x300c8003
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37800032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37810032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37820032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37830032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37840032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37850032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37860032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37870032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37880032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x37890032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x378a0032
+cosq_gport_traverse_callback scheduler: local_port=50,mod_port=0x8002805, numq=1, gport=0x378b0032
+cosq_gport_traverse_callback: gport for local_port: 51
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc000
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc001
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc002
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc003
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc004
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc005
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc006
+cosq_gport_traverse_callback ucast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x240cc007
+cosq_gport_traverse_callback mcast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x300cc000
+cosq_gport_traverse_callback mcast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x300cc001
+cosq_gport_traverse_callback mcast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x300cc002
+cosq_gport_traverse_callback mcast queue: local_port=51,mod_port=0x8002806, numq=1, gport=0x300cc003
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37800033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37810033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37820033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37830033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37840033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37850033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37860033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37870033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37880033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x37890033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x378a0033
+cosq_gport_traverse_callback scheduler: local_port=51,mod_port=0x8002806, numq=1, gport=0x378b0033
+cosq_gport_traverse_callback: gport for local_port: 52
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0000
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0001
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0002
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0003
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0004
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0005
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0006
+cosq_gport_traverse_callback ucast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x240d0007
+cosq_gport_traverse_callback mcast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x300d0000
+cosq_gport_traverse_callback mcast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x300d0001
+cosq_gport_traverse_callback mcast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x300d0002
+cosq_gport_traverse_callback mcast queue: local_port=52,mod_port=0x8002807, numq=1, gport=0x300d0003
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37800034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37810034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37820034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37830034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37840034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37850034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37860034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37870034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37880034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x37890034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x378a0034
+cosq_gport_traverse_callback scheduler: local_port=52,mod_port=0x8002807, numq=1, gport=0x378b0034
+cosq_gport_traverse_callback: gport for local_port: 53
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4000
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4001
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4002
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4003
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4004
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4005
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4006
+cosq_gport_traverse_callback ucast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x240d4007
+cosq_gport_traverse_callback mcast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x300d4000
+cosq_gport_traverse_callback mcast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x300d4001
+cosq_gport_traverse_callback mcast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x300d4002
+cosq_gport_traverse_callback mcast queue: local_port=53,mod_port=0x8002808, numq=1, gport=0x300d4003
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37800035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37810035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37820035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37830035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37840035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37850035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37860035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37870035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37880035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x37890035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x378a0035
+cosq_gport_traverse_callback scheduler: local_port=53,mod_port=0x8002808, numq=1, gport=0x378b0035
+cosq_gport_traverse_callback: gport for local_port: 54
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8000
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8001
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8002
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8003
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8004
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8005
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8006
+cosq_gport_traverse_callback ucast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x240d8007
+cosq_gport_traverse_callback mcast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x300d8000
+cosq_gport_traverse_callback mcast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x300d8001
+cosq_gport_traverse_callback mcast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x300d8002
+cosq_gport_traverse_callback mcast queue: local_port=54,mod_port=0x8003000, numq=1, gport=0x300d8003
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37800036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37810036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37820036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37830036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37840036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37850036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37860036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37870036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37880036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x37890036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x378a0036
+cosq_gport_traverse_callback scheduler: local_port=54,mod_port=0x8003000, numq=1, gport=0x378b0036
+cosq_gport_traverse_callback: gport for local_port: 68
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110000
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110001
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110002
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110003
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110004
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110005
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110006
+cosq_gport_traverse_callback ucast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x24110007
+cosq_gport_traverse_callback mcast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x30110000
+cosq_gport_traverse_callback mcast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x30110001
+cosq_gport_traverse_callback mcast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x30110002
+cosq_gport_traverse_callback mcast queue: local_port=68,mod_port=0x8003805, numq=1, gport=0x30110003
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37800044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37810044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37820044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37830044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37840044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37850044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37860044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37870044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37880044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x37890044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x378a0044
+cosq_gport_traverse_callback scheduler: local_port=68,mod_port=0x8003805, numq=1, gport=0x378b0044
+cosq_gport_traverse_callback: gport for local_port: 69
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114000
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114001
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114002
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114003
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114004
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114005
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114006
+cosq_gport_traverse_callback ucast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x24114007
+cosq_gport_traverse_callback mcast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x30114000
+cosq_gport_traverse_callback mcast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x30114001
+cosq_gport_traverse_callback mcast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x30114002
+cosq_gport_traverse_callback mcast queue: local_port=69,mod_port=0x8003806, numq=1, gport=0x30114003
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37800045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37810045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37820045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37830045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37840045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37850045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37860045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37870045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37880045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x37890045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x378a0045
+cosq_gport_traverse_callback scheduler: local_port=69,mod_port=0x8003806, numq=1, gport=0x378b0045
+cosq_gport_traverse_callback: gport for local_port: 70
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118000
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118001
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118002
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118003
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118004
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118005
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118006
+cosq_gport_traverse_callback ucast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x24118007
+cosq_gport_traverse_callback mcast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x30118000
+cosq_gport_traverse_callback mcast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x30118001
+cosq_gport_traverse_callback mcast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x30118002
+cosq_gport_traverse_callback mcast queue: local_port=70,mod_port=0x8003807, numq=1, gport=0x30118003
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37800046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37810046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37820046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37830046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37840046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37850046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37860046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37870046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37880046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x37890046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x378a0046
+cosq_gport_traverse_callback scheduler: local_port=70,mod_port=0x8003807, numq=1, gport=0x378b0046
+cosq_gport_traverse_callback: gport for local_port: 71
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c000
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c001
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c002
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c003
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c004
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c005
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c006
+cosq_gport_traverse_callback ucast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x2411c007
+cosq_gport_traverse_callback mcast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x3011c000
+cosq_gport_traverse_callback mcast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x3011c001
+cosq_gport_traverse_callback mcast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x3011c002
+cosq_gport_traverse_callback mcast queue: local_port=71,mod_port=0x8003808, numq=1, gport=0x3011c003
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37800047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37810047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37820047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37830047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37840047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37850047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37860047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37870047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37880047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x37890047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x378a0047
+cosq_gport_traverse_callback scheduler: local_port=71,mod_port=0x8003808, numq=1, gport=0x378b0047
+cosq_gport_traverse_callback: gport for local_port: 85
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154000
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154001
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154002
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154003
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154004
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154005
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154006
+cosq_gport_traverse_callback ucast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x24154007
+cosq_gport_traverse_callback mcast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x30154000
+cosq_gport_traverse_callback mcast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x30154001
+cosq_gport_traverse_callback mcast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x30154002
+cosq_gport_traverse_callback mcast queue: local_port=85,mod_port=0x8004804, numq=1, gport=0x30154003
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37800055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37810055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37820055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37830055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37840055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37850055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37860055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37870055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37880055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x37890055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x378a0055
+cosq_gport_traverse_callback scheduler: local_port=85,mod_port=0x8004804, numq=1, gport=0x378b0055
+cosq_gport_traverse_callback: gport for local_port: 86
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158000
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158001
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158002
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158003
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158004
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158005
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158006
+cosq_gport_traverse_callback ucast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x24158007
+cosq_gport_traverse_callback mcast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x30158000
+cosq_gport_traverse_callback mcast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x30158001
+cosq_gport_traverse_callback mcast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x30158002
+cosq_gport_traverse_callback mcast queue: local_port=86,mod_port=0x8004805, numq=1, gport=0x30158003
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37800056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37810056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37820056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37830056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37840056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37850056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37860056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37870056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37880056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x37890056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x378a0056
+cosq_gport_traverse_callback scheduler: local_port=86,mod_port=0x8004805, numq=1, gport=0x378b0056
+cosq_gport_traverse_callback: gport for local_port: 87
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c000
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c001
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c002
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c003
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c004
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c005
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c006
+cosq_gport_traverse_callback ucast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x2415c007
+cosq_gport_traverse_callback mcast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x3015c000
+cosq_gport_traverse_callback mcast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x3015c001
+cosq_gport_traverse_callback mcast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x3015c002
+cosq_gport_traverse_callback mcast queue: local_port=87,mod_port=0x8004806, numq=1, gport=0x3015c003
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37800057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37810057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37820057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37830057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37840057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37850057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37860057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37870057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37880057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x37890057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x378a0057
+cosq_gport_traverse_callback scheduler: local_port=87,mod_port=0x8004806, numq=1, gport=0x378b0057
+cosq_gport_traverse_callback: gport for local_port: 88
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160000
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160001
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160002
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160003
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160004
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160005
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160006
+cosq_gport_traverse_callback ucast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x24160007
+cosq_gport_traverse_callback mcast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x30160000
+cosq_gport_traverse_callback mcast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x30160001
+cosq_gport_traverse_callback mcast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x30160002
+cosq_gport_traverse_callback mcast queue: local_port=88,mod_port=0x8004807, numq=1, gport=0x30160003
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37800058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37810058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37820058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37830058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37840058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37850058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37860058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37870058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37880058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x37890058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x378a0058
+cosq_gport_traverse_callback scheduler: local_port=88,mod_port=0x8004807, numq=1, gport=0x378b0058
+cosq_gport_traverse_callback: gport for local_port: 102
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198000
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198001
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198002
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198003
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198004
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198005
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198006
+cosq_gport_traverse_callback ucast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x24198007
+cosq_gport_traverse_callback mcast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x30198000
+cosq_gport_traverse_callback mcast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x30198001
+cosq_gport_traverse_callback mcast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x30198002
+cosq_gport_traverse_callback mcast queue: local_port=102,mod_port=0x8005803, numq=1, gport=0x30198003
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37800066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37810066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37820066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37830066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37840066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37850066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37860066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37870066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37880066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x37890066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x378a0066
+cosq_gport_traverse_callback scheduler: local_port=102,mod_port=0x8005803, numq=1, gport=0x378b0066
+cosq_gport_traverse_callback: gport for local_port: 103
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c000
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c001
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c002
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c003
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c004
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c005
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c006
+cosq_gport_traverse_callback ucast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x2419c007
+cosq_gport_traverse_callback mcast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x3019c000
+cosq_gport_traverse_callback mcast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x3019c001
+cosq_gport_traverse_callback mcast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x3019c002
+cosq_gport_traverse_callback mcast queue: local_port=103,mod_port=0x8005804, numq=1, gport=0x3019c003
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37800067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37810067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37820067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37830067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37840067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37850067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37860067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37870067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37880067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x37890067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x378a0067
+cosq_gport_traverse_callback scheduler: local_port=103,mod_port=0x8005804, numq=1, gport=0x378b0067
+cosq_gport_traverse_callback: gport for local_port: 104
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0000
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0001
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0002
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0003
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0004
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0005
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0006
+cosq_gport_traverse_callback ucast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x241a0007
+cosq_gport_traverse_callback mcast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x301a0000
+cosq_gport_traverse_callback mcast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x301a0001
+cosq_gport_traverse_callback mcast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x301a0002
+cosq_gport_traverse_callback mcast queue: local_port=104,mod_port=0x8005805, numq=1, gport=0x301a0003
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37800068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37810068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37820068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37830068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37840068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37850068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37860068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37870068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37880068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x37890068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x378a0068
+cosq_gport_traverse_callback scheduler: local_port=104,mod_port=0x8005805, numq=1, gport=0x378b0068
+cosq_gport_traverse_callback: gport for local_port: 105
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4000
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4001
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4002
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4003
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4004
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4005
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4006
+cosq_gport_traverse_callback ucast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x241a4007
+cosq_gport_traverse_callback mcast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x301a4000
+cosq_gport_traverse_callback mcast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x301a4001
+cosq_gport_traverse_callback mcast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x301a4002
+cosq_gport_traverse_callback mcast queue: local_port=105,mod_port=0x8005806, numq=1, gport=0x301a4003
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37800069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37810069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37820069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37830069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37840069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37850069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37860069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37870069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37880069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x37890069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x378a0069
+cosq_gport_traverse_callback scheduler: local_port=105,mod_port=0x8005806, numq=1, gport=0x378b0069
+cosq_gport_traverse_callback: gport for local_port: 119
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc000
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc001
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc002
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc003
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc004
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc005
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc006
+cosq_gport_traverse_callback ucast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x241dc007
+cosq_gport_traverse_callback mcast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x301dc000
+cosq_gport_traverse_callback mcast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x301dc001
+cosq_gport_traverse_callback mcast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x301dc002
+cosq_gport_traverse_callback mcast queue: local_port=119,mod_port=0x8006802, numq=1, gport=0x301dc003
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37800077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37810077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37820077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37830077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37840077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37850077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37860077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37870077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37880077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x37890077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x378a0077
+cosq_gport_traverse_callback scheduler: local_port=119,mod_port=0x8006802, numq=1, gport=0x378b0077
+cosq_gport_traverse_callback: gport for local_port: 120
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0000
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0001
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0002
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0003
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0004
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0005
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0006
+cosq_gport_traverse_callback ucast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x241e0007
+cosq_gport_traverse_callback mcast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x301e0000
+cosq_gport_traverse_callback mcast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x301e0001
+cosq_gport_traverse_callback mcast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x301e0002
+cosq_gport_traverse_callback mcast queue: local_port=120,mod_port=0x8006803, numq=1, gport=0x301e0003
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37800078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37810078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37820078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37830078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37840078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37850078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37860078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37870078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37880078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x37890078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x378a0078
+cosq_gport_traverse_callback scheduler: local_port=120,mod_port=0x8006803, numq=1, gport=0x378b0078
+cosq_gport_traverse_callback: gport for local_port: 121
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4000
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4001
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4002
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4003
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4004
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4005
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4006
+cosq_gport_traverse_callback ucast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x241e4007
+cosq_gport_traverse_callback mcast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x301e4000
+cosq_gport_traverse_callback mcast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x301e4001
+cosq_gport_traverse_callback mcast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x301e4002
+cosq_gport_traverse_callback mcast queue: local_port=121,mod_port=0x8006804, numq=1, gport=0x301e4003
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37800079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37810079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37820079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37830079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37840079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37850079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37860079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37870079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37880079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x37890079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x378a0079
+cosq_gport_traverse_callback scheduler: local_port=121,mod_port=0x8006804, numq=1, gport=0x378b0079
+cosq_gport_traverse_callback: gport for local_port: 122
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8000
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8001
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8002
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8003
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8004
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8005
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8006
+cosq_gport_traverse_callback ucast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x241e8007
+cosq_gport_traverse_callback mcast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x301e8000
+cosq_gport_traverse_callback mcast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x301e8001
+cosq_gport_traverse_callback mcast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x301e8002
+cosq_gport_traverse_callback mcast queue: local_port=122,mod_port=0x8006805, numq=1, gport=0x301e8003
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3780007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3781007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3782007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3783007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3784007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3785007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3786007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3787007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3788007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x3789007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x378a007a
+cosq_gport_traverse_callback scheduler: local_port=122,mod_port=0x8006805, numq=1, gport=0x378b007a
+cosq_gport_traverse_callback: gport for local_port: 136
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220000
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220001
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220002
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220003
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220004
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220005
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220006
+cosq_gport_traverse_callback ucast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x24220007
+cosq_gport_traverse_callback mcast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x30220000
+cosq_gport_traverse_callback mcast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x30220001
+cosq_gport_traverse_callback mcast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x30220002
+cosq_gport_traverse_callback mcast queue: local_port=136,mod_port=0x8007801, numq=1, gport=0x30220003
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37800088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37810088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37820088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37830088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37840088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37850088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37860088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37870088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37880088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x37890088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x378a0088
+cosq_gport_traverse_callback scheduler: local_port=136,mod_port=0x8007801, numq=1, gport=0x378b0088
+cosq_gport_traverse_callback: gport for local_port: 137
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224000
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224001
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224002
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224003
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224004
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224005
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224006
+cosq_gport_traverse_callback ucast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x24224007
+cosq_gport_traverse_callback mcast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x30224000
+cosq_gport_traverse_callback mcast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x30224001
+cosq_gport_traverse_callback mcast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x30224002
+cosq_gport_traverse_callback mcast queue: local_port=137,mod_port=0x8007802, numq=1, gport=0x30224003
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37800089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37810089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37820089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37830089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37840089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37850089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37860089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37870089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37880089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x37890089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x378a0089
+cosq_gport_traverse_callback scheduler: local_port=137,mod_port=0x8007802, numq=1, gport=0x378b0089
+cosq_gport_traverse_callback: gport for local_port: 138
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228000
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228001
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228002
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228003
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228004
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228005
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228006
+cosq_gport_traverse_callback ucast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x24228007
+cosq_gport_traverse_callback mcast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x30228000
+cosq_gport_traverse_callback mcast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x30228001
+cosq_gport_traverse_callback mcast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x30228002
+cosq_gport_traverse_callback mcast queue: local_port=138,mod_port=0x8007803, numq=1, gport=0x30228003
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3780008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3781008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3782008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3783008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3784008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3785008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3786008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3787008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3788008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x3789008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x378a008a
+cosq_gport_traverse_callback scheduler: local_port=138,mod_port=0x8007803, numq=1, gport=0x378b008a
+cosq_gport_traverse_callback: gport for local_port: 139
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c000
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c001
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c002
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c003
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c004
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c005
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c006
+cosq_gport_traverse_callback ucast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x2422c007
+cosq_gport_traverse_callback mcast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x3022c000
+cosq_gport_traverse_callback mcast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x3022c001
+cosq_gport_traverse_callback mcast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x3022c002
+cosq_gport_traverse_callback mcast queue: local_port=139,mod_port=0x8007804, numq=1, gport=0x3022c003
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3780008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3781008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3782008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3783008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3784008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3785008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3786008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3787008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3788008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x3789008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x378a008b
+cosq_gport_traverse_callback scheduler: local_port=139,mod_port=0x8007804, numq=1, gport=0x378b008b
+cosq_gport_traverse_callback: gport for local_port: 152
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260000
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260001
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260002
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260003
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260004
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260005
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260006
+cosq_gport_traverse_callback ucast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x24260007
+cosq_gport_traverse_callback mcast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x30260000
+cosq_gport_traverse_callback mcast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x30260001
+cosq_gport_traverse_callback mcast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x30260002
+cosq_gport_traverse_callback mcast queue: local_port=152,mod_port=0x8008008, numq=1, gport=0x30260003
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37800098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37810098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37820098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37830098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37840098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37850098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37860098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37870098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37880098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x37890098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x378a0098
+cosq_gport_traverse_callback scheduler: local_port=152,mod_port=0x8008008, numq=1, gport=0x378b0098
+cosq_gport_traverse_callback: gport for local_port: 153
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264000
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264001
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264002
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264003
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264004
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264005
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264006
+cosq_gport_traverse_callback ucast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x24264007
+cosq_gport_traverse_callback mcast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x30264000
+cosq_gport_traverse_callback mcast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x30264001
+cosq_gport_traverse_callback mcast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x30264002
+cosq_gport_traverse_callback mcast queue: local_port=153,mod_port=0x8008800, numq=1, gport=0x30264003
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37800099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37810099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37820099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37830099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37840099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37850099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37860099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37870099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37880099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x37890099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x378a0099
+cosq_gport_traverse_callback scheduler: local_port=153,mod_port=0x8008800, numq=1, gport=0x378b0099
+cosq_gport_traverse_callback: gport for local_port: 154
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268000
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268001
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268002
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268003
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268004
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268005
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268006
+cosq_gport_traverse_callback ucast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x24268007
+cosq_gport_traverse_callback mcast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x30268000
+cosq_gport_traverse_callback mcast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x30268001
+cosq_gport_traverse_callback mcast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x30268002
+cosq_gport_traverse_callback mcast queue: local_port=154,mod_port=0x8008801, numq=1, gport=0x30268003
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3780009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3781009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3782009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3783009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3784009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3785009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3786009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3787009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3788009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x3789009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x378a009a
+cosq_gport_traverse_callback scheduler: local_port=154,mod_port=0x8008801, numq=1, gport=0x378b009a
+cosq_gport_traverse_callback: gport for local_port: 155
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c000
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c001
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c002
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c003
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c004
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c005
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c006
+cosq_gport_traverse_callback ucast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x2426c007
+cosq_gport_traverse_callback mcast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x3026c000
+cosq_gport_traverse_callback mcast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x3026c001
+cosq_gport_traverse_callback mcast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x3026c002
+cosq_gport_traverse_callback mcast queue: local_port=155,mod_port=0x8008802, numq=1, gport=0x3026c003
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3780009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3781009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3782009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3783009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3784009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3785009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3786009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3787009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3788009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x3789009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x378a009b
+cosq_gport_traverse_callback scheduler: local_port=155,mod_port=0x8008802, numq=1, gport=0x378b009b
+cosq_gport_traverse_callback: gport for local_port: 156
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270000
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270001
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270002
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270003
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270004
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270005
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270006
+cosq_gport_traverse_callback ucast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x24270007
+cosq_gport_traverse_callback mcast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x30270000
+cosq_gport_traverse_callback mcast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x30270001
+cosq_gport_traverse_callback mcast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x30270002
+cosq_gport_traverse_callback mcast queue: local_port=156,mod_port=0x8008803, numq=1, gport=0x30270003
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3780009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3781009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3782009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3783009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3784009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3785009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3786009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3787009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3788009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x3789009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x378a009c
+cosq_gport_traverse_callback scheduler: local_port=156,mod_port=0x8008803, numq=1, gport=0x378b009c
+cosq_gport_traverse_callback: gport for local_port: 170
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8000
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8001
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8002
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8003
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8004
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8005
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8006
+cosq_gport_traverse_callback ucast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x242a8007
+cosq_gport_traverse_callback mcast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x302a8000
+cosq_gport_traverse_callback mcast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x302a8001
+cosq_gport_traverse_callback mcast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x302a8002
+cosq_gport_traverse_callback mcast queue: local_port=170,mod_port=0x8009008, numq=1, gport=0x302a8003
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378000aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378100aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378200aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378300aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378400aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378500aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378600aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378700aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378800aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378900aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378a00aa
+cosq_gport_traverse_callback scheduler: local_port=170,mod_port=0x8009008, numq=1, gport=0x378b00aa
+cosq_gport_traverse_callback: gport for local_port: 171
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac000
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac001
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac002
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac003
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac004
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac005
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac006
+cosq_gport_traverse_callback ucast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x242ac007
+cosq_gport_traverse_callback mcast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x302ac000
+cosq_gport_traverse_callback mcast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x302ac001
+cosq_gport_traverse_callback mcast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x302ac002
+cosq_gport_traverse_callback mcast queue: local_port=171,mod_port=0x8009800, numq=1, gport=0x302ac003
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378000ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378100ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378200ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378300ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378400ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378500ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378600ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378700ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378800ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378900ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378a00ab
+cosq_gport_traverse_callback scheduler: local_port=171,mod_port=0x8009800, numq=1, gport=0x378b00ab
+cosq_gport_traverse_callback: gport for local_port: 172
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0000
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0001
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0002
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0003
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0004
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0005
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0006
+cosq_gport_traverse_callback ucast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x242b0007
+cosq_gport_traverse_callback mcast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x302b0000
+cosq_gport_traverse_callback mcast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x302b0001
+cosq_gport_traverse_callback mcast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x302b0002
+cosq_gport_traverse_callback mcast queue: local_port=172,mod_port=0x8009801, numq=1, gport=0x302b0003
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378000ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378100ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378200ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378300ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378400ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378500ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378600ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378700ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378800ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378900ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378a00ac
+cosq_gport_traverse_callback scheduler: local_port=172,mod_port=0x8009801, numq=1, gport=0x378b00ac
+cosq_gport_traverse_callback: gport for local_port: 173
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4000
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4001
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4002
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4003
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4004
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4005
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4006
+cosq_gport_traverse_callback ucast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x242b4007
+cosq_gport_traverse_callback mcast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x302b4000
+cosq_gport_traverse_callback mcast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x302b4001
+cosq_gport_traverse_callback mcast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x302b4002
+cosq_gport_traverse_callback mcast queue: local_port=173,mod_port=0x8009802, numq=1, gport=0x302b4003
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378000ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378100ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378200ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378300ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378400ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378500ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378600ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378700ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378800ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378900ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378a00ad
+cosq_gport_traverse_callback scheduler: local_port=173,mod_port=0x8009802, numq=1, gport=0x378b00ad
+cosq_gport_traverse_callback: gport for local_port: 187
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec000
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec001
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec002
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec003
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec004
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec005
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec006
+cosq_gport_traverse_callback ucast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x242ec007
+cosq_gport_traverse_callback mcast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x302ec000
+cosq_gport_traverse_callback mcast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x302ec001
+cosq_gport_traverse_callback mcast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x302ec002
+cosq_gport_traverse_callback mcast queue: local_port=187,mod_port=0x800a007, numq=1, gport=0x302ec003
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378000bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378100bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378200bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378300bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378400bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378500bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378600bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378700bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378800bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378900bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378a00bb
+cosq_gport_traverse_callback scheduler: local_port=187,mod_port=0x800a007, numq=1, gport=0x378b00bb
+cosq_gport_traverse_callback: gport for local_port: 188
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0000
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0001
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0002
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0003
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0004
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0005
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0006
+cosq_gport_traverse_callback ucast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x242f0007
+cosq_gport_traverse_callback mcast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x302f0000
+cosq_gport_traverse_callback mcast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x302f0001
+cosq_gport_traverse_callback mcast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x302f0002
+cosq_gport_traverse_callback mcast queue: local_port=188,mod_port=0x800a008, numq=1, gport=0x302f0003
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378000bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378100bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378200bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378300bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378400bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378500bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378600bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378700bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378800bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378900bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378a00bc
+cosq_gport_traverse_callback scheduler: local_port=188,mod_port=0x800a008, numq=1, gport=0x378b00bc
+cosq_gport_traverse_callback: gport for local_port: 189
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4000
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4001
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4002
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4003
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4004
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4005
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4006
+cosq_gport_traverse_callback ucast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x242f4007
+cosq_gport_traverse_callback mcast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x302f4000
+cosq_gport_traverse_callback mcast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x302f4001
+cosq_gport_traverse_callback mcast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x302f4002
+cosq_gport_traverse_callback mcast queue: local_port=189,mod_port=0x800a800, numq=1, gport=0x302f4003
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378000bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378100bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378200bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378300bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378400bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378500bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378600bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378700bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378800bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378900bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378a00bd
+cosq_gport_traverse_callback scheduler: local_port=189,mod_port=0x800a800, numq=1, gport=0x378b00bd
+cosq_gport_traverse_callback: gport for local_port: 190
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8000
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8001
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8002
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8003
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8004
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8005
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8006
+cosq_gport_traverse_callback ucast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x242f8007
+cosq_gport_traverse_callback mcast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x302f8000
+cosq_gport_traverse_callback mcast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x302f8001
+cosq_gport_traverse_callback mcast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x302f8002
+cosq_gport_traverse_callback mcast queue: local_port=190,mod_port=0x800a801, numq=1, gport=0x302f8003
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378000be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378100be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378200be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378300be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378400be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378500be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378600be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378700be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378800be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378900be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378a00be
+cosq_gport_traverse_callback scheduler: local_port=190,mod_port=0x800a801, numq=1, gport=0x378b00be
+cosq_gport_traverse_callback: gport for local_port: 204
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330000
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330001
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330002
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330003
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330004
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330005
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330006
+cosq_gport_traverse_callback ucast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x24330007
+cosq_gport_traverse_callback mcast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x30330000
+cosq_gport_traverse_callback mcast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x30330001
+cosq_gport_traverse_callback mcast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x30330002
+cosq_gport_traverse_callback mcast queue: local_port=204,mod_port=0x800b006, numq=1, gport=0x30330003
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378000cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378100cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378200cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378300cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378400cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378500cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378600cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378700cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378800cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378900cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378a00cc
+cosq_gport_traverse_callback scheduler: local_port=204,mod_port=0x800b006, numq=1, gport=0x378b00cc
+cosq_gport_traverse_callback: gport for local_port: 205
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334000
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334001
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334002
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334003
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334004
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334005
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334006
+cosq_gport_traverse_callback ucast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x24334007
+cosq_gport_traverse_callback mcast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x30334000
+cosq_gport_traverse_callback mcast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x30334001
+cosq_gport_traverse_callback mcast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x30334002
+cosq_gport_traverse_callback mcast queue: local_port=205,mod_port=0x800b007, numq=1, gport=0x30334003
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378000cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378100cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378200cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378300cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378400cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378500cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378600cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378700cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378800cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378900cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378a00cd
+cosq_gport_traverse_callback scheduler: local_port=205,mod_port=0x800b007, numq=1, gport=0x378b00cd
+cosq_gport_traverse_callback: gport for local_port: 206
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338000
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338001
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338002
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338003
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338004
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338005
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338006
+cosq_gport_traverse_callback ucast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x24338007
+cosq_gport_traverse_callback mcast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x30338000
+cosq_gport_traverse_callback mcast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x30338001
+cosq_gport_traverse_callback mcast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x30338002
+cosq_gport_traverse_callback mcast queue: local_port=206,mod_port=0x800b008, numq=1, gport=0x30338003
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378000ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378100ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378200ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378300ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378400ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378500ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378600ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378700ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378800ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378900ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378a00ce
+cosq_gport_traverse_callback scheduler: local_port=206,mod_port=0x800b008, numq=1, gport=0x378b00ce
+cosq_gport_traverse_callback: gport for local_port: 207
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c000
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c001
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c002
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c003
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c004
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c005
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c006
+cosq_gport_traverse_callback ucast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x2433c007
+cosq_gport_traverse_callback mcast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x3033c000
+cosq_gport_traverse_callback mcast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x3033c001
+cosq_gport_traverse_callback mcast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x3033c002
+cosq_gport_traverse_callback mcast queue: local_port=207,mod_port=0x800b800, numq=1, gport=0x3033c003
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378000cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378100cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378200cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378300cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378400cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378500cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378600cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378700cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378800cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378900cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378a00cf
+cosq_gport_traverse_callback scheduler: local_port=207,mod_port=0x800b800, numq=1, gport=0x378b00cf
+cosq_gport_traverse_callback: gport for local_port: 221
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374000
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374001
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374002
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374003
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374004
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374005
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374006
+cosq_gport_traverse_callback ucast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x24374007
+cosq_gport_traverse_callback mcast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x30374000
+cosq_gport_traverse_callback mcast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x30374001
+cosq_gport_traverse_callback mcast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x30374002
+cosq_gport_traverse_callback mcast queue: local_port=221,mod_port=0x800c005, numq=1, gport=0x30374003
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378000dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378100dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378200dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378300dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378400dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378500dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378600dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378700dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378800dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378900dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378a00dd
+cosq_gport_traverse_callback scheduler: local_port=221,mod_port=0x800c005, numq=1, gport=0x378b00dd
+cosq_gport_traverse_callback: gport for local_port: 222
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378000
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378001
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378002
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378003
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378004
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378005
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378006
+cosq_gport_traverse_callback ucast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x24378007
+cosq_gport_traverse_callback mcast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x30378000
+cosq_gport_traverse_callback mcast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x30378001
+cosq_gport_traverse_callback mcast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x30378002
+cosq_gport_traverse_callback mcast queue: local_port=222,mod_port=0x800c006, numq=1, gport=0x30378003
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378000de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378100de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378200de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378300de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378400de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378500de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378600de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378700de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378800de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378900de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378a00de
+cosq_gport_traverse_callback scheduler: local_port=222,mod_port=0x800c006, numq=1, gport=0x378b00de
+cosq_gport_traverse_callback: gport for local_port: 223
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c000
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c001
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c002
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c003
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c004
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c005
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c006
+cosq_gport_traverse_callback ucast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x2437c007
+cosq_gport_traverse_callback mcast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x3037c000
+cosq_gport_traverse_callback mcast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x3037c001
+cosq_gport_traverse_callback mcast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x3037c002
+cosq_gport_traverse_callback mcast queue: local_port=223,mod_port=0x800c007, numq=1, gport=0x3037c003
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378000df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378100df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378200df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378300df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378400df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378500df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378600df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378700df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378800df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378900df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378a00df
+cosq_gport_traverse_callback scheduler: local_port=223,mod_port=0x800c007, numq=1, gport=0x378b00df
+cosq_gport_traverse_callback: gport for local_port: 224
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380000
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380001
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380002
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380003
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380004
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380005
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380006
+cosq_gport_traverse_callback ucast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x24380007
+cosq_gport_traverse_callback mcast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x30380000
+cosq_gport_traverse_callback mcast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x30380001
+cosq_gport_traverse_callback mcast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x30380002
+cosq_gport_traverse_callback mcast queue: local_port=224,mod_port=0x800c008, numq=1, gport=0x30380003
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378000e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378100e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378200e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378300e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378400e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378500e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378600e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378700e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378800e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378900e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378a00e0
+cosq_gport_traverse_callback scheduler: local_port=224,mod_port=0x800c008, numq=1, gport=0x378b00e0
+cosq_gport_traverse_callback: gport for local_port: 238
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8000
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8001
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8002
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8003
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8004
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8005
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8006
+cosq_gport_traverse_callback ucast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x243b8007
+cosq_gport_traverse_callback mcast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x303b8000
+cosq_gport_traverse_callback mcast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x303b8001
+cosq_gport_traverse_callback mcast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x303b8002
+cosq_gport_traverse_callback mcast queue: local_port=238,mod_port=0x800d004, numq=1, gport=0x303b8003
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378000ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378100ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378200ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378300ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378400ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378500ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378600ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378700ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378800ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378900ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378a00ee
+cosq_gport_traverse_callback scheduler: local_port=238,mod_port=0x800d004, numq=1, gport=0x378b00ee
+cosq_gport_traverse_callback: gport for local_port: 239
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc000
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc001
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc002
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc003
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc004
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc005
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc006
+cosq_gport_traverse_callback ucast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x243bc007
+cosq_gport_traverse_callback mcast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x303bc000
+cosq_gport_traverse_callback mcast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x303bc001
+cosq_gport_traverse_callback mcast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x303bc002
+cosq_gport_traverse_callback mcast queue: local_port=239,mod_port=0x800d005, numq=1, gport=0x303bc003
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378000ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378100ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378200ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378300ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378400ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378500ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378600ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378700ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378800ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378900ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378a00ef
+cosq_gport_traverse_callback scheduler: local_port=239,mod_port=0x800d005, numq=1, gport=0x378b00ef
+cosq_gport_traverse_callback: gport for local_port: 240
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0000
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0001
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0002
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0003
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0004
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0005
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0006
+cosq_gport_traverse_callback ucast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x243c0007
+cosq_gport_traverse_callback mcast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x303c0000
+cosq_gport_traverse_callback mcast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x303c0001
+cosq_gport_traverse_callback mcast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x303c0002
+cosq_gport_traverse_callback mcast queue: local_port=240,mod_port=0x800d006, numq=1, gport=0x303c0003
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378000f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378100f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378200f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378300f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378400f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378500f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378600f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378700f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378800f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378900f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378a00f0
+cosq_gport_traverse_callback scheduler: local_port=240,mod_port=0x800d006, numq=1, gport=0x378b00f0
+cosq_gport_traverse_callback: gport for local_port: 241
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4000
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4001
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4002
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4003
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4004
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4005
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4006
+cosq_gport_traverse_callback ucast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x243c4007
+cosq_gport_traverse_callback mcast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x303c4000
+cosq_gport_traverse_callback mcast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x303c4001
+cosq_gport_traverse_callback mcast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x303c4002
+cosq_gport_traverse_callback mcast queue: local_port=241,mod_port=0x800d007, numq=1, gport=0x303c4003
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378000f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378100f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378200f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378300f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378400f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378500f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378600f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378700f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378800f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378900f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378a00f1
+cosq_gport_traverse_callback scheduler: local_port=241,mod_port=0x800d007, numq=1, gport=0x378b00f1
+cosq_gport_traverse_callback: gport for local_port: 255
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc000
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc001
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc002
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc003
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc004
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc005
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc006
+cosq_gport_traverse_callback ucast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x243fc007
+cosq_gport_traverse_callback mcast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x303fc000
+cosq_gport_traverse_callback mcast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x303fc001
+cosq_gport_traverse_callback mcast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x303fc002
+cosq_gport_traverse_callback mcast queue: local_port=255,mod_port=0x800e003, numq=1, gport=0x303fc003
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378000ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378100ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378200ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378300ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378400ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378500ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378600ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378700ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378800ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378900ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378a00ff
+cosq_gport_traverse_callback scheduler: local_port=255,mod_port=0x800e003, numq=1, gport=0x378b00ff
+cosq_gport_traverse_callback: gport for local_port: 256
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400000
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400001
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400002
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400003
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400004
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400005
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400006
+cosq_gport_traverse_callback ucast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x24400007
+cosq_gport_traverse_callback mcast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x30400000
+cosq_gport_traverse_callback mcast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x30400001
+cosq_gport_traverse_callback mcast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x30400002
+cosq_gport_traverse_callback mcast queue: local_port=256,mod_port=0x800e004, numq=1, gport=0x30400003
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37800100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37810100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37820100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37830100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37840100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37850100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37860100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37870100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37880100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x37890100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x378a0100
+cosq_gport_traverse_callback scheduler: local_port=256,mod_port=0x800e004, numq=1, gport=0x378b0100
+cosq_gport_traverse_callback: gport for local_port: 257
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404000
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404001
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404002
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404003
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404004
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404005
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404006
+cosq_gport_traverse_callback ucast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x24404007
+cosq_gport_traverse_callback mcast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x30404000
+cosq_gport_traverse_callback mcast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x30404001
+cosq_gport_traverse_callback mcast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x30404002
+cosq_gport_traverse_callback mcast queue: local_port=257,mod_port=0x800e005, numq=1, gport=0x30404003
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37800101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37810101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37820101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37830101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37840101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37850101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37860101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37870101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37880101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x37890101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x378a0101
+cosq_gport_traverse_callback scheduler: local_port=257,mod_port=0x800e005, numq=1, gport=0x378b0101
+cosq_gport_traverse_callback: gport for local_port: 258
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408000
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408001
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408002
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408003
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408004
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408005
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408006
+cosq_gport_traverse_callback ucast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x24408007
+cosq_gport_traverse_callback mcast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x30408000
+cosq_gport_traverse_callback mcast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x30408001
+cosq_gport_traverse_callback mcast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x30408002
+cosq_gport_traverse_callback mcast queue: local_port=258,mod_port=0x800e006, numq=1, gport=0x30408003
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37800102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37810102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37820102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37830102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37840102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37850102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37860102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37870102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37880102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x37890102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x378a0102
+cosq_gport_traverse_callback scheduler: local_port=258,mod_port=0x800e006, numq=1, gport=0x378b0102
+cosq_gport_traverse_callback: gport for local_port: 0
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000000
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000001
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000002
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000003
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000004
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000005
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000006
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000007
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000008
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000009
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000a
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000b
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000c
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000d
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000e
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000000f
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000010
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000011
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000012
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000013
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000014
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000015
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000016
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000017
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000018
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000019
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001a
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001b
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001c
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001d
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001e
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000001f
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000020
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000021
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000022
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000023
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000024
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000025
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000026
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000027
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000028
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x30000029
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002a
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002b
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002c
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002d
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002e
+cosq_gport_traverse_callback mcast queue: local_port=0,mod_port=0x8000000, numq=1, gport=0x3000002f
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=48, gport=0x37800000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37810000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37820000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37830000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37840000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37850000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37860000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37870000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37880000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x37890000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x378a0000
+cosq_gport_traverse_callback scheduler: local_port=0,mod_port=0x8000000, numq=0, gport=0x378b0000
+Kindly refer to above gport printing!
+bcm_error_t $$ = BCM_E_NONE (0)
+

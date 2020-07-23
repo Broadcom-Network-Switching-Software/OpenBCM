@@ -1,0 +1,159 @@
+# $Id: gsanity.soc,v 1.79 2013/09/25 18:43:13 rajguru Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run the correct variant of the sanity script on the
+# current chip.
+#
+# To run the correct variant on ALL attached chips, run "*:gsanity".
+#
+# Runs:
+#	sanity.soc on StrataSwitch chips
+#	hsanity.soc on Hercules chips
+#	lsanity.soc on Lynx chips
+#	dsanity.soc on Draco chips
+#	tsanity.soc on Tucana/Magnum chips
+#       fsanity.soc on Firebolt2/Firebolt/Helix chips
+#       esanity.soc on Easyrider chips
+#       bsanity.soc on Bradley/HUMV/Goldwing chips
+#       rsanity.soc on Raptor/Raven chips
+#       trsanity.soc on Triumph chips
+#       hksanity.soc on Hawkeye/Hawkeye_EEE chips
+#       ensanity.soc on Enduro chips
+#       vsanity.soc on Valkyrie chips
+#       scsanity.soc on Scorpion/HUMV+/Conqueror chips
+#       tdsanity.soc on Trident/Titan chips
+#       tr3_sanity.soc on Triumph3/Firebolt4 chips
+#       td2sanity.soc on Trident2/Titan2 chips
+#       td2p_sanity.soc on Trident2+ chip
+#       td4sanity.soc on Trident4 chips
+#       td4x9sanity.soc on Trident4 X9 chips
+#       apsanity.soc on Apache chip
+#       th_sanity.soc on Tomahawk/Titan-hawk chips
+#       td3sanity.soc on Trident3 chip
+#       hx5sanity.soc on Helix5 chip
+#       hr4sanity.soc on Hurricane4 chip
+#       mv2sanity.soc on Maverick2 chip
+#       fb6sanity.soc on Firebolt6 chip
+#       th2_sanity.soc on Tomahawk2 chips
+#       ghsanity.soc on Greyhound/Rager2 chips
+#       hr3sanity.soc on Hurricane3 chips
+#       flsanity.soc on Firelight chips
+#       th4_sanity.soc on Tomahawk4 chips
+
+echo "Display current config"                                        
+config show                                                          
+echo "Display port status"                                         
+ps 
+
+if $?slc || $?gsl || $?sml || $?ul "local script sanity.soc"
+if $?herc || $?herc15	"local script hsanity.soc"
+if $?lynx || $?lynx15	"local script lsanity.soc"
+if $?drac || $?drac15	"local script dsanity.soc"
+if $?tucana || $?magnum "local script tsanity.soc"
+if $?fbpoe || $?firebolt || $?helix || $?felix || $?helix15 || $?felix15 \
+        "local script fsanity.soc"
+if $?easyrider || $?easyrider10 "local script esanity.soc"
+if $?bradley || $?humv || $?goldwing "local script bsanity.soc"
+if $?raptor || $?raven "local script rsanity.soc"
+if $?triumph "local script trsanity.soc"
+if $?hawkeye || $?hawkeye_eee "local script hksanity.soc"
+if $?enduro "local script ensanity.soc"
+if $?hurricane "local script husanity.soc"
+if $?hurricane2 "local script hu2sanity.soc"
+if $?hurricane3 "local script hr3sanity.soc"
+if $?greyhound "local script ghsanity.soc"
+if $?greyhound2 "local script gh2sanity.soc"
+if $?firelight "local script flsanity.soc"
+if $?wolfhound2 "local script wh2sanity.soc"
+if $?valkyrie "local script vsanity.soc"
+if $?scorpion || $?humvplus || $?conqueror "local script scsanity.soc"
+if $?BCM56520_A0 || $?BCM56520_B0 "local script bcm56520sanity.soc"
+if $?BCM56521_A0 || $?BCM56521_B0 "local script bcm56521sanity.soc"
+if $?BCM56524_A0 || $?BCM56524_B0 || $?BCM56534_B0 "local script bcm56524sanity.soc"
+if $?BCM56526_A0 || $?BCM56526_B0 "local script bcm56526sanity.soc"
+if $?BCM56630_A0 || $?BCM56630_B0 "local script bcm56630sanity.soc"
+if $?BCM56634_A0 || $?BCM56634_B0 "local script bcm56634sanity.soc"
+if $?BCM56636_A0 || $?BCM56636_B0 "local script bcm56636sanity.soc"
+if $?BCM56638_A0 || $?BCM56638_B0 "local script bcm56638sanity.soc"
+if $?BCM56639_A0 || $?BCM56639_B0 "local script bcm56639sanity.soc"
+if $?BCM56538_B0 "local script bcm56538sanity.soc"
+if $?BCM56685_A0 || $?BCM56685_B0 "local script bcm56685sanity.soc"
+if $?BCM56689_A0 || $?BCM56689_B0 "local script bcm56689sanity.soc"
+if $?BCM56324_A0 || $?BCM56324_B0 "local script fsanity.soc"
+if $?trident "local script tdsanity.soc"
+if $?BCM56838_A0 || $?BCM56838_A1 || $?BCM56838_A2 "local script bcm56838sanity.soc"
+if $?BCM56831_A0 || $?BCM56831_A1 || $?BCM56831_A2 "local script bcm56831sanity.soc"
+if $?BCM56835_A0 || $?BCM56835_A1 || $?BCM56835_A2 "local script bcm56835sanity.soc"
+if $?katana "local script ktsanity.soc"
+if $?katana2 "local script kt2sanity.soc" "setenv run_full_sanity 1"
+if $?saber2 "local script sb2sanity.soc" "setenv run_full_sanity 1"
+if $?metrolite "local script metrolitesanity.soc"
+if $?triumph3 "local script tr3_sanity.soc"
+if $?BCM56640_A0 || $?BCM56640_A1 || $?BCM56640_B0 \
+    "local script bcm56640sanity.soc"
+if $?BCM56643_A0 || $?BCM56643_A1 || $?BCM56643_B0 \
+    "local script bcm56643sanity.soc"
+if $?BCM56644_A0 || $?BCM56644_A1 || $?BCM56644_B0 \
+    "local script bcm56644sanity.soc"
+if $?BCM56648_A0 || $?BCM56648_A1 || $?BCM56648_B0 \
+    "local script bcm56643sanity.soc"
+if $?BCM56649_A0 || $?BCM56649_A1 || $?BCM56649_B0 \
+    "local script bcm56649sanity.soc"
+if $?BCM56540_A0 || $?BCM56540_A1 || $?BCM56540_B0 \
+    "local script bcm56540sanity.soc"
+if $?BCM56541_A0 || $?BCM56541_A1 || $?BCM56541_B0 \
+    "local script bcm56541sanity.soc"
+if $?BCM56542_A0 || $?BCM56542_A1 || $?BCM56542_B0 \
+    "local script bcm56542sanity.soc"
+if $?BCM56545_A0 || $?BCM56545_A1 || $?BCM56545_B0 \
+    "local script bcm56540sanity.soc"
+if $?BCM56544_A0 || $?BCM56544_A1 || $?BCM56544_B0 \
+    "local script bcm56544sanity.soc"
+if $?BCM56546_A0 || $?BCM56546_A1 || $?BCM56546_B0 \
+    "local script bcm56541sanity.soc"
+if $?BCM56046_B0 || $?BCM56045_B0 \
+    "local script bcm56045sanity.soc"
+if $?BCM56044_B0 \
+    "local script bcm56044sanity.soc"
+if $?BCM56340_A0 || $?BCM56342_A0 \
+    "local script bcm56340sanity.soc"
+if $?BCM56344_A0 || $?BCM56345_A0 || $?BCM56346_A0 \
+    "local script bcm56344sanity.soc"
+if $?BCM56040_A0 || $?BCM56041_A0 || $?BCM56042_A0 \
+    "local script bcm56040sanity.soc"
+if $?BCM56547_A0 || $?BCM56548_A0 || $?BCM56548H_A0 \
+    "local script bcm56547sanity.soc"
+if $?BCM56049_A0 "local script bcm56049sanity.soc"    
+if $?shadow "local script shadowsanity.soc"
+if $?trident2 "local script td2sanity.soc"
+if $?apache "local script apsanity.soc"
+if $?monterey "local script mnsanity.soc"
+if $?BCM56675_B0 "local script mnsanity56675.soc"
+if $?BCM56672_B0 "local script mnsanity56672.soc"
+if $?BCM56675_C0 "local script mnsanity56675.soc"
+if $?BCM56672_C0 "local script mnsanity56672.soc"
+if $?trident2plus "local script td2p_sanity.soc"
+if $?tomahawk "local script th_sanity.soc"
+if $?trident3 "local script td3_sanity.soc"
+if $?helix5 "local script hx5_sanity.soc"
+if $?hurricane4 "local script hr4_sanity.soc"
+if $?maverick2 "local script mv2_sanity.soc"
+if $?firebolt6 "local script fb6_sanity.soc"
+if $?tomahawk_plus "local script th_sanity.soc"
+if $?tomahawk2 "local script th2_sanity.soc"
+if $?tomahawk3 "local script th3_sanity.soc"
+if $?BCM56880_A0 "local script td4sanity.soc"
+if $?BCM56880_B0 "local script td4sanity.soc"
+if $?BCM56990_A0 "local script th4_sanity.soc"
+if $?BCM56780_A0 "local script td4x9sanity.soc"
+
+if $?PETRAB_A0 "local script bcm88640sanity.soc"
+if $?BCM88650_A0 || $?BCM88650_B0 "local script bcm88650sanity.soc"
+if $?BCM88750_A0 || $?BCM88750_B0  "local script bcm88750sanity.soc"
+
+if !$?script \
+	"echo 'ERROR: Unit $unit ($devname): cannot determine sanity script'"
+if $?script \
+	"echo 'Unit $unit ($devname) running $script'; rccache add $script; rcload $script; rccache delete $script"

@@ -1,0 +1,139 @@
+#
+# $Id: flair.soc,v 1.90 2013/08/14 08:32:00 ninash Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+debug info
+debug appl rcload warn
+debug appl symtab warn
+debug bcm rx,tx,link,attach warn
+debug soc tests warn
+debug soc rx,phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,ddr warn
+debug soc common err
+debug sys verinet warn
+debug soc physim warn
+
+# currently only FIC Falcon 0 ~ 5 are connected to MDIO
+config add serdes_qrtt_active_6=0
+config add serdes_qrtt_active_7=0
+config add serdes_qrtt_active_8=0
+
+## temporary suppressing unknown soc properties warnings - till adding them unknown to property.h/propgen
+## (need to be the first soc property in the file).
+config add suppress_unknown_prop_warnings=1
+
+config add sw_state_max_size.BCM8206=350000000
+#set Flair to TM to make pp_enable=false
+config add fap_device_mode.BCM8206=TM
+config add fabric_connect_mode.BCM8206=SINGLE_FAP
+config add ext_ram_present.BCM8206=0
+
+config add diag_cosq_disable=1
+config add custom_feature_skip_before_traffic_validation=1
+
+config add serdes_firmware_mode_sfi.BCM8206=4
+#1 - internal, 2 - external
+config add load_firmware_fabric.BCM8206=2
+
+config add fabric_pcp_enable=1
+config add port_init_speed_sfi=25000
+config add port_init_cl72_sfi=1
+
+config add bcm_stat_interval=0
+
+config add system_ref_core_clock_khz=1200000
+# Options:  0 - 125MHz, 1 - 156.25MHz, -1 - Disable
+config add serdes_fabric_clk_freq_in0.BCM8206=1
+config add serdes_fabric_clk_freq_in1.BCM8206=1
+config add serdes_fabric_clk_freq_out0.BCM8206=1
+config add serdes_fabric_clk_freq_out1.BCM8206=1
+config add core_clock_speed_khz.BCM8206=625000
+
+## configuration for work with FE
+#config add diag_chassis=1
+#config add module_id=2
+#config add n_devices=64
+
+### SAT
+## Enable SAT Interface. 0 - Disable, 1 - Enable
+config add sat_enable=0
+
+## Header extensions
+# Set if an FTMH Out-LIF extension is present to Unicast and Multicast packets
+# Options: NEVER / IF_MC (only Multicast packets) / ALWAYS
+config add fabric_ftmh_outlif_extension.BCM8206=ALWAYS
+
+# Load DRAM tuning properties from local File. RcLoad will not fail if file not found, and will not show errors of missing file.
+set RCError=off
+debug appl shell warn
+
+debug appl shell =
+set RCError=on
+
+#Set fabric connect mode as FE for multi FAP system
+if $?diag_chassis " \
+   config add fabric_connect_mode.BCM8206=FE"
+
+# Set modid:
+# If diag_chassis is enabled (two line cards), and 'slot' is defined (slot is defined only when
+# working without a management card - set modid to be 'slot'
+# Otherwise (single line card, or management card), set modid to be 0 for unit 0, and 1 for unit != 0
+if $?diag_chassis && $?slot "\
+  local modid $slot" \
+else "\
+  local modid $unit"
+expr $modid==1; if $? "local modid 2"
+
+if $?module_id " \
+  local modid $module_id"
+
+echo "$unit: modid=$modid"
+
+# Set base_modid:
+# Id base_module_id is set, then set base_modid to have base_module_id value.
+# Otherwise, set base_modid to be 0.
+if $?base_module_id " \
+  local base_modid $base_module_id" \
+else " \
+  local base_modid 0"
+
+expr $base_modid > 0
+if $? " \
+  echo '$unit: base_modid=$base_modid'"
+
+if $?diag_chassis " \
+  local nof_devices 2" \
+else "\
+  local nof_devices 1"
+
+if $?n_devices " \
+  local nof_devices $n_devices"
+
+expr $nof_devices > 1
+if $? " \
+  echo '$unit: nof_devices=$nof_devices'"
+
+#default values in a case which these parameters are not exist
+if !$?diag_cosq_disable "\
+  local diag_cosq_disable 0"
+if !$?warmboot "\
+  local warmboot 0"
+if !$?diag_disable "\
+  local diag_disable 0"
+if !$?diag_no_itmh_prog_mode "\
+  local diag_no_itmh_prog_mode 0"
+if !$?l2_mode "\
+  local l2_mode 0"
+
+
+INIT_DNX ModID=$modid NofDevices=$nof_devices CosqDisable=$diag_cosq_disable NoAppl=$diag_disable Warmboot=$warmboot NoRxLos=1 NoLinkscan=1 NoElkDevice=1 NoElkAppl=1 NoItmhProgMode=$diag_no_itmh_prog_mode L2Mode=$l2_mode NoIntr=1 NoPktRx=1
+
+#echo "performing force forward to sysport 1"
+#mod IHP_PINFO_LLR 0 256 DEFAULT_CPU_TRAP_CODE=200 DEFAULT_ACTION_PROFILE_FWD=7
+#mod IHB_FWD_ACT_PROFILE 200 1 FWD_ACT_DESTINATION=0x10001 FWD_ACT_DESTINATION_OVERWRITE=1
+#echo "performing credit flush from NIF to EGQ"
+#m NBIH_TX_EGRESS_CREDITS_DEBUG_PM TX_FLUSH_EGRESS_PORT_0_MLF_0_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_1_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_2_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_3_QMLF_N=1
+echo "flair.soc: Done."

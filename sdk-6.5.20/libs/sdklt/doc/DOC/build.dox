@@ -1,0 +1,291 @@
+/*! \page build_intro Building the SDK
+
+\section pre_build Prerequisites
+
+\subsection build_tools Build Tools
+
+Building the SDKLT requires a number of tools to be successful:
+
+- GNU Make
+- Compiler tool chain, e.g. GCC
+- Perl
+- Python
+
+Please refer to the SDKLT release notes for specific version requirements.
+
+\subsection ext_libs External Libraries
+
+The BCMCFG component of the SDKLT requires LibYAML in order to parse
+configuration files. More information about this can be found in the
+\ref build_yaml section below.
+
+\section basic_build Basic Build
+
+The following examples assume that you have the programs \c cc, \c ar,
+\c perl and \c python in your current \c $PATH.
+
+The simplest way to build the SDKLT is to set the $SDK environment
+variable and then run make from the top-level directory of the SDKLT:
+
+\verbatim
+export SDK=~/broadcom/sdklt
+make -s -C $SDK
+\endverbatim
+
+Note that the SDKLT makefiles support parallel build, so if you have a
+powerful host system, then you can cut the build time significantly by
+building in parallel:
+
+\verbatim
+make -s -j4 -C $SDK
+\endverbatim
+
+When the build completes, the resulting output files are placed in \c
+$SDK/build. Specifically the public header files are placed in \c
+$SDK/build/include, and the library files are placed in \c
+$SDK/build/lib.
+
+Furthermore you will most likely see the following message:
+
+\verbatim
+Skip building shared library (no -fPIC option in CFLAGS)
+\endverbatim
+
+To rebuild the library with the -fPIC option:
+
+\verbatim
+rm -rf $SDK/build
+make -s -j4 -C $SDK SDK_CFLAGS="-fPIC"
+\endverbatim
+
+\section build_output Build Output
+
+By default all object files are placed in \c $SDK/build, but you can
+override this via the \c $SDK_BLDDIR variable.
+
+Furthermore, the \c $SDK_DSTDIR variable can be used to place the
+resulting libraies and header files in a separate location.
+
+In the following example, the object files are placed on some scratch
+drive, while the library and header files will be installed in a
+shared location for external libraries.
+
+\verbatim
+make -s -j4 -C $SDK SDK_CFLAGS="-fPIC" SDK_BLDDIR=$SCRATCH/x86_64 SDK_DSTDIR=$EXTLIB/brcm
+\endverbatim
+
+Once the build completes, the library files can be found in \c
+$EXTLIB/brcm/lib and the header file can be found in \c
+$EXTLIB/brcm/include.
+
+\section config_tools Configuring the Build Tools
+
+The SDKLT makefiles use the standard variables \c $CC and \c $AR to
+represent the compiler and the library tool. By default the GNU Make
+utility will set these two variables to \c cc and \c ar, so unless you
+are cross-compiling, the makefiles will work without any additional
+tool configuration.
+
+If you want to cross-compile to a different type of target, then you
+must set the \c $CC and \c $AR variables accordingly, for example:
+
+\verbatim
+make -s -j4 -C $SDK SDK_CFLAGS="-fPIC" CC=mips-gcc AR=mips-ar
+\endverbatim
+
+The example assumes the \c mips-gcc and \c mips-ar programs can be
+found in the current \c $PATH.
+
+Often the cross-compilation tools require additional compilation
+options, which can be specified using \c SDK_CPPFLAGS (pre-processor
+options) and \c SDK_CFLAGS (compiler options):
+
+\verbatim
+make -s -j4 -C $SDK SDK_CFLAGS="-fPIC -mabi=32" CC=mips-gcc AR=mips-ar
+\endverbatim
+
+\section system_interface System Interface
+
+The SDKLT library includes a an application helper function called \c
+bcma_sys_probe, which will probe for switch devices, register them
+with the Device Resource Database (DRD) and initialize the Hardware
+Abstraction Layer (HAL).
+
+The function is implemented for different types of targets, of which
+one must be chosen via the \c $SYSTEM_INTERFACE variable when the
+SDKLT library is compiled.
+
+Currently available targets are:
+
+ - \c xgssim (default)
+ - \c plisim
+ - \c ngbde
+
+The \c xgssim interface hooks the SDKLT up to an internal register
+simulator, which can be used for the most basic API testing.
+
+The \c plisim interface must be selected if you wish to connect to the
+BCMSIM switch simulation environment across a network connection.
+
+The \c ngbde interface is used for an embedded Linux system running on
+top of a real switch device. This system interface communicates with a
+special Linux kernel module in order to provide access to hardware
+registers, DMA memory and interrupts.
+
+To compile the SDKLT library for use with BCMSIM, use a command like
+this:
+
+\verbatim
+make -s -j4 -C $SDK SDK_CFLAGS="-fPIC" SYSTEM_INTERFACE=plisim
+\endverbatim
+
+\subsection build_endian Endianness
+
+The Broadcom switch hardware use a little endian data model
+internally. This means that if the host CPU is big endian, then
+multi-byte data words need to be byte-swapped when transferred between
+the host CPU system and the switch hardware.
+
+The switch hardware supports hardware byte-swapping, but for this to
+work correctly, the application must specify how various data types
+are represented in the host CPU.
+
+The \c bcma_sys_probe function will use the following macro constants
+to configure host CPU endianness:
+
+ - SYS_BE_PIO: Set to 1 if programmed I/O needs byte-swapping.
+ - SYS_BE_PACKET: Set to 1 if packet DMA needs byte-swapping.
+ - SYS_BE_OTHER: Set to 1 if non-packet DMA needs byte-swapping.
+
+Typical configuration for a little endian host CPU system like x86:
+
+\verbatim
+SDK_CPPFLAGS="-DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0"
+\endverbatim
+
+Typical configuration for a big endian host CPU system like PowerPC:
+
+\verbatim
+SDK_CPPFLAGS="-DSYS_BE_PIO=1 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=1"
+\endverbatim
+
+Note that some CPU systems (typically bi-endian CPUs) implement their
+own byte-swapping hardware, which is why three settings are needed.
+
+\section linux_modules Linux Kernel Modules
+
+This section explains how to build the Linux kernel modules used by
+the \c ngbde system interface described in the previous section.
+
+The SDKLT is written to be portable across different processor types
+and operating systems, however it is currently only tested on
+Linux running kernel version 3.2 or newer.
+
+The Linux support files are located in the \c $SDK/linux directory and
+consists of both kernel modules and user mode stubs to interact with
+the kernel modules.
+
+For general information about building external Linux modules, please
+refer to the official guidelines included with your Linux
+distribution.
+
+In order to build the kernel modules you must do the following:
+
+ - Let \c $KDIR point to the (fully configured) Linux kernel sources
+ - Let \c $CC point to gcc 
+ - Assign the cross-compiler prefix to \c $CROSS_COMPILE
+ - Export the \c $ARCH variable to match the kernel
+ - Make sure the compiler tools are in the \c $PATH
+
+Example:
+
+\verbatim
+export KDIR=$PROJ/linux/mips-4.4
+export ARCH=mips
+export CC=gcc
+export CROSS_COMPILE=mips-
+export PATH=$PROJ/mips-tools/bin:$PATH
+\endverbatim
+
+If the kernel is fully configured, the Linux makefiles will pick up
+the matching compiler flags from the kernel source tree, so all you
+have to do is to build the BDE and KNET kernel modules in the SDKLT:
+
+\verbatim
+make -C $SDK/linux/bde
+make -C $SDK/linux/knet
+\endverbatim
+
+By default the output will be placed in the source directory, but this
+can be overridden using the \c $LKM_BLDDIR variable.
+
+\section build_examples Build Examples
+
+The SDKLT includes a number of sample applications to demonstrate how
+to build the SDKLT libraries, the Linux kernel modules and a simple
+application on top of it.
+
+Please refer to \ref build_ex for more information.
+
+\section build_yaml LibYAML
+
+The SDKLT configuration component BCMCFG requires linking with LibYAML
+available at http://pyyaml.org/download/libyaml/yaml-0.1.7.tar.gz.
+
+The YAML library may be built and installed for the local host as shown below:
+
+\verbatim
+wget http://pyyaml.org/download/libyaml/yaml-0.1.7.tar.gz
+tar xf yaml-0.1.7.tar.gz
+cd yaml-0.1.7/
+./configure --prefix=/home/$USER/build/x86_64/yaml && make install
+\endverbatim
+
+When building the SDKLT library, the BCMCFG component expects to find
+the YAML header file as \c $YAML/include/yaml.h. For example, if the
+header file is installed as \c /usr/include/yaml.h, then the \c $YAML
+variable must be set to \c /usr like this:
+
+\verbatim
+export YAML=/usr
+\endverbatim
+
+When building the SDKLT example applications, the linker will look for
+the YAML library in the linker's default library path. However, if the
+YAML library is not in this path, then the YAML library path must be
+specified. This is done using the variable \c $YAML_LIBDIR, and if for
+example the YAML library is installed as \c
+/usr/opensrc/yaml/x86_64/libyaml.so, then the variable should be set
+like this:
+
+\verbatim
+export YAML_LIBDIR=/usr/opensrc/yaml/x86_64
+\endverbatim
+
+When building for the local host (typically a simulation environment),
+the steps above should be sufficient to successfully build the example
+applications for the local host.
+
+If you build the example applications for a real device such as a
+Broadcom SVK, then the YAML library may be at a different location in
+the root file system of the embedded system. If this is the case, then
+this location must be specified using the \c $YAML_TARGET_LIBDIR
+variable.
+
+Note that if the YAML library is not even installed on the embedded
+system, then you can choose to link the YAML library statically. For
+example if the static YAML library is installed as \c
+/usr/opensrc/yaml/x86_64/libyaml.a, then you can set the \c
+$YAML_LDLIBS variablelike this:
+
+\verbatim
+export YAML_LDLIBS=/usr/opensrc/yaml/x86_64/libyaml.a
+\endverbatim
+
+If you are building your own application on top of the SDKLT, then it
+is the responsibility of the application build environment to link the
+YAML library.
+
+
+
+*/

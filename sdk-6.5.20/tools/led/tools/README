@@ -1,0 +1,27 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+This directory contains tools for programming the 5605 LED processor.
+Contained herein are:
+
+    ledasm.h --
+	A common include file used by ledasm.c and leddasm.c
+
+    ledasm.c --
+	A simple assembler that converts a .asm into .lst and .hex files.
+
+    leddasmcore.c --
+	A module to disassemble one instruction
+
+    leddasm.c --
+	A driver for ledasmcore.c, showing how to use leddasmcore.
+	Disassembles a .hex file on stdout.
+
+In order to build these tools, edit the Makefile and set CC, RM, CFLAGS,
+etc. to the correct C compiler for your system.  No special libraries or
+includes are required.

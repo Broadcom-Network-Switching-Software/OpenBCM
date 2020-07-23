@@ -1,0 +1,48 @@
+#
+# file: bcmcfg_ha_config.yml
+# BCMCFG YAML file describing the HA data structures for ISSU purposes
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+   bcmcfg_ha_config:
+       bcmcfg_ha_header_t:
+           comment: Header data of HA block.
+           type: struct
+           fields:
+               signature:
+                   type: uint32_t
+                   comment: HA signature
+               size:
+                   type: uint32_t
+                   comment: Size of HA block
+
+       bcmcfg_basic_tuple_t:
+           comment: A tuple data for LT config.
+           type: struct
+           fields:
+               sid:
+                   type: uint32_t
+                   ltid:
+                   comment: LT ID
+               fid:
+                   type: uint32_t
+                   fid: sid
+                   comment: LT field ID
+               fidx:
+                   type: uint32_t
+                   comment: Field index to the array field.
+               val:
+                   type: uint64_t
+                   comment: Field value
+               src_type:
+                   type: uint32_t
+                   comment: Source type
+               rsvd:
+                   type: uint32_t
+                   comment: Reserved

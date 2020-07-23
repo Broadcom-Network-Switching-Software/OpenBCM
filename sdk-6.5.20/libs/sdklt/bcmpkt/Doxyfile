@@ -1,0 +1,14 @@
+PROJECT_NAME            = "Packet I/O Library (BCMPKT)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INPUT                   = DOC/bcmpkt.dox \
+                          DOC/bcmpkt_ug.dox \
+                          include
+
+EXCLUDE                 = include/bcmpkt/bcmpkt_higig_defs.h \
+                          include/bcmpkt/bcmpkt_internal.h \
+                          include/bcmpkt/bcmpkt_txpmd_internal.h \
+                          include/bcmpkt/bcmpkt_rxpmd_internal.h \
+                          include/bcmpkt/bcmpkt_lbhdr_internal.h
+
+IMAGE_PATH              = DOC/generated

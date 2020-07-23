@@ -1,0 +1,123 @@
+# $Id: bcm.soc,v 1.3 2011/06/10 16:39:31 vadivelm Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# Initialization RC (run commands) file
+#
+# These are default commands that are read and executed by default
+# when BCM boots up.  Typically this file is called rc.soc and resides
+# in the flash filesystem, NVRAM, or disk.
+#
+
+if $?1 "echo bcm.soc: arguments not supported; exit"
+
+# On 48-port, set PCI retries to infinite to get around PCI bridge
+# fairness bug in IDTRC3233x.
+if $?p48 "s pcic 0x40 0x0080"
+
+# Be sure linkscan is off before doing init. 
+linkscan off
+
+# Set convenience local variables
+
+if $?quickturn || $?plisim \
+	"local simulator 1"
+
+# Set software's wait for S-Channel response to 3 seconds for QuickTurn
+# (Recommend at least 10 seconds if the ARL is 100% busy with inserts.)
+if $?quickturn	"stimeout 3000000"
+
+# Reset chip, initialize for most basic operation
+init soc
+
+# Initialize miscellaneous chip registers
+init misc
+
+# Program the SDRAM timing and MMU switch configuration registers
+init mmu
+
+# Determine and configure the GBP size
+if !$?gsl && !$?drac "sizegbp size=auto quiet=yes"
+
+# Initialize the Slot Free Address Pool in the GBP
+if !$?gsl && !$?drac && !$?herc "sfapinit"
+
+# Turn on mirroring of hardware ARL operations into software ARL table.
+if !$?drac && !$?herc && !$?simulator "arlmode intr_dma"
+if $?drac && !$?simulator "l2mode interval=3000000"
+
+# Enable caching of some tables.  Caching uses memory, but reduces or
+# eliminates table reads.  When a cache is enabled on a table, the whole
+# table is read in.  Note: L3 usually can't be cached because the
+# hardware can update the hit bits.
+if !$?gsl && !$?drac && !$?herc "cache imask irule"
+if                      !$?herc "cache gimask girule"
+if           !$?drac && !$?herc "cache marl ptable vtable"
+if           !$?drac && !$?herc "cache l3intf def_ip"
+if            $?drac            "cache port vlan trunk_bitmap trunk_group"
+if                       $?herc "cache uc mc vid"
+echo "Table caches enabled"
+
+# Initialize the BCM driver layer
+init bcm
+echo "BCM Driver Enabled"
+
+# Configure ports and turn enable automatic link scanning
+linkscan 250000
+port * linkscan=on autoneg=on \
+	speed=0 fullduplex=true txpause=true rxpause=true
+
+stg stp 1 all forward
+
+# Clear counters and enable counter collection
+clear counters
+if  $?quickturn "local cint 1000"
+if !$?quickturn "local cint 1000000"
+if  $?plisim    "local cdma false"
+if !$?plisim    "local cdma true"
+counter Interval=$cint Pbm=all DMA=$cdma
+
+# Set default mode for packet watcher
+pw report +raw
+
+# Default LED processor program for 5605 SDK
+
+if !$?p48 "local ledcode '\
+ E0 28 60 7F 67 2F 67 6B 06 7F 80 D2 1A 74 01 12 \
+ 7E 85 05 D2 0F 71 19 52 00 12 7D 85 05 D2 1F 71 \
+ 23 52 00 12 7C 85 05 D2 05 71 2D 52 00 3A 68 32 \
+ 00 97 75 3B 12 A0 FE 7F 02 0A 50 32 01 97 75 47 \
+ 12 BA FE 7F 02 0A 50 12 BA FE 7F 95 75 59 85 12 \
+ A0 FE 7F 95 75 A8 85 77 9A 12 A0 FE 7F 95 75 63 \
+ 85 77 A1 16 7C DA 02 71 A1 77 A8 32 05 97 71 76 \
+ 06 7D D2 01 71 9A 06 7F 67 93 75 9A 32 02 97 71 \
+ 9A 32 03 97 71 A8 32 04 97 75 A1 06 7E D2 07 71 \
+ A1 77 A8 12 80 F8 15 1A 00 57 32 0E 87 32 0E 87 \
+ 57 32 0E 87 32 0F 87 57 32 0F 87 32 0E 87 57'"
+
+# Default LED processor program for 48-port SDK
+
+if $?p48 "local ledcode '\
+ E0 28 60 7F 67 43 67 3C 67 35 67 2F 06 7F 80 D2 \
+ 18 74 01 28 60 7F 67 9B 67 89 67 BF 67 83 67 3C \
+ 67 73 67 68 67 5D 06 7F 80 D2 1A 74 13 3A 70 67 \
+ AD 71 C3 77 BF 32 03 97 71 C3 77 BF 32 05 97 71 \
+ C3 77 BF 12 BA FE 7F 32 01 97 75 4F 02 06 50 32 \
+ 00 97 75 57 02 06 50 95 75 C3 85 77 BF 67 AD 75 \
+ BF 32 04 97 71 C3 77 BF 67 AD 75 BF 32 03 97 71 \
+ C3 77 BF 67 AD 75 BF 32 03 97 71 BF 32 04 97 71 \
+ BF 77 C3 67 B6 71 C3 77 BF 12 A0 FE 7F 32 00 97 \
+ 75 95 02 06 50 95 75 C3 85 77 BF 12 BA FE 7F 32 \
+ 01 97 75 A7 02 06 50 95 75 C3 85 77 BF 06 7F 12 \
+ 80 F8 15 1A 00 57 06 7F 12 80 F8 15 1A 07 57 32 \
+ 0F 87 57 32 0E 87 57'"
+
+# Download LED code into LED process and enable (if applicable)
+
+if $?BCM5605_A0 || $?ul \
+	"led prog $ledcode; \
+	 led auto on; \
+	 led start"
+
+echo "Initialization complete."

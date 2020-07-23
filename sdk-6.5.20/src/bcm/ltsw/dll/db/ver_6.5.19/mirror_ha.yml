@@ -1,0 +1,107 @@
+#
+# file: mirror_ha.yml
+# MIRROR YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_mirror:
+        bcmint_mirror_session_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ref_cnt:
+                    type: int
+                    comment: Reference count.
+                egr:
+                    type: bool
+                    comment: For egress or ingress Mirroring.
+                cosq_mod:
+                    type: bool
+                    comment: For CoSQ MOD Mirroring.
+                encap_id:
+                    type: int
+                    comment: Encap id.
+                mirror_dest_id:
+                    type: int
+                    comment: Associated Mirror destination id.
+                multi_dip_group_id:
+                    type: int
+                    comment: Associated multiple destination IP group id.
+        bcmint_mirror_container_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ref_cnt:
+                    type: int
+                    comment: Reference count.
+                source:
+                    type: uint32_t
+                    comment: Current source types on the Mirror container.
+                egr:
+                    type: bool
+                    comment: For egress or ingress Mirroring.
+        bcmint_mirror_ingress_mod_event_group_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ref_cnt:
+                    type: int
+                    comment: Reference count.
+                group_id:
+                    type: int
+                    comment: Event group id.
+        bcmint_mirror_ingress_mod_event_profile_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                profile_id:
+                    type: int
+                    comment: Event profile id.
+                reason_code:
+                    type: uint8_t
+                    comment: Configurable reason code for ingress mirror-on-drop packets.
+                sample_rate:
+                    type: uint32_t
+                    comment: Sampler threshold.
+                priority:
+                    type: uint32_t
+                    comment: Profile priority. Higher value means higher priority.
+                group_bmp:
+                    type: uint32_t
+                    comment: Event group bitmap
+                group_mask_bmp:
+                    type: uint32_t
+                    comment: Event group mask bitmap
+        bcmint_mirror_multi_dip_group_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ref_cnt:
+                    type: int
+                    comment: Reference count.
+                group_id:
+                    type: int
+                    comment: Multi DIP group id.
+                group_size:
+                    type: int
+                    comment: Size of the group.
+                offset:
+                    type: int
+                    comment: Offset to LT entry.
+                ipv6:
+                    type: bool
+                    comment: IPv6 group.
+                ipv4_index:
+                    type: int
+                    comment: IPv4 index in a table entry. An entry can contain two IPv4 addresses.

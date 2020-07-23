@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+             
+            <defines>
+            </defines >
+         
+            <numerics>
+                <numeric name="device_id" value="0x8693"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+    <module name="dram">
+        <sub_module name="general_info">
+            <tables>
+                <table name="dram_info">
+                    <value name="dram_bitmap" default="0x0"> </value>
+                </table>
+            </tables>
+        </sub_module>
+    </module>
+    <module name="nif">
+        <sub_module name="ilkn">
+            <features>
+                <feature name="is_supported" value="0"></feature>
+            </features>
+            
+            <defines>
+                <define name="ilkn_unit_nof" value="0"></define>
+                <define name="ilkn_unit_if_nof" value="0"></define>
+                <define name="ilkn_if_nof" value="0"></define>
+                <define name="lanes_max_nof" value="0"></define>
+                <define name="lanes_allowed_nof" value="0"></define>
+                <define name="ilkn_over_eth_pms_max" value="0"></define>
+                <define name="segments_max_nof" value="0"></define>
+                <define name="watermark_high_elk" value="0"></define>
+                <define name="watermark_low_elk" value="0"></define>
+                <define name="watermark_high_data" value="0"></define>
+                <define name="watermark_low_data" value="0"></define>
+                <define name="pms_nof" value="0"></define>
+                <define name="fmac_bus_size" value="0"></define>
+            </defines>
+
+            <tables>
+                <table name="supported_phys">
+                    <entries>
+                        <entry ilkn_id="0" is_supported="0" max_phys="0" nif_phys="0x0" fabric_phys="0x0"></entry>
+                        <entry ilkn_id="1" is_supported="0" max_phys="0" nif_phys="0x0" fabric_phys="0x0"></entry>
+                    </entries>
+                </table>
+                
+                <table name="supported_device_core">
+                    <entries>
+                        <entry ilkn_id="0" core="-1"></entry>
+                        <entry ilkn_id="1" core="-1"></entry>
+                    </entries>
+                </table>
+
+                <table name="properties">
+                     <entries>
+                        <entry ilkn_id="0" is_over_fabric="0"></entry>
+                        <entry ilkn_id="1" is_over_fabric="0"></entry>
+                    </entries>
+                </table>
+            
+                <table name="nif_lanes_map">
+                    <entries>
+                        <entry ilkn_core="0" range_id="0" first_phy="0" ilkn_lane_offset="0" nof_lanes="0"></entry>
+                        <entry ilkn_core="1" range_id="0" first_phy="0" ilkn_lane_offset="0" nof_lanes="0"></entry>
+                    </entries>
+                </table>
+
+                <table name="fabric_lanes_map">
+                    <entries>
+                        <entry ilkn_core="0" range_id="0" first_phy="0" ilkn_lane_offset="0" nof_lanes="0"></entry>
+                        <entry ilkn_core="1" range_id="0" first_phy="0" ilkn_lane_offset="0" nof_lanes="0"></entry>
+                    </entries>
+                </table>
+            
+                <table name="nif_pms">
+                    <entries>
+                        <entry pm_id="0" first_phy="-1"></entry>
+                        <entry pm_id="1" first_phy="-1"></entry>
+                        <entry pm_id="2" first_phy="-1"></entry>
+                        <entry pm_id="6" first_phy="-1"></entry>
+                        <entry pm_id="7" first_phy="-1"></entry>
+                        <entry pm_id="8" first_phy="-1"></entry>
+                    </entries>
+                </table>
+                
+                <table name="fabric_pms">
+                    <entries>
+                        <entry pm_id="0" first_phy="-1"></entry>
+                        <entry pm_id="1" first_phy="-1"></entry>
+                        <entry pm_id="2" first_phy="-1"></entry>
+                        <entry pm_id="7" first_phy="-1"></entry>
+                        <entry pm_id="8" first_phy="-1"></entry>
+                        <entry pm_id="9" first_phy="-1"></entry>
+                    </entries>
+                </table>
+
+                <table name="phys">
+                    <entries>
+                        <entry ilkn_id="0" bitmap="0" lanes_array="0" array_order_valid="0"></entry>
+                        <entry ilkn_id="1" bitmap="0" lanes_array="0" array_order_valid="0"></entry>
+                    </entries>
+                </table>
+
+            </tables>
+          
+        </sub_module>
+    </module>
+</device_data>

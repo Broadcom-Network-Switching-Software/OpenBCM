@@ -1,0 +1,58 @@
+config add diag_chassis=1
+config add bcm88xxx_system_resource_management.0=1
+config add bcm88xxx_system_resource_management.2=1
+
+config add appl_param_nof_devices=2
+
+config add appl_param_device_type0=0x8690
+config add appl_param_device_type1=0x8802
+
+config add appl_param_cpu_agent_id=0
+# use default modids
+
+config add appl_param_multi_cpu_agents=1
+
+# JR2 system ports
+config add appl_param_sys_port0=0:0:0:0:10000
+config add appl_param_sys_port1=0:1:0:1:400000
+config add appl_param_sys_port13=0:13:1:13:10000
+config add appl_param_sys_port14=0:14:1:14:10000
+config add appl_param_sys_port15=0:15:0:15:10000
+config add appl_param_sys_port16=0:16:0:16:10000
+config add appl_param_sys_port17=0:17:1:17:100000
+config add appl_param_sys_port200=0:200:1:200:10000
+config add appl_param_sys_port201=0:201:0:201:10000
+config add appl_param_sys_port202=0:202:1:202:10000
+config add appl_param_sys_port203=0:203:0:203:10000
+config add appl_param_sys_port218=0:218:0:218:400000
+config add appl_param_sys_port219=0:219:1:219:400000
+config add appl_param_sys_port221=0:221:0:221:10000
+config add appl_param_sys_port222=0:222:1:222:10000
+config add appl_param_sys_port230=0:230:0:230:10000
+config add appl_param_sys_port232=0:232:0:232:10000
+config add appl_param_sys_port233=0:233:1:233:10000
+config add appl_param_sys_port240=0:240:0:240:10000:OLP
+config add appl_param_sys_port241=0:241:0:241:10000:OLP
+config add appl_param_sys_port254=0:254:0:255:10000
+config add appl_param_sys_port255=0:255:1:255:10000
+
+# J2C system ports
+config add appl_param_sys_port1024=1:0:0:0:10000
+config add appl_param_sys_port1025=1:1:0:1:400000
+config add appl_param_sys_port1030=1:6:0:6:25781
+config add appl_param_sys_port1031=1:7:0:7:25781
+config add appl_param_sys_port1037=1:13:0:13:10000
+config add appl_param_sys_port1038=1:14:0:14:10000
+config add appl_param_sys_port1039=1:15:0:15:10000
+config add appl_param_sys_port1040=1:16:0:16:10000
+config add appl_param_sys_port1041=1:17:0:17:100000
+config add appl_param_sys_port1224=1:200:0:200:10000
+config add appl_param_sys_port1225=1:201:0:201:10000
+config add appl_param_sys_port1226=1:202:0:202:10000
+config add appl_param_sys_port1227=1:203:0:203:10000
+config add appl_param_sys_port1242=1:218:0:218:400000
+config add appl_param_sys_port1245=1:221:0:221:10000
+config add appl_param_sys_port1254=1:230:0:230:10000
+config add appl_param_sys_port1256=1:232:0:232:10000
+config add appl_param_sys_port1264=1:240:0:240:10000:OLP
+config add appl_param_sys_port1279=1:255:0:255:10000

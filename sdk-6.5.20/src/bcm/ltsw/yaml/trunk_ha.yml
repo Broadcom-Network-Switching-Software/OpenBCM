@@ -1,0 +1,77 @@
+#
+# file: trunk_ha.yml
+# TRUNK YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_trunk:
+        bcmint_trunk_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                tid:
+                    type: int
+                    comment: Trunk group ID.
+                in_use:
+                    type: int
+                    comment: Trunk is in use.
+                member_count:
+                    type: int
+                    comment: Number of ports.
+                flags:
+                    type: uint32_t
+                    comment: BCM_TRUNK_FLAG_xxx.
+                psc:
+                    type: int
+                    comment: Port selection criteria.
+                l2_dest:
+                    type: int
+                    comment: Trunk L2 destination.
+                ipmc_psc:
+                    type: int
+                    comment: Port selection criteria for software IPMC trunk resolution.
+                dlf_index:
+                    type: int
+                    comment: DLF/broadcast port for trunk group.
+                dynamic_size:
+                    type: int
+                    comment: Number of flows for dynamic load balancing.
+                dynamic_age:
+                    type: int
+                    comment: Inactivity duration, in microseconds.
+                dlb_id:
+                    type: int
+                    comment: Trunk DLB Id.
+        bcmint_trunk_member_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: BCM_TRUNK_MEMBER_xxx.
+                fail_flags:
+                    type: uint32_t
+                    comment: BCM_TRUNK_FLAG_FAILOVER_xxx.
+                gport:
+                    type: int
+                    comment: Trunk member GPORT ID.
+                dynamic_scaling_factor:
+                    type: int
+                    comment: Dynamic load balancing threshold scaling factor.
+                dynamic_load_weight:
+                    type: int
+                    comment: Relative weight of historical load in determining member quality.
+                dynamic_queue_size_weight:
+                    type: int
+                    comment: Relative weight of queue size in determining member quality.
+                failover_psc:
+                    type: int
+                    comment: Trunk member failover PSC.

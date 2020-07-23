@@ -1,0 +1,84 @@
+# $Id: tr500_cmicx_stress.soc v 1.0 2017/08/05 18:01:07 spaulraj Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TR 500 cmicx Packetdma stress tests
+#
+# Script to run tr 500 stress tests for cmicx. Will be invoked by nightly regression
+# infrastructure to verify various tr tests across various cmcs.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+#Display some useful information
+date
+ver
+soc
+
+# Re-initialize to clean up of various read/wrires to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+sramscan off
+
+#TR500 with continuous dma and descriptor prefetch disabled
+echo "Testing TR500 with continuous dma and descriptor prefetch disabled"
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0001 rxbitmap=0x0000 pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0001 rxbitmap=0x0002 pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0005 rxbitmap=0x000a pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x5555 rxbitmap=0xaaaa pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+$done
+
+#TR500 with continuous dma disabled and descriptor prefetch enabled
+config add pdma_descriptor_prefetch_enable=1
+
+echo "Testing TR500 with continuous dma disabled and descriptor prefetch enabled"
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0001 rxbitmap=0x0002 pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0005 rxbitmap=0x000a pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x5555 rxbitmap=0xaaaa pktsize=1522 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0001 rxbitmap=0x0002 pktsize=64 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0005 rxbitmap=0x000a pktsize=64 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=64 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x5555 rxbitmap=0xaaaa pktsize=64 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0001 rxbitmap=0x0002 pktsize=512 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0005 rxbitmap=0x000a pktsize=512 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=512 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=128 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=129 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=1024 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+tr 500 streamtx=1 streamrx=1 testtypetx=4 testtyperx=4 txbitmap=0x0055 rxbitmap=0x00aa pktsize=9216 numpktstx=10 numpktsrx=10 pollintr=0 nlp=16
+$done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+#rcload rc.soc
+#counter off
+#l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

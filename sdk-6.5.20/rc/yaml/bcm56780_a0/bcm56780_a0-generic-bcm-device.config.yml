@@ -1,0 +1,41 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56780 BCM device configuration.
+#
+# configuration yaml file
+#
+# bcm_device:
+#     <unit>:
+#         global:
+#             <property_1>: <value>
+#             <property_2>: <value>
+#         port:
+#             <key>:
+#                 <property_1>: <value>
+#                 <property_2>: <value>
+#
+# $Copyright:.$
+#
+
+---
+bcm_device:
+    0:
+        global:
+            bcm_tunnel_term_compatible_mode: 1
+            vlan_flooding_l2mc_num_reserved: 0
+            l3_alpm_template: 2
+            l3_alpm2_bnk_threshold: 100
+            uft_mode: 1
+            l3_enable: 1
+            l2_hitbit_enable: 0
+...
+---
+bcm_device:
+    0:
+        port:
+            "*":
+                encap_mode: IEEE
+...

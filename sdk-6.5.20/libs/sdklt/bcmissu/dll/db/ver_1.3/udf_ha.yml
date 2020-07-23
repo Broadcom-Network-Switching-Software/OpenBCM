@@ -1,0 +1,99 @@
+#
+# file: udf_ha.yml
+# UDF YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    UDF_MAX_OBJECT_ID: 4096
+    UDF_MAX_PARSER_STAGES: 6
+    UDF_IPARSER_HFE_POLICY_INDEX_MAX: 128
+    UDF_IPARSER_HFE_POLICY_INDEX_MAX_ALL_STAGE: 768
+    UDF_4_BYTE_CONTAINER_MAX: 16
+    UDF_2_BYTE_CONTAINER_MAX: 24
+    UDF_1_BYTE_CONTAINER_MAX: 8
+
+component:
+    bcmcth_udf:
+        policy_table_index_info_t:
+            type: struct
+            fields:
+                index:
+                    type: uint8_t
+                    comment: HFE POLICY table index.
+                base_offset:
+                    type: uint8_t
+                    comment: HFE POLICY table base offset.
+        udf_hdr_fmt_hw_info_t:
+            type: struct
+            fields:
+                parser:
+                    type: uint8_t
+                    comment: Parser number.
+                num_stages:
+                    type: uint8_t
+                    comment: Number stages supported for the specified header.
+                hfe_policy_mem:
+                    type: uint32_t
+                    length: UDF_MAX_PARSER_STAGES
+                    comment: Parser1/2 stage policy memory.
+                hfe_index_count:
+                    type: uint8_t
+                    length: UDF_MAX_PARSER_STAGES
+                    comment: HFE index count.
+                hfe_profile_index:
+                    type: policy_table_index_info_t
+                    length: UDF_IPARSER_HFE_POLICY_INDEX_MAX_ALL_STAGE
+                    comment: HFE Profile index and offset for a given stage.
+                hfe_profile_entry:
+                    type: uint8_t
+                    length: UDF_IPARSER_HFE_POLICY_INDEX_MAX_ALL_STAGE
+                    comment: Array of HFE Profile entries for a given stage.
+                valid_cmd_bmap:
+                    type: uint32_t
+                    length: UDF_IPARSER_HFE_POLICY_INDEX_MAX_ALL_STAGE
+                    comment: Valid commands configured on each stage policy mem.
+                max_commands:
+                    type: uint8_t
+                    comment: Max supported commands for specified anchor.
+                num_1_byte_cont:
+                    type: uint8_t
+                    comment: Number of 1 byte container.
+                num_2_byte_cont:
+                    type: uint8_t
+                    comment: Number of 2 byte container.
+                num_4_byte_cont:
+                    type: uint8_t
+                    comment: Number of 4 byte container.
+                current_offset:
+                    type: uint8_t
+                    comment: packet byte current offset.
+                cont_used_4B:
+                    type: uint8_t
+                    length: UDF_4_BYTE_CONTAINER_MAX
+                    comment: 4B container list used for specified UDF header.
+                cont_used_2B:
+                    type: uint8_t
+                    length: UDF_2_BYTE_CONTAINER_MAX
+                    comment: 2B container list used for specified UDF header.
+                cont_used_1B:
+                    type: uint8_t
+                    length: UDF_1_BYTE_CONTAINER_MAX
+                    comment: 1B container list used for specified UDF header.
+
+        udf_hdr_fmt_ha_info_t:
+            type: struct
+            fields:
+                max_hdr_count:
+                    type: uint32_t
+                    comment: indicate the array size of udf_hdr_fmt_array.
+                udf_hdr_fmt_array:
+                    type: udf_hdr_fmt_hw_info_t
+                    table:
+                    size: max_hdr_count
+                    comment: UDF header format info array.

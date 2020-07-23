@@ -1,0 +1,66 @@
+PROJECT_NAME            = "User Guide"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INPUT                   = ../doc/DOC/userguide.dox \
+                          ../doc/DOC/build.dox \
+                          ../doc/DOC/examples.dox \
+                          ../bcma/DOC/bcma_comp.dox \
+                          ../bcma/DOC/bcma_bsl.dox \
+                          ../bcma/DOC/bcma_cli.dox \
+                          ../bcma/DOC/bcma_clicmd.dox \
+                          ../bcma/DOC/bcma_bcmlt.dox \
+                          ../bcma/DOC/bcma_bcmbd.dox \
+                          ../bcma/DOC/bcma_test.dox \
+                          ../bcma/DOC/bcma_qspi.dox \
+                          ../bcma/DOC/bcma_io.dox \
+                          ../bcma/DOC/bcma_sys.dox \
+                          ../bcmdrd/DOC/bcmdrd_dev.dox \
+                          ../bcmha/DOC/bcmha_mem.dox \
+                          ../bcmmgmt/DOC/bcmmgmt_init.dox \
+                          ../bcmpkt/DOC/bcmpkt_ug.dox \
+                          ../bcmcfg/DOC/bcmcfg_ug.dox \
+                          ../bcmlt/DOC/bcmlt_ug.dox \
+                          ../bcmltd/include/bcmltd/bcmltd_lt_types.h \
+                          ../bcmlt/include/bcmlt/bcmlt.h \
+                          ../bcmdrd/include/bcmdrd/bcmdrd_types.h \
+                          ../bcmdrd/include/bcmdrd/bcmdrd_hal.h \
+                          ../bcmdrd/include/bcmdrd/bcmdrd.h \
+                          ../bcmmgmt/include/bcmmgmt/bcmmgmt_sysm.h \
+                          ../bcmmgmt/include/bcmmgmt/bcmmgmt.h \
+                          ../bcmmgmt/include/bcmmgmt/bcmmgmt_sysm_default.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_net.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_rxpmd_defs.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_txpmd_defs.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_rxpmd.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_txpmd.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_lbhdr_defs.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_lbhdr.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_socket.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_rcpu_hdr.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_buf.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_dev.h \
+                          ../bcmpkt/include/bcmpkt/bcmpkt_knet.h \
+                          ../bcma/include/bcma/sys/bcma_sys_probe.h \
+                          ../bcmcfg/include/bcmcfg/bcmcfg.h \
+                          ../bcmcfg/include/bcmcfg/bcmcfg_lt.h \
+                          ../bcmcfg/include/bcmcfg/comp \
+                          ../bcmha/include/bcmha \
+                          ../bcma/include/bcma
+
+EXCLUDE_PATTERNS        = *bcma_bcmbd.h \
+                          *bcma_bcmbd_*.h \
+                          *bcma_bcmdrd.h \
+                          *bcma_bcmdrd_*.h \
+                          *bcma_bcmmgmt.h \
+                          *bcma_bcmlt.h \
+                          *bcma_bcmmgmt_*.h \
+                          *bcma_bcmpc.h \
+                          *bcma_bcmpc_*.h \
+                          *bcma_bcmpkt_*.h \
+                          *bcma_testdb*.h \
+                          *bcma_testcase*.h \
+                          *bcma_testutil*.h \
+                          *bcma/editline* \
+                          *bcma/cfgdb
+
+IMAGE_PATH              = ../doc/DOC/generated

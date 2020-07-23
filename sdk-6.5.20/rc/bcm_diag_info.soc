@@ -1,0 +1,88 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to get the standardized and critical information about the chip
+
+local done 'echo "   Done"'
+
+#Show the current list of attached devices
+echo "List of attached devices"
+a 
+$done
+
+#Show current firmware version and build status
+echo "Current firmware version and build status"
+version 
+$done
+
+#Show the current config variables
+echo "Current config variables"
+config show 
+$done
+
+#Display the counter values
+echo "Counter values"
+show counters 
+$done
+
+#Displays the linkscan status for all ports.
+echo "Linkscan status"
+linkscan 
+$done
+
+#Display  about info about port status
+echo "Port status info"
+ps 
+$done
+
+#Show the tree for the LLS port
+echo "LLS tree info"
+lls 
+$done
+
+#Show the tree for the HSP port
+echo "HSP tree info"
+hsp 
+$done
+
+#Print internal SOC driver control information
+echo "SOC driver information"
+soc 
+$done
+
+#Display the Field Processor information
+echo "FP information"
+fp show 
+$done
+
+#Show the port mapping information
+echo "Port map information"
+show pmap 
+$done
+
+#Show the PHY information of the ports
+echo "PHY information"
+phy info 
+$done
+
+#Show the Chip parameters
+echo "Chip parameters"
+show params 
+$done
+
+#Show enabled features for the unit
+echo "Features enabled on the unit"
+show features 
+$done
+
+#Dump the PCI Config space
+echo "Dumping the  PCI config to the file"
+dump file=pcic.dump pcic 
+$done
+
+#Dump the CMIC PCI registers
+#echo "Dumping the CMIC PCI registers to the file"
+#dump file=pcim.dump pcim 
+#$done

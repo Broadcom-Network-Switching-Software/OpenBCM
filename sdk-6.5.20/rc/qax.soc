@@ -1,0 +1,156 @@
+#
+# $Id: qax.soc,v 1.90 2013/08/14 08:32:00 ninash Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# Load DRAM tuning properties from local File. RcLoad will not fail if file not found, and will not show errors of missing file.
+#der 0x40 4
+#exit
+
+debug info
+debug appl rcload warn
+debug appl symtab warn
+debug bcm rx,tx,link,attach warn
+debug soc tests warn
+debug soc rx,phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,ddr warn
+debug soc common err
+debug sys verinet warn
+debug soc physim warn
+
+if $?QAX \
+    'rcload bcm88470_board.soc'
+
+if $?QUX \
+    'rcload bcm88270_board.soc'
+
+# Load DRAM tuning properties from local File. RcLoad will not fail if file not found, and will not show errors of missing file.
+set RCError=off
+debug appl shell warn
+if $?QAX \
+    'rcload /home/negev/bcm88470_dram_tune.soc'
+if $?QUX \
+    'rcload /home/negev/bcm88270_dram_tune.soc'
+
+debug appl shell =
+set RCError=on
+
+set RCError=off
+rcload combo28_dram.soc
+set RCError=on
+
+#Set fabric connect mode as FE for multi FAP system
+if $?diag_chassis " \
+   config add fabric_connect_mode.BCM88470=FE"
+
+# Set modid:
+# If diag_chassis is enabled (two line cards), and 'slot' is defined (slot is defined only when
+# working without a management card - set modid to be 'slot'
+# Otherwise (single line card, or management card), set modid to be 0 for unit 0, and 1 for unit != 0
+if $?diag_chassis && $?slot "\
+  local modid $slot" \
+else "\
+  local modid $unit"
+expr $modid==1; if $? "local modid 2"
+
+if $?module_id " \
+  local modid $module_id"
+
+echo "$unit: modid=$modid"
+
+# Set base_modid:
+# Id base_module_id is set, then set base_modid to have base_module_id value.
+# Otherwise, set base_modid to be 0.
+if $?base_module_id " \
+  local base_modid $base_module_id" \
+else " \
+  local base_modid 0"
+
+expr $base_modid > 0
+if $? " \
+  echo '$unit: base_modid=$base_modid'"
+
+if $?diag_chassis " \
+  local nof_devices 2" \
+else "\
+  local nof_devices 1"
+
+if $?n_devices " \
+  local nof_devices $n_devices"
+
+expr $nof_devices > 1
+if $? " \
+  echo '$unit: nof_devices=$nof_devices'"
+
+if $?mng_cpu " \
+  echo '$unit:management card - polling is set on'; \
+  config add polled_irq_mode.BCM88675=1; \
+  config add schan_intr_enable.BCM88675=0; \
+  config add tdma_intr_enable.BCM88675=0; \
+  config add tslam_intr_enable.BCM88675=0; \
+  config add miim_intr_enable.BCM88675=0; "
+
+#Counters unavailable in cmodel
+if $?cmodel " \
+  config add counter_engine_sampling_interval=0;"
+
+#default values in a case which these parameters are not exist
+if !$?diag_cosq_disable "\
+  local diag_cosq_disable 0"
+if !$?warmboot "\
+  local warmboot 0"
+if !$?diag_disable "\
+  local diag_disable 0"
+if !$?diag_no_itmh_prog_mode "\
+  local diag_no_itmh_prog_mode 0"
+if !$?l2_mode "\
+  local l2_mode 0"
+
+#Disable interrupts in cmodel
+if $?cmodel "\
+  local no_intr 1" \
+else "\
+  local no_intr 0"
+
+if $?QUX "\
+    local no_elk 1" \
+else "\
+    local no_elk 0"
+
+INIT_DNX ModID=$modid NofDevices=$nof_devices CosqDisable=$diag_cosq_disable NoAppl=$diag_disable Warmboot=$warmboot NoRxLos=1 NoLinkscan=0 NoElkDevice=$no_elk NoElkAppl=0 NoItmhProgMode=$diag_no_itmh_prog_mode L2Mode=$l2_mode NoIntr=$no_intr
+
+#echo "performing force forward to sysport 1"
+#mod IHP_PINFO_LLR 0 256 DEFAULT_CPU_TRAP_CODE=200 DEFAULT_ACTION_PROFILE_FWD=7
+#mod IHB_FWD_ACT_PROFILE 200 1 FWD_ACT_DESTINATION=0x10001 FWD_ACT_DESTINATION_OVERWRITE=1
+#echo "performing credit flush from NIF to EGQ"
+#m NBIH_TX_EGRESS_CREDITS_DEBUG_PM TX_FLUSH_EGRESS_PORT_0_MLF_0_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_1_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_2_QMLF_N=1 TX_FLUSH_EGRESS_PORT_0_MLF_3_QMLF_N=1
+
+#LED support section start
+
+if $?QAX "\
+    local ledcode '02 30 67 4D 02 2F 67 4D 02 2D 67 4D 02 29 67 4D\
+     02 25 67 4D 02 21 67 4D 02 01 67 4D 02 05 67 4D\
+     02 09 67 4D 02 0D 67 4D 02 11 67 4D 02 15 67 4D\
+     02 19 67 4D 02 1D 67 4D 86 E0 3A 0E 28 32 00 32\
+     01 B7 97 75 5E 16 E0 CA 06 70 5E 77 5A 67 53 75\
+     5A 77 3C 12 A0 F8 15 1A 00 57 32 0E 87 57 32 0F\
+     87 57' " #sdk88470.hex
+
+if $?QUX "\
+    local ledcode '02 03 67 51 02 01 67 51 02 02 67 51 02 04 67 51\
+     02 05 67 51 02 09 67 51 02 11 67 51 02 0D 67 51\
+     02 19 67 51 02 15 67 51 02 1D 67 51 02 1E 67 51\
+     02 1F 67 51 02 20 67 51 02 21 67 51 86 E0 3A 0F\
+     28 32 00 32 01 B7 97 75 62 16 E0 CA 06 70 62 77\
+     5E 67 57 75 5E 77 40 12 A0 F8 15 1A 00 57 32 0E\
+     87 57 32 0F 87 57' " #sdk88470.hex
+
+# Download LED code into LED processor and enable (if applicable).
+if $?feature_led_proc && $?ledcode && !$?simulator \
+    "led prog $ledcode; \
+     led auto on;\
+     led start"
+echo "qax.soc: Done."
+

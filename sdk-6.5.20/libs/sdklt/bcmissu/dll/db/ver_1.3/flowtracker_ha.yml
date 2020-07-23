@@ -1,0 +1,35 @@
+#
+# file: flowtracker_ha.yml
+# Flowtracker YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    FT_EM_GRP_ID_MAP_SIZE: 32
+component:
+   bcmcth_flowtracker:
+       bcmcth_mon_ft_ha_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               init:
+                   type: bool
+                   comment: Indicates if flowtracker app is initialized
+               run:
+                   type: bool
+                   comment: Indicates if embedded app is running or not.If this field is true, then it implies init is also true.
+               uc_num:
+                   type: uint32_t
+                   comment: uController number running flowtracker application.
+               collector_ref_count:
+                   type: uint32_t
+                   comment: Collector reference count.
+               em_group_id_map:
+                   type: uint32_t
+                   length: FT_EM_GRP_ID_MAP_SIZE
+                   comment: Array of EM groups Mapping.

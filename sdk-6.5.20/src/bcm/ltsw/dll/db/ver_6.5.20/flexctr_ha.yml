@@ -1,0 +1,251 @@
+#
+# file: flexctr_ha.yml
+# Flexctr YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    FC_MAX_OPOBJ:        (8)
+    FC_QUANT_RANGE_MAX:  (8)
+    FC_POOL_NONE:        (0)
+    FC_POOL_SLIM:        (1)
+    FC_ACTION_OBJ_COUNT: (4)
+    FC_VALUE_A_TRUE:     (0)
+    FC_VALUE_B_TRUE:     (1)
+    FC_VALUE_COUNT:      (2)
+    FC_INDEX_OP:         (2)
+    FC_OP_COUNT:         (3)
+    FC_BITWID:           (32)
+    FLEXCTR_NUM_TBLS_MAX: (32)
+    FLEXCTR_NUM_SECTION_MAX: (128)
+    FLEXCTR_TBL_WORDS_NUM: ((FLEXCTR_NUM_TBLS_MAX + FC_BITWID - 1)/FC_BITWID)
+    FLEXCTR_SECTION_WORDS_NUM: ((FLEXCTR_NUM_SECTION_MAX + FC_BITWID - 1)/FC_BITWID)
+    FC_ACTION_OPOBJ_COUNT: (FC_MAX_OPOBJ * FC_OP_COUNT)
+    BCMI_FLEXCTR_GROUP_ACTION_SIZE: 16
+component:
+    bcmint_flexctr:
+        bcmi_flexctr_hint_type_t:
+            type: enum
+            attrib:
+                version: 1
+            fields:
+                BCMI_FLEXCTR_HINT_POOL:            0
+                BCMI_FLEXCTR_HINT_FIELD_GROUP_ID:  1
+                BCMI_FLEXCTR_HINT_COUNT:           2
+            comment: Hint type. This enum should align with bcm_flexctr_hint_type_t.
+                     BCMI_FLEXCTR_HINT_POOL = 0,  Assign the same pool ID on one hint value for the given flex counter source.
+                     BCMI_FLEXCTR_HINT_FIELD_GROUP_ID = 1, Indicate a field group ID as the hint and assign the pool ID based on the field group priority.
+                     BCMI_FLEXCTR_HINT_COUNT = 2,  Always last one.
+        ltsw_flexctr_quant_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if quantization has been used.
+                used_for_32bit:
+                    type: bool
+                    comment: TRUE if quantization has been used for 32-bit mode.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                options:
+                    type: uint32_t
+                    comment: Options.
+                object:
+                    type: int
+                    comment: Quant object.
+                object_upper:
+                    type: int
+                    comment: Quant object for the upper 16 bits.
+                range_min:
+                    type: uint32_t
+                    length: FC_QUANT_RANGE_MAX
+                    comment: Quant min array.
+                range_max:
+                    type: uint32_t
+                    length: FC_QUANT_RANGE_MAX
+                    comment: Quant max array.
+                range_num:
+                    type: uint32_t
+                    comment: Quant range_num.
+                object_id:
+                    type: uint32_t
+                    comment: Quant object id.
+                object_id_upper:
+                    type: uint32_t
+                    comment: Quant object id for the upper object.
+                global_rsvd:
+                    type: bool
+                    comment: Reserved for global action in pipe unique mode.
+        ltsw_flexctr_pool_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used_by_tbls:
+                    type: uint32_t
+                    length: FLEXCTR_TBL_WORDS_NUM
+                    comment: Bitmap representing tables within the pool.
+                mode:
+                    type: int
+                    comment: Pool mode.
+                hint:
+                    type: int
+                    comment: Hint value.
+                used_count:
+                    type: uint32_t
+                    comment: Number of action is using this pool.
+                inuse_bitmap:
+                    type: uint32_t
+                    length: FLEXCTR_SECTION_WORDS_NUM
+                    comment: Bitmap representing sections within the pool.
+                global_rsvd:
+                    type: bool
+                    comment: Reserved for global action in pipe unique mode.
+        ltsw_flexctr_action_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if action has been used.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                group_stat_counter_id:
+                    type: uint32_t
+                    comment: Associated group action id.
+                grp_ref_count:
+                    type: int
+                    comment: Reference counter for group action.
+                options:
+                    type: uint32_t
+                    comment: Action options.
+                objects:
+                    type: int
+                    length: FC_ACTION_OBJ_COUNT
+                    comment: Action object array.
+                objects_id:
+                    type: uint32_t
+                    length: FC_ACTION_OBJ_COUNT
+                    comment: Action object id array.
+                start_pool_idx:
+                    type: uint32_t
+                    comment: Allocated first counter pool.
+                end_pool_idx:
+                    type: uint32_t
+                    comment: Allocated last counter pool.
+                start_section_idx:
+                    type: uint32_t
+                    comment: Allocated first counter section.
+                end_section_idx:
+                    type: uint32_t
+                    comment: Allocated last counter section.
+                index_profile:
+                    type: uint32_t
+                    comment: Index operation profile id.
+                value_a_profile:
+                    type: uint32_t
+                    comment: Value A true operation profile id.
+                value_b_profile:
+                    type: uint32_t
+                    comment: Value B true operation profile id.
+                index_num:
+                    type: uint32_t
+                    comment: Stat counter number.
+                flags:
+                    type: uint32_t
+                    comment: Action flags.
+                source:
+                    type: int
+                    comment: Action source.
+                hint:
+                    type: int
+                    comment: Action hint.
+                drop_count_mode:
+                    type: int
+                    comment: Action drop count mode.
+                exception_drop_count_enable:
+                    type: int
+                    comment: Action exception drop count enable.
+                egress_mirror_count_enable:
+                    type: int
+                    comment: Action egress mirror count enable.
+                mode:
+                    type: int
+                    comment: Action mode.
+                object:
+                    type: int
+                    length: FC_ACTION_OPOBJ_COUNT
+                    comment: Action object array.
+                object_id:
+                    type: uint32_t
+                    length: FC_ACTION_OPOBJ_COUNT
+                    comment: Action object id array.
+                quant_id:
+                    type: uint32_t
+                    length: FC_ACTION_OPOBJ_COUNT
+                    comment: Action quantization array.
+                mask_size:
+                    type: uint32_t
+                    length: FC_ACTION_OPOBJ_COUNT
+                    comment: Action mask_size array.
+                shift:
+                    type: uint32_t
+                    length: FC_ACTION_OPOBJ_COUNT
+                    comment: Action shift array.
+                value_select:
+                    type: int
+                    length: FC_VALUE_COUNT
+                    comment: Action value select.
+                value_type:
+                    type: int
+                    length: FC_VALUE_COUNT
+                    comment: Action value type.
+                global_rsvd:
+                    type: bool
+                    comment: Reserved for global action in pipe unique mode.
+                evict_ena:
+                    type: bool
+                    comment: Eviction enabled on the action.
+                hint_type:
+                    type: bcmi_flexctr_hint_type_t
+                    comment: Hint type.
+        ltsw_flexctr_grp_action_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if action has been used.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                options:
+                    type: uint32_t
+                    comment: Action options.
+                parent_act_id:
+                    type: uint32_t
+                    comment: Parent action id.
+                source:
+                    type: int
+                    comment: Group action source.
+                stat_counter_id:
+                    type: uint32_t
+                    length: BCMI_FLEXCTR_GROUP_ACTION_SIZE
+                    comment: Group action stat_counter_id array.
+                action_num:
+                    type: uint32_t
+                    comment: Group action number.
+                global_rsvd:
+                    type: bool
+                    comment: Reserved for global action in pipe unique mode.

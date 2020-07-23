@@ -1,0 +1,153 @@
+
+BCM.0> init all
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmptm_wal_dyn_atomic_trans: CTH is requesting dynamic enable of atomic_trans in middle of a transaction (trans_state = 1)
+0:bcmcth_mon_st_init: uKernel Telemetry application not available
+BCM.0> c td4_hsdk_vlan_vfi_from_vlan_range.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 18:45:20 2019)
+From sdkrel@lc-sj1-3890:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_9, BCM56880_A0_IDNA_4_4_9
+~~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+~~~ #1) test_setup(): ** end **
+~~~ #2) setup_vlan_switching(): ** start **
+create vlan 20
+~~~ #2) setup_vlan_switching(): ** end **
+~~~ #3) verify(): ** start **
+vlan show
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)
+vlan 20 ports cd0-cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)
+l2 show
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x2 modid=0 port=2/cd1 Static
+
+Sending vlan id 120 packet to ingress port:1
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000011} {000000000002} 8100 0078
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0078> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000011} {000000000002} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+show c
+XLMIB_TBYT.cd0                        :                    68                 +68
+XLMIB_RBYT.cd0                        :                    68                 +68
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                    68                 +68
+XLMIB_RBYT.cd1                        :                    68                 +68
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                    68                 +68
+
+verify l2 learning:
+l2 show
+mac=00:00:00:00:00:02 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x2 modid=0 port=2/cd1 Static Hit
+
+Sending vlan id 150 packet to ingress port:1
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000011} {000000000003} 8100 0096
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x0096> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000011} {000000000003} 8100 0014
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+show c
+XLMIB_TBYT.cd0                        :                   136                 +68
+XLMIB_RBYT.cd0                        :                   136                 +68
+XLMIB_TPOK.cd0                        :                     2                  +1
+XLMIB_RPOK.cd0                        :                     2                  +1
+XLMIB_TVLN.cd0                        :                     2                  +1
+XLMIB_RVLN.cd0                        :                     2                  +1
+XLMIB_TUCA.cd0                        :                     2                  +1
+XLMIB_RUCA.cd0                        :                     2                  +1
+XLMIB_TPKT.cd0                        :                     2                  +1
+XLMIB_RPKT.cd0                        :                     2                  +1
+XLMIB_T127.cd0                        :                     2                  +1
+XLMIB_R127.cd0                        :                     2                  +1
+XLMIB_RPRM.cd0                        :                     2                  +1
+XLMIB_TBYT.cd1                        :                   136                 +68
+XLMIB_RBYT.cd1                        :                   136                 +68
+XLMIB_TPOK.cd1                        :                     2                  +1
+XLMIB_RPOK.cd1                        :                     2                  +1
+XLMIB_TVLN.cd1                        :                     2                  +1
+XLMIB_RVLN.cd1                        :                     2                  +1
+XLMIB_TUCA.cd1                        :                     2                  +1
+XLMIB_RUCA.cd1                        :                     2                  +1
+XLMIB_TPKT.cd1                        :                     2                  +1
+XLMIB_RPKT.cd1                        :                     2                  +1
+XLMIB_T127.cd1                        :                     2                  +1
+XLMIB_R127.cd1                  :                           2                  +1
+XLMIB_RPRM.cd1                        :                     2                  +1
+UC_PERQ_PKT(0).cd1                    :                     2                  +1
+UC_PERQ_BYTE(0).cd1                   :                   136                 +68
+
+verify l2 learning:
+l2 show
+mac=00:00:00:00:00:02 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:03 vlan=20 GPORT=0x1 modid=0 port=1/cd0 Hit
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x2 modid=0 port=2/cd1 Static Hit
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

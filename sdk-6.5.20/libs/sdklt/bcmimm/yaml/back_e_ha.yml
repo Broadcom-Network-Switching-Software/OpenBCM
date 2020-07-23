@@ -1,0 +1,177 @@
+#
+# file: back_e_ha.yml
+# In memory back end YAML file describing the HA data structures
+#
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+   bcmimm_be:
+       element_list_head_t:
+           comment: Block header for free element. The headers can be linked together to track multiple blocks of the same element size as well as different element sizes
+           type: struct
+           fields:
+               signature:
+                   type: uint32_t
+                   comment: Block validation
+               data_len:
+                   type: uint8_t
+                   comment: The field data size supported by this table
+               sub:
+                   type: uint16_t
+                   comment: The sub component ID
+               elem_count:
+                   type: uint32_t
+                   comment: The number of elements in this table
+               blk_ext:
+                   type: uint32_t
+                   comment: Point to second block if this became full
+               next_size_blk:
+                   type: uint32_t
+                   comment: Point to similar block of different size elements
+               free_list:
+                   type: uint32_t
+                   comment: Pointer to the free list of available data items
+
+       tbl_header_t:
+           comment: Backend table header
+           type: struct
+           fields:
+               signature:
+                   type: uint32_t
+                   comment: Block validation
+               comp_id:
+                   type: uint16_t
+                   comment: The component ID created this table
+               data_len:
+                   type: uint8_t
+                   comment: The field data size supported by this table
+               key_len:
+                   type: uint8_t
+                   comment: The entry key size supported by this table
+               num_of_rows:
+                   type: uint32_t
+                   comment: The hash table size
+               num_of_ent:
+                   type: uint32_t
+                   comment: The number of entries in the table
+               ent_len:
+                   type: uint16_t
+                   comment: The entry length of this table
+               sub_id:
+                   type: uint16_t
+                   comment: The sub-component ID created this table
+               basic_tbl:
+                   type: bool
+                   comment: Indicates if the table is basic or direct table
+               array_tbl:
+                   type: bool
+                   comment: Only relevant for direct tables. Indicates if the table has array fields.
+
+       direct_tbl_array_field_t:
+           type: struct
+           comment: Field definition for entry with array elements
+           fields:
+               fid:
+                   type: uint32_t
+                   comment: Field ID
+               idx:
+                   type: uint32_t
+                   comment: The field index in an array
+               data:
+                   type: uint64_t
+                   comment: The field data
+
+       direct_tbl_basic_field_t:
+           type: struct
+           comment: Field definition for entry without array elements
+           fields:
+               fid:
+                   type: uint32_t
+                   comment: Field ID
+               data:
+                   type: uint64_t
+                   comment: The field data
+
+       direct_tbl_entry_array_t:
+           type: struct
+           comment: Entry definition for entry with array elements
+           fields:
+               count:
+                   type: uint16_t
+                   comment: Field count
+               lock:
+                   type: uint8_t
+                   comment: Entry lock count
+               valid:
+                   type: bool
+                   comment: Is the entry empty or not
+               fields:
+                   type: direct_tbl_array_field_t
+                   table:
+                   size: count
+                   comment: Array of fields
+
+       direct_tbl_entry_basic_t:
+           type: struct
+           comment: Entry definition for entry without array elements
+           fields:
+               count:
+                   type: uint16_t
+                   comment: Field count
+               lock:
+                   type: uint8_t
+                   comment: Entry lock count
+               valid:
+                   type: bool
+                   comment: Is the entry empty or not
+               fields:
+                   type: direct_tbl_basic_field_t
+                   table:
+                   size: count
+                   comment: Array of basic fields
+
+       direct_tbl_array_t:
+           type: struct
+           comment: Direct table definition for entry with array elements
+           fields:
+               hdr:
+                   type: tbl_header_t
+                   comment: Table header
+               rows:
+                   type: uint32_t
+                   comment: Rows count
+               start_idx:
+                   type: uint32_t
+                   comment: The start index of the table.
+               body:
+               # This should be of type direct_tbl_entry_array_t. However since
+               # direct_tbl_entry_array_t is also unbounded array we can't
+               # put them together.
+                   type: uint8_t
+                   table:
+                   size: rows
+                   comment: The table content
+
+       direct_tbl_basic_t:
+           type: struct
+           comment: Direct table definition for entry without array elements
+           fields:
+               hdr:
+                   type: tbl_header_t
+                   comment: Table header
+               rows:
+                   type: uint32_t
+                   comment: Rows count
+               start_idx:
+                   type: uint32_t
+                   comment: The start index of the table.
+               body:
+                   type: uint8_t
+                   table:
+                   size: rows
+                   comment: The table content
+

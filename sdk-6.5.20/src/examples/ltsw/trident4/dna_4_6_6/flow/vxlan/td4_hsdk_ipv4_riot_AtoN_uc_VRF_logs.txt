@@ -1,0 +1,157 @@
+BCM.0> cint TD4_HSDK_ipv4_riot_AtoN_uc_VRF.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 08:40:53 2019)
+From sdkrel@lc-sj1-4870:/projects/ntsw_sw18_scratch/sdkrel/regress/sdk-6.5.18-EA6/src/sdk.hsdk.release.build
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+~~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1
+egress_port_multi_setup port: 2
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Get flow handler for CLASSIC_VXLAN
+
+Setup access VP on port 1
+Configure Vxlan access port configuration
+Access: create VPN
+create multicast group for UUC/MC/BC
+Access: add access port to VPN
+Access: create flow port vp
+Access: flow port=0xb0000001
+Access: create UL L3 interface
+Access: create OL L3 interface
+Access: create OL L3 egress object
+Access: create L3 ingress interface
+Access: update the vrf field in VFI table
+Access: add flow match (match: port,vlan criteria)
+Access: l2 station entry add
+Access: add the l3 route
+
+Setup network VP on port 2
+Configure Vxlan network port configuration
+Network: create VPN
+create multicast group for UUC/MC/BC
+Network: add network port to VPN
+Network: create flow port vp
+Network: flow port=0xb0000002
+Network: create UL L3 interface
+Network: create UL L3 egress object
+Network: encap add, VFI-->VNID
+Network: set encapsulation. VP=>egress-obj{Device,Port}
+Network: create OL L3 interface
+Network: create OL L3 egress object
+Network: create L3 ingress interface
+Network: update the vrf field in VFI table
+Network: configure match condition to derive VPN (Match:{VN_ID},Derive: VFI (VPN))
+Network: add flow match (match: SIP => network SVP)
+Network: underlay l2 station entry add
+Network: overlay l2 host add 
+Network: add the l3 route
+Tunnel_init: create flow tunnel initiator
+Tunnel_term: create flow tunnel terminator
+~~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~~ #3) verify(): ** start **
+vlan 1	ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e) 
+vlan 10	ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+vlan 11	ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+mac=00:00:00:01:01:01 vlan=32769 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+0       10       0.0.0.0/0           100001 0   
+1       10       192.168.10.0/24     100002 0   
+2       10       192.168.20.0/24     100003 132769
+EgrID        MAC Address   Intf      Port Module   MTU       Type
+---------------------------------------------------------------
+100001  00:00:00:00:00:00  16383     1            0 16383    overlay
+
+100002  00:00:00:11:11:11      1     1  flow      0 16383    overlay
+
+100003  00:00:00:02:02:02      2     2  flow      0 16383    overlay
+
+132769  00:00:00:00:aa:aa  16385     2            0     0   underlay
+
+INTF  VID   MAC Address       
+----------------------------------------------
+1     32768 00:00:00:22:22:22  OverLay  
+
+2     32769 00:00:00:01:01:01  OverLay  
+
+16385 11    00:00:00:00:bb:bb  UnderLay 
+
+
+Sending known unicast packet to ingress access side:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000222222} {000000111111} 8100 000a
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff da7e c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 0a01 c0a8 1401 0000 0000 0000 0000 0000 
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPWN.0]Packet[1]: data[0040]: 0000 0000 
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.10.1> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 000b
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0064 0000 0000 3f11 3f6a 0a0a 
+[bcmPWN.0]Packet[2]: data[0020]: 0a01 1414 1401 c000 12b5 0050 0000 0800 
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0002 0202 0000 0001 
+[bcmPWN.0]Packet[2]: data[0040]: 0101 0800 4500 002e 0000 0000 3fff db7e 
+[bcmPWN.0]Packet[2]: data[0050]: c0a8 0a01 c0a8 1401 0000 0000 0000 0000 
+[bcmPWN.0]Packet[2]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPWN.0]Packet[2]: data[0070]: 0000 0000 0000 
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<20.20.20.1> hl<5> service-type<0> tl<100> id<0> frg-off<0> ttl<63> > chk-sum<0x3f6a>
+XLMIB_TBYT.cd0                        :                    72                 +72
+XLMIB_RBYT.cd0                        :                    72                 +72
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                   122                +122
+XLMIB_RBYT.cd1                        :                   122                +122
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                   122                +122
+
+verify l2 learning:
+mac=00:00:00:00:bb:bb vlan=11 GPORT=0x2 modid=0 port=2/cd1 Hit
+mac=00:00:00:01:01:01 vlan=32769 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:11:11:11 vlan=32768 GPORT=0x1 modid=0 port=1/cd0 Hit
+
+verify l3 route hit
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+0       10       0.0.0.0/0           100001 0   
+1       10       192.168.10.0/24     100002 0   
+2       10       192.168.20.0/24     100003 132769
+0:bcm_ltsw_flow_vpn_traverse: null
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+

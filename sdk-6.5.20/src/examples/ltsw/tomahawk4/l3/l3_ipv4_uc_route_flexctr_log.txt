@@ -1,0 +1,88 @@
+BCM.0> c l3_ipv4_uc_route_flexctr.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int egr_obj_id = 100001 (0x186a1)
+int $$ = 0 (0x0)
+int egr_obj_id2 = 100002 (0x186a2)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+statid = 268451841.
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 5 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x52(82)
+        SRC_PORT_NUM                    :0x2(2)
+        OUTER_VID                       :0xc(12)
+        TIMESTAMP_TYPE                  :0x3(3)
+        SWITCH                          :0x1(1)
+        ING_TAG_TYPE                    :0x1(1)
+[RX reasons]
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[1]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[1]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+XLMIB_TBYT.cd0                        :                    78                 +78
+XLMIB_RBYT.cd0                        :                    78                 +78
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T127.cd0                        :                     1                  +1
+XLMIB_R127.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_RFLR.cd0                        :                     1                  +1
+RUC_64.cd0                            :                     1                  +1
+RIPC4_64.cd0                          :                     1                  +1
+XLMIB_TBYT.cd1                        :                    82                 +82
+XLMIB_RBYT.cd1                        :                    82                 +82
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+RUC_64.cd1                            :                     1                  +1
+TDBGC4_64.cd1                         :                     1                  +1
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x0000004E}
+    }
+}

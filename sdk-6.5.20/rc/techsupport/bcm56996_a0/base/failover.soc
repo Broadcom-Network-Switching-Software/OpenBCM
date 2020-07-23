@@ -1,0 +1,15 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Failover RC (run commands) file
+#
+#       These are default commands that are for TechSupport Failover.
+#
+
+# Show Failover related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Failover related LTs.
+local lt TNL_CONTROL;                               $traverse_lt;

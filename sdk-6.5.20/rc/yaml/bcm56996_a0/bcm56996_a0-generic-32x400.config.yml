@@ -1,0 +1,184 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56996 32x400g port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                PORT_ID: 1
+            :
+                PC_PHYS_PORT_ID: 1
+            ?
+                PORT_ID: 2
+            :
+                PC_PHYS_PORT_ID: 9
+            ?
+                PORT_ID: 17
+            :
+                PC_PHYS_PORT_ID: 17
+            ?
+                PORT_ID: 18
+            :
+                PC_PHYS_PORT_ID: 25
+            ?
+                PORT_ID: 34
+            :
+                PC_PHYS_PORT_ID: 33
+            ?
+                PORT_ID: 35
+            :
+                PC_PHYS_PORT_ID: 41
+            ?
+                PORT_ID: 51
+            :
+                PC_PHYS_PORT_ID: 49
+            ?
+                PORT_ID: 52
+            :
+                PC_PHYS_PORT_ID: 57
+            ?
+                PORT_ID: 68
+            :
+                PC_PHYS_PORT_ID: 65
+            ?
+                PORT_ID: 69
+            :
+                PC_PHYS_PORT_ID: 73
+            ?
+                PORT_ID: 85
+            :
+                PC_PHYS_PORT_ID: 81
+            ?
+                PORT_ID: 86
+            :
+                PC_PHYS_PORT_ID: 89
+            ?
+                PORT_ID: 102
+            :
+                PC_PHYS_PORT_ID: 97
+            ?
+                PORT_ID: 103
+            :
+                PC_PHYS_PORT_ID: 105
+            ?
+                PORT_ID: 119
+            :
+                PC_PHYS_PORT_ID: 113
+            ?
+                PORT_ID: 120
+            :
+                PC_PHYS_PORT_ID: 121
+            ?
+                PORT_ID: 136
+            :
+                PC_PHYS_PORT_ID: 129
+            ?
+                PORT_ID: 137
+            :
+                PC_PHYS_PORT_ID: 137
+            ?
+                PORT_ID: 153
+            :
+                PC_PHYS_PORT_ID: 145
+            ?
+                PORT_ID: 154
+            :
+                PC_PHYS_PORT_ID: 153
+            ?
+                PORT_ID: 170
+            :
+                PC_PHYS_PORT_ID: 161
+            ?
+                PORT_ID: 171
+            :
+                PC_PHYS_PORT_ID: 169
+            ?
+                PORT_ID: 187
+            :
+                PC_PHYS_PORT_ID: 177
+            ?
+                PORT_ID: 188
+            :
+                PC_PHYS_PORT_ID: 185
+            ?
+                PORT_ID: 204
+            :
+                PC_PHYS_PORT_ID: 193
+            ?
+                PORT_ID: 205
+            :
+                PC_PHYS_PORT_ID: 201
+            ?
+                PORT_ID: 221
+            :
+                PC_PHYS_PORT_ID: 209
+            ?
+                PORT_ID: 222
+            :
+                PC_PHYS_PORT_ID: 217
+            ?
+                PORT_ID: 238
+            :
+                PC_PHYS_PORT_ID: 225
+            ?
+                PORT_ID: 239
+            :
+                PC_PHYS_PORT_ID: 233
+            ?
+                PORT_ID: 255
+            :
+                PC_PHYS_PORT_ID: 241
+            ?
+                PORT_ID: 256
+            :
+                PC_PHYS_PORT_ID: 249
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: [[1, 2],
+                          [17, 18],
+                          [34, 35],
+                          [51, 52],
+                          [68, 69],
+                          [85, 86],
+                          [102, 103],
+                          [119, 120],
+                          [136, 137],
+                          [153, 154],
+                          [170, 171],
+                          [187, 188],
+                          [204, 205],
+                          [221, 222],
+                          [238, 239],
+                          [255, 256]]
+            :
+                ENABLE: 1
+                SPEED: 400000
+                NUM_LANES: 8
+                FEC_MODE: PC_FEC_RS544_2XN
+                MAX_FRAME_SIZE: 9416
+...

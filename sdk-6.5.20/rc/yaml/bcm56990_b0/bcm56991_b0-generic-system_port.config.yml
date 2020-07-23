@@ -1,0 +1,44 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56991 system port configuration.
+# Support pipe numbers: 0, 1, 2, 3, 12, 13, 14, 15
+#
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                PORT_ID: 33
+            :
+                PC_PHYS_PORT_ID: 259
+            ?
+                PORT_ID: 67
+            :
+                PC_PHYS_PORT_ID: 260
+            ?
+                PORT_ID: 237
+            :
+                PC_PHYS_PORT_ID: 265
+            ?
+                PORT_ID: 271
+            :
+                PC_PHYS_PORT_ID: 266
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: [0, 33, 67, 237, 271]
+            :
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+...

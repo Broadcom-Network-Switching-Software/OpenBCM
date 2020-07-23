@@ -1,0 +1,61 @@
+# $Id: lmfb48.soc,v 1.4 2005/08/29 17:29:17 sanjayg Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# This script runs the tr 19 test for all the 24 GE ports and 4 HiGig
+# ports of the firebolt device. There are 2 firebolt devices on the
+# LM48 platform. 
+# After running the tr 19 test, this script runs the system snake
+# test for the platform.
+
+
+#Set the mode argument as a variable
+if $?1 'local $1 1'
+
+#Set the duration argument as a variable
+if !$?2 'local count 10'
+if $?2 'local count $2'
+
+
+#Check for ext_mode/int_mode argument
+if !$?int_mode && !$?ext_mode || !$?1  'Echo   ; \
+	 Echo -----------------------------------; \
+         Echo MISSING mandatory arguments:; \
+         Echo   ; \
+         Echo lmfb48 ext_mode <duration>; \
+         Echo - run in external mode. Default duration=10 [pkts for tr19, 10sec for ss]; \
+         Echo   ; \
+         Echo lmfb48 int_mode <duration>; \
+         Echo - run in internal mode. Default duration=10 [pkts for tr19, 10sec for ss]; \
+         Echo -----------------------------------; \
+         exit'
+
+
+
+if !$?lm48p && !$?lm48p_D "echo rc: config variable lm48p or lm48p_D not set; exit"
+
+echo " "
+echo "Starting TR 19 test ..."
+testmode run
+
+1:modreg mac_ctrl.hg2 RMTLOOP=1
+1:modreg mac_ctrl.hg3 RMTLOOP=1
+0: tr 19 ExtselfloopPBM=hg count=$count
+1:modreg mac_ctrl.hg2 RMTLOOP=0
+1:modreg mac_ctrl.hg3 RMTLOOP=0
+
+0:modreg mac_ctrl.hg2 RMTLOOP=1
+0:modreg mac_ctrl.hg3 RMTLOOP=1
+1: tr 19 ExtselfloopPBM=hg count=$count
+0:modreg mac_ctrl.hg2 RMTLOOP=0
+0:modreg mac_ctrl.hg3 RMTLOOP=0
+
+echo " "
+echo "Starting System snake test ..."
+
+if $?ext_mode 'Echo (in external mode);0:ss mode=ext duration=$count'
+if $?int_mode 'Echo (in internal mode);0:ss duration=$count'
+
+
+

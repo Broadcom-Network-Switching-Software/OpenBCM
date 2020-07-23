@@ -1,0 +1,449 @@
+# $Id: bcm56547sanity.soc,v 1.6 2013/07/18 20:03:09 tusharty Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Helix4 BCM56547 / BCM56548 / BCM56548H Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+# -------------------------------------------- #
+# BCM56547 config.bcm                          #
+# -------------------------------------------- #
+# portgroup_12=1
+# portgroup_11=1
+# portgroup_10=1
+# portgroup_9=1
+# portgroup_8=1
+# portgroup_7=1
+# portgroup_6=1
+# portgroup_5=1
+# portgroup_4=1
+# portgroup_3=1
+# portgroup_2=1
+# portgroup_1=1
+# portgroup_0=1
+#
+# phy_sgmii_autoneg_ge=1
+#
+# phy_port_primary_and_offset_ge47=0x2907
+# phy_port_primary_and_offset_ge46=0x2906
+# phy_port_primary_and_offset_ge45=0x2905
+# phy_port_primary_and_offset_ge44=0x2904
+# phy_port_primary_and_offset_ge43=0x2903
+# phy_port_primary_and_offset_ge42=0x2902
+# phy_port_primary_and_offset_ge41=0x2901
+# phy_port_primary_and_offset_ge40=0x2900
+# phy_port_primary_and_offset_ge39=0x2107
+# phy_port_primary_and_offset_ge38=0x2106
+# phy_port_primary_and_offset_ge37=0x2105
+# phy_port_primary_and_offset_ge36=0x2104
+# phy_port_primary_and_offset_ge35=0x2103
+# phy_port_primary_and_offset_ge34=0x2102
+# phy_port_primary_and_offset_ge33=0x2101
+# phy_port_primary_and_offset_ge32=0x2100
+# phy_port_primary_and_offset_ge31=0x1907
+# phy_port_primary_and_offset_ge30=0x1906
+# phy_port_primary_and_offset_ge29=0x1905
+# phy_port_primary_and_offset_ge28=0x1904
+# phy_port_primary_and_offset_ge27=0x1903
+# phy_port_primary_and_offset_ge26=0x1902
+# phy_port_primary_and_offset_ge25=0x1901
+# phy_port_primary_and_offset_ge24=0x1900
+# phy_port_primary_and_offset_ge23=0x1107
+# phy_port_primary_and_offset_ge22=0x1106
+# phy_port_primary_and_offset_ge21=0x1105
+# phy_port_primary_and_offset_ge20=0x1104
+# phy_port_primary_and_offset_ge19=0x1103
+# phy_port_primary_and_offset_ge18=0x1102
+# phy_port_primary_and_offset_ge17=0x1101
+# phy_port_primary_and_offset_ge16=0x1100
+# phy_port_primary_and_offset_ge15=0x0907
+# phy_port_primary_and_offset_ge14=0x0906
+# phy_port_primary_and_offset_ge13=0x0905
+# phy_port_primary_and_offset_ge12=0x0904
+# phy_port_primary_and_offset_ge11=0x0903
+# phy_port_primary_and_offset_ge10=0x0902
+# phy_port_primary_and_offset_ge9=0x0901
+# phy_port_primary_and_offset_ge8=0x0900
+# phy_port_primary_and_offset_ge7=0x0107
+# phy_port_primary_and_offset_ge6=0x0106
+# phy_port_primary_and_offset_ge5=0x0105
+# phy_port_primary_and_offset_ge4=0x0104
+# phy_port_primary_and_offset_ge3=0x0103
+# phy_port_primary_and_offset_ge2=0x0102
+# phy_port_primary_and_offset_ge1=0x0101
+# phy_port_primary_and_offset_ge0=0x0100
+#
+# pbmp_xport_xe.0=0x3c000000000000
+# -------------------------------------------- #
+# Enabling all ports - bcm56547 SKU
+if $?BCM56547_A0 \
+    'local pbmge     0x1fffffffffffe; \
+     local pbmpmgmt  0x2000000000000; \
+     local pbmxe     0x3c000000000000; \
+     local pbmhg11   0x0; \
+     local pbmhg42   0xc0000000000000; \
+     local pbmport   0xfdfffffffffffe; \
+     local pbmge25   0x0'
+
+# -------------------------------------------- #
+# BCM56548 config.bcm                          #
+# -------------------------------------------- #
+# portgroup_0=1
+# portgroup_1=1
+# portgroup_2=1
+# portgroup_3=1
+# portgroup_4=1
+# portgroup_5=1
+# portgroup_6=1
+# portgroup_7=1
+# portgroup_8=1
+# portgroup_9=1
+#
+# phy_sgmii_autoneg_ge=1
+#
+# phy_port_primary_and_offset_ge0=0x0100
+# phy_port_primary_and_offset_ge1=0x0101
+# phy_port_primary_and_offset_ge2=0x0102
+# phy_port_primary_and_offset_ge3=0x0103
+# phy_port_primary_and_offset_ge4=0x0104
+# phy_port_primary_and_offset_ge5=0x0105
+# phy_port_primary_and_offset_ge6=0x0106
+# phy_port_primary_and_offset_ge7=0x0107
+# phy_port_primary_and_offset_ge8=0x0900
+# phy_port_primary_and_offset_ge9=0x0901
+# phy_port_primary_and_offset_ge10=0x0902
+# phy_port_primary_and_offset_ge11=0x0903
+# phy_port_primary_and_offset_ge12=0x0904
+# phy_port_primary_and_offset_ge13=0x0905
+# phy_port_primary_and_offset_ge14=0x0906
+# phy_port_primary_and_offset_ge15=0x0907
+# phy_port_primary_and_offset_ge16=0x1100
+# phy_port_primary_and_offset_ge17=0x1101
+# phy_port_primary_and_offset_ge18=0x1102
+# phy_port_primary_and_offset_ge19=0x1103
+# phy_port_primary_and_offset_ge20=0x1104
+# phy_port_primary_and_offset_ge21=0x1105
+# phy_port_primary_and_offset_ge22=0x1106
+# phy_port_primary_and_offset_ge23=0x1107
+# phy_port_primary_and_offset_ge24=0x1900
+# phy_port_primary_and_offset_ge25=0x1901
+# phy_port_primary_and_offset_ge26=0x1902
+# phy_port_primary_and_offset_ge27=0x1903
+# phy_port_primary_and_offset_ge28=0x1904
+#
+# pbmp_xport_xe=0x3fc0000000000
+# -------------------------------------------- #
+# Enabling all ports - bcm56548 SKU
+if $?BCM56548_A0 \
+    'local pbmge     0x1ffffffe; \
+     local pbmpmgmt  0x20000000000; \
+     local pbmhg42   0x4000000000000; \
+     local pbmport   0x3ffc001ffffffe; \
+     local pbmge25   0x0; \
+     local pbmxe     0x3fc0000000000'
+
+# -------------------------------------------- #
+# BCM56548H config.bcm                          #
+# -------------------------------------------- #
+# portgroup_0=1
+# portgroup_1=1
+# portgroup_2=1
+# portgroup_3=1
+# portgroup_4=1
+# portgroup_5=1
+# portgroup_6=1
+# portgroup_7=1
+#
+# phy_sgmii_autoneg_ge=1
+#
+# phy_port_primary_and_offset_ge0=0x0100
+# phy_port_primary_and_offset_ge1=0x0101
+# phy_port_primary_and_offset_ge2=0x0102
+# phy_port_primary_and_offset_ge3=0x0103
+# phy_port_primary_and_offset_ge4=0x0104
+# phy_port_primary_and_offset_ge5=0x0105
+# phy_port_primary_and_offset_ge6=0x0106
+# phy_port_primary_and_offset_ge7=0x0107
+# phy_port_primary_and_offset_ge8=0x0900
+# phy_port_primary_and_offset_ge9=0x0901
+# phy_port_primary_and_offset_ge10=0x0902
+# phy_port_primary_and_offset_ge11=0x0903
+# phy_port_primary_and_offset_ge12=0x0904
+# phy_port_primary_and_offset_ge13=0x0905
+# phy_port_primary_and_offset_ge14=0x0906
+# phy_port_primary_and_offset_ge15=0x0907
+# phy_port_primary_and_offset_ge16=0x1100
+# phy_port_primary_and_offset_ge17=0x1101
+# phy_port_primary_and_offset_ge18=0x1102
+# phy_port_primary_and_offset_ge19=0x1103
+#
+# pbmp_xport_xe=0x3c0000000000
+# -------------------------------------------- #
+# Enabling all ports - bcm56548H SKU
+if $?BCM56548H_A0 \
+    'local pbmge     0x1ffffe; \
+     local pbmpmgmt  0x20000000000; \
+     local pbmhg42   0x0000000000000; \
+     local pbmport   0x3ffc001ffffffe; \
+     local pbmhg11   0x3fc00000000000; \
+     local pbmge25   0x0; \
+     local pbmxe     0x3c0000000000'
+# Turn off Mem cache and Parity checks for mem tests
+config add mem_cache_enable=0
+config add parity_enable=0
+
+if $?BCM56547_A0 \
+    'echo "testsuite: started: sanity 0xb547"'
+if $?BCM56548_A0 \
+    'echo "testsuite: started: sanity 0xb548"'
+if $?BCM56548H_A0 \
+    'echo "testsuite: started: sanity 0xb5A"'
+
+rcload rc.soc
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init
+init misc
+
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+if !$?ihost_mode \
+    'echo "Running PCI Compliance ...";\
+     tr 2;\
+     $done;'
+
+if !$?ihost_mode \
+    'echo "Running PCI S-Channel Buf ...";\
+     tr 4;\
+     $done;'
+
+init soc
+debug -warn
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+debug +warn
+
+rcload rc.soc
+counter off
+l2mode off
+echo "Running CPU Benchmarks (No Mem Cache) ..."
+tr 21
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+hx4_mem.soc
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#Hashing tests
+echo "Hash mem test ..."
+tr 55
+
+echo "Running MDIO Linkscan test"
+tr 60
+$done
+
+echo "Testing CPU DMA loopback ..."
+tr 17
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Reload ..."
+tr 22
+#$done
+
+echo "Testing CPU DMA, Scatter/Gather Simple ..."
+tr 23
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Random ..."
+tr 24
+$done
+
+ps
+
+#MAC Loopback
+echo "Testing MAC Loopback - 1 Gb/s all GE ports"
+tr 18 PortBitMap=$pbmge Speed=1000
+$done
+
+echo "Testing MAC Loopback - 2.5 Gb/s GE 2.5 ports"
+tr 18 PortBitMap=$pbmge25 Speed=2500
+$done
+
+echo "Testing MAC Loopback - 10 Gb/s all XE ports"
+tr 18 PortBitMap=$pbmxe Speed=10G
+$done
+
+echo "Testing MAC Loopback - 11 Gb/s all HG ports"
+tr 18 PortBitMap=$pbmhg11 Speed=11G
+$done
+
+echo "Testing MAC Loopback - 42 Gb/s all HG ports"
+tr 18 PortBitMap=$pbmhg42 Speed=42G
+$done
+
+echo "Testing PHY Loopback - 1 Gb/s all GE ports"
+tr 19 PortBitMap=$pbmge Speed=1000
+$done
+
+echo "Testing PHY Loopback - 2.5 Gb/s GE 2.5 ports"
+tr 19 PortBitMap=$pbmge25 Speed=2500
+$done
+
+echo "Testing PHY Loopback - 10 Gb/s all XE ports"
+tr 19 PortBitMap=$pbmxe Speed=10G
+$done
+
+echo "Testing PHY Loopback - 11 Gb/s all HG ports"
+tr 19 PortBitMap=$pbmhg11 Speed=11G
+$done
+
+echo "Testing PHY Loopback - 42 Gb/s all HG ports"
+tr 19 PortBitMap=$pbmhg42 Speed=42G
+$done
+
+# tr 48 does not work with mix of port types
+echo "Running MAC loopback V2 on GE ports..."
+tr 48 pbm=$pbmge sp=1000
+$done
+
+echo "Running MAC loopback V2 on XE ports ..."
+tr 48 pbm=$pbmxe sp=10G
+$done
+
+echo "Running MAC loopback V2 on  HG ports(11 Gb/s) ..."
+tr 48 PortBitMap=$pbmhg11 Sp=11G
+$done
+
+echo "Running MAC loopback V2 on HG ports(42 Gb/s) ..."
+tr 48 pbm=$pbmhg42 sp=42G
+$done
+
+# tr 49 does not work with mix of port types
+echo "Running PHY loopback V2 on GE ports ..."
+tr 49 pbm=$pbmge sp=1000
+$done
+
+echo "Running PHY loopback V2 on XE ports ..."
+tr 49 pbm=$pbmxe sp=10G
+$done
+
+echo "Running PHY loopback V2 on  HG ports(11 Gb/s) ..."
+tr 49 PortBitMap=$pbmhg11 Sp=11G
+$done
+
+echo "Running PHY loopback V2 on HG ports(42 Gb/s) ..."
+tr 49 pbm=$pbmhg42 sp=42G
+$done
+
+#Internal snake Loopback
+echo "Running internal snake on GE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmge
+$done
+
+echo "Running internal snake on GE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmge
+$done
+
+echo "Running internal snake on XE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmxe
+$done
+
+echo "Running internal snake on XE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmxe
+$done
+
+#Traffic Test
+echo "Running Traffic Test on GE ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmge c=10 sp=1000
+$done
+
+#Traffic Test
+echo "Running Traffic Test on GE 2.5 ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmge25 c=10 sp=2500
+$done
+
+echo "Running Traffic Test on GE ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmge c=10 sp=1000
+$done
+
+echo "Running Traffic Test on XE ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmxe c=10 sp=10G
+$done
+
+echo "Running Traffic Test on XE ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmxe c=10 sp=10G
+$done
+
+echo "Running Traffic Test on HG ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmhg42 c=10 sp=42G
+$done
+
+echo "Running Traffic Test on HG ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmhg42 c=10 sp=42G
+$done
+
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

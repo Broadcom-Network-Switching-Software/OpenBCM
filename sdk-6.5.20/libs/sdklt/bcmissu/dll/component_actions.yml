@@ -1,0 +1,32 @@
+#
+# file: component_actions.yml
+# Attached component action functions to various stages of the ISSU process.
+# These functions will be call per SYSM instance (per unit or generic).
+# The two legitimate phases are pre_upgrade and post_upgrade. Currently only
+# pre_upgrade is being used.
+# The component name value should be the directory name under $SDK. This
+# directory should have a sub-directory named issu_dll where the C file should
+# be written. The C file must have a function that matches the handler name
+# in the following format: <component_name>_<handler>. For example for the
+# bcmimm component there should be a function named bcmimm_fl_id_hdl(int unit)
+# The directory issu_dll should not be included in the targets.mk file as it
+# will be build during the DLL build and not during the regular SDK build.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+phase:
+   pre_upgrade:
+      comp_1:
+          component_name: bcmltm
+          handler: state_hdl
+      comp_2:
+          component_name: bcmptm
+          handler: ltid_hdl
+      comp_3:
+          component_name: bcmimm
+          handler: fl_id_hdl

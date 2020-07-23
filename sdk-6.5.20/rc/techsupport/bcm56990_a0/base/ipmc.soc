@@ -1,0 +1,41 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport IPMC RC (run commands) file
+#
+#       These are default commands that are for TechSupport IPMC.
+#
+
+# Show S/W state in IPMC.
+dump sw ipmc
+
+# Show IPMC configurations.
+ipmc table show
+ipmc ip6table show
+
+# Show IPMC related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Table Information of Route related LTs.
+local lt TABLE_INFO; local ltid L3_IPV4_MC_ROUTE;         $lookup_lt;
+local lt TABLE_INFO; local ltid L3_IPV6_MC_ROUTE;         $lookup_lt;
+
+# Show Table Control Information of Route related LTs.
+local lt TABLE_CONTROL; local ltid L3_IPV4_MC_ROUTE;      $lookup_lt;
+local lt TABLE_CONTROL; local ltid L3_IPV6_MC_ROUTE;      $lookup_lt;
+
+# Show L3 IPMC route table.
+local lt L3_IPV4_MC_ROUTE;                                $traverse_lt;
+local lt L3_IPV6_MC_ROUTE;                                $traverse_lt;
+
+# Show L3 IPMC Egress Object LTs.
+local lt L3_MC_NHOP;                                      $traverse_lt;
+
+# Show L3 IPMC MTU LT.
+local lt L3_MC_MTU;                                       $traverse_lt;
+
+# Show L3 IPMC control LT.
+local lt L3_MC_CONTROL;                                   $traverse_lt;
+local lt L3_MC_PORT_CONTROL;                              $traverse_lt;

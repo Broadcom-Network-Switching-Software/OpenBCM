@@ -1,0 +1,72 @@
+# $Id:$
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# File: ltsw.sc
+#
+# Initialization RC (run commands) file
+#
+#       These are default commands that are read and executed by default
+#       when BCM boots up.
+
+if !$?unit "echo rc: no current unit; exit"
+
+echo "rc: unit $unit device $devname"
+
+#
+# Unregister LED callback from linkscan
+#
+if $?cmicx_led_fw && !$?xgssim && !$?plisim \
+    "led auto off"
+
+#
+# Shutdown threads if system is already running
+#
+l2 age off
+
+#
+# Shutdown linkscan thread if system is already running
+#
+linkscan off
+
+#
+# Init device
+#
+init soc;
+
+# Change core voltage to 0.78V for A0 board
+if $?BCM56880_A0 || $?BCM56881_A0 || $?BCM56883_A0 && !$?xgssim && !$?plisim \
+    "dsh -c 'bb voltage Core 0.78'"
+
+#
+# Init CLI and BCM API
+#
+
+init bcm;
+echo "rc: BCM driver initialized"
+
+#
+# Start linkscan task and set port modes
+#
+linkscan 250000;
+
+port xe,ce,cd linkscan=sw autoneg=off fullduplex=true txpause=true rxpause=true;
+port hg linkscan=sw fullduplex=true txpause=false rxpause=false;
+
+echo "rc: Port modes initialized"
+
+#
+# No spanning tree is running, so put ports all in the forwarding state
+#
+stg stp 1 all forward
+
+# Resynchronize the saved values kept by the 'show counter' command.
+if !$?xgssim \
+    "counter sync"
+
+# For CMICx devices, default LED firmware is custom_led.bin.
+if !$?cmicx_led_fw "local cmicx_led_fw cmicfw/custom_led.bin"
+if $?cmicx_led_fw && !$?xgssim && !$?plisim \
+    "led load $cmicx_led_fw; led auto on; led start"
+

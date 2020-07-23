@@ -1,0 +1,26 @@
+# $Id: BCM953022K.bcm,v 1.2 2013/05/13 10:56:34 kliao Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+pbmp_valid=0x11f
+# internal GPHY
+phy_sys_interface_ge4.0=1
+phy_port_primary_and_offset_ge0=0x0000
+phy_port_primary_and_offset_ge1=0x0001
+phy_port_primary_and_offset_ge2=0x0002
+phy_port_primary_and_offset_ge3=0x0003
+phy_port_primary_and_offset_ge4=0x0004
+
+## ==== MacSec Section ==== ##  
+macsec_enable = 1
+
+#MACSEC device address. MACSEC devices address, used to adress MACSEC core.
+#This is MDIO address that is being assigned to MACSEC core. The MDIO address
+#gets programmed to MACSEC PHY during initialization if MACSEC is enabled.
+macsec_dev_addr_ge4=0x21B
+
+#A MACSEC phy could be an integrated PHYs with multiple ports. This property
+#is needed to identify the index of each PHY port.
+macsec_port_index_ge4=0
+

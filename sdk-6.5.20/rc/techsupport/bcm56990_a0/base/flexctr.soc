@@ -1,0 +1,45 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport FLEXCTR RC (run commands) file
+#
+#       These are default commands that are for TechSupport FLEXCTR.
+#
+
+# Show S/W state in FLEXCTR.
+dump sw flexctr
+
+# Show FLEXCTR related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+local lt CTR_EFLEX_CONFIG;                                         $traverse_lt;
+
+# Show FLEXCTR related Ingress Counter LTs.
+local lt CTR_ING_EFLEX_ACTION_PROFILE;                             $traverse_lt;
+local lt CTR_ING_EFLEX_ACTION_PROFILE_INFO;                        $traverse_lt;
+local lt CTR_ING_EFLEX_ERROR_STATS;                                $traverse_lt;
+local lt CTR_ING_EFLEX_GROUP_ACTION_PROFILE;                       $traverse_lt;
+local lt CTR_ING_EFLEX_OBJ_QUANTIZATION;                           $traverse_lt;
+local lt CTR_ING_EFLEX_OPERAND_PROFILE;                            $traverse_lt;
+local lt CTR_ING_EFLEX_RANGE_CHK_PROFILE;                          $traverse_lt;
+local lt CTR_ING_EFLEX_STATS;                                      $traverse_lt;
+local lt CTR_ING_EFLEX_TRIGGER;                                    $traverse_lt;
+local lt CTR_ING_FLEX_POOL_CONTROL;                                $traverse_lt;
+local lt CTR_ING_FLEX_POOL_INFO;                                   $traverse_lt;
+local lt CTR_ING_EFLEX_HITBIT_CONTROL;                             $traverse_lt;
+
+# Show FLEXCTR related Egress Counter LTs.
+local lt CTR_EGR_EFLEX_ACTION_PROFILE;                             $traverse_lt;
+local lt CTR_EGR_EFLEX_ACTION_PROFILE_INFO;                        $traverse_lt;
+local lt CTR_EGR_EFLEX_ERROR_STATS;                                $traverse_lt;
+local lt CTR_EGR_EFLEX_GROUP_ACTION_PROFILE;                       $traverse_lt;
+local lt CTR_EGR_EFLEX_OBJ_QUANTIZATION;                           $traverse_lt;
+local lt CTR_EGR_EFLEX_OPERAND_PROFILE;                            $traverse_lt;
+local lt CTR_EGR_EFLEX_RANGE_CHK_PROFILE;                          $traverse_lt;
+local lt CTR_EGR_EFLEX_STATS;                                      $traverse_lt;
+local lt CTR_EGR_EFLEX_TRIGGER;                                    $traverse_lt;
+local lt CTR_EGR_FLEX_POOL_CONTROL;                                $traverse_lt;
+local lt CTR_EGR_FLEX_POOL_INFO;                                   $traverse_lt;
+local lt CTR_EGR_EFLEX_HITBIT_CONTROL;                             $traverse_lt;

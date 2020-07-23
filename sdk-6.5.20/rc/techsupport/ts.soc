@@ -1,0 +1,24 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport RC (run commands) file
+#
+#       These are default commands that are for TechSupport.
+#
+
+if $?base_drv_name\
+    ' \
+     if $?variantname \
+         " \
+          if $?1 \
+              \' rcload $base_drv_name/$variantname/$1.soc $2 $3\' \
+          else \
+              \' rcload $base_drv_name/$variantname/help.soc \' \
+         " \
+     else \
+         "echo ERROR: Unit $unit $(variantname): not defined." \
+    ' \
+else \
+    'echo ERROR Unit $unit: $(base_drv_name) not defined'

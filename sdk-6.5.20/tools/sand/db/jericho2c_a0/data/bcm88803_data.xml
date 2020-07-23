@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+
+<!-- This XML file is for 88803 SKU Dynamic DNX DATA -->
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+                <numeric name="device_id" value="0x8803"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="nif">
+        <sub_module name="phys">
+
+            <tables>
+                <table name="general">
+                    <value name="supported_phys" default="0xFF00FFFF,0xFFFFFF0F,0xFFFFFF00"></value>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="eth">
+            <defines>
+                <define name="is_400G_supported" value="0"></define>
+            </defines>
+        </sub_module>
+
+        <sub_module name="ilkn">
+
+            <numerics>
+                <numeric name="max_nof_ifs" value="2"></numeric>
+                <numeric name="max_nof_elk_ifs" value="1"></numeric>
+            </numerics>
+
+            <defines>
+                <define name="is_nif_56G_speed_supported" value="0"></define>
+                <define name="is_fabric_56G_speed_supported" value="0"></define>
+            </defines>
+
+            <tables>
+                <table name="supported_phys">
+                    <value name="is_supported" default="0"></value>
+                    <value name="max_phys" default="0"></value>
+                    <value name="nif_phys" default="0"></value>
+                    <value name="fabric_phys" default="0"></value>
+                    <entries>
+                        <entry ilkn_id="2" is_supported="1" max_phys="24" nif_phys="0x00000000, 0xffffff00, 0x000000ff, 0x00000000"></entry>
+                        <entry ilkn_id="3" is_supported="1" max_phys="24" nif_phys="0x00000000, 0xffffff00, 0x000000ff, 0x00000000"></entry>
+                        <entry ilkn_id="6" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0xffffff00, 0x00000000"></entry>
+                        <entry ilkn_id="7" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0xffffff00, 0x00000000"></entry>
+                        <entry ilkn_id="8" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0x00000000, 0x00ffffff"></entry>
+                        <entry ilkn_id="9" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0x00000000, 0x00ffffff"></entry>
+                        <entry ilkn_id="10" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0x00000000, 0xffffff00"></entry>
+                        <entry ilkn_id="11" is_supported="1" max_phys="24" nif_phys="0x00000000, 0x00000000, 0x00000000, 0xffffff00"></entry>
+                        <entry ilkn_id="12" is_supported="1" max_phys="24" nif_phys="0x00ffffff, 0x00000000, 0x00000000, 0x00000000"></entry>
+                        <entry ilkn_id="13" is_supported="1" max_phys="24" nif_phys="0x00ffffff, 0x00000000, 0x00000000, 0x00000000" ></entry>
+                        <entry ilkn_id="14" is_supported="1" max_phys="24" nif_phys="0xffffff00, 0x00000000, 0x00000000, 0x00000000"></entry>
+                        <entry ilkn_id="15" is_supported="1" max_phys="24" nif_phys="0xffffff00, 0x00000000, 0x00000000, 0x00000000"></entry>
+                    </entries>
+                </table>
+
+                <table name="ilkn_cores">
+                    <value name="is_elk_supported" default="0"></value>
+                    <value name="is_data_supported" default="0"></value>
+                    <value name="fec_disable_by_bypass" default="0"></value>
+                    <entries>
+                        <entry ilkn_core_id="1" is_elk_supported="1" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="3" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="4" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="5" is_elk_supported="0" is_data_supported="1"></entry>
+                        <entry ilkn_core_id="6" is_elk_supported="1" is_data_supported="1" fec_disable_by_bypass="1"></entry>
+                        <entry ilkn_core_id="7" is_elk_supported="0" is_data_supported="1" fec_disable_by_bypass="1"></entry>
+                    </entries>
+                </table>
+
+                <!-- For J2C ILKN Mux logic  -->
+                <table name="ilkn_cores_clup_facing">
+                    <value name="clu_unit" default="-1"></value>
+                    <entries>
+                        <entry ilkn_core_id="1"  clu_unit="1"></entry>
+                        <entry ilkn_core_id="3"  clu_unit="3"></entry>
+                        <entry ilkn_core_id="4"  clu_unit="4"></entry>
+                        <entry ilkn_core_id="5"  clu_unit="5"></entry>
+                    </entries>
+                </table>
+
+                <table name="nif_lanes_map">
+                    <value name="first_phy" default="-1"></value>
+                    <value name="ilkn_lane_offset" default="-1"></value>
+                    <value name="nof_lanes" default="-1"></value>
+                    <entries>
+                       <!-- Entries for core 1  -->
+                        <entry ilkn_core="1" range_id ="0" first_phy="40" ilkn_lane_offset="16" nof_lanes="8"></entry>
+                        <entry ilkn_core="1" range_id ="1" first_phy="48" ilkn_lane_offset="0" nof_lanes="24"></entry>
+                       <!-- Entries for core 3  -->
+                        <entry ilkn_core="3" range_id ="0" first_phy="72" ilkn_lane_offset="16" nof_lanes="8"></entry>
+                        <entry ilkn_core="3" range_id ="1" first_phy="80" ilkn_lane_offset="0" nof_lanes="16"></entry>
+                       <!-- Entries for core 4  -->
+                        <entry ilkn_core="4" range_id ="0" first_phy="96" ilkn_lane_offset="0" nof_lanes="24"></entry>
+                       <!-- Entries for core 5  -->
+                        <entry ilkn_core="5" range_id ="0" first_phy="104" ilkn_lane_offset="16" nof_lanes="8"></entry>
+                        <entry ilkn_core="5" range_id ="1" first_phy="112" ilkn_lane_offset="0" nof_lanes="16"></entry>
+                       <!-- Entries for core 6  -->
+                        <entry ilkn_core="6" range_id ="0" first_phy="0" ilkn_lane_offset="0" nof_lanes="24"></entry>
+                       <!-- Entries for core 7  -->
+                        <entry ilkn_core="7" range_id ="0" first_phy="8"  ilkn_lane_offset="16" nof_lanes="8"></entry>
+                        <entry ilkn_core="7" range_id ="1" first_phy="16" ilkn_lane_offset="0"  nof_lanes="16"></entry>
+                    </entries>
+                </table>
+            </tables>
+        </sub_module>
+     </module>
+
+</device_data>

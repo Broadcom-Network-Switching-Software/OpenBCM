@@ -1,0 +1,36 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport MPLS RC (run commands) file
+#
+#       These are default commands that are for TechSupport MPLS.
+#
+
+# Show S/W state.
+dump sw mpls
+
+# Show related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show related Ingress LTs.
+local lt TNL_MPLS_DECAP_KEY_MASK;                                  $traverse_lt;
+local lt TNL_MPLS_DECAP;                                           $traverse_lt;
+local lt TNL_MPLS_DECAP_TRUNK;                                     $traverse_lt;
+local lt L2_MY_STATION;                                            $traverse_lt;
+local lt L2_MY_STATION_TRUNK;                                      $traverse_lt;
+local lt L2_MY_STATION_MODPORT;                                    $traverse_lt;
+local lt TNL_CONTROL;                                              $traverse_lt;
+local lt TNL_MPLS_GLOBAL_LABEL_RANGE;                              $traverse_lt;
+local lt TNL_MPLS_PROTECTION_ENABLE;                               $traverse_lt;
+local lt VLAN_XLATE_1_STRENGTH_PROFILE;                            $traverse_lt;
+local lt VLAN_XLATE_2_STRENGTH_PROFILE;                            $traverse_lt;
+local lt VLAN_XLATE_3_STRENGTH_PROFILE;                            $traverse_lt;
+
+# Show related Egress LTs.
+local lt TNL_MPLS_ENCAP_NHOP;                                      $traverse_lt;
+local lt TNL_MPLS_TRANSIT_NHOP;                                    $traverse_lt;
+local lt L3_EIF;                                                   $traverse_lt;
+local lt TNL_MPLS_ENCAP;                                           $traverse_lt;
+local lt TNL_MPLS_DST_MAC;                                         $traverse_lt;

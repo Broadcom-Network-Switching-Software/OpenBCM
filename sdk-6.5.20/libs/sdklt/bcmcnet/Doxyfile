@@ -1,0 +1,12 @@
+PROJECT_NAME            = "Core Network Driver Library (BCMCNET)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INPUT                   = DOC/bcmcnet.dox \
+                          include
+
+IMAGE_PATH              = DOC/img
+
+ENABLE_PREPROCESSING    = yes
+MACRO_EXPANSION         = yes
+EXPAND_ONLY_PREDEF      = yes
+PREDEFINED              = __attribute__(x)=

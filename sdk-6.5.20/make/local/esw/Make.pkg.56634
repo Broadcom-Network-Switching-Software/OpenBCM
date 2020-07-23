@@ -1,0 +1,18 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Filename Make.local.56634
+FEATURE_LIST=PTP CINT  L3 I2C MEM_SCAN EDITLINE BCM_SAL_PROFILE  CUSTOMER TEST CHASSIS MSTP RCPU
+BCM_PTL_SPT = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+
+BCM_56634_A0 = 1  
+BCM_56634_B0 = 1  
+
+# workspace:system=56634  
+# linux-user:system=56634 buildDir=systems/linux/user/gto cpu=gto
+# linux26wrs-user:system=56634 buildDir=systems/linux/user/gto-2_6 cpu=gto

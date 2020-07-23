@@ -1,0 +1,25 @@
+#
+# file: bcmptm_uft_ha.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    DEPTH_BANK_BITMAP: 4
+
+component:
+    bcmptm_uft_ha:
+        bcmptm_uft_bank_bmp_t:
+            type: struct
+            comment: Device physical bank bitmap.
+            fields:
+                bk_bmp:
+                    comment: Device physical bank bitmap.
+                    type: uint32_t
+                    length: DEPTH_BANK_BITMAP
+

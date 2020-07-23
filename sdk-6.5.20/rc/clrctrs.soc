@@ -1,0 +1,171 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# SNMP Counter (TX/RX) and MIB Stats initialization
+# all counters must be zeroed out before they start
+# counting (R. Selvaraj)
+# Receive/Transmit Packet counter
+
+echo Clearing Fast Ethernet Statistics Counters
+
+setreg RPKT 0
+setreg TPKT 0
+# Receive/Transmit Byte counter
+setreg RBYT 0
+setreg TBYT 0
+# Receive/Transmit FCS error counter
+setreg RFCS 0
+setreg TFCS 0
+# Receive/Transmit Multicast Packet counter
+setreg RMCA 0
+setreg TMCA 0
+# Receive/Transmit Broadcast Packet counter
+setreg RBCA 0
+setreg TBCA 0
+# Receive/Transmit Control Frame/Unicast Packet counter
+setreg RXCF 0
+setreg TUCA 0
+# Receive/Transmit Pause Frame Packet counter
+setreg RXPF 0
+setreg TXPF 0
+# Receive/Transmit Unknown Opcode counter
+setreg RXUO 0
+# Transmit Single/Multiple Deferral Packet counter
+setreg TDFR 0
+setreg TXDF 0
+#Transmit single/multiple/late collision packet counter
+setreg TSCL 0
+setreg TMCL 0
+setreg TLCL 0
+# Transmit Total/Excessive Collision packet counter
+setreg TNCL 0
+setreg TXCL 0
+# Receive/Transmit Alignment Error counter
+setreg RALN 0
+# Receive/Transmit Frame Length out of range counter
+setreg RFLR 0
+# Receive/Transmit Code Error counter
+setreg RCDE 0
+# Receive/Transmit False carrier counter
+setreg RFCR 0
+# Receive/Transmit Undersize Packet counter
+setreg RUND 0
+# Receive/Transmit Oversize Packet counter
+setreg ROVR 0
+setreg TOVR 0
+# Receive/Transmit Fragments counter
+setreg RFRG 0
+# Receive/Transmit Jabber counter
+setreg RJBR 0
+setreg TJBR 0
+# Receive/Transmit 64 byte frame counter
+setreg R64 0
+setreg T64 0
+# Receive/Transmit 65 - 127 byte frame counter
+setreg R127 0
+setreg T127 0
+# Receive/Transmit 128 - 255 byte frame counter
+setreg R255 0
+setreg T255 0
+# Receive/Transmit 256 - 511 byte frame counter
+setreg R511 0
+setreg T511 0
+# Receive/Transmit 512 - 1023 byte frame counter
+setreg R1023 0
+setreg T1023 0
+# Receive/Transmit 1024 - MaxPktLen frame counter
+setreg RMAX 0
+setreg TMAX 0
+# Receive/Transmit 1519 - 1522 byte Good VLAN Frame counter
+setreg RMGV 0
+setreg TMGV 0
+# Receive/Transmit 1519 - 1522 byte Bad VLAN Frame counter
+setreg RMBV 0
+setreg TMBV 0
+# L3 Received unicast packet counter
+setreg RIPC 0
+# L3 Received Discarded packet counter
+setreg RIPD 0
+# L3 Received IP Header Error packet counter
+setreg RIPCHK 0
+# L3 Received IPX Packet counter
+setreg RIPX 0
+# L3 Received IPX Error packet counter
+setreg RIPXD 0
+# L3 Received Packet Discard counter
+setreg RDISC 0
+# Number of packets dropped due to Egress Aging
+setreg TAGE 0
+# L3 Packets transmitted
+setreg TIP 0
+# Number of L3 packets aborted
+setreg TIPD 0
+# Number of tagged VLAN packets transmitted
+setreg TVLAN 0
+# Number of IPX packets transmitted
+setreg TIPX 0
+# Number of packets aborted 
+setreg TABRT 0
+
+echo Clearing Gigabit Ethernet Statistics Counters
+
+setreg GR64 0
+setreg GR127 0
+setreg GR255 0
+setreg GR511 0
+setreg GR1023 0
+setreg GRMAX 0
+setreg GRMVL 0
+setreg GRBCA 0
+setreg GRXCF 0
+setreg GRFCS 0
+setreg GRFDR 0
+setreg GRFRG 0
+setreg GRIPC 0
+setreg GRIPCHK 0
+setreg GRIPD 0
+setreg GRJBR 0
+setreg GRSER 0
+setreg GRLER 0
+setreg GRTYP 0
+setreg GRMCA 0
+setreg GRBYT 0
+setreg GROVR 0
+setreg GRXPF 0
+setreg GRUNI 0
+setreg GRUND 0
+setreg GRXUO 0
+setreg GRVLF 0
+setreg GT64 0
+setreg GT127 0
+setreg GT255 0
+setreg GT511 0
+setreg GT1023 0
+setreg GTMAX 0
+setreg GTBCA 0
+setreg GTXCF 0
+setreg GTFDR 0
+setreg GTFCS 0
+setreg GTFRG 0
+setreg GTJBR 0
+setreg GTMVL 0
+setreg GTMCA 0
+setreg GTBYT 0
+setreg GTOVR 0
+setreg GTXPF 0
+setreg GTUND 0
+setreg GTUNI 0
+setreg GTVLF 0
+setreg GRDISC 0
+setreg GRIPX 0
+setreg GRIPXD 0
+setreg GTABRT 0
+setreg GTAGE 0
+setreg GTIP 0
+setreg GTIPD 0
+setreg GTIPX 0
+setreg GTVLAN 0
+
+echo Statistics Counters cleared.

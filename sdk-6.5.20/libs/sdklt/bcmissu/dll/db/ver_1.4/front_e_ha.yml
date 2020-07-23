@@ -1,0 +1,183 @@
+#
+# file: front_e_ha.yml
+# In memory front end YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+#
+# The maximal number of elements in a transaction involving IMM.
+   BCMIMM_MAX_TRANS_SIZE: 100
+
+component:
+   bcmimm_fe:
+       field_info_t:
+           comment: Basic field information required by the front end.
+           type: struct
+           fields:
+               fid:
+                   type: uint32_t
+                   comment: Field ID
+               width:
+                   type: uint32_t
+                   comment: Field data width (bits)
+               def_val:
+                   type: uint64_t
+                   comment: The data default value
+               min_val:
+                   type: uint64_t
+                   comment: The data minimal value
+               max_val:
+                   type: uint64_t
+                   comment: The data maximal value
+               read_only:
+                   type: bool
+                   comment: Indicates if the field is read only
+               array_size:
+                   type: uint32_t
+                   comment: If array this field is the array size, otherwise 0
+
+       table_type_t:
+           comment: Different types of IMM tables
+           type: enum
+           fields:
+               IMM_BASIC: 0
+               IMM_DIRECT: 1
+
+       table_info_t:
+           comment: The information required to maintain a LT
+           type: struct
+           fields:
+               sid:
+                   type: uint32_t
+                   comment: Table ID
+               sub:
+                   type: uint16_t
+                   comment: The sub module ID
+               array_idx_size:
+                   type: uint8_t
+                   comment: The size of the array index
+               key_fld_cnt:
+                   type: uint8_t
+                   comment: Number of key fields
+               key_arry_size:
+                   type: uint8_t
+                   comment: Total number of key bits
+               key_bits:
+                   type: uint32_t
+                   comment: Offset to buffer containing the key bits
+               blk_hdl:
+                   type: uint32_t
+                   comment: Backend block handle
+               data_bits:
+                   type: uint32_t
+                   comment: Offset to buffer containing the entire data entry
+               data_bits_len:
+                   type: uint32_t
+                   comment: The memory size of data_bits (bytes) includes FID & del indication
+               max_num_field:
+                   type: uint32_t
+                   comment: Maximal number of data fields in entry (arrays counted based on their size)
+               data_fld_cnt:
+                   type: uint32_t
+                   comment: Number of different data field (array is counted as 1)
+               f_data_size:
+                   type: uint8_t
+                   comment: The data size of a single field
+               pending_ops:
+                   type: uint8_t
+                   comment: The number of pending operations (during trans)
+               fields_idx:
+                   type: uint16_t
+                   comment: The index of the table where the dynamic info available
+               interactive:
+                   type: bool
+                   comment: Indicate if table type is interactive
+               type:
+                   type: table_type_t
+                   comment: Determine the behavior of the IMM table
+               trans_id:
+                   type: uint32_t
+                   comment: On-going transaction ID
+               entry_limit:
+                   type: uint32_t
+                   comment: The entry_limit attribute value
+
+       generic_array_blk_t:
+           comment: Structure to maintain the header of a generic array blocks. These blocks used as buffers for various operations
+           type: struct
+           fields:
+               signature:
+                   type: uint32_t
+                   comment: Block validation
+               free_offset:
+                   type: uint32_t
+                   comment: The offset of the next available item
+               blk_size:
+                   type: uint32_t
+                   comment: Total data length of the block
+
+       imm_ha_blk_t:
+           comment: Header of an HA block that keeps track of all IMM LT
+           type: struct
+           fields:
+               signature:
+                   type: uint32_t
+                   comment: Block validation
+               free_idx:
+                   type: uint32_t
+                   comment: The index of the next available item
+               array_size:
+                   type: uint32_t
+                   comment: How many tables can be allocated
+               allocated:
+                   type: uint32_t
+                   comment: How many tables had been allocated
+               tbl:
+                  type: table_info_t
+                  table:
+                  size: array_size
+                  comment: table info array
+
+       imm_trans_elem_t:
+           comment: Table that maintains the information of a single transaction
+           type: struct
+           fields:
+               sub:
+                   type: uint16_t
+                   comment: Table sub module ID
+               type:
+                   type: table_type_t
+                   comment: Determine the behavior of the IMM table
+               data:
+                   type: uint32_t
+                   comment: Pointer (HA) to the data portion
+               key:
+                   type: uint32_t
+                   comment: Pointer (HA) to the key portion
+
+       imm_trans_info_t:
+           comment: Table that maintains the list of all active transactions
+           type: struct
+           fields:
+               start_idx:
+                   type: uint32_t
+                   comment: start trans element index
+               trans_id:
+                   type: uint32_t
+                   comment: Transaction ID
+               unit:
+                   type: int
+                   comment: Unit associated with the transaction
+               elem_cnt:
+                   type: uint32_t
+                   comment: Total elements in transaction
+               elem:
+                  type: imm_trans_elem_t
+                  length: BCMIMM_MAX_TRANS_SIZE
+                  comment: Array of transaction elements

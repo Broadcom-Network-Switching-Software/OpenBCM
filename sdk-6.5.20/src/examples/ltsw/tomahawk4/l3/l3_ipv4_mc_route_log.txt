@@ -1,0 +1,75 @@
+BCM.0> c l3_ipv4_mc_route.c
+Ingress port: 104
+Egress  port: 256
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int egr_obj_id = 100001 (0x186a1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+[New Thread 0x7ffff404d700 (LWP 19343)]
+tx 1 pbm=104 data=01005e00010200010203040508004500002e000040000a068dc101010101e000010781815151b1b2b3b4a1a2a3a4500f01f5e3dd00001112131415161718191a;sleep 5
+Packet from data=<>, length=64
+Warning:  Untagged packet read from file for tx.
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {01005e000102} {000000000002} 8100 0003
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 4000 0906 8ec1 0101
+[bcmPWN.0]Packet[1]: data[0020]: 0101 e000 0107 8181 5151 b1b2 b3b4 a1a2
+[bcmPWN.0]Packet[1]: data[0030]: a3a4 500f 01f5 e3dd 0000 1112 1314 1516
+[bcmPWN.0]Packet[1]: data[0040]: 1718 191a
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x100(256)
+        OUTER_VID                       :0x3(3)
+        TIMESTAMP_TYPE                  :0x3(3)
+        SWITCH                          :0x1(1)
+        ING_TAG_TYPE                    :0x1(1)
+[RX reasons]
+        CPU_SLF
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:5e:00:01:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0003> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<224.0.1.7> hl<5> service-type<0> tl<46> id<0> frg-off<16384> ttl<9> > chk-sum<0x8ec1>
+Packet[1]:   TCP: sPort<33153> dPort<20817> Seq<2981278644> Ack<2711790500> Off<5> Flags<0x0f=FIN,SYN,RST,PUSH> Csum<0xe3dd> Urp<0x0000>
+Sleeping for 5 seconds
+XLMIB_TBYT.cd26                       :                    68                 +68
+XLMIB_RBYT.cd26                       :                    68                 +68
+XLMIB_TFRG.cd26                       :                     1                  +1
+XLMIB_TPOK.cd26                       :                     1                  +1
+XLMIB_RPOK.cd26                       :                     1                  +1
+XLMIB_TMCA.cd26                       :                     1                  +1
+XLMIB_RMCA.cd26                       :                     1                  +1
+XLMIB_TPKT.cd26                       :                     1                  +1
+XLMIB_RPKT.cd26                       :                     1                  +1
+XLMIB_T127.cd26                       :                     1                  +1
+XLMIB_R127.cd26                       :                     1                  +1
+XLMIB_RPRM.cd26                       :                     1                  +1
+XLMIB_RFLR.cd26                       :                     1                  +1
+IMRP4_64.cd26                         :                     1                  +1
+XLMIB_TBYT.cd61                       :                    72                 +72
+XLMIB_RBYT.cd61                       :                    72                 +72
+XLMIB_TPOK.cd61                       :                     1                  +1
+XLMIB_RPOK.cd61                       :                     1                  +1
+XLMIB_TVLN.cd61                       :                     1                  +1
+XLMIB_RVLN.cd61                       :                     1                  +1
+XLMIB_TMCA.cd61                       :                     1                  +1
+XLMIB_RMCA.cd61                       :                     1                  +1
+XLMIB_TPKT.cd61                       :                     1                  +1
+XLMIB_RPKT.cd61                       :                     1                  +1
+XLMIB_T127.cd61                       :                     1                  +1
+XLMIB_R127.cd61                       :                     1                  +1
+XLMIB_RPRM.cd61                       :                     1                  +1

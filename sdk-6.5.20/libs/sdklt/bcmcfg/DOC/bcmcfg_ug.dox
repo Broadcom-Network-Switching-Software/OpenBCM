@@ -1,0 +1,68 @@
+/*! \page cfg_user_guide BCMCFG User Guide
+
+\section cfg_intro Introduction
+
+The BCMCFG application interfaces allow an application to supply and
+query an initial SDKLT device and software component configuration.
+
+This configuration may be supplied by either a YAML based
+representation, or by functions that supply the required values prior to
+SDKLT system initialization.
+
+Once an application has finished calling SDKLT system initialization,
+the application can query values used for initialization.
+
+SDKLT configuration is divided into two broad categories: device and
+component.
+
+Device configuration supplies configuration for attached switch
+devices, and is specified on a per-unit basis.
+
+Component configuration supplies unit independent configuration for
+SDKLT software components.
+
+YAML-based configuration is optional. Applications not using YAML
+based configuration can use the BCMCFG configuration setting APIs
+instead.
+
+\section cfg_yaml_staging Staging YAML configuration
+
+The BCMCFG YAML staging APIs supply YAML formatted strings or
+filenames containing YAML data for parsing by the BCMCFG subsystem
+during SDKLT system initialization. These APIs must be called prior to
+invoking SDKLT system initialization APIs, and will return an error
+if called after system initialization completes. The supplied YAML
+data is parsed during BCMCFG software component initialization in same
+order that the functions were called. String and file function calls
+may be freely intermixed.
+
+Please refer to bcmcfg.h for the BCMCFG YAML staging API reference.
+
+\section cfg_setting Setting device and component configuration
+
+Applications can use BCMCFG configuration setting APIs in lieu of YAML
+based configuration. These APIs must be called prior to invoking SDKLT
+system initialization APIs.
+
+There are separate APIs for device configuration and software
+component configuration.
+
+The device configuration APIs are generic and apply for any of the
+"config type" logical tables.
+
+The software component configuration APIs are specific for each
+software component, but are similar in construction.
+
+Please refer to bcmcfg_lt.h for the BCMCFG device configuration API
+reference.
+
+Please refer to the following for the BCMCFG software component
+configuration API references:
+
+bcmcfg_feature_ctl.h
+
+bcmcfg_ltm_resources.h
+
+bcmcfg_trm_resources.h
+
+*/

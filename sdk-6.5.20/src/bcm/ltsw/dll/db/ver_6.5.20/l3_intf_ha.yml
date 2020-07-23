@@ -1,0 +1,21 @@
+#
+# file: l3_intf_ha.yml
+# L3 Interface YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_l3_intf:
+        bcmint_l3_ul_oif_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                vfi:
+                    type: int
+                    comment: VFI that associated to an underlay oif.

@@ -1,0 +1,88 @@
+Verify UC pkt from 255 forwarding to port 156
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+Executing 'show c'
+XLMIB_TBYT.cd39                       :                    78                 +78
+XLMIB_RBYT.cd39                       :                    78                 +78
+XLMIB_TPOK.cd39                       :                     1                  +1
+XLMIB_RPOK.cd39                       :                     1                  +1
+XLMIB_TUCA.cd39                       :                     1                  +1
+XLMIB_RUCA.cd39                       :                     1                  +1
+XLMIB_TPKT.cd39                       :                     1                  +1
+XLMIB_RPKT.cd39                       :                     1                  +1
+XLMIB_T127.cd39                       :                     1                  +1
+XLMIB_R127.cd39                       :                     1                  +1
+XLMIB_RPRM.cd39                       :                     1                  +1
+XLMIB_RFLR.cd39                       :                     1                  +1
+RUC_64.cd39                           :                     1                  +1
+RDBGC0_64.cd39                        :                     1                  +1
+XLMIB_TBYT.cd60                       :                    78                 +78
+XLMIB_RBYT.cd60                       :                    78                 +78
+XLMIB_TPOK.cd60                       :                     1                  +1
+XLMIB_RPOK.cd60                       :                     1                  +1
+XLMIB_TUCA.cd60                       :                     1                  +1
+XLMIB_RUCA.cd60                       :                     1                  +1
+XLMIB_TPKT.cd60                       :                     1                  +1
+XLMIB_RPKT.cd60                       :                     1                  +1
+XLMIB_T127.cd60                       :                     1                  +1
+XLMIB_R127.cd60                       :                     1                  +1
+XLMIB_RPRM.cd60                       :                     1                  +1
+XLMIB_RFLR.cd60                       :                     1                  +1
+RUC_64.cd60                           :                     1                  +1
+
+******Port stats check******
+--------Ingress port1 (255) stats--------
+Rx : 1 packets
+--------Egress port (156) stats--------
+Tx : 1 packets
+--------Ingress port2 (205) stats--------
+Tx : 0 packets
+Executing 'l2 show'
+mac=00:00:00:bb:bb:bb vlan=2 GPORT=0x9c modid=0 port=156/cd39 Static Hit
+mac=00:2a:10:77:77:00 vlan=2 GPORT=0xff modid=0 port=255/cd60 Hit
+Verify UC pkt from 205 forwarding to port 156
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+Executing 'show c'
+XLMIB_TBYT.cd39                       :                   156                 +78
+XLMIB_RBYT.cd39                       :                   156                 +78
+XLMIB_TPOK.cd39                       :                     2                  +1
+XLMIB_RPOK.cd39                       :                     2                  +1
+XLMIB_TUCA.cd39                       :                     2                  +1
+XLMIB_RUCA.cd39                       :                     2                  +1
+XLMIB_TPKT.cd39                       :                     2                  +1
+XLMIB_RPKT.cd39                       :                     2                  +1
+XLMIB_T127.cd39                       :                     2                  +1
+XLMIB_R127.cd39                       :                     2                  +1
+XLMIB_RPRM.cd39                       :                     2                  +1
+XLMIB_RFLR.cd39                       :                     2                  +1
+RUC_64.cd39                           :                     2                  +1
+RDBGC0_64.cd39                        :                     2                  +1
+XLMIB_TBYT.cd49                       :                    78                 +78
+XLMIB_RBYT.cd49                       :                    78                 +78
+XLMIB_TPOK.cd49                       :                     1                  +1
+XLMIB_RPOK.cd49                       :                     1                  +1
+XLMIB_TUCA.cd49                       :                     1                  +1
+XLMIB_RUCA.cd49                       :                     1                  +1
+XLMIB_TPKT.cd49                       :                     1                  +1
+XLMIB_RPKT.cd49                       :                     1                  +1
+XLMIB_T127.cd49                       :                     1                  +1
+XLMIB_R127.cd49                       :                     1                  +1
+XLMIB_RPRM.cd49                       :                     1                  +1
+XLMIB_RFLR.cd49                       :                     1                  +1
+RUC_64.cd49                           :                     1                  +1
+
+******Port stats check******
+--------Ingress port2 (205) stats--------
+Rx : 1 packets
+--------Egress port (156) stats--------
+Tx : 2 packets
+--------Ingress port1 (255) stats--------
+Tx : 1 packets
+Executing 'l2 show'
+mac=00:00:00:bb:bb:bb vlan=2 GPORT=0x9c modid=0 port=156/cd39 Static Hit
+mac=00:2a:10:77:77:00 vlan=2 GPORT=0xcd modid=0 port=205/cd49 Hit
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

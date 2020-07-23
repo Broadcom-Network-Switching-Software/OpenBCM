@@ -1,0 +1,235 @@
+# $Id: bcm56344sanity.soc,v 1.2 2013/06/12 23:13:02 tusharty Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Helix4 BCM56344 Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+#10xF.QSGMII + 3xFlex[4x10]
+
+local pbmmgmt 0x2000000000000
+local pbmge 0x3fffffffffe
+local pbmhg 0x3c0000000000
+local pbmxe 0x3fc00000000000
+local pbmport 0x3ffffffffffffe
+
+if $?BCM56345_A0 \
+'local pbmge 0x3fffffffffffe; \
+ local pbmhg 0x3fc000000000000; \
+ local pbmxe 0x3fc00000000000;'
+
+if $?BCM56346_A0 \
+'local pbmge 0x200001ffffffe; \
+ local pbmhg 0x3c0000000000000; \
+ local pbmxe 0x3c000000000000;'
+
+# Turn off Mem cache and Parity checks for mem tests
+config add mem_cache_enable=0
+config add parity_enable=0
+
+echo "testsuite: started: Helix4 sanity"
+rcload rc.soc
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init
+init misc
+
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+if !$?ihost_mode \
+    'echo "Running PCI Compliance ...";\
+     tr 2;\
+     $done;'
+
+if !$?ihost_mode \
+    'echo "Running PCI S-Channel Buf ...";\
+     tr 4;\
+     $done;'
+
+init soc
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+echo "Running CPU Benchmarks (No Mem Cache) ..."
+tr 21
+$done
+
+hx4_mem.soc
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#Hashing tests
+echo "Running hash mem test ..."
+tr 55
+$done
+
+echo "Running MDIO Linkscan test"
+tr 60
+$done
+
+echo "Testing CPU DMA loopback ..."
+tr 17
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Reload ..."
+tr 22
+#$done
+
+echo "Testing CPU DMA, Scatter/Gather Simple ..."
+tr 23
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Random ..."
+tr 24
+$done
+
+ps
+
+#MAC Loopback
+echo "Testing MAC Loopback - 1 Gb/s all GE ports"
+tr 18 PortBitMap=$pbmge Speed=1000
+$done
+
+echo "Testing MAC Loopback - 10 Gb/s all XE ports"
+tr 18 PortBitMap=$pbmxe Speed=10G
+$done
+
+echo "Testing PHY Loopback - 1 Gb/s all GE ports"
+tr 19 PortBitMap=$pbmge Speed=1000
+$done
+
+echo "Testing PHY Loopback - 10 Gb/s all XE ports"
+tr 19 PortBitMap=$pbmxe Speed=10G
+$done
+
+# tr 48 does not work with mix of port types
+echo "Running MAC loopback V2 on GE ports..."
+tr 48 pbm=$pbmge speed=1000
+$done
+
+echo "Running MAC loopback V2 on XE ports ..."
+tr 48 pbm=$pbmxe speed=10G
+$done
+
+echo "Running MAC loopback V2 on HG ports ..."
+tr 48 pbm=$pbmhg speed=11G
+$done
+
+# tr 49 does not work with mix of port types
+echo "Running PHY loopback V2 on GE ports ..."
+tr 49 pbm=$pbmge speed=1000
+$done
+
+echo "Running PHY loopback V2 on XE ports ..."
+tr 49 pbm=$pbmxe speed=10G
+$done
+
+echo "Running PHY loopback V2 on HG ports ..."
+tr 49 pbm=$pbmhg speed=11G
+$done
+
+#Internal snake Loopback
+echo "Running internal snake on GE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmge
+$done
+
+echo "Running internal snake on GE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmge
+$done
+
+echo "Running internal snake on XE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmxe
+$done
+
+echo "Running internal snake on XE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmxe
+$done
+
+#Traffic Test
+echo "Running Traffic Test on GE ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmge c=10 sp=1000
+$done
+
+echo "Running Traffic Test on GE ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmge c=10 sp=1000
+$done
+
+echo "Running Traffic Test on XE ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmxe c=10 sp=10G
+$done
+
+echo "Running Traffic Test on XE ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmxe c=10 sp=10G
+$done
+
+echo "Running Traffic Test on HG ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmhg c=10 sp=11G
+$done
+
+echo "Running Traffic Test on HG ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmhg c=10 sp=11G
+$done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

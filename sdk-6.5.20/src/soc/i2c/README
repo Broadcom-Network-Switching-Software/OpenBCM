@@ -1,0 +1,1225 @@
+$Id: README,v 1.2 2011/05/22 19:05:07 iakramov Exp $
+ This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ 
+ Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+Broadcom StrataSwitch 
+I2C Device Driver API
+
+Introduction
+
+This document descrives the I2C bus-master driver for the CPU
+Management Interface Controller (CMIC). This module provides common
+I2C Bus driver routines for using the the I2C bus controller (internal
+to the CMIC) as a bus-master. This is useful when using the I2C bus to
+control auxiliary I2C slave devices connected to the SDA,SCL pins of a
+StrataSwitch device.
+
+Overview
+ 
+The I2C Device Driver API allows for programming of I2C devices
+connected to a Broadcom StrataSwitch through the CMIC I2C controller 
+(accessible via PCI).  
+
+The I2C bus is a 2-wire bus originally developed by Phillips
+Semiconductor for bi-directional data I/O between two interconnected
+integrated circuits (hence the name Inter-IC, IIC or I2C). The I2C bus
+uses the 2-wires SDA (Serial Data) and SCL (Serial Clock) and each
+device connected to the bus is addressable through a unique slave or
+device address while simple master/slave relationships exist at all
+times. Serial, 8-bit oriented, bi-directional data transfers can be
+made at up to 400Kbits/sec in fast mode, with 100Kbits/s being the
+norm. The number of IC's connected to this bus is limited only by a
+maximum bus capacitance of 400pF.
+
+
+Modules and Theory of Operation
+
+A layering architecture is employed for the I2C drivers, this
+layering and their source modules is described below.
+
++--------------------------------+
+| I2C read/write/ioctl API       |   src/bcm/bcmi2c.c
++--------------------------------+
+| I2C Device Drivers             |   src/drv/i2c/{lm75.c,max127.c,24c64.c}
++--------------------------------+
+| Server Management Bus Driver   |   src/drv/i2c/smbus.c
++---------------+----------------+
+| I2C Bus Driver| Device Manager |   src/drv/i2c/{bus.c,devs.c}
++---------------+----------------+
+|  PCI          |                    src/drv/cmic.c
++---------------+
+
+The I2C driver is started by the system entry point soc_i2c_attach()
+in bus.c which takes a PCI device number, flags, and an optional bus speed.
+Both PIO and Interrupt driven modes of operation are supported. Speed,
+if non-zero is used if a speed which is >= the provided speed can be found.
+For most cases, the defaults for FLAGS and speed can be used. The attach
+routine will initialize the bus-controller, and then attempt to perform
+discovery by calling the probe routine (soc_i2c_probe). Note: This routine
+can be invoked by typeing "i2c probe" from the BCM CLI.
+
+The I2C device discovery entry point is soc_i2c_probe() in devs.c 
+which will iterate over every device in the I2C device table and attempt
+to acknowledge-poll the device by generating START,SLAVE_ADDR and
+waiting for an acknowledgment.  When an acknowledgement is received,
+the associated driver for the device is loaded. General call addresses
+are NOT used and only devices added to the device descriptor table are
+probed.
+
+The core driver (bus.c) only deals with generating the bus conditions
+and states required for I2C message processing. These routines are
+low-level routines which assume that locking will occur at a
+higher-level. For many devices, this will occur in the driver
+definitions for a particular device or for those routines which use
+the SMB protocol, locking is provided in the SMB module instead (smbus.c). 
+The file bus.c contains the core driver routines used for generating
+START, STOP, REPSTART, and DATA conditions, along with state dependent
+processing, and bus error handling.
+
+I2C Devices which communicate via the SMB (Server Management Bus)
+protocol can use the higher-level protocol operations defined in this
+module (smbus.c).  Note that support is provided for 8-bit and 16-bit
+SMB r/w operations and all locking is provided in this module so every
+module which uses it is MT-safe.  For more advanced SMB features
+(block read/write), see the implementation of the 24c64 EEPROM driver.
+
+An I2C driver is used to communicate with an external slave device. I2C
+drivers are used for every device which supports r/w operations. Devices
+which use non-standard mechanisms for IO need only support the IO control
+(ioctl) interface. The I2C device driver interface is defined in the 
+i2c_driver_t type, this driver is associated with the device type in
+the i2c_device_t struct. For example drivers, see 24c64.c and lm75.c
+
+When one or more drivers are added to the device driver association
+table, devices are probed by the device layer (devs.c) which is responsible
+for finding I2C devices, looking up a driver for a given slave address,
+and associating a device with a driver callout. Users should implement their
+driver, and then add the associated device entry to the i2c_devices[]
+table in devs.c to make the device available to the system.
+
+Finally, a high-level user API is provided for open/read/write/ioctl
+style programming. Use of this API is dependent upon a driver for the
+named device to be loaded into the system via the device probe layer.
+This can be used to provide generic programmability of a wide variety
+of devices while hiding the implementation details in the driver itself
+and separating the device level interface from implementation. 
+
+In practice, a CLI or external management program will typically call
+the API routines directly. See the file bcmi2c.c for more details,
+also, see the CLI command implementation (diag/system/i2c_cmds.c) for
+its use.
+
+
+I2C Bus Driver API
+
+The bus driver API (bus.c) allows for generating the bus conditions
+and states required for I2C message processing. These routines are
+low-level routines which assume that locking will occur at a
+higher-level.  In addition, they make various assumptions about
+state-specific processing which will need to occur within higher level
+routines. This documentation covers the general sequencing interface
+which a higher-level driver will use to perform tasks such as I2C
+attach, start, stop, read data, write data, detach, etc. It covers
+user-serviceable routines only as internals are documented within 
+the source code.
+
+Function: int soc_i2c_attach(int unit, int ena, uint32 flags, int speed)
+Purpose: I2C Bus attach routine, main entry point for I2C startup.
+         Initialize the I2C controller configuration for the specified
+         device. Default is to disable the device, if ena is specified,
+         the default frequency is 100Khz. Flags currently allows 
+         selection of Interrupt driven mode, PIO mode, or force 
+         configuration.
+Parameters:
+
+   unit - StrataSwitch device number or I2C bus number
+   enable - if non-zero, turn on and configure the bus
+   flags - bitmap (logical OR) of one or more of the following:
+                 SOC_I2C_FORCE  -force configuration
+                 SOC_I2C_MODE_INTR - interrupt driven mode
+                 SOC_I2C_MODE_PIO - programmed I/O mode
+Returns:
+
+    SOC_E_NONE - operation succeeed, I2C bus ready for IO
+    SOC_E_MEMORY - memory allocation error
+
+Notes: Default is Interrupt mode, if both are selected Interrupt is 
+       chosen.
+
+ 
+Function:int soc_i2c_start(int unit, uint8 slave_addr)
+Purpose: Issue an I2C start command to the provided slave_addr.
+         For Transmit functions, the LSB should be cleared.
+         For Receive functions the LSB should be set.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number  
+   slave_addr - I2C slave device address (LSB set for function).
+
+Returns: SOC_E_NONE if the device was contacted and ready for I/O.
+         SOC_E_TIMEOUT if the device is not present.
+
+       If SOC_E_NONE is returned, you need to call soc_i2c_stop()
+       to release the bus when finished performing I/O.
+
+       See also: SOC_I2C_TX_ADDR(), SOC_I2C_RX_ADDR()
+
+Notes: 10-bit addressing currently not supported.
+
+ 
+Function: int soc_i2c_write_data(int unit, uint8 data)
+Purpose: Write data to the last addressed slave device.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number  
+   data - data byte to transmit
+
+Returns:
+        SOC_E_NONE if the device was contacted and the operation
+        succeeded.
+        SOC_E_BUSY if the device timed out or is busy.
+
+Notes:
+      Before this routine can be used, one must issue a START
+      condition on the bus along with the slave address used to
+      write to the device (e.g. a write address)
+ 
+
+
+Function:int soc_i2c_read_data(int unit, uint8* data, int tx_ack)
+Purpose: Read some data from the last addressed slave device.
+
+Parameters:
+
+   unit - StrataSwitch device number or I2C bus number  
+   data - address to place data byte received from slave
+   tx_ack - if set, an ACK will automatically be sent by the
+            controller when a slave sends data. If not set,
+            a NAK is pulsed when the byte has been received.
+            This is used for read operations where a master would
+            like to signify the last byte is being sent.
+Returns:
+
+        SOC_E_NONE if the device was contacted and the operation
+        succeeded.
+        SOC_E_TIMEOUT if the device timed out.
+Notes:
+
+      Before this routine can be used, one must issue a START
+      condition on the bus along with the slave address used to
+      read from the device (e.g. a write address). This means
+      for example, that bit0 must be set in the slave address.
+      We always transmit an ACK when tx_ack is non-zero.
+ 
+
+Function: int soc_i2c_stop(int unit)
+Purpose:  Generate stop condition on the I2C bus. This routine is 
+          used to signal the end of a data transfer and releases 
+          the bus according to the I2C protocol.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number  
+
+Returns:
+    SOC_E_NONE - no error, one can always issue stop.
+
+Notes:
+    none
+ 
+Function: int soc_i2c_rep_start(int unit, uint8 slave_addr)
+Purpose: Generate a repeated start to the specified slave address.
+         Typically, this is done in the middle of an operation in order
+         to delimit a new command sequence without releasing the I2C 
+         bus.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number  
+   slave_addr - device address, with r/w bit set for data direction.
+
+Returns:
+   SOC_E_TIMEOUT - the device cannot be contacted or is offline
+   SOC_E_NONE - no error, device ready for IO.
+
+Notes:
+   none
+
+Function: int soc_i2c_ack_poll(int unit, uint8 io_addr, int maxpolls)
+Purpose: Many devices will require a polling acknowledge cycle to
+         determine if the device is available for IO. Usually, this
+         means that a START condition is generated, along with a read
+         or write form of the slave device address, and then we wait
+         until the device responds with an ACK. When this occurs, we
+         issue a STOP, to free the bus, and return since the device
+         is ready for IO.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number  
+   io_addr - device address, with r/w bit set for data direction.
+   max_polls - number of times to attempt the operation.
+
+Returns:
+    Number of Poll operations required to contact device, or
+    maxpolls if the device is not online or responding.
+
+Notes: Typically, we poll a specified IO address with the read/write bit
+       set to determine if the device is ready for reading or writing.
+       When we receive an ACK for that function (Read/Write), the device
+       is ready for IO. The data direction (or function) is determined
+       by the address bits (see SOC_I2C_TX_ADDR/SOC_I2C_RX_ADDR) macros.
+
+Function: int soc_i2c_detach(int unit)
+Purpose: I2C detach routine: free resources used by I2C bus driver.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+
+Returns:
+   SOC_E_NONE - no error
+
+Notes:
+   none
+
+
+Function: soc_i2c_status_t soc_i2c_stat(int unit)
+Purpose: Return bus status code in enumerated type format.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+
+Returns:
+   bus status code as enumerated type definition
+
+Notes:
+   This routine should be used in conjunction with 
+   soc_i2c_status_message
+ 
+
+Function:char* soc_i2c_status_message(soc_i2c_status_t status)
+Purpose: This routine decodes the current I2C bus status code and
+         return human-readable bus status for last I2C operation 
+Returns: human readable character string telling what the
+         current status of the I2C bus is, NULL on invalid status code.
+Notes:
+      See also: soc_i2c_stat (for getting current status value). 
+
+
+Server Management Bus (SMB) API Interface
+
+The majority of I2C devices communicate using some form of SMB commands.
+These commands consist of various protocol interactions between a host
+chip and master I2C processor (the StrataSwitch family of switch chips).
+
+Most devices use the SMBus (System Management Bus) protocol, which is
+a subset of commands from the I2C protocol. Fortunately, many devices
+use the same subset, which makes it possible to derive the following
+SMBus operations/commands.
+
+This module provides for SMB r/w byte and word commands based on
+top of the bus driver module. Note that locking is performed in
+this module, such that all drivers which use SMB commands are
+automatically MT-safe.
+
+When possible, please use the SMB commands for developing your I2C
+device driver, as this will simplify debugging and development.
+
+Below is a list of SMBus commands, all of the commands are based
+on I2C protocol concepts. 
+ 
+Key to symbols
+==============
+
+S     (1 bit) : Start bit
+P     (1 bit) : Stop bit
+Rd/Wr (1 bit) : Read/Write bit. Rd equals 1, Wr equals 0.
+A, NA (1 bit) : Accept and reverse accept (ACK and Not ACK (NACK) ) bit.
+Addr  (7 bits): I2C 7 bit address. Note that this can be expanded
+                as usual to get a 10 bit I2C address.
+Comm  (8 bits): Command byte, a data byte which often selects a 
+                register on the device.
+Data  (8 bits): A plain data byte. Sometimes, I write DataLow, DataHigh
+                for 16 bit data.
+Count (8 bits): A data byte containing the length of a block operation.
+
+[..]: Data sent by I2C device, as opposed to data sent by the host 
+      adapter.
+
+
+
+
+Function: int soc_i2c_read_byte(int unit, uint8 saddr, uint8* data)
+ 
+Purpose: SMBus Read Quick/Byte
+
+This Reads a single byte from the device
+ 
+Algorithm: A Addr Rd [A] [Data] NA P
+
+Parameters: 
+    unit - StrataSwitch device number or I2C bus number  
+    saddr - device base address, r bit should not be set.
+    data - 8 bit device-specific data value to read into.
+ 
+Returns: 
+    SOC_E_TIMEOUT - the device can not be contacted or is offline.
+    SOC_E_NONE - no error, operation succeeded.
+
+Notes:
+   none
+
+
+
+Function: int soc_i2c_write_byte(int unit, uint8 saddr, uint8 data)
+
+Purpose: SMBus Write Quick/Byte
+ 
+This sends a single byte to the device, at the place of the Rd/Wr bit.
+There is no equivalent Read Quick command.
+
+Algorithm: A Addr Rd/Wr [A] P
+ 
+Parameters: 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   data - 8 bit device-specific data value
+
+Returns: 
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+
+Notes:
+   none
+ 
+
+
+
+Function: int soc_i2c_read_word(int unit, uint8 saddr, uint16* value)
+
+Purpose: SMBus Read Word
+ 
+This reads a single word from the device. Some devices like to
+perform split bus transaction; where a write byte command is
+followed by a 16-bit read operation to fetch the last data
+word from an action or state change which was performed by the
+chip or device.
+
+Algorithm: A Addr Rd [A] [Data] [A] [Data] NA P
+ 
+Parameters: 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   value - 16 bit device-specific data value to read.
+
+Returns: 
+
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+
+Notes:
+   none
+
+
+
+
+Function: int soc_i2c_write_word(int unit, uint8 saddr, uint16 value)
+
+Purpose: SMBus Write Word
+
+This command writes a single word to an I2C device.
+
+Algorithm: S Addr Wr [A] DataHigh [A] DataLow [A] P
+
+Parameters:
+
+    unit - StrataSwitch device number or I2C bus number  
+    saddr - device base address, r bit should not be set.
+    value - 16 bit data value to write
+ 
+Returns: 
+
+    SOC_E_TIMEOUT - the device can not be contacted or is offline.
+    SOC_E_NONE - no error, operation succeeded.
+
+Notes:
+    None
+
+
+
+Function:int soc_i2c_read_byte_data(int unit, uint8 saddr, 
+                                    uint8 com, uint8* value)
+Purpose: SMBus read byte
+ 
+This reads a single byte from a device, from a designated register.
+The register is specified through the Comm byte.
+
+Algorithm: S Addr Wr [A] Comm [A] S Addr Rd [A] [Data] NA P
+
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   value - address of where data byte should be stored
+
+Returns: data byte in value parameter and one of the following:
+
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+ 
+Notes:
+   none
+ 
+
+
+Function: int soc_i2c_write_byte_data(int unit, uint8 saddr, 
+                                                uint8 com, uint8 value)
+Purpose: SMBus write byte
+
+This writes a single byte to a device, to a designated register. The
+register is specified through the Comm byte. This is the opposite of
+the Read Byte Data command.
+
+Algorithm: S Addr Wr [A] Comm [A] Data [A] P
+
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   value - data value to write
+
+Returns: 
+
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+ 
+Notes:
+   none
+ 
+
+
+Function:int soc_i2c_read_word_data(int unit, uint8 saddr, 
+                                     uint8 com, uint16* value) 
+Purpose: SMBus Read Word Data
+
+This command is very like Read Byte Data; again, data is read from a
+device, from a designated register that is specified through the Comm
+byte. But this time, the data is a complete word (16 bits).
+
+Algorithm: 
+   S Addr Wr [A] Comm [A] S Addr Rd [A] [DataLow] A [DataHigh] NA P
+ 
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   value - address where 16bit data value should be stored.
+
+Returns: 16bit data value on success, and one of the following :
+
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+ 
+Notes:
+  None
+ 
+
+
+Function:int soc_i2c_write_word_data(int unit, uint8 saddr, 
+                                     uint8 com, uint16 value)
+ 
+Purpose: SMBus Write Word Data
+ 
+This is the opposite operation of the Read Word Data command. 16 bits
+of data is read from a device, from a designated register that is 
+specified through the Comm byte. 
+
+Algorithm: S Addr Wr [A] Comm [A] DataLow [A] DataHigh [A] P
+ 
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   value - 16 bit data value to write
+
+Returns: 
+
+   SOC_E_TIMEOUT - the device can not be contacted or is offline.
+   SOC_E_NONE - no error, operation succeeded.
+ 
+Notes:
+   None
+ 
+
+
+Function: int soc_i2c_block_read(int unit, uint8 saddr,
+                                 uint8 com, uint8* count, uint8* data)
+
+Purpose: SMBus Block Read
+
+This command reads a block of upto 32 bytes from a device, from a 
+designated register that is specified through the Comm byte. The amount
+of data is specified by the device in the Count byte.
+
+Algorithm: S Addr Wr [A] Comm [A] 
+           S Addr Rd [A] [Count] A [Data] A [Data] A ... A [Data] NA P
+ 
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   count - address where number of bytes read into data buff is stored.
+   data - address where data buffer should be stored.
+
+Returns: 
+   count - updated with the number of bytes successfullly read.
+
+   SOC_E_TIMEOUT - the device can not be contacted or is
+                       offline, or the number of bytes specified
+                       could not be read from the device.
+
+   SOC_E_NONE - no error, operation succeeded.
+ 
+Notes:
+   None
+ 
+
+
+Function: int soc_i2c_block_write(int unit, uint8 saddr,
+                                  uint8 com, uint8 count, uint8* data)
+ 
+
+Purpose: SMBus Block Write
+
+The opposite of the Block Read command, this writes upto 32 bytes to 
+a device, to a designated register that is specified through the
+Comm byte. The amount of data is specified in the Count byte.
+
+Algorithm: S Addr Wr [A] Comm [A]
+           Count [A] Data [A] Data [A] ... [A] Data [A] P
+ 
+
+Parameters:
+ 
+   unit - StrataSwitch device number or I2C bus number  
+   saddr - device base address, r bit should not be set.
+   com - 8 bit device address or com port
+   count - number of bytes to write from data buff.
+   data - address of data to write (data buffer).
+
+Returns: 
+
+   SOC_E_TIMEOUT - the device can not be contacted or is
+                       offline, or the specified number of bytes
+                       could not be written to the device.
+
+   SOC_E_NONE - no error, operation succeeded.
+
+Notes:
+   None
+ 
+
+I2C Device Driver Interface
+
+I2C Device drivers are used by the system to identify a particular
+device and provide for a high-level read/write or bulk data-transfer
+capability.  An I2C driver is a function vector with entry points for
+initialization of the slave device, read, write, and ioctl operations.
+
+
+
+typedef int (*i2c_read_func_t)(int unit, int devno,
+			       uint16 addr, uint8* data, uint32* len);
+typedef int (*i2c_write_func_t)(int unit, int devno,
+				uint16 addr, uint8* data, uint32 len);
+typedef int (*i2c_ioc_func_t)(int unit, int devno, int opcode,
+			      void* data, int len);
+typedef int (*i2c_dev_init_func_t)(int unit, int devno,
+				   void* data, int len);
+/*
+ * I2C Driver structure: definitions for managed device operations.
+ */
+typedef struct i2c_driver_s{
+    uint8 flags;               /* Device flags */
+    int devno;                 /* Index into device descriptor table */
+    uint32 id;                 /* Device Serial No, or ID (unique)*/
+    i2c_read_func_t     read;  /* Read routine */
+    i2c_write_func_t    write; /* Write routine */
+    i2c_ioc_func_t      ioctl; /* io control routine */
+    i2c_dev_init_func_t load;  /* called once at startup */
+} i2c_driver_t;
+
+/*
+ * I2C Device Descriptor: One for every known device on the bus
+ */
+typedef struct i2c_dev_s{
+    char devname[12];    /* Device name, eg. "eeprom0" */
+    unsigned char saddr; /* Slave address */
+    char desc[64];       /* Description */
+    i2c_driver_t *driver;/* Driver routines */
+    void* testdata;      /* Test data */
+    int testlen;         /* Size of test data */
+    uint32 tbyte;        /* Bytes transmitted */
+    uint32 rbyte;        /* Bytes received */
+    soc_i2c_bus_t *bus;  /* Bus device attached to */
+} i2c_device_t;
+
+
+Function: int soc_i2c_probe(int unit)
+Purpose: Probe I2C devices on bus, report devices found.
+         This routine will walk through our internal I2C device driver
+         tables, attempt to find the device on the I2C bus, and if
+         successful, register a device driver for that device.
+
+         This allows for the device to be used in an API context as
+         when the devices are found, the device driver table is filled
+         with the correct entries for that device (r/w function, etc).
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+
+Return:
+    SOC_E_NONE - always returns with no errors.
+ 
+
+
+Function:int soc_i2c_device_count(int unit)
+Purpose: Report the number of devices registered
+         in the system. For now, this is the total number of devices
+         we have added to the statically defined device descriptor
+         array above.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+
+Returns:
+       number of devices register in the system device table.
+
+Notes: Currently, we do not support dynamic device loading.
+       Later, one will be able add a driver to the device table,
+       without the STATIC attribute.
+
+ 
+Function: void soc_i2c_show(int unit)
+Purpose: Show all valid devices and their attributes and
+         statistics.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+Returns:
+   none
+Notes:
+   none
+ 
+
+Function: uint8 soc_i2c_addr(int unit, int devid)
+Purpose: Return slave address of specified device.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   devid - I2C device id returned from soc_i2c_devopen
+
+Returns:
+   8-bit slave address of device
+
+Notes:
+   none
+ 
+
+Function: const char* soc_i2c_devname(int unit, int devid)
+Purpose: Return device name of specified device.
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   devid - I2C device id returned from soc_i2c_devopen
+
+Returns:
+   character string name of device
+
+Notes:
+   none
+ 
+
+Function: i2c_device_t* soc_i2c_device(int unit, int devid)
+Purpose: Returns the device structure associated with the bus and
+         device identifier.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   devid - I2C device id returned from soc_i2c_devopen
+
+Returns:
+   I2C device descriptor
+
+Notes:
+   none
+ 
+
+Function: int soc_i2c_devtype(int unit, int devid)
+Purpose: Return the device driver type, this is an integer value
+         associated with the driver to determine ownership of the 
+         device.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   devid - I2C device id returned from soc_i2c_devopen
+
+Returns:
+   I2C device type code (from driver)
+
+Notes:
+   Every device should have a unique Device type indentifier.
+
+ 
+
+
+I2C Device Driver Registration
+
+I2C devices are added to the I2C device driver table (i2c_devices),
+along with their slave address, a string description, and their driver
+(if available).
+
+COMPILER_STATIC i2c_device_t
+i2c_devices[] = {    
+    {"nvram0", 0xa0, "Atmel 24C64 (64Kbit) Serial EEPROM #0",
+     &eep24c64_driver, eep24c64_test_data, eep24c64_test_data_len,0,0},
+    {"nvram1", 0xa8, "Atmel 24C64 (64Kbit) Serial EEPROM #1",
+     &eep24c64_driver, eep24c64_test_data, eep24c64_test_data_len,0,0},
+    {"lm75a", 0x90, "National LM75 Temperature Sensor A",
+     &lm75_driver, NULL, 0,0,0},
+    {"lm75b", 0x98, "National LM75 Temperature Sensor B",
+     &lm75_driver, NULL, 0,0,0},
+    {"adc0", 0x50, "Maxim MAX127 A/D Converter #0",
+     &max127_driver, NULL, 0,0,0},
+    {"pll0", 0xd2, "Cypress W229B Clock Chip #0",
+     &w229b_driver, NULL, 0,0,0},        
+};
+
+Add your device entry to this table, recompile, and attempt to probe for
+your device.
+
+
+I2C API Interface
+
+Applications should attempt to separate interface from implementation
+as much as possible and use the API calls to access their device; this
+will allow vendor-specific I2C device drivers to work with newer versions
+of the bus driver and I2C application framework.
+
+Function: int bcm_i2c_open(int unit, char *devname, 
+                           uint32 flags, int speed)
+
+Purpose:  Open device, return valid file descriptor or -1 on error.
+
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   devname - I2C device name string
+   flags - arguments to pass to attach, default value should be zero
+   speed - I2C bus speed, if non-zero, this speed is configured, 
+           normally this argument should be zero unless a speed 
+           is desired.
+Returns:
+     device identifier for all I2C operations
+ 
+Notes:
+     This routine should be called before attempting to communicate
+     with an I2C device which has a registered driver.
+     A valid driver with this device name must be installed in the 
+     system.
+ 
+
+
+Function: int bcm_i2c_write(int unit, int fd, uint32 addr, 
+                            uint8 *data, uint32 nbytes)
+Purpose:  Write to a device
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   fd - I2C device ID
+   addr - device register or memory address
+   data - data byte buffer
+   nbytes - number of bytes of data
+
+Returns:
+    Number of bytes written on success, -1 otherwise.
+
+Notes:
+     This routine requires a driver.
+ 
+
+
+
+Function: int bcm_i2c_read(int unit, int fd, 
+                           uint32 addr, uint8 *data, uint32nbytes)
+Purpose:  Read from a device
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   fd - I2C device ID
+   addr - device register or memory address
+   data - data byte buffer to read into
+   nbytes - number of bytes of data, updated on success.
+
+Returns:
+    On success, number of bytes read; nbytes updated with number
+    of bytes read from device, -1 otherwise.
+ 
+Notes:
+     This routine requires a driver.
+ 
+
+Function: int bcm_i2c_ioctl(int unit, int fd, int opcode, 
+                            void *data, int len)
+Purpose:  Device specific I/O control
+Parameters:
+   unit - StrataSwitch device number or I2C bus number
+   fd - I2C device ID
+   opcode - device command code (device-specific).
+   data - data byte buffer for command
+   nbytes - number of bytes of data
+
+Returns:
+    On success, application specific value greater than zero,
+    -1 otherwise.
+ 
+Notes:
+     This routine requires a driver.
+ 
+
+Example I2C Driver: MAXIM MAX127 
+
+The MAX127 is a multi-range 12-bit D-A converter chip which provides
+for eight (8) analog input channels that are independently software
+programmable via I2C bus. On BCM956xx system boards, this device is
+used to measure the voltages on the board. The device uses a split
+transaction cycle where a bytes are written to the device and then a
+word is read back for the A/D conversion cycle. A byte conversion
+table for the operations is used to write to the device; each word 
+value read back is interpreted and displayed.
+
+The initialization routine simply prints out that it found the device.
+
+COMPILER_STATIC int
+max127_init(int unit, int devno,
+	    void* data, int len)
+
+{
+    soc_cm_print("unit %d i2c 0x%x %s: MAX127 A/D Converter\n",
+		 unit, soc_i2c_addr(unit, devno),
+		 soc_i2c_devname(unit,devno));
+		 
+    return SOC_E_NONE;
+}
+
+
+Since the A/D values are read-only, an ioctl style interface is chosen
+for the driver, whereby it's invocation will print the output of the
+A/D channels. Note that definition is static to preserve namespace
+and the the transmit and receive stats are incremented after each
+SMB transaction so that the "i2c show" command can report accurate stats
+for this device. 
+
+COMPILER_STATIC int
+max127_ioctl(int unit, int devno,
+	     int opcode, void* data, int len)
+{
+    int i;
+    uint16 val ;
+    uint8 saddr = soc_i2c_addr(unit, devno);
+    for(i = 0; i < N_MAX127_CHAN; i++){
+	/* CHi start conversion, read back data */
+	if(soc_i2c_write_byte(unit, saddr, max127_vals[i].cv) < 0){
+	    soc_cm_print("unit %d i2c %s: could not configure channel %d\n",
+			 unit, soc_i2c_devname(unit,devno), i);
+	}
+	soc_i2c_device(unit, devno)->tbyte++;   
+
+	/* Read back CHi conversion value */
+	if(soc_i2c_read_word(unit, saddr, &val) < 0){
+	    soc_cm_print("unit %d i2c %s: could not read channel %d\n",
+			 unit, soc_i2c_devname(unit,devno), i);
+	}
+	soc_i2c_device(unit, devno)->rbyte += 2;   
+
+	soc_cm_print("\tCH%d=0x%2x/%.2f\n",
+		     i, val,
+		     max127_unipolar_value(val,max127_vals[i].r) );
+    }
+}
+
+Define the MAX127 A-D converter driver callout. NOTE: both read and
+write routines are stubs which return SOC_E_NONE when invocated.
+
+i2c_driver_t max127_driver = {
+    0x0, 0x0, /* System assigned bytes */
+    MAX127_DEVICE_TYPE,
+    max127_read,
+    max127_write,
+    max127_ioctl,
+    max127_init
+};
+
+Add the device to the i2c_devices[] array in devs.c:
+
+    {"adc0", 0x50, "Maxim MAX127 A/D Converter #0",
+     &max127_driver, NULL, 0,0,0},
+
+
+In your program, open the device and perform ioctl operation.
+
+    if ( (fd = bcm_i2c_open(unit, "adc0",0,0)) < 0) {
+	printk("Could not open adc0: %s\n", bcm_errmsg(fd));
+	return CMD_FAIL;
+    }
+
+    if ( (bcm_i2c_ioctl(unit, fd, 0, NULL, 0) < 0)) {
+	printk("Error: failed to perform A/D conversions.\n");
+    }
+
+In BCM, this command can be invoked from the CLI via the ADC
+command:
+
+BCM.0> adc show          
+	CH0=0x55/3.32
+	CH1=0xc3/7.62
+	CH2=0xec/4.61
+	CH3=0x7f/2.48
+	CH4=0xf1/4.71
+	CH5=0x70/2.19
+	CH6=0xb2/3.48
+	CH7=0xbe/3.71
+BCM.0>
+
+
+
+BCM I2C Test Commands
+
+A number of commands are provided in the file src/diag/i2c_cmds.c;
+these commands allow for communication with I2C slave devices and
+for configuration and testing of the I2C bus. These commands are
+shown here for exemplary purposes:
+
+
+
+BCM.0> i2c ?
+Usages:
+               i2c probe [pio|intr]
+                   - probe devices on I2C bus and build device tree.
+                     If "intr" or "pio" is specified, use that bus mode.
+               i2c retries [count]
+                   - set number of handshake attempts.
+               i2c show
+                   - show devices found and their attributes.
+
+The "i2c" command is used to probe the I2C bus, find all chips and
+load their drivers if available, and show devices and their statistics.
+It can also be used to change the I2C clock speed and I2C ack retry
+count for finicky devices. Note that speed is an undocumented setting
+at this point in time and when configured, the driver will emit M/N
+clock divider values.
+
+BCM.0> i2c probe intr 75
+unit 0 i2c 0x60 bus: mode INTR, speed 67Kbps
+unit 0 i2c 0xa0 nvram0: 24C64 Serial EEPROM, 65524 bytes
+unit 0 i2c 0x50 adc0: MAX127 A/D Converter
+unit 0 i2c 0xd2 pll0: Cypress W229B/W311 Clock Chip
+BCM.0> adc show
+        CH0=0x55/3.32
+        CH1=0xc3/7.62
+        CH2=0xec/4.61
+        CH3=0x7f/2.48
+        CH4=0xf1/4.71
+        CH5=0x70/2.19
+        CH6=0xb2/3.48
+        CH7=0xbe/3.71
+BCM.0>
+
+
+
+BCM.0> nvram ?
+Usages:
+               nvram r [off] [nbytes]
+                   - show specified number of NVRAM bytes starting at offset.
+               nvram w [off] [data] 
+                   - write data byte to specified NVRAM offset.
+
+The "nvram" command will use the BCM I2C API calls to open the device
+named "nvram" and allow reading and writing of bytes over I2C to the
+device. Note that the EEPROM driver will test all of NVRAM memory (64K)
+when it first sees the device and does not see a valid checksum in
+the first bytes of the NVRAM chip. 
+
+The 24C64 chip can be used to test the I2C bus, by writing a 0 value to
+the checksum offset of the NVRAM, and then re-attaching to the I2C bus
+with a specified speed until the device starts issuing too many retries
+and becomes unresponsive and essentially falls off the bus.
+
+One can test the bus with the eeprom and a variety of speeds and limit
+the number of timeouts before we giveup on trying to talk to the
+device by setting the retries threshold.
+
+
+BCM.0> i2c ?
+Usages:
+               i2c probe [pio|intr]
+                   - probe devices on I2C bus and build device tree.
+                     If "intr" or "pio" is specified, use that bus mode.
+               i2c retries [count]
+                   - set number of handshake attempts.
+               i2c show
+                   - show devices found and their attributes.
+
+BCM.0> i2c retries 
+BCM.0> nv w 1 0
+Using NVRAM device: nvram0
+BCM.0> i2c p p  
+BCM5680_A0/i2c0: mode=PIO speed=100Kbps slave_addr=0x44
+NOTICE: EEPROM contents invalid or bad checksum.
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM
+BCM5680_A0/i2c0/nvram0: testing data integrity data=0x178924,len=65536bytes
+        Writing 65536 bytes [pattern=0x80]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, ACK Received]
+eep24c64_write(0,0,a200,128,24032): failed to gen start
+64KB write took 10.13 sec 6.31KB/sec
+        EEPROM error: write failed: I2C device timed out
+        Reading 65536 bytes ...
+64KB read took 6.72 sec 9.52KB/sec
+        65536 bytes read OK
+        EEPROM test passed (65536 bytes verified).
+BCM.0> i2c retries 5 
+BCM.0> i2c p p       
+BCM5680_A0/i2c0: mode=PIO speed=100Kbps slave_addr=0x44
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM 65524 bytes cksum=0x71b7
+BCM.0> nv w 1 0      
+Using NVRAM device: nvram0
+BCM.0> i2c p p  
+BCM5680_A0/i2c0: mode=PIO speed=100Kbps slave_addr=0x44
+NOTICE: EEPROM contents invalid or bad checksum.
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM
+BCM5680_A0/i2c0/nvram0: testing data integrity data=0x178924,len=65536bytes
+        Writing 65536 bytes [pattern=0x0]
+64KB write took 16.01 sec 4.00KB/sec
+        65536 bytes written OK
+        Reading 65536 bytes ...
+64KB read took 6.72 sec 9.52KB/sec
+        65536 bytes read OK
+        EEPROM test passed (65536 bytes verified).
+BCM.0> nv w 1 0
+Using NVRAM device: nvram0
+BCM.0> i2c p p 150
+soc_i2c_set_freq: i2c0 speed=150.00KHz (153600)
+soc_i2c_set_freq: i2c0: just set M=8 N=0: 138.89KHz
+BCM5680_A0/i2c0: mode=PIO speed=150Kbps slave_addr=0x44
+BCM.0> nv w 1 0    
+Using NVRAM device: nvram0
+eep24c64_write(0,0,1,0,-30): failed to gen start
+Error: write of byte at 0x1 failed:I2C device timed out
+BCM.0> i2c p p 150
+soc_i2c_set_freq: i2c0 speed=150.00KHz (153600)
+soc_i2c_set_freq: i2c0: just set M=8 N=0: 138.89KHz
+BCM5680_A0/i2c0: mode=PIO speed=150Kbps slave_addr=0x44
+BCM.0> nv w 1 0    
+Using NVRAM device: nvram0
+eep24c64_write(0,0,1,0,-30): failed to gen start
+Error: write of byte at 0x1 failed:I2C device timed out
+BCM.0> i2c p p 100
+soc_i2c_set_freq: i2c0 speed=100.00KHz (102400)
+soc_i2c_set_freq: i2c0: just set M=12 N=0: 96.15KHz
+BCM5680_A0/i2c0: mode=PIO speed=100Kbps slave_addr=0x44
+NOTICE: EEPROM contents invalid or bad checksum.
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM
+BCM5680_A0/i2c0/nvram0: testing data integrity data=0x178924,len=65536bytes
+        Writing 65536 bytes [pattern=0x80]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+64KB write took 18.38 sec 3.48KB/sec
+        65536 bytes written OK
+        Reading 65536 bytes ...
+64KB read took 8.64 sec 7.40KB/sec
+        65536 bytes read OK
+        EEPROM test passed (65536 bytes verified).
+BCM.0> i2c
+BCM5680_A0/i2c0/nvram0 @0xa0 [Atmel 24C64 (64Kbit) Serial EEPROM #0]
+nvram0: driver attached
+        172684 bytes transmitted
+        196668 bytes received
+        Read@0x17ec74
+        Write@0x17ec78
+        Ioctl@0x17ec7c
+        Load@0x17ec80
+BCM.0> i2c retries 100
+BCM.0> i2c p p 2000    
+soc_i2c_set_freq: i2c0 speed=1.95MHz (2048000)
+soc_i2c_set_freq: i2c0: just set M=0 N=0: 1.25MHz
+BCM5680_A0/i2c0: mode=PIO speed=2000Kbps slave_addr=0x44
+BCM.0> nv w 0 1
+Using NVRAM device: nvram0
+eep24c64_write(0,0,0,1,1): failed to gen start
+Error: write of byte at 0x0 failed:I2C device timed out
+BCM.0> i2c p p 120
+soc_i2c_set_freq: i2c0 speed=120.00KHz (122880)
+soc_i2c_set_freq: i2c0: just set M=10 N=0: 113.64KHz
+BCM5680_A0/i2c0: mode=PIO speed=120Kbps slave_addr=0x44
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM 65524 bytes cksum=0x71b7
+BCM.0> nv w 0 1    
+Using NVRAM device: nvram0
+BCM.0> i2c p p 120
+soc_i2c_set_freq: i2c0 speed=120.00KHz (122880)
+soc_i2c_set_freq: i2c0: just set M=10 N=0: 113.64KHz
+BCM5680_A0/i2c0: mode=PIO speed=120Kbps slave_addr=0x44
+NOTICE: EEPROM contents invalid or bad checksum.
+BCM5680_A0/i2c0/nvram0: 24C64 Serial EEPROM
+BCM5680_A0/i2c0/nvram0: testing data integrity data=0x178924,len=65536bytes
+        Writing 65536 bytes [pattern=0x0]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+BCM5680_A0/i2c0:STATUS:[Data Byte Transmitted, NO ACK Received]
+64KB write took 11.52 sec 5.55KB/sec
+        65536 bytes written OK
+        Reading 65536 bytes ...
+64KB read took 2.87 sec 22.30KB/sec
+        65536 bytes read OK
+        EEPROM test passed (65536 bytes verified).
+BCM.0> 
+
+From the data above, it looks like 120Khz is the fastest setting we
+can use with MPC8240 and the 24C64 in PIO mode. Note that since the
+driver is performing a lot of retries at this speed, 100Khz is probably
+optimal. Similar strategies can be employeed for debugging and tuning
+other devices.
+
+
+Known Issues
+
+This driver supports master-mode only at this time. Currently, slave
+mode is supported only in HW.
+
+When soc_i2c_attach is invoked, the bus driver programs every PCI
+chip with a new slave address based on the algorithm: addr = 0x60 (Default) *
+pci_devid * 4, hence each I2C bus will have a unique slave address at
+a multiple of 4, and multiple PCI bus-controller chips is possible in
+multi-switch systems.
+
+Note: The I2C controller will automatically enter slave transmit mode
+if it receives it's own Slave address with the read bit set.
+Similarly, the I2C controller will automatically enter slave receive
+mode if it receives it's own slave address and the write bit, or the
+general call address. The implication is that, at the time of this
+writing, you cannot have two masters with the same slave address or
+use the General call address while one of the chips is an I2C master.
+
+References
+
+ * StrataSwitch Register Reference (BCM56xx), Broadcom Corporation
+   http:/www.broadcom.com/
+ * The I2C Bus Specification : Version 2.1, Phillips Semiconductor
+   http://www.semiconductors.philips.com/i2c/   
+ * LM75 Databook, National Semiconductor
+   http://www.national.com/
+ * 24C64 64K I2C EEPROM Data Sheet, Atmel Corporation
+   http://www.atmel.com/
+ * MAX127 A/D Converter, Dallas/MAXIM Semiconductor
+   http://www.maxim-ic.com/
+ * W229b Clock Generator Databook, Cypress Semiconductor
+   http://www.cypress.com/

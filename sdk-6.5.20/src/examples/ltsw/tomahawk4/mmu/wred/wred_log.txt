@@ -1,0 +1,207 @@
+BCM.0> exit
+xl-sj1-30{sg944605}360: ./bcm.sim -y $SDKLT/INTERNAL/examples/bcm56990_a0/config/bcm56990_a0-generic-64x400.config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190510 (Fri May 10 02:07:52 2019)
+From sg944605@xl-sj1-29:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+Starting Interrupt service...
+[DMA-listener]DMA Controller listening on port[39237]
+[Interrupt-listener]ISR dispatcher listening on port[47573]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+0:bcmi_ltsw_sbr_init: Feature unavailable
+0:bcmpkt_gih_fid_support_get: null
+0:bcmpkt_higig3_fid_support_get: null
+0:bcmpkt_rxpmd_flex_fid_support_get: null
+0:mbcm_virtual_index_get: Feature unavailable
+0:bcmi_ltsw_virtual_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:mbcm_ltsw_field_clear: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_stk_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_ipmc_init: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+0:bcm_ltsw_flowtracker_init: Feature unavailable
+0:ltsw_flowtracker_resource_free: Feature unavailable
+0:bcm_ltsw_init_selective: Feature unavailable
+rc: BCM driver initialized
+rc: Port modes initialized
+BCM.0> c wred.c
+bcm_error_t $$ = BCM_E_NONE (0)
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190510 (Fri May 10 02:07:52 2019)
+From sg944605@xl-sj1-29:/projects/ntsw-sw21/home/shiming/hsdk/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     BCM56990_A0_BASE, BCM56880_A0_BASE
+... WRED INIT ...
+discard_profile_create profile id 1 created
+bcm_esw_cosq_discard_profile_get profile id 1, rule_count 6 
+bcm_cosq_discard_rule_t[12] rule_out = {
+    bcm_cosq_discard_rule_t rule_out[0] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[1] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[2] = {
+        unsigned int egress_pool_congestion_state = 1 (0x1)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[3] = {
+        unsigned int egress_pool_congestion_state = 1 (0x1)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[4] = {
+        unsigned int egress_pool_congestion_state = 2 (0x2)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[5] = {
+        unsigned int egress_pool_congestion_state = 2 (0x2)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[6] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[7] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[8] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[9] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[10] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[11] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+}
+discard_profile_create profile id 1 updated
+bcm_esw_cosq_discard_profile_get profile id 1, rule_count 6 
+bcm_cosq_discard_rule_t[12] rule_out = {
+    bcm_cosq_discard_rule_t rule_out[0] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 1 (0x1)
+    }
+    bcm_cosq_discard_rule_t rule_out[1] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[2] = {
+        unsigned int egress_pool_congestion_state = 1 (0x1)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[3] = {
+        unsigned int egress_pool_congestion_state = 1 (0x1)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[4] = {
+        unsigned int egress_pool_congestion_state = 2 (0x2)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[5] = {
+        unsigned int egress_pool_congestion_state = 2 (0x2)
+        unsigned int queue_min_congestion_state = 2 (0x2)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[6] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[7] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[8] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[9] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[10] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+    bcm_cosq_discard_rule_t rule_out[11] = {
+        unsigned int egress_pool_congestion_state = 0 (0x0)
+        unsigned int queue_min_congestion_state = 0 (0x0)
+        unsigned int action = 0 (0x0)
+    }
+}
+... WRED INIT ...
+
+Test Case(#1): Color All + TCP
+        Port 1, Cos 0
+max_thresh(byte) in: 7590, out: 7620
+Test Case(1): PASSED
+
+Test Case(#2): Color All + NONTCP
+        Port 2, Cos 0
+max_thresh(byte) in: 5000, out: 5080
+Test Case(2): PASSED
+
+Test Case(#3): Color Green_Red + TCP
+        Port 1, Cos 3
+max_thresh(byte) in: 6072, out: 6096
+Test Case(3): PASSED
+
+Test Case(#4): Color Yellow_Red + NONTCP
+        Port 2, Cos 2
+max_thresh(byte) in: 4000, out: 4064
+Test Case(4): PASSED
+Input flag: 0x40000
+Returned flag: 0x0
+discard_profile_destroy profile id 1 destroyed
+bcm_error_t $$ = BCM_E_NONE (0)
+

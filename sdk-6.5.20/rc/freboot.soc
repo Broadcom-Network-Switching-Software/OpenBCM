@@ -1,0 +1,46 @@
+#
+# $Id: freboot.soc,v 1.11 2019/01/30 00:40:32 et923243 Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+*:counter off
+
+*:warmboot on
+*:init noreset
+
+if $?feature_cancun \
+    "cancun load cmh;" \
+    "cancun load cch;" \
+    "cancun load ceh;" \
+
+*:init misc
+if $?feature_cancun \
+    "cancun load cih;" \
+    "cancun load cfh;"\
+    "cancun stat;"
+*:init mmu
+# Note: Un-comment the following debug verbose and dbm bcm lines to get more debug info.
+#       They are turned off by default to reduce init time.
+
+#debug +verbose
+#dbm bcm fp VVERbose
+*:init bcm
+#dbm bcm -fp -VVERbose
+#debug -verbose
+#*:linkscan 250000; \
+#	 port fe,ge linkscan=on autoneg=on \
+#		speed=0 fullduplex=true txpause=true rxpause=true; \
+#	 port st linkscan=on txpause=false rxpause=false; \
+#         port xe,ce,cd linkscan=on autoneg=off \
+#                speed=0 fullduplex=true txpause=true rxpause=true; \
+#         port hg linkscan=on fullduplex=true txpause=false rxpause=false;
+
+if $?feature_arl_hashed && !$?simulator && !$?rcpu_only \
+    "l2mode interval=3000000"
+
+if !$?no_bcm && !$?shadow \
+        "stg stp 1 all forward"
+
+sleep 1

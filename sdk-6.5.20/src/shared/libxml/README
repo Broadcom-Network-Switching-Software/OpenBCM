@@ -1,0 +1,54 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+This package was obtained from http://xmlsoft.org/downloads.html 
+(ftp://xmlsoft.org/libxml2/libxml2-2.9.9.tar.gz)
+and was modified for purposes of inclusion into the SOC diagnostics shell.
+
+Only certain portion of package was included in SDK in 2 places:
+    Under srs/shared/libxml
+        chvalid.c, config.h, dict.c, encoding.c, entities.c, error.c
+        globals.c, hash.c, libxml.h, list.c, Makefile, parser.c
+        parserInternals.c, SAX2.c, threads.c, tree.c, uri.c, valid.c
+        xmlIO.c, xmlmemory.c, xmlsave.c, xmlstring.c, xmlunicode.c
+    Under include/shared/libxml
+        catalog.h, chvalid.h, debugXML.h, dict.h, DOCBparser.h
+        encoding.h, entities.h, globals.h, hash.h, HTMLparser.h
+        HTMLtree.h, list.h, parser.h, parserInternals.h, pattern.h
+        relaxng, SAX2.h, threads.h, tree.h, uri.h, valid.h, xinclude.h
+        xlink.h, xmlautomata.h, xmlerror.h, xmlexports.h, xmlIO.h
+        xmlmemory.h, xmlmodule.h, xmlregexp.h, xmlsave.h, xmlstring.h
+        xmlunicode.h, xmlversion.h, xpath.h, xpathInternals.h, xpointer.h
+
+No functionality was changed, but there were modifications to match SDK requirements
+
+Copyright 
+
+Except where otherwise noted in the source code (e.g. the files hash.c,
+list.c and the trio files, which are covered by a similar licence but
+with different Copyright notices) all the files are:
+
+ Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is fur-
+nished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FIT-
+NESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

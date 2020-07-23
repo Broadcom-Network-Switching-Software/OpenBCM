@@ -1,0 +1,104 @@
+# $Id: bcm88950_board.soc,v 1.18 2013/02/11 13:31:04 moshikor Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+#Board Properties
+local asymmetrical_mode 1
+
+#Polarity configuration required for Broadcom BCM88950 board
+#RX polarity
+config add phy_rx_polarity_flip.BCM88950=1
+
+config add phy_rx_polarity_flip_fabric0.BCM88950=0
+config add phy_rx_polarity_flip_fabric1.BCM88950=0
+config add phy_rx_polarity_flip_fabric2.BCM88950=0
+config add phy_rx_polarity_flip_fabric3.BCM88950=0
+config add phy_rx_polarity_flip_fabric4.BCM88950=0
+config add phy_rx_polarity_flip_fabric5.BCM88950=0
+config add phy_rx_polarity_flip_fabric6.BCM88950=0
+config add phy_rx_polarity_flip_fabric7.BCM88950=0
+config add phy_rx_polarity_flip_fabric8.BCM88950=0
+config add phy_rx_polarity_flip_fabric9.BCM88950=0
+config add phy_rx_polarity_flip_fabric10.BCM88950=0
+config add phy_rx_polarity_flip_fabric11.BCM88950=0
+
+config add phy_rx_polarity_flip_fabric36.BCM88950=0
+config add phy_rx_polarity_flip_fabric37.BCM88950=0
+config add phy_rx_polarity_flip_fabric38.BCM88950=0
+config add phy_rx_polarity_flip_fabric39.BCM88950=0
+config add phy_rx_polarity_flip_fabric40.BCM88950=0
+config add phy_rx_polarity_flip_fabric41.BCM88950=0
+config add phy_rx_polarity_flip_fabric42.BCM88950=0
+config add phy_rx_polarity_flip_fabric43.BCM88950=0
+config add phy_rx_polarity_flip_fabric44.BCM88950=0
+config add phy_rx_polarity_flip_fabric45.BCM88950=0
+config add phy_rx_polarity_flip_fabric46.BCM88950=0
+config add phy_rx_polarity_flip_fabric47.BCM88950=0
+
+config add phy_rx_polarity_flip_fabric72.BCM88950=0
+config add phy_rx_polarity_flip_fabric73.BCM88950=0
+config add phy_rx_polarity_flip_fabric74.BCM88950=0
+config add phy_rx_polarity_flip_fabric75.BCM88950=0
+config add phy_rx_polarity_flip_fabric76.BCM88950=0
+config add phy_rx_polarity_flip_fabric77.BCM88950=0
+config add phy_rx_polarity_flip_fabric78.BCM88950=0
+config add phy_rx_polarity_flip_fabric79.BCM88950=0
+config add phy_rx_polarity_flip_fabric80.BCM88950=0
+config add phy_rx_polarity_flip_fabric81.BCM88950=0
+config add phy_rx_polarity_flip_fabric82.BCM88950=0
+config add phy_rx_polarity_flip_fabric83.BCM88950=0
+
+config add phy_rx_polarity_flip_fabric108.BCM88950=0
+config add phy_rx_polarity_flip_fabric109.BCM88950=0
+config add phy_rx_polarity_flip_fabric110.BCM88950=0
+config add phy_rx_polarity_flip_fabric111.BCM88950=0
+config add phy_rx_polarity_flip_fabric112.BCM88950=0
+config add phy_rx_polarity_flip_fabric113.BCM88950=0
+config add phy_rx_polarity_flip_fabric114.BCM88950=0
+config add phy_rx_polarity_flip_fabric115.BCM88950=0
+config add phy_rx_polarity_flip_fabric116.BCM88950=0
+config add phy_rx_polarity_flip_fabric117.BCM88950=0
+config add phy_rx_polarity_flip_fabric118.BCM88950=0
+config add phy_rx_polarity_flip_fabric119.BCM88950=0
+
+#TX polarity
+config add phy_tx_polarity_flip.BCM88950=0
+
+#lane swap
+config add phy_tx_lane_map.BCM88950=0x3210
+config add phy_tx_lane_map_quad3.BCM88950=0x1032
+config add phy_tx_lane_map_quad4.BCM88950=0x1032
+config add phy_tx_lane_map_quad5.BCM88950=0x2301
+config add phy_tx_lane_map_quad6.BCM88950=0x1032
+config add phy_tx_lane_map_quad7.BCM88950=0x1032
+config add phy_tx_lane_map_quad8.BCM88950=0x1032
+config add phy_tx_lane_map_quad12.BCM88950=0x1032
+config add phy_tx_lane_map_quad13.BCM88950=0x1032
+config add phy_tx_lane_map_quad14.BCM88950=0x2301
+config add phy_tx_lane_map_quad15.BCM88950=0x1032
+config add phy_tx_lane_map_quad16.BCM88950=0x1032
+config add phy_tx_lane_map_quad17.BCM88950=0x1032
+config add phy_tx_lane_map_quad18.BCM88950=0x1032
+config add phy_tx_lane_map_quad19.BCM88950=0x1032
+config add phy_tx_lane_map_quad20.BCM88950=0x1032
+config add phy_tx_lane_map_quad23.BCM88950=0x0321
+if $asymmetrical_mode "\
+   config add phy_tx_lane_map_quad26.BCM88950=0x1032" \
+else "\
+   config add phy_tx_lane_map_quad26.BCM88950=0x2031"
+
+config add phy_tx_lane_map_quad27.BCM88950=0x1032
+config add phy_tx_lane_map_quad28.BCM88950=0x1032
+config add phy_tx_lane_map_quad29.BCM88950=0x1032
+config add phy_tx_lane_map_quad32.BCM88950=0x0123
+config add phy_tx_lane_map_quad35.BCM88950=0x1032
+
+
+
+
+
+
+
+

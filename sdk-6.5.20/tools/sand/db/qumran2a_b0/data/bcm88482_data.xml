@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+                <numeric name="device_id" value="0x8482"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="nif">
+        <sub_module name="phys">
+            <tables>
+                <table name="general">
+                    <value name="supported_phys" default="0xF0F0FFFF,0x000FFFFF"></value>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="flexe">
+            <features>
+                <feature name="disable_l1" value="0"></feature>
+                <feature name="disable_oam_over_flexe" value="0"></feature>
+            </features>
+            <numerics>
+                <numeric name="nof_pms_per_feu" value="2"></numeric>
+                <numeric name="flexe_mode" value="DNX_FLEXE_MODE_DISABLED">
+                    <property name="flexe_device_mode" method="direct_map">
+                        <map name="DISTRIBUTED"></map>
+                    </property>
+                </numeric>
+            </numerics>
+        </sub_module>
+
+        <sub_module name="ilkn">
+
+            <numerics>
+                <numeric name="max_nof_elk_ifs" value="0"></numeric>
+            </numerics>
+
+            <tables>
+
+                <table name="supported_phys">
+                    <entries>
+                        <entry ilkn_id="2" is_supported="1" max_phys="24" nif_phys="0xf0000000, 0x000fffff" fabric_phys="0x0"></entry>
+                        <entry ilkn_id="3" is_supported="1" max_phys="12" nif_phys="0xf0000000, 0x000fffff" fabric_phys="0x0"></entry>
+                    </entries>
+                </table>
+
+                <table name="ilkn_cores">
+                    <entries>
+                        <entry ilkn_core_id="1" is_elk_supported="0" is_data_supported="1"></entry>
+                    </entries>
+                </table>
+
+
+                <table name="ilkn_cores_clup_facing">
+                    <entries>
+                        <entry ilkn_core_id="1"  clu_unit="1"></entry>
+                    </entries>
+                </table>
+
+                <table name="nif_lanes_map">
+                    <entries>
+                        <!-- Entries for core 1  -->
+                        <entry ilkn_core="1" range_id="0" first_phy="28" ilkn_lane_offset="0" nof_lanes="24"></entry>
+                    </entries>
+                </table>
+
+            </tables>
+        </sub_module>
+
+    </module>
+
+    <module name="mdb">
+        <sub_module name="dh">
+            <features>
+                <feature name="macro_A_half_nof_clusters_enable" value="1"></feature>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+</device_data>

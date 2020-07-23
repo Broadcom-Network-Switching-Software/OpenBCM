@@ -1,0 +1,81 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Hash Output Selection RC (run commands) file
+#
+#       These are default commands that are for TechSupport Hash Output Selection.
+#
+
+# Show Hash Output Selection related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Hash Output Selection Profile related LTs.
+local lt TRUNK_HASH_OUTPUT_SELECTION_PROFILE;                      $traverse_lt;
+local lt DLB_TRUNK_HASH_OUTPUT_SELECTION_PROFILE;                  $traverse_lt;
+local lt ECMP_LEVEL0_HASH_OUTPUT_CONTROL_PROFILE;                  $traverse_lt;
+local lt ECMP_LEVEL1_HASH_OUTPUT_CONTROL_PROFILE;                  $traverse_lt;
+
+# Show Hash Output Selection instance related LTs.
+local lt LB_HASH_TRUNK_UC_OUTPUT_SELECTION;                        $traverse_lt;
+local lt LB_HASH_TRUNK_NONUC_OUTPUT_SELECTION;                     $traverse_lt;
+local lt LB_HASH_TRUNK_FAILOVER_OUTPUT_SELECTION;                  $traverse_lt;
+local lt LB_HASH_TRUNK_SYSTEM_OUTPUT_SELECTION;                    $traverse_lt;
+local lt LB_HASH_TRUNK_SYSTEM_FAILOVER_OUTPUT_SELECTION;           $traverse_lt;
+local lt LB_HASH_DLB_TRUNK_OUTPUT_SELECTION;                       $traverse_lt;
+local lt LB_HASH_ECMP_LEVEL0_OUTPUT_SELECTION;                     $traverse_lt;
+local lt LB_HASH_ECMP_LEVEL1_OUTPUT_SELECTION;                     $traverse_lt;
+local lt LB_HASH_DLB_ECMP_LEVEL0_OUTPUT_SELECTION;                 $traverse_lt;
+
+# Related switch controls.
+if $?1 " \
+local sctrl TrunkUnicastHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl TrunkNonUnicastHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl TrunkFailoverHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl HigigTrunkHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl FabricTrunkFailoverHashOffset; echo scn pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl TrunkDynamicHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+local sctrl VpTrunkHashOffset; echo sc pbm=$1 \$sctrl; sc pbm=$1 \$sctrl; \
+" \
+else " \
+local sctrl HashUseFlowSelTrunkUc; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelTrunkNonUnicast; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelTrunkFailover; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelHigigTrunk; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelHigigTrunkFailover; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelTrunkDynamic; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseFlowSelVpTrunk; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HashUseHigig3EntropyTrunkNonUnicast; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkUnicastHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkNonUnicastHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkFailoverHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkFailoverHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkDynamicHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowVpTrunkHashConcatEnable; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkUnicastHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkUnicastHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkUnicastHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkNonUnicastHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkNonUnicastHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkNonUnicastHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkFailoverHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkFailoverHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkFailoverHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkFailoverHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkFailoverHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowHigigTrunkFailoverHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkDynamicHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkDynamicHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowTrunkDynamicHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowVpTrunkHashMinOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowVpTrunkHashMaxOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl MacroFlowVpTrunkHashStrideOffset; echo sc \$sctrl; sc \$sctrl; \
+local sctrl TrunkRandomSeed; echo sc \$sctrl; sc \$sctrl; \
+local sctrl HigigTrunkRandomSeed; echo sc \$sctrl; sc \$sctrl; \
+local sctrl VPTrunkRandomSeed; echo sc \$sctrl; sc \$sctrl; \
+"

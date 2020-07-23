@@ -1,0 +1,35 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport MULTICAST RC (run commands) file
+#
+#       These are default commands that are for TechSupport MULTICAST.
+#
+
+# Show S/W state in MULTICAST.
+dump sw multicast
+
+# Show available MULTICAST handles.
+multicast show
+
+# Show MULTICAST related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show L2 MULTICAST LTs.
+local lt L2_MC_GROUP;                                     $traverse_lt;
+
+# Show L3 MULTICAST LTs.
+local lt TM_MC_GROUP;                                     $traverse_lt;
+local lt TM_MC_PORT_AGG_LIST;                             $traverse_lt;
+local lt TM_MC_AGG_LIST_MEMBER_REMAP;                     $traverse_lt;
+
+# Show L3 MULTICAST aggre1 list remap range.              $traverse_lt;
+local lt TM_MC_AGG_LIST_MEMBER_REMAP_RANGE;               $traverse_lt;
+
+# Show L3 MULTICAST port aggregate mapping info.          $traverse_lt;
+local lt TM_MC_PORT_AGG_MAP;                              $traverse_lt;
+
+# Show IPMC remap LT.
+local lt ING_IPMC_REMAP_TABLE;                            $traverse_lt;

@@ -1,0 +1,126 @@
+#
+# file: bcmptm_rm_tcam_prio_only_ha.yml
+# PTRM HA memory YAML file describing the HA data structures for prio_only type TCAM
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   BCMPTM_RM_TCAM_MAX_ENTRIES_PER_INDEX: 2
+   BCMPTM_RM_TCAM_MAX_FIELDS_PER_ENTRY: 4
+
+component:
+   bcmptm_rm_tcam_prio_only_ha:
+      bcmptm_rm_tcam_hw_field_list_t:
+         type: struct
+         fields:
+            num_fields:
+               type: uint8_t
+               comment: numbers of fields
+            field_width:
+               type: uint16_t
+               length: BCMPTM_RM_TCAM_MAX_FIELDS_PER_ENTRY
+               comment: width of each field
+            field_start_bit:
+               type: uint16_t
+               length: BCMPTM_RM_TCAM_MAX_FIELDS_PER_ENTRY
+               comment: start bit of each field
+      bcmptm_rm_tcam_prio_only_info_t:
+         type: struct
+         fields:
+            ltid:
+               type: uint32_t
+               ltid:
+               comment: Logical Table ID
+            flags:
+               type: uint32_t
+               comment: TCAM Flags  of type BCMPTM_RM_TCAM_XXX
+            num_entries:
+               type: uint16_t
+               comment: Total number of TCAM entries
+            num_entries_ltid:
+               type: uint16_t
+               comment: Total number of TCAM entries on this LTID
+            num_lookups:
+               type: uint8_t
+               comment: number of lookups for a LT operation
+            num_entries_per_index:
+               type: uint8_t
+               comment: number of logical entries per a physical index
+            hw_field_list:
+               type: bcmptm_rm_tcam_hw_field_list_t
+               length: BCMPTM_RM_TCAM_MAX_ENTRIES_PER_INDEX
+               comment: hw key width attributes for each logical entry
+            reserved_entry_index1:
+               type: int32_t
+               comment: Reserved entry used for TCAM sharing
+            reserved_entry_index2:
+               type: int32_t
+               comment: Reserved entry used for TCAM sharing
+            res_ent_key_type_val:
+               type: int8_t
+               comment: Reserved entry key type value
+            num_lt_sharing:
+               type: uint8_t
+               comment: number of LT sharing this tcam info
+            shr_info_count:
+               type: uint16_t
+               comment: Number of shared LTID information
+            shr_info_offset:
+               type: uint32_t
+               comment: Memory Offset to first shared LTID information
+            entry_info_offset:
+               type: uint32_t
+               comment: Memory offset to TCAM entry operational information
+            entry_info_seg_size:
+               type: uint32_t
+               comment: Size TCAM entry operational information
+            entry_hash_size:
+               type: uint16_t
+               comment: Depth of hash table which is used to lookup TCAM entry information
+            entry_hash_offset:
+               type: uint32_t
+               comment: Memory offset to TCAM entry hash information
+            entry_hash_seg_size:
+               type: uint32_t
+               comment: Size of TCAM entry hash information
+
+      bcmptm_rm_tcam_prio_only_entry_info_t:
+         type: struct
+         fields:
+            entry_pri:
+               type: int
+               comment: TCAM entry priority set by the application layer
+            entry_type:
+               type: int8_t
+               comment: TCAM entry type information
+            offset:
+               type: int32_t
+               comment: Offset to TCAM entry information which has same hash as this TCAM entry
+
+      bcmptm_rm_tcam_prio_only_shr_info_t:
+         type: struct
+         fields:
+            shr_ltid:
+               type: uint32_t
+               ltid:
+               comment: shared LTID
+            start_index:
+               type: uint32_t
+               comment: My LTID start index
+            end_index:
+               type: uint32_t
+               comment: My LTID end index
+            shr_start_index:
+               type: uint32_t
+               comment: Shared LTID start index
+            shr_end_index:
+               type: uint32_t
+               comment: Shared LTID end index
+            shr_flags:
+                type: uint32_t
+                comment: Flags for shared info

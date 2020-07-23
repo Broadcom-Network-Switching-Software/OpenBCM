@@ -1,0 +1,92 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TR LTSW CMICX Sanity tests
+#
+# Script to run SDKLT HMI tests for cmicx.
+
+echo "testsuite: started: sanity"
+
+#Display some useful information
+rcload ltsw.soc
+date
+ver
+echo
+
+#TR 4 test
+echo "TR4: sbus test ..."
+dsh -c "tr 4"
+dsh -c "testlist 4"
+$done
+date
+echo
+
+#TR 10 test
+echo "TR10: interrupt test ..."
+dsh -c "tr 10"
+dsh -c "testlist 10"
+$done
+date
+echo
+
+#TR 11 test
+echo "TR11: sbusdma Register mode test ..."
+dsh -c "tr 11"
+dsh -c "testlist 11"
+$done
+date
+echo
+
+#TR 12 test
+echo "TR12: schanfifo test ..."
+dsh -c "tr 12"
+dsh -c "testlist 12"
+$done
+date
+echo
+
+#TR 500 test
+echo "TR500: pktdma test ..."
+dsh -c "tr 500"
+dsh -c "testlist 500"
+$done
+date
+echo
+
+#TR 502 test
+echo "TR502: sbusdma Descriptor mode test ..."
+dsh -c "tr 502"
+dsh -c "testlist 502"
+$done
+date
+echo
+
+#TR 503 test
+echo "TR503: ccmdma test ..."
+dsh -c "tr 503"
+dsh -c "testlist 503"
+$done
+date
+echo
+
+#TR 504 test
+echo "TR504: fifodma test ..."
+dsh -c "tr 504"
+dsh -c "testlist 504"
+$done
+date
+echo
+
+#Show status
+dsh -c "testlist hmi"
+local returnCode $?
+
+echo Tests Complete. Reinitializing ...
+rcload ltsw.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: gsanity: $returnCode"
