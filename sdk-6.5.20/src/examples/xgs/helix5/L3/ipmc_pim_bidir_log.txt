@@ -1,0 +1,414 @@
+BCM.0> init all;cint ipmc_pim_bidir.c
+execute(): Start
+config show; attach; cancun stat; version
+    portmap_8=8:2.5
+    portmap_9=9:2.5
+    portmap_10=10:2.5
+    portmap_11=11:2.5
+    portmap_20=20:2.5
+    portmap_12=12:2.5
+    portmap_21=21:2.5
+    portmap_13=13:2.5
+    portmap_30=30:2.5
+    portmap_22=22:2.5
+    portmap_14=14:2.5
+    portmap_31=31:2.5
+    portmap_23=23:2.5
+    portmap_15=15:2.5
+    portmap_40=52:10
+    portmap_32=32:2.5
+    portmap_24=24:2.5
+    portmap_16=16:2.5
+    port_gmii_mode_33=2
+    port_gmii_mode_17=2
+    portmap_41=53:10
+    portmap_33=33:2.5
+    portmap_25=25:2.5
+    portmap_17=17:2.5
+    portmap_50=73:100
+    portmap_42=54:10
+    portmap_34=34:2.5
+    portmap_26=26:2.5
+    portmap_18=18:2.5
+    portmap_51=69:100
+    portmap_43=55:10
+    portmap_35=35:2.5
+    portmap_27=27:2.5
+    portmap_19=19:2.5
+    portmap_44=56:10
+    portmap_36=36:2.5
+    portmap_28=28:2.5
+    port_gmii_mode_1=2
+    portmap_45=57:10
+    portmap_37=49:10
+    portmap_29=29:2.5
+    pbmp_xport_xe=0x1fffffffffffffe
+    portmap_46=58:10
+    portmap_38=50:10
+    os=unix
+    portmap_55=61:10
+    portmap_47=59:10
+    portmap_39=51:10
+    portmap_56=62:10
+    portmap_48=60:10
+    core_clock_frequency=893
+    mmu_lossless=0
+    portmap_1=1:2.5
+    portmap_2=2:2.5
+    portmap_3=3:2.5
+    portmap_4=4:2.5
+    portmap_5=5:2.5
+    portmap_6=6:2.5
+    portmap_7=7:2.5
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 03.00.05
+
+        CMH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CCH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CEH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.16 built 20190117 (Thu Jan 17 23:19:06 2019)
+From br930043@lvnvdc3607:/projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0,
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,
+
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,
+       BCM56260_A0, BCM56260_B0,
+
+
+       BCM56160_A0, BCM56270_A0, BCM56965_A0, BCM56970_A0,
+       BCM56870_A0, BCM56870_B0, BCM53570_A0, BCM53570_B0,
+       BCM56980_A0, BCM56980_B0, BCM53540_A0, BCM56670_A0,
+       BCM56670_B0, BCM56370_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_l3_ipmc_pim_bidir(): ** start **
+PIM BIDIR config done
+~~ #2) config_l3_ipmc_pim_bidir(): ** end **
+~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports none (0x0000000000000000000000000000000000000000000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 10 ports ge0,qsgmii0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 100        ports ge1,qsgmii1 (0x0000000000000000000000000000000000000000000000000000000000000004), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 200        ports ge2,qsgmii2 (0x0000000000000000000000000000000000000000000000000000000000000008), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 300        ports ge3,qsgmii3 (0x0000000000000000000000000000000000000000000000000000000000000010), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+Free L3INTF entries: 8186
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     10    0     0     10   00:00:00:00:00:10  16383 0    0     0     0
+0     100   0     0     100  00:00:00:00:01:00  16383 0    0     0     0
+0     200   0     0     200  00:00:00:00:02:00  16383 0    0     0     0
+0     300   0     0     300  00:00:00:00:03:00  16383 0    0     0     0
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:00:00:00    0  100     0    0        -1   no   no    0  yes
+100003  00:00:00:00:00:00    0  200     0    0        -1   no   no    0  yes
+Group 0x2000001 (L3)
+        port ge1, encap id 100
+        port ge2, encap id 200
+SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS TS   GROUP     VRF
+GROUP-L2  CLASS HIT
+0.0.0.0         228.1.1.3          0  -1   -1   1  -1  0   0x2000001   0
+0x2000000 0      y
+
+a) Sending IPv4 multicast packet (DIP=228.1.1.3),VID 10 from Downstream intf/ ingress_port :1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {01005e010103} {000004000200} 8100 000a
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 92ca 0101
+[bcmPW.0]Packet[1]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[1]: data[0040]: 4eed c154 1cdf 4421
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 1. dest-mod 32. src-port 1. src-mod 0. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:04:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x92ca>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {01005e010103} {000000000100} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 3fff 93ca 0101
+[bcmPW.0]Packet[2]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 4eed c154 52b8 7647
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:00:00:01:00> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x93ca>
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {01005e010103} {000000000200} 8100 00c8
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 3fff 93ca 0101
+[bcmPW.0]Packet[3]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[3]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[3]: data[0040]: 4eed c154 6720 bafa
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 3. cos 0. prio_int 0. vlan 200. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:00:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x00c8> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x93ca>
+SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS TS   GROUP     VRF
+GROUP-L2  CLASS HIT
+0.0.0.0         228.1.1.3          0  -1   -1   1  -1  0   0x2000001   0
+0x2000000 0      y
+MC_PERQ_PKT(0).cpu0         :                     3                  +3               3/s
+MC_PERQ_BYTE(0).cpu0        :                   216                +216             212/s
+IMRP4_64.ge0                :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GRMCA.ge0                   :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    72                 +72              71/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GTMCA.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    72                 +72              71/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    72                 +72              71/s
+ING_NIV_RX_FRAMES_VL.ge1    :                     1                  +1               1/s
+GRMCA.ge1                   :                     1                  +1               1/s
+GR127.ge1                   :                     1                  +1               1/s
+GRPKT.ge1                   :                     1                  +1               1/s
+GRBYT.ge1                   :                    72                 +72              71/s
+GRPOK.ge1                   :                     1                  +1               1/s
+GTMCA.ge1                   :                     1                  +1               1/s
+GT127.ge1                   :                     1                  +1               1/s
+GTPKT.ge1                   :                     1                  +1               1/s
+GTBYT.ge1                   :                    72                 +72              71/s
+GTPOK.ge1                   :                     1                  +1               1/s
+MC_PERQ_PKT(0).ge1          :                     1                  +1               1/s
+MC_PERQ_BYTE(0).ge1         :                    72                 +72              71/s
+ING_NIV_RX_FRAMES_VL.ge2    :                     1                  +1               1/s
+GRMCA.ge2                   :                     1                  +1               1/s
+GR127.ge2                   :                     1                  +1               1/s
+GRPKT.ge2                   :                     1                  +1               1/s
+GRBYT.ge2                   :                    72                 +72              71/s
+GRPOK.ge2                   :                     1                  +1               1/s
+GTMCA.ge2                   :                     1                  +1               1/s
+GT127.ge2                   :                     1                  +1               1/s
+GTPKT.ge2                   :                     1                  +1               1/s
+GTBYT.ge2                   :                    72                 +72              71/s
+GTPOK.ge2                   :                     1                  +1               1/s
+MC_PERQ_PKT(0).ge2          :                     1                  +1               1/s
+MC_PERQ_BYTE(0).ge2         :                    72                 +72              71/s
+
+b) Sending IPv4 multicast packet (DIP=228.1.1.3), VID 100 from Upstream#1 intf/egress_port1 :2
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {01005e010103} {000004000200} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 40ff 92ca 0101
+[bcmPW.0]Packet[4]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[4]: data[0040]: 4eed c154 abb4 810b
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 1. dest-mod 32. src-port 2. src-mod 0. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:04:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x92ca>
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {01005e010103} {000000000200} 8100 00c8
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 3fff 93ca 0101
+[bcmPW.0]Packet[5]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[5]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[5]: data[0040]: 4eed c154 6720 bafa
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 3. cos 0. prio_int 0. vlan 200. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]:
+Packet[5]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:00:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x00c8> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x93ca>
+SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS TS   GROUP     VRF
+GROUP-L2  CLASS HIT
+0.0.0.0         228.1.1.3          0  -1   -1   1  -1  0   0x2000001   0
+0x2000000 0      y
+MC_PERQ_PKT(0).cpu0         :                     5                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   360                +144             141/s
+IMRP4_64.ge1                :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge1    :                     2                  +1               1/s
+TDBGC3_64.ge1               :                     1                  +1               1/s
+GRMCA.ge1                   :                     2                  +1               1/s
+GR127.ge1                   :                     2                  +1               1/s
+GRPKT.ge1                   :                     2                  +1               1/s
+GRBYT.ge1                   :                   144                 +72              70/s
+GRPOK.ge1                   :                     2                  +1               1/s
+GTMCA.ge1                   :                     2                  +1               1/s
+GT127.ge1                   :                     2                  +1               1/s
+GTPKT.ge1                   :                     2                  +1               1/s
+GTBYT.ge1                   :                   144                 +72              70/s
+GTPOK.ge1                   :                     2                  +1               1/s
+UC_PERQ_PKT(0).ge1          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge1         :                    72                 +72              70/s
+ING_NIV_RX_FRAMES_VL.ge2    :                     2                  +1               1/s
+GRMCA.ge2                   :                     2                  +1               1/s
+GR127.ge2                   :                     2                  +1               1/s
+GRPKT.ge2                   :                     2                  +1               1/s
+GRBYT.ge2                   :                   144                 +72              70/s
+GRPOK.ge2                   :                     2                  +1               1/s
+GTMCA.ge2                   :                     2                  +1               1/s
+GT127.ge2                   :                     2                  +1               1/s
+GTPKT.ge2                   :                     2                  +1               1/s
+GTBYT.ge2                   :                   144                 +72              70/s
+GTPOK.ge2                   :                     2                  +1               1/s
+MC_PERQ_PKT(0).ge2          :                     2                  +1               1/s
+MC_PERQ_BYTE(0).ge2         :                   144                 +72              70/s
+
+c) Sending IPv4 multicast packet (DIP=228.1.1.3), VID 200 from Upstream#2 intf/egress_port2 :3
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {01005e010103} {000004000200} 8100 00c8
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 40ff 92ca 0101
+[bcmPW.0]Packet[6]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[6]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[6]: data[0040]: 4eed c154 2b3c 0469
+[bcmPW.0]Packet[6]: length 72 (72). rx-port 3. cos 0. prio_int 0. vlan 200. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 1. dest-mod 32. src-port 3. src-mod 0. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]:
+Packet[6]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:04:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x00c8> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x92ca>
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {01005e010103} {000000000100} 8100 0064
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 3fff 93ca 0101
+[bcmPW.0]Packet[7]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[7]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[7]: data[0040]: 4eed c154 52b8 7647
+[bcmPW.0]Packet[7]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]:
+Packet[7]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:00:00:01:00> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x93ca>
+SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS TS   GROUP     VRF
+GROUP-L2  CLASS HIT
+0.0.0.0         228.1.1.3          0  -1   -1   1  -1  0   0x2000001   0
+0x2000000 0      y
+MC_PERQ_PKT(0).cpu0         :                     7                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   504                +144             141/s
+ING_NIV_RX_FRAMES_VL.ge1    :                     3                  +1               1/s
+GRMCA.ge1                   :                     3                  +1               1/s
+GR127.ge1                   :                     3                  +1               1/s
+GRPKT.ge1                   :                     3                  +1               1/s
+GRBYT.ge1                   :                   216                 +72              71/s
+GRPOK.ge1                   :                     3                  +1               1/s
+GTMCA.ge1                   :                     3                  +1               1/s
+GT127.ge1                   :                     3                  +1               1/s
+GTPKT.ge1                   :                     3                  +1               1/s
+GTBYT.ge1                   :                   216                 +72              71/s
+GTPOK.ge1                   :                     3                  +1               1/s
+MC_PERQ_PKT(0).ge1          :                     2                  +1               1/s
+MC_PERQ_BYTE(0).ge1         :                   144                 +72              71/s
+IMRP4_64.ge2                :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge2    :                     3                  +1               1/s
+TDBGC3_64.ge2               :                     1                  +1               1/s
+GRMCA.ge2                   :                     3                  +1               1/s
+GR127.ge2                   :                     3                  +1               1/s
+GRPKT.ge2                   :                     3                  +1               1/s
+GRBYT.ge2                   :                   216                 +72              71/s
+GRPOK.ge2                   :                     3                  +1               1/s
+GTMCA.ge2                   :                     3                  +1               1/s
+GT127.ge2                   :                     3                  +1               1/s
+GTPKT.ge2                   :                     3                  +1               1/s
+GTBYT.ge2                   :                   216                 +72              71/s
+GTPOK.ge2                   :                     3                  +1               1/s
+UC_PERQ_PKT(0).ge2          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge2         :                    72                 +72              71/s
+
+d) Sending IPv4 multicast packet (DIP=228.1.1.3), VID 300 from None DF intf/egress_port3 :4
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {01005e010103} {000004000200} 8100 012c
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 40ff 92ca 0101
+[bcmPW.0]Packet[8]: data[0020]: 0102 e401 0103 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[8]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[8]: data[0040]: 4eed c154 04ed ac26
+[bcmPW.0]Packet[8]: length 72 (72). rx-port 4. cos 0. prio_int 0. vlan 300. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 44. dest-mod 1. src-port 4. src-mod 0. opcode 2.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]:
+Packet[8]:   Ethernet: dst<01:00:5e:01:01:03> src<00:00:04:00:02:00> Tagged Packet ProtID<0x8100> Ctrl<0x012c> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<1.1.1.2> dst<228.1.1.3> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x92ca>
+SRC IP ADDRESS  MC IP ADDRESS     VLAN MOD PORT V COS TS   GROUP     VRF
+GROUP-L2  CLASS HIT
+0.0.0.0         228.1.1.3          0  -1   -1   1  -1  0   0x2000001   0
+0x2000000 0      y
+MC_PERQ_PKT(0).cpu0         :                     8                  +1               1/s
+MC_PERQ_BYTE(0).cpu0        :                   576                 +72              71/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GRMCA.ge3                   :                     1                  +1               1/s
+GR127.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                    72                 +72              71/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GTMCA.ge3                   :                     1                  +1               1/s
+GT127.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                    72                 +72              71/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                    72                 +72              71/s
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

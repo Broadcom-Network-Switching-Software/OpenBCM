@@ -1,0 +1,1155 @@
+BCM.0> 
+BCM.0> 
+BCM.0> cint cint_agm.c YES 0
+int opt_TestTypeEcmp = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 5 (0x5)
+int egr_port2 = 9 (0x9)
+int egr_port3 = 13 (0xd)
+int egr_port4 = 17 (0x11)
+int egr_port5 = 21 (0x15)
+Initialize Hashing
+Doing HASH Initializations...DONE
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int i = 0 (0x0)
+int $$ = 100002 (0x186a2)
+int $$ = 2 (0x2)
+int $$ = 2 (0x2)
+int i = 1 (0x1)
+int $$ = 100003 (0x186a3)
+int $$ = 3 (0x3)
+int $$ = 3 (0x3)
+int i = 2 (0x2)
+int $$ = 100004 (0x186a4)
+Doing l3 egress ecmp create...
+int $$ = 300256 (0x494e0)
+
+##############   VERIFY   #######################
+
+Doing L3 route create...
+
+############  Sending UC packet 0  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110022222222228100006408004500002E0000000040065CC8140000020A0000011111222200000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			100		   +100
+RUC_64.xe0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			100		   +100
+R127.xe0		    :			100		   +100
+RPKT.xe0		    :			100		   +100
+RUCA.xe0		    :			100		   +100
+RPRM.xe0		    :			100		   +100
+RVLN.xe0		    :			100		   +100
+RPOK.xe0		    :			100		   +100
+RBYT.xe0		    :		      7,200		 +7,200
+T127.xe0		    :			100		   +100
+TPOK.xe0		    :			100		   +100
+TPKT.xe0		    :			100		   +100
+TUCA.xe0		    :			100		   +100
+TVLN.xe0		    :			100		   +100
+TBYT.xe0		    :		      7,200		 +7,200
+RPROG0.xe0		    :			100		   +100
+UC_PERQ_PKT(0).xe0	    :			100		   +100
+UC_PERQ_BYTE(0).xe0	    :		      7,200		 +7,200
+RUC_64.ce0		    :			 29		    +29
+RDBGC0_64.ce0		    :			 29		    +29
+ING_NIV_RX_FRAMES_VL.ce0    :			 29		    +29
+TDBGC4_64.ce0		    :			 29		    +29
+R127.ce0		    :			 29		    +29
+RPKT.ce0		    :			 29		    +29
+RUCA.ce0		    :			 29		    +29
+RPRM.ce0		    :			 29		    +29
+RVLN.ce0		    :			 29		    +29
+RPOK.ce0		    :			 29		    +29
+RBYT.ce0		    :		      2,088		 +2,088
+T127.ce0		    :			 29		    +29
+TPOK.ce0		    :			 29		    +29
+TPKT.ce0		    :			 29		    +29
+TUCA.ce0		    :			 29		    +29
+TVLN.ce0		    :			 29		    +29
+TBYT.ce0		    :		      2,088		 +2,088
+RPROG0.ce0		    :			 29		    +29
+UC_PERQ_PKT(0).ce0	    :			 29		    +29
+UC_PERQ_BYTE(0).ce0	    :		      2,088		 +2,088
+RUC_64.ce1		    :			 34		    +34
+RDBGC0_64.ce1		    :			 34		    +34
+ING_NIV_RX_FRAMES_VL.ce1    :			 34		    +34
+TDBGC4_64.ce1		    :			 34		    +34
+R127.ce1		    :			 34		    +34
+RPKT.ce1		    :			 34		    +34
+RUCA.ce1		    :			 34		    +34
+RPRM.ce1		    :			 34		    +34
+RVLN.ce1		    :			 34		    +34
+RPOK.ce1		    :			 34		    +34
+RBYT.ce1		    :		      2,448		 +2,448
+T127.ce1		    :			 34		    +34
+TPOK.ce1		    :			 34		    +34
+TPKT.ce1		    :			 34		    +34
+TUCA.ce1		    :			 34		    +34
+TVLN.ce1		    :			 34		    +34
+TBYT.ce1		    :		      2,448		 +2,448
+RPROG0.ce1		    :			 34		    +34
+UC_PERQ_PKT(0).ce1	    :			 34		    +34
+UC_PERQ_BYTE(0).ce1	    :		      2,448		 +2,448
+RUC_64.ce2		    :			 37		    +37
+RDBGC0_64.ce2		    :			 37		    +37
+ING_NIV_RX_FRAMES_VL.ce2    :			 37		    +37
+TDBGC4_64.ce2		    :			 37		    +37
+R127.ce2		    :			 37		    +37
+RPKT.ce2		    :			 37		    +37
+RUCA.ce2		    :			 37		    +37
+RPRM.ce2		    :			 37		    +37
+RVLN.ce2		    :			 37		    +37
+RPOK.ce2		    :			 37		    +37
+RBYT.ce2		    :		      2,664		 +2,664
+T127.ce2		    :			 37		    +37
+TPOK.ce2		    :			 37		    +37
+TPKT.ce2		    :			 37		    +37
+TUCA.ce2		    :			 37		    +37
+TVLN.ce2		    :			 37		    +37
+TBYT.ce2		    :		      2,664		 +2,664
+RPROG0.ce2		    :			 37		    +37
+UC_PERQ_PKT(0).ce2	    :			 37		    +37
+UC_PERQ_BYTE(0).ce2	    :		      2,664		 +2,664
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000001D}
+        uint64 bytes = {0x00000000 0x00000828}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000022}
+        uint64 bytes = {0x00000000 0x00000990}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000025}
+        uint64 bytes = {0x00000000 0x00000A68}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 1  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110023232222238100006408004500002E0000000040065CC8140000020A0000011112222300000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			200		   +100
+RUC_64.xe0		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			200		   +100
+R127.xe0		    :			200		   +100
+RPKT.xe0		    :			200		   +100
+RUCA.xe0		    :			200		   +100
+RPRM.xe0		    :			200		   +100
+RVLN.xe0		    :			200		   +100
+RPOK.xe0		    :			200		   +100
+RBYT.xe0		    :		     14,400		 +7,200
+T127.xe0		    :			200		   +100
+TPOK.xe0		    :			200		   +100
+TPKT.xe0		    :			200		   +100
+TUCA.xe0		    :			200		   +100
+TVLN.xe0		    :			200		   +100
+TBYT.xe0		    :		     14,400		 +7,200
+RPROG0.xe0		    :			200		   +100
+UC_PERQ_PKT(0).xe0	    :			200		   +100
+UC_PERQ_BYTE(0).xe0	    :		     14,400		 +7,200
+RUC_64.ce0		    :			 59		    +30
+RDBGC0_64.ce0		    :			 59		    +30
+ING_NIV_RX_FRAMES_VL.ce0    :			 59		    +30
+TDBGC4_64.ce0		    :			 59		    +30
+R127.ce0		    :			 59		    +30
+RPKT.ce0		    :			 59		    +30
+RUCA.ce0		    :			 59		    +30
+RPRM.ce0		    :			 59		    +30
+RVLN.ce0		    :			 59		    +30
+RPOK.ce0		    :			 59		    +30
+RBYT.ce0		    :		      4,248		 +2,160
+T127.ce0		    :			 59		    +30
+TPOK.ce0		    :			 59		    +30
+TPKT.ce0		    :			 59		    +30
+TUCA.ce0		    :			 59		    +30
+TVLN.ce0		    :			 59		    +30
+TBYT.ce0		    :		      4,248		 +2,160
+RPROG0.ce0		    :			 59		    +30
+UC_PERQ_PKT(0).ce0	    :			 59		    +30
+UC_PERQ_BYTE(0).ce0	    :		      4,248		 +2,160
+RUC_64.ce1		    :			 57		    +23
+RDBGC0_64.ce1		    :			 57		    +23
+ING_NIV_RX_FRAMES_VL.ce1    :			 57		    +23
+TDBGC4_64.ce1		    :			 57		    +23
+R127.ce1		    :			 57		    +23
+RPKT.ce1		    :			 57		    +23
+RUCA.ce1		    :			 57		    +23
+RPRM.ce1		    :			 57		    +23
+RVLN.ce1		    :			 57		    +23
+RPOK.ce1		    :			 57		    +23
+RBYT.ce1		    :		      4,104		 +1,656
+T127.ce1		    :			 57		    +23
+TPOK.ce1		    :			 57		    +23
+TPKT.ce1		    :			 57		    +23
+TUCA.ce1		    :			 57		    +23
+TVLN.ce1		    :			 57		    +23
+TBYT.ce1		    :		      4,104		 +1,656
+RPROG0.ce1		    :			 57		    +23
+UC_PERQ_PKT(0).ce1	    :			 57		    +23
+UC_PERQ_BYTE(0).ce1	    :		      4,104		 +1,656
+RUC_64.ce2		    :			 84		    +47
+RDBGC0_64.ce2		    :			 84		    +47
+ING_NIV_RX_FRAMES_VL.ce2    :			 84		    +47
+TDBGC4_64.ce2		    :			 84		    +47
+R127.ce2		    :			 84		    +47
+RPKT.ce2		    :			 84		    +47
+RUCA.ce2		    :			 84		    +47
+RPRM.ce2		    :			 84		    +47
+RVLN.ce2		    :			 84		    +47
+RPOK.ce2		    :			 84		    +47
+RBYT.ce2		    :		      6,048		 +3,384
+T127.ce2		    :			 84		    +47
+TPOK.ce2		    :			 84		    +47
+TPKT.ce2		    :			 84		    +47
+TUCA.ce2		    :			 84		    +47
+TVLN.ce2		    :			 84		    +47
+TBYT.ce2		    :		      6,048		 +3,384
+RPROG0.ce2		    :			 84		    +47
+UC_PERQ_PKT(0).ce2	    :			 84		    +47
+UC_PERQ_BYTE(0).ce2	    :		      6,048		 +3,384
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000003B}
+        uint64 bytes = {0x00000000 0x00001098}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000039}
+        uint64 bytes = {0x00000000 0x00001008}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000054}
+        uint64 bytes = {0x00000000 0x000017A0}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 2  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110024242222248100006408004500002E0000000040065CC8140000020A0000011113222400000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			300		   +100
+RUC_64.xe0		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			300		   +100
+R127.xe0		    :			300		   +100
+RPKT.xe0		    :			300		   +100
+RUCA.xe0		    :			300		   +100
+RPRM.xe0		    :			300		   +100
+RVLN.xe0		    :			300		   +100
+RPOK.xe0		    :			300		   +100
+RBYT.xe0		    :		     21,600		 +7,200
+T127.xe0		    :			300		   +100
+TPOK.xe0		    :			300		   +100
+TPKT.xe0		    :			300		   +100
+TUCA.xe0		    :			300		   +100
+TVLN.xe0		    :			300		   +100
+TBYT.xe0		    :		     21,600		 +7,200
+RPROG0.xe0		    :			300		   +100
+UC_PERQ_PKT(0).xe0	    :			300		   +100
+UC_PERQ_BYTE(0).xe0	    :		     21,600		 +7,200
+RUC_64.ce0		    :			 94		    +35
+RDBGC0_64.ce0		    :			 94		    +35
+ING_NIV_RX_FRAMES_VL.ce0    :			 94		    +35
+TDBGC4_64.ce0		    :			 94		    +35
+R127.ce0		    :			 94		    +35
+RPKT.ce0		    :			 94		    +35
+RUCA.ce0		    :			 94		    +35
+RPRM.ce0		    :			 94		    +35
+RVLN.ce0		    :			 94		    +35
+RPOK.ce0		    :			 94		    +35
+RBYT.ce0		    :		      6,768		 +2,520
+T127.ce0		    :			 94		    +35
+TPOK.ce0		    :			 94		    +35
+TPKT.ce0		    :			 94		    +35
+TUCA.ce0		    :			 94		    +35
+TVLN.ce0		    :			 94		    +35
+TBYT.ce0		    :		      6,768		 +2,520
+RPROG0.ce0		    :			 94		    +35
+UC_PERQ_PKT(0).ce0	    :			 94		    +35
+UC_PERQ_BYTE(0).ce0	    :		      6,768		 +2,520
+RUC_64.ce1		    :			 88		    +31
+RDBGC0_64.ce1		    :			 88		    +31
+ING_NIV_RX_FRAMES_VL.ce1    :			 88		    +31
+TDBGC4_64.ce1		    :			 88		    +31
+R127.ce1		    :			 88		    +31
+RPKT.ce1		    :			 88		    +31
+RUCA.ce1		    :			 88		    +31
+RPRM.ce1		    :			 88		    +31
+RVLN.ce1		    :			 88		    +31
+RPOK.ce1		    :			 88		    +31
+RBYT.ce1		    :		      6,336		 +2,232
+T127.ce1		    :			 88		    +31
+TPOK.ce1		    :			 88		    +31
+TPKT.ce1		    :			 88		    +31
+TUCA.ce1		    :			 88		    +31
+TVLN.ce1		    :			 88		    +31
+TBYT.ce1		    :		      6,336		 +2,232
+RPROG0.ce1		    :			 88		    +31
+UC_PERQ_PKT(0).ce1	    :			 88		    +31
+UC_PERQ_BYTE(0).ce1	    :		      6,336		 +2,232
+RUC_64.ce2		    :			118		    +34
+RDBGC0_64.ce2		    :			118		    +34
+ING_NIV_RX_FRAMES_VL.ce2    :			118		    +34
+TDBGC4_64.ce2		    :			118		    +34
+R127.ce2		    :			118		    +34
+RPKT.ce2		    :			118		    +34
+RUCA.ce2		    :			118		    +34
+RPRM.ce2		    :			118		    +34
+RVLN.ce2		    :			118		    +34
+RPOK.ce2		    :			118		    +34
+RBYT.ce2		    :		      8,496		 +2,448
+T127.ce2		    :			118		    +34
+TPOK.ce2		    :			118		    +34
+TPKT.ce2		    :			118		    +34
+TUCA.ce2		    :			118		    +34
+TVLN.ce2		    :			118		    +34
+TBYT.ce2		    :		      8,496		 +2,448
+RPROG0.ce2		    :			118		    +34
+UC_PERQ_PKT(0).ce2	    :			118		    +34
+UC_PERQ_BYTE(0).ce2	    :		      8,496		 +2,448
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000005E}
+        uint64 bytes = {0x00000000 0x00001A70}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000058}
+        uint64 bytes = {0x00000000 0x000018C0}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000076}
+        uint64 bytes = {0x00000000 0x00002130}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 3  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110025252222258100006408004500002E0000000040065CC8140000020A0000011114222500000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			400		   +100
+RUC_64.xe0		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			400		   +100
+R127.xe0		    :			400		   +100
+RPKT.xe0		    :			400		   +100
+RUCA.xe0		    :			400		   +100
+RPRM.xe0		    :			400		   +100
+RVLN.xe0		    :			400		   +100
+RPOK.xe0		    :			400		   +100
+RBYT.xe0		    :		     28,800		 +7,200
+T127.xe0		    :			400		   +100
+TPOK.xe0		    :			400		   +100
+TPKT.xe0		    :			400		   +100
+TUCA.xe0		    :			400		   +100
+TVLN.xe0		    :			400		   +100
+TBYT.xe0		    :		     28,800		 +7,200
+RPROG0.xe0		    :			400		   +100
+UC_PERQ_PKT(0).xe0	    :			400		   +100
+UC_PERQ_BYTE(0).xe0	    :		     28,800		 +7,200
+RUC_64.ce0		    :			127		    +33
+RDBGC0_64.ce0		    :			127		    +33
+ING_NIV_RX_FRAMES_VL.ce0    :			127		    +33
+TDBGC4_64.ce0		    :			127		    +33
+R127.ce0		    :			127		    +33
+RPKT.ce0		    :			127		    +33
+RUCA.ce0		    :			127		    +33
+RPRM.ce0		    :			127		    +33
+RVLN.ce0		    :			127		    +33
+RPOK.ce0		    :			127		    +33
+RBYT.ce0		    :		      9,144		 +2,376
+T127.ce0		    :			127		    +33
+TPOK.ce0		    :			127		    +33
+TPKT.ce0		    :			127		    +33
+TUCA.ce0		    :			127		    +33
+TVLN.ce0		    :			127		    +33
+TBYT.ce0		    :		      9,144		 +2,376
+RPROG0.ce0		    :			127		    +33
+UC_PERQ_PKT(0).ce0	    :			127		    +33
+UC_PERQ_BYTE(0).ce0	    :		      9,144		 +2,376
+RUC_64.ce1		    :			119		    +31
+RDBGC0_64.ce1		    :			119		    +31
+ING_NIV_RX_FRAMES_VL.ce1    :			119		    +31
+TDBGC4_64.ce1		    :			119		    +31
+R127.ce1		    :			119		    +31
+RPKT.ce1		    :			119		    +31
+RUCA.ce1		    :			119		    +31
+RPRM.ce1		    :			119		    +31
+RVLN.ce1		    :			119		    +31
+RPOK.ce1		    :			119		    +31
+RBYT.ce1		    :		      8,568		 +2,232
+T127.ce1		    :			119		    +31
+TPOK.ce1		    :			119		    +31
+TPKT.ce1		    :			119		    +31
+TUCA.ce1		    :			119		    +31
+TVLN.ce1		    :			119		    +31
+TBYT.ce1		    :		      8,568		 +2,232
+RPROG0.ce1		    :			119		    +31
+UC_PERQ_PKT(0).ce1	    :			119		    +31
+UC_PERQ_BYTE(0).ce1	    :		      8,568		 +2,232
+RUC_64.ce2		    :			154		    +36
+RDBGC0_64.ce2		    :			154		    +36
+ING_NIV_RX_FRAMES_VL.ce2    :			154		    +36
+TDBGC4_64.ce2		    :			154		    +36
+R127.ce2		    :			154		    +36
+RPKT.ce2		    :			154		    +36
+RUCA.ce2		    :			154		    +36
+RPRM.ce2		    :			154		    +36
+RVLN.ce2		    :			154		    +36
+RPOK.ce2		    :			154		    +36
+RBYT.ce2		    :		     11,088		 +2,592
+T127.ce2		    :			154		    +36
+TPOK.ce2		    :			154		    +36
+TPKT.ce2		    :			154		    +36
+TUCA.ce2		    :			154		    +36
+TVLN.ce2		    :			154		    +36
+TBYT.ce2		    :		     11,088		 +2,592
+RPROG0.ce2		    :			154		    +36
+UC_PERQ_PKT(0).ce2	    :			154		    +36
+UC_PERQ_BYTE(0).ce2	    :		     11,088		 +2,592
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000007F}
+        uint64 bytes = {0x00000000 0x000023B8}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000077}
+        uint64 bytes = {0x00000000 0x00002178}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x0000009A}
+        uint64 bytes = {0x00000000 0x00002B50}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 4  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110026262222268100006408004500002E0000000040065CC8140000020A0000011115222600000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			500		   +100
+RUC_64.xe0		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			500		   +100
+R127.xe0		    :			500		   +100
+RPKT.xe0		    :			500		   +100
+RUCA.xe0		    :			500		   +100
+RPRM.xe0		    :			500		   +100
+RVLN.xe0		    :			500		   +100
+RPOK.xe0		    :			500		   +100
+RBYT.xe0		    :		     36,000		 +7,200
+T127.xe0		    :			500		   +100
+TPOK.xe0		    :			500		   +100
+TPKT.xe0		    :			500		   +100
+TUCA.xe0		    :			500		   +100
+TVLN.xe0		    :			500		   +100
+TBYT.xe0		    :		     36,000		 +7,200
+RPROG0.xe0		    :			500		   +100
+UC_PERQ_PKT(0).xe0	    :			500		   +100
+UC_PERQ_BYTE(0).xe0	    :		     36,000		 +7,200
+RUC_64.ce0		    :			161		    +34
+RDBGC0_64.ce0		    :			161		    +34
+ING_NIV_RX_FRAMES_VL.ce0    :			161		    +34
+TDBGC4_64.ce0		    :			161		    +34
+R127.ce0		    :			161		    +34
+RPKT.ce0		    :			161		    +34
+RUCA.ce0		    :			161		    +34
+RPRM.ce0		    :			161		    +34
+RVLN.ce0		    :			161		    +34
+RPOK.ce0		    :			161		    +34
+RBYT.ce0		    :		     11,592		 +2,448
+T127.ce0		    :			161		    +34
+TPOK.ce0		    :			161		    +34
+TPKT.ce0		    :			161		    +34
+TUCA.ce0		    :			161		    +34
+TVLN.ce0		    :			161		    +34
+TBYT.ce0		    :		     11,592		 +2,448
+RPROG0.ce0		    :			161		    +34
+UC_PERQ_PKT(0).ce0	    :			161		    +34
+UC_PERQ_BYTE(0).ce0	    :		     11,592		 +2,448
+RUC_64.ce1		    :			152		    +33
+RDBGC0_64.ce1		    :			152		    +33
+ING_NIV_RX_FRAMES_VL.ce1    :			152		    +33
+TDBGC4_64.ce1		    :			152		    +33
+R127.ce1		    :			152		    +33
+RPKT.ce1		    :			152		    +33
+RUCA.ce1		    :			152		    +33
+RPRM.ce1		    :			152		    +33
+RVLN.ce1		    :			152		    +33
+RPOK.ce1		    :			152		    +33
+RBYT.ce1		    :		     10,944		 +2,376
+T127.ce1		    :			152		    +33
+TPOK.ce1		    :			152		    +33
+TPKT.ce1		    :			152		    +33
+TUCA.ce1		    :			152		    +33
+TVLN.ce1		    :			152		    +33
+TBYT.ce1		    :		     10,944		 +2,376
+RPROG0.ce1		    :			152		    +33
+UC_PERQ_PKT(0).ce1	    :			152		    +33
+UC_PERQ_BYTE(0).ce1	    :		     10,944		 +2,376
+RUC_64.ce2		    :			187		    +33
+RDBGC0_64.ce2		    :			187		    +33
+ING_NIV_RX_FRAMES_VL.ce2    :			187		    +33
+TDBGC4_64.ce2		    :			187		    +33
+R127.ce2		    :			187		    +33
+RPKT.ce2		    :			187		    +33
+RUCA.ce2		    :			187		    +33
+RPRM.ce2		    :			187		    +33
+RVLN.ce2		    :			187		    +33
+RPOK.ce2		    :			187		    +33
+RBYT.ce2		    :		     13,464		 +2,376
+T127.ce2		    :			187		    +33
+TPOK.ce2		    :			187		    +33
+TPKT.ce2		    :			187		    +33
+TUCA.ce2		    :			187		    +33
+TVLN.ce2		    :			187		    +33
+TBYT.ce2		    :		     13,464		 +2,376
+RPROG0.ce2		    :			187		    +33
+UC_PERQ_PKT(0).ce2	    :			187		    +33
+UC_PERQ_BYTE(0).ce2	    :		     13,464		 +2,376
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x000000A1}
+        uint64 bytes = {0x00000000 0x00002D48}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000098}
+        uint64 bytes = {0x00000000 0x00002AC0}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000BB}
+        uint64 bytes = {0x00000000 0x00003498}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 5  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110027272222278100006408004500002E0000000040065CC8140000020A0000011116222700000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			600		   +100
+RUC_64.xe0		    :			600		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			600		   +100
+R127.xe0		    :			600		   +100
+RPKT.xe0		    :			600		   +100
+RUCA.xe0		    :			600		   +100
+RPRM.xe0		    :			600		   +100
+RVLN.xe0		    :			600		   +100
+RPOK.xe0		    :			600		   +100
+RBYT.xe0		    :		     43,200		 +7,200
+T127.xe0		    :			600		   +100
+TPOK.xe0		    :			600		   +100
+TPKT.xe0		    :			600		   +100
+TUCA.xe0		    :			600		   +100
+TVLN.xe0		    :			600		   +100
+TBYT.xe0		    :		     43,200		 +7,200
+RPROG0.xe0		    :			600		   +100
+UC_PERQ_PKT(0).xe0	    :			600		   +100
+UC_PERQ_BYTE(0).xe0	    :		     43,200		 +7,200
+RUC_64.ce0		    :			184		    +23
+RDBGC0_64.ce0		    :			184		    +23
+ING_NIV_RX_FRAMES_VL.ce0    :			184		    +23
+TDBGC4_64.ce0		    :			184		    +23
+R127.ce0		    :			184		    +23
+RPKT.ce0		    :			184		    +23
+RUCA.ce0		    :			184		    +23
+RPRM.ce0		    :			184		    +23
+RVLN.ce0		    :			184		    +23
+RPOK.ce0		    :			184		    +23
+RBYT.ce0		    :		     13,248		 +1,656
+T127.ce0		    :			184		    +23
+TPOK.ce0		    :			184		    +23
+TPKT.ce0		    :			184		    +23
+TUCA.ce0		    :			184		    +23
+TVLN.ce0		    :			184		    +23
+TBYT.ce0		    :		     13,248		 +1,656
+RPROG0.ce0		    :			184		    +23
+UC_PERQ_PKT(0).ce0	    :			184		    +23
+UC_PERQ_BYTE(0).ce0	    :		     13,248		 +1,656
+RUC_64.ce1		    :			197		    +45
+RDBGC0_64.ce1		    :			197		    +45
+ING_NIV_RX_FRAMES_VL.ce1    :			197		    +45
+TDBGC4_64.ce1		    :			197		    +45
+R127.ce1		    :			197		    +45
+RPKT.ce1		    :			197		    +45
+RUCA.ce1		    :			197		    +45
+RPRM.ce1		    :			197		    +45
+RVLN.ce1		    :			197		    +45
+RPOK.ce1		    :			197		    +45
+RBYT.ce1		    :		     14,184		 +3,240
+T127.ce1		    :			197		    +45
+TPOK.ce1		    :			197		    +45
+TPKT.ce1		    :			197		    +45
+TUCA.ce1		    :			197		    +45
+TVLN.ce1		    :			197		    +45
+TBYT.ce1		    :		     14,184		 +3,240
+RPROG0.ce1		    :			197		    +45
+UC_PERQ_PKT(0).ce1	    :			197		    +45
+UC_PERQ_BYTE(0).ce1	    :		     14,184		 +3,240
+RUC_64.ce2		    :			219		    +32
+RDBGC0_64.ce2		    :			219		    +32
+ING_NIV_RX_FRAMES_VL.ce2    :			219		    +32
+TDBGC4_64.ce2		    :			219		    +32
+R127.ce2		    :			219		    +32
+RPKT.ce2		    :			219		    +32
+RUCA.ce2		    :			219		    +32
+RPRM.ce2		    :			219		    +32
+RVLN.ce2		    :			219		    +32
+RPOK.ce2		    :			219		    +32
+RBYT.ce2		    :		     15,768		 +2,304
+T127.ce2		    :			219		    +32
+TPOK.ce2		    :			219		    +32
+TPKT.ce2		    :			219		    +32
+TUCA.ce2		    :			219		    +32
+TVLN.ce2		    :			219		    +32
+TBYT.ce2		    :		     15,768		 +2,304
+RPROG0.ce2		    :			219		    +32
+UC_PERQ_PKT(0).ce2	    :			219		    +32
+UC_PERQ_BYTE(0).ce2	    :		     15,768		 +2,304
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x000000B8}
+        uint64 bytes = {0x00000000 0x000033C0}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x000000C5}
+        uint64 bytes = {0x00000000 0x00003768}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000DB}
+        uint64 bytes = {0x00000000 0x00003D98}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 6  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110028282222288100006408004500002E0000000040065CC8140000020A0000011117222800000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			700		   +100
+RUC_64.xe0		    :			700		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			700		   +100
+R127.xe0		    :			700		   +100
+RPKT.xe0		    :			700		   +100
+RUCA.xe0		    :			700		   +100
+RPRM.xe0		    :			700		   +100
+RVLN.xe0		    :			700		   +100
+RPOK.xe0		    :			700		   +100
+RBYT.xe0		    :		     50,400		 +7,200
+T127.xe0		    :			700		   +100
+TPOK.xe0		    :			700		   +100
+TPKT.xe0		    :			700		   +100
+TUCA.xe0		    :			700		   +100
+TVLN.xe0		    :			700		   +100
+TBYT.xe0		    :		     50,400		 +7,200
+RPROG0.xe0		    :			700		   +100
+UC_PERQ_PKT(0).xe0	    :			700		   +100
+UC_PERQ_BYTE(0).xe0	    :		     50,400		 +7,200
+RUC_64.ce0		    :			223		    +39
+RDBGC0_64.ce0		    :			223		    +39
+ING_NIV_RX_FRAMES_VL.ce0    :			223		    +39
+TDBGC4_64.ce0		    :			223		    +39
+R127.ce0		    :			223		    +39
+RPKT.ce0		    :			223		    +39
+RUCA.ce0		    :			223		    +39
+RPRM.ce0		    :			223		    +39
+RVLN.ce0		    :			223		    +39
+RPOK.ce0		    :			223		    +39
+RBYT.ce0		    :		     16,056		 +2,808
+T127.ce0		    :			223		    +39
+TPOK.ce0		    :			223		    +39
+TPKT.ce0		    :			223		    +39
+TUCA.ce0		    :			223		    +39
+TVLN.ce0		    :			223		    +39
+TBYT.ce0		    :		     16,056		 +2,808
+RPROG0.ce0		    :			223		    +39
+UC_PERQ_PKT(0).ce0	    :			223		    +39
+UC_PERQ_BYTE(0).ce0	    :		     16,056		 +2,808
+RUC_64.ce1		    :			224		    +27
+RDBGC0_64.ce1		    :			224		    +27
+ING_NIV_RX_FRAMES_VL.ce1    :			224		    +27
+TDBGC4_64.ce1		    :			224		    +27
+R127.ce1		    :			224		    +27
+RPKT.ce1		    :			224		    +27
+RUCA.ce1		    :			224		    +27
+RPRM.ce1		    :			224		    +27
+RVLN.ce1		    :			224		    +27
+RPOK.ce1		    :			224		    +27
+RBYT.ce1		    :		     16,128		 +1,944
+T127.ce1		    :			224		    +27
+TPOK.ce1		    :			224		    +27
+TPKT.ce1		    :			224		    +27
+TUCA.ce1		    :			224		    +27
+TVLN.ce1		    :			224		    +27
+TBYT.ce1		    :		     16,128		 +1,944
+RPROG0.ce1		    :			224		    +27
+UC_PERQ_PKT(0).ce1	    :			224		    +27
+UC_PERQ_BYTE(0).ce1	    :		     16,128		 +1,944
+RUC_64.ce2		    :			253		    +34
+RDBGC0_64.ce2		    :			253		    +34
+ING_NIV_RX_FRAMES_VL.ce2    :			253		    +34
+TDBGC4_64.ce2		    :			253		    +34
+R127.ce2		    :			253		    +34
+RPKT.ce2		    :			253		    +34
+RUCA.ce2		    :			253		    +34
+RPRM.ce2		    :			253		    +34
+RVLN.ce2		    :			253		    +34
+RPOK.ce2		    :			253		    +34
+RBYT.ce2		    :		     18,216		 +2,448
+T127.ce2		    :			253		    +34
+TPOK.ce2		    :			253		    +34
+TPKT.ce2		    :			253		    +34
+TUCA.ce2		    :			253		    +34
+TVLN.ce2		    :			253		    +34
+TBYT.ce2		    :		     18,216		 +2,448
+RPROG0.ce2		    :			253		    +34
+UC_PERQ_PKT(0).ce2	    :			253		    +34
+UC_PERQ_BYTE(0).ce2	    :		     18,216		 +2,448
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x000000DF}
+        uint64 bytes = {0x00000000 0x00003EB8}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x000000E0}
+        uint64 bytes = {0x00000000 0x00003F00}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000FD}
+        uint64 bytes = {0x00000000 0x00004728}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 7  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110029292222298100006408004500002E0000000040065CC8140000020A0000011118222900000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			800		   +100
+RUC_64.xe0		    :			800		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			800		   +100
+R127.xe0		    :			800		   +100
+RPKT.xe0		    :			800		   +100
+RUCA.xe0		    :			800		   +100
+RPRM.xe0		    :			800		   +100
+RVLN.xe0		    :			800		   +100
+RPOK.xe0		    :			800		   +100
+RBYT.xe0		    :		     57,600		 +7,200
+T127.xe0		    :			800		   +100
+TPOK.xe0		    :			800		   +100
+TPKT.xe0		    :			800		   +100
+TUCA.xe0		    :			800		   +100
+TVLN.xe0		    :			800		   +100
+TBYT.xe0		    :		     57,600		 +7,200
+RPROG0.xe0		    :			800		   +100
+UC_PERQ_PKT(0).xe0	    :			800		   +100
+UC_PERQ_BYTE(0).xe0	    :		     57,600		 +7,200
+RUC_64.ce0		    :			252		    +29
+RDBGC0_64.ce0		    :			252		    +29
+ING_NIV_RX_FRAMES_VL.ce0    :			252		    +29
+TDBGC4_64.ce0		    :			252		    +29
+R127.ce0		    :			252		    +29
+RPKT.ce0		    :			252		    +29
+RUCA.ce0		    :			252		    +29
+RPRM.ce0		    :			252		    +29
+RVLN.ce0		    :			252		    +29
+RPOK.ce0		    :			252		    +29
+RBYT.ce0		    :		     18,144		 +2,088
+T127.ce0		    :			252		    +29
+TPOK.ce0		    :			252		    +29
+TPKT.ce0		    :			252		    +29
+TUCA.ce0		    :			252		    +29
+TVLN.ce0		    :			252		    +29
+TBYT.ce0		    :		     18,144		 +2,088
+RPROG0.ce0		    :			252		    +29
+UC_PERQ_PKT(0).ce0	    :			252		    +29
+UC_PERQ_BYTE(0).ce0	    :		     18,144		 +2,088
+RUC_64.ce1		    :			256		    +32
+RDBGC0_64.ce1		    :			256		    +32
+ING_NIV_RX_FRAMES_VL.ce1    :			256		    +32
+TDBGC4_64.ce1		    :			256		    +32
+R127.ce1		    :			256		    +32
+RPKT.ce1		    :			256		    +32
+RUCA.ce1		    :			256		    +32
+RPRM.ce1		    :			256		    +32
+RVLN.ce1		    :			256		    +32
+RPOK.ce1		    :			256		    +32
+RBYT.ce1		    :		     18,432		 +2,304
+T127.ce1		    :			256		    +32
+TPOK.ce1		    :			256		    +32
+TPKT.ce1		    :			256		    +32
+TUCA.ce1		    :			256		    +32
+TVLN.ce1		    :			256		    +32
+TBYT.ce1		    :		     18,432		 +2,304
+RPROG0.ce1		    :			256		    +32
+UC_PERQ_PKT(0).ce1	    :			256		    +32
+UC_PERQ_BYTE(0).ce1	    :		     18,432		 +2,304
+RUC_64.ce2		    :			292		    +39
+RDBGC0_64.ce2		    :			292		    +39
+ING_NIV_RX_FRAMES_VL.ce2    :			292		    +39
+TDBGC4_64.ce2		    :			292		    +39
+R127.ce2		    :			292		    +39
+RPKT.ce2		    :			292		    +39
+RUCA.ce2		    :			292		    +39
+RPRM.ce2		    :			292		    +39
+RVLN.ce2		    :			292		    +39
+RPOK.ce2		    :			292		    +39
+RBYT.ce2		    :		     21,024		 +2,808
+T127.ce2		    :			292		    +39
+TPOK.ce2		    :			292		    +39
+TPKT.ce2		    :			292		    +39
+TUCA.ce2		    :			292		    +39
+TVLN.ce2		    :			292		    +39
+TBYT.ce2		    :		     21,024		 +2,808
+RPROG0.ce2		    :			292		    +39
+UC_PERQ_PKT(0).ce2	    :			292		    +39
+UC_PERQ_BYTE(0).ce2	    :		     21,024		 +2,808
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x000000FC}
+        uint64 bytes = {0x00000000 0x000046E0}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000100}
+        uint64 bytes = {0x00000000 0x00004800}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000124}
+        uint64 bytes = {0x00000000 0x00005220}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 8  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002A2A22222A8100006408004500002E0000000040065CC8140000020A0000011119222A00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			900		   +100
+RUC_64.xe0		    :			900		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			900		   +100
+R127.xe0		    :			900		   +100
+RPKT.xe0		    :			900		   +100
+RUCA.xe0		    :			900		   +100
+RPRM.xe0		    :			900		   +100
+RVLN.xe0		    :			900		   +100
+RPOK.xe0		    :			900		   +100
+RBYT.xe0		    :		     64,800		 +7,200
+T127.xe0		    :			900		   +100
+TPOK.xe0		    :			900		   +100
+TPKT.xe0		    :			900		   +100
+TUCA.xe0		    :			900		   +100
+TVLN.xe0		    :			900		   +100
+TBYT.xe0		    :		     64,800		 +7,200
+RPROG0.xe0		    :			900		   +100
+UC_PERQ_PKT(0).xe0	    :			900		   +100
+UC_PERQ_BYTE(0).xe0	    :		     64,800		 +7,200
+RUC_64.ce0		    :			282		    +30
+RDBGC0_64.ce0		    :			282		    +30
+ING_NIV_RX_FRAMES_VL.ce0    :			282		    +30
+TDBGC4_64.ce0		    :			282		    +30
+R127.ce0		    :			282		    +30
+RPKT.ce0		    :			282		    +30
+RUCA.ce0		    :			282		    +30
+RPRM.ce0		    :			282		    +30
+RVLN.ce0		    :			282		    +30
+RPOK.ce0		    :			282		    +30
+RBYT.ce0		    :		     20,304		 +2,160
+T127.ce0		    :			282		    +30
+TPOK.ce0		    :			282		    +30
+TPKT.ce0		    :			282		    +30
+TUCA.ce0		    :			282		    +30
+TVLN.ce0		    :			282		    +30
+TBYT.ce0		    :		     20,304		 +2,160
+RPROG0.ce0		    :			282		    +30
+UC_PERQ_PKT(0).ce0	    :			282		    +30
+UC_PERQ_BYTE(0).ce0	    :		     20,304		 +2,160
+RUC_64.ce1		    :			290		    +34
+RDBGC0_64.ce1		    :			290		    +34
+ING_NIV_RX_FRAMES_VL.ce1    :			290		    +34
+TDBGC4_64.ce1		    :			290		    +34
+R127.ce1		    :			290		    +34
+RPKT.ce1		    :			290		    +34
+RUCA.ce1		    :			290		    +34
+RPRM.ce1		    :			290		    +34
+RVLN.ce1		    :			290		    +34
+RPOK.ce1		    :			290		    +34
+RBYT.ce1		    :		     20,880		 +2,448
+T127.ce1		    :			290		    +34
+TPOK.ce1		    :			290		    +34
+TPKT.ce1		    :			290		    +34
+TUCA.ce1		    :			290		    +34
+TVLN.ce1		    :			290		    +34
+TBYT.ce1		    :		     20,880		 +2,448
+RPROG0.ce1		    :			290		    +34
+UC_PERQ_PKT(0).ce1	    :			290		    +34
+UC_PERQ_BYTE(0).ce1	    :		     20,880		 +2,448
+RUC_64.ce2		    :			328		    +36
+RDBGC0_64.ce2		    :			328		    +36
+ING_NIV_RX_FRAMES_VL.ce2    :			328		    +36
+TDBGC4_64.ce2		    :			328		    +36
+R127.ce2		    :			328		    +36
+RPKT.ce2		    :			328		    +36
+RUCA.ce2		    :			328		    +36
+RPRM.ce2		    :			328		    +36
+RVLN.ce2		    :			328		    +36
+RPOK.ce2		    :			328		    +36
+RBYT.ce2		    :		     23,616		 +2,592
+T127.ce2		    :			328		    +36
+TPOK.ce2		    :			328		    +36
+TPKT.ce2		    :			328		    +36
+TUCA.ce2		    :			328		    +36
+TVLN.ce2		    :			328		    +36
+TBYT.ce2		    :		     23,616		 +2,592
+RPROG0.ce2		    :			328		    +36
+UC_PERQ_PKT(0).ce2	    :			328		    +36
+UC_PERQ_BYTE(0).ce2	    :		     23,616		 +2,592
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000011A}
+        uint64 bytes = {0x00000000 0x00004F50}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000122}
+        uint64 bytes = {0x00000000 0x00005190}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000148}
+        uint64 bytes = {0x00000000 0x00005C40}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 9  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002B2B22222B8100006408004500002E0000000040065CC8140000020A000001111A222B00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :		      1,000		   +100
+RUC_64.xe0		    :		      1,000		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :		      1,000		   +100
+R127.xe0		    :		      1,000		   +100
+RPKT.xe0		    :		      1,000		   +100
+RUCA.xe0		    :		      1,000		   +100
+RPRM.xe0		    :		      1,000		   +100
+RVLN.xe0		    :		      1,000		   +100
+RPOK.xe0		    :		      1,000		   +100
+RBYT.xe0		    :		     72,000		 +7,200
+T127.xe0		    :		      1,000		   +100
+TPOK.xe0		    :		      1,000		   +100
+TPKT.xe0		    :		      1,000		   +100
+TUCA.xe0		    :		      1,000		   +100
+TVLN.xe0		    :		      1,000		   +100
+TBYT.xe0		    :		     72,000		 +7,200
+RPROG0.xe0		    :		      1,000		   +100
+UC_PERQ_PKT(0).xe0	    :		      1,000		   +100
+UC_PERQ_BYTE(0).xe0	    :		     72,000		 +7,200
+RUC_64.ce0		    :			317		    +35
+RDBGC0_64.ce0		    :			317		    +35
+ING_NIV_RX_FRAMES_VL.ce0    :			317		    +35
+TDBGC4_64.ce0		    :			317		    +35
+R127.ce0		    :			317		    +35
+RPKT.ce0		    :			317		    +35
+RUCA.ce0		    :			317		    +35
+RPRM.ce0		    :			317		    +35
+RVLN.ce0		    :			317		    +35
+RPOK.ce0		    :			317		    +35
+RBYT.ce0		    :		     22,824		 +2,520
+T127.ce0		    :			317		    +35
+TPOK.ce0		    :			317		    +35
+TPKT.ce0		    :			317		    +35
+TUCA.ce0		    :			317		    +35
+TVLN.ce0		    :			317		    +35
+TBYT.ce0		    :		     22,824		 +2,520
+RPROG0.ce0		    :			317		    +35
+UC_PERQ_PKT(0).ce0	    :			317		    +35
+UC_PERQ_BYTE(0).ce0	    :		     22,824		 +2,520
+RUC_64.ce1		    :			329		    +39
+RDBGC0_64.ce1		    :			329		    +39
+ING_NIV_RX_FRAMES_VL.ce1    :			329		    +39
+TDBGC4_64.ce1		    :			329		    +39
+R127.ce1		    :			329		    +39
+RPKT.ce1		    :			329		    +39
+RUCA.ce1		    :			329		    +39
+RPRM.ce1		    :			329		    +39
+RVLN.ce1		    :			329		    +39
+RPOK.ce1		    :			329		    +39
+RBYT.ce1		    :		     23,688		 +2,808
+T127.ce1		    :			329		    +39
+TPOK.ce1		    :			329		    +39
+TPKT.ce1		    :			329		    +39
+TUCA.ce1		    :			329		    +39
+TVLN.ce1		    :			329		    +39
+TBYT.ce1		    :		     23,688		 +2,808
+RPROG0.ce1		    :			329		    +39
+UC_PERQ_PKT(0).ce1	    :			329		    +39
+UC_PERQ_BYTE(0).ce1	    :		     23,688		 +2,808
+RUC_64.ce2		    :			354		    +26
+RDBGC0_64.ce2		    :			354		    +26
+ING_NIV_RX_FRAMES_VL.ce2    :			354		    +26
+TDBGC4_64.ce2		    :			354		    +26
+R127.ce2		    :			354		    +26
+RPKT.ce2		    :			354		    +26
+RUCA.ce2		    :			354		    +26
+RPRM.ce2		    :			354		    +26
+RVLN.ce2		    :			354		    +26
+RPOK.ce2		    :			354		    +26
+RBYT.ce2		    :		     25,488		 +1,872
+T127.ce2		    :			354		    +26
+TPOK.ce2		    :			354		    +26
+TPKT.ce2		    :			354		    +26
+TUCA.ce2		    :			354		    +26
+TVLN.ce2		    :			354		    +26
+TBYT.ce2		    :		     25,488		 +1,872
+RPROG0.ce2		    :			354		    +26
+UC_PERQ_PKT(0).ce2	    :			354		    +26
+UC_PERQ_BYTE(0).ce2	    :		     25,488		 +1,872
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000013D}
+        uint64 bytes = {0x00000000 0x00005928}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100002 (0x186a2)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000149}
+        uint64 bytes = {0x00000000 0x00005C88}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100003 (0x186a3)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000162}
+        uint64 bytes = {0x00000000 0x00006390}
+        int period = 0 (0x0)
+        int gport_id = -1 (0xffffffff)
+        int intf_id = 100004 (0x186a4)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+BCM.0> 

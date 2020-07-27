@@ -1,0 +1,627 @@
+rack# ./bcm.user
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.15 built 20190201 (Fri Feb  1 15:36:42 2019)
+From sr936857@xl-blr-07:/projects/ntsw-sw7/home/sr936857/git-code/sdk_boiler/SDK_6515
+Platform: X86
+OS: Unix (Posix)
+DMA pool size: 33554432
+PCI unit 0: Dev 0xb770, Rev 0x01, Chip BCM56770_A0, Driver BCM56770_A0
+SOC unit 0 attached to PCI device BCM56770_A0
+rc: unit 0 device BCM56770_A0
+open /dev/linux-bcm-knet: : No such file or directory
+Loading M0 Firmware located at ../../../../rc/cmicfw/linkscan_led_fw.bin
+Loading M0 Firmware located at ../../../../rc/cmicfw/custom_led.bin
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.01.02
+
+	CMH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+	CCH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+	CEH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+rc: MMU initialized
+MCSLoad: Error: Unable to open file: BCM56770_0_bfd.srec
+MCSLoad: Error: Unable to open file: BCM56770_1_ptpfull.srec
+*** unit 0: ports capable of limited speed range cut-thru
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0> cd /projects/ntsw-sw7/home/msivaram/code_base/sdk/src/examples/xgs/maverick2/Vxlan/LegacyAPI
+BCM.0> c acc_to_acc_uc.c
+**************************** basic information begin****************************
+    phy_chain_rx_polarity_flip_physical{61}=0x1
+    phy_chain_rx_polarity_flip_physical{44}=0x0
+    phy_chain_tx_lane_map_physical{49.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{27}=0x1
+    phy_chain_tx_polarity_flip_physical{81}=0x0
+    phy_chain_tx_polarity_flip_physical{64}=0x1
+    phy_chain_tx_polarity_flip_physical{47}=0x1
+    portmap_8=29:100
+    phy_chain_rx_polarity_flip_physical{70}=0x0
+    phy_chain_rx_polarity_flip_physical{53}=0x0
+    phy_chain_rx_polarity_flip_physical{36}=0x1
+    phy_chain_rx_polarity_flip_physical{19}=0x0
+    phy_chain_tx_polarity_flip_physical{73}=0x0
+    phy_chain_tx_polarity_flip_physical{56}=0x1
+    phy_chain_tx_polarity_flip_physical{39}=0x1
+    portmap_9=33:100
+    phy_chain_tx_polarity_flip_physical{2}=0x0
+    phy_chain_rx_lane_map_physical{21.0}=0x3120
+    phy_chain_rx_lane_map_physical{29.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{62}=0x1
+    phy_chain_rx_polarity_flip_physical{45}=0x0
+    phy_chain_rx_polarity_flip_physical{28}=0x1
+    phy_chain_tx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_lane_map_physical{5.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{48}=0x1
+    portmap_10=37:100
+    phy_chain_tx_lane_map_physical{33.0}=0x2031
+    phy_chain_rx_lane_map_physical{73.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{71}=0x1
+    phy_chain_rx_polarity_flip_physical{54}=0x0
+    phy_chain_rx_polarity_flip_physical{37}=0x1
+    phy_chain_tx_polarity_flip_physical{74}=0x1
+    phy_chain_tx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{3}=0x1
+    phy_chain_rx_polarity_flip_physical{80}=0x0
+    dpp_clock_ratio=2:3
+    phy_chain_rx_polarity_flip_physical{63}=0x0
+    phy_chain_rx_polarity_flip_physical{46}=0x0
+    phy_chain_rx_polarity_flip_physical{29}=0x0
+    phy_chain_tx_lane_map_physical{1.0}=0x2031
+    phy_chain_tx_polarity_flip_physical{66}=0x1
+    phy_chain_tx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_lane_map_physical{9.0}=0x2031
+    phy_chain_rx_lane_map_physical{13.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{72}=0x1
+    phy_chain_rx_polarity_flip_physical{55}=0x1
+    phy_chain_rx_polarity_flip_physical{38}=0x1
+    phy_chain_tx_polarity_flip_physical{75}=0x1
+    phy_chain_tx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{4}=0x1
+    phy_chain_tx_lane_map_physical{25.0}=0x2031
+    phy_chain_rx_lane_map_physical{65.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{81}=0x0
+    phy_chain_rx_polarity_flip_physical{64}=0x0
+    phy_chain_rx_polarity_flip_physical{47}=0x1
+    phy_chain_tx_polarity_flip_physical{67}=0x1
+    oversubscribe_mode=1
+    phy_chain_tx_lane_map_physical{77.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{73}=0x0
+    phy_chain_rx_polarity_flip_physical{56}=0x1
+    phy_chain_rx_polarity_flip_physical{39}=0x0
+    phy_chain_tx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{1}=0x1
+    phy_chain_tx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{5}=0x1
+    phy_chain_rx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_polarity_flip_physical{48}=0x1
+    phy_chain_tx_polarity_flip_physical{68}=0x1
+    phy_chain_tx_polarity_flip_physical{10}=0x0
+    phy_chain_tx_lane_map_physical{17.0}=0x2031
+    phy_chain_rx_lane_map_physical{57.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{74}=0x0
+    phy_chain_rx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{77}=0x0
+    phy_chain_rx_polarity_flip_physical{2}=0x1
+    phy_chain_tx_polarity_flip_physical{6}=0x0
+    portmap_41=41:100
+    phy_chain_tx_lane_map_physical{61.0}=0x3120
+    phy_chain_tx_lane_map_physical{69.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{66}=0x0
+    phy_chain_rx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_polarity_flip_physical{69}=0x0
+    portmap_50=77:100
+    portmap_42=45:100
+    phy_chain_tx_polarity_flip_physical{11}=0x1
+    phy_chain_rx_polarity_flip_physical{75}=0x1
+    phy_chain_rx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{78}=0x0
+    phy_chain_rx_polarity_flip_physical{3}=0x1
+    phy_chain_tx_polarity_flip_physical{7}=0x0
+    phy_chain_rx_lane_map_physical{41.0}=0x2031
+    portmap_43=49:100
+    phy_chain_tx_polarity_flip_physical{20}=0x1
+    phy_chain_rx_lane_map_physical{49.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{67}=0x1
+    portmap_44=53:100
+    phy_chain_tx_lane_map_physical{53.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{12}=0x1
+    phy_chain_rx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{79}=0x1
+    phy_chain_rx_polarity_flip_physical{4}=0x0
+    phy_chain_tx_polarity_flip_physical{8}=0x1
+    portmap_45=57:100
+    phy_chain_tx_polarity_flip_physical{21}=0x0
+    phy_chain_rx_polarity_flip_physical{68}=0x1
+    fpem_mem_entries=16384
+    phy_chain_rx_lane_map_physical{33.0}=0x1302
+    pbmp_xport_xe=0x10007fe00000007fe
+    phy_chain_rx_polarity_flip_physical{10}=0x0
+    portmap_46=61:100
+    phy_chain_tx_polarity_flip_physical{30}=0x1
+    phy_chain_tx_polarity_flip_physical{13}=0x0
+    phy_chain_rx_polarity_flip_physical{77}=0x1
+    l2_mem_entries=32768
+    os=unix
+    phy_chain_rx_polarity_flip_physical{5}=0x0
+    phy_chain_tx_polarity_flip_physical{9}=0x0
+    portmap_47=65:100
+    phy_chain_tx_lane_map_physical{45.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{22}=0x0
+    phy_chain_rx_polarity_flip_physical{69}=0x0
+    phy_chain_rx_polarity_flip_physical{11}=0x1
+    portmap_64=81:10:4
+    portmap_48=69:100
+    phy_chain_tx_polarity_flip_physical{31}=0x1
+    phy_chain_tx_polarity_flip_physical{14}=0x0
+    phy_chain_rx_polarity_flip_physical{78}=0x1
+    phy_chain_rx_polarity_flip_physical{6}=0x0
+    phy_chain_rx_lane_map_physical{25.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{20}=0x0
+    portmap_65=82:10
+    portmap_49=73:100
+    phy_chain_tx_polarity_flip_physical{40}=0x1
+    phy_chain_tx_polarity_flip_physical{23}=0x1
+    phy_chain_rx_lane_map_physical{1.0}=0x1302
+    phy_chain_rx_lane_map_physical{9.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{12}=0x1
+    phy_chain_tx_lane_map_physical{37.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_lane_map_physical{77.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{15}=0x1
+    phy_chain_rx_polarity_flip_physical{79}=0x0
+    phy_chain_rx_polarity_flip_physical{7}=0x1
+    phy_chain_rx_polarity_flip_physical{21}=0x0
+    phy_chain_tx_lane_map_physical{81.0}=0x3210
+    phy_chain_tx_polarity_flip_physical{41}=0x0
+    phy_chain_tx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{5.0}=0x0132
+    phy_chain_rx_lane_map_physical{17.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{30}=0x0
+    phy_chain_rx_polarity_flip_physical{13}=0x0
+    phy_chain_tx_polarity_flip_physical{50}=0x0
+    phy_chain_tx_polarity_flip_physical{33}=0x0
+    phy_chain_tx_polarity_flip_physical{16}=0x1
+    phy_chain_rx_polarity_flip_physical{8}=0x1
+    phy_chain_tx_lane_map_physical{21.0}=0x0213
+    phy_chain_rx_lane_map_physical{61.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{22}=0x0
+    core_clock_frequency=1525
+    phy_chain_tx_lane_map_physical{29.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_lane_map_physical{69.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{25}=0x0
+    phy_chain_rx_polarity_flip_physical{31}=0x1
+    phy_chain_rx_polarity_flip_physical{14}=0x0
+    phy_chain_tx_lane_map_physical{73.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{51}=0x1
+    phy_chain_tx_polarity_flip_physical{34}=0x1
+    phy_chain_tx_polarity_flip_physical{17}=0x0
+    phy_chain_rx_polarity_flip_physical{9}=0x0
+    l2xmsg_mode=1
+    phy_chain_rx_polarity_flip_physical{40}=0x0
+    phy_chain_rx_polarity_flip_physical{23}=0x1
+    phy_chain_tx_polarity_flip_physical{60}=0x1
+    phy_chain_tx_polarity_flip_physical{43}=0x1
+    phy_chain_tx_polarity_flip_physical{26}=0x1
+    phy_chain_tx_lane_map_physical{13.0}=0x0213
+    phy_chain_rx_lane_map_physical{53.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_polarity_flip_physical{15}=0x1
+    portmap_1=1:100
+    phy_chain_tx_polarity_flip_physical{52}=0x1
+    phy_chain_tx_polarity_flip_physical{35}=0x1
+    phy_chain_tx_polarity_flip_physical{18}=0x0
+    phy_chain_rx_polarity_flip_physical{41}=0x1
+    phy_chain_rx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{65.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{61}=0x0
+    portmap_2=5:100
+    phy_chain_tx_polarity_flip_physical{44}=0x1
+    phy_chain_tx_polarity_flip_physical{27}=0x1
+    phy_chain_rx_polarity_flip_physical{50}=0x0
+    phy_chain_rx_polarity_flip_physical{33}=0x0
+    phy_chain_rx_polarity_flip_physical{16}=0x1
+    phy_chain_tx_polarity_flip_physical{70}=0x0
+    phy_chain_tx_polarity_flip_physical{53}=0x0
+    portmap_3=9:100
+    phy_chain_tx_polarity_flip_physical{36}=0x1
+    phy_chain_tx_polarity_flip_physical{19}=0x1
+    phy_chain_rx_lane_map_physical{45.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_polarity_flip_physical{25}=0x0
+    phy_chain_tx_polarity_flip_physical{62}=0x1
+    phy_chain_tx_polarity_flip_physical{45}=0x0
+    portmap_4=13:100
+    phy_chain_tx_polarity_flip_physical{28}=0x1
+    l3_mem_entries=16384
+    phy_chain_rx_polarity_flip_physical{51}=0x1
+    phy_chain_rx_polarity_flip_physical{34}=0x0
+    phy_chain_tx_lane_map_physical{57.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{17}=0x1
+    phy_chain_tx_polarity_flip_physical{71}=0x1
+    phy_chain_tx_polarity_flip_physical{54}=0x0
+    phy_chain_tx_polarity_flip_physical{37}=0x0
+    portmap_5=17:100
+    phy_chain_rx_polarity_flip_physical{60}=0x1
+    phy_chain_rx_polarity_flip_physical{43}=0x0
+    phy_chain_rx_polarity_flip_physical{26}=0x0
+    phy_chain_tx_polarity_flip_physical{80}=0x1
+    phy_chain_tx_polarity_flip_physical{63}=0x1
+    phy_chain_tx_polarity_flip_physical{46}=0x0
+    phy_chain_tx_polarity_flip_physical{29}=0x0
+    portmap_6=21:100
+    phy_chain_rx_lane_map_physical{37.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{52}=0x1
+    phy_chain_rx_polarity_flip_physical{35}=0x1
+    phy_chain_rx_polarity_flip_physical{18}=0x1
+    phy_chain_tx_polarity_flip_physical{72}=0x1
+    phy_chain_tx_polarity_flip_physical{55}=0x1
+    phy_chain_tx_polarity_flip_physical{38}=0x0
+    portmap_7=25:100
+    phy_chain_tx_polarity_flip_physical{1}=0x0
+    phy_chain_tx_lane_map_physical{41.0}=0x1302
+    phy_chain_rx_lane_map_physical{81.0}=0x3210
+Attach: Unit 0 (BCM56770_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.15 built 20190201 (Fri Feb  1 15:36:42 2019)
+From sr936857@xl-blr-07:/projects/ntsw-sw7/home/sr936857/git-code/sdk_boiler/SDK_6515
+Platform: X86
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+      
+       BCM88732_A0, BCM56440_A0, BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+      
+      
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM53570_A0,
+       BCM53570_B0, BCM56980_A0, BCM56980_B0, BCM53540_A0,
+       BCM56670_A0, BCM56670_B0, BCM56370_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM84756
+    BCM84757, BCM84759, BCM5421S, BCM54680,
+    BCM53324, BCM56160-GPHY, BCM53540-GPHY, BCM54880,
+    BCM54881, BCM54810, BCM54811, BCM54640E,
+    BCM54880E, BCM54680E, BCM52681E, BCM8703,
+    BCM8704, BCM8705/24/25, BCM8706/8726, BCM8727,
+    BCM8728/8747, BCM8072, BCM8073, BCM8074,
+    BCM8040, BCM8481X, BCM84812, BCM84821,
+    BCM84822, BCM84823, BCM84833, BCM84834,
+    BCM84835, BCM84836, BCM84844, BCM84846,
+    BCM84848, BCM84858, BCM84856, BCM84860,
+    BCM84861, BCM84864, BCM84868, BCM84888,
+    BCM84884, BCM84888E, BCM84884E, BCM84881,
+    BCM84880, BCM84888S, BCM84887, BCM84886,
+    BCM84885, BCM8750, BCM8752, BCM8754,
+    BCM84740, BCM84164, BCM84758, BCM84780,
+    BCM84784, BCM84318, BCM84328, BCM84793
+    BCM82328, Furia, Huracan, Sesto,
+    Madura, BCM82780, copper sfp
+   
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.01.02
+
+	CMH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+	CCH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+	CEH: LOADED
+	Ver: 03.01.02
+	SDK Ver: 06.05.15
+
+**************************** basic information end****************************
+
+**************************** test setup begin****************************
+Using port number:1 as access_port_1
+Using port number:2 as access_port_2
+Using port number:3 as access_port_3
+**************************** test setup end****************************
+
+****************************run main script begin****************************
+bcm_switch_control_set SUCCESS! 
+bcm_switch_control_set bcmSwitchVxlanUdpDestPortSet SUCCESS! 
+bcm_switch_control_set bcmSwitchVxlanEntropyEnable SUCCESS! 
+bcm_switch_control_set bcmSwitchVxlanTunnelMissToCpu SUCCESS! 
+bcm_switch_control_set bcmSwitchVxlanVnIdMissToCpu SUCCESS! 
+bcm_vlan_control_port_set bcmVlanTranslateIngressEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanTunnelbasedVnId SUCCESS! 
+bcm_vlan_control_port_set bcmVlanTranslateIngressEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanTunnelbasedVnId SUCCESS! 
+bcm_vlan_control_port_set bcmVlanTranslateIngressEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanEnable SUCCESS! 
+bcm_vlan_control_port_set bcmPortControlVxlanTunnelbasedVnId SUCCESS! 
+sdtag_create_vxlan_vpn SUCCESS! 
+vlan_create_add_port SUCCESS 
+create_l3_interface SUCCESS! 
+vxlan_create_egr_obj SUCCESS! 
+sdtag_create_vxlan_acc_vp SUCCESS! 
+int vxlan_port_a = -2147483647 (0x80000001)
+vlan_create_add_port SUCCESS 
+create_l3_interface SUCCESS! 
+vxlan_create_egr_obj SUCCESS! 
+sdtag_create_vxlan_acc_vp SUCCESS! 
+int vxlan_port_b = -2147483646 (0x80000002)
+vlan_create_add_port SUCCESS 
+create_l3_interface SUCCESS! 
+vxlan_create_egr_obj SUCCESS! 
+sdtag_create_vxlan_acc_vp SUCCESS! 
+int vxlan_port_c = -2147483645 (0x80000003)
+add_to_l2_table SUCCESS! 
+add_to_l2_table SUCCESS! 
+add_to_l2_table SUCCESS! 
+acc_to_acc_uc SUCCESS 
+****************************run main script end****************************
+
+****************************Verify begin****************************
+Current header mode for unit 0 is now Ieee (0).
+ 
+ **************TEST 1	access port1--> access port3 **************
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan)
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000003} {000000000001} 8100 000a
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff da7d c0a8 
+[bcmPW.0]Packet[1]: data[0020]: 1402 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[1]: data[0040]: b437 ccce 
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -2147483645. src-gport -2147483647. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:03> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.20.2> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7d>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000003} {000000000001} 8100 000c
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 40ff da7d c0a8 
+[bcmPW.0]Packet[2]: data[0020]: 1402 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[2]: data[0040]: 5cd9 fe5b 
+[bcmPW.0]Packet[2]: length 68 (68). rx-port 3. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-gport -2147483645. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:03> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<192.168.20.2> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7d>
+mac=00:00:00:00:00:01 vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+Sleeping for 1 second
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2
+MC_PERQ_BYTE(0).cpu0	    :			136		   +136
+RUC_64.ce0		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ce0    :			  1		     +1
+CLMIB_R127.ce0		    :			  1		     +1
+CLMIB_RPKT.ce0		    :			  1		     +1
+CLMIB_RUCA.ce0		    :			  1		     +1
+CLMIB_RPRM.ce0		    :			  1		     +1
+CLMIB_RVLN.ce0		    :			  1		     +1
+CLMIB_RPOK.ce0		    :			  1		     +1
+CLMIB_RBYT.ce0		    :			 68		    +68
+CLMIB_T127.ce0		    :			  1		     +1
+CLMIB_TPOK.ce0		    :			  1		     +1
+CLMIB_TPKT.ce0		    :			  1		     +1
+CLMIB_TUCA.ce0		    :			  1		     +1
+CLMIB_TVLN.ce0		    :			  1		     +1
+CLMIB_TBYT.ce0		    :			 68		    +68
+CLMIB_RPROG0.ce0	    :			  1		     +1
+UC_PERQ_PKT(0).ce0	    :			  1		     +1
+UC_PERQ_BYTE(0).ce0	    :			 68		    +68
+RUC_64.ce2		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ce2    :			  1		     +1
+CLMIB_R127.ce2		    :			  1		     +1
+CLMIB_RPKT.ce2		    :			  1		     +1
+CLMIB_RUCA.ce2		    :			  1		     +1
+CLMIB_RPRM.ce2		    :			  1		     +1
+CLMIB_RVLN.ce2		    :			  1		     +1
+CLMIB_RPOK.ce2		    :			  1		     +1
+CLMIB_RBYT.ce2		    :			 68		    +68
+CLMIB_T127.ce2		    :			  1		     +1
+CLMIB_TPOK.ce2		    :			  1		     +1
+CLMIB_TPKT.ce2		    :			  1		     +1
+CLMIB_TUCA.ce2		    :			  1		     +1
+CLMIB_TVLN.ce2		    :			  1		     +1
+CLMIB_TBYT.ce2		    :			 68		    +68
+CLMIB_RPROG0.ce2	    :			  1		     +1
+UC_PERQ_PKT(0).ce2	    :			  1		     +1
+UC_PERQ_BYTE(0).ce2	    :			 68		    +68
+ 
+ **************TEST 2 access	port1--> access port2**************
+mac=00:00:00:00:00:01 vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+Packet from data=<>, length=72
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000011} {000000000001} 8100 000a
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 40ff da7d c0a8 
+[bcmPW.0]Packet[3]: data[0020]: 1402 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[3]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[3]: data[0040]: 037c 213e 1cdf 4421 
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-gport -2147483646. src-gport -2147483647. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<192.168.20.2> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7d>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000011} {000000000001} 8100 000b
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 40ff da7d c0a8 
+[bcmPW.0]Packet[4]: data[0020]: 1402 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[4]: data[0040]: 037c 213e 5d6f 9c5f 
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-gport -2147483646. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<192.168.20.2> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7d>
+mac=00:00:00:00:00:01 vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan) Hit
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+Sleeping for 1 second
+MC_PERQ_PKT(0).cpu0	    :			  4		     +2
+MC_PERQ_BYTE(0).cpu0	    :			280		   +144
+RUC_64.ce0		    :			  2		     +1
+ING_NIV_RX_FRAMES_VL.ce0    :			  2		     +1
+CLMIB_R127.ce0		    :			  2		     +1
+CLMIB_RPKT.ce0		    :			  2		     +1
+CLMIB_RUCA.ce0		    :			  2		     +1
+CLMIB_RPRM.ce0		    :			  2		     +1
+CLMIB_RVLN.ce0		    :			  2		     +1
+CLMIB_RPOK.ce0		    :			  2		     +1
+CLMIB_RBYT.ce0		    :			140		    +72
+CLMIB_T127.ce0		    :			  2		     +1
+CLMIB_TPOK.ce0		    :			  2		     +1
+CLMIB_TPKT.ce0		    :			  2		     +1
+CLMIB_TUCA.ce0		    :			  2		     +1
+CLMIB_TVLN.ce0		    :			  2		     +1
+CLMIB_TBYT.ce0		    :			140		    +72
+CLMIB_RPROG0.ce0	    :			  2		     +1
+UC_PERQ_PKT(0).ce0	    :			  2		     +1
+UC_PERQ_BYTE(0).ce0	    :			140		    +72
+RUC_64.ce1		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ce1    :			  1		     +1
+CLMIB_R127.ce1		    :			  1		     +1
+CLMIB_RPKT.ce1		    :			  1		     +1
+CLMIB_RUCA.ce1		    :			  1		     +1
+CLMIB_RPRM.ce1		    :			  1		     +1
+CLMIB_RVLN.ce1		    :			  1		     +1
+CLMIB_RPOK.ce1		    :			  1		     +1
+CLMIB_RBYT.ce1		    :			 72		    +72
+CLMIB_T127.ce1		    :			  1		     +1
+CLMIB_TPOK.ce1		    :			  1		     +1
+CLMIB_TPKT.ce1		    :			  1		     +1
+CLMIB_TUCA.ce1		    :			  1		     +1
+CLMIB_TVLN.ce1		    :			  1		     +1
+CLMIB_TBYT.ce1		    :			 72		    +72
+CLMIB_RPROG0.ce1	    :			  1		     +1
+UC_PERQ_PKT(0).ce1	    :			  1		     +1
+UC_PERQ_BYTE(0).ce1	    :			 72		    +72
+ 
+ **************TEST 3	access port2--> access port1**************
+mac=00:00:00:00:00:01 vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan) Hit
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan)
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {000000000001} {000000000002} 8100 000b
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 40ff 9b1d 0a0a 
+[bcmPW.0]Packet[5]: data[0020]: 0a01 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[5]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[5]: data[0040]: b5db 25c2 
+[bcmPW.0]Packet[5]: length 68 (68). rx-port 2. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-gport -2147483647. src-gport -2147483646. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.1> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x9b1d>
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000000001} {000000000002} 8100 000a
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 40ff 9b1d 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a01 c0a8 0a01 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[6]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[6]: data[0040]: a6f4 7d4d 
+[bcmPW.0]Packet[6]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-gport -2147483647. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.1> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x9b1d>
+mac=00:00:00:00:00:01 vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:00:11 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan) Hit
+mac=00:00:00:00:00:03 vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+mac=00:00:00:00:00:02 vlan=28688 GPORT=0x80000002 port=0x80000002(vxlan) Hit
+Sleeping for 1 second
+MC_PERQ_PKT(0).cpu0	    :			  6		     +2
+MC_PERQ_BYTE(0).cpu0	    :			416		   +136
+RUC_64.ce0		    :			  3		     +1
+ING_NIV_RX_FRAMES_VL.ce0    :			  3		     +1
+CLMIB_R127.ce0		    :			  3		     +1
+CLMIB_RPKT.ce0		    :			  3		     +1
+CLMIB_RUCA.ce0		    :			  3		     +1
+CLMIB_RPRM.ce0		    :			  3		     +1
+CLMIB_RVLN.ce0		    :			  3		     +1
+CLMIB_RPOK.ce0		    :			  3		     +1
+CLMIB_RBYT.ce0		    :			208		    +68
+CLMIB_T127.ce0		    :			  3		     +1
+CLMIB_TPOK.ce0		    :			  3		     +1
+CLMIB_TPKT.ce0		    :			  3		     +1
+CLMIB_TUCA.ce0		    :			  3		     +1
+CLMIB_TVLN.ce0		    :			  3		     +1
+CLMIB_TBYT.ce0		    :			208		    +68
+CLMIB_RPROG0.ce0	    :			  3		     +1
+UC_PERQ_PKT(0).ce0	    :			  3		     +1
+UC_PERQ_BYTE(0).ce0	    :			208		    +68
+RUC_64.ce1		    :			  2		     +1
+ING_NIV_RX_FRAMES_VL.ce1    :			  2		     +1
+CLMIB_R127.ce1		    :			  2		     +1
+CLMIB_RPKT.ce1		    :			  2		     +1
+CLMIB_RUCA.ce1		    :			  2		     +1
+CLMIB_RPRM.ce1		    :			  2		     +1
+CLMIB_RVLN.ce1		    :			  2		     +1
+CLMIB_RPOK.ce1		    :			  2		     +1
+CLMIB_RBYT.ce1		    :			140		    +68
+CLMIB_T127.ce1		    :			  2		     +1
+CLMIB_TPOK.ce1		    :			  2		     +1
+CLMIB_TPKT.ce1		    :			  2		     +1
+CLMIB_TUCA.ce1		    :			  2		     +1
+CLMIB_TVLN.ce1		    :			  2		     +1
+CLMIB_TBYT.ce1		    :			140		    +68
+CLMIB_RPROG0.ce1	    :			  2		     +1
+UC_PERQ_PKT(0).ce1	    :			  2		     +1
+UC_PERQ_BYTE(0).ce1	    :			140		    +68
+ 
+ **************destroy the ifp rules************** 
+****************************Verify end****************************
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

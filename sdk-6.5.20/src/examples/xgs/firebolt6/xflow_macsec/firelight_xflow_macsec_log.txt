@@ -1,0 +1,401 @@
+BCM.0> cint firelight_xflow_macsec.c
+int ARGC = 0 (0x0)
+Using preferred port 50
+Using preferred port 4
+Using preferred port 2
+Using preferred port 3
+Using preferred port 5
+int uplink_port1 = 50 (0x32)
+int dwnlink_port_normal1 = 2 (0x2)
+int dwnlink_port_macsec1 = 3 (0x3)
+int dwnlink_port_macsec2 = 5 (0x5)
+int fl_subport_num1 = 10 (0xa)
+int fl_subport_num2 = 11 (0xb)
+unsigned int pkt_type_do_encrypt = 4 (0x4)
+unsigned int pkt_type_dont_encrypt = 0 (0x0)
+unsigned int svtag_sig = 19 (0x13)
+int include_sci = 1 (0x1)
+int assoc_num = 1 (0x1)
+unsigned int cph_enc_match_hdr_data = 318768128 (0x13000400)
+unsigned int cph_noenc_match_hdr_data = 318767104 (0x13000000)
+unsigned int cph_match_mask = 4278255360 (0xff00ff00)
+execute(): Start
+Doing port loopbacks n dmirror...
+B_CM.0> dmirror 50 mode=ingress dp=cpu0 dm=0
+B_CM.0> dmirror 5 mode=ingress dp=cpu0 dm=0
+B_CM.0> dmirror 2 mode=ingress dp=cpu0 dm=0
+B_CM.0> dmirror 3 mode=ingress dp=cpu0 dm=0
+ifp_qualify_custom_header_redirect: ifp_qid_1_init=0 cph_mask=0xff00ff00
+ifp_qualify_custom_header_redirect: ifp_qid_1_init=1 cph_mask=0xff00ff00
+Doing init...
+uint64 $$ = {0x00000000 0x00000007}
+Doing SVTagTPIDEtype set...
+Doing SVTagTPIDEtype set...
+Doing create sc...
+sc1.tci = 0x29
+++++ Create a new Security Channel for an encrypt flow *chan_id=0x400000B
+++++ Created *chan_id=0x400000B
+Doing create sa...
+++++ Create a security association for the given chan_id.
+xflow_macsec_subport_id_t subport_id = 1140850699 (0x4400000b)
+uint64 val = {0x00000000 0x00000000}
+
+
+
+##########   Sending FB6 Captured packet with SVTAG ENCRYPT 1 ########
+B_CM.0> tx 1 pbm=50 data=0000000000AA0000000000EE1300040B81000065080045000046000000003F111B461010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2DF89253DA
+Packet from data=<>, length=104
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000aa} {0000000000ee} 1300 040b
+[bcmPW.0]Packet[1]: data[0010]: 8100 0065 0800 4500 0046 0000 0000 3f11
+[bcmPW.0]Packet[1]: data[0020]: 1b46 1010 1011 2020 2021 1111 2222 0036
+[bcmPW.0]Packet[1]: data[0030]: c6b0 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPW.0]Packet[1]: data[0040]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[1]: data[0050]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[1]: data[0060]: f892 53da 1cdf 4421
+[bcmPW.0]Packet[1]: length 104 (104). rx-port 50. cos 0. prio_int 0. vlan 101. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 50. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000aa} {0000000000ee} 8100 0001
+[bcmPW.0]Packet[2]: data[0010]: 1301 1001 8100 0065 88e5 2900 0000 0001
+[bcmPW.0]Packet[2]: data[0020]: 0000 0000 0000 0007 1783 378b bd6d 615a
+[bcmPW.0]Packet[2]: data[0030]: c8bc de8d f1cf 88d8 100c 17c6 6439 4f3f
+[bcmPW.0]Packet[2]: data[0040]: 0ffb fc67 e1e8 af0f d88e f5b3 ea8d d427
+[bcmPW.0]Packet[2]: data[0050]: 7665 2616 24ae d6f4 447c 4ae3 af08 9634
+[bcmPW.0]Packet[2]: data[0060]: db42 529a a98b 1831 280b f446 faa1 9b88
+[bcmPW.0]Packet[2]: data[0070]: 1038 1b39 3b74 0347 c519 f94c fcfa 62ed
+[bcmPW.0]Packet[2]: data[0080]: 794a 2950 5739 fcd3 0000 0000
+[bcmPW.0]Packet[2]: length 140 (140). rx-port 3. cos 0. prio_int 0. vlan 1. reason 0x0. Untagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+xflow_macsec_subport_id_t subport_id = 1140850699 (0x4400000b)
+uint64 val = {0x00000000 0x0000005C}
+
+
+##########   Sending FB6 Captured packet with SVTAG ENCRYPT 2 ########
+B_CM.0> tx 1 pbm=50 data=0000000000AA0000000000EE1300040B81000065080045000046000000003F111B461010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2DF89253DA
+Packet from data=<>, length=104
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000aa} {0000000000ee} 1300 040b
+[bcmPW.0]Packet[3]: data[0010]: 8100 0065 0800 4500 0046 0000 0000 3f11
+[bcmPW.0]Packet[3]: data[0020]: 1b46 1010 1011 2020 2021 1111 2222 0036
+[bcmPW.0]Packet[3]: data[0030]: c6b0 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPW.0]Packet[3]: data[0040]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[3]: data[0050]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[3]: data[0060]: f892 53da 1cdf 4421
+[bcmPW.0]Packet[3]: length 104 (104). rx-port 50. cos 0. prio_int 0. vlan 101. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 50. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000aa} {0000000000ee} 8100 0001
+[bcmPW.0]Packet[4]: data[0010]: 1301 1001 8100 0065 88e5 2900 0000 0002
+[bcmPW.0]Packet[4]: data[0020]: 0000 0000 0000 0007 b41c 2431 038a 8a27
+[bcmPW.0]Packet[4]: data[0030]: 4fd3 7fd2 b59f c0c4 2d78 0980 3797 9b68
+[bcmPW.0]Packet[4]: data[0040]: 9452 6cd6 c67f 77b9 33fa 6a02 c87a 711f
+[bcmPW.0]Packet[4]: data[0050]: f70c da0e 62f8 af88 fcac b3c0 ae84 9c0d
+[bcmPW.0]Packet[4]: data[0060]: 11fd 4051 0e05 35bc 5305 3cc0 54d2 d18d
+[bcmPW.0]Packet[4]: data[0070]: 145c 270f f20f aa43 e1f1 4ddf e4e6 a5c6
+[bcmPW.0]Packet[4]: data[0080]: 2286 cc82 6cc4 3e42 0000 0000
+[bcmPW.0]Packet[4]: length 140 (140). rx-port 3. cos 0. prio_int 0. vlan 1. reason 0x0. Untagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+xflow_macsec_subport_id_t subport_id = 1140850699 (0x4400000b)
+uint64 val = {0x00000000 0x000000B8}
+
+
+ ######## Configuring Decryption...#########
+
+Doing create sc decrypt...
+++++ Create a new Security Channel for an decrypt flow *chan_id=0x800000B
+++++ Created decrypt *chan_id=0x800000B
+++++ Enable secure channel
+Doing create sa...
+++++ Create a security association for the given chan_id.
+Doing create policy...
+++++ Create the policy
+++++ Get the SC
+++++ Set the SC with the policy
+Doing create flows...
+++++ Create a flow
+++++ Enable flows
+Doing set port control...
+
+
+##########   Sending FB6 Captured packet with SVTAG ENCRYPT 3 ########
+B_CM.0> tx 1 pbm=50 data=0000000000AA0000000000EE1300040B81000065080045000046000000003F111B461010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2DF89253DA
+Packet from data=<>, length=104
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000aa} {0000000000ee} 1300 040b
+[bcmPW.0]Packet[5]: data[0010]: 8100 0065 0800 4500 0046 0000 0000 3f11
+[bcmPW.0]Packet[5]: data[0020]: 1b46 1010 1011 2020 2021 1111 2222 0036
+[bcmPW.0]Packet[5]: data[0030]: c6b0 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPW.0]Packet[5]: data[0040]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[5]: data[0050]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[5]: data[0060]: f892 53da 1cdf 4421
+[bcmPW.0]Packet[5]: length 104 (104). rx-port 50. cos 0. prio_int 0. vlan 101. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 50. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {0000000000aa} {0000000000ee} 8100 0001
+[bcmPW.0]Packet[6]: data[0010]: 1300 6401 8100 0065 0800 4500 0046 0000
+[bcmPW.0]Packet[6]: data[0020]: 0000 3f11 1b46 1010 1011 2020 2021 1111
+[bcmPW.0]Packet[6]: data[0030]: 2222 0036 c6b0 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[6]: data[0040]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[6]: data[0050]: 1a1b 1c1d 1e1f 2021 2223 2425 2627 2829
+[bcmPW.0]Packet[6]: data[0060]: 2a2b 2c2d f892 53da 0000 0000
+[bcmPW.0]Packet[6]: length 108 (108). rx-port 3. cos 0. prio_int 0. vlan 1. reason 0x0. Untagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+xflow_macsec_subport_id_t subport_id = 1140850699 (0x4400000b)
+uint64 val = {0x00000000 0x00000114}
+
+
+##########   Sending FB6 Captured packet with SVTAG ENCRYPT 4 ########
+B_CM.0> tx 1 pbm=50 data=0000000000AA0000000000EE1300040B81000065080045000046000000003F111B461010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2DF89253DA
+Packet from data=<>, length=104
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {0000000000aa} {0000000000ee} 1300 040b
+[bcmPW.0]Packet[7]: data[0010]: 8100 0065 0800 4500 0046 0000 0000 3f11
+[bcmPW.0]Packet[7]: data[0020]: 1b46 1010 1011 2020 2021 1111 2222 0036
+[bcmPW.0]Packet[7]: data[0030]: c6b0 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPW.0]Packet[7]: data[0040]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[7]: data[0050]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[7]: data[0060]: f892 53da 1cdf 4421
+[bcmPW.0]Packet[7]: length 104 (104). rx-port 50. cos 0. prio_int 0. vlan 101. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 0. dest-mod 0. src-port 50. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {0000000000aa} {0000000000ee} 8100 0001
+[bcmPW.0]Packet[8]: data[0010]: 1300 6401 8100 0065 0800 4500 0046 0000
+[bcmPW.0]Packet[8]: data[0020]: 0000 3f11 1b46 1010 1011 2020 2021 1111
+[bcmPW.0]Packet[8]: data[0030]: 2222 0036 c6b0 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[8]: data[0040]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[8]: data[0050]: 1a1b 1c1d 1e1f 2021 2223 2425 2627 2829
+[bcmPW.0]Packet[8]: data[0060]: 2a2b 2c2d f892 53da 0000 0000
+[bcmPW.0]Packet[8]: length 108 (108). rx-port 3. cos 0. prio_int 0. vlan 1. reason 0x0. Untagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+xflow_macsec_subport_id_t subport_id = 1140850699 (0x4400000b)
+uint64 val = {0x00000000 0x00000170}
+
+B_CM.0> show c
+PERQ_PKT(0).cpu0            :                    12                 +12
+PERQ_BYTE(0).cpu0           :                 1,328              +1,328
+RUC.ge1                     :                     4                  +4
+RDBGC0.ge1                  :                     4                  +4
+GR255.ge1                   :                     4                  +4
+GRPKT.ge1                   :                     4                  +4
+GRBYT.ge1                   :                   528                +528
+GRUC.ge1                    :                     4                  +4
+GRPOK.ge1                   :                     4                  +4
+GT255.ge1                   :                     4                  +4
+GTPKT.ge1                   :                     4                  +4
+GTBYT.ge1                   :                   528                +528
+GTUC.ge1                    :                     4                  +4
+GTPOK.ge1                   :                     4                  +4
+PERQ_PKT(0).ge1             :                     4                  +4
+PERQ_BYTE(0).ge1            :                   416                +416
+ING_RX_NON_PREEMPTAB.ge1    :                     4                  +4
+RUC.xe0                     :                     4                  +4
+ING_NIV_RFVT.xe0            :                     4                  +4
+CLMIB_R127.xe0              :                     4                  +4
+CLMIB_RPKT.xe0              :                     4                  +4
+CLMIB_RUCA.xe0              :                     4                  +4
+CLMIB_RPRM.xe0              :                     4                  +4
+CLMIB_RPOK.xe0              :                     4                  +4
+CLMIB_RBYT.xe0              :                   416                +416
+CLMIB_T127.xe0              :                     4                  +4
+CLMIB_TPOK.xe0              :                     4                  +4
+CLMIB_TPKT.xe0              :                     4                  +4
+CLMIB_TUCA.xe0              :                     4                  +4
+CLMIB_TBYT.xe0              :                   416                +416
+CLMIB_RPROG2.xe0            :                     4                  +4
+ING_RX_NON_PREEMPTAB.xe0    :                     4                  +4
+B_CM.0> fp show
+FP:     unit 0:
+PIPELINE STAGE INGRESS
+FP:           :tcam_sz=1024(0x400), tcam_slices=8, tcam_ext_numb=-1,
+PIPELINE STAGE EGRESS
+FP:           :tcam_sz=256(0x100), tcam_slices=4, tcam_ext_numb=-1,
+PIPELINE STAGE LOOKUP
+FP:           :tcam_sz=256(0x100), tcam_slices=4, tcam_ext_numb=-1,
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000000000000000000000003ffffffffffffffd}
+         qset={SrcPort, Stage, IntPriority, CustomHeaderPkt, CustomHeaderData},
+         selcodes[0]=
+{
+         FPF1=11
+         FPF2=17
+         FPF3=12
+         AuxTag2Select=3
+         Intraslice=Primary slice.
+ {Stage->IntPriority->CustomHeaderPkt->CustomHeaderData->SrcPort},
+
+         group_priority= 0
+         slice_primary =  {slice_number=0, Entry count=128(0x80), Entry free=126(0x7e)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=1024, entries_free=1022,
+                       counters_total=1024, counters_free=1024, meters_total=1024, meters_free=1024}
+EID 0x00000001: gid=0x1,
+         slice=0, slice_idx=0, part =0 prio=0, flags=0xa10602, Installed, Enabled
+              tcam: color_indep=1,
+ Stage
+ CustomHeaderPkt
+    Offset0: 26 Width0: 1
+    DATA=0x00000001
+    MASK=0x00000001
+ CustomHeaderData
+    Offset0: 29 Width0: 32
+    DATA=0x13000000
+    MASK=0xff00ff00
+         action={act=RedirectPbmp, pbmp=0x0000000000000000000000000000000000000000000000000000000000000004  }
+         policer=
+         statistics=NULL
+EID 0x00000002: gid=0x1,
+         slice=0, slice_idx=0x1, part =0 prio=0, flags=0xa10602, Installed, Enabled
+              tcam: color_indep=1,
+ Stage
+ CustomHeaderPkt
+    Offset0: 26 Width0: 1
+    DATA=0x00000001
+    MASK=0x00000001
+ CustomHeaderData
+    Offset0: 29 Width0: 32
+    DATA=0x13000400
+    MASK=0xff00ff00
+         action={act=RedirectPbmp, pbmp=0x0000000000000000000000000000000000000000000000000000000000000008  }
+         policer=
+         statistics=NULL
+B_CM.0> ps
+                 ena/    speed/ link auto    STP                  lrn  inter   max  loop
+           port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       ge0(  2)  up    2.5G  FD   SW  Yes  Forward  TX RX    All   FA  SGMII 16356         MAC
+       ge1(  3)  up    2.5G  FD   SW  Yes  Forward  TX RX    All   FA  SGMII 16356         MAC
+       ge2(  4)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge3(  5)  up    2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356         MAC
+       ge4(  6)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge5(  7)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge6(  8)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge7(  9)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge8( 10)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       ge9( 11)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge10( 12)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge11( 13)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge12( 14)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge13( 15)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge14( 16)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge15( 17)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge16( 18)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge17( 19)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge18( 20)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge19( 21)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge20( 22)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge21( 23)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge22( 24)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge23( 25)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge24( 26)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge25( 27)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge26( 28)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge27( 29)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge28( 30)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge29( 31)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge30( 32)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge31( 33)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge32( 34)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge33( 35)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge34( 36)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge35( 37)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge36( 38)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge37( 39)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge38( 40)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge39( 41)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge40( 42)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge41( 43)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge42( 44)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge43( 45)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge44( 46)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge45( 47)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge46( 48)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+      ge47( 49)  down  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 16356
+       xe0( 50)  up     25G  FD   SW  No   Forward  TX RX   None    F     CR 16356         MAC
+       xe1( 51)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe2( 52)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe3( 53)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe4( 54)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe5( 55)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe6( 56)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe7( 57)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe8( 58)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+       xe9( 59)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+      xe10( 60)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+      xe11( 61)  down   25G  FD   SW  No   Forward  TX RX   None   FA     CR 16356
+B_CM.0> vlan show
+vlan 1  ports ge,xe,qsgmii (0x0000000000000000000000000000000000000000000000003ffffffffffffffc), untagged ge,xe,qsgmii (0x0000000000000000000000000000000000000000000000003ffffffffffffffc) MCAST_FLOOD_UNKNOWN
+vlan 101        ports ge0-ge1,ge3,xe0,qsgmii0-qsgmii1,qsgmii3 (0x000000000000000000000000000000000000000000000000000400000000002c), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200427 (Mon Apr 27 04:20:53 2020)
+From sr936857@xl-sj1-31:/projects/ntsw-sw7/home/sr936857/gitcode/SDK_6519
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0, BCM56440_A0, BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+
+
+
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM53570_A0,
+       BCM53570_B0, BCM56980_A0, BCM56980_B0, BCM53540_A0,
+       BCM56670_A0, BCM56670_B0, BCM56670_C0, BCM56370_A0,
+       BCM56275_A0, BCM56770_A0, BCM56470_A0, BCM56070_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM84756
+    BCM84757, BCM84759, BCM5421S, BCM54680,
+    BCM53324, BCM56160-GPHY, BCM53540-GPHY, BCM56275-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328
+    BCM84793, BCM82328, Furia, Huracan,
+    Sesto, Madura, BCM82780, copper sfp
+
+B_CM.0> a
+Attach: Unit 0 (BCM56070_A0): attached (current unit)
+
+
+         Expected Result:  1st 2 packets will be ONLY encrypted. After that you will see Decrypted packets.
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

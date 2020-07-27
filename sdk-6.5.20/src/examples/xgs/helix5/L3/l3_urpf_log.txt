@@ -1,0 +1,301 @@
+BCM.0> init all; cint l3_urpf.c
+execute(): Start
+config show; attach; cancun stat; version
+    portmap_8=8:2.5
+    portmap_9=9:2.5
+    portmap_10=10:2.5
+    portmap_11=11:2.5
+    portmap_20=20:2.5
+    portmap_12=12:2.5
+    portmap_21=21:2.5
+    portmap_13=13:2.5
+    portmap_30=30:2.5
+    portmap_22=22:2.5
+    portmap_14=14:2.5
+    portmap_31=31:2.5
+    portmap_23=23:2.5
+    portmap_15=15:2.5
+    portmap_40=52:10
+    portmap_32=32:2.5
+    portmap_24=24:2.5
+    portmap_16=16:2.5
+    l3_ecmp_levels=2
+    port_gmii_mode_33=2
+    port_gmii_mode_17=2
+    portmap_41=53:10
+    portmap_33=33:2.5
+    portmap_25=25:2.5
+    portmap_17=17:2.5
+    portmap_50=73:100
+    portmap_42=54:10
+    portmap_34=34:2.5
+    portmap_26=26:2.5
+    portmap_18=18:2.5
+    portmap_51=69:100
+    portmap_43=55:10
+    portmap_35=35:2.5
+    portmap_27=27:2.5
+    portmap_19=19:2.5
+    portmap_44=56:10
+    portmap_36=36:2.5
+    portmap_28=28:2.5
+    port_gmii_mode_1=2
+    portmap_45=57:10
+    portmap_37=49:10
+    portmap_29=29:2.5
+    pbmp_xport_xe=0x1fffffffffffffe
+    portmap_46=58:10
+    portmap_38=50:10
+    os=unix
+    portmap_55=61:10
+    portmap_47=59:10
+    portmap_39=51:10
+    portmap_56=62:10
+    portmap_48=60:10
+    core_clock_frequency=893
+    mmu_lossless=0
+    portmap_1=1:2.5
+    portmap_2=2:2.5
+    portmap_3=3:2.5
+    portmap_4=4:2.5
+    portmap_5=5:2.5
+    portmap_6=6:2.5
+    portmap_7=7:2.5
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 03.00.05
+
+        CMH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CCH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CEH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.16 built 20190117 (Thu Jan 17 23:19:06 2019)
+From br930043@lvnvdc3607:/projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0,
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,
+
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,
+       BCM56260_A0, BCM56260_B0,
+
+
+       BCM56160_A0, BCM56270_A0, BCM56965_A0, BCM56970_A0,
+       BCM56870_A0, BCM56870_B0, BCM53570_A0, BCM53570_B0,
+       BCM56980_A0, BCM56980_B0, BCM53540_A0, BCM56670_A0,
+       BCM56670_B0, BCM56370_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_l3_urpf(): ** start **
+~~ #2) config_l3_urpf(): ** end **
+~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports cpu,ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dffffffffffff), untagged ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dfffffffffffe) MCAST_FLOOD_UNKNOWN
+vlan 12 ports ge0,qsgmii0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 13 ports ge1,qsgmii1 (0x0000000000000000000000000000000000000000000000000000000000000004), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+Free L3INTF entries: 8188
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     1     0     0     13   00:00:00:00:bb:bb  1400 0    0     0     0
+0     2     0     0     12   00:00:00:00:aa:aa  1400 0    0     0     0
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:00:11:11    1    1     2    0        -1   no   no    1   no
+100003  00:00:00:00:22:22    2    2     1    0        -1   no   no    1   no
+Unit 0, Total Number of DEFIP entries: 8192
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+1024  0        192.168.10.0/24      00:00:00:00:00:00 100002    0     0     0    0 n
+1024  0        10.10.10.0/24        00:00:00:00:00:00 100003    0     0     0    0 n
+
+a) Sending IPv4 unicast packet (SIP=10.10.10.1) to ingress_port:1
+Packet from data=<>, length=76
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 0032 0000 0000 40ff 9b19 0a0a
+[bcmPW.0]Packet[1]: data[0020]: 0a01 c0a8 0a01 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[1]: data[0040]: 1a1b 1c1d 907e 5579 1cdf 4421
+[bcmPW.0]Packet[1]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 12. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.1> dst<192.168.10.1> hl<5> service-type<0> tl<50> id<0> frg-off<0> ttl<64> > chk-sum<0x9b19>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000001111} {00000000bbbb} 8100 000d
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 0032 0000 0000 3fff 9c19 0a0a
+[bcmPW.0]Packet[2]: data[0020]: 0a01 c0a8 0a01 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 907e 5579 0b48 2196
+[bcmPW.0]Packet[2]: length 76 (76). rx-port 2. cos 0. prio_int 0. vlan 13. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x000d> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<192.168.10.1> hl<5> service-type<0> tl<50> id<0> frg-off<0> ttl<63> > chk-sum<0x9c19>
+Unit 0, Total Number of DEFIP entries: 8192
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+1024  0        192.168.10.0/24      00:00:00:00:00:00 100002    0     0     0    0 y
+1024  0        10.10.10.0/24        00:00:00:00:00:00 100003    0     0     0    0 n
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   152                +152             148/s
+RIPC4_64.ge0                :                     1                  +1               1/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    76                 +76              74/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    76                 +76              74/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    76                 +76              74/s
+RUC_64.ge1                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge1    :                     1                  +1               1/s
+TDBGC4_64.ge1               :                     1                  +1               1/s
+GR127.ge1                   :                     1                  +1               1/s
+GRPKT.ge1                   :                     1                  +1               1/s
+GRBYT.ge1                   :                    76                 +76              74/s
+GRUC.ge1                    :                     1                  +1               1/s
+GRPOK.ge1                   :                     1                  +1               1/s
+GT127.ge1                   :                     1                  +1               1/s
+GTPKT.ge1                   :                     1                  +1               1/s
+GTBYT.ge1                   :                    76                 +76              74/s
+GTUC.ge1                    :                     1                  +1               1/s
+GTPOK.ge1                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge1          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge1         :                    76                 +76              74/s
+
+b) Sending IPv4 unicast packet (SIP=10.10.20.1), SIP miss (so URPF fails) to ingress_port:1
+Packet from data=<>, length=76
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 0032 0000 0000 40ff 9119 0a0a
+[bcmPW.0]Packet[3]: data[0020]: 1401 c0a8 0a01 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[3]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[3]: data[0040]: 1a1b 1c1d 2ef9 ffde 1cdf 4421
+[bcmPW.0]Packet[3]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 12. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.20.1> dst<192.168.10.1> hl<5> service-type<0> tl<50> id<0> frg-off<0> ttl<64> > chk-sum<0x9119>
+Unit 0, Total Number of DEFIP entries: 8192
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+1024  0        192.168.10.0/24      00:00:00:00:00:00 100002    0     0     0    0 y
+1024  0        10.10.10.0/24        00:00:00:00:00:00 100003    0     0     0    0 n
+MC_PERQ_PKT(0).cpu0         :                     3                  +1               1/s
+MC_PERQ_BYTE(0).cpu0        :                   228                 +76              74/s
+RUC_64.ge0                  :                     2                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     2                  +1               1/s
+GR127.ge0                   :                     2                  +1               1/s
+GRPKT.ge0                   :                     2                  +1               1/s
+GRBYT.ge0                   :                   152                 +76              74/s
+GRUC.ge0                    :                     2                  +1               1/s
+GRPOK.ge0                   :                     2                  +1               1/s
+GT127.ge0                   :                     2                  +1               1/s
+GTPKT.ge0                   :                     2                  +1               1/s
+GTBYT.ge0                   :                   152                 +76              74/s
+GTUC.ge0                    :                     2                  +1               1/s
+GTPOK.ge0                   :                     2                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     2                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                   152                 +76              74/s
+
+c) Turn on URPF_MISS_TOCPU, so the packet failing the URPF is forwarded to CPU, re-send SIP miss packet to ingress_port:1
+modreg CPU_CONTROL_1  URPF_MISS_TOCPU=1
+Packet from data=<>, length=76
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 0032 0000 0000 40ff 9119 0a0a
+[bcmPW.0]Packet[4]: data[0020]: 1401 c0a8 0a01 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[4]: data[0040]: 1a1b 1c1d 2ef9 ffde 1cdf 4421
+[bcmPW.0]Packet[4]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 12. reason 0x81. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: reasons: L3SourceMiss
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.20.1> dst<192.168.10.1> hl<5> service-type<0> tl<50> id<0> frg-off<0> ttl<64> > chk-sum<0x9119>
+Unit 0, Total Number of DEFIP entries: 8192
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+1024  0        192.168.10.0/24      00:00:00:00:00:00 100002    0     0     0    0 y
+1024  0        10.10.10.0/24        00:00:00:00:00:00 100003    0     0     0    0 n
+MC_PERQ_PKT(0).cpu0         :                     4                  +1               1/s
+MC_PERQ_BYTE(0).cpu0        :                   304                 +76              74/s
+RUC_64.ge0                  :                     3                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     3                  +1               1/s
+GR127.ge0                   :                     3                  +1               1/s
+GRPKT.ge0                   :                     3                  +1               1/s
+GRBYT.ge0                   :                   228                 +76              74/s
+GRUC.ge0                    :                     3                  +1               1/s
+GRPOK.ge0                   :                     3                  +1               1/s
+GT127.ge0                   :                     3                  +1               1/s
+GTPKT.ge0                   :                     3                  +1               1/s
+GTBYT.ge0                   :                   228                 +76              74/s
+GTUC.ge0                    :                     3                  +1               1/s
+GTPOK.ge0                   :                     3                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     3                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                   228                 +76              74/s
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

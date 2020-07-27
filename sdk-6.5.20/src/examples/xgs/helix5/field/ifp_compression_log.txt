@@ -1,0 +1,420 @@
+int ing_port1 = 1 (0x1)       
+int ing_port2 = 2 (0x2)       
+int egr_port = 3 (0x3)        
+
+Creating ETHERTYPE COMPRESSION Stage Group for ETHERTYPE
+Creating ETHERTYPE COMPRESSION stage Entry 1            
+Creating ETHERTYPE COMPRESSION stage Qualifier          
+Creating ETHERTYPE COMPRESSION stage Adding class       
+Creating ETHERTYPE COMPRESSION stage Installing Entry   
+Creating ETHERTYPE COMPRESSION stage Entry 2            
+Creating ETHERTYPE COMPRESSION stage Qualifier          
+Creating ETHERTYPE COMPRESSION stage Adding class       
+Creating ETHERTYPE COMPRESSION stage Installing Entry   
+
+Creating ETHERTYPE COMPRESSION stage Group For L4SRCPORT
+Creating ETHERTYPE COMPRESSION stage Entry 1            
+Creating ETHERTYPE COMPRESSION stage Qualifier          
+Creating ETHERTYPE COMPRESSION stage Adding class       
+Creating ETHERTYPE COMPRESSION stage Installing Entry   
+Creating ETHERTYPE COMPRESSION stage Entry 2            
+Creating ETHERTYPE COMPRESSION stage Qualifier          
+Creating ETHERTYPE COMPRESSION stage Adding class       
+Creating ETHERTYPE COMPRESSION stage Installing Entry   
+
+Doing Group Config in IFP
+Doing Entry Create       
+Doing qualify Ethertype Class
+Doing Entry Install in IFP   
+Doing Entry Create           
+Doing qualify L4SrcPort Class
+Doing Entry Install in IFP   
+
+
+B_CM.0> fp show
+FP:     unit 0:
+PIPELINE STAGE FLOWTRACKER
+FP:           :tcam_sz=2044(0x7fc), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE EXACTMATCH                                          
+FP:           :tcam_sz=16384(0x4000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS                                               
+FP:           :tcam_sz=9216(0x2400), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS                                                
+FP:           :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,  
+PIPELINE STAGE LOOKUP                                                
+FP:           :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,  
+GID          3: gid=0x3, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={DstIp6Low, InPort, Stage, EtherTypeClass, L4SrcPortClass},                                                                                                 
+         aset={PolicerGroup, StatGroup},                                                                                                                                  
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=512(0x200), Entry free=510(0x1fe)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8190,
+                       counters_total=14336, counters_free=13310, meters_total=6144, meters_free=6144}  
+EID 0x00000005: gid=0x3,                                                                                
+         slice=2, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+ EtherTypeClass                    
+    Part:0 Offset0: 40 Width0:   4 
+    DATA=0x00000005                
+    MASK=0x0000000f                
+         policer=                  
+         statistics={stat id 1  slice = 10 idx=3 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL                                          
+EID 0x00000006: gid=0x3,                                                   
+         slice=2, slice_idx=0x1, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+ L4SrcPortClass                    
+    Part:0 Offset0: 44 Width0:   4 
+    DATA=0x00000006                
+    MASK=0x0000000f                
+         policer=                  
+         statistics={stat id 2  slice = 10 idx=2 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL                                          
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={InPort, Stage},                                                                                                                                               
+         aset={CopyToCpu, PolicerGroup, StatGroup},                                                                                                                          
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8191,
+                       counters_total=14336, counters_free=13311, meters_total=6144, meters_free=6144}  
+EID 0x0001868d: gid=0x270e,                                                                             
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL                                                         
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={InPort, Stage},                                                                                                                                               
+         aset={CopyToCpu, PolicerGroup, StatGroup},                                                                                                                          
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8191,
+                       counters_total=14336, counters_free=13311, meters_total=6144, meters_free=6144}  
+EID 0x00018697: gid=0x270f,                                                                             
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000003                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL                                                         
+
+
+B_CM.0> fp show class
+CLASS:  unit 0:PIPELINE STAGE CLASS
+ClassPipe  ClassType        Flags  Entries Used  Entries Available
+---------  ---------------  -----  ------------  -----------------
+  Default  EtherType           0             2                 16 
+  Default  TTL                 0             0                256 
+  Default  TOS                 0             0                256 
+  Default  IPProtocol          0             0                256 
+  Default  L4SrcPort           0             2                 16 
+  Default  L4DstPort           0             0                 16 
+  Default  TCP                 0             0                256 
+  Default  SrcCompression      0             0                128 
+  Default  DstCompression      0             0                128 
+GID          1: gid=0x1, instance=0, flags 0x10, stage=5 lookup=Enabled, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff},
+         qset={EtherType, StageClassExactMatch},                                                                                                   
+         aset={ClassZero},                                                                                                                         
+         group_status={entries_total=16, entries_free=14, entries_count=2}                                                                         
+EID 0x00000001: gid=0x1,                                                                                                                           
+         prio=0, flags=0x200, hw_index=0, Installed                                                                                                
+         Compression Type: EtherType                                                                                                               
+         {EtherType=0x906}                                                                                                                         
+         action={act=ClassZero, class=0x000000005}                                                                                                 
+EID 0x00000002: gid=0x1,                                                                                                                           
+         prio=0, flags=0x200, hw_index=0x1, Installed                                                                                              
+         Compression Type: EtherType                                                                                                               
+         {EtherType=0x907}                                                                                                                         
+         action={act=ClassZero, class=0x000000005}                                                                                                 
+GID          2: gid=0x2, instance=0, flags 0x10, stage=5 lookup=Enabled, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff},
+         qset={L4SrcPort, StageClassExactMatch},                                                                                                   
+         aset={ClassZero},                                                                                                                         
+         group_status={entries_total=16, entries_free=14, entries_count=2}                                                                         
+EID 0x00000003: gid=0x2,                                                                                                                           
+         prio=0, flags=0x200, hw_index=0, Installed                                                                                                
+         Compression Type: L4SrcPort                                                                                                               
+         {L4 SRC Port=32896}                                                                                                                       
+         action={act=ClassZero, class=0x000000006}                                                                                                 
+EID 0x00000004: gid=0x2,                                                                                                                           
+         prio=0, flags=0x200, hw_index=0x1, Installed                                                                                              
+         Compression Type: L4SrcPort                                                                                                               
+         {L4 SRC Port=32897}                                                                                                                       
+         action={act=ClassZero, class=0x000000006}                                                                                                 
+
+
+
+Sending packet with changing ETHERTYPE value
+
+############   Ethertype = 0x0904   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409044500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[1]: data[0010]: 0904 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[1]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[1]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[1]: data[0040]: 0c51 6cdd 5098 494a                                                                                                             
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[1]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[1]:                                                                                                                                             
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 04 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000000                                                                                                                                                                                                         
+
+############   Ethertype = 0x0905   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409054500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[2]: data[0010]: 0905 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[2]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[2]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[2]: data[0040]: 0c51 6cdd c36b 7780                                                                                                             
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[2]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[2]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[2]:                                                                                                                                             
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 05 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000000                                                                                                                                                                                                         
+
+############   Ethertype = 0x0906   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409064500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[3]: data[0010]: 0906 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[3]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[3]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[3]: data[0040]: 0c51 6cdd 3779 4505                                                                                                             
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[3]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[3]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[3]:                                                                                                                                             
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 06 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000001                                                                                                                                                                                                         
+
+############   Ethertype = 0x0907   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409074500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[4]: data[0010]: 0907 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[4]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[4]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[4]: data[0040]: 0c51 6cdd a48a 7bcf                                                                                                             
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[4]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[4]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[4]:                                                                                                                                             
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 07 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000002                                                                                                                                                                                                         
+
+############   Ethertype = 0x0908   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409084500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[5]: data[0010]: 0908 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[5]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[5]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[5]: data[0040]: 0c51 6cdd 43d9 1233                                                                                                             
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[5]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[5]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[5]:                                                                                                                                             
+Packet[5]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 08 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000002                                                                                                                                                                                                         
+
+############   Ethertype = 0x0909   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006409094500002E0000000040063683151617180B0C0D0E08AE0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[6]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[6]: data[0010]: 0909 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[6]: data[0020]: 1718 0b0c 0d0e 08ae 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[6]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[6]: data[0040]: 0c51 6cdd d02a 2cf9                                                                                                             
+[bcmPW.0]Packet[6]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[6]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[6]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[6]:                                                                                                                                             
+Packet[6]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 09 09 45 00 00 2e 00 00 00 00 40 06 36 83 15 16 17 18 0b 0c 0d 0e 08 ae 0d 05 00 00 00 00 00 00 00 00 50 00 00 00 4f db 00 00 00 01 02 03 04 05                                                                                                                      
+B_CM.0> sleep 2                                                                                                                                                                                                                   
+Sleeping for 2 seconds                                                                                                                                                                                                            
+B_CM.0> fp stat get si=1 t=p                                                                                                                                                                                                      
+The value is: 0x000000002                                                                                                                                                                                                         
+
+Sending packet with changing L4 SRC PORT value
+
+############   l4srcport = 0x807E   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E807E0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[7]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[7]: data[0020]: 1718 0b0c 0d0e 807e 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[7]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[7]: data[0040]: 0c51 6cdd 7c9a 72a9                                                                                                             
+[bcmPW.0]Packet[7]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[7]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[7]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[7]:                                                                                                                                             
+Packet[7]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)                           
+Packet[7]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>                                 
+Packet[7]:   TCP: sPort<32894> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>                                                           
+B_CM.0> sleep 2                                                                                                                                                 
+Sleeping for 2 seconds                                                                                                                                          
+B_CM.0> fp stat get si=2 t=p                                                                                                                                    
+The value is: 0x000000000                                                                                                                                       
+
+############   l4srcport = 0x807F   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E807F0D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[8]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[8]: data[0020]: 1718 0b0c 0d0e 807f 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[8]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[8]: data[0040]: 0c51 6cdd 5843 75ca                                                                                                             
+[bcmPW.0]Packet[8]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[8]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[8]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[8]:                                                                                                                                             
+Packet[8]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)                           
+Packet[8]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>                                 
+Packet[8]:   TCP: sPort<32895> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>                                                           
+B_CM.0> sleep 2                                                                                                                                                 
+Sleeping for 2 seconds                                                                                                                                          
+B_CM.0> fp stat get si=2 t=p                                                                                                                                    
+The value is: 0x000000000                                                                                                                                       
+
+############   l4srcport = 0x8080   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E80800D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[9]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                         
+[bcmPW.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516                                                                                         
+[bcmPW.0]Packet[9]: data[0020]: 1718 0b0c 0d0e 8080 0d05 0000 0000 0000                                                                                         
+[bcmPW.0]Packet[9]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                         
+[bcmPW.0]Packet[9]: data[0040]: 0c51 6cdd 705d 345d                                                                                                             
+[bcmPW.0]Packet[9]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                           
+[bcmPW.0]Packet[9]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                               
+[bcmPW.0]Packet[9]: reasons: FilterMatch                                                                                                                        
+[bcmPW.0]Packet[9]:                                                                                                                                             
+Packet[9]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)                           
+Packet[9]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>                                 
+Packet[9]:   TCP: sPort<32896> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>                                                           
+B_CM.0> sleep 2                                                                                                                                                 
+Sleeping for 2 seconds                                                                                                                                          
+B_CM.0> fp stat get si=2 t=p                                                                                                                                    
+The value is: 0x000000001                                                                                                                                       
+
+############   l4srcport = 0x8081   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E80810D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72                                                                                                                                  
+[bcmPW.0]                                                                                                                                                       
+[bcmPW.0]Packet[10]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064                                                                                        
+[bcmPW.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516                                                                                        
+[bcmPW.0]Packet[10]: data[0020]: 1718 0b0c 0d0e 8081 0d05 0000 0000 0000                                                                                        
+[bcmPW.0]Packet[10]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405                                                                                        
+[bcmPW.0]Packet[10]: data[0040]: 0c51 6cdd 5484 333e                                                                                                            
+[bcmPW.0]Packet[10]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.                                                          
+[bcmPW.0]Packet[10]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.                                              
+[bcmPW.0]Packet[10]: reasons: FilterMatch                                                                                                                       
+[bcmPW.0]Packet[10]:                                                                                                                                            
+Packet[10]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)                          
+Packet[10]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>                                
+Packet[10]:   TCP: sPort<32897> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>                                                          
+B_CM.0> sleep 2                                                                                                                                                 
+Sleeping for 2 seconds
+B_CM.0> fp stat get si=2 t=p
+The value is: 0x000000002
+
+############   l4srcport = 0x8082   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E80820D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[11]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[11]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516
+[bcmPW.0]Packet[11]: data[0020]: 1718 0b0c 0d0e 8082 0d05 0000 0000 0000
+[bcmPW.0]Packet[11]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405
+[bcmPW.0]Packet[11]: data[0040]: 0c51 6cdd 38ef 3b9b
+[bcmPW.0]Packet[11]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[11]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[11]: reasons: FilterMatch
+[bcmPW.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>
+Packet[11]:   TCP: sPort<32898> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> fp stat get si=2 t=p
+The value is: 0x000000002
+
+############   l4srcport = 0x8083   #######
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063683151617180B0C0D0E80830D050000000000000000500000004FDB00000001020304050C516CDD
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[12]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[12]: data[0010]: 0800 4500 002e 0000 0000 4006 3683 1516
+[bcmPW.0]Packet[12]: data[0020]: 1718 0b0c 0d0e 8083 0d05 0000 0000 0000
+[bcmPW.0]Packet[12]: data[0030]: 0000 5000 0000 4fdb 0000 0001 0203 0405
+[bcmPW.0]Packet[12]: data[0040]: 0c51 6cdd 1c36 3cf8
+[bcmPW.0]Packet[12]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[12]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[12]: reasons: FilterMatch
+[bcmPW.0]Packet[12]:
+Packet[12]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[12]:   IP: V(4) src<21.22.23.24> dst<11.12.13.14> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3683>
+Packet[12]:   TCP: sPort<32899> dPort<3333> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4fdb> Urp<0x0000>
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> fp stat get si=2 t=p
+The value is: 0x000000002
+
+
+Final count of stat should be 2 each
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000002
+B_CM.0> fp stat get si=2 t=p
+The value is: 0x000000002
+bcm_error_t $$ = BCM_E_NONE (0)

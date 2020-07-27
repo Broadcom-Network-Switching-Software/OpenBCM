@@ -1,0 +1,324 @@
+**************************** basic information begin****************************
+    portmap_29.0=72:25
+    portmap_4.0=13:1
+    portmap_10.0=37:1
+    riot_overlay_ecmp_resilient_hash_size=64
+    portmap_5.0=17:1
+    portmap_11.0=41:1
+    portmap_20.0=63:10
+    port_gmii_mode{1}=1
+    portmap_6.0=21:1
+    portmap_12.0=45:1
+    portmap_21.0=64:10
+    l3_ecmp_levels=2
+    portmap_30.0=73:25
+    portmap_7.0=25:1
+    portmap_13.0=49:20
+    riot_overlay_l3_egress_mem_size=12288
+    portmap_22.0=65:25
+    portmap_31.0=74:25
+    portmap_8.0=29:1
+    portmap_14.0=51:20
+    fpem_mem_entries=8192
+    portmap_23.0=66:25
+    pbmp_xport_xe=0xC3C3ffffe
+    l2_mem_entries=16384
+    os=unix
+    portmap_32.0=75:25
+    portmap_9.0=33:1
+    portmap_15.0=53:10
+    portmap_24.0=67:25
+    port_flex_enable=1
+    portmap_33.0=76:25
+    port_gmii_mode{33}=1
+    riot_enable=1
+    portmap_16.0=55:10
+    l2delete_chunks=4096
+    portmap_25.0=68:25
+    port_gmii_mode{17}=1
+    riot_overlay_l3_intf_mem_size=4096
+    core_clock_frequency=893
+    portmap_17.0=57:40
+    l2xmsg_mode=1
+    portmap_26.0=69:25
+    portmap_1.0=1:1
+    ifp_inports_support_enable=1
+    portmap_18.0=61:10
+    portmap_27.0=70:25
+    portmap_2.0=5:1
+    l3_mem_entries=16384
+    portmap_19.0=62:10
+    portmap_28.0=71:25
+    portmap_3.0=9:1
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190213 (Wed Feb 13 23:30:40 2019)
+From sdkrel@lc-sj1-4708:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.dpart.56370
+Platform: IPROC_CMICD
+OS: Unix (Posix)
+Chips:
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       BCM56370_A0,
+      
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+   
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.05
+
+	CMH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CCH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CEH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+**************************** basic information end****************************
+
+**************************** test setup begin****************************
+**************************** test setup end****************************
+
+****************************run main script begin****************************
+bcm_port_gport_get()  acc_gport_1=0x8000001
+bcm_port_gport_get()  acc_gport_2=0x8000002
+==== switch control set for vxlan ====
+vxlan_riot_system_config SUCCESS 
+==== port control and vlan control set for vxlan port ====
+vxlan_access_port_config SUCCESS 
+vxlan_access_port_config SUCCESS 
+==== create vlan, add vlan port ====
+vlan_create_add_port SUCCESS 
+vlan_create_add_port SUCCESS 
+Access side VFI 1
+bcm_multicast_create() Ok mc group=201326593
+bcm_vxlan_vpn_create() Ok vpn=0x7001
+vpn_acc_1=0x7001
+Access side VFI 2
+bcm_multicast_create() Ok mc group=201326594
+bcm_vxlan_vpn_create() Ok vpn=0x7002
+vpn_acc_2=0x7002
+==== Create vxlan l3 egress - access UL with no UL l3 intf create required ====
+bcm_l3_egress_create() Ok egr_obj_id=0x1b6a0
+bcm_l3_egress_create() Ok egr_obj_id=0x1b6a1
+==== Create vxlan port - access vp 1 ====
+bcm_vxlan_port_add() Ok
+vxlan_port_create()  acc_vp_1=0x80000001
+==== Create vxlan port - access vp 2 ====
+bcm_vxlan_port_add() Ok
+vxlan_port_create()  acc_vp_2=0x80000002
+==== Create RIOT routing L3 egress - access 1 OL ====
+bcm_l3_intf_create() Ok
+l3_intf_create() acc_intf_ol=0x1
+==== Create RIOT routing L3 egress - access 2 OL ====
+bcm_l3_intf_create() Ok
+l3_intf_create() acc_intf_ol_2=0x2
+bcm_l3_egress_create() Ok egr_obj_id=0x61a82
+l3_egress_create() acc_egr_obj_ol_1=0x61a82
+bcm_l3_egress_create() Ok egr_obj_id=0x61a83
+l3_egress_create() acc_egr_obj_ol_2=0x61a83
+bcm_l3_ingress_create()  acc_ing_obj_1=0x1
+bcm_l3_ingress_create()  acc_ing_obj_2=0x2
+==== update VFI table vrf field ====
+bcm_vlan_control_vlan_get() Ok
+bcm_vlan_control_vlan_set() Ok
+==== update VFI table vrf field ====
+bcm_vlan_control_vlan_get() Ok
+bcm_vlan_control_vlan_set() Ok
+==== my_station_tcam and my_station_tcam_2 add ====
+bcm_l2_station_add() Ok
+bcm_l2_station_add() Ok
+==== Add L3 route entries ====
+bcm_l3_route_add() Ok
+bcm_l3_route_add() Ok
+riot uc SUCCESS 
+****************************run main script end****************************
+
+****************************Verify begin****************************
+Current header mode for unit 0 is now Ieee (0).
+ 
+****************************
+
+
+
+
+ 
+ **************TEST 1  sent pkt to access port 1 **************
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000222222} {000000111111} 8100 000a
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff da7e c0a8 
+[bcmPW.0]Packet[1]: data[0020]: 0a01 c0a8 1401 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[1]: data[0040]: 0000 0000 49e4 680f 
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -2147483646. src-gport -2147483647. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.10.1> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7e>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000111112} {000000222223} 8100 0014
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 3fff db7e c0a8 
+[bcmPW.0]Packet[2]: data[0020]: 0a01 c0a8 1401 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0040]: 0000 0000 2789 d294 
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 28674. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-gport -2147483646. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:11:11:12> src<00:00:00:22:22:23> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<192.168.10.1> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0xdb7e>
+Sleeping for 1 second
+mac=00:00:00:11:11:11 vlan=28673 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+Sleeping for 1 second
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2
+MC_PERQ_BYTE(0).cpu0	    :			144		   +144
+RIPC4_64.ge0		    :			  1		     +1
+RUC_64.ge0		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ge0    :			  1		     +1
+GR127.ge0		    :			  1		     +1
+GRPKT.ge0		    :			  1		     +1
+GRBYT.ge0		    :			 72		    +72
+GRUC.ge0		    :			  1		     +1
+GRPOK.ge0		    :			  1		     +1
+GT127.ge0		    :			  1		     +1
+GTPKT.ge0		    :			  1		     +1
+GTBYT.ge0		    :			 72		    +72
+GTUC.ge0		    :			  1		     +1
+GTPOK.ge0		    :			  1		     +1
+UC_PERQ_PKT(2).ge0	    :			  1		     +1
+UC_PERQ_BYTE(2).ge0	    :			 72		    +72
+RUC_64.ge1		    :			  1		     +1
+ING_NIV_RX_FRAMES_VL.ge1    :			  1		     +1
+TDBGC4_64.ge1		    :			  1		     +1
+GR127.ge1		    :			  1		     +1
+GRPKT.ge1		    :			  1		     +1
+GRBYT.ge1		    :			 72		    +72
+GRUC.ge1		    :			  1		     +1
+GRPOK.ge1		    :			  1		     +1
+GT127.ge1		    :			  1		     +1
+GTPKT.ge1		    :			  1		     +1
+GTBYT.ge1		    :			 72		    +72
+GTUC.ge1		    :			  1		     +1
+GTPOK.ge1		    :			  1		     +1
+UC_PERQ_PKT(0).ge1	    :			  1		     +1
+UC_PERQ_BYTE(0).ge1	    :			 72		    +72
+ 
+ **************TEST 2  sent pkt to access port 2 **************
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000222223} {000000111112} 8100 0014
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 40ff da7e c0a8 
+[bcmPW.0]Packet[3]: data[0020]: 1401 c0a8 0a01 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0040]: 531f 75e3 1cdf 4421 
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 28674. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-gport -2147483647. src-gport -2147483646. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:22:22:23> src<00:00:00:11:11:12> Tagged Packet ProtID<0x8100> Ctrl<0x0014> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<192.168.20.1> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7e>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000111111} {000000222222} 8100 000a
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 3fff db7e c0a8 
+[bcmPW.0]Packet[4]: data[0020]: 1401 c0a8 0a01 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0040]: 531f 75e3 02c3 cd2a 
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-gport -2147483647. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:11:11:11> src<00:00:00:22:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<192.168.20.1> dst<192.168.10.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0xdb7e>
+Sleeping for 1 second
+mac=00:00:00:11:11:12 vlan=28674 GPORT=0x80000002 port=0x80000002(vxlan) Hit
+mac=00:00:00:11:11:11 vlan=28673 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+Sleeping for 1 second
+MC_PERQ_PKT(0).cpu0	    :			  4		     +2
+MC_PERQ_BYTE(0).cpu0	    :			288		   +144
+RUC_64.ge0		    :			  2		     +1
+ING_NIV_RX_FRAMES_VL.ge0    :			  2		     +1
+TDBGC4_64.ge0		    :			  1		     +1
+GR127.ge0		    :			  2		     +1
+GRPKT.ge0		    :			  2		     +1
+GRBYT.ge0		    :			144		    +72
+GRUC.ge0		    :			  2		     +1
+GRPOK.ge0		    :			  2		     +1
+GT127.ge0		    :			  2		     +1
+GTPKT.ge0		    :			  2		     +1
+GTBYT.ge0		    :			144		    +72
+GTUC.ge0		    :			  2		     +1
+GTPOK.ge0		    :			  2		     +1
+UC_PERQ_PKT(0).ge0	    :			  1		     +1
+UC_PERQ_BYTE(0).ge0	    :			 72		    +72
+RIPC4_64.ge1		    :			  1		     +1
+RUC_64.ge1		    :			  2		     +1
+ING_NIV_RX_FRAMES_VL.ge1    :			  2		     +1
+GR127.ge1		    :			  2		     +1
+GRPKT.ge1		    :			  2		     +1
+GRBYT.ge1		    :			144		    +72
+GRUC.ge1		    :			  2		     +1
+GRPOK.ge1		    :			  2		     +1
+GT127.ge1		    :			  2		     +1
+GTPKT.ge1		    :			  2		     +1
+GTBYT.ge1		    :			144		    +72
+GTUC.ge1		    :			  2		     +1
+GTPOK.ge1		    :			  2		     +1
+UC_PERQ_PKT(2).ge1	    :			  1		     +1
+UC_PERQ_BYTE(2).ge1	    :			 72		    +72
+****************************Verify end****************************

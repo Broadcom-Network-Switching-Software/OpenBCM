@@ -1,0 +1,612 @@
+BCM.0> cint ifp_range_checker.c
+If using multiple ranges of a given RangeType, invert cannot be used.
+int opt_UseRangeGroupSetOfApis = 1 (0x1)
+int opt_UseMultipleRanges = 1 (0x1)
+int opt_UseRangeInvert = 1 (0x1)
+int opt_PipeLocal = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3)
+Doing create VLANs and add ports to them..
+Doing L2 addr add..
+Doing port loopbacks...
+Doing port config get..
+Doing range1 create...
+Doing range2 create...
+Doing IFP group create
+Doing IFP entry create
+Doing IFP qual srcmac
+Doing IFP qual InPort 2
+Doing range GROUP create..
+Doing IFP qual RANGE
+Doing IFP action add CopyToCpu
+Doing stat attach..
+Doing IFP entry INSTALL
+B_CM.0> fp show
+FP:	unit 0:
+PIPELINE STAGE FLOWTRACKER
+FP:	      :tcam_sz=2044(0x7fc), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=9216(0x2400), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000018dffffffffffff}
+         qset={SrcMac, InPort, Stage, RangeCheckGroup},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 0
+         slice_primary =  {slice_number=0, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=9216, entries_free=9215,
+                       counters_total=14336, counters_free=14335, meters_total=6144, meters_free=6144}
+EID 0x00000001: gid=0x1,
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000002 
+    MASK=0x000000ff 
+ RangeCheckGroup 
+    Part:0 Offset0: 40 Width0:   4 
+    Part:0 Offset1: 44 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x00000001 
+         action={act=CopyToCpu, param0=1(0x1), param1=200(0xc8), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+
+
+
+############  VID=95   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100005F08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=96   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006008004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=97   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006108004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=98   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006208004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=99   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006308004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=100   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006408004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000000
+
+
+
+############  VID=101   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006508004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+[bcmPW.0]
+sleep 1
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {000000000202} 8100 0065
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+Sleeping for 1 second
+[bcmPW.0]Packet[1]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0040]: b0f9 eb4f 5660 3528 
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 101. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0065> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[1]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000001
+
+
+
+############  VID=102   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006608004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {000000000202} 8100 0066
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+sleep 1
+[bcmPW.0]Packet[2]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[2]: data[0040]: b0f9 eb4f 95b0 5cab 
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 102. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0066> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[2]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000002
+
+
+
+############  VID=103   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006708004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {000000000202} 8100 0067
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[3]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[3]: data[0040]: b0f9 eb4f d400 84d5 
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 103. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0067> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[3]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000003
+
+
+
+############  VID=104   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006808004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+Sleeping for 1 second
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {000000000202} 8100 0068
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[4]: data[0040]: b0f9 eb4f d899 d936 
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 104. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0068> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[4]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000004
+
+
+
+############  VID=105   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006908004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+Sleeping for 1 second
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {000000000202} 8100 0069
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[5]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[5]: data[0040]: b0f9 eb4f 9929 0148 
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 105. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0069> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[5]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=106   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006A08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=107   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006B08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=108   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006C08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=109   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006D08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=110   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006E08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000005
+
+
+
+############  VID=111   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100006F08004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {0000000000dd} {000000000202} 8100 006f
+Sleeping for 1 second
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[6]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[6]: data[0040]: b0f9 eb4f 5e8e a395 
+[bcmPW.0]Packet[6]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x006f> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[6]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000006
+
+
+
+############  VID=112   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007008004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+Sleeping for 1 second
+[bcmPW.0]Packet[7]: data[0000]: {0000000000dd} {000000000202} 8100 0070
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[7]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[7]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[7]: data[0040]: b0f9 eb4f 460a b1f6 
+[bcmPW.0]Packet[7]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 112. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0070> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[7]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000007
+
+
+
+############  VID=113   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007108004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {0000000000dd} {000000000202} 8100 0071
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[8]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[8]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[8]: data[0040]: b0f9 eb4f 07ba 6988 
+[bcmPW.0]Packet[8]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 113. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0071> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[8]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000008
+
+
+
+############  VID=114   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007208004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+Sleeping for 1 second
+[bcmPW.0]Packet[9]: data[0000]: {0000000000dd} {000000000202} 8100 0072
+[bcmPW.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[9]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[9]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[9]: data[0040]: b0f9 eb4f c46a 000b 
+[bcmPW.0]Packet[9]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 114. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[9]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch
+[bcmPW.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0072> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[9]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x000000009
+
+
+
+############  VID=115   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007308004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+[bcmPW.0]
+Sleeping for 1 second
+[bcmPW.0]Packet[10]: data[0000]: {0000000000dd} {000000000202} 8100 0073
+[bcmPW.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a 
+[bcmPW.0]Packet[10]: data[0020]: 0a0b 0c0c 0c0d 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[10]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[10]: data[0040]: b0f9 eb4f 85da d875 
+[bcmPW.0]Packet[10]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 115. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[10]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 200. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0073> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<10.10.10.11> dst<12.12.12.13> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[10]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+
+############  VID=116   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007408004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+
+############  VID=117   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007508004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+
+############  VID=118   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007608004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+
+############  VID=119   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007708004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+
+############  VID=120   ########
+
+
+tx 1 pbm=1 data=0000000000DD0000000002028100007808004500002E0000000040063E8C0A0A0A0B0C0C0C0D227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 1
+Sleeping for 1 second
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+
+
+fp stat get si=1 t=p
+
+The value is: 0x00000000a
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

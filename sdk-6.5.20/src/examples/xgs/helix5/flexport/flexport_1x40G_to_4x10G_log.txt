@@ -1,0 +1,166 @@
+BCM.0> cint flexport_1x40G_to_4x10G.c                                                              
+    portmap_8=20:10                                                                                
+    portmap_9=33:10                                                                                
+    portmap_10=34:10                                                                               
+    portmap_11=35:10                                                                               
+    portmap_20=57:10                                                                               
+    portmap_12=49:10                                                                               
+    portmap_21=58:10                                                                               
+    portmap_13=50:10                                                                               
+    portmap_30=36:10                                                                               
+    portmap_22=59:10                                                                               
+    portmap_14=51:10                                                                               
+    oversubscribe_mode=1                                                                           
+    portmap_31=73:50                                                                               
+    portmap_23=60:10                                                                               
+    portmap_15=52:10                                                                               
+    portmap_32=75:50                                                                               
+    portmap_24=61:40                                                                               
+    portmap_16=53:10                                                                               
+    portmap_17=54:10                                                                               
+    portmap_18=55:10                                                                               
+    portmap_19=56:10                                                                               
+    portmap_28=65:40                                                                               
+    portmap_29=69:50                                                                               
+    pbmp_xport_xe=0x001ffffffe                                                                     
+    os=unix                                                                                        
+    port_flex_enable=1                                                                             
+    core_clock_frequency=587                                                                       
+    portmap_1=1:10                                                                                 
+    portmap_2=2:10                                                                                 
+    portmap_3=3:10                                                                                 
+    pbmp_oversubscribe=0xffffffffff                                                                
+    portmap_4=4:10                                                                                 
+    portmap_5=17:10                                                                                
+    portmap_6=18:10                                                                                
+    portmap_7=19:10                                                                                
+Attach: Unit 0 (BCM56375_A0): attached (current unit)                                              
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom                                         
+Release: sdk-6.5.17 built 20190213 (Wed Feb 13 15:19:40 2019)                                      
+From nn953613@ibnvda1012:/projects/ntsw-sw7/home/nnikam/sdk/MASTER_2                               
+Platform: SLK_BCM957812                                                                            
+OS: Unix (Posix)                                                                                   
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,                                         
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,                                         
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,                                         
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,                                         
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,                                         
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,                                         
+       BCM56840_B0,                                                                                
+                                                                                                   
+       BCM88732_A0,                                                                                
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,                                                      
+                                                                                                   
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,                                         
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,                                         
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,                                         
+       BCM56260_A0, BCM56260_B0,                                                                   
+                                                                                                   
+                                                                                                   
+       BCM56160_A0, BCM56270_A0,                                                                   
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM56870_B0,                                         
+       BCM53570_A0, BCM53570_B0, BCM56980_A0, BCM56980_B0,                                         
+       BCM53540_A0, BCM56670_A0, BCM56670_B0, BCM56370_A0,                                         
+       BCM56770_A0                                                                                 
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,                                                      
+    BCM5238, BCM5248, BCM5400, BCM5401,                                                            
+    BCM5402, BCM5404, BCM5424/34, BCM5411,                                                         
+    BCM5461, BCM5464, BCM5466, BCM5478,                                                            
+    BCM5488, BCM54980, BCM54980, BCM54980,                                                         
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,                                                    
+    BCM54640, BCM54682E, BCM54684E, BCM54685,                                                      
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,                                                     
+    BCM84073, BCM84074, BCM84728, BCM84748,                                                        
+    BCM84727, BCM84747, BCM84762, BCM84764,                                                        
+    BCM84042, BCM84044, BCM8806X, BCM54182,                                                        
+    BCM54185, BCM54180, BCM54140, BCM54192,                                                        
+    BCM54195, BCM54190, BCM54194, BCM54210,                                                        
+    BCM54220, BCM54280, BCM54282, BCM54240,                                                        
+    BCM54285, BCM5428X, BCM54290, BCM54292,                                                        
+    BCM54294, BCM54295, BCM54296, BCM5421S                                                         
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,                                              
+    BCM54880, BCM54881, BCM54810, BCM54811,                                                        
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,                                                    
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,                                                 
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,                                                       
+    BCM8074, BCM8040, BCM8481X, BCM84812,                                                          
+    BCM84821, BCM84822, BCM84823, BCM84833,                                                        
+    BCM84834, BCM84835, BCM84836, BCM84844,                                                        
+    BCM84846, BCM84848, BCM84858, BCM84856,                                                        
+    BCM84860, BCM84861, BCM84864, BCM84868,                                                        
+    BCM84888, BCM84884, BCM84888E, BCM84884E,                                                      
+    BCM84881, BCM84880, BCM84888S, BCM84887,                                                       
+    BCM84886, BCM84885, BCM8750, BCM8752,                                                          
+    BCM8754, BCM84740, BCM84164, BCM84758,                                                         
+    BCM84780, BCM84784, BCM84318, BCM84328,                                                        
+    BCM84793, BCM82328, Furia, Huracan                                                             
+    Sesto, Madura, BCM82780, copper sfp                                                            
+                                                                                                   
+                 ena/        speed/ link auto    STP                  lrn  inter   max   cut   loop
+           port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?  back
+       xe0(  1)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe1(  2)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe2(  3)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe3(  4)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe4(  5)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe5(  6)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe6(  7)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe7(  8)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe8(  9)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+       xe9( 10)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe10( 11)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe11( 12)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe12( 13)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe13( 14)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe14( 15)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe15( 16)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe16( 17)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe17( 18)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe18( 19)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe19( 20)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284             
+      xe20( 21)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe21( 22)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe22( 23)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe23( 24)  !ena   4   40G  FD None  No   Forward  TX RX   None   FA  XLAUI 12284
+      xe24( 28)  down   2   40G  FD   SW  No   Forward  TX RX   None   FA    KR2 12284
+       hg0( 29)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+       hg1( 30)  down   1   10G  FD   SW  No   Forward          None   FA    XFI 12288
+       hg2( 31)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+       hg3( 32)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+                 ena/        speed/ link auto    STP                  lrn  inter   max   cut   loop
+           port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?  back
+       xe0(  1)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe1(  2)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe2(  3)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe3(  4)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe4(  5)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe5(  6)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe6(  7)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe7(  8)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe8(  9)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+       xe9( 10)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe10( 11)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe11( 12)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe12( 13)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe13( 14)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe14( 15)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe15( 16)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe16( 17)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe17( 18)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe18( 19)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe19( 20)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe20( 21)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe21( 22)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe22( 23)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe23( 24)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe24( 25)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe25( 26)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe26( 27)  down   1   10G  FD   SW  No   Forward  TX RX   None   FA    XFI 12284
+      xe27( 28)  down   2   40G  FD   SW  No   Forward  TX RX   None   FA    KR2 12284
+       hg0( 29)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+       hg1( 30)  down   1   10G  FD   SW  No   Forward          None   FA    XFI 12288
+       hg2( 31)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+       hg3( 32)  down   2   50G  FD   SW  No   Forward  TX RX   None   FA    CR2 12288
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

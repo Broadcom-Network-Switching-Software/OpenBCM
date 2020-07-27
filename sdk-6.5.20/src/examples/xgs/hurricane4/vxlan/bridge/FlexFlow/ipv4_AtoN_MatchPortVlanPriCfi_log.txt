@@ -1,0 +1,323 @@
+BCM.0> c ipv4_AtoN_MatchPortVlanPriCfi.c
+execute(): Start
+config show; attach; version
+    phy_port_primary_and_offset_4=0x0103
+    portmap_29.0=29:2.5
+    portmap_4.0=4:1
+    phy_port_primary_and_offset_5=0x0500
+    portmap_10.0=10:1
+    portmap_38.0=38:2.5
+    phy_port_primary_and_offset_6=0x0501
+    portmap_47.0=51:1
+    phy_port_primary_and_offset_7=0x0502
+    portmap_5.0=5:1
+    phy_port_primary_and_offset_8=0x0503
+    cache_coherency_check=0
+    portmap_11.0=11:1
+    portmap_65.0=65:20
+    portmap_39.0=39:2.5
+    phy_port_primary_and_offset_9=0x0900
+    portmap_20.0=20:1
+    portmap_48.0=52:1
+    flowtracker_ipfix_observation_domain_id=1
+    portmap_6.0=6:1
+    portmap_12.0=12:1
+    portmap_66.0=66:20
+    portmap_21.0=21:1
+    portmap_49.0=57:25
+    portmap_30.0=30:2.5
+    portmap_7.0=7:1
+    portmap_13.0=13:1
+    portmap_67.0=67:20
+    portmap_22.0=22:1
+    portmap_31.0=31:2.5
+    portmap_8.0=8:1
+    portmap_40.0=40:2.5
+    portmap_14.0=14:1
+    portmap_68.0=68:20
+    portmap_23.0=23:1
+    pbmp_xport_xe=0x01FFFFFFFFFFFFE
+    os=unix
+    portmap_32.0=32:2.5
+    portmap_9.0=9:1
+    portmap_41.0=41:1
+    portmap_15.0=15:1
+    core_clock_to_pm_clock_factor=1
+    phy_chain_rx_polarity_flip_physical{29.0}=1
+    portmap_50.0=58:25
+    portmap_24.0=24:1
+    port_gmii_mode{41}=1
+    port_flex_enable=1
+    portmap_33.0=33:2.5
+    flowtracker_num_unique_user_entry_keys=10
+    phy_port_primary_and_offset_10=0x0901
+    portmap_42.0=42:1
+    portmap_16.0=16:1
+    port_gmii_mode{25}=2
+    l2delete_chunks=4096
+    phy_port_primary_and_offset_11=0x0902
+    portmap_51.0=59:25
+    portmap_25.0=25:2.5
+    phy_port_primary_and_offset_20=0x1103
+    phy_port_primary_and_offset_12=0x0903
+    portmap_34.0=34:2.5
+    core_clock_frequency=495
+    phy_port_primary_and_offset_21=0x1500
+    phy_port_primary_and_offset_13=0x0d00
+    portmap_43.0=43:1
+    portmap_17.0=17:1
+    l2xmsg_mode=1
+    phy_port_primary_and_offset_22=0x1501
+    phy_port_primary_and_offset_14=0x0d01
+    portmap_52.0=60:25
+    portmap_26.0=26:2.5
+    portmap_1.0=1:1
+    phy_port_primary_and_offset_23=0x1502
+    phy_port_primary_and_offset_15=0x0d02
+    portmap_35.0=35:2.5
+    ifp_inports_support_enable=1
+    phy_port_primary_and_offset_24=0x1503
+    phy_port_primary_and_offset_16=0x0d03
+    portmap_44.0=44:1
+    portmap_18.0=18:1
+    flow_init_mode=1
+    portmap_53.0=61:20
+    phy_port_primary_and_offset_17=0x1100
+    portmap_27.0=27:2.5
+    portmap_2.0=2:1
+    portmap_36.0=36:2.5
+    phy_port_primary_and_offset_18=0x1101
+    portmap_45.0=49:1
+    portmap_19.0=19:1
+    phy_port_primary_and_offset_19=0x1102
+    phy_port_primary_and_offset_1=0x0100
+    portmap_54.0=63:20
+    portmap_28.0=28:2.5
+    phy_port_primary_and_offset_2=0x0101
+    portmap_3.0=3:1
+    portmap_37.0=37:2.5
+    phy_port_primary_and_offset_3=0x0102
+    portmap_46.0=50:1
+Attach: Unit 0 (BCM56275_A1): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200513 (Wed May 13 18:09:36 2020)
+From nm915460@lc-sj1-3830:/projects/ntsw-sw2/home/nmou/sdk-xgs-6.5.19
+Platform: IPROC_CMICD
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0, BCM56440_A0, BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+
+
+
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM53570_A0,
+       BCM53570_B0, BCM56980_A0, BCM56980_B0, BCM53540_A0,
+       BCM56670_A0, BCM56670_B0, BCM56670_C0, BCM56370_A0,
+       BCM56275_A0, BCM56770_A0, BCM56470_A0, BCM56070_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM56275-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM54640E, BCM54880E, BCM54680E,
+    BCM52681E, BCM8703, BCM8704, BCM8705/24/25,
+    BCM8706/8726, BCM8727, BCM8728/8747, BCM8072,
+    BCM8073, BCM8074, BCM8040, BCM8481X,
+    BCM84812, BCM84821, BCM84822, BCM84823,
+    BCM84833, BCM84834, BCM84835, BCM84836,
+    BCM84844, BCM84846, BCM84848, BCM84858,
+    BCM84856, BCM84860, BCM84861, BCM84864,
+    BCM84868, BCM84888, BCM84884, BCM84888E,
+    BCM84884E, BCM84881, BCM84880, BCM84888S,
+    BCM84887, BCM84886, BCM84885, BCM8750,
+    BCM8752, BCM8754, BCM84740, BCM84164,
+    BCM84758, BCM84780, BCM84784, BCM84318,
+    BCM84328, BCM84793, BCM82328, Furia
+    Huracan, Sesto, Madura, BCM82780,
+    copper sfp
+
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Configure Vxlan Global Configuration.
+Get flow-handler for Classic_Vxlan
+Create Multicast group for UUC/MC/BC.
+Create Flow VPN.
+Configure Vxlan Access Port Configuration.
+Create access L3 interface
+Create access L3 Egress object.
+Create Access Flow Port (VP).
+Create Flow VP.
+Access: Add flow match (match: port,vlan prio+cfi).
+Access: Set Encapsulation. VP=>egress-obj{Device,Port}.
+Configure Vxlan Network Port Configuration.
+Create network L3 interface
+Create network L3 Egress object.
+Create Network Flow Port.
+Create Flow VP.
+Network: encap add, VFI-->VNID
+Network: Configure match condition to derive VPN (Match: {VN_ID}, Derive: VFI (VPN))
+Network; Set Encapsulation. VP=>egress-obj{Device,Port}.
+Network: Set Egress-vlan-xlate key-type for network VP
+Network: Add flow match (match: SIP => network SVP)
+Tunnel_init: Create Flow Tunnel Initiator.
+Tunnel_term: Create Flow Tunnel Terminator.
+Access-to-Network: Add payload-dest-mac Address => Network-flow-port (VP).
+~~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports cpu,ge,xe,hg,qsgmii (0x00000000000000000000000000000000000000000000001e007fffffffffffff), untagged ge,xe,hg,qsgmii (0x000000000000000000000000000000000000000000000000007ffffffffffffe) MCAST_FLOOD_UNKNOWN
+vlan 21 ports ge0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22 ports ge1 (0x0000000000000000000000000000000000000000000000000000000000000004), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+mac=00:00:00:00:aa:aa vlan=28688 GPORT=0xb0000002 port=0xb0000002(flow) Static
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+
+Sending known unicast packet to ingress_port access side:1
+Packet from data=<>, length=102
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 8015
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101
+[bcmPW.0]Packet[1]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465
+[bcmPW.0]Packet[1]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465
+[bcmPW.0]Packet[1]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465
+[bcmPW.0]Packet[1]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465
+[bcmPW.0]Packet[1]: data[0060]: 7374 3d5e 83c0
+[bcmPW.0]Packet[1]: length 102 (102). rx-port 1. cos 2. prio_int 4. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x8015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 8016
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 0082 0000 0000 3f11 a5b7 0a0a
+[bcmPW.0]Packet[2]: data[0020]: 0a01 c0a8 0101 ffff 2118 006e 0000 0000
+[bcmPW.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000
+[bcmPW.0]Packet[2]: data[0040]: bbbb 0800 4500 0050 0001 0000 4011 7497
+[bcmPW.0]Packet[2]: data[0050]: 0101 0101 0202 0202 0035 0035 003c 32f6
+[bcmPW.0]Packet[2]: data[0060]: 7465 7374 7465 7374 7465 7374 7465 7374
+[bcmPW.0]Packet[2]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374
+[bcmPW.0]Packet[2]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374
+[bcmPW.0]Packet[2]: data[0090]: 7465 7374 eaf4 95be
+[bcmPW.0]Packet[2]: length 152 (152). rx-port 2. cos 2. prio_int 4. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x8016> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<192.168.1.1> hl<5> service-type<0> tl<130> id<0> frg-off<0> ttl<63> > chk-sum<0xa5b7>
+MC_PERQ_PKT(2).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(2).cpu0        :                   254                +254             240/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                   102                +102              96/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                   102                +102              96/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                   102                +102              96/s
+RUC_64.ge1                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge1    :                     1                  +1               1/s
+GR255.ge1                   :                     1                  +1               1/s
+GRPKT.ge1                   :                     1                  +1               1/s
+GRBYT.ge1                   :                   152                +152             144/s
+GRUC.ge1                    :                     1                  +1               1/s
+GRPOK.ge1                   :                     1                  +1               1/s
+GT255.ge1                   :                     1                  +1               1/s
+GTPKT.ge1                   :                     1                  +1               1/s
+GTBYT.ge1                   :                   152                +152             144/s
+GTUC.ge1                    :                     1                  +1               1/s
+GTPOK.ge1                   :                     1                  +1               1/s
+UC_PERQ_PKT(4).ge1          :                     1                  +1               1/s
+UC_PERQ_BYTE(4).ge1         :                   152                +152             144/s
+mac=00:00:00:00:bb:bb vlan=28688 GPORT=0xb0000001 port=0xb0000001(flow) Hit
+mac=00:00:00:00:aa:aa vlan=28688 GPORT=0xb0000002 port=0xb0000002(flow) Static Hit
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+
+ Vpn :28688
+
+ VpnInfo :
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 2 (0x2)
+        int igmp_query_action = 2 (0x2)
+        int igmp_unknown_msg_action = 2 (0x2)
+        int mld_report_done_action = 2 (0x2)
+        int mld_query_action = 2 (0x2)
+        int ip4_rsvd_mc_action = 2 (0x2)
+        int ip6_rsvd_mc_action = 2 (0x2)
+        int ip4_mc_router_adv_action = 2 (0x2)
+        int ip6_mc_router_adv_action = 2 (0x2)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 2
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177279 (0xb0000001)
+    unsigned int flags = 16 (0x10)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 33024 (0x8100)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 18 (0x12)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 1 (0x1)
+    unsigned short egress_service_tpid = 33024 (0x8100)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

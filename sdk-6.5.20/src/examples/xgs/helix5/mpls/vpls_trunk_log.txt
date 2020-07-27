@@ -1,0 +1,532 @@
+BCM.0> init all;cint vpls_trunk.c
+execute(): Start
+config show; attach; cancun stat; version
+    portmap_8=8:2.5
+    portmap_9=9:2.5
+    portmap_10=10:2.5
+    portmap_11=11:2.5
+    portmap_20=20:2.5
+    portmap_12=12:2.5
+    portmap_21=21:2.5
+    portmap_13=13:2.5
+    portmap_30=30:2.5
+    portmap_22=22:2.5
+    portmap_14=14:2.5
+    portmap_31=31:2.5
+    portmap_23=23:2.5
+    portmap_15=15:2.5
+    portmap_40=52:10
+    portmap_32=32:2.5
+    portmap_24=24:2.5
+    portmap_16=16:2.5
+    l3_ecmp_levels=2
+    port_gmii_mode_33=2
+    port_gmii_mode_17=2
+    portmap_41=53:10
+    portmap_33=33:2.5
+    portmap_25=25:2.5
+    portmap_17=17:2.5
+    portmap_50=73:100
+    portmap_42=54:10
+    portmap_34=34:2.5
+    portmap_26=26:2.5
+    portmap_18=18:2.5
+    portmap_51=69:100
+    portmap_43=55:10
+    portmap_35=35:2.5
+    portmap_27=27:2.5
+    portmap_19=19:2.5
+    portmap_44=56:10
+    portmap_36=36:2.5
+    portmap_28=28:2.5
+    port_gmii_mode_1=2
+    portmap_45=57:10
+    portmap_37=49:10
+    portmap_29=29:2.5
+    pbmp_xport_xe=0x1fffffffffffffe
+    portmap_46=58:10
+    portmap_38=50:10
+    os=unix
+    portmap_55=61:10
+    portmap_47=59:10
+    portmap_39=51:10
+    portmap_56=62:10
+    portmap_48=60:10
+    core_clock_frequency=893
+    mmu_lossless=0
+    portmap_1=1:2.5
+    portmap_2=2:2.5
+    portmap_3=3:2.5
+    portmap_4=4:2.5
+    portmap_5=5:2.5
+    portmap_6=6:2.5
+    portmap_7=7:2.5
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 03.00.05
+
+        CMH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CCH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+        CEH: LOADED
+        Ver: 03.00.05
+        SDK Ver: 06.05.16
+
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.16 built 20190117 (Thu Jan 17 23:19:06 2019)
+From br930043@lvnvdc3607:/projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0,
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,
+
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,
+       BCM56260_A0, BCM56260_B0,
+
+
+       BCM56160_A0, BCM56270_A0, BCM56965_A0, BCM56970_A0,
+       BCM56870_A0, BCM56870_B0, BCM53570_A0, BCM53570_B0,
+       BCM56980_A0, BCM56980_B0, BCM53540_A0, BCM56670_A0,
+       BCM56670_B0, BCM56370_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_vpls_trunk(): ** start **
+int customer_gport = 201326593 (0xc000001)
+VPN ID = 0x7001
+mpls_c_port.encap_id=400003
+mpls_p_port.encap_id=400004
+~~ #2) config_vpls_trunk(): ** end **
+~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports cpu,ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dffffffffffff), untagged ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dfffffffffffe) MCAST_FLOOD_UNKNOWN
+vlan 11 ports ge0-ge2,qsgmii0-qsgmii2 (0x000000000000000000000000000000000000000000000000000000000000000e), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22 ports ge3,qsgmii3 (0x0000000000000000000000000000000000000000000000000000000000000010), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+Free L3INTF entries: 8189
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     1     0     0     22   00:00:00:00:00:bb  16383 0    2     0     0
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:00:00:aa   22    1     4    0        -1   no   no    1   no
+100004  00:00:00:00:00:aa   22    1     4    0      1092   no   no    0   no
+Device supports 2112 trunk groups:
+  2048 front panel trunks (0..2047), 256 ports/trunk
+  64 fabric trunks (2048..2111), 64 ports/trunk
+trunk 1: (front panel, 3 ports)=ge0,ge1,ge2 dlf=any mc=any ipmc=any psc=portflow (0x9)
+
+a) Sending a customer packet on 1st member port (of the trunk group)/access_port:1
+Packet from data=<>, length=68
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000445566} {000000aabbcc} 8100 000b
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPW.0]Packet[1]: data[0020]: 0000 0000 0000 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[1]: data[0040]: eab5 369d
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 1. dest-mod 32. src-gport 402653185. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:44:55:66> src<00:00:00:aa:bb:cc> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000aa} {0000000000bb} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 8847 0011 1010 0044 4110 0000 0044 5566
+[bcmPW.0]Packet[2]: data[0020]: 0000 00aa bbcc 8100 000b 0800 4500 002e
+[bcmPW.0]Packet[2]: data[0030]: 0000 0000 40ff 79d2 0000 0000 0000 0000
+[bcmPW.0]Packet[2]: data[0040]: 0001 0203 0405 0607 0809 0a0b 0c0d 0e0f
+[bcmPW.0]Packet[2]: data[0050]: 1011 1213 1415 1617 1819 b83e 9161
+[bcmPW.0]Packet[2]: length 94 (94). rx-port 4. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 4. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:aa> src<00:00:00:00:00:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 aa 00 00 00 00 00 bb 81 00 00 16 88 47 00 11 10 10 00 44 41 10 00 00 00 44 55 66 00 00 00 aa bb cc 81 00 00 0b 08 00 45 00 00 2e 00 00 00 00 40 ff 79 d2 00 00 00 00 00 00 00 00
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   162                +162             156/s
+IMRP4_64.ge0                :                     1                  +1               1/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+TDBGC3_64.ge0               :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    68                 +68              65/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    68                 +68              65/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    68                 +68              65/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR127.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                    94                 +94              90/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT127.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                    94                 +94              90/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+MC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+MC_PERQ_BYTE(0).ge3         :                    94                 +94              90/s
+Sleeping for 4 seconds
+
+b) Sending a provider packet on network_port:4
+Packet from data=<>, length=94
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000bb} {0000000000aa} 8100 0016
+[bcmPW.0]Packet[3]: data[0010]: 8847 0022 2040 0033 3140 0000 00aa bbcc
+[bcmPW.0]Packet[3]: data[0020]: 0000 0044 5566 8100 000b 0800 4500 002e
+[bcmPW.0]Packet[3]: data[0030]: 0000 0000 40ff 79d2 0000 0000 0000 0000
+[bcmPW.0]Packet[3]: data[0040]: 9100 0003 8902 a001 0446 0000 0000 0000
+[bcmPW.0]Packet[3]: data[0050]: d36d 6169 6434 3862 7974 3919 5abc
+[bcmPW.0]Packet[3]: length 94 (94). rx-port 4. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-gport 402653185. src-gport 402653186. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:bb> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 bb 00 00 00 00 00 aa 81 00 00 16 88 47 00 22 20 40 00 33 31 40 00 00 00 aa bb cc 00 00 00 44 55 66 81 00 00 0b 08 00 45 00 00 2e 00 00 00 00 40 ff 79 d2 00 00 00 00 00 00 00 00
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000aabbcc} {000000445566} 8100 000b
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPW.0]Packet[4]: data[0020]: 0000 0000 0000 9100 0003 8902 a001 0446
+[bcmPW.0]Packet[4]: data[0030]: 0000 0000 0000 d36d 6169 6434 3862 7974
+[bcmPW.0]Packet[4]: data[0040]: 91d2 7ef1
+[bcmPW.0]Packet[4]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-gport 402653185. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:aa:bb:cc> src<00:00:00:44:55:66> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   162                +162             159/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    68                 +68              67/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    68                 +68              67/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    68                 +68              67/s
+RDISC_64.ge3                :                     1                  +1               1/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR127.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                    94                 +94              92/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT127.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                    94                 +94              92/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                    94                 +94              92/s
+Sleeping for 4 seconds
+
+c) Sending a provider packet with payload VID changed to 0x11 on network_port:4
+Packet from data=<>, length=94
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000bb} {0000000000aa} 8100 0016
+[bcmPW.0]Packet[5]: data[0010]: 8847 0022 2040 0033 3140 0000 00aa bbcc
+[bcmPW.0]Packet[5]: data[0020]: 0000 0044 5566 8100 0011 0800 4500 002e
+[bcmPW.0]Packet[5]: data[0030]: 0000 0000 40ff 79d2 0000 0000 0000 0000
+[bcmPW.0]Packet[5]: data[0040]: 9100 0003 8902 a001 0446 0000 0000 0000
+[bcmPW.0]Packet[5]: data[0050]: d36d 6169 6434 3862 7974 3df0 c340
+[bcmPW.0]Packet[5]: length 94 (94). rx-port 4. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-gport 402653185. src-gport 402653186. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:bb> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 bb 00 00 00 00 00 aa 81 00 00 16 88 47 00 22 20 40 00 33 31 40 00 00 00 aa bb cc 00 00 00 44 55 66 81 00 00 11 08 00 45 00 00 2e 00 00 00 00 40 ff 79 d2 00 00 00 00 00 00 00 00
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000aabbcc} {000000445566} 8100 0011
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPW.0]Packet[6]: data[0020]: 0000 0000 0000 9100 0003 8902 a001 0446
+[bcmPW.0]Packet[6]: data[0030]: 0000 0000 0000 d36d 6169 6434 3862 7974
+[bcmPW.0]Packet[6]: data[0040]: 953b e70d
+[bcmPW.0]Packet[6]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 17. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-trunk 1. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:aa:bb:cc> src<00:00:00:44:55:66> Tagged Packet ProtID<0x8100> Ctrl<0x0011> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   162                +162             159/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    68                 +68              67/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    68                 +68              67/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    68                 +68              67/s
+RDISC_64.ge3                :                     1                  +1               1/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR127.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                    94                 +94              92/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT127.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                    94                 +94              92/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                    94                 +94              92/s
+Sleeping for 4 seconds
+
+d) Sending a provider packet with payload SA changed on network_port:4
+Packet from data=<>, length=94
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {0000000000bb} {0000000000aa} 8100 0016
+[bcmPW.0]Packet[7]: data[0010]: 8847 0022 2040 0033 3140 0000 00aa bbcc
+[bcmPW.0]Packet[7]: data[0020]: 0000 1100 5566 8100 000b 0800 4500 002e
+[bcmPW.0]Packet[7]: data[0030]: 0000 0000 40ff 79d2 0000 0000 0000 0000
+[bcmPW.0]Packet[7]: data[0040]: 9100 0003 8902 a001 0446 0000 0000 0000
+[bcmPW.0]Packet[7]: data[0050]: d36d 6169 6434 3862 7974 d214 30c6
+[bcmPW.0]Packet[7]: length 94 (94). rx-port 4. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-gport 402653185. src-gport 402653186. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:00:00:bb> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 bb 00 00 00 00 00 aa 81 00 00 16 88 47 00 22 20 40 00 33 31 40 00 00 00 aa bb cc 00 00 11 00 55 66 81 00 00 0b 08 00 45 00 00 2e 00 00 00 00 40 ff 79 d2 00 00 00 00 00 00 00 00
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {000000aabbcc} {000011005566} 8100 000b
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 40ff 79d2 0000
+[bcmPW.0]Packet[8]: data[0020]: 0000 0000 0000 9100 0003 8902 a001 0446
+[bcmPW.0]Packet[8]: data[0030]: 0000 0000 0000 d36d 6169 6434 3862 7974
+[bcmPW.0]Packet[8]: data[0040]: 7adf 148b
+[bcmPW.0]Packet[8]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-gport 402653185. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:aa:bb:cc> src<00:00:11:00:55:66> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<0.0.0.0> dst<0.0.0.0> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x79d2>
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   162                +162             159/s
+RUC_64.ge0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge0    :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                    68                 +68              67/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                    68                 +68              67/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                    68                 +68              67/s
+RDISC_64.ge3                :                     1                  +1               1/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR127.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                    94                 +94              92/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT127.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                    94                 +94              92/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                    94                 +94              92/s
+Sleeping for 4 seconds
+
+e) Sending a provider packet/ MiM packet on network_port:4
+Packet from data=<>, length=140
+[bcmPW.0]
+[bcmPW.0]Packet[9]: data[0000]: {0000000000bb} {0000000000aa} 8100 0016
+[bcmPW.0]Packet[9]: data[0010]: 8847 0022 2040 0033 3140 0000 00aa bbcc
+[bcmPW.0]Packet[9]: data[0020]: 0000 0044 5566 88e7 0000 face 0000 0001
+[bcmPW.0]Packet[9]: data[0030]: 0001 0000 0100 f300 0081 00af a000 0102
+[bcmPW.0]Packet[9]: data[0040]: 0304 0506 0708 09f3 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[9]: data[0050]: 1213 1415 1617 1819 f31a 1b1c 1d1e 1f20
+[bcmPW.0]Packet[9]: data[0060]: 2122 2324 2526 2728 29f3 2a2b 2c06 477d
+[bcmPW.0]Packet[9]: data[0070]: 29f3 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[9]: data[0080]: 0000 0000 2583 48ea 5c28 a712
+[bcmPW.0]Packet[9]: length 140 (140). rx-port 4. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[9]: dest-gport 402653185. src-gport 402653186. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch
+[bcmPW.0]Packet[9]:
+Packet[9]:   Ethernet: dst<00:00:00:00:00:bb> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 bb 00 00 00 00 00 aa 81 00 00 16 88 47 00 22 20 40 00 33 31 40 00 00 00 aa bb cc 00 00 00 44 55 66 88 e7 00 00 fa ce 00 00 00 01 00 01 00 00 01 00 f3 00 00 81 00 af a0 00 01 02
+[bcmPW.0]
+[bcmPW.0]Packet[10]: data[0000]: {000000aabbcc} {000000445566} 8100 0001
+[bcmPW.0]Packet[10]: data[0010]: 88e7 0000 face 0000 0001 0001 0000 0100
+[bcmPW.0]Packet[10]: data[0020]: f300 0081 00af a000 0102 0304 0506 0708
+[bcmPW.0]Packet[10]: data[0030]: 09f3 0a0b 0c0d 0e0f 1011 1213 1415 1617
+[bcmPW.0]Packet[10]: data[0040]: 1819 f31a 1b1c 1d1e 1f20 2122 2324 2526
+[bcmPW.0]Packet[10]: data[0050]: 2728 29f3 2a2b 2c06 477d 29f3 0000 0000
+[bcmPW.0]Packet[10]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 2583
+[bcmPW.0]Packet[10]: data[0070]: 48ea 2b9e 24de
+[bcmPW.0]Packet[10]: length 118 (118). rx-port 2. cos 0. prio_int 0. vlan 1. reason 0x1. Untagged.
+[bcmPW.0]Packet[10]: dest-port 0. dest-mod 0. src-trunk 1. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:aa:bb:cc> src<00:00:00:44:55:66> Tagged Packet ProtID<0x8100> Ctrl<0x0001> * Unknown/Experimental format * 00 00 00 aa bb cc 00 00 00 44 55 66 81 00 00 01 88 e7 00 00 fa ce 00 00 00 01 00 01 00 00 01 00 f3 00 00 81 00 af a0 00 01 02 03 04 05 06 07 08 09 f3 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   258                +258             253/s
+RUC_64.ge1                  :                     1                  +1               1/s
+GR127.ge1                   :                     1                  +1               1/s
+GRPKT.ge1                   :                     1                  +1               1/s
+GRBYT.ge1                   :                   114                +114             112/s
+GRUC.ge1                    :                     1                  +1               1/s
+GRPOK.ge1                   :                     1                  +1               1/s
+GT127.ge1                   :                     1                  +1               1/s
+GTPKT.ge1                   :                     1                  +1               1/s
+GTBYT.ge1                   :                   114                +114             112/s
+GTUC.ge1                    :                     1                  +1               1/s
+GTPOK.ge1                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge1          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge1         :                   114                +114             112/s
+RDISC_64.ge3                :                     1                  +1               1/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR255.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                   140                +140             137/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT255.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                   140                +140             137/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                   140                +140             137/s
+Sleeping for 4 seconds
+
+f) Sending a provider packet/ MiM packet with MiM SA changed on network_port:4
+Packet from data=<>, length=140
+[bcmPW.0]
+[bcmPW.0]Packet[11]: data[0000]: {0000000000bb} {0000000000aa} 8100 0016
+[bcmPW.0]Packet[11]: data[0010]: 8847 0022 2040 0033 3140 0000 00aa bbcc
+[bcmPW.0]Packet[11]: data[0020]: 0000 1100 5566 88e7 0000 face 0000 0001
+[bcmPW.0]Packet[11]: data[0030]: 0001 0000 0100 f300 0081 00af a000 0102
+[bcmPW.0]Packet[11]: data[0040]: 0304 0506 0708 09f3 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[11]: data[0050]: 1213 1415 1617 1819 f31a 1b1c 1d1e 1f20
+[bcmPW.0]Packet[11]: data[0060]: 2122 2324 2526 2728 29f3 2a2b 2c06 477d
+[bcmPW.0]Packet[11]: data[0070]: 29f3 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[11]: data[0080]: 0000 0000 2583 48ea 06f1 1b2c
+[bcmPW.0]Packet[11]: length 140 (140). rx-port 4. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[11]: dest-gport 402653185. src-gport 402653186. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[11]: reasons: FilterMatch
+[bcmPW.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:bb> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 00 bb 00 00 00 00 00 aa 81 00 00 16 88 47 00 22 20 40 00 33 31 40 00 00 00 aa bb cc 00 00 11 00 55 66 88 e7 00 00 fa ce 00 00 00 01 00 01 00 00 01 00 f3 00 00 81 00 af a0 00 01 02
+[bcmPW.0]
+[bcmPW.0]Packet[12]: data[0000]: {000000aabbcc} {000011005566} 8100 0001
+[bcmPW.0]Packet[12]: data[0010]: 88e7 0000 face 0000 0001 0001 0000 0100
+[bcmPW.0]Packet[12]: data[0020]: f300 0081 00af a000 0102 0304 0506 0708
+[bcmPW.0]Packet[12]: data[0030]: 09f3 0a0b 0c0d 0e0f 1011 1213 1415 1617
+[bcmPW.0]Packet[12]: data[0040]: 1819 f31a 1b1c 1d1e 1f20 2122 2324 2526
+[bcmPW.0]Packet[12]: data[0050]: 2728 29f3 2a2b 2c06 477d 29f3 0000 0000
+[bcmPW.0]Packet[12]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 2583
+[bcmPW.0]Packet[12]: data[0070]: 48ea 7147 98e0
+[bcmPW.0]Packet[12]: length 118 (118). rx-port 1. cos 0. prio_int 0. vlan 1. reason 0x1. Untagged.
+[bcmPW.0]Packet[12]: dest-port 0. dest-mod 0. src-trunk 1. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[12]: reasons: FilterMatch
+[bcmPW.0]Packet[12]:
+Packet[12]:   Ethernet: dst<00:00:00:aa:bb:cc> src<00:00:11:00:55:66> Tagged Packet ProtID<0x8100> Ctrl<0x0001> * Unknown/Experimental format * 00 00 00 aa bb cc 00 00 11 00 55 66 81 00 00 01 88 e7 00 00 fa ce 00 00 00 01 00 01 00 00 01 00 f3 00 00 81 00 af a0 00 01 02 03 04 05 06 07 08 09 f3 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   258                +258             253/s
+RUC_64.ge0                  :                     1                  +1               1/s
+GR127.ge0                   :                     1                  +1               1/s
+GRPKT.ge0                   :                     1                  +1               1/s
+GRBYT.ge0                   :                   114                +114             112/s
+GRUC.ge0                    :                     1                  +1               1/s
+GRPOK.ge0                   :                     1                  +1               1/s
+GT127.ge0                   :                     1                  +1               1/s
+GTPKT.ge0                   :                     1                  +1               1/s
+GTBYT.ge0                   :                   114                +114             112/s
+GTUC.ge0                    :                     1                  +1               1/s
+GTPOK.ge0                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge0         :                   114                +114             112/s
+RDISC_64.ge3                :                     1                  +1               1/s
+RUC_64.ge3                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ge3    :                     1                  +1               1/s
+GR255.ge3                   :                     1                  +1               1/s
+GRPKT.ge3                   :                     1                  +1               1/s
+GRBYT.ge3                   :                   140                +140             137/s
+GRUC.ge3                    :                     1                  +1               1/s
+GRPOK.ge3                   :                     1                  +1               1/s
+GT255.ge3                   :                     1                  +1               1/s
+GTPKT.ge3                   :                     1                  +1               1/s
+GTBYT.ge3                   :                   140                +140             137/s
+GTUC.ge3                    :                     1                  +1               1/s
+GTPOK.ge3                   :                     1                  +1               1/s
+UC_PERQ_PKT(0).ge3          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ge3         :                   140                +140             137/s
+Sleeping for 4 seconds
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+
