@@ -3261,9 +3261,10 @@ bcmi_xgs4_udf_offset_install(int unit, int e, uint32 hw_bmap,
         soc_mem_field32_set(unit, mem, &offset_buf, UDF_CLASS_IDf, class_id);
     }
     if (UDF_CTRL(unit)->flags & BCMI_XGS4_UDF_CONDITIONAL_CHECK) {
-        soc_mem_field32_set(unit, mem, &offset_buf,
-                            ENABLE_UDF_CONDITIONAL_CHECKf,
-                            ((flags & BCMI_XGS4_UDF_OFFSET_FLEXHASH) ? 1 : 0));
+        if (flags & BCMI_XGS4_UDF_OFFSET_FLEXHASH) {
+            soc_mem_field32_set(unit, mem, &offset_buf,
+                                ENABLE_UDF_CONDITIONAL_CHECKf, 1);
+        }
     }
 #endif
 
