@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        fields_l.i
  * Purpose:     Field declarations.
@@ -34933,6 +34933,12 @@ soc_field_info_t soc_L3_DEFIP_BCM56870_A0m_fields[] = {
     { IPMC_EXPECTED_L3_IIF_MISMATCH_DROP1f, 1, 383, 0 | SOCF_GLOBAL },
     { IPMC_EXPECTED_L3_IIF_MISMATCH_TOCPU0f, 1, 282, 0 | SOCF_GLOBAL },
     { IPMC_EXPECTED_L3_IIF_MISMATCH_TOCPU1f, 1, 384, 0 | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_107_64f, 44, 8, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_107_64_MASKf, 44, 108, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_127_108f, 20, 58, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_127_108_MASKf, 20, 158, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_IDf, 12, 78, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_ID_MASKf, 12, 178, SOCF_LE | SOCF_GLOBAL },
     { IPV6_SIP_LINK_LOCAL_DROP0f, 1, 283, 0 | SOCF_GLOBAL },
     { IPV6_SIP_LINK_LOCAL_DROP1f, 1, 385, 0 | SOCF_GLOBAL },
     { IP_ADDR0f, 32, 8, SOCF_LE | SOCF_GLOBAL },
@@ -37935,6 +37941,16 @@ soc_field_info_t soc_L3_DEFIP_PAIR_128_BCM56870_A0m_fields[] = {
     { HITf, 1, 523, 0 | SOCF_GLOBAL },
     { IPMC_EXPECTED_L3_IIF_MISMATCH_DROPf, 1, 491, 0 | SOCF_GLOBAL },
     { IPMC_EXPECTED_L3_IIF_MISMATCH_TOCPUf, 1, 492, 0 | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_127_88f, 40, 110, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_127_88_MASKf, 40, 310, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_43_0f, 44, 10, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_43_0_MASKf, 44, 210, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_87_44f, 44, 60, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_ADDR_87_44_MASKf, 44, 260, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_ID_11_4f, 8, 160, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_ID_11_4_MASKf, 8, 360, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_ID_3_0f, 4, 150, SOCF_LE | SOCF_GLOBAL },
+    { IPMC_V6_VRF_ID_3_0_MASKf, 4, 350, SOCF_LE | SOCF_GLOBAL },
     { IPV6_SIP_LINK_LOCAL_DROPf, 1, 493, 0 | SOCF_GLOBAL },
     { IP_ADDR0_LWRf, 32, 10, SOCF_LE | SOCF_GLOBAL },
     { IP_ADDR0_UPRf, 32, 110, SOCF_LE | SOCF_GLOBAL },

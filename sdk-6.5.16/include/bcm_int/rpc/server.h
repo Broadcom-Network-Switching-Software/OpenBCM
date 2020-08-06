@@ -6,12 +6,11 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:	server.h
  * Purpose:	server BCM API dispatch driver
- * Generator:	mkdispatch 
- * Generated:	Fri Aug 19 23:36:26 2011
+ * Generator:	mkdispatch 1.54
  */
 
 #ifdef	BCM_RPC_SUPPORT

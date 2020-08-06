@@ -6,12 +6,11 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:	xapi_ref.h
  * Purpose:	BCMX API routines reference
- * Generator:	mkdispatch 1.51
- * Generated:	Mon Oct 15 09:04:23 2012
+ * Generator:	mkdispatch 1.54
  */
 
 #ifndef	_BCMX_API_REF_H

@@ -874,6 +874,17 @@ _bcm_modules_init(int unit)
     }
 #endif
 
+#ifdef CANCUN_SUPPORT
+    if (soc_feature(unit, soc_feature_cancun)) {
+        SOC_IF_ERROR_RETURN(soc_cancun_version_get(unit, &cancun_ver));
+        if ((SOC_IS_TRIDENT3(unit) && (cancun_ver >= SOC_CANCUN_VERSION_DEF_6_1_3)) ||
+            (SOC_IS_MAVERICK2(unit) && (cancun_ver >= SOC_CANCUN_VERSION_DEF_4_1_2))) {
+                SOC_FEATURE_SET(unit, soc_feature_enable_flow_based_udf_extraction);
+				SOC_IF_ERROR_RETURN(soc_td3_flow_based_udf_enable(unit));
+        }
+    }
+#endif    
+
     /* Must call mbcm init first to ensure driver properly installed */
     BCM_IF_ERROR_RETURN(mbcm_init(unit));
 

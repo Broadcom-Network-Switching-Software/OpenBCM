@@ -205,6 +205,8 @@ soc_counter_trident3_extra_ctrs_init(int unit, soc_reg_t id,
                                      uint32 extra_ctr_ct,
                                      int *total_entries);
 
+extern int soc_td3_flow_based_udf_enable(int unit);
+
 typedef struct _soc_trident3_tdm_pblk_info_s {
 	int pblk_hpipe_num; /* half pipeline info */
     int pblk_cal_idx;   /* index to 8 HPIPEx_PBLK_CALENDARr */

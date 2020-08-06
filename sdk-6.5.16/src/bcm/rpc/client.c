@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:	client.c
  * Purpose:	client BCM API dispatch driver
@@ -9304,7 +9304,7 @@ bcm_client_cosq_port_priority_group_property_get(
 	uint32	r_key[] = {
 		0x2b901133,0x2482e998,0x9e259b6e,0x4ef78026,0xd6e00a32 };
 
-	r_pkt = bcm_rpc_setup('C', r_key, 17, 0, BCM_CONTROL(unit)->unit);
+	r_pkt = bcm_rpc_setup('C', r_key, 21, 0, BCM_CONTROL(unit)->unit);
 	if (r_pkt == NULL) {
 		return BCM_E_MEMORY;
 	}
@@ -9312,7 +9312,12 @@ bcm_client_cosq_port_priority_group_property_get(
 	BCM_PACK_U32(r_pp, port);
 	BCM_PACK_U32(r_pp, priority_group_id);
 	BCM_PACK_U32(r_pp, type);
-	BCM_PACK_U8(r_pp, (arg == NULL) ? 1 : 0);
+	if (arg == NULL) {
+		BCM_PACK_U8(r_pp, 1);
+	} else {
+		BCM_PACK_U8(r_pp, 0);
+		BCM_PACK_U32(r_pp, *arg);
+	}
 
 	r_rv = bcm_rpc_request(unit, r_pkt, r_pp-r_pkt, &r_rpkt, &r_cookie);
 	if (r_rv < 0) {
@@ -9320,11 +9325,6 @@ bcm_client_cosq_port_priority_group_property_get(
 	}
 	r_pp = r_rpkt + BCM_RPC_HLEN;
 	BCM_UNPACK_U32(r_pp, r_ret);
-	if (r_ret >= 0) {
-		if (arg != NULL) {
-			BCM_UNPACK_U32(r_pp, *arg);
-		}
-	}
 
 	bcm_rpc_free(r_rpkt, r_cookie);
 	return r_ret;

@@ -505,8 +505,10 @@ typedef struct soc_cancun_s {
 #define SOC_CANCUN_VERSION_DEF_5_3_0        0x01050300
 #define SOC_CANCUN_VERSION_DEF_5_3_2        0x01050302
 #define SOC_CANCUN_VERSION_DEF_6_0_0        0x01060000
+#define SOC_CANCUN_VERSION_DEF_6_1_3        0x01060103
 #define SOC_CANCUN_VERSION_DEF_3_0_0        0x01030000
 #define SOC_CANCUN_VERSION_DEF_4_0_0        0x01040000
+#define SOC_CANCUN_VERSION_DEF_4_1_2        0x01040102
 #define SOC_CANCUN_VERSION(_m,_mn,_s) (((_m) << 16) | ((_mn) << 8) | \
 			(_s) | (1 << 24))
 #define SOC_CANCUN_VERSION_5_2_UNDER_SERIES(_ver) \

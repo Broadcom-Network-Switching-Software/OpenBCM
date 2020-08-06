@@ -13971,6 +13971,45 @@ void soc_td3_hgoe_feature_update(int unit) {
 }
 
 /*
+ * Enable flow based UDF extraction.
+ * Few containers are disabled by default for certain flows.
+ * This routine enables UDF extraction for various protocols
+ */
+
+int
+soc_td3_flow_based_udf_enable(int unit)
+{
+
+    uint32 rval = 0;
+
+    if (!soc_feature(unit, soc_feature_enable_flow_based_udf_extraction)) {
+        return SOC_E_NONE;
+    }
+
+
+    SOC_IF_ERROR_RETURN(READ_EGR_FLEX_CONFIGr(unit, &rval));
+    soc_reg_field_set(unit, EGR_FLEX_CONFIGr, &rval,
+                      ENABLE_FLEX_MIM_ISID_EXTRACTIONf, 1);
+    SOC_IF_ERROR_RETURN(WRITE_EGR_FLEX_CONFIGr(unit, rval));
+
+    rval = 0;
+    SOC_IF_ERROR_RETURN(READ_ING_FLEX_CONFIGr(unit, &rval));
+    soc_reg_field_set(unit, ING_FLEX_CONFIGr, &rval,
+                      ENABLE_BFD_VER_EXTRACTIONf, 1);
+    soc_reg_field_set(unit, ING_FLEX_CONFIGr, &rval,
+                      ENABLE_IPSEC_SPI_EXTRACTIONf, 1);
+    soc_reg_field_set(unit, ING_FLEX_CONFIGr, &rval,
+                      ENABLE_IPV4_FLAGS_FRAG_OFFSET_EXTRACTIONf, 1);
+    soc_reg_field_set(unit, ING_FLEX_CONFIGr, &rval,
+                      ENABLE_LLC_HDR_EXTRACTIONf, 1);
+    soc_reg_field_set(unit, ING_FLEX_CONFIGr, &rval,
+                      GPE_IOAM_ENABLEf, 1);
+    SOC_IF_ERROR_RETURN(WRITE_ING_FLEX_CONFIGr(unit, rval));
+
+    return SOC_E_NONE;
+}
+
+/*
  * Trident3 chip driver functions.
  * Pls keep at the end of this file for easy access.
  */

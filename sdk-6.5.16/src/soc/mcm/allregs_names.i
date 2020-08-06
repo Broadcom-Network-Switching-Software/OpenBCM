@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        allregs_names.i
  * Purpose:     Register names.
@@ -60789,6 +60789,8 @@
     "MPLS_CAM_DBGCTRL_0_PIPE2",
     "MPLS_CAM_DBGCTRL_0_PIPE3",
     "MPLS_CONTROL_PKT_PARSER2_CONTEXT",
+    "MPLS_DEFAULT_NETWORK_L3_IIF",
+    "MPLS_DEFAULT_NETWORK_SVP",
     "MPLS_ENABLE",
     "MPLS_ENTROPY_LABEL_CONFIG_64",
     "MPLS_ENTRY_DBGCTRL",
@@ -60818,6 +60820,7 @@
     "MPLS_ENTRY_PARITY_STATUS_NACK_0",
     "MPLS_ENTRY_PARITY_STATUS_NACK_1",
     "MPLS_ETHERTYPE",
+    "MPLS_EVPN_CONTROL",
     "MPLS_EXTENDED_LABEL_LOOKUP_ENABLE",
     "MPLS_IP_NIBBLE_PEEKING_CTRL",
     "MPLS_MEMORY_DBGCTRL",

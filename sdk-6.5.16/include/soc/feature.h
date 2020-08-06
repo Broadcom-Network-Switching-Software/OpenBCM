@@ -1152,6 +1152,7 @@ SHR_G_ENTRY(large_scale_nat),  /*  Large Scale Egress NAT. */ \
 SHR_G_ENTRY(vfi_switched_l2_change_fields), /* L2 change fields for VFI switched packets. */ \
 SHR_G_ENTRY(wh2_miim_delay), /* WH2 need miim delay for cable diag */ \
 SHR_G_ENTRY(l3defip_rp_l3iif_resolve),  /* Route IPMC RP or L3IIF will be resolved by end user. */ \
+SHR_G_ENTRY(enable_flow_based_udf_extraction), /* Enable flow based UDF container extraction */ \
 SHR_G_ENTRY(count)            /* ALWAYS LAST PLEASE (DO NOT CHANGE)  */
 
 /* Make the enums */

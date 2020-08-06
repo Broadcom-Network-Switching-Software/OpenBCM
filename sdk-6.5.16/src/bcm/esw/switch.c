@@ -22409,6 +22409,22 @@ defined(BCM_TRIDENT3_SUPPORT))
             return BCM_E_UNAVAIL;
         }
     break;
+    case bcmSwitchIPv4DoNotVerifyIncomingChecksum:
+        if (SOC_IS_TRIDENT3X(unit)) {
+            uint32 ver;
+            BCM_IF_ERROR_RETURN(soc_cancun_version_get(unit, &ver));
+            if ((SOC_IS_TRIDENT3(unit) && (ver >= SOC_CANCUN_VERSION_DEF_6_1_3)) ||
+                (SOC_IS_MAVERICK2(unit) && (ver >= SOC_CANCUN_VERSION_DEF_4_1_2))) {
+                if (arg < 0 || arg > 1) {
+                    return BCM_E_PARAM;
+                }
+                SOC_IF_ERROR_RETURN(soc_reg_field32_modify(unit, EGR_FLEX_CONFIGr,
+                        REG_PORT_ANY, IPV4_INCR_CHECKSUM_ORIGINAL_VALUE_VERIFYf, !arg));
+                return BCM_E_NONE;
+            }
+        }
+        return BCM_E_UNAVAIL;
+    break;
 #endif /* BCM_TRIDENT3_SUPPORT && INCLUDE_L3 */
 
 #if defined(BCM_KATANA2_SUPPORT)
@@ -26247,6 +26263,21 @@ defined(BCM_TRIDENT3_SUPPORT))
 
             return _bcm_td3_large_scale_nat_mc_get(unit, type, arg);
         }
+    break;
+    case bcmSwitchIPv4DoNotVerifyIncomingChecksum:
+        if (SOC_IS_TRIDENT3X(unit)) {
+            uint32 ver;
+            BCM_IF_ERROR_RETURN(soc_cancun_version_get(unit, &ver));
+            if ((SOC_IS_TRIDENT3(unit) && (ver >= SOC_CANCUN_VERSION_DEF_6_1_3)) ||
+                (SOC_IS_MAVERICK2(unit) && (ver >= SOC_CANCUN_VERSION_DEF_4_1_2))) {
+                uint32 reg32 = 0;
+                SOC_IF_ERROR_RETURN(READ_EGR_FLEX_CONFIGr(unit, &reg32));
+                *arg = !soc_reg_field_get(unit, EGR_FLEX_CONFIGr,
+                    reg32, IPV4_INCR_CHECKSUM_ORIGINAL_VALUE_VERIFYf);
+                return BCM_E_NONE;
+            }
+        }
+        return BCM_E_UNAVAIL;
     break;
 #endif /* BCM_TRIDENT3_SUPPORT && INCLUDE_L3 */
 

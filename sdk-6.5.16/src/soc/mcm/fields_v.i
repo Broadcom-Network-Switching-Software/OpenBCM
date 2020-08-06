@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        fields_v.i
  * Purpose:     Field declarations.
@@ -9761,6 +9761,14 @@ soc_field_info_t soc_VLAN_XLATE_2_DOUBLEm_fields[] = {
     { MAC_PORT__TGIDf, 11, 10, SOCF_LE },
     { MAC_PORT__VLAN_ACTION_VALIDf, 1, 188, 0 },
     { MAC_PORT__VLAN_IDf, 12, 148, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__ING_TAG_ACTION_PROFILE_IDXf, 7, 198, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__ISIDf, 24, 68, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__KEY_0f, 89, 3, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__MAC_SAf, 48, 8, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__OCFIf, 1, 182, 0 },
+    { MIM_BMACSA_BVID_ISID__OPRIf, 3, 183, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__OUTER_VLANf, 12, 56, SOCF_LE },
+    { MIM_BMACSA_BVID_ISID__OVIDf, 12, 186, SOCF_LE },
     { MODULE_IDf, 8, 18, SOCF_LE },
     { MPLS_ACTIONf, 2, 79, SOCF_LE },
     { NEW_ICFIf, 1, 155, 0 },
@@ -10258,9 +10266,31 @@ soc_field_info_t soc_VLAN_XLATE_2_REMAP_TABLE_Am_fields[] = {
 };
 #endif
 
-#if defined(BCM_56370_A0) || defined(BCM_56770_A0) || \
-    defined(BCM_56870_A0)
+#if defined(BCM_56770_A0) || defined(BCM_56870_A0)
 soc_field_info_t soc_VLAN_XLATE_2_SINGLEm_fields[] = {
+    { ACTION_PROFILE_PTRf, 5, 100, SOCF_LE | SOCF_GLOBAL },
+    { BASE_VALIDf, 3, 0, SOCF_LE | SOCF_GLOBAL },
+    { DATA_TYPEf, 5, 100, SOCF_LE | SOCF_GLOBAL },
+    { ING_TAG_ACTION_PROFILE_IDXf, 7, 93, SOCF_LE },
+    { ISIDf, 24, 8, SOCF_LE },
+    { KEYf, 29, 3, SOCF_LE },
+    { KEY_TYPEf, 5, 3, SOCF_LE | SOCF_GLOBAL },
+    { MIM_ISID__ING_TAG_ACTION_PROFILE_IDXf, 7, 93, SOCF_LE },
+    { MIM_ISID__ISIDf, 24, 8, SOCF_LE },
+    { MIM_ISID__KEYf, 29, 3, SOCF_LE },
+    { MIM_ISID__OCFIf, 1, 77, 0 },
+    { MIM_ISID__OPRIf, 3, 78, SOCF_LE },
+    { MIM_ISID__OVIDf, 12, 81, SOCF_LE },
+    { OCFIf, 1, 77, 0 },
+    { OPRIf, 3, 78, SOCF_LE },
+    { OVIDf, 12, 81, SOCF_LE },
+    { POLICY_DATAf, 92, 8, SOCF_LE | SOCF_GLOBAL },
+    { TABLE_FIELDSf, 92, 8, SOCF_LE | SOCF_GLOBAL }
+};
+#endif
+
+#if defined(BCM_56370_A0)
+soc_field_info_t soc_VLAN_XLATE_2_SINGLE_BCM56370_A0m_fields[] = {
     { ACTION_PROFILE_PTRf, 5, 100, SOCF_LE | SOCF_GLOBAL },
     { BASE_VALIDf, 3, 0, SOCF_LE | SOCF_GLOBAL },
     { DATA_TYPEf, 5, 100, SOCF_LE | SOCF_GLOBAL },

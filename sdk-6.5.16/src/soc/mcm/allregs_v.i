@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        allregs_v.i
  * Purpose:     Independent register descriptions.
@@ -23384,6 +23384,25 @@
     },
 #endif /* chips */
 
+#if defined(BCM_56370_A0)
+    { /* SOC_REG_INT_VXLAN_DEFAULT_NETWORK_SVP_BCM56370_A0r */
+        soc_block_list[115],
+        soc_genreg,
+        1,
+        0,
+        0x2003700,
+        (3 << SOC_REG_FLAG_ACC_TYPE_SHIFT),
+        SOC_REG_FLAG_CCH,
+        1,
+        soc_L2GRE_DEFAULT_NETWORK_SVPr_fields,
+        SOC_RESET_VAL_DEC(0x00000000, 0x00000000)
+        SOC_RESET_MASK_DEC(0x0000ffff, 0x00000000)
+        -1,
+        -1,
+        3,
+    },
+#endif /* chips */
+
 #if defined(BCM_56560_A0) || defined(BCM_56560_B0) || \
     defined(BCM_56670_A0) || defined(BCM_56670_B0)
     { /* SOC_REG_INT_VXLAN_DEFAULT_NETWORK_SVP_BCM56560_A0r */
@@ -23421,14 +23440,13 @@
     },
 #endif /* chips */
 
-#if defined(BCM_56370_A0) || defined(BCM_56770_A0) || \
-    defined(BCM_56870_A0)
+#if defined(BCM_56770_A0) || defined(BCM_56870_A0)
     { /* SOC_REG_INT_VXLAN_DEFAULT_NETWORK_SVP_BCM56870_A0r */
         soc_block_list[115],
         soc_genreg,
         1,
         0,
-        0x2003700,
+        0x2003a00,
         (3 << SOC_REG_FLAG_ACC_TYPE_SHIFT),
         SOC_REG_FLAG_CCH,
         1,

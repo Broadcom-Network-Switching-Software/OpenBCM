@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        allmems_l.i
  * Purpose:     Independent memory descriptions.
@@ -23798,7 +23798,7 @@
         /* base        */ 0x68740000,
         /* gran        */ 1,
         /* bytes       */ 53,
-        /* nFields     */ 101,
+        /* nFields     */ 107,
         /* *fields     */ soc_L3_DEFIP_BCM56870_A0m_fields,
         /* *views      */ NULL,
         /* *views_num  */ NULL,
@@ -24039,7 +24039,7 @@
         /* base        */ 0x68740000,
         /* gran        */ 1,
         /* bytes       */ 53,
-        /* nFields     */ 101,
+        /* nFields     */ 107,
         /* *fields     */ soc_L3_DEFIP_BCM56870_A0m_fields,
         /* *views      */ NULL,
         /* *views_num  */ NULL,
@@ -28391,7 +28391,7 @@
         /* base        */ 0x68800000,
         /* gran        */ 1,
         /* bytes       */ 66,
-        /* nFields     */ 101,
+        /* nFields     */ 111,
         /* *fields     */ soc_L3_DEFIP_PAIR_128_BCM56870_A0m_fields,
         /* *views      */ NULL,
         /* *views_num  */ NULL,
@@ -28498,7 +28498,7 @@
         /* base        */ 0x68800000,
         /* gran        */ 1,
         /* bytes       */ 66,
-        /* nFields     */ 101,
+        /* nFields     */ 111,
         /* *fields     */ soc_L3_DEFIP_PAIR_128_BCM56870_A0m_fields,
         /* *views      */ NULL,
         /* *views_num  */ NULL,

@@ -3473,6 +3473,7 @@ soc_features_bcm56980_a0(int unit, soc_feature_t feature)
     case soc_feature_hg_proxy_module_config:
     case soc_feature_timesync_time_capture:
     case soc_feature_hash_fcoe_field:
+    case soc_feature_enable_flow_based_udf_extraction:
         return FALSE;
     default:
         return soc_features_bcm56960_a0(unit, feature);

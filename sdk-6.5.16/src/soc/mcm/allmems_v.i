@@ -6,7 +6,7 @@
  * 
  * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
  * 
- * Copyright 2007-2019 Broadcom Inc. All rights reserved.
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
  *
  * File:        allmems_v.i
  * Purpose:     Independent memory descriptions.
@@ -20505,7 +20505,7 @@
         /* base        */ 0x61380000,
         /* gran        */ 1,
         /* bytes       */ 27,
-        /* nFields     */ 254,
+        /* nFields     */ 262,
         /* *fields     */ soc_VLAN_XLATE_2_DOUBLEm_fields,
         /* *views      */ soc_VLAN_XLATE_2_DOUBLEm_views,
         /* *views_num  */ &soc_VLAN_XLATE_2_DOUBLEm_views_num,
@@ -20576,7 +20576,7 @@
         /* base        */ 0x61380000,
         /* gran        */ 1,
         /* bytes       */ 27,
-        /* nFields     */ 254,
+        /* nFields     */ 262,
         /* *fields     */ soc_VLAN_XLATE_2_DOUBLEm_fields,
         /* *views      */ soc_VLAN_XLATE_2_DOUBLEm_views,
         /* *views_num  */ &soc_VLAN_XLATE_2_DOUBLEm_views_num,
@@ -21257,6 +21257,7 @@
                           SOC_MEM_FLAG_CACHABLE |
                           SOC_MEM_FLAG_SER_SPECIAL |
                           SOC_MEM_FLAG_HASHED |
+                          SOC_MEM_FLAG_MULTIVIEW |
                           (9 << SOC_MEM_FLAG_ACC_TYPE_SHIFT), /* 0x20222 */
         /* cmp_fn      */ _soc_mem_cmp_vlan_xlate_tr,
         /* *null_entry */ _soc_mem_entry_null_zeroes,
@@ -21269,10 +21270,10 @@
         /* base        */ 0x612c0000,
         /* gran        */ 1,
         /* bytes       */ 14,
-        /* nFields     */ 6,
+        /* nFields     */ 18,
         /* *fields     */ soc_VLAN_XLATE_2_SINGLEm_fields,
-        /* *views      */ NULL,
-        /* *views_num  */ NULL,
+        /* *views      */ soc_VLAN_XLATE_2_SINGLEm_views,
+        /* *views_num  */ &soc_VLAN_XLATE_2_SINGLEm_views_num,
         /* snoop_cb    */ NULL, 
         /* snoop_user_data */ NULL, 
         /* snoop_flags */ 0,
@@ -21304,7 +21305,7 @@
         /* gran        */ 1,
         /* bytes       */ 14,
         /* nFields     */ 6,
-        /* *fields     */ soc_VLAN_XLATE_2_SINGLEm_fields,
+        /* *fields     */ soc_VLAN_XLATE_2_SINGLE_BCM56370_A0m_fields,
         /* *views      */ NULL,
         /* *views_num  */ NULL,
         /* snoop_cb    */ NULL, 
@@ -21326,6 +21327,7 @@
                           SOC_MEM_FLAG_CACHABLE |
                           SOC_MEM_FLAG_SER_SPECIAL |
                           SOC_MEM_FLAG_HASHED |
+                          SOC_MEM_FLAG_MULTIVIEW |
                           (9 << SOC_MEM_FLAG_ACC_TYPE_SHIFT), /* 0x20222 */
         /* cmp_fn      */ _soc_mem_cmp_vlan_xlate_tr,
         /* *null_entry */ _soc_mem_entry_null_zeroes,
@@ -21338,10 +21340,10 @@
         /* base        */ 0x612c0000,
         /* gran        */ 1,
         /* bytes       */ 14,
-        /* nFields     */ 6,
+        /* nFields     */ 18,
         /* *fields     */ soc_VLAN_XLATE_2_SINGLEm_fields,
-        /* *views      */ NULL,
-        /* *views_num  */ NULL,
+        /* *views      */ soc_VLAN_XLATE_2_SINGLEm_views,
+        /* *views_num  */ &soc_VLAN_XLATE_2_SINGLEm_views_num,
         /* snoop_cb    */ NULL, 
         /* snoop_user_data */ NULL, 
         /* snoop_flags */ 0,
