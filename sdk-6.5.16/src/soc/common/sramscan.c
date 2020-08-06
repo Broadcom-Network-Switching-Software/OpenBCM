@@ -577,6 +577,7 @@ _soc_sram_scan_thread(void *unit_vp)
                             } else if (mem == L3_DEFIP_ALPM_IPV4m || mem == L3_DEFIP_ALPM_IPV4_1m ||
                                 mem == L3_DEFIP_ALPM_IPV6_64m || mem == L3_DEFIP_ALPM_IPV6_64_1m ||
                                 mem == L3_DEFIP_ALPM_IPV6_128m || mem == L3_DEFIP_PAIR_128m ||
+                                mem == L3_DEFIP_ALPM_RAWm || mem == L3_DEFIP_ALPM_ECCm ||
                                 mem == L3_DEFIPm || mem == L3_DEFIP_AUX_TABLEm) {
                                 _ALPM_UNLOCK(unit);
                             } else
@@ -592,6 +593,7 @@ _soc_sram_scan_thread(void *unit_vp)
                     } else if (mem == L3_DEFIP_ALPM_IPV4m || mem == L3_DEFIP_ALPM_IPV4_1m ||
                         mem == L3_DEFIP_ALPM_IPV6_64m || mem == L3_DEFIP_ALPM_IPV6_64_1m ||
                         mem == L3_DEFIP_ALPM_IPV6_128m || mem == L3_DEFIP_PAIR_128m ||
+                        mem == L3_DEFIP_ALPM_RAWm || mem == L3_DEFIP_ALPM_ECCm ||
                         mem == L3_DEFIPm || mem == L3_DEFIP_AUX_TABLEm) {
                         _ALPM_UNLOCK(unit);
                     } else
