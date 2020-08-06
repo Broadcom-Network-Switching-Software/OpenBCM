@@ -142,6 +142,7 @@ alpm_wb_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt)
         alpm_lib_trie_init(max_key_len, &ACB_PVT_TRIE(acb, vrf_id, ipt)));
 
     ACB_VRF_INIT_SET(u, acb, vrf_id, ipt);
+    ACB_DR_INIT_CLEAR(u, acb, vrf_id, ipt);
 
     if (ACB_HAS_RTE(acb, vrf_id)) {
         rv = alpm_lib_trie_init(max_key_len, &ALPM_VRF_TRIE(u, vrf_id, ipt));

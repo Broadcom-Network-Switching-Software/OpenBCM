@@ -453,6 +453,11 @@ alpm_ppg_assoc_data_cb(alpm_lib_trie_node_t *trie, alpm_lib_trie_bpm_cb_info_t *
     pfx_len     = ppg_data->key_len;
     rpl_bpm_len = ppg_data->bpm_len;
 
+    /* bypass MC (direct route) for ppg in case of mix UC & MC in same VRF */
+    if (PVT_IS_IPMC(pvt_node)) {
+        return rv;
+    }
+
     if (user_data->ppg_op == ALPM_PPG_INSERT) {
         rpl_bpm_len = pfx_len;
     }
@@ -655,6 +660,7 @@ alpm_pvt_trie_insert(int u, _bcm_defip_cfg_t *lpm_cfg)
     /* Direct route pvt_node doesn't use bkt_trie, def_pfx & bkt_info */
     PVT_KEY_LEN(pvt_node) = lpm_cfg->defip_sub_len;
     PVT_KEY_CPY(pvt_node, lpm_cfg->user_data);
+    PVT_FLAGS(pvt_node) = lpm_cfg->defip_flags;
 
     pvt_trie = ACB_PVT_TRIE(ACB_TOP(u), vrf_id, PVT_BKT_IPT(pvt_node));
     rv = alpm_lib_trie_insert(pvt_trie, lpm_cfg->user_data,
@@ -679,6 +685,9 @@ alpm_pvt_trie_init(int u, int vrf_id, int ipt)
     max_key_len = alpm_util_trie_max_key_len(u, ipt);
     ALPM_IER(alpm_lib_trie_init(max_key_len, &ACB_PVT_TRIE(acb, vrf_id, ipt)));
     ACB_VRF_INIT_SET(u, acb, vrf_id, ipt);
+    /* VRF DR partially inited: help to decide alpm_vrf_init
+       for case of mix MC & UC, in alpm_cb_insert */
+    ACB_DR_INIT_SET(u, acb, vrf_id, ipt);
 
     return rv;
 }
@@ -2414,6 +2423,7 @@ alpm_bkt_trie_split(int u, _alpm_cb_t *acb,
     PVT_BKT_PKM(cpn)   = pkm;
     PVT_KEY_CPY(cpn, pvt_key);
     PVT_KEY_LEN(cpn)   = pvt_len;
+    PVT_FLAGS(cpn)     = lpm_cfg->defip_flags;
     *spl_pvt_node = cpn;
     *spl_bkt_trie = cbt;
 
@@ -2860,6 +2870,7 @@ alpm_vrf_pvt_node_init(int u, _alpm_cb_t *acb,
     PVT_BPM_LEN(tmp_node)   = 0;
     PVT_KEY_LEN(tmp_node)   = pvt_cfg->defip_sub_len;
     PVT_KEY_CPY(tmp_node,  pvt_cfg->user_data);
+    PVT_FLAGS(tmp_node)     = pvt_cfg->defip_flags;
 
     PVT_IDX(tmp_node)       = pvt_cfg->defip_index;
 
@@ -3062,6 +3073,7 @@ alpm_vrf_init(int u, _alpm_cb_t *acb, int vrf_id, int ipt, uint8 db_type)
     ALPM_IEG_PRT_EXCEPT(alpm_cb_pvt_add(u, acb, vrf_id, ipt, &pvt_cfg), BCM_E_FULL);
 
     ACB_VRF_INIT_SET(u, acb, vrf_id, ipt);
+    ACB_DR_INIT_CLEAR(u, acb, vrf_id, ipt); /* clear DR partially inited */
 
     alpm_vrf_spl_len_calc(u, acb, vrf_id, db_type,
                           &ACB_VRF_SPLEN_DIFF1(u, acb, vrf_id, ipt),
@@ -4265,10 +4277,10 @@ alpm_cb_insert(int u, _alpm_cb_t *acb, _bcm_defip_cfg_t *lpm_cfg)
     _alpm_pvt_node_t    *pvt_node, *upr_pvt_node;
     _alpm_tcam_write_t  tcam_write;
 
-    /* Init ALPM structure for first insert */
-    if (!ACB_VRF_INITED(u, acb, vrf_id, ipt)) {
+    /* Init ALPM structure for first insert or was DR partially inited (MC first) */
+    if (!ACB_VRF_INITED(u, acb, vrf_id, ipt) || ACB_DR_INITED(u, acb, vrf_id, ipt)) {
         uint8 db_type = alpm_util_route_type_get(u, lpm_cfg);
-        ALPM_IEG_PRT_EXCEPT(alpm_vrf_init(u, acb, vrf_id, ipt, db_type), BCM_E_FULL);
+        ALPM_IEG(alpm_vrf_init(u, acb, vrf_id, ipt, db_type));
     }
 
     if (ACB_BKT_FIXED_FMT(acb, vrf_id)) {
@@ -4972,6 +4984,7 @@ bcm_esw_alpm_delete(int u, _bcm_defip_cfg_t *lpm_cfg)
             if (VRF_ROUTE_CNT(acb, vrf_id, ipt) == 0) {
                 (void)alpm_lib_trie_destroy(ACB_PVT_TRIE(acb, vrf_id, ipt));
                 ACB_VRF_INIT_CLEAR(u, acb, vrf_id, ipt);
+                ACB_DR_INIT_CLEAR(u, acb, vrf_id, ipt);
                 ACB_PVT_TRIE(acb, vrf_id, ipt) = NULL;
             }
         }

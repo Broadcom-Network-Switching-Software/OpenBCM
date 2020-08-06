@@ -315,6 +315,7 @@ typedef struct _alpm_pvt_node_s {
     uint32 has_def;             /* has default route */
 
     uint32 tcam_idx;            /* TCAM index in 1st level */
+    uint32 pvt_flags;
 
     struct _alpm_bkt_node_s *def_pfx; /* Link to bkt_node for bkt def route */
     struct _alpm_bkt_info_s bkt_info;    /* Bucket info */
@@ -332,6 +333,7 @@ typedef struct _alpm_pvt_ctrl_s {
     uint32 cnt_add;
     uint32 cnt_del;
 
+    uint8 dr_inited; /* to indicate direct route inited first */
     uint8 db_inited;
     /* database type: FULL | REDUCED
      * FULL : supports Destination AND
@@ -731,6 +733,8 @@ extern alpm_functions_t th_alpm_driver;
 #define PVT_BKT_IDX(pvt_node)           (PVT_BKT_INFO(pvt_node).bkt_idx)
 #define PVT_SUB_BKT_IDX(pvt_node)       (PVT_BKT_INFO(pvt_node).sub_bkt_idx)
 #define PVT_BKT_VRF(pvt_node)           ((pvt_node)->vrf_id)
+#define PVT_FLAGS(pvt_node)             ((pvt_node)->pvt_flags)
+#define PVT_IS_IPMC(pvt_node)           (PVT_FLAGS(pvt_node) & BCM_L3_IPMC)
 #define PVT_BKT_PKM(pvt_node)           ((pvt_node)->bkt_pkm)
 #define PVT_BKT_IPT(pvt_node)           (ALPM_PKM2IPT((pvt_node)->bkt_pkm))
 #define PVT_BPM_LEN(pvt_node)           ((pvt_node)->bpm_len)
@@ -849,6 +853,13 @@ extern alpm_functions_t th_alpm_driver;
 #define ACB_VRF_SPLEN_DIFF2(u, acb, vrf_id, ipt)                \
         (ACB_PVT_CTRL(acb, vrf_id, ipt).spl_len_diff2)
 
+#define ACB_DR_INITED(u, acb, vrf_id, ipt)                      \
+        ((acb)->pvt_ctl[!!ipt] &&                               \
+         ACB_PVT_CTRL(acb, vrf_id, ipt).dr_inited)
+#define ACB_DR_INIT_SET(u, acb, vrf_id, ipt)                    \
+        (ACB_PVT_CTRL(acb, vrf_id, ipt).dr_inited = TRUE)
+#define ACB_DR_INIT_CLEAR(u, acb, vrf_id, ipt)                  \
+        (ACB_PVT_CTRL(acb, vrf_id, ipt).dr_inited = FALSE)
 
 #define ACB_BNK_CONF(acb)               ((acb)->bnk_conf)
 #define ACB_BNK_BMP(acb, vrf_id, ipt)                           \
