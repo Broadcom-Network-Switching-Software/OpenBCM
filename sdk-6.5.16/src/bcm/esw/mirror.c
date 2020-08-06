@@ -13425,7 +13425,7 @@ _bcm_trx_mirror_tunnel_set(int unit, int index,
             } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
 #ifdef BCM_TRIDENT3_SUPPORT
-            if (SOC_IS_TRIDENT3(unit)) {
+            if (SOC_IS_TRIDENT3X(unit)) {
                 if (6 == mirror_dest->version) {
                     rv = _bcm_td3_mirror_ipv6_gre_tunnel_set(unit, index,
                                       flags, mirror_dest->flags,
