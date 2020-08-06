@@ -2214,6 +2214,14 @@ bypass_dump_table(int unit, soc_mem_t mem, uint32 copyno, int flags)
         }
     }
 
+#ifdef BCM_TOMAHAWK3_SUPPORT
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        if (mem == CDPORT_TSC_UCMEM_DATAm) {
+            return TRUE;
+        }
+    }
+#endif
+
     return FALSE;
 }
 
