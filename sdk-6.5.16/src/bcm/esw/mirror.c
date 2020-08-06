@@ -131,6 +131,7 @@
 #define IPV6_TRAFFIC_CLASS       2
 #define IPV6_NEXT_HDR_TCP        6
 #define IPV6_NEXT_HDR_UDP        17
+#define IPV6_NEXT_HDR_GRE        47
 #define IPV6_HOP_LIMIT           0x3F
 #define IPV6_ETHER_TYPE          0x86DD
 
@@ -2127,12 +2128,15 @@ _bcm_td3_mirror_flex_editor_header_create(int unit, int edit_ctrl_id,
             /* payload length */
             *(uint16*)p_profile_header = 0;
             p_profile_header+=sizeof(uint16);
-            /* Next Header TCP/UDP */
-            *p_profile_header = IPV6_NEXT_HDR_UDP;
+
+            /* Next Header GRE */
+            *p_profile_header = IPV6_NEXT_HDR_GRE;
             p_profile_header+=1;
+
             /* HOP Limit */
             *p_profile_header = IPV6_HOP_LIMIT;
             p_profile_header+=1;
+
             sal_memcpy(p_profile_header, mirror_dest->src6_addr, sizeof(bcm_ip6_t));
             p_profile_header+=sizeof(bcm_ip6_t);
             sal_memcpy(p_profile_header, mirror_dest->dst6_addr, sizeof(bcm_ip6_t));
