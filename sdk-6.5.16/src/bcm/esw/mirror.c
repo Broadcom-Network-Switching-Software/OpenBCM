@@ -816,6 +816,11 @@ int bcm_esw_mirror_payload_zero_profile_destroy(
 #define MIRROR_EDIT_CTRL_ID_INT_PROBE                                  37
 #define MIRROR_EDIT_CTRL_ID_IFA                                        32
 
+#define MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR                 38
+#define MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR           39
+#define MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD   40
+#define MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD 41
+#define MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR    42
 #define EGR_MIRROR_TABLE_PROFILE_DEFAULT  0
 #define EGR_MIRROR_TABLE_ENTRIES          0
 #define EGR_MIRROR_TABLE_ENTRIES_NUM      1
@@ -865,6 +870,11 @@ _bcm_td3_egr_mirror_table_entry_delete(int unit, uint32 index)
 STATIC int _is_edit_ctrl_id_ipv6(int id)
 {
     return (((id == MIRROR_EDIT_CTRL_ID_PSAMP_IPV6) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR) ||
              (id == MIRROR_EDIT_CTRL_ID_VXLAN_IPV6))? 1 : 0);
 }
 
@@ -945,6 +955,7 @@ STATIC int _is_edit_ctrl_id_rspan(int id)
 STATIC int _is_edit_ctrl_id_erspan_seq(int id)
 {
     if ((id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_EGRESS_MIRROR)) {
         return (1);
     }
@@ -963,6 +974,11 @@ STATIC int _is_edit_ctrl_id_erspan(int id)
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_EGRESS_MIRROR_UNTAG_PAYLOAD) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_INGRESS_MIRROR) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN3_INGRESS_MIRROR) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN3_INGRESS_MIRROR_NO_SUBHDR)) {
         return (1);
@@ -978,6 +994,9 @@ STATIC int _is_edit_ctrl_id_erspan_tagged(int id)
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_EGRESS_MIRROR)  ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_INGRESS_MIRROR) || 
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR) ||
+        (id == MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN3_INGRESS_MIRROR) ||
         (id == MIRROR_EDIT_CTRL_ID_ERSPAN3_INGRESS_MIRROR_NO_SUBHDR)) {
         return (1);
@@ -1009,6 +1028,16 @@ STATIC int _is_edit_ctrl_id_erspan_tagged(int id)
 #define ENCAP_PROF_ERSPAN3_INGRESS_MIRROR_NO_SUBHDR_REMOTE_MTP           71
 #define ENCAP_PROF_INT_PROBE_LOCAL_MTP                                   72
 #define ENCAP_PROF_IFA_LOCAL_MTP                                         73
+#define ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_LOCAL_MTP                  74
+#define ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_REMOTE_MTP                 75
+#define ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_LOCAL_MTP            76
+#define ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_REMOTE_MTP           77
+#define ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP    78
+#define ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP   79
+#define ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP  80
+#define ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP 81
+#define ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_LOCAL_MTP     82
+#define ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_REMOTE_MTP    83
 
 
 #define ENCAP_PROF_PSAMP_UNTAG_LOCAL_MTP                                 16
@@ -1307,6 +1336,36 @@ _bcm_td3_mirror_cancun_app_get(int unit, int edit_ctrl_id, int encap_profile_ind
              *app = CANCUN_APP__MIRROR__INGRESS_MIRROR_WITH_INT_PROBE;
              break;
 
+        case ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_IPV6_INGRESS_MIRROR_LOCAL_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_REMOTE_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_LOCAL_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_REMOTE_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_LOCAL_MTP;
+             break;
+        case ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_REMOTE_MTP:
+             *app = CANCUN_APP__MIRROR__ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
         default:
              return (BCM_E_INTERNAL);
              break;
@@ -1604,6 +1663,31 @@ _bcm_td3_mirror_encap_profile_idx_get(int unit, int edit_ctrl_id, int local)
              encap_profile_index = ENCAP_PROF_IFA_LOCAL_MTP;
              break;
 
+        case MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR:
+             encap_profile_index = local?
+                    ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+                    ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
+        case MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR:
+             encap_profile_index = local?
+                    ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+                    ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
+        case MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD:
+             encap_profile_index = local?
+               ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP:
+               ENCAP_PROF_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP;
+             break;
+        case MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD:
+             encap_profile_index = local?
+               ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_LOCAL_MTP:
+               ENCAP_PROF_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD_REMOTE_MTP;
+             break;
+        case MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR:
+             encap_profile_index = local?
+               ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_LOCAL_MTP:
+               ENCAP_PROF_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR_REMOTE_MTP;
+             break;
         default:
              encap_profile_index = 0;
              break;
@@ -2019,57 +2103,92 @@ _bcm_td3_mirror_flex_editor_header_create(int unit, int edit_ctrl_id,
             }
         }
 
+        if (_is_edit_ctrl_id_ipv6(edit_ctrl_id)) {
         /* Add Ether Type */
-        *(uint16*)p_profile_header = soc_ntohs(0x0800);
-        p_profile_header+=sizeof(uint16);
+            *(uint16*)p_profile_header = soc_ntohs(IPV6_ETHER_TYPE);
+            p_profile_header+=sizeof(uint16);
+            /* Construct IPV6 Information */
+            len_adjust = TWOS_COMPLEMENT(p_profile_header - p_profile_hdr);
+            /* Version and traffic Class upper nibble */
+            *p_profile_header = ((mirror_dest->version << NIBBLE_SHIFT_OFFSET)|
+                                 (IPV6_TRAFFIC_CLASS >> NIBBLE_SHIFT_OFFSET));
+            p_profile_header+=1;
+            /* Traffic_class lower nibble */
+            flow_label = (uint16)(mirror_dest->flow_label >> 16);
+            *p_profile_header = (((IPV6_TRAFFIC_CLASS & 0xF) << NIBBLE_SHIFT_OFFSET) |
+                                  (flow_label & 0xF));
+            p_profile_header+=1;
+            /* Flow label */
+            flow_label = (uint16)mirror_dest->flow_label;
+            *(uint16*)p_profile_header = soc_ntohs(flow_label);
+            p_profile_header+=sizeof(uint16);
+            len_offset = p_profile_header - p_profile_hdr;
 
-        /* construct IPV4 Information */
-        len_adjust = TWOS_COMPLEMENT(p_profile_header - p_profile_hdr);
-        /****************************************
-        | BYTE 0  | BYTE 1  | BYTE 2  | BYTE 3  |
-        -----------------------------------------
-        |0123-4567|0123-4567|0123-4567|0123-4567|
-        -----------------------------------------
-        |VERS|IHL |TOS      |TOTAL LENGTH       |
-        -----------------------------------------
-        |IDENTIFICATION     |FLG|FRAGMENT OFFSET|
-        -----------------------------------------
-        |TTL      |PROTOCOL |HEADER CHECKSUM    |
-        -----------------------------------------
-        |SOURCE IP ADDRESS                      |
-        -----------------------------------------
-        |DEST IP ADDRESS                        |
-        -----------------------------------------
-        |UDP SRC PORT       | UDP DEST PORT     |
-        -----------------------------------------
-        |LENGTH             | CHECK SUM         |
- */
+            /* payload length */
+            *(uint16*)p_profile_header = 0;
+            p_profile_header+=sizeof(uint16);
+            /* Next Header TCP/UDP */
+            *p_profile_header = IPV6_NEXT_HDR_UDP;
+            p_profile_header+=1;
+            /* HOP Limit */
+            *p_profile_header = IPV6_HOP_LIMIT;
+            p_profile_header+=1;
+            sal_memcpy(p_profile_header, mirror_dest->src6_addr, sizeof(bcm_ip6_t));
+            p_profile_header+=sizeof(bcm_ip6_t);
+            sal_memcpy(p_profile_header, mirror_dest->dst6_addr, sizeof(bcm_ip6_t));
+            p_profile_header+=sizeof(bcm_ip6_t);
+        } else {
+            /* Add Ether Type */
+            *(uint16*)p_profile_header = soc_ntohs(0x0800);
+            p_profile_header+=sizeof(uint16);
 
-        *p_profile_header = ((mirror_dest->version & 0xF) << NIBBLE_SHIFT_OFFSET) |
-                             IPV4_HEADER_LENGTH_WORDS;
-        p_profile_header+=1;
+            /* construct IPV4 Information */
+            len_adjust = TWOS_COMPLEMENT(p_profile_header - p_profile_hdr);
+            /****************************************
+            | BYTE 0  | BYTE 1  | BYTE 2  | BYTE 3  |
+            -----------------------------------------
+            |0123-4567|0123-4567|0123-4567|0123-4567|
+            -----------------------------------------
+            |VERS|IHL |TOS      |TOTAL LENGTH       |
+            -----------------------------------------
+            |IDENTIFICATION     |FLG|FRAGMENT OFFSET|
+            -----------------------------------------
+            |TTL      |PROTOCOL |HEADER CHECKSUM    |
+            -----------------------------------------
+            |SOURCE IP ADDRESS                      |
+            -----------------------------------------
+            |DEST IP ADDRESS                        |
+            -----------------------------------------
+            |UDP SRC PORT       | UDP DEST PORT     |
+            -----------------------------------------
+            |LENGTH             | CHECK SUM         |
+            *****************************************/
 
-        *p_profile_header = mirror_dest->tos;
-        p_profile_header+=1;
+            *p_profile_header = ((mirror_dest->version & 0xF) << NIBBLE_SHIFT_OFFSET) |
+                                 IPV4_HEADER_LENGTH_WORDS;
+            p_profile_header+=1;
 
-        len_offset = p_profile_header - p_profile_hdr;
+            *p_profile_header = mirror_dest->tos;
+            p_profile_header+=1;
 
-        /* From Length move to flags field. Set DF flag  */
-        p_profile_header+=4;
-        *p_profile_header =mirror_dest->df? 1 << DF_FLAG_SHIFTER: 0;
+            len_offset = p_profile_header - p_profile_hdr;
 
-        /* From flags move to Time to Live */
-        p_profile_header+=2;
+            /* From Length move to flags field. Set DF flag  */
+            p_profile_header+=4;
+            *p_profile_header =mirror_dest->df? 1 << DF_FLAG_SHIFTER: 0;
 
-        *p_profile_header = mirror_dest->ttl;
-        *(p_profile_header+1) = IPV4_GRE_PROTOCOL;
-        p_profile_header+=sizeof(uint32);
+            /* From flags move to Time to Live */
+            p_profile_header+=2;
 
-        *(uint32*)p_profile_header = soc_ntohl(mirror_dest->src_addr);
-        p_profile_header+=sizeof(uint32);
-        *(uint32*)p_profile_header = soc_ntohl(mirror_dest->dst_addr);
-        p_profile_header+=sizeof(uint32);
+            *p_profile_header = mirror_dest->ttl;
+            *(p_profile_header+1) = IPV4_GRE_PROTOCOL;
+            p_profile_header+=sizeof(uint32);
 
+            *(uint32*)p_profile_header = soc_ntohl(mirror_dest->src_addr);
+            p_profile_header+=sizeof(uint32);
+            *(uint32*)p_profile_header = soc_ntohl(mirror_dest->dst_addr);
+            p_profile_header+=sizeof(uint32);
+    }
         /* construct GRE Protocol */
         if (mirror_dest->gre_protocol == ERSPAN3_GRE_PROTOCOL_TYPE) {
             /* Only sequence number present bit is set in erspan3 */
@@ -2706,13 +2825,103 @@ _bcm_td3_mirror_ipv4_gre_tunnel_set(int unit, int index, int flags,
 
 /*
  * Function:
+ *          _bcm_td3_mirror_ipv6_gre_tunnel_set
+ * Purpose:
+ *         Prepare IPv6 mirror tunnel encapsulation for Trident3.
+ * Parameters:
+ *     unit       - (IN) BCM device number
+ *     index      - (IN) Mtp index.
+ *     flags      - (IN) Mirror direction flags.
+ *     entries    - (IN) Pointer to EGR_MIRROR_ENCAP_* entries array
+ * Returns:
+ *         BCM_E_XXX
+ */
+int
+_bcm_td3_mirror_ipv6_gre_tunnel_set(int unit, int index, int flags,
+                                    int dest_flags, void **entries,
+                                    int is_eport)
+{
+    bcm_mirror_destination_t *mirror_dest; /* Destination & encapsulation.*/
+    _bcm_mtp_config_p         mtp_cfg;     /* Mtp configuration.*/
+    uint32 edit_ctrl_id;
+    egr_mirror_table_entry_t *mirror_table_p;
+
+    /* These entries were initialized by the calling function */
+    mirror_table_p    = entries[EGR_MIRROR_TABLE_ENTRIES];
+
+    /* Get mtp configuration structure by direction & index. */
+    mtp_cfg     = MIRROR_CONFIG_MTP(unit, index, flags);
+    mirror_dest = MIRROR_DEST(unit, mtp_cfg->dest_id);
+
+    /* egress IPv6 ERSPAN and IPv6 ERSPAN3 is not supported */
+    if ((mirror_dest->gre_protocol == ERSPAN3_GRE_PROTOCOL_TYPE) ||
+        (mtp_cfg->egress)) {
+        return BCM_E_PARAM;
+    }
+    /* Outer vlan tag. */
+
+    if (dest_flags & BCM_MIRROR_DEST_TUNNEL_WITH_SEQ) {
+        edit_ctrl_id = MIRROR_EDIT_CTRL_ID_ERSPAN_GRE_SEQUENCE_IPV6_INGRESS_MIRROR;
+    } else {
+        if (mirror_dest->flags & BCM_MIRROR_DEST_PAYLOAD_UNTAGGED) {
+            if (BCM_VLAN_CTRL_ID(mirror_dest->vlan_id) > 0) {
+                edit_ctrl_id = MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD;
+            } else {
+                edit_ctrl_id = MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR_UNTAG_PAYLOAD;
+            }
+        } else {
+            if (BCM_VLAN_CTRL_ID(mirror_dest->vlan_id) > 0) {
+                edit_ctrl_id = MIRROR_EDIT_CTRL_ID_ERSPAN_IPV6_INGRESS_MIRROR;
+            } else {
+                edit_ctrl_id = MIRROR_EDIT_CTRL_ID_ERSPAN_UNTAG_IPV6_INGRESS_MIRROR;
+            }
+        }
+    }
+
+    /* Setup Mirror Table Entry */
+    soc_mem_field32_set (unit, EGR_MIRROR_TABLEm, mirror_table_p,
+                         MIRROR_EDIT_CTRL_IDf, edit_ctrl_id);
+
+    if (dest_flags & BCM_MIRROR_DEST_TUNNEL_WITH_SEQ) {
+        BCM_IF_ERROR_RETURN(_bcm_td3_mirror_seq_num_enable (unit,
+                                mirror_table_p,
+                                EGR_MIRROR_TABLE_SEQNUM_OFFSET + index,
+                                BCM_MIRROR_IP_GRE_SEQ_NUM|index));
+    }
+
+    /* coverity[result_independent_of_operands] */
+    if (BCM_VLAN_VALID(mirror_dest->vlan_id)) {
+        soc_mem_field32_set (unit, EGR_MIRROR_TABLEm, mirror_table_p,
+                             MIRROR_VLAN_VLDf, is_eport? 0:1);
+        soc_mem_field32_set (unit, EGR_MIRROR_TABLEm, mirror_table_p,
+                                           MIRROR_VLANf, mirror_dest->vlan_id);
+    }
+
+    if (mirror_dest->truncate == BCM_MIRROR_PAYLOAD_TRUNCATE) {
+        soc_mem_field32_set (unit, EGR_MIRROR_TABLEm, mirror_table_p,
+                             TRUNCATE_ENf,1);
+    } else if (!mirror_dest->truncate) {
+        soc_mem_field32_set (unit, EGR_MIRROR_TABLEm, mirror_table_p,
+                             TRUNCATE_ENf,0);
+    }
+        /* Create the flex editor header */
+    BCM_IF_ERROR_RETURN(_bcm_td3_mirror_flex_editor_header_create(unit,
+                edit_ctrl_id, mirror_dest, entries, is_eport));
+
+    /* Profile entries will be committed to HW by the calling function. */
+
+    return (BCM_E_NONE);
+}
+
+/*
+ * Function:
  *	    _bcm_td3_mirror_trill_tunnel_set
  * Purpose:
  *	   Prepare Trill mirror tunnel encapsulation for TD3.
  * Parameters:
  *     unit       - (IN) BCM device number
  *     index      - (IN) Mtp index.
- *     flags      - (IN) Mirror direction flags. 
+ *     flags      - (IN) Mirror direction flags.
  *     entries    - (IN) Pointer to EGR_MIRROR_ENCAP_* entries array
  * Returns:
  *	   BCM_E_XXX
@@ -3721,7 +3930,7 @@ _bcm_td3_mirror_flex_editor_header_decode(int unit, int edit_ctrl_id,
             |SOURCE IP ADDRESS                      |
             -----------------------------------------
             |DEST IP ADDRESS                        |
- */
+            ****************************************/
 
             mirror_dest->version  = *p_profile_header >> NIBBLE_SHIFT_OFFSET;
             p_profile_header+=1;
@@ -3775,23 +3984,56 @@ _bcm_td3_mirror_flex_editor_header_decode(int unit, int edit_ctrl_id,
             mirror_dest->vlan_id = soc_ntohs(mirror_dest->vlan_id);
         }
 
+        if (_is_edit_ctrl_id_ipv6(edit_ctrl_id)) {
+            /* Add Ether Type */
+            p_profile_header += 2;
+
+            /* Version and traffic Class upper nibble */
+            mirror_dest->version  = *p_profile_header >> NIBBLE_SHIFT_OFFSET;
+            p_profile_header += 1;
+
+            flow_label_upper = *p_profile_header & 0xF;
+            p_profile_header += 1;
+
+            mirror_dest->flow_label = soc_ntohs(*(uint16 *)p_profile_header);
+            mirror_dest->flow_label |= (flow_label_upper << 16);
+            p_profile_header += 2;
+
+            /* payload length */
+            p_profile_header += 2;
+
+            /* next header */
+            p_profile_header += 1;
+
+            /* hop limit */
+            p_profile_header += 1;
+
+            sal_memcpy(mirror_dest->src6_addr, p_profile_header,
+                       sizeof(bcm_ip6_t));
+            p_profile_header+=sizeof(bcm_ip6_t);
+            sal_memcpy(mirror_dest->dst6_addr, p_profile_header,
+                       sizeof(bcm_ip6_t));
+            p_profile_header+=sizeof(bcm_ip6_t);
+
+        } else { /* IPv4 */
         /* Account for Ether Type */
         p_profile_header+=sizeof(uint16);
 
         /* Extract IPV4 Information */
-        mirror_dest->version  = *p_profile_header >> NIBBLE_SHIFT_OFFSET;
-        p_profile_header+=1;
-        mirror_dest->tos      = *p_profile_header;
-        p_profile_header+=5;
-        mirror_dest->df      = ((*p_profile_header) & (1 << DF_FLAG_SHIFTER))? 1: 0;
-        p_profile_header+=2;
-        mirror_dest->ttl      = *p_profile_header;
-        p_profile_header+=sizeof(uint32);
+            mirror_dest->version  = *p_profile_header >> NIBBLE_SHIFT_OFFSET;
+            p_profile_header+=1;
+            mirror_dest->tos      = *p_profile_header;
+            p_profile_header+=5;
+            mirror_dest->df      = ((*p_profile_header) & (1 << DF_FLAG_SHIFTER))? 1: 0;
+            p_profile_header+=2;
+            mirror_dest->ttl      = *p_profile_header;
+            p_profile_header+=sizeof(uint32);
 
-        mirror_dest->src_addr = soc_ntohl(*(uint32*)p_profile_header);
-        p_profile_header+=sizeof(uint32);
-        mirror_dest->dst_addr = soc_ntohl(*(uint32*)p_profile_header);
-        p_profile_header+=sizeof(uint32);
+            mirror_dest->src_addr = soc_ntohl(*(uint32*)p_profile_header);
+            p_profile_header+=sizeof(uint32);
+            mirror_dest->dst_addr = soc_ntohl(*(uint32*)p_profile_header);
+            p_profile_header+=sizeof(uint32);
+        }
 
         /* Extract GRE Protocol */
         p_profile_header+=sizeof(uint16);
@@ -13182,6 +13424,19 @@ _bcm_trx_mirror_tunnel_set(int unit, int index,
                 }
             } else
 #endif /* BCM_TOMAHAWK3_SUPPORT */
+#ifdef BCM_TRIDENT3_SUPPORT
+            if (SOC_IS_TRIDENT3(unit)) {
+                if (6 == mirror_dest->version) {
+                    rv = _bcm_td3_mirror_ipv6_gre_tunnel_set(unit, index,
+                                      flags, mirror_dest->flags,
+                                      entries,is_eport);
+                    update_eme = TRUE;
+
+                } else {
+                    rv = BCM_E_UNAVAIL;
+                }
+            } else
+#endif /* BCM_TRIDENT3_SUPPORT */
             rv = (BCM_E_UNAVAIL);
         }
     } else if (mirror_dest->flags & BCM_MIRROR_DEST_TUNNEL_PSAMP) {
