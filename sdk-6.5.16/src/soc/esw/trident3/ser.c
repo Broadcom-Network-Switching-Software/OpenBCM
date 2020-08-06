@@ -1537,6 +1537,42 @@ static _soc_generic_ser_info_t _soc_td3_tcam_ser_info_template[] = {
     { INVALIDm },
 };
 
+static soc_mem_t _soc_td3_skip_populating[] = {
+    /* Shared MMU_WRED_ENABLE_ECCP_MEM.PROFILE_ECCP_EN */
+    MMU_WRED_DROP_CURVE_PROFILE_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_6m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_7m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_8m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Bm,
+
+    /* Shared MMU_SCFG_PARITY_EN.TDM_PARITY_EN*/
+    TDM_CALENDAR0m,
+    TDM_CALENDAR1m,
+    INVALIDm
+};
+
 static int _soc_td3_tcam_mode_info[SOC_MAX_NUM_DEVICES][7];
 static _soc_generic_ser_info_t *_soc_td3_tcam_ser_info[SOC_MAX_NUM_DEVICES];
 
@@ -2610,6 +2646,24 @@ soc_td3_parity_bit_enable(int unit, soc_reg_t enreg, soc_mem_t enmem,
 }
 
 STATIC int
+_soc_td3_mem_log_content_skip(int unit, soc_mem_t mem){
+    soc_mem_t *mem_list = NULL;
+    int i = 0;
+
+    mem_list = _soc_td3_skip_populating;
+
+    i = 0;
+    while(mem_list[i] != INVALIDm) {
+        if (mem == mem_list[i]) {
+            return TRUE;
+        }
+        i++;
+    }
+
+    return FALSE;
+}
+
+int
 _soc_td3_populate_ser_log(int unit, soc_reg_t parity_enable_reg,
                          soc_mem_t parity_enable_mem,
                          soc_field_t parity_enable_field,
@@ -2654,6 +2708,7 @@ _soc_td3_populate_ser_log(int unit, soc_reg_t parity_enable_reg,
     if (mem != INVALIDm) {
         final_disable_mem_read = disable_mem_read ||
                                  _soc_td3_mem_is_dyn(unit, mem) ||
+                                 _soc_td3_mem_log_content_skip(unit, mem) ||
                                  ((parity_enable_reg == INVALIDr) &&
                                  (parity_enable_mem == INVALIDm)) ||
                                  (parity_enable_field == INVALIDf);

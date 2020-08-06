@@ -971,6 +971,37 @@ _soc_th_ser_route_block_t  _soc_th_ser_route_blocks[] = {
     { 0 } /* table terminator */
 };
 
+static soc_mem_t _soc_th_skip_populating[] = {
+    /* Shared MMU_WRED_ENABLE_ECCP_MEM.PROFILE_ECCP_EN */
+    MMU_WRED_DROP_CURVE_PROFILE_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_6m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_7m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_8m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Bm,
+    INVALIDm
+};
 
 #ifdef BCM_TOMAHAWK2_SUPPORT
 extern _soc_bus_ser_en_info_t _soc_bcm56970_a0_ip_bus_ser_info[];
@@ -2074,6 +2105,42 @@ static _soc_tcam_ser_en_info_t _soc_th2_tcam_wrapper_table[] = {
     { INVALIDm},
 };
 
+static soc_mem_t _soc_th2_skip_populating[] = {
+    /* Shared MMU_WRED_ENABLE_ECCP_MEM.PROFILE_ECCP_EN */
+    MMU_WRED_DROP_CURVE_PROFILE_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_6m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_7m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_8m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Bm,
+
+    /*Shared MMU_SCFG_PARITY_EN.TDM_PARITY_EN*/
+    TDM_CALENDAR0m,
+    TDM_CALENDAR1m,
+
+    INVALIDm
+};
 
 #endif
 
@@ -2934,6 +3001,65 @@ _soc_th_ser_mmu_intr_info_t th3_mmu_intr_info[] = {
     { INVALIDf, -1, -1 }
 };
 
+static soc_mem_t _soc_th3_skip_populating[] = {
+    /* Shared  MMU_WRED_ENABLE_ECCP_MEM.MMU_WRED_DROP_CURVE_PROFILE_ECCP_EN */
+    MMU_WRED_DROP_CURVE_PROFILE_0_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_5m,
+    INVALIDm
+};
+
 static uint32 _soc_th3_ip_pipe_fifo_bmask[SOC_MAX_NUM_DEVICES][8];
 STATIC soc_error_t _soc_th3_ser_tcam_wrapper_found(soc_mem_t mem);
 STATIC soc_error_t
@@ -3093,6 +3219,44 @@ _soc_th_ser_route_block_t  _soc_thplus_ser_route_blocks[] = {
       _soc_th_pm_xlp_ser_info, 0 },
     { 0 } /* table terminator */
 };
+
+soc_mem_t _soc_thp_skip_populating[] = {
+    /* Shared MMU_WRED_ENABLE_ECCP_MEM.PROFILE_ECCP_EN */
+    MMU_WRED_DROP_CURVE_PROFILE_0m,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_0_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_1m,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_1_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_2m,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_2_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_3m,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_3_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_4m,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_4_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_5m,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_5_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_6m,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_6_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_7m,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_7_Bm,
+    MMU_WRED_DROP_CURVE_PROFILE_8m,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Am,
+    MMU_WRED_DROP_CURVE_PROFILE_8_Bm,
+
+    /* Shared MMU_SCFG_PARITY_EN.TDM_PARITY_EN */
+    TDM_CALENDAR0m,
+    TDM_CALENDAR1m,
+
+    INVALIDm
+};
+
 #endif
 
 STATIC int
@@ -4405,6 +4569,41 @@ _soc_th_mem_is_dyn(int unit, soc_mem_t mem)
 }
 
 STATIC int
+_soc_thx_mem_log_content_skip(int unit, soc_mem_t mem){
+    soc_mem_t *mem_list = NULL;
+    int i = 0;
+
+#ifdef BCM_TOMAHAWK3_SUPPORT
+    if (SOC_IS_TOMAHAWK3(unit)) {
+        mem_list = _soc_th3_skip_populating;
+    } else
+#endif
+#ifdef BCM_TOMAHAWK2_SUPPORT
+    if (SOC_IS_TOMAHAWK2(unit)) {
+        mem_list = _soc_th2_skip_populating;
+    } else
+#endif
+#ifdef BCM_TOMAHAWKPLUS_SUPPORT
+    if (SOC_IS_TOMAHAWKPLUS(unit)) {
+        mem_list = _soc_thp_skip_populating;
+    } else
+#endif
+    {
+        mem_list = _soc_th_skip_populating;
+    }
+
+    i = 0;
+    while(mem_list[i] != INVALIDm) {
+        if (mem == mem_list[i]) {
+            return TRUE;
+        }
+        i++;
+    }
+
+    return FALSE;
+}
+
+STATIC int
 _soc_th_populate_ser_log(int unit, soc_reg_t parity_enable_reg,
                          soc_mem_t parity_enable_mem,
                          soc_field_t parity_enable_field,
@@ -4448,6 +4647,7 @@ _soc_th_populate_ser_log(int unit, soc_reg_t parity_enable_reg,
     if (mem != INVALIDm) {
         final_disable_mem_read = disable_mem_read ||
                                  _soc_th_mem_is_dyn(unit, mem) ||
+                                 _soc_thx_mem_log_content_skip(unit, mem) ||
                                  ((parity_enable_reg == INVALIDr) &&
                                  (parity_enable_mem == INVALIDm)) ||
                                  (parity_enable_field == INVALIDf);
