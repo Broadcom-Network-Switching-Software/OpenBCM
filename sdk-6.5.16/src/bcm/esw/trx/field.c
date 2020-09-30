@@ -21265,7 +21265,7 @@ _field_tr2_actions_recover(int              unit,
     SOC_PBMP_CLEAR(pbmp);
 #if defined(BCM_TRIDENT2_SUPPORT)
     if ((SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-         SOC_IS_TOMAHAWKX(unit) )) {
+         soc_feature(unit, soc_feature_field_multi_pipe_support) )) {
         hash_select_entry_ptr[0] = (uint32 *)hash_select_entry_arr;
         hash_select_entry_ptr[1] =  hash_select_entry_ptr[0] +
                                     soc_mem_entry_words(unit,
@@ -26282,7 +26282,7 @@ _field_tr2_actions_recover(int              unit,
     case HASH_FIELD_BITMAP_PTR_Af:
         if ((SOC_IS_TRIDENT2X(unit) ||
              SOC_IS_TITAN2PLUS(unit) ||
-             SOC_IS_TOMAHAWKX(unit) )) {
+             soc_feature(unit, soc_feature_field_multi_pipe_support) )) {
             hw_index = PolicyGet(unit, policy_mem, policy_entry,
                                  HASH_FIELD_BITMAP_PTR_Af);
             action = bcmFieldActionHashSelect0;
@@ -26303,7 +26303,7 @@ _field_tr2_actions_recover(int              unit,
     case HASH_FIELD_BITMAP_PTR_Bf:
         if ((SOC_IS_TRIDENT2X(unit) ||
              SOC_IS_TITAN2PLUS(unit) ||
-             SOC_IS_TOMAHAWKX(unit) )) {
+             soc_feature(unit, soc_feature_field_multi_pipe_support) )) {
             hw_index = PolicyGet(unit, policy_mem, policy_entry,
                                  HASH_FIELD_BITMAP_PTR_Bf);
             action = bcmFieldActionHashSelect1;

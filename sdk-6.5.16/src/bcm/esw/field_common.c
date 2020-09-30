@@ -13819,8 +13819,8 @@ _field_action_hw_resources_free(int unit, _field_entry_t  *f_ent,
       case bcmFieldActionHashSelect1:
           /* Applicable to stage lookup on TRIDENT2 device only. */
           if ((0 == (SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit)
-                      || SOC_IS_TOMAHAWKX(unit))) ||
-              (_BCM_FIELD_STAGE_LOOKUP != f_ent->group->stage_id)) {
+                      || soc_feature(unit, soc_feature_field_multi_pipe_support)))
+                      || (_BCM_FIELD_STAGE_LOOKUP != f_ent->group->stage_id)) {
               break;
           }
           mem = ((fa->action == bcmFieldActionHashSelect0)?
@@ -27916,7 +27916,7 @@ _field_resources_free(int unit, _field_entry_t *f_ent, uint32 flags)
 
 #if defined(BCM_TRIDENT2_SUPPORT)
     if ((SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-           SOC_IS_TOMAHAWKX(unit))) {
+           soc_feature(unit, soc_feature_field_multi_pipe_support))) {
         rv = _bcm_field_td2_hash_select_profile_hw_free(unit, f_ent, flags);
         BCM_IF_ERROR_RETURN(rv);
     }
@@ -28130,7 +28130,7 @@ _field_hw_resources_alloc(int unit, _field_entry_t *f_ent)
 #if defined(BCM_TRIDENT2_SUPPORT)
     /* Allocate hash select profiles. */
     if ((SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-           SOC_IS_TOMAHAWKX(unit))) {
+         soc_feature(unit, soc_feature_field_multi_pipe_support))) {
         rv = _bcm_field_td2_hash_select_profile_hw_alloc(unit, f_ent);
         if (BCM_FAILURE(rv)) {
             _field_mtp_hw_free(unit, f_ent, _FP_ACTION_HW_FREE);
@@ -28159,7 +28159,7 @@ _field_hw_resources_alloc(int unit, _field_entry_t *f_ent)
             _field_redirect_profile_hw_free(unit, f_ent, _FP_ACTION_HW_FREE);
 #if defined(BCM_TRIDENT2_SUPPORT)
             if ((SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-                  SOC_IS_TOMAHAWKX(unit))) {
+                 soc_feature(unit, soc_feature_field_multi_pipe_support))) {
                 _bcm_field_td2_hash_select_profile_hw_free(unit,
                                                            f_ent,
                                                            _FP_ACTION_HW_FREE);
@@ -28227,7 +28227,7 @@ _field_hw_resources_alloc(int unit, _field_entry_t *f_ent)
         }
 #if defined(BCM_TRIDENT2_SUPPORT)
         if ((SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-              SOC_IS_TOMAHAWKX(unit))) {
+             soc_feature(unit, soc_feature_field_multi_pipe_support))) {
             _bcm_field_td2_hash_select_profile_hw_free(unit,
                     f_ent,
                     _FP_ACTION_HW_FREE);

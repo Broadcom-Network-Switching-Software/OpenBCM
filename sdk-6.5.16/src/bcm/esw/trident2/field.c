@@ -8307,7 +8307,7 @@ _bcm_field_td2_hash_select_profile_hw_free(int unit,
 
     /* Applicable to stage lookup on TRIDENT2 devices. */
     if ((0 == (SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit)||
-               SOC_IS_TOMAHAWKX(unit) )) ||
+               soc_feature(unit, soc_feature_field_multi_pipe_support))) ||
         (_BCM_FIELD_STAGE_LOOKUP != f_ent->group->stage_id)) {
         return (BCM_E_NONE);
     }
@@ -8370,7 +8370,7 @@ _bcm_field_td2_hash_select_profile_hw_alloc (int unit, _field_entry_t *f_ent)
 
     /* Applicable to stage lookup on TRIDENT2 devices only. */
     if ((0 == (SOC_IS_TRIDENT2X(unit) || SOC_IS_TITAN2PLUS(unit) ||
-               SOC_IS_TOMAHAWKX(unit))) ||
+               soc_feature(unit, soc_feature_field_multi_pipe_support))) ||
         (_BCM_FIELD_STAGE_LOOKUP != f_ent->group->stage_id)) { 
         return (BCM_E_NONE);
     }
