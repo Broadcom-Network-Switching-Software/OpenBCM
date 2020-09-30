@@ -2166,7 +2166,7 @@ _bcm_td3_mirror_flex_editor_header_create(int unit, int edit_ctrl_id,
             |UDP SRC PORT       | UDP DEST PORT     |
             -----------------------------------------
             |LENGTH             | CHECK SUM         |
-            *****************************************/
+ */
 
             *p_profile_header = ((mirror_dest->version & 0xF) << NIBBLE_SHIFT_OFFSET) |
                                  IPV4_HEADER_LENGTH_WORDS;
@@ -2396,9 +2396,10 @@ _bcm_td3_mirror_flex_editor_header_create(int unit, int edit_ctrl_id,
                     } else if (_is_edit_ctrl_id_erspan(edit_ctrl_id)) {
                         truncate_ip_len_adjust = GRE_HEADER_LEN;
                     }
-                    if (_is_edit_ctrl_id_ipv6(edit_ctrl_id)) {
-                        truncate_ip_len_adjust += IPV6_HEADER_LEN;
-                    } else {
+                    /* len in IPv6 header is the payload length.
+                     * Adjust only for IPv4 header
+                     */
+                    if (!_is_edit_ctrl_id_ipv6(edit_ctrl_id)) {
                         truncate_ip_len_adjust += IPV4_HEADER_LEN;
                     }
                 }
@@ -3934,7 +3935,7 @@ _bcm_td3_mirror_flex_editor_header_decode(int unit, int edit_ctrl_id,
             |SOURCE IP ADDRESS                      |
             -----------------------------------------
             |DEST IP ADDRESS                        |
-            ****************************************/
+ */
 
             mirror_dest->version  = *p_profile_header >> NIBBLE_SHIFT_OFFSET;
             p_profile_header+=1;
