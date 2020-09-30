@@ -2141,6 +2141,8 @@ _bcm_td3_mirror_flex_editor_header_create(int unit, int edit_ctrl_id,
             p_profile_header+=sizeof(bcm_ip6_t);
             sal_memcpy(p_profile_header, mirror_dest->dst6_addr, sizeof(bcm_ip6_t));
             p_profile_header+=sizeof(bcm_ip6_t);
+            /* will be used for IPv6 payload length */
+            udp_len_adjust = TWOS_COMPLEMENT(p_profile_header - p_profile_hdr);
         } else {
             /* Add Ether Type */
             *(uint16*)p_profile_header = soc_ntohs(0x0800);
