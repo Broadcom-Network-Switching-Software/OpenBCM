@@ -167,10 +167,13 @@ _bcm_td3_vlan_vfi_profile_entry_set(int unit, bcm_vlan_t vlan_vfi,
                          vlan_vfi, cur_prof_index, cur_idx_ref_count));
 
     /* Depending on the direction, update the  relevant profile index,
-       if the old and new are different, delete the old one */
+       delete the old one */
 
     BCM_IF_ERROR_RETURN(_bcm_vlan_vfi_untag_profile_entry_op(unit, &entry_data, 1, 1,
                             (uint32 *)&new_prof_index));
+
+    /* Write the new index into the VALN/VFI tables */
+    _bcm_td3_vlan_vfi_untag_profile_ptr_set(unit, vlan_vfi, new_prof_index);
 
     /*
      * If the old-profile-index entry is non-zero delete it, note that if the
@@ -181,9 +184,6 @@ _bcm_td3_vlan_vfi_profile_entry_set(int unit, bcm_vlan_t vlan_vfi,
         _bcm_vlan_vfi_untag_profile_entry_op(unit, NULL, 1, 0,
                                              &cur_prof_index);
     }
-
-    /* Write the new index into the VALN/VFI tables */
-    _bcm_td3_vlan_vfi_untag_profile_ptr_set(unit, vlan_vfi, new_prof_index);
 
     /* Gather the ref counts */
     BCM_IF_ERROR_RETURN
