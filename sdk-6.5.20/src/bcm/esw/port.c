@@ -37911,15 +37911,26 @@ _bcm_td_port_lanes_set(int unit, bcm_port_t port, int value)
             /* Case of 40G port --> 10G XFI */
             if (value == 1) {
                 SOC_INFO(unit).port_speed_max[port]=10000;
+            } else if (value == 2) {
+                /* Case of single mode --> dual mode */
+                SOC_INFO(unit).port_speed_max[port]=20000;
+                core_mode = 1;
+                soc_reg_field_set(unit, XLPORT_MODE_REGr, &rval, CORE_PORT_MODEf, core_mode);
+                SOC_IF_ERROR_RETURN(WRITE_XLPORT_MODE_REGr(unit, port, rval));
             }
         } else if (phy_mode == 1) { /* dual mode */
             if (value != 2 && value != 4) {
                 rv = BCM_E_PARAM;
             } else if (value == 4) {
+                /* Case of dual mode --> single mode */
                 core_mode = 0;
-                soc_reg_field_set(unit, XLPORT_MODE_REGr, &rval, CORE_PORT_MODEf, core_mode);
-                SOC_IF_ERROR_RETURN(WRITE_XLPORT_MODE_REGr(unit, port, rval));
+                SOC_INFO(unit).port_speed_max[port]=40000;
+            } else {
+                /* case of 20G single mode --> 20G dual mode */
+                core_mode = 1;
             }
+            soc_reg_field_set(unit, XLPORT_MODE_REGr, &rval, CORE_PORT_MODEf, core_mode);
+            SOC_IF_ERROR_RETURN(WRITE_XLPORT_MODE_REGr(unit, port, rval));
         } else {  /* phy_mode == 2 */
             if (value == 4) {
                 /* 10G XFI --> 10G XAUI or 10G XFI --> 40G */
