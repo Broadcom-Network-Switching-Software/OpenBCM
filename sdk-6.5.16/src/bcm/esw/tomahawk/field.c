@@ -11375,6 +11375,7 @@ _bcm_field_th_ingress_action_params_check(int unit,
                             (0 == _BCM_MULTICAST_IS_WLAN(fa->param[0])) &&
                             (0 == _BCM_MULTICAST_IS_VXLAN(fa->param[0])) &&
                             (0 == _BCM_MULTICAST_IS_VLAN(fa->param[0])) &&
+                            (0 == _BCM_MULTICAST_IS_FLOW(fa->param[0])) &&
                             (0 == _BCM_MULTICAST_IS_VPLS(fa->param[0]))) {
                         return (BCM_E_PARAM);
                     }
