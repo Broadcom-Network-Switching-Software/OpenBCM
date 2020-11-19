@@ -10642,17 +10642,15 @@ _bcm_field_td2_action_get(int             unit,
             }
             break;
 #endif
-#if defined(BCM_TOMAHAWK2_SUPPORT)
         case bcmFieldActionMplsLabel1ExpNew:
-            if (SOC_IS_TOMAHAWK2(unit) &&
-                (f_ent->group->stage_id == _BCM_FIELD_STAGE_EGRESS)) {
+            if ((SOC_MEM_FIELD_VALID(unit, mem, CHANGE_EXPf))
+                    && (SOC_MEM_FIELD_VALID(unit, mem, EXPf))) {
                 PolicySet(unit, mem, buf, CHANGE_EXPf, 0x1);
                 PolicySet(unit, mem, buf, EXPf, fa->param[0]);
             } else {
                 return (BCM_E_UNAVAIL);
             }
             break;
-#endif
         default:
             return (BCM_E_UNAVAIL);
     }

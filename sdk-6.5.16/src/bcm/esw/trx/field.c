@@ -27467,8 +27467,6 @@ _field_tr2_actions_recover(int              unit,
             }
             break;
 #endif /* BCM_GREYHOUND2_SUPPORT */
-
-#if defined BCM_TOMAHAWK2_SUPPORT
         case CHANGE_EXPf:
             append = 0;
             if (fldval) {
@@ -27477,7 +27475,6 @@ _field_tr2_actions_recover(int              unit,
                 append = 1;
             }
             break;
-#endif /* BCM_TOMAHAWK2_SUPPORT */
 #if defined(BCM_TSN_SR_SUPPORT)
         case DROP_SR_FRAMEf:
             if (fldval) {

@@ -10064,12 +10064,10 @@ _field_th_stage_action_support_check(int unit,
             *result = (stage == _BCM_FIELD_STAGE_LOOKUP);
             return (BCM_E_NONE);
         case bcmFieldActionMplsLabel1ExpNew:
-#if defined (BCM_TOMAHAWK2_SUPPORT)
-            if (SOC_IS_TOMAHAWK2(unit)) {
+            if (SOC_IS_TOMAHAWK2(unit) ||
+                SOC_IS_TOMAHAWK3(unit) || SOC_IS_TRIDENT3X(unit)) {
                 *result = (stage == _BCM_FIELD_STAGE_EGRESS);
-            } else
-#endif
-            {
+            } else {
                 *result = FALSE;
             }
             return BCM_E_NONE;
@@ -11715,11 +11713,9 @@ _bcm_field_th_action_params_check(int unit,
                 case bcmFieldActionLoopBackTypeNew:
                     PolicyCheck(unit, mem, LB_TYPE_NEWf , fa->param[0]);
                     return (BCM_E_NONE);
-#if defined(BCM_TOMAHAWK2_SUPPORT)
                 case bcmFieldActionMplsLabel1ExpNew:
                     PolicyCheck(unit, mem, EXPf, fa->param[0]);
                     return (BCM_E_NONE);
-#endif
                 case bcmFieldActionLatencyMonitorEnable:
                     PolicyCheck(unit, mem, LAT_MON_ENf, fa->param[0]);
                     return (BCM_E_NONE);
