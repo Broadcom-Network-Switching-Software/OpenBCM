@@ -82,6 +82,7 @@ STATIC _bcm_th_ft_template_support_mapping_t _bcm_th_ft_template_element_mapping
 #ifdef BCM_WARM_BOOT_SUPPORT
 STATIC int _bcm_th_ft_scache_alloc(int unit, int create);
 STATIC int _bcm_th_ft_wb_recover(int unit);
+#define _BCM_FT_WB_INVALID_COLLECTOR_ID 0xFFFF
 #endif /* BCM_WARM_BOOT_SUPPORT */
 
 /* TD3 chunk index to FT qualifier mapping */
@@ -6835,7 +6836,8 @@ _bcm_th_ft_scache_v0_group_recover(int unit, uint8 **scache)
 
         /* Collector Id */
         FT_SCACHE_READ(*scache, group->collector_id, uint16);
-        if (ft_info->cfg_mode >= SHR_FT_CFG_MODE_V2) {
+        if (ft_info->cfg_mode >= SHR_FT_CFG_MODE_V2 &&
+            (group->collector_id != _BCM_FT_WB_INVALID_COLLECTOR_ID)) {
             BCM_IF_ERROR_RETURN(
                    _bcm_esw_collector_ref_count_update(unit,
                                                        group->collector_id, 1));
@@ -8078,10 +8080,13 @@ _bcm_th_ft_scache_v1_group_recover(int unit, uint8 **scache)
 
         /* Export profile Id */
         FT_SCACHE_READ(*scache, group->export_profile_id, int);
-        BCM_IF_ERROR_RETURN(
-           _bcm_esw_collector_export_profile_ref_count_update(unit,
+        if (group->export_profile_id !=
+            BCM_INT_COLLECTOR_INVALID_EXPORT_PROFILE_ID) {
+            BCM_IF_ERROR_RETURN(
+                    _bcm_esw_collector_export_profile_ref_count_update(unit,
                                                               group->export_profile_id,
                                                               1));
+        }
 
         if (ft_info->cfg_mode >= SHR_FT_CFG_MODE_V2) {
             bcm_collector_export_profile_t_init(&export_profile_info);
@@ -8091,14 +8096,16 @@ _bcm_th_ft_scache_v1_group_recover(int unit, uint8 **scache)
                         group->export_profile_id,
                         &export_profile_info));
 
-            if (export_profile_info.wire_format == bcmCollectorWireFormatIpfix) {
-                BCM_IF_ERROR_RETURN(
-                        _bcm_esw_collector_user_update(unit,
-                            group->collector_id, _BCM_COLLECTOR_EXPORT_APP_FT_IPFIX));
-            } else {
-                BCM_IF_ERROR_RETURN(
-                        _bcm_esw_collector_user_update(unit,
-                            group->collector_id, _BCM_COLLECTOR_EXPORT_APP_FT_PROTOBUF));
+            if (group->collector_id != _BCM_FT_WB_INVALID_COLLECTOR_ID) {
+                if (export_profile_info.wire_format == bcmCollectorWireFormatIpfix) {
+                    BCM_IF_ERROR_RETURN(
+                            _bcm_esw_collector_user_update(unit,
+                                group->collector_id, _BCM_COLLECTOR_EXPORT_APP_FT_IPFIX));
+                } else {
+                    BCM_IF_ERROR_RETURN(
+                            _bcm_esw_collector_user_update(unit,
+                                group->collector_id, _BCM_COLLECTOR_EXPORT_APP_FT_PROTOBUF));
+                }
             }
         }
 
@@ -8225,6 +8232,8 @@ _bcm_th_ft_scache_v1_collector_recover(int unit, uint8 **scache)
     uint8 in_use;
     uint16 start_id, end_id;
     int collector_id;
+    int rv = BCM_E_NONE;
+    _bcm_int_ft_info_t *ft_info = FT_INFO_GET(unit);
     _bcm_int_ft_v2_collector_info_t *collector_list = ft_v2_collector_info_list[unit];
     _bcm_int_ft_v2_collector_info_t *collector = NULL;
 
@@ -8257,6 +8266,9 @@ _bcm_th_ft_scache_v1_collector_recover(int unit, uint8 **scache)
         /* Collector Internal id */
         FT_SCACHE_READ(*scache, collector->int_id, int);
 
+        rv = shr_idxres_list_reserve(ft_info->collector_pool,
+                                     collector->int_id, collector->int_id);
+        BCM_IF_ERROR_RETURN(rv);
     }
 
     return BCM_E_NONE;
@@ -8345,8 +8357,10 @@ _bcm_th_ft_scache_v1_export_profile_recover(int unit, uint8 **scache)
 {
     int i;
     uint8 in_use;
+    int rv = BCM_E_NONE;
     uint16 start_id, end_id;
     int export_profile_id;
+    _bcm_int_ft_info_t *ft_info = FT_INFO_GET(unit);
     _bcm_int_ft_v2_export_profile_info_t *export_profile_list = ft_v2_export_profile_info_list[unit];
     _bcm_int_ft_v2_export_profile_info_t *export_profile = NULL;
 
@@ -8379,6 +8393,9 @@ _bcm_th_ft_scache_v1_export_profile_recover(int unit, uint8 **scache)
         /* Export_Profile Internal id */
         FT_SCACHE_READ(*scache, export_profile->int_id, int);
 
+        rv = shr_idxres_list_reserve(ft_info->export_profile_pool,
+                                     export_profile->int_id, export_profile->int_id);
+        BCM_IF_ERROR_RETURN(rv);
     }
 
     return BCM_E_NONE;

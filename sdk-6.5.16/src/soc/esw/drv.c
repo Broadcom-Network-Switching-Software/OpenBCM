@@ -11338,7 +11338,10 @@ soc_shutdown(int unit)
     int                 cmc;
 #ifdef INCLUDE_KNET
     uint8               shutdown_knet = TRUE;
+#endif
+    int warm_boot;
 
+#ifdef INCLUDE_KNET
     if (SOC_KNET_MODE(unit) &&
         soc_property_get(unit, spn_WARMBOOT_KNET_SHUTDOWN_MODE, 0)) {
         shutdown_knet = FALSE;
@@ -11431,8 +11434,17 @@ soc_shutdown(int unit)
         }
 #endif /* BCM_TOMAHAWK3_SUPPORT */
 
+        warm_boot = SOC_WARM_BOOT(unit);
+        if (!warm_boot) {
+            SOC_WARM_BOOT_START(unit);
+        }
+
         /* Terminate counter module; frees allocated space */
         soc_counter_detach(unit);
+
+        if (!warm_boot) {
+            SOC_WARM_BOOT_DONE(unit);
+        }
 
 #ifdef BCM_XGS_SWITCH_SUPPORT
 

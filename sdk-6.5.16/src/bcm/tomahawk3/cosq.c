@@ -6072,30 +6072,22 @@ int
 _bcm_th3_cosq_gport_cpu_tree_create(int unit, bcm_port_t port)
 {
     bcm_gport_t cpu_mc_gport[_BCM_TH3_NUM_CPU_MCAST_QUEUE];
-    int id, cmc, pci_cmc = SOC_PCI_CMC(unit);
-    int ch_l0_map[SOC_CMCS_NUM_MAX];
+    int id, pci_cmc = SOC_PCI_CMC(unit);
+    int ch_l0_map;
     bcm_gport_t sched_gport[_BCM_TH3_NUM_SCHEDULER_PER_PORT];
     int numq;
+    int num_queues_uc0 = soc_property_get(unit, "num_queues_uc0", 0);
+    int num_queues_uc1 = soc_property_get(unit, "num_queues_uc1", 0);
 
     if (!IS_CPU_PORT(unit, port)) {
         return BCM_E_PARAM;
     }
-
-    if (SOC_CMCS_NUM(unit) > SOC_CMCS_NUM_MAX) {
-        return BCM_E_INIT;
+    /* CMIC requires all 48 queues to be set and for the respective CMC */
+    if ((NUM_CPU_ARM_COSQ(unit, pci_cmc) + num_queues_uc0 + num_queues_uc1) !=
+         SOC_TH3_NUM_CPU_QUEUES) {
+        return BCM_E_PARAM;
     }
 
-    for (cmc = 0; cmc < SOC_CMCS_NUM(unit); cmc++) {
-        if (cmc == pci_cmc) {
-            ch_l0_map[cmc] = 0;
-        } else if (cmc == SOC_ARM_CMC(unit, 0)) {
-            ch_l0_map[cmc] = 7;
-        } else if (cmc == SOC_ARM_CMC(unit, 1)) {
-            ch_l0_map[cmc] = 8;
-        } else {
-            return BCM_E_PARAM;
-        }
-    }
 
     numq = 48;
     /* Adding L0 (schedular) nodes and attaching them to cpu port */
@@ -6110,19 +6102,28 @@ _bcm_th3_cosq_gport_cpu_tree_create(int unit, bcm_port_t port)
             "sched_gport[%d]=0x%x\n"),
             id, sched_gport[id]));
     }
+    /* Add MC queues and attach them to Schedular nodes.
+     * L0.0 node - PCI host
+     * L0.7 node - uc0
+     * L0.8 node - uc1
+     */
+
+    /* CMICX supports only 2 CMCs.
+     * CMC0 connected to PCI.
+     * CMC1 is connected to other arm cores.
+     */
 
     for (id = 0; id < _BCM_TH3_NUM_CPU_MCAST_QUEUE; id++) {
-        cmc = (id < NUM_CPU_ARM_COSQ(unit, pci_cmc)) ? pci_cmc :
-              (id < (NUM_CPU_ARM_COSQ(unit, pci_cmc) +
-                     NUM_CPU_ARM_COSQ(unit, 1))) ? SOC_ARM_CMC(unit, 0) :
-                     SOC_ARM_CMC(unit, 1);
+        ch_l0_map = (id < NUM_CPU_ARM_COSQ(unit, pci_cmc)) ? pci_cmc :
+                    (id < (NUM_CPU_ARM_COSQ(unit, pci_cmc) +
+                        (num_queues_uc0))) ? 7 : 8;
         BCM_IF_ERROR_RETURN
             (bcm_th3_cosq_gport_add(unit, 0, 1,
                                    BCM_COSQ_GPORT_MCAST_QUEUE_GROUP,
                                    &cpu_mc_gport[id]));
         BCM_IF_ERROR_RETURN
             (bcm_th3_cosq_gport_attach(unit, cpu_mc_gport[id],
-                                      sched_gport[ch_l0_map[cmc]], id));
+                                      sched_gport[ch_l0_map], id));
     }
 
 

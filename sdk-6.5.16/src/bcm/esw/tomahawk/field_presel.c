@@ -5990,65 +5990,127 @@ _bcm_field_th_qualify_MixedSrcClassId(int unit,
     }
 
     BCM_IF_ERROR_RETURN(_field_stage_control_get(unit, stage_id, &stage_fc));
-
     switch (stage_fc->field_src_class_mode[pipe_idx]) {
         case bcmFieldSrcClassModeDefault:
-            hw_data = ((((data.src_class_field & 0x3) << 10 ) |
-                        (data.dst_class_field & 0x3FF)) << 20) |
-                ((data.udf_class & 0xFF) << 12) |
-                ((data.intf_class_port & 0xFF) << 4) |
-                (data.intf_class_l2 & 0xF);
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                hw_data = (uint32)((uint32)((data.intf_class_l2 & 0xF) << 28))
+                    | ((data.src_class_field & 0x3) << 26)
+                    | ((data.dst_class_field & 0x3FF) << 16)
+                    | ((data.udf_class & 0xFF) << 8)
+                    | (data.intf_class_port & 0xFF);
 
-            hw_mask = ((((mask.src_class_field & 0x3) << 10 ) |
-                        (mask.dst_class_field & 0x3FF)) << 20) |
-                ((mask.udf_class & 0xFF) << 12) |
-                ((mask.intf_class_port & 0xFF) << 4) |
-                (mask.intf_class_l2 & 0xF);
+                hw_mask = (uint32)((uint32)((mask.intf_class_l2 & 0xF) << 28))
+                    | ((mask.src_class_field & 0x3) << 26)
+                    | ((mask.dst_class_field & 0x3FF) << 16)
+                    | ((mask.udf_class & 0xFF) << 8)
+                    | (mask.intf_class_port & 0xFF);
+            } else {
+                hw_data = (uint32)((uint32)(
+                    (data.src_class_field & 0x3) << 30))
+                    | ((data.dst_class_field & 0x3FF) << 20)
+                    | ((data.udf_class & 0xFF) << 12)
+                    | ((data.intf_class_port & 0xFF) << 4)
+                    | (data.intf_class_l2 & 0xF);
+
+                hw_mask = (uint32)((uint32)(
+                    (mask.src_class_field & 0x3) << 30 ))
+                    | ((mask.dst_class_field & 0x3FF) << 20)
+                    | ((mask.udf_class & 0xFF) << 12)
+                    | ((mask.intf_class_port & 0xFF) << 4)
+                    | (mask.intf_class_l2 & 0xF);
+            }
             break;
         case bcmFieldSrcClassModeSDN:
-            hw_data = ((((data.src_class_field & 0x3) << 10 ) |
-                        (data.dst_class_field & 0x3FF)) << 20) |
-                ((data.udf_class & 0xF) << 16) |
-                ((data.intf_class_port & 0xF) << 12) |
-                ((data.intf_class_l2 & 0xF) << 8) |
-                ((data.intf_class_vport & 0xF) << 4) |
-                (data.intf_class_l3 & 0xF);
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                hw_data = (uint32)((uint32)((data.intf_class_l2 & 0xF) << 28))
+                    | ((data.src_class_field & 0x3) << 26)
+                    | ((data.dst_class_field & 0x3FF) << 16)
+                    | ((data.udf_class & 0xF) << 12)
+                    | ((data.intf_class_port & 0xF) << 4)
+                    | (data.intf_class_l3 & 0xF);
 
-            hw_mask = ((((mask.src_class_field & 0x3) << 10 ) |
-                        (mask.dst_class_field & 0x3FF)) << 20) |
-                ((mask.udf_class & 0xF) << 16) |
-                ((mask.intf_class_port & 0xF) << 12) |
-                ((mask.intf_class_l2 & 0xF) << 8) |
-                ((mask.intf_class_vport & 0xF) << 4) |
-                (mask.intf_class_l3 & 0xF);
+                hw_mask = (uint32)((uint32)((mask.intf_class_l2 & 0xF) << 28))
+                    | ((mask.src_class_field & 0x3) << 26)
+                    | ((mask.dst_class_field & 0x3FF) << 16)
+                    | ((mask.udf_class & 0xF) << 12)
+                    | ((mask.intf_class_port & 0xF) << 4)
+                    | (mask.intf_class_l3 & 0xF);
+            } else {
+                hw_data = (uint32)((uint32)(
+                    (data.src_class_field & 0x3) << 30))
+                    | ((data.dst_class_field & 0x3FF) << 20)
+                    | ((data.udf_class & 0xF) << 16)
+                    | ((data.intf_class_port & 0xF) << 12)
+                    | ((data.intf_class_l2 & 0xF) << 8)
+                    | ((data.intf_class_vport & 0xF) << 4)
+                    | (data.intf_class_l3 & 0xF);
+
+                hw_mask = (uint32)((uint32)(
+                    (mask.src_class_field & 0x3) << 30))
+                    | ((mask.dst_class_field & 0x3FF) << 20)
+                    | ((mask.udf_class & 0xF) << 16)
+                    | ((mask.intf_class_port & 0xF) << 12)
+                    | ((mask.intf_class_l2 & 0xF) << 8)
+                    | ((mask.intf_class_vport & 0xF) << 4)
+                    | (mask.intf_class_l3 & 0xF);
+            }
             break;
         case bcmFieldSrcClassModeBalanced:
-            hw_data = ((data.dst_class_field & 0xFF) << 24) |
-                ((data.udf_class & 0xF) << 20) |
-                ((data.intf_class_port & 0xFF) << 12) |
-                ((data.intf_class_l2 & 0xF) << 8) |
-                ((data.intf_class_vport & 0xF) << 4) |
-                (data.intf_class_l3 & 0xF);
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                hw_data = (uint32)((uint32)((data.intf_class_l2 & 0xF) << 28))
+                    | ((data.dst_class_field & 0xFF) << 20)
+                    | ((data.udf_class & 0xF) << 16)
+                    | ((data.intf_class_port & 0xFF) << 4)
+                    | (data.intf_class_l3 & 0xF);
+                hw_mask = (uint32)((uint32)((mask.intf_class_l2 & 0xF) << 28))
+                    | ((mask.dst_class_field & 0xFF) << 20)
+                    | ((mask.udf_class & 0xF) << 16)
+                    | ((mask.intf_class_port & 0xFF) << 4)
+                    | (mask.intf_class_l3 & 0xF);
+            } else {
+                hw_data = (uint32)((uint32)(
+                    (data.dst_class_field & 0xFF) << 24))
+                    | ((data.udf_class & 0xF) << 20)
+                    | ((data.intf_class_port & 0xFF) << 12)
+                    | ((data.intf_class_l2 & 0xF) << 8)
+                    | ((data.intf_class_vport & 0xF) << 4)
+                    | (data.intf_class_l3 & 0xF);
 
-            hw_mask = ((mask.dst_class_field & 0xFF) << 24) |
-                ((mask.udf_class & 0xF) << 20) |
-                ((mask.intf_class_port & 0xFF) << 12) |
-                ((mask.intf_class_l2 & 0xF) << 8) |
-                ((mask.intf_class_vport & 0xF) << 4) |
-                (mask.intf_class_l3 & 0xF);
+                hw_mask = (uint32)((uint32)(
+                    (mask.dst_class_field & 0xFF) << 24))
+                    | ((mask.udf_class & 0xF) << 20)
+                    | ((mask.intf_class_port & 0xFF) << 12)
+                    | ((mask.intf_class_l2 & 0xF) << 8)
+                    | ((mask.intf_class_vport & 0xF) << 4)
+                    | (mask.intf_class_l3 & 0xF);
+            }
             break;
         case bcmFieldSrcClassModeOverlayNetworks:
-            hw_data = ((data.dst_class_field & 0xF) << 28) |
-                ((data.intf_class_port & 0xF) << 24) |
-                ((data.intf_class_l2 & 0xFF) << 16) |
-                ((data.intf_class_vport & 0xFF) << 8) |
-                (data.intf_class_l3 & 0xFF);
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                hw_data = (uint32)((uint32)((data.intf_class_l2 & 0xFF) << 24))
+                    | ((data.dst_class_field & 0xF) << 20)
+                    | ((data.intf_class_port & 0xF) << 8)
+                    | (data.intf_class_l3 & 0xFF);
 
-            hw_mask = ((mask.dst_class_field & 0xF) << 28) |
-                ((mask.intf_class_port & 0xF) << 24) |
-                ((mask.intf_class_l2 & 0xFF) << 16) |
-                ((mask.intf_class_vport & 0xFF) << 8) |
-                (mask.intf_class_l3 & 0xFF);
+                hw_mask = (uint32)((uint32)((mask.intf_class_l2 & 0xFF) << 24))
+                    | ((mask.dst_class_field & 0xF) << 20)
+                    | ((mask.intf_class_port & 0xF) << 8)
+                    | (mask.intf_class_l3 & 0xFF);
+            } else {
+                hw_data = (uint32)((uint32)(
+                    (data.dst_class_field & 0xF) << 28))
+                    | ((data.intf_class_port & 0xF) << 24)
+                    | ((data.intf_class_l2 & 0xFF) << 16)
+                    | ((data.intf_class_vport & 0xFF) << 8)
+                    | (data.intf_class_l3 & 0xFF);
+
+                hw_mask = (uint32)((uint32)(
+                    (mask.dst_class_field & 0xF) << 28))
+                    | ((mask.intf_class_port & 0xF) << 24)
+                    | ((mask.intf_class_l2 & 0xFF) << 16)
+                    | ((mask.intf_class_vport & 0xFF) << 8)
+                    | (mask.intf_class_l3 & 0xFF);
+            }
             break;
         default:
             return (BCM_E_PARAM);
@@ -6177,62 +6239,118 @@ _bcm_field_th_qualify_MixedSrcClassId_get(int unit,
 
     switch (stage_fc->field_src_class_mode[pipe_idx]) {
         case bcmFieldSrcClassModeDefault:
-            data->src_class_field   = (hw_data >> 30) & 0x3;
-            data->dst_class_field   = (hw_data >> 20) & 0x3FF;
-            data->udf_class         = (hw_data >> 12) & 0xFF;
-            data->intf_class_port   = (hw_data >> 4) & 0xFF;
-            data->intf_class_l2     = hw_data & 0xF;
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                data->intf_class_l2     = (hw_data >> 28) & 0xF;
+                data->src_class_field   = (hw_data >> 26) & 0x3;
+                data->dst_class_field   = (hw_data >> 16) & 0x3FF;
+                data->udf_class         = (hw_data >> 8) & 0xFF;
+                data->intf_class_port   = hw_data & 0xFF;
 
-            mask->src_class_field   = (hw_mask >> 30) & 0x3;
-            mask->dst_class_field   = (hw_mask >> 20) & 0x3FF;
-            mask->udf_class         = (hw_mask >> 12) & 0xFF;
-            mask->intf_class_port   = (hw_mask >> 4) & 0xFF;
-            mask->intf_class_l2     = hw_mask & 0xF;
+                mask->intf_class_l2     = (hw_mask >> 28) & 0xF;
+                mask->src_class_field   = (hw_mask >> 26) & 0x3;
+                mask->dst_class_field   = (hw_mask >> 16) & 0x3FF;
+                mask->udf_class         = (hw_mask >> 8) & 0xFF;
+                mask->intf_class_port   = hw_mask & 0xFF;
+            } else {
+                data->src_class_field   = (hw_data >> 30) & 0x3;
+                data->dst_class_field   = (hw_data >> 20) & 0x3FF;
+                data->udf_class         = (hw_data >> 12) & 0xFF;
+                data->intf_class_port   = (hw_data >> 4) & 0xFF;
+                data->intf_class_l2     = hw_data & 0xF;
+
+                mask->src_class_field   = (hw_mask >> 30) & 0x3;
+                mask->dst_class_field   = (hw_mask >> 20) & 0x3FF;
+                mask->udf_class         = (hw_mask >> 12) & 0xFF;
+                mask->intf_class_port   = (hw_mask >> 4) & 0xFF;
+                mask->intf_class_l2     = hw_mask & 0xF;
+            }
             break;
         case bcmFieldSrcClassModeSDN:
-            data->src_class_field   = (hw_data >> 30) & 0x3;
-            data->dst_class_field   = (hw_data >> 20) & 0x3FF;
-            data->udf_class         = (hw_data >> 16) & 0xF;
-            data->intf_class_port   = (hw_data >> 12) & 0xF;
-            data->intf_class_l2     = (hw_data >> 8) & 0xF;
-            data->intf_class_vport  = (hw_data >> 4) & 0xF;
-            data->intf_class_l3     = hw_data & 0xF;
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                data->intf_class_l2     = (hw_data >> 28) & 0xF;
+                data->src_class_field   = (hw_data >> 26) & 0x3;
+                data->dst_class_field   = (hw_data >> 16) & 0x3FF;
+                data->udf_class         = (hw_data >> 12) & 0xF;
+                data->intf_class_port   = (hw_data >> 4) & 0xF;
+                data->intf_class_l3     = hw_data & 0xF;
 
-            mask->src_class_field   = (hw_mask >> 30) & 0x3;
-            mask->dst_class_field   = (hw_mask >> 20) & 0x3FF;
-            mask->udf_class         = (hw_mask >> 16) & 0xF;
-            mask->intf_class_port   = (hw_mask >> 12) & 0xF;
-            mask->intf_class_l2     = (hw_mask >> 8) & 0xF;
-            mask->intf_class_vport  = (hw_mask >> 4) & 0xF;
-            mask->intf_class_l3     = hw_mask & 0xF;
+                mask->intf_class_l2     = (hw_mask >> 28) & 0xF;
+                mask->src_class_field   = (hw_mask >> 26) & 0x3;
+                mask->dst_class_field   = (hw_mask >> 16) & 0x3FF;
+                mask->udf_class         = (hw_mask >> 12) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 4) & 0xF;
+                mask->intf_class_l3     = hw_mask & 0xF;
+            } else {
+                data->src_class_field   = (hw_data >> 30) & 0x3;
+                data->dst_class_field   = (hw_data >> 20) & 0x3FF;
+                data->udf_class         = (hw_data >> 16) & 0xF;
+                data->intf_class_port   = (hw_data >> 12) & 0xF;
+                data->intf_class_l2     = (hw_data >> 8) & 0xF;
+                data->intf_class_vport  = (hw_data >> 4) & 0xF;
+                data->intf_class_l3     = hw_data & 0xF;
+
+                mask->src_class_field   = (hw_mask >> 30) & 0x3;
+                mask->dst_class_field   = (hw_mask >> 20) & 0x3FF;
+                mask->udf_class         = (hw_mask >> 16) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 12) & 0xF;
+                mask->intf_class_l2     = (hw_mask >> 8) & 0xF;
+                mask->intf_class_vport  = (hw_mask >> 4) & 0xF;
+                mask->intf_class_l3     = hw_mask & 0xF;
+            }
             break;
         case bcmFieldSrcClassModeBalanced:
-            data->dst_class_field   = (hw_data >> 24) & 0xFF;
-            data->udf_class         = (hw_data >> 20) & 0xF;
-            data->intf_class_port   = (hw_data >> 12) & 0xFF;
-            data->intf_class_l2     = (hw_data >> 8) & 0xF;
-            data->intf_class_vport  = (hw_data >> 4) & 0xF;
-            data->intf_class_l3     = hw_data & 0xF;
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                data->intf_class_l2     = (hw_data >> 28) & 0xF;
+                data->dst_class_field   = (hw_data >> 20) & 0xFF;
+                data->udf_class         = (hw_data >> 16) & 0xF;
+                data->intf_class_port   = (hw_data >> 4) & 0xFF;
+                data->intf_class_l3     = hw_data & 0xF;
 
-            mask->dst_class_field   = (hw_mask >> 24) & 0xFF;
-            mask->udf_class         = (hw_mask >> 20) & 0xF;
-            mask->intf_class_port   = (hw_mask >> 12) & 0xFF;
-            mask->intf_class_l2     = (hw_mask >> 8) & 0xF;
-            mask->intf_class_vport  = (hw_mask >> 4) & 0xF;
-            mask->intf_class_l3     = hw_mask & 0xF;
+                mask->intf_class_l2     = (hw_mask >> 28) & 0xF;
+                mask->dst_class_field   = (hw_mask >> 20) & 0xFF;
+                mask->udf_class         = (hw_mask >> 16) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 4) & 0xFF;
+                mask->intf_class_l3     = hw_mask & 0xF;
+            } else {
+                data->dst_class_field   = (hw_data >> 24) & 0xFF;
+                data->udf_class         = (hw_data >> 20) & 0xF;
+                data->intf_class_port   = (hw_data >> 12) & 0xFF;
+                data->intf_class_l2     = (hw_data >> 8) & 0xF;
+                data->intf_class_vport  = (hw_data >> 4) & 0xF;
+                data->intf_class_l3     = hw_data & 0xF;
+
+                mask->dst_class_field   = (hw_mask >> 24) & 0xFF;
+                mask->udf_class         = (hw_mask >> 20) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 12) & 0xFF;
+                mask->intf_class_l2     = (hw_mask >> 8) & 0xF;
+                mask->intf_class_vport  = (hw_mask >> 4) & 0xF;
+                mask->intf_class_l3     = hw_mask & 0xF;
+            }
             break;
         case bcmFieldSrcClassModeOverlayNetworks:
-            data->dst_class_field   = (hw_data >> 28) & 0xF;
-            data->intf_class_port   = (hw_data >> 24) & 0xF;
-            data->intf_class_l2     = (hw_data >> 16) & 0xFF;
-            data->intf_class_vport  = (hw_data >> 8) & 0xFF;
-            data->intf_class_l3     = hw_data & 0xFF;
+            if (soc_feature(unit, soc_feature_th3_style_fp)) {
+                data->intf_class_l2     = (hw_data >> 24) & 0xFF;
+                data->dst_class_field   = (hw_data >> 20) & 0xF;
+                data->intf_class_port   = (hw_data >> 8) & 0xF;
+                data->intf_class_l3     = hw_data & 0xFF;
 
-            mask->dst_class_field   = (hw_mask >> 28) & 0xF;
-            mask->intf_class_port   = (hw_mask >> 24) & 0xF;
-            mask->intf_class_l2     = (hw_mask >> 16) & 0xFF;
-            mask->intf_class_vport  = (hw_mask >> 8) & 0xFF;
-            mask->intf_class_l3     = hw_mask & 0xFF;
+                mask->intf_class_l2     = (hw_mask >> 24) & 0xFF;
+                mask->dst_class_field   = (hw_mask >> 20) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 8) & 0xF;
+                mask->intf_class_l3     = hw_mask & 0xFF;
+            } else {
+                data->dst_class_field   = (hw_data >> 28) & 0xF;
+                data->intf_class_port   = (hw_data >> 24) & 0xF;
+                data->intf_class_l2     = (hw_data >> 16) & 0xFF;
+                data->intf_class_vport  = (hw_data >> 8) & 0xFF;
+                data->intf_class_l3     = hw_data & 0xFF;
+
+                mask->dst_class_field   = (hw_mask >> 28) & 0xF;
+                mask->intf_class_port   = (hw_mask >> 24) & 0xF;
+                mask->intf_class_l2     = (hw_mask >> 16) & 0xFF;
+                mask->intf_class_vport  = (hw_mask >> 8) & 0xFF;
+                mask->intf_class_l3     = hw_mask & 0xFF;
+            }
             break;
         default:
             return (BCM_E_PARAM);
