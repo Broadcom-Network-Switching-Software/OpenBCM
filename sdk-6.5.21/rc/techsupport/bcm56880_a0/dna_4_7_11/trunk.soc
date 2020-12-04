@@ -1,0 +1,34 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport TRUNK RC (run commands) file
+#
+#       These are default commands that are for TechSupport TRUNK.
+#
+
+# Show S/W state in TRUNK.
+dump sw trunk
+
+# Show available TRUNK handles.
+trunk show
+
+# Show TRUNK related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show TRUNK related LTs.
+local lt ING_SYSTEM_PORT_TABLE;                                   $traverse_lt;
+local lt ING_L2_IIF_TABLE;                                        $traverse_lt;
+local lt ING_L2_IIF_ATTRIBUTES_TABLE;                             $traverse_lt;
+local lt L2_EIF_SYSTEM_DESTINATION;                               $traverse_lt;
+local lt TRUNK;                                                   $traverse_lt;
+local lt TRUNK_FAILOVER;                                          $traverse_lt;
+local lt PORT_SYSTEM_DESTINATION;                                 $traverse_lt;
+local lt TRUNK_SYSTEM;                                            $traverse_lt;
+local lt PORT_TRUNK;                                              $traverse_lt;
+local lt TRUNK_SYSTEM_FAILOVER;                                   $traverse_lt;
+local lt TRUNK_SYSTEM_FAILOVER_PORT;                              $traverse_lt;
+local lt EGR_L2_OIF;                                              $traverse_lt;
+
+

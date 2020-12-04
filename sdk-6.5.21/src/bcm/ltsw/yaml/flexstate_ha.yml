@@ -1,0 +1,235 @@
+#
+# file: flexstate_ha.yml
+# Flexstate YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    FS_MAX_OPOBJ:        (8)
+    FS_QUANT_RANGE_MAX:  (8)
+    FS_POOL_NONE:        (0x0)
+    FS_POOL_OUTPUT:      (0x1)
+    FS_POOL_HALF:        (0x2)
+    FS_ACTION_OBJ_COUNT: (4)
+    FS_VALUE_COUNT:      (6)
+    FS_OP_COUNT:         (7)
+    FS_BITWID:           (32)
+    FLEXSTATE_NUM_TBLS_MAX: (32)
+    FLEXSTATE_NUM_SECTION_MAX: (128)
+    FLEXSTATE_TBL_WORDS_NUM: ((FLEXSTATE_NUM_TBLS_MAX + FS_BITWID - 1)/FS_BITWID)
+    FLEXSTATE_SECTION_WORDS_NUM: ((FLEXSTATE_NUM_SECTION_MAX + FS_BITWID - 1)/FS_BITWID)
+    FS_ACTION_OPOBJ_COUNT: (FS_MAX_OPOBJ * FS_OP_COUNT)
+    BCMI_FLEXSTATE_GROUP_ACTION_SIZE: 4
+component:
+    bcmint_flexstate:
+        ltsw_flexstate_quant_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if quantization has been used.
+                used_for_32bit:
+                    type: bool
+                    comment: TRUE if quantization has been used for 32-bit mode.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                options:
+                    type: uint32_t
+                    comment: Options.
+                object:
+                    type: int
+                    comment: Quant object.
+                object_upper:
+                    type: int
+                    comment: Quant object for the upper 16 bits.
+                range_min:
+                    type: uint32_t
+                    length: FS_QUANT_RANGE_MAX
+                    comment: Quant min array.
+                range_max:
+                    type: uint32_t
+                    length: FS_QUANT_RANGE_MAX
+                    comment: Quant max array.
+                range_num:
+                    type: uint32_t
+                    comment: Quant range_num.
+        ltsw_flexstate_pool_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used_by_tbls:
+                    type: uint32_t
+                    length: FLEXSTATE_TBL_WORDS_NUM
+                    comment: Bitmap representing tables within the pool.
+                mode:
+                    type: int
+                    comment: Pool mode.
+                hint:
+                    type: int
+                    comment: Hint value.
+                used_count:
+                    type: uint32_t
+                    comment: Number of action is using this pool.
+                inuse_bitmap:
+                    type: uint32_t
+                    length: FLEXSTATE_SECTION_WORDS_NUM
+                    comment: Bitmap representing sections within the pool.
+        ltsw_flexstate_action_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if action has been used.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                group_action_id:
+                    type: uint32_t
+                    comment: Associated group action id.
+                grp_ref_count:
+                    type: int
+                    comment: Reference counter for group action.
+                options:
+                    type: uint32_t
+                    comment: Action options.
+                objects:
+                    type: int
+                    length: FS_ACTION_OBJ_COUNT
+                    comment: Action object array.
+                start_pool_idx:
+                    type: uint32_t
+                    comment: Allocated first counter pool.
+                end_pool_idx:
+                    type: uint32_t
+                    comment: Allocated last counter pool.
+                start_section_idx:
+                    type: uint32_t
+                    comment: Allocated first counter section.
+                end_section_idx:
+                    type: uint32_t
+                    comment: Allocated last counter section.
+                index_profile:
+                    type: uint32_t
+                    comment: Index operation profile id.
+                value_a_profile_comp:
+                    type: uint32_t
+                    comment: Value A comparison operation profile id.
+                value_a_profile:
+                    type: uint32_t
+                    comment: Value A true operation profile id.
+                value_a_profile_false:
+                    type: uint32_t
+                    comment: Value A false operation profile id.
+                value_b_profile_comp:
+                    type: uint32_t
+                    comment: Value B comparison operation profile id.
+                value_b_profile:
+                    type: uint32_t
+                    comment: Value B true operation profile id.
+                value_b_profile_false:
+                    type: uint32_t
+                    comment: Value B false operation profile id.
+                index_num:
+                    type: uint32_t
+                    comment: Stat counter number.
+                flags:
+                    type: uint32_t
+                    comment: Action flags.
+                source:
+                    type: int
+                    comment: Action source.
+                hint:
+                    type: int
+                    comment: Action hint.
+                drop_count_mode:
+                    type: int
+                    comment: Action drop count mode.
+                exception_drop_count_enable:
+                    type: int
+                    comment: Action exception drop count enable.
+                egress_mirror_count_enable:
+                    type: int
+                    comment: Action egress mirror count enable.
+                mode:
+                    type: int
+                    comment: Action mode.
+                object:
+                    type: int
+                    length: FS_ACTION_OPOBJ_COUNT
+                    comment: Action object array.
+                quant_id:
+                    type: uint32_t
+                    length: FS_ACTION_OPOBJ_COUNT
+                    comment: Action quantization array.
+                mask_size:
+                    type: uint32_t
+                    length: FS_ACTION_OPOBJ_COUNT
+                    comment: Action mask_size array.
+                shift:
+                    type: uint32_t
+                    length: FS_ACTION_OPOBJ_COUNT
+                    comment: Action shift array.
+                update_compare_a:
+                    type: int
+                    comment: Action update compare a.
+                update_compare_b:
+                    type: int
+                    comment: Action update compare b.
+                value_select:
+                    type: int
+                    length: FS_VALUE_COUNT
+                    comment: Action value select.
+                value_type:
+                    type: int
+                    length: FS_VALUE_COUNT
+                    comment: Action value type.
+                update_source_pool_a:
+                    type: int
+                    comment: Action update source a for pool.
+                update_source_bus_a:
+                    type: int
+                    comment: Action update source a for bus.
+                update_source_pool_b:
+                    type: int
+                    comment: Action update source b for pool.
+                update_source_bus_b:
+                    type: int
+                    comment: Action update source b for bus.
+        ltsw_flexstate_grp_action_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                used:
+                    type: bool
+                    comment: TRUE if action has been used.
+                ref_count:
+                    type: int
+                    comment: Reference counter.
+                parent_act_id:
+                    type: uint32_t
+                    comment: Parent action id.
+                options:
+                    type: uint32_t
+                    comment: Action options.
+                source:
+                    type: int
+                    comment: Group action source.
+                action_id:
+                    type: uint32_t
+                    length: BCMI_FLEXSTATE_GROUP_ACTION_SIZE
+                    comment: Group action action_id array.
+                action_num:
+                    type: uint32_t
+                    comment: Group action number.

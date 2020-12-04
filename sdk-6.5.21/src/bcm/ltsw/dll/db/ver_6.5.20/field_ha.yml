@@ -1,0 +1,451 @@
+#
+# file: field_ha.yml
+# TRUNK YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   BCMI_FP_GROUP_ID_MAX:   (0x00000FFF)
+   BCMI_FP_ENTRY_ID_MAX:   (0x000FFFFF)
+   BCMI_FP_PRESEL_ID_MAX:  (0x0000FFFF)
+   BCMI_FP_PRESEL_GID_MAX: (0x00000003)
+   BCMI_FP_BITWID: 32
+   BCMI_FIELD_HA_BLK_ID_ARRAY_SIZE: 8
+   BCMI_FIELD_HA_GID_BMP_SIZE:  (((BCMI_FP_GROUP_ID_MAX) + BCMI_FP_BITWID - 1) / BCMI_FP_BITWID)
+   BCMI_FIELD_HA_EID_BMP_SIZE:  (((BCMI_FP_ENTRY_ID_MAX) + BCMI_FP_BITWID - 1) / BCMI_FP_BITWID)
+   BCMI_FIELD_HA_PID_BMP_SIZE:  (((BCMI_FP_PRESEL_ID_MAX) + BCMI_FP_BITWID - 1) / BCMI_FP_BITWID)
+   BCMI_FIELD_HA_PGID_BMP_SIZE: (((BCMI_FP_PRESEL_GID_MAX) + BCMI_FP_BITWID - 1) / BCMI_FP_BITWID)
+   BCMI_FIELD_HA_QSET_MAX: 100
+   BCMI_FIELD_HA_ASET_MAX: 50
+   BCMI_FIELD_HA_PRESEL_MAX: 10
+   BCMI_FIELD_HA_ENT_ACTIONS_MAX: 50
+   BCMI_FIELD_HA_HINT_ID_BASE: 1
+   BCMI_FIELD_HA_HINT_ID_MAX: 256
+   BCMI_FIELD_HA_MAX_HINTS_PER_HINTID: 40
+
+component:
+    bcmi_field:
+       bcmi_field_ha_blk_type_t:
+           type: enum
+           fields:
+               BCMI_FIELD_HA_BLK_TYPE_ROOT: 1
+               BCMI_FIELD_HA_BLK_TYPE_IFP_PRESEL_INFO: 2
+               BCMI_FIELD_HA_BLK_TYPE_IFP_PRESEL_HASH: 3
+               BCMI_FIELD_HA_BLK_TYPE_IFP_PRESEL_OPER: 4
+               BCMI_FIELD_HA_BLK_TYPE_IFP_GROUP_INFO: 5
+               BCMI_FIELD_HA_BLK_TYPE_IFP_GROUP_HASH: 6
+               BCMI_FIELD_HA_BLK_TYPE_IFP_GROUP_OPER: 7
+               BCMI_FIELD_HA_BLK_TYPE_IFP_ENTRY_INFO: 8
+               BCMI_FIELD_HA_BLK_TYPE_IFP_ENTRY_HASH: 9
+               BCMI_FIELD_HA_BLK_TYPE_IFP_ENTRY_OPER: 10
+               BCMI_FIELD_HA_BLK_TYPE_IFP_SBR_OPER: 11
+               BCMI_FIELD_HA_BLK_TYPE_VFP_PRESEL_INFO: 12
+               BCMI_FIELD_HA_BLK_TYPE_VFP_PRESEL_HASH: 13
+               BCMI_FIELD_HA_BLK_TYPE_VFP_PRESEL_OPER: 14
+               BCMI_FIELD_HA_BLK_TYPE_VFP_GROUP_INFO: 15
+               BCMI_FIELD_HA_BLK_TYPE_VFP_GROUP_HASH: 16
+               BCMI_FIELD_HA_BLK_TYPE_VFP_GROUP_OPER: 17
+               BCMI_FIELD_HA_BLK_TYPE_VFP_ENTRY_INFO: 18
+               BCMI_FIELD_HA_BLK_TYPE_VFP_ENTRY_HASH: 19
+               BCMI_FIELD_HA_BLK_TYPE_VFP_ENTRY_OPER: 20
+               BCMI_FIELD_HA_BLK_TYPE_VFP_SBR_OPER: 21
+               BCMI_FIELD_HA_BLK_TYPE_EFP_PRESEL_INFO: 22
+               BCMI_FIELD_HA_BLK_TYPE_EFP_PRESEL_HASH: 23
+               BCMI_FIELD_HA_BLK_TYPE_EFP_PRESEL_OPER: 24
+               BCMI_FIELD_HA_BLK_TYPE_EFP_GROUP_INFO: 25
+               BCMI_FIELD_HA_BLK_TYPE_EFP_GROUP_HASH: 26
+               BCMI_FIELD_HA_BLK_TYPE_EFP_GROUP_OPER: 27
+               BCMI_FIELD_HA_BLK_TYPE_EFP_ENTRY_INFO: 28
+               BCMI_FIELD_HA_BLK_TYPE_EFP_ENTRY_HASH: 29
+               BCMI_FIELD_HA_BLK_TYPE_EFP_ENTRY_OPER: 30
+               BCMI_FIELD_HA_BLK_TYPE_EFP_SBR_OPER: 31
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_PRESEL_INFO: 32
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_PRESEL_HASH: 33
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_PRESEL_OPER: 34
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_GROUP_INFO: 35
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_GROUP_HASH: 36
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_GROUP_OPER: 37
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_ENTRY_INFO: 38
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_ENTRY_HASH: 39
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_ENTRY_OPER: 40
+               BCMI_FIELD_HA_BLK_TYPE_EMFP_SBR_OPER: 41
+               BCMI_FIELD_HA_BLK_TYPE_IFP_COLOR_TBL_INFO: 42
+               BCMI_FIELD_HA_BLK_TYPE_IFP_COLOR_TBL_PDD_INFO: 43
+               BCMI_FIELD_HA_BLK_TYPE_IFP_COLOR_TBL_SBR_INFO: 44
+               BCMI_FIELD_HA_BLK_TYPE_EFP_COLOR_TBL_INFO: 45
+               BCMI_FIELD_HA_BLK_TYPE_EFP_COLOR_TBL_PDD_INFO: 46
+               BCMI_FIELD_HA_BLK_TYPE_EFP_COLOR_TBL_SBR_INFO: 47
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_PRESEL_INFO: 48
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_PRESEL_HASH: 49
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_PRESEL_OPER: 50
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_GROUP_INFO: 51
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_GROUP_HASH: 52
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_GROUP_OPER: 53
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_ENTRY_INFO: 54
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_ENTRY_HASH: 55
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_ENTRY_OPER: 56
+               BCMI_FIELD_HA_BLK_TYPE_EMFT_SBR_OPER: 57
+               BCMI_FIELD_HA_BLK_TYPE_HINT_LIST: 58
+               BCMI_FIELD_HA_BLK_TYPE_HINT_ENTRY: 59
+               BCMI_FIELD_HA_BLK_TYPE_LAST_COUNT: 60
+       bcmi_field_ha_blk_id_bmp_t:
+           type: struct
+           fields:
+               w:
+                   type: uint32_t
+                   length: BCMI_FIELD_HA_BLK_ID_ARRAY_SIZE
+                   comment: HA Blk ID bitmap array.
+       bcmi_field_ha_root_blk_t:
+           type: struct
+           fields:
+               min_ha_blk_id:
+                   type: uint8_t
+                   comment: Minimum HA block id allowed.
+               max_ha_blk_id:
+                   type: uint8_t
+                   comment: Maximum HA block id allowed.
+               in_use_ha_blk_id_bmp:
+                   type: bcmi_field_ha_blk_id_bmp_t
+                   comment: HA - used blk ID bitmap.
+       bcmi_field_ha_blk_hdr_t:
+           type: struct
+           fields:
+               blk_size:
+                   type: uint32_t
+                   comment: HA block size
+               backup_blk_id:
+                   type: uint8_t
+                   comment:  Back up block ID.
+               free_blk_offset:
+                   type: uint32_t
+                   comment: Free HA element in this HA block. This is used to
+                        maintain list of free HA elements in this HA block.
+               free_ha_element_count:
+                   type: uint32_t
+                   comment: Number of free HA elements.
+               signature:
+                   type: uint32_t
+                   comment: Signature.
+               blk_type:
+                   type: bcmi_field_ha_blk_type_t
+                   comment: Block type
+       bcmi_field_ha_blk_info_t:
+           type: struct
+           fields:
+               blk_id:
+                   type: uint16_t
+                   comment: Unique Id assigned to HA block created by BCMFP.
+                         This will be same as sub component id used while
+                         creating the HA block using bcmi_field_ha_mem_alloc API.
+               blk_offset:
+                   type: uint32_t
+                   comment: Block info will be derived for a certain s/w state
+                         during run time. This block offset is the offset in
+                         the HA block of "blk_id". This is multiples of size
+                         of bcmi_field_ha_element_t.
+       bcmi_field_grpid_bmp_t:
+           type: struct
+           fields:
+               w:
+                  type: uint32_t
+                  length: BCMI_FIELD_HA_GID_BMP_SIZE
+                  comment: Group ID bitmap array.
+       bcmi_field_ha_group_info_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               grpid_bmp:
+                   type: bcmi_field_grpid_bmp_t
+                   comment: Bitmap of created field group IDs
+               last_allocated_gid:
+                   type: int
+                   comment: Value of last allocated group ID
+               last_allocated_prio:
+                   type: int
+                   comment: Value of last allocated priority
+               gid_max:
+                   type: int
+                   comment: Max Group ID
+               hash_size:
+                   type: int
+                   comment: Group Hash ID
+       bcmi_field_ha_group_oper_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               hintid:
+                   type: uint32_t
+                   comment: hint ID
+               group_id:
+                   type: int
+                   comment: group ID
+               group_flags:
+                   type: uint32_t
+                   comment: Group flags BCMINT_FIELD_GROUP_xx
+               priority:
+                   type: int
+                   comment: group Priority
+               group_mode:
+                   type: char
+                   length: 50
+                   comment: Group mode. To disable all entries in group, set
+                            the group_mode to None for that group. To enable
+                            all entries in group, set the group_mode to the
+                            required correct mode. Save this group mode
+                            information to enable/disable all entries in the
+                            group.
+               presel_group:
+                   type: int
+                   comment: Presel group ID
+               qual_cnt:
+                   type: uint16_t
+                   comment: Number of qualifiers in the qset_arr
+               qset_arr:
+                   type: uint16_t
+                   length: BCMI_FIELD_HA_QSET_MAX
+                   comment: Group's qualifiers set Array
+               action_cnt:
+                   type: uint16_t
+                   comment: Number of actions in the aset_arr
+               aset_arr:
+                   type: uint16_t
+                   length: BCMI_FIELD_HA_ASET_MAX
+                   comment: Group's Action set Array
+               def_action_cnt:
+                   type: uint16_t
+                   comment: Number of actions in the default entry aset_arr
+               def_aset_arr:
+                   type: uint16_t
+                   length: BCMI_FIELD_HA_ASET_MAX
+                   comment: Group's default Action set Array
+               presel_cnt:
+                   type: uint16_t
+                   comment: Number of presel indices in the presel_arr
+               presel_arr:
+                   type: uint16_t
+                   length: BCMI_FIELD_HA_PRESEL_MAX
+                   comment: Group's Presel set Array
+               strength_prof_id:
+                    type: int
+                    comment: Action based strength profile Index
+               color_pdd_id:
+                    type: int
+                    comment: Color table PDD profile index.
+               color_sbr_id:
+                    type: int
+                    comment: Color table SBR profile index.
+               policer_pool_id:
+                   type: int
+                   comment: Policer pool used by this group.
+               next:
+                   type: bcmi_field_ha_blk_info_t
+                   comment: Reference to next operational entry
+       bcmi_field_eid_bmp_t:
+           type: struct
+           fields:
+               w:
+                  type: uint32_t
+                  length: BCMI_FIELD_HA_EID_BMP_SIZE
+                  comment: Entry ID bitmap array.
+       bcmi_field_ha_entry_info_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               eid_bmp:
+                   type: bcmi_field_eid_bmp_t
+                   comment: Bitmap of created field entry IDs
+               last_allocated_eid:
+                   type: int
+                   comment: Value of last allocated entry ID
+               eid_max:
+                   type: int
+                   comment: Max Entry ID
+               hash_size:
+                   type: int
+                   comment: Entry Hash Size
+       bcmi_field_ha_profile_info_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               ref_count:
+                   type: uint32_t
+                   comment: Number of entries using this profile entry.
+       bcmi_field_ha_entry_oper_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               entry_id:
+                   type: int
+                   comment: Entry ID
+               entry_flags:
+                   type: uint32_t
+                   comment: Entry flags BCMINT_FIELD_ENTRY_xx
+               action_flags:
+                   type: uint32_t
+                   comment: Entry flags BCMINT_FIELD_ENTRY_ACTION_xx
+               group_id:
+                   type: int
+                   comment: group ID
+               priority:
+                   type: int
+                   comment: entry Priority
+               flexctr_action_id:
+                   type: int
+                   comment: Flex counter Action ID
+               counter_idx:
+                   type: int
+                   comment: Flex counter counter Index
+               g_counter_idx:
+                   type: int
+                   comment: Flex counter green counter Index
+               y_counter_idx:
+                   type: int
+                   comment: Flex counter yellow counter Index
+               r_counter_idx:
+                   type: int
+                   comment: Flex counter red counter Index
+               counter_color:
+                   type: int
+                   comment: Color based counters attached to the entry.
+               color_action_id:
+                   type: int
+                   comment: Color action table index used by this entry.
+               policer_id:
+                   type: int
+                   comment: Policer ID used by this entry.
+               qos_type:
+                   type: uint8_t
+                   comment: type of qos map for action dcspmapnew.
+               strength_idx:
+                    type: int
+                    comment: Entry based strength profile Index for non-color actions.
+               color_strength_idx:
+                    type: int
+                    comment: Entry based strength profile Index for color actions.
+               num_actions:
+                   type: uint8_t
+                   comment: Number of actions in the action_arr
+               action_arr:
+                   type: uint16_t
+                   length: BCMI_FIELD_HA_ENT_ACTIONS_MAX
+                   comment: Group's Action set Array
+               next:
+                   type: bcmi_field_ha_blk_info_t
+                   comment: Reference to next operational entry
+       bcmi_field_pgid_bmp_t:
+           type: struct
+           fields:
+               w:
+                  type: uint32_t
+                  length: BCMI_FIELD_HA_PGID_BMP_SIZE
+                  comment: Presel Group ID bitmap array.
+       bcmi_field_pid_bmp_t:
+           type: struct
+           fields:
+               w:
+                  type: uint32_t
+                  length: BCMI_FIELD_HA_PID_BMP_SIZE
+                  comment: Presel ID bitmap array.
+       bcmi_field_ha_presel_info_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               pgid_bmp:
+                   type: bcmi_field_pgid_bmp_t
+                   comment: Bitmap of created field presel GIDs
+               pid_bmp:
+                   type: bcmi_field_pid_bmp_t
+                   comment: Bitmap of created field presel IDs
+               pid_max:
+                   type: int
+                   comment: Max Presel ID
+               hash_size:
+                   type: int
+                   comment: Presel Entry Hash Size
+               gid_max:
+                   type: int
+                   comment: Max Presel Group ID
+               last_allocated_pid:
+                   type: int
+                   comment: Value of last allocated presel ID
+               last_allocated_pgid:
+                   type: int
+                   comment: Value of last allocated presel Group ID
+       bcmi_field_ha_presel_oper_t:
+           type: struct
+           attrib:
+               version: 1
+           fields:
+               presel_entry_id:
+                   type: int
+                   comment: Presel Entry ID
+               group_id:
+                   type: int
+                   comment: group ID
+               priority:
+                   type: int
+                   comment: Presel Entry Priority
+               next:
+                   type: bcmi_field_ha_blk_info_t
+                   comment: Reference to next operational entry
+       bcmi_field_ha_hint_entry_t:
+           type: struct
+           fields:
+               hint_type:
+                   type: uint16_t
+                   comment: Type of field hint
+               qual:
+                   type: uint16_t
+                   comment: Field qualifier bcmFieldQualifyXXX
+               max_values:
+                   type: uint32_t
+                   comment: Width of the compression output.
+               start_bit:
+                   type: uint32_t
+                   comment: Start bit of a mask for the qualifier.
+               end_bit:
+                   type: uint32_t
+                   comment: End bit of a mask for the qualifier.
+               flags:
+                   type: uint32_t
+                   comment: Flags
+               max_group_size:
+                   type: uint32_t
+                   comment: Max size of the group
+               udf_id:
+                   type: int
+                   comment: UDF ID
+               value:
+                   type: int
+                   comment: Value to be set for hint type.
+               next:
+                   type: bcmi_field_ha_blk_info_t
+                   comment: Reference to next operational entry
+       bcmi_field_ha_hints_t:
+           type: struct
+           fields:
+               hintid:
+                   type: uint32_t
+                   comment: Hint ID
+               hints:
+                   type: bcmi_field_ha_blk_info_t
+                   comment: List of hints linked to hintid
+               grp_ref_count:
+                   type: uint16_t
+                   comment: Count of groups linked to a hintid
+               hint_count:
+                   type: uint16_t
+                   comment: Count of hints linked to a hintid
+
+

@@ -1,0 +1,336 @@
+BCM.0> cint th4_hsdk_l3_uc_ipv4_route_full_data_mode.c
+Ingress_port_multi_setup port: 1 setup
+Egress_port_multi_setup port: 2 setup
+
+Completed test setup successfully.
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.0/24      100001 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1     2            0     0   underlay   no
+
+Sending 8 unicast packets to ingress port 1
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: Total 5
+[bcmPWN.0]Packet[5]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[5]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: Total 6
+[bcmPWN.0]Packet[6]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[6]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[6]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: Total 7
+[bcmPWN.0]Packet[7]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[7]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[7]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: Total 8
+[bcmPWN.0]Packet[8]: data[0000]: {000000000002} {000000000001} 8100 0002
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 002a 0000 0000 40ff a3e5 0a0a
+[bcmPWN.0]Packet[8]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[8]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+
+[RX metadata information]
+        MATCHED_RULE=2
+        PKT_LENGTH=0x44
+        SRC_PORT_NUM=1
+        OUTER_VID=2
+        TIMESTAMP_TYPE=3
+        SWITCH=1
+        ING_TAG_TYPE=1
+        RX_BFD_START_OFFSET=4
+        RX_BFD_SESSION_INDEX=0x64
+        I2E_CLASSID=0x64
+        ING_L3_INTF=0x64
+        ING_L3_INTF_VALID=1
+[Higig2 fields]
+        START=0xfb
+        SRC_PORT=1
+        CC=1
+        PPD_TYPE=0
+        PPD0_INGRESS_TAGGED=1
+        PPD0_VC_LABEL=2
+        PPD0_REP_ID=2
+        PPD0_VID_LOW=2
+        PPD0_OPCODE=1
+[RX reasons]
+        CPU_FFP
+
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<64> > chk-sum<0xa3e5>
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.0/24      100001 0    1
+
+Routed : 8 packets / 544 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

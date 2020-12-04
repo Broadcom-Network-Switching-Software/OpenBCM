@@ -1,0 +1,157 @@
+# $Id: Make.tools,v 1.17 2011/09/06 21:30:36 yshtil Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# Customize the location of your local tools below.
+# Several standard flavors are auto-selected based on uname -s
+# output.  If the SYSNAME environment variable is set, that overrides
+# calling uname.  There are also a couple of Windows flavors that are
+# selected by setting the HOSTTYPE environment variable.  These should
+# convert to using SYSNAME when I can test them...
+# HOSTTYPE is still set because it is used in various Makefiles in the tree
+
+SYSOK	= 0
+ifneq "$(SYSNAME)" ""
+SYSOK	= 1		# already set from environment
+endif
+
+# non-unix types first
+ifeq "$(SYSOK)" "0"
+ifeq "$(HOSTTYPE)" "Windows2000PC"
+SYSOK	= 1
+#MAKE	= make
+HCC ?= cl
+SED	= SED_NOT_DEFINED
+COMPRESS = COMPRESS_NOT_DEFINED
+GZIP = GZIP_NOT_DEFINED
+LZMA = LZMA_NOT_DEFINED
+TOUCH   = TOUCH_NOT_DEFINED
+
+export PERL_BASE ?= c:/Perl/
+ifneq "$(PERL_BASE)" ""
+PERL = $(PERL_BASE)/bin/perl
+else
+PERL	= perl
+endif
+endif
+endif
+
+# unix or unix-type type hosts
+ifeq "$(SYSOK)" "0"
+SYSNAME	:= $(shell uname -s)
+ifeq "$(SYSNAME)" "Linux"
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /bin/sed
+COMPRESS = /usr/bin/compress
+GZIP = /usr/bin/gzip
+LZMA = /projects/ntsw-tools/tools/bin/7za
+TEST	= /usr/bin/test
+PERL	= $(shell which perl)
+LN	= /bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= i386-linux
+endif
+ifeq "$(SYSNAME)" "SunOS"
+SYSOK	= 1
+HCC ?= /tools/bin/gcc
+SED	= /usr/ucb/sed
+COMPRESS = /bin/compress
+GZIP = /usr/bin/gzip
+LZMA = LZMA_NOT_DEFINED
+TEST	= /bin/test
+PERL	= $(shell which perl)
+LN	= /usr/bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= sun4
+endif
+ifeq "$(SYSNAME)" "NetBSD"
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /usr/bin/sed
+COMPRESS = /usr/bin/compress
+GZIP = /usr/bin/gzip
+LZMA = LZMA_NOT_DEFINED
+PERL	= /usr/pkg/bin/perl
+LN	= /bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= i386-linux
+endif
+ifneq "$(findstring CYGWIN,$(SYSNAME))" ""
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /usr/bin/sed
+COMPRESS = COMPRESS_NOT_DEFINED
+GZIP = GZIP_NOT_DEFINED
+LZMA = LZMA_NOT_DEFINED
+PERL	= /usr/bin/perl
+LN	= /bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= Windows_Cygnus
+export HOSTTYPE		# systems makefiles need this
+endif
+ifeq "$(SYSNAME)" "Darwin"
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /usr/bin/sed
+COMPRESS = /usr/bin/compress
+GZIP = /usr/bin/gzip
+LZMA = LZMA_NOT_DEFINED
+TEST	= /bin/test
+PERL	= $(shell which perl)
+LN	= /bin/ln
+TOUCH   = /usr/bin/touch
+HOSTTYPE= i386-linux
+endif
+endif
+
+
+#
+# Platform Independent
+#
+ifeq "$(HOSTTYPE)" "Windows2000PC"
+MKTOOL	=	$(PERL) ${SDK}/tools/mktool.pl
+BCM2C	=	$(PERL) ${SDK}/tools/bcm2c.pl
+MKVERS	=	$(PERL) ${SDK}/tools/version.pl
+RM	=	rm -f
+CP	=	cp
+#MKDIR	=	mkdir -p
+MKDIR	=	c:/windriver/workbench-3.0/x86-win32/bin/mkdir -p
+FOREACH	=	$(MKTOOL) -foreach
+MAKEDEP	=	echo
+ECHO	=	echo
+#TOUCH	=	touch
+TOUCH	=	c:/windriver/workbench-3.0/x86-win32/bin/touch
+MKBEEP	=	$(MKTOOL) -beep
+else
+MKTOOL	=	$(PERL) ${SDK}/tools/mktool.pl
+BCM2C	=	$(PERL) ${SDK}/tools/bcm2c.pl
+MKVERS	=	$(PERL) ${SDK}/tools/version.pl
+RM	=	/bin/rm -rf
+CP	=	/bin/cp
+MKDIR	=	/bin/mkdir -p
+FOREACH	=	$(MKTOOL) -foreach
+MAKEDEP =	/bin/echo
+ECHO	=	/bin/echo
+MKBEEP	=	$(MKTOOL) -beep
+endif
+
+#
+# You may override any of the previous decisions and assignments
+# determined above by providing your own makefile to be 
+# included here. Just set MAKE_TOOLS_LOCAL to the path to your makefile. 
+#
+# Don't forget to set SYSOK=1 in your local makefile if you are 
+# providing a brand new
+# environment. 
+#
+
+ifdef MAKE_TOOLS_LOCAL
+include        ${MAKE_TOOLS_LOCAL}
+endif
+
+
+ifeq "$(SYSOK)" "0"
+$(error Cannot figure out system type)
+endif

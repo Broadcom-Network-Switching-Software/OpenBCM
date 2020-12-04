@@ -1,0 +1,849 @@
+#
+# $Id: combo28_dram.soc,v 1.0 2014/04/28 15:50:00 nhefetz Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+#################### General Notes ########################
+# @@@@@ IMPORTANT! @@@@@
+# This file is no longer maintained or updated.
+# Please refer to docSafe zip file titled "DNX28 DDR4 and GDDR5 Timing Parameters" for updated and for new devices timing parameters.
+# @@@@@@@@@@@@@@@@@@@@@@
+#
+# Our controller support both DDR4 and GDDR5, we need to "modify" ext_ram_columns in the following way:
+#   For DDR4, need to use column number as in DRAM Data Sheet, meaning 1024 in drams supported.
+#   For GDDR5, need to multiply number in Data Sheet by 8 (representing the 3 address bits, which are constant 000 in DDR4.), meaning 512 in drams supported.
+
+
+if $?dram_type_DDR4_SAMSUNG_K4A4G165WD_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=45320;\
+  config add ext_ram_t_rcd_wr.BCM88650=13320;\
+  config add ext_ram_t_rcd_rd.BCM88650=13320;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=7c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=13320;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=10c;\
+  config add ext_ram_t_rtp_l.BCM88650=10c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\\
+  config add ext_ram_t_ccd_l.BCM88650=6c;\\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=12c;\
+  config add ext_ram_c_cas_latency.BCM88650=17c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024; \
+  config add ext_ram_rows.BCM88650=32768; \
+  config add ext_ram_banks.BCM88650=8;"
+
+if $?dram_type_DDR4_MICRON_EDY4016AABG_DRFR_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=45320;\
+  config add ext_ram_t_rcd_wr.BCM88650=13320;\
+  config add ext_ram_t_rcd_rd.BCM88650=13320;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=7c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=13320;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=10c;\
+  config add ext_ram_t_rtp_l.BCM88650=10c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\\
+  config add ext_ram_t_ccd_l.BCM88650=6c;\\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=12c;\
+  config add ext_ram_c_cas_latency.BCM88650=16c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024; \
+  config add ext_ram_rows.BCM88650=32768; \
+  config add ext_ram_banks.BCM88650=8;"
+
+########################################################################
+# Note: Not for new design not recommended to be used and not supported
+########################################################################
+if $?dram_type_DDR4_MICRON_MT40A256M16HA_083EA_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=47000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=15000;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=15000;\
+  config add ext_ram_t_wr.BCM88650=14900;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=170c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=18c;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024; \
+  config add ext_ram_rows.BCM88650=32768; \
+  config add ext_ram_banks.BCM88650=8;"
+
+########################################################################
+# Note: Not for new design not recommended to be used and not supported
+########################################################################
+if $?dram_type_DDR4_MICRON_MT40A512M16_8GBIT "\
+    config add ext_ram_type.BCM88650=DDR4; \
+    config add ext_ram_t_rfc.BCM88650=350000;\
+    config add ext_ram_t_rc.BCM88650=45320;\
+    config add ext_ram_t_rcd_wr.BCM88650=13320;\
+    config add ext_ram_t_rcd_rd.BCM88650=13320;\
+    config add ext_ram_t_rrd_l.BCM88650=8c;\
+    config add ext_ram_t_rrd_s.BCM88650=7c;\
+    config add ext_ram_t_ras.BCM88650=32000;\
+    config add ext_ram_t_wr.BCM88650=15000;\
+    config add ext_ram_t_faw.BCM88650=30000;\
+    config add ext_ram_t_rtp_s.BCM88650=10c;\
+    config add ext_ram_t_rtp_l.BCM88650=10c;\
+    config add ext_ram_t_wtr_s.BCM88650=4c;\\
+    config add ext_ram_t_wtr_l.BCM88650=10c;\
+    config add ext_ram_t_ccd_l.BCM88650=8c;\
+    config add ext_ram_t_ccd_s.BCM88650=4c;\
+    config add ext_ram_t_zqcs.BCM88650=128c;\
+    config add ext_ram_t_crc_alert.BCM88650=13000;\
+    config add ext_ram_t_rst.BCM88650=500000000;\
+    config add ext_ram_t_ref.BCM88650=3900000;\
+    config add ext_ram_c_wr_latency.BCM88650=12c;\
+    config add ext_ram_c_cas_latency.BCM88650=16c;\
+    config add ext_ram_t_al.BCM88650=0;\
+    config add ext_ram_columns.BCM88650=1024; \
+    config add ext_ram_rows.BCM88650=65536; \
+    config add ext_ram_t_rp.BCM88650=13320;\
+    config add ext_ram_banks.BCM88650=8;"
+
+if $?dram_type_DDR4_HYNIX_H5AN4G6NMFR_VJC_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=45320;\
+  config add ext_ram_t_rcd_wr.BCM88650=13320;\
+  config add ext_ram_t_rcd_rd.BCM88650=13320;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=4c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=13320;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=7500;\
+  config add ext_ram_t_rtp_l.BCM88650=7500;\
+  config add ext_ram_t_wtr_s.BCM88650=2500;\
+  config add ext_ram_t_wtr_l.BCM88650=7500;\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=12c;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=16c;\
+  config add ext_ram_c_cas_latency.BCM88650=20c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024; \
+  config add ext_ram_rows.BCM88650=32768; \
+  config add ext_ram_banks.BCM88650=8;"
+
+if $?dram_type_DDR4_MICRON_Y4016AABG_JD_F_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=47000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=15000;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=15000;\
+  config add ext_ram_t_wr.BCM88650=14900;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=170c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=16c;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024; \
+  config add ext_ram_rows.BCM88650=32768; \
+  config add ext_ram_banks.BCM88650=8;"
+
+if $?dram_type_GDDR5_SAMSUNG_K4G20325FD_2GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5; \
+  config add ext_ram_t_rfc.BCM88650=78000;\
+  config add ext_ram_t_rc.BCM88650=48000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=16000;\
+  config add ext_ram_t_rrd_l.BCM88650=6000;\
+  config add ext_ram_t_rrd_s.BCM88650=6000;\
+  config add ext_ram_t_ras.BCM88650=34000;\
+  config add ext_ram_t_rp.BCM88650=14000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=24000;\
+  config add ext_ram_t_32aw.BCM88650=192000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=4c;\
+  config add ext_ram_t_wtr_s.BCM88650=8c;\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\
+  config add ext_ram_t_ccd_l.BCM88650=3c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=3c;\
+  config add ext_ram_c_cas_latency.BCM88650=20c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=512; \
+  config add ext_ram_rows.BCM88650=8192; \
+  config add ext_ram_banks.BCM88650=16;"
+
+########################################################################
+# Note: Not for new design not recommended to be used and not supported
+########################################################################
+if $?dram_type_GDDR5_SAMSUNG_K4G41325FC_4GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5; \
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=48000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=16000;\
+  config add ext_ram_t_rrd_l.BCM88650=6000;\
+  config add ext_ram_t_rrd_s.BCM88650=6000;\
+  config add ext_ram_t_ras.BCM88650=34000;\
+  config add ext_ram_t_rp.BCM88650=14000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=24000;\
+  config add ext_ram_t_32aw.BCM88650=192000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=4c;\
+  config add ext_ram_t_wtr_s.BCM88650=8c;\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\
+  config add ext_ram_t_ccd_l.BCM88650=3c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=3c;\
+  config add ext_ram_c_cas_latency.BCM88650=20c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=512; \
+  config add ext_ram_rows.BCM88650=16384; \
+  config add ext_ram_banks.BCM88650=16;"
+
+#if $?dram_type_GDDR5_HYNIX_H5GQ2H24AFR_R0C_2GBIT "\
+#  config add ext_ram_type.BCM88650=GDDR5; \
+#  config add ext_ram_t_rfc.BCM88650=120000;\
+#  config add ext_ram_t_rc.BCM88650=48000;\
+#  config add ext_ram_t_rcd_wr.BCM88650=14000;\
+#  config add ext_ram_t_rcd_rd.BCM88650=18000;\
+#  config add ext_ram_t_rrd_l.BCM88650=9c;\
+#  config add ext_ram_t_rrd_s.BCM88650=9c;\
+#  config add ext_ram_t_ras.BCM88650=32000;\
+#  config add ext_ram_t_rp.BCM88650=16000;\
+#  config add ext_ram_t_wr.BCM88650=16000;\
+#  config add ext_ram_t_faw.BCM88650=30000;\
+#  config add ext_ram_t_32aw.BCM88650=245000;\
+#  config add ext_ram_t_rtp_s.BCM88650=2c;\
+#  config add ext_ram_t_rtp_l.BCM88650=2c;\
+#  config add ext_ram_t_wtr_s.BCM88650=8c;\
+#  config add ext_ram_t_wtr_l.BCM88650=8c;\
+#  config add ext_ram_t_ccd_l.BCM88650=3c;\
+#  config add ext_ram_t_ccd_s.BCM88650=2c;\
+#  config add ext_ram_t_ref.BCM88650=3900000;\
+#  config add ext_ram_c_wr_latency.BCM88650=3c;\
+#  config add ext_ram_c_cas_latency.BCM88650=16c;\
+#  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+#  config add ext_ram_t_crc_wr_latency.BCM88650=11c;\
+#  config add ext_ram_t_rst.BCM88650=200000000;\
+#  config add ext_ram_t_al.BCM88650=1c;\
+#  config add ext_ram_columns.BCM88650=512; \
+#  config add ext_ram_rows.BCM88650=8192; \
+#  config add ext_ram_banks.BCM88650=16;"
+#
+
+###################################################
+#     ELPIDA GDDR5
+###################################################
+
+########################################################################
+# Note: dram_type_GDDR5_MICRON_EDW4032CABG_4GBIT is deprecated and maintained
+# for legacy only, recommended values are in dram_type_GDDR5_MICRON_EDW4032CABG_4GBIT_V1
+########################################################################
+if $?dram_type_GDDR5_MICRON_EDW4032CABG_4GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5; \
+  config add ext_ram_t_rfc.BCM88650=90000;\
+  config add ext_ram_t_rc.BCM88650=44000;\
+  config add ext_ram_t_rcd_wr.BCM88650=13000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=5000;\
+  config add ext_ram_t_rrd_s.BCM88650=5000;\
+  config add ext_ram_t_ras.BCM88650=27000;\
+  config add ext_ram_t_rp.BCM88650=17000;\
+  config add ext_ram_t_wr.BCM88650=18000;\
+  config add ext_ram_t_faw.BCM88650=20000;\
+  config add ext_ram_t_32aw.BCM88650=160000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=7c;\
+  config add ext_ram_t_wtr_l.BCM88650=7c;\
+  config add ext_ram_t_ccd_l.BCM88650=3c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=4c;\
+  config add ext_ram_c_cas_latency.BCM88650=18c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=11c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=2c;\
+  config add ext_ram_columns.BCM88650=512; \
+  config add ext_ram_rows.BCM88650=16384; \
+  config add ext_ram_banks.BCM88650=16;"
+
+if $?dram_type_GDDR5_MICRON_EDW4032CABG_4GBIT_V1 "\
+  config add ext_ram_type.BCM88650=GDDR5; \
+  config add ext_ram_t_rfc.BCM88650=90000;\
+  config add ext_ram_t_rc.BCM88650=44000;\
+  config add ext_ram_t_rcd_wr.BCM88650=10000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=5000;\
+  config add ext_ram_t_rrd_s.BCM88650=5000;\
+  config add ext_ram_t_ras.BCM88650=27000;\
+  config add ext_ram_t_rp.BCM88650=17000;\
+  config add ext_ram_t_wr.BCM88650=18000;\
+  config add ext_ram_t_faw.BCM88650=20000;\
+  config add ext_ram_t_32aw.BCM88650=160000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_l.BCM88650=2c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=6c;\
+  config add ext_ram_c_cas_latency.BCM88650=16c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=11c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=2c;\
+  config add ext_ram_columns.BCM88650=512; \
+  config add ext_ram_rows.BCM88650=16384; \
+  config add ext_ram_banks.BCM88650=16;"
+
+if $?dram_type_GDDR5_HYNIX_H5GC4H24MFR_T2C_4GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5; \
+  config add ext_ram_t_rfc.BCM88650=120000;\
+  config add ext_ram_t_rc.BCM88650=48000;\
+  config add ext_ram_t_rcd_wr.BCM88650=14000;\
+  config add ext_ram_t_rcd_rd.BCM88650=18000;\
+  config add ext_ram_t_rrd_l.BCM88650=9c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=16000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_32aw.BCM88650=245000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=8c;\
+  config add ext_ram_t_wtr_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_l.BCM88650=3c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=4c;\
+  config add ext_ram_c_cas_latency.BCM88650=18c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=13c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=512; \
+  config add ext_ram_rows.BCM88650=16384; \
+  config add ext_ram_banks.BCM88650=16;"
+
+###############################################################################################
+# Note: For extended devices for example Micron dram_type_DDR4_MICRON_MT40A256M16HA_083E
+#       please use none extended parameters for example dram_type_DDR4_MICRON_MT40A256M16HA_083
+###############################################################################################
+if $?dram_type_DDR4_MICRON_MT40A256M16HA_083_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4;\
+  config add ext_ram_freq.BCM88650=1200;\
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=46160;\
+  config add ext_ram_t_rcd_wr.BCM88650=14160;\
+  config add ext_ram_t_rcd_rd.BCM88650=14160;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=7c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=14160;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=10c;\
+  config add ext_ram_t_rtp_l.BCM88650=10c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\
+  config add ext_ram_t_ccd_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=12c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=32768;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=5;\
+  config add ext_ram_c_cas_latency.BCM88650=17c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_MICRON_MT40A256M16HA_083_4GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=20c;"
+
+if $?dram_type_DDR4_MICRON_MT40A512M16HA_083_8GBIT "\
+  config add ext_ram_type.BCM88650=DDR4;\
+  config add ext_ram_freq.BCM88650=1200;\
+  config add ext_ram_t_rfc.BCM88650=350000;\
+  config add ext_ram_t_rc.BCM88650=46160;\
+  config add ext_ram_t_rcd_wr.BCM88650=14160;\
+  config add ext_ram_t_rcd_rd.BCM88650=14160;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=7c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=14160;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=10c;\
+  config add ext_ram_t_rtp_l.BCM88650=10c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\
+  config add ext_ram_t_ccd_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=12c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=65536;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=5;\
+  config add ext_ram_c_cas_latency.BCM88650=17c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_MICRON_MT40A512M16HA_083_8GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=20c;"
+
+if $?dram_type_DDR4_MICRON_MT40A256M16GE_062_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4;\
+  config add ext_ram_freq.BCM88650=1600;\
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=47000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=15000;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=15000;\
+  config add ext_ram_t_wr.BCM88650=14900;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=170c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=16c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=32768;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=8;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_MICRON_MT40A256M16GE_062_4GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=28c;"
+
+if $?dram_type_DDR4_SAMSUNG_K4A4G165WE_4GBIT "\
+  config add ext_ram_type.BCM88650=DDR4;\
+  config add ext_ram_freq.BCM88650=1200;\
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=46160;\
+  config add ext_ram_t_rcd_wr.BCM88650=14160;\
+  config add ext_ram_t_rcd_rd.BCM88650=14160;\
+  config add ext_ram_t_rrd_l.BCM88650=8c;\
+  config add ext_ram_t_rrd_s.BCM88650=7c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=14160;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=10c;\
+  config add ext_ram_t_rtp_l.BCM88650=10c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=10c;\
+  config add ext_ram_t_ccd_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=500000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=12c ;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=32768;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=5;\
+  config add ext_ram_c_cas_latency.BCM88650=17c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_SAMSUNG_K4A4G165WE_4GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=20c;"
+
+if $?dram_type_GDDR5_MICRON_MT51K256M32HF_50_8GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=44000;\
+  config add ext_ram_t_rcd_wr.BCM88650=12000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=5000;\
+  config add ext_ram_t_rrd_s.BCM88650=5000;\
+  config add ext_ram_t_ras.BCM88650=27000;\
+  config add ext_ram_t_rp.BCM88650=17000;\
+  config add ext_ram_t_wr.BCM88650=18000;\
+  config add ext_ram_t_faw.BCM88650=20000;\
+  config add ext_ram_t_32aw.BCM88650=160000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_l.BCM88650=2c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=4c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=11c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=2c;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add ext_ram_c_cas_latency.BCM88650=16c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_GDDR5_MICRON_MT51K256M32HF_50_8GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=16c;"
+
+########################################################################
+# Note: dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT is deprecated and maintained
+# for legacy only, recommended values are in dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT_V1
+########################################################################
+if $?dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=48000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=16000;\
+  config add ext_ram_t_rrd_l.BCM88650=6000;\
+  config add ext_ram_t_rrd_s.BCM88650=6000;\
+  config add ext_ram_t_ras.BCM88650=34000;\
+  config add ext_ram_t_rp.BCM88650=14000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=24000;\
+  config add ext_ram_t_32aw.BCM88650=192000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=4c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_l.BCM88650=3c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=512;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add ext_ram_c_cas_latency.BCM88650=18c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=19c;"
+
+if $?dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT_V1 "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=48000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=16000;\
+  config add ext_ram_t_rrd_l.BCM88650=6000;\
+  config add ext_ram_t_rrd_s.BCM88650=6000;\
+  config add ext_ram_t_ras.BCM88650=34000;\
+  config add ext_ram_t_rp.BCM88650=14000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=24000;\
+  config add ext_ram_t_32aw.BCM88650=192000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=4c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_l.BCM88650=2c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=6c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=512;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add ext_ram_c_cas_latency.BCM88650=18c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_GDDR5_SAMSUNG_K4G41325FE_HC28_4GBIT_V1 "\
+  config add ext_ram_c_cas_latency.BCM88650=19c;"
+
+###############################################################################################
+# Note: For extended devices for example Micron DDR4 MT40A256M16-062E use -62 instead
+###############################################################################################
+if $?dram_type_DDR4_MICRON_MT40A512M16LY_062_8GBIT_1V1 "\
+  config add ext_ram_type.BCM88650=DDR4;\
+  config add ext_ram_freq.BCM88650=1600;\
+  config add ext_ram_t_rfc.BCM88650=350000;\
+  config add ext_ram_t_rc.BCM88650=47000;\
+  config add ext_ram_t_rcd_wr.BCM88650=15000;\
+  config add ext_ram_t_rcd_rd.BCM88650=15000;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=15000;\
+  config add ext_ram_t_wr.BCM88650=15000;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=20c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=65536;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=6;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_MICRON_MT40A512M16LY_062_8GBIT_1V1 "\
+  config add ext_ram_c_cas_latency.BCM88650=28c;"
+
+if $?dram_type_DDR4_SAMSUNG_K4A4G165WE_BIWE_BCWE_4GBIT_1V1 "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_freq.BCM88650=1600;\
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=45750;\
+  config add ext_ram_t_rcd_wr.BCM88650=13750;\
+  config add ext_ram_t_rcd_rd.BCM88650=13750;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=13750;\
+  config add ext_ram_t_wr.BCM88650=14900;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=16c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=32768;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=6;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;"
+expr $ext_ram_read_dbi+0 == 1
+if $? && $?dram_type_DDR4_SAMSUNG_K4A4G165WE_BIWE_BCWE_4GBIT_1V1 "\
+  config add ext_ram_c_cas_latency.BCM88650=28c;"
+
+if $?dram_type_DDR4_HYNIX_H5AN4G6NBJR_XNI_4GBIT_1V4 "\
+  config add ext_ram_type.BCM88650=DDR4; \
+  config add ext_ram_freq.BCM88650=1600;\
+  config add ext_ram_t_rfc.BCM88650=260000;\
+  config add ext_ram_t_rc.BCM88650=45750;\
+  config add ext_ram_t_rcd_wr.BCM88650=13750;\
+  config add ext_ram_t_rcd_rd.BCM88650=13750;\
+  config add ext_ram_t_rrd_l.BCM88650=11c;\
+  config add ext_ram_t_rrd_s.BCM88650=9c;\
+  config add ext_ram_t_ras.BCM88650=32000;\
+  config add ext_ram_t_rp.BCM88650=13750;\
+  config add ext_ram_t_wr.BCM88650=14900;\
+  config add ext_ram_t_faw.BCM88650=30000;\
+  config add ext_ram_t_rtp_s.BCM88650=12c;\
+  config add ext_ram_t_rtp_l.BCM88650=12c;\
+  config add ext_ram_t_wtr_s.BCM88650=4c;\
+  config add ext_ram_t_wtr_l.BCM88650=12c;\
+  config add ext_ram_t_ccd_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_s.BCM88650=4c;\
+  config add ext_ram_t_zqcs.BCM88650=128c;\
+  config add ext_ram_t_crc_alert.BCM88650=13000;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_ref.BCM88650=3900000;\
+  config add ext_ram_c_wr_latency.BCM88650=16c;\
+  config add ext_ram_t_al.BCM88650=0;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=32768;\
+  config add ext_ram_banks.BCM88650=8;\
+  config delete ext_ram_cmd_par_latency*;\
+  config add ext_ram_cmd_par_latency.BCM88650=6;\
+  config add ext_ram_c_cas_latency.BCM88650=24c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_DDR4_HYNIX_H5AN4G6NBJR_XNI_4GBIT_1V4 "\
+  config add ext_ram_c_cas_latency.BCM88650=28c;"
+
+if $?dram_type_GDDR5_MICRON_MT51K128M32HF60_4GBIT_1V2 "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=90000;\
+  config add ext_ram_t_rc.BCM88650=44000;\
+  config add ext_ram_t_rcd_wr.BCM88650=9000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=5000;\
+  config add ext_ram_t_rrd_s.BCM88650=5000;\
+  config add ext_ram_t_ras.BCM88650=27000;\
+  config add ext_ram_t_rp.BCM88650=17000;\
+  config add ext_ram_t_wr.BCM88650=18000;\
+  config add ext_ram_t_faw.BCM88650=20000;\
+  config add ext_ram_t_32aw.BCM88650=160000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_l.BCM88650=2c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=7c;\
+  config add ext_ram_c_cas_latency.BCM88650=14c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=2c;\
+  config add ext_ram_columns.BCM88650=512;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add dram_auto_calibration_update_enable.BCM88650=0;\
+  config add ext_ram_t_ras_enable.BCM88650=1;\
+  config add ext_ram_freq.BCM88650=2000;"
+
+if $?dram_type_GDDR5_MICRON_MT51K256M32HF60_8GBIT_1V0 "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=44000;\
+  config add ext_ram_t_rcd_wr.BCM88650=9000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=5000;\
+  config add ext_ram_t_rrd_s.BCM88650=5000;\
+  config add ext_ram_t_ras.BCM88650=27000;\
+  config add ext_ram_t_rp.BCM88650=17000;\
+  config add ext_ram_t_wr.BCM88650=18000;\
+  config add ext_ram_t_faw.BCM88650=20000;\
+  config add ext_ram_t_32aw.BCM88650=160000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=2c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=6c;\
+  config add ext_ram_t_ccd_l.BCM88650=2c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=7c;\
+  config add ext_ram_c_cas_latency.BCM88650=14c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=2c;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add dram_auto_calibration_update_enable.BCM88650=0;\
+  config add ext_ram_t_ras_enable.BCM88650=1;\
+  config add ext_ram_freq.BCM88650=2000;"
+
+if $?dram_type_GDDR5_SAMSUNG_K4G80325FBHC28_8GBIT_1V0 "\
+  config add ext_ram_type.BCM88650=GDDR5;\
+  config add ext_ram_t_rfc.BCM88650=110000;\
+  config add ext_ram_t_rc.BCM88650=50000;\
+  config add ext_ram_t_rcd_wr.BCM88650=13000;\
+  config add ext_ram_t_rcd_rd.BCM88650=17000;\
+  config add ext_ram_t_rrd_l.BCM88650=6000;\
+  config add ext_ram_t_rrd_s.BCM88650=6000;\
+  config add ext_ram_t_ras.BCM88650=34000;\
+  config add ext_ram_t_rp.BCM88650=16000;\
+  config add ext_ram_t_wr.BCM88650=16000;\
+  config add ext_ram_t_faw.BCM88650=24000;\
+  config add ext_ram_t_32aw.BCM88650=192000;\
+  config add ext_ram_t_rtp_s.BCM88650=2c;\
+  config add ext_ram_t_rtp_l.BCM88650=4c;\
+  config add ext_ram_t_wtr_s.BCM88650=6c;\
+  config add ext_ram_t_wtr_l.BCM88650=8c;\
+  config add ext_ram_t_ccd_l.BCM88650=4c;\
+  config add ext_ram_t_ccd_s.BCM88650=2c;\
+  config add ext_ram_t_ref.BCM88650=1900000;\
+  config add ext_ram_c_wr_latency.BCM88650=7c;\
+  config add ext_ram_t_crc_rd_latency.BCM88650=2c;\
+  config add ext_ram_t_crc_wr_latency.BCM88650=14c;\
+  config add ext_ram_t_rst.BCM88650=200000000;\
+  config add ext_ram_t_al.BCM88650=1c;\
+  config add ext_ram_columns.BCM88650=1024;\
+  config add ext_ram_rows.BCM88650=16384;\
+  config add ext_ram_banks.BCM88650=16;\
+  config add dram_auto_calibration_update_enable.BCM88650=0;\
+  config add ext_ram_t_ras_enable.BCM88650=1;\
+  config add ext_ram_freq.BCM88650=2000;\
+  config add ext_ram_c_cas_latency.BCM88650=18c;"
+expr $ext_ram_write_dbi+0 == 1
+if $? && $?dram_type_GDDR5_SAMSUNG_K4G80325FBHC28_8GBIT "\
+  config add ext_ram_c_cas_latency.BCM88650=19c;"

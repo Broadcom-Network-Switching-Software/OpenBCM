@@ -1,0 +1,62 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE, BCM56996_A0_BASE
+~~~ #1) test_setup(): ** start **
+Monitor src port : 1
+Monitor dst port: 239
+Sleeping for 1 second
+mon_id = 0x0
+quant_id = 0x30002000
+stat_counter_id = 0x10002001
+--> save_tc_to_q_mapping:
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 0, 7)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 1, 6)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 2, 5)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 3, 4)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 4, 3)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 5, 2)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 6, 1)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 7, 0)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 8, 4)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 9, 3)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 10, 2)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 11, 1)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 12, 1)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 13, 2)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 14, 3)
+Unicast: Map TC to Egress queue (P, TC, Q) = (1, 15, 4)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 0, 3)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 1, 2)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 2, 1)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 3, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 4, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 5, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 6, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 7, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 8, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 9, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 10, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 11, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 12, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 13, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 14, 0)
+Multicast: map TC to Egress queue (P, TC, Q) = (1, 15, 0)
+Setup L2 qos map 1 for port 1: <dot1p = 6, cfi = 0> --> TC = 4
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Packet from data=<>, length=68
+queue_id = 3
+LDH flexCtr for queue_id=3, counter[0]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[1]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[2]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[3]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[4]: 100 packets / 7200 bytes
+LDH flexCtr for queue_id=3, counter[5]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[6]: 0 packets / 0 bytes
+LDH flexCtr for queue_id=3, counter[7]: 0 packets / 0 bytes
+testVerify() [PASS]
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+--> restore_tc_to_q_mapping:
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End

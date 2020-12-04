@@ -1,0 +1,101 @@
+BCM.0> c td4x9_hsdk_flexctr_vxlan_encap.c                                                                                                                                        
+    os=unix                                                                                                                                                                      
+Attach: Unit 0 (BCM56780_A0): attached (current unit)                                                                                                                            
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom                                                                                                                       
+Release: sdk-6.5.21 built 20200906 (Sun Sep  6 09:23:21 2020)                                                                                                                    
+From sdkrel@lc-sj1-4832:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780                                                                                 
+Platform: SLK_BCM957812                                                                                                                                                          
+OS: Unix (Posix)                                                                                                                                                                 
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5             
+Choosing port 78 as access port                               
+Choosing port 71 as network port                              
+network egr object: 0x206aa                                   
+vpn: 0x8064                                                   
+acc_flow_port: 0xb0000001                                     
+net_flow_port: 0xb0000002                                     
+Completed test setup successfully.                            
+Stat Counter Id 268435463                                     
+Completed test configure successfully.                        
+
+******************************
+******Traffic test start******
+Packet comes into access port 78
+tx 1 pbm=78 data=0x00000000aaaa00000000bbbb8100001e08004500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 5                                                                                                                                                                           
+Packet from data=<>, length=78                                                                                                                                                   
+Sleeping for 5 seconds                                                                                                                                                           
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[1]: data[0000]: {000000000002} {000000002222} 8100 0014                                                                                                         
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 006e 0000 0000 1011 d4cb 0a0a                                                                                                         
+[bcmPWN.0]Packet[1]: data[0020]: 0a01 c0a8 0101 c000 0000 005a 0000 0800                                                                                                         
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0123 4500 0000 0000 aaaa 0000 0000                                                                                                         
+[bcmPWN.0]Packet[1]: data[0040]: bbbb 0800 4500 003c 6762 0000 ff01 bd76                                                                                                         
+[bcmPWN.0]Packet[1]: data[0050]: 0a3a 4001 0a3a 4273 0000 550a 0001 0051                                                                                                         
+[bcmPWN.0]Packet[1]: data[0060]: 6162 6364 6566 6768 696a 6b6c 6d6e 6f70                                                                                                         
+[bcmPWN.0]Packet[1]: data[0070]: 7172 7374 7576 7761 6263 6465 6667 6869                                                                                                         
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0][RX metadata information]                                                                                                                                              
+        PKT_LENGTH=0x84                                                                                                                                                          
+        SRC_PORT_NUM=0x47                                                                                                                                                        
+        SWITCH=1                                                                                                                                                                 
+        MATCH_ID_LO=0x80d424                                                                                                                                                     
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                                                                   
+        EGR_ZONE_REMAP_CTRL=1                                                                                                                                                    
+[FLEX fields]                                                                                                                                                                    
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                                                                 
+        SYSTEM_SOURCE_15_0=0x47                                                                                                                                                  
+        SYSTEM_DESTINATION_15_0=0x50                                                                                                                                             
+        INGRESS_PP_PORT_7_0=0x47                                                                                                                                                 
+        EFFECTIVE_TTL_7_0=0x10                                                                                                                                                   
+        VFI_15_0=0x14                                                                                                                                                            
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                                                                           
+        SYSTEM_OPCODE_3_0=1                                                                                                                                                      
+        PKT_MISC_CTRL_0_3_0=1                                                                                                                                                    
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                                                             
+        L2_OIF_10_0=0x50                                                                                                                                                         
+[RX reasons]                                                                                                                                                                     
+[Decode match id]                                                                                                                                                                
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                                                              
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                                                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   204                +204
+XLMIB_TBYT.ce47                       :                   132                +132
+XLMIB_RBYT.ce47                       :                   132                +132
+XLMIB_TPOK.ce47                       :                     1                  +1
+XLMIB_RPOK.ce47                       :                     1                  +1
+XLMIB_TVLN.ce47                       :                     1                  +1
+XLMIB_RVLN.ce47                       :                     1                  +1
+XLMIB_TUCA.ce47                       :                     1                  +1
+XLMIB_RUCA.ce47                       :                     1                  +1
+XLMIB_TPKT.ce47                       :                     1                  +1
+XLMIB_RPKT.ce47                       :                     1                  +1
+XLMIB_T255.ce47                       :                     1                  +1
+XLMIB_R255.ce47                       :                     1                  +1
+XLMIB_RPRM.ce47                       :                     1                  +1
+UC_PERQ_PKT(0).ce47                   :                     1                  +1
+UC_PERQ_BYTE(0).ce47                  :                   132                +132
+XLMIB_TBYT.xe1                        :                    82                 +82
+XLMIB_RBYT.xe1                        :                    82                 +82
+XLMIB_TPOK.xe1                        :                     1                  +1
+XLMIB_RPOK.xe1                        :                     1                  +1
+XLMIB_TVLN.xe1                        :                     1                  +1
+XLMIB_RVLN.xe1                        :                     1                  +1
+XLMIB_TUCA.xe1                        :                     1                  +1
+XLMIB_RUCA.xe1                        :                     1                  +1
+XLMIB_TPKT.xe1                        :                     1                  +1
+XLMIB_RPKT.xe1                        :                     1                  +1
+XLMIB_T127.xe1                        :                     1                  +1
+XLMIB_R127.xe1                        :                     1                  +1
+XLMIB_RPRM.xe1                        :                     1                  +1
+Flex Counters collected on ING VPN 32868  Packets / Bytes : 0x00000001 / 0x00000052
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

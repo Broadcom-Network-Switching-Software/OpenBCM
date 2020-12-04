@@ -1,0 +1,19 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Latency Monitor RC (run commands) file
+#
+#       These are default commands that are for TechSupport Latency Monitor feature.
+#
+
+# Mirror configuration
+rcload $base_drv_name/$variantname/mirror.soc
+
+# FP configuration
+rcload $base_drv_name/$variantname/field.soc
+
+# EP Recirculate configuration
+rcload $base_drv_name/$variantname/eprecirculate.soc
+

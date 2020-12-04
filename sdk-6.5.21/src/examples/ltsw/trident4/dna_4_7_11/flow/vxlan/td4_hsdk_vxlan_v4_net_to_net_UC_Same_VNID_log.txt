@@ -1,0 +1,116 @@
+execute(): Start                                                                                                              
+config show; attach; version                                                                                                  
+    os=unix                                                                                                                   
+Attach: Unit 0 (BCM56880_A0): attached (current unit)                                                                         
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom                                                                    
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 08:36:59 2019)                                                                 
+From sdkrel@lc-sj1-4391:/projects/ntsw_sw18_scratch/sdkrel/regress/sdk-6.5.18-EA6/src/sdk.hsdk.release.56880-release          
+Platform: SLK_BCM957812                                                                                                       
+OS: Unix (Posix)                                                                                                              
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+~~~ #1) test_setup(): ** start **                    
+~~~ #1) test_setup(): ** end **                      
+~~~ #2) config_vxlan(): ** start **                  
+Creating VXLAN VPN (0x8064)... done!                 
+Creating Network Interface (0x4001)... done!         
+Create Network Flow Port (0xb0000001)... done!       
+Create Network Egress Object (0x206a1)... done!      
+Creating Flow Encap... done!                         
+Adding Flow Match (VNID -> VFI)... done!             
+Setting Port Encap... done!                          
+Adding Flow Match (SIP -> SVP)... done!              
+Creating VXLAN init-tunnel... done!                  
+Creating VXLAN term-tunnel... done!                  
+Creating Network Interface (0x4002)... done!         
+Create Network Flow Port (0xb0000002)... done!       
+Create Network Egress Object (0x206a2)... done!      
+Creating Flow Encap... done!                         
+Warning: Flow Match (VNID 0x12345 -> VFI 0x8064) Entry exists!
+Setting Port Encap... done!                                   
+Adding Flow Match (SIP -> SVP)... done!                       
+Creating VXLAN init-tunnel... done!                           
+Warning: The VxLAN DIP already created!                       
+~~~ #2) config_vxlan(): ** end **                             
+~~~ #3) verify(): ** start **                                 
+
+vlan 1  ports cpu,cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001f), untagged cd,xe (0x00000000000000000000000000000000000000004000f0000f4000f0000f4000f0000f4000f0001e)                                           
+vlan 22 ports cd0 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)                                                  
+vlan 23 ports cd1 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000)                                                  
+
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:33:33 vlan=23 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:bb:bb vlan=32868 GPORT=0xb0000002 port=0xb0000002(flow) Static
+
+
+     VRF Net Addr            INTF UL_INTF
+--------------------------------------------
+
+Sending known unicast packet to ingress_port Network side:1
+Packet from data=<>, length=148                            
+[bcmPWN.0]                                                 
+[bcmPWN.0]Packet[1]: data[0000]: {000000002222} {000000000002} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0082 0000 4000 3f11 65b7 c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 0101 0a0a 0a01 d903 12b5 006e 790b 0800 
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0123 4500 0000 0000 bbbb 0000 0000 
+[bcmPWN.0]Packet[1]: data[0040]: aaaa 0800 4500 0050 0001 0000 4011 7497 
+[bcmPWN.0]Packet[1]: data[0050]: 0202 0202 0101 0101 0035 0035 003c 32f6 
+[bcmPWN.0]Packet[1]: data[0060]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0090]: 7465 7374                               
+[bcmPWN.0]                                                               
+[bcmPWN.0]Packet[1]:                                                     
+Packet[1]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)                                                                      
+Packet[1]:   IP: V(4) src<192.168.1.1> dst<10.10.10.1> hl<5> service-type<0> tl<130> id<0> frg-off<16384> ttl<63> > chk-sum<0x65b7>                                                                        
+[bcmPWN.0]                                                                   
+[bcmPWN.0]Packet[2]: data[0000]: {000000000003} {000000003333} 8100 0017     
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0082 0000 0000 3f11 a4b6 0a0a     
+[bcmPWN.0]Packet[2]: data[0020]: 0a01 c0a8 0202 c000 12b5 006e 0000 0800     
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0000 bbbb 0000 0000     
+[bcmPWN.0]Packet[2]: data[0040]: aaaa 0800 4500 0050 0001 0000 4011 7497     
+[bcmPWN.0]Packet[2]: data[0050]: 0202 0202 0101 0101 0035 0035 003c 32f6     
+[bcmPWN.0]Packet[2]: data[0060]: 7465 7374 7465 7374 7465 7374 7465 7374     
+[bcmPWN.0]Packet[2]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374     
+[bcmPWN.0]Packet[2]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374     
+[bcmPWN.0]Packet[2]: data[0090]: 7465 7374                                   
+[bcmPWN.0]                                                                   
+[bcmPWN.0]Packet[2]:                                                         
+Packet[2]:   Ethernet: dst<00:00:00:00:00:03> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)                                                                      
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<192.168.2.2> hl<5> service-type<0> tl<130> id<0> frg-off<0> ttl<63> > chk-sum<0xa4b6>
+XLMIB_TBYT.cd0                        :                   152                +152
+XLMIB_RBYT.cd0                        :                   152                +152
+XLMIB_TPOK.cd0                        :                     1                  +1
+XLMIB_RPOK.cd0                        :                     1                  +1
+XLMIB_TVLN.cd0                        :                     1                  +1
+XLMIB_RVLN.cd0                        :                     1                  +1
+XLMIB_TUCA.cd0                        :                     1                  +1
+XLMIB_RUCA.cd0                        :                     1                  +1
+XLMIB_TPKT.cd0                        :                     1                  +1
+XLMIB_RPKT.cd0                        :                     1                  +1
+XLMIB_T255.cd0                        :                     1                  +1
+XLMIB_R255.cd0                        :                     1                  +1
+XLMIB_RPRM.cd0                        :                     1                  +1
+XLMIB_TBYT.cd1                        :                   152                +152
+XLMIB_RBYT.cd1                        :                   152                +152
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T255.cd1                        :                     1                  +1
+XLMIB_R255.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                   152                +152
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:33:33 vlan=23 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:00:aa:aa vlan=32868 GPORT=0xb0000001 port=0xb0000001(flow) Hit
+mac=00:00:00:00:bb:bb vlan=32868 GPORT=0xb0000002 port=0xb0000002(flow) Static Hit
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End

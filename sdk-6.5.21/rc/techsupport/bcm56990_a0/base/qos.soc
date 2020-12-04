@@ -1,0 +1,35 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport QoS RC (run commands) file
+#
+#       These are default commands that are for TechSupport QoS.
+#
+
+# Show S/W state in QoS.
+dump sw qos
+
+# Show QoS related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show QoS ingress mapping related LTs.
+local lt PHB_ING_IP_DSCP_TO_INT_PRI_REMAP;                         $traverse_lt;
+local lt PHB_ING_L2_OTAG_REMAP;                                    $traverse_lt;
+local lt PHB_ING_L2_TAGGED_TO_INT_PRI;                             $traverse_lt;
+local lt PHB_ING_L2_UNTAGGED_TO_INT_PRI;                           $traverse_lt;
+local lt PHB_ING_MPLS_EXP_TO_INT_PRI;                              $traverse_lt;
+
+# Show QoS egress remarking related LTs.
+local lt PHB_EGR_IP_INT_PRI_TO_DSCP;                               $traverse_lt;
+local lt PHB_EGR_L2_INT_PRI_TO_OTAG;                               $traverse_lt;
+local lt PHB_EGR_MPLS_INT_PRI_TO_L2_OTAG;                          $traverse_lt;
+local lt PHB_EGR_MPLS_INT_PRI_TO_LSP_EXP;                          $traverse_lt;
+local lt PHB_EGR_MPLS_INT_PRI_TO_TRANSIT_EXP;                      $traverse_lt;
+local lt PHB_EGR_MPLS_INT_PRI_TO_VPN_EXP;                          $traverse_lt;
+local lt PHB_EGR_PORT_INT_PRI_TO_L2_OTAG;                          $traverse_lt;
+local lt PHB_EGR_MPLS_EXP_TO_L2_OTAG;                              $traverse_lt;
+
+# Show QoS control LT.
+local lt PHB_CONTROL;                                              $traverse_lt;

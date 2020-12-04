@@ -1,0 +1,704 @@
+BCM.0> init all; c td4x9_hsdk_ipv4_riot_AtoN_uc_HECMP_underlay.c
+0:bcm_ltsw_bfd_init_common: BFD(unit 0) Warning: BFD app not initialized.
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200819 (Wed Aug 19 09:59:43 2020)
+From sdkrel@lc-sj1-6659:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4
+dump sw config
+
+SW Information CONFIG - Dunit 0
+Config Property: hash   96, uft_mode = 3
+Config Property: hash  216, l3_alpm_template = 2
+Config Property: hash  284, l2_hitbit_enable = 1
+Config Property: hash  421, bcm_tunnel_term_compatible_mode = 1
+Config Property: hash  430, encap_mode_port_* = IEEE
+Config Property: hash  458, encap_mode_port_14 = HIGIG3
+Config Property: hash  555, encap_mode_port_33 = HIGIG3
+Config Property: hash  652, encap_mode_port_52 = HIGIG3
+Config Property: hash  716, encap_mode_port_70 = HIGIG3
+Config Property: hash  749, encap_mode_port_71 = HIGIG3
+Config Property: hash  763, l3_alpm2_bnk_threshold = 100
+Config Property: hash  793, encap_mode_port_5 = HIGIG3
+Config Property: hash  815, encap_mode_port_73 = HIGIG3
+Config Property: hash  826, encap_mode_port_6 = HIGIG3
+Config Property: hash  859, encap_mode_port_7 = HIGIG3
+Config Property: hash  892, encap_mode_port_8 = HIGIG3
+Config Property: hash  903, flexctr_action_reserved_ipmc_hitbit = 1
+Config Property: hash  915, encap_mode_port_68 = HIGIG3
+Config Property: hash  929, vlan_flooding_l2mc_num_reserved = 0
+Config Property: hash  947, l3_enable = 1
+Config Property: hash  948, encap_mode_port_69 = HIGIG3
+bsh -c config
+---
+# Software component configuration
+component:
+    feature_ctl:
+        enable_atomic_trans: 0
+    ltm_resources:
+        max_tables_transaction: 8
+    trm_resources:
+        max_entries: 32768
+        max_transactions: 128
+    cfg_error_control:
+        stop_playback_on_error: 0
+...
+---
+# BCM56780
+device:
+    0:
+        CTR_EFLEX_CONFIG:
+            CTR_EGR_EFLEX_OPERMODE_PIPEUNIQUE: 0
+            CTR_ING_EFLEX_OPERMODE_PIPEUNIQUE: 0
+        DEVICE_CONFIG:
+            POLLED_IRQ_THREAD_PRIORITY: 0
+            POLLED_IRQ_DELAY: 0
+            POLLED_IRQ_ENABLE: 0
+            PIO_BULK_COPY: 0
+            PIO_BULK_WRITE: 0
+            PIO_BULK_READ: 0
+            CHIP_DEBUG: 0
+            BS_PLL_1_CLK_SEL: CLK_INT_50MHZ
+            BS_PLL_0_CLK_SEL: CLK_INT_50MHZ
+            TS_PLL_CLK_SEL: CLK_INT_50MHZ
+            PP_CLK_FREQ: CLK_1350MHZ
+            CORE_CLK_FREQ: CLK_1350MHZ
+            VARIANT: DNA_2_5_3
+        DEVICE_WAL_CONFIG:
+            BYPASS: 1
+            WAL_READER_USE_FIFO_CHANNEL_OP_THRESHOLD: 4
+            DMA_WRITE_OP_THRESHOLD: 5
+            DMA_READ_OP_THRESHOLD: 2
+            FIFO_CHANNELS_DMA: 1
+            FIFO_CHANNELS_MAX_POLLS: 10000
+            FIFO_CHANNELS_MAX_POLLS_OVERRIDE: 0
+            FIFO_CHANNELS_POLL: 1
+            FIFO_CHANNELS_MODE: DOUBLE
+            WAL_DEPTH_MULTIPLIER: 1000
+        FP_CONFIG:
+            FP_ING_COMP_DST_IP6_ONLY: 0
+            FP_ING_COMP_SRC_IP6_ONLY: 0
+            FP_ING_COMP_DST_IP4_ONLY: 0
+            FP_ING_COMP_SRC_IP4_ONLY: 0
+            FP_ING_MANUAL_COMP: 0
+            FP_ING_RANGE_CHECK_OPERMODE_PIPEUNIQUE: 0
+            FP_COMPRESSION_OPERMODE_PIPEUNIQUE: 0
+            FP_EGR_OPERMODE_PIPEUNIQUE: 0
+            FP_VLAN_OPERMODE_PIPEUNIQUE: 0
+            FP_ING_OPERMODE: GLOBAL_PIPE_AWARE
+        METER_FP_CONFIG:
+            METER_EGR_OPERMODE_PIPEUNIQUE: 0
+            METER_ING_OPERMODE_PIPEUNIQUE: 0
+        PC_SERDES_CONFIG:
+            FW_CRC_VERIFY: 0
+            FW_LOAD_VERIFY: 0
+            FW_LOAD_METHOD: PC_SERDES_FW_FAST_LOAD
+        SER_CONFIG:
+            SER_LOG_DEPTH: 10
+            MESSAGE_Q_DEPTH: 8
+            SER_ENABLE: 1
+        TM_PM_FLEX_CONFIG:
+            MAX_SUB_PORT: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+        TM_SCHEDULER_CONFIG:
+            NUM_MC_Q: NUM_MC_Q_4
+        TM_SHAPER_CONFIG:
+            ITU_MODE: 0
+        TM_THD_CONFIG:
+            THRESHOLD_MODE: LOSSY
+        DT_EFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        DT_IFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        EGR_VLAN_TRANSLATION_DW_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        EGR_VLAN_TRANSLATION_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_1_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_2_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_3_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_15_0_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_31_16_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_47_32_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+...
+lt traverse -l DEVICE_CONFIG
+Traverse table [DEVICE_CONFIG]:
+    POLLED_IRQ_THREAD_PRIORITY=0
+    POLLED_IRQ_DELAY=0
+    POLLED_IRQ_ENABLE=0
+    PIO_BULK_COPY=0
+    PIO_BULK_WRITE=0
+    PIO_BULK_READ=0
+    CHIP_DEBUG=0
+    BS_PLL_1_CLK_SEL=CLK_INT_50MHZ
+    BS_PLL_0_CLK_SEL=CLK_INT_50MHZ
+    TS_PLL_CLK_SEL=CLK_INT_50MHZ
+    PP_CLK_FREQ=CLK_1350MHZ
+    CORE_CLK_FREQ=CLK_1350MHZ
+    VARIANT=DNA_2_5_3
+  1 entry traversed.
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1
+egress_port_multi_setup port: 2
+egress_port_multi_setup port: 3
+~~ #1) test_setup(): ** end **
+~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Get flow handler for CLASSIC_VXLAN
+
+Setup Hash for ECMP
+Setup access VP on port 1
+Configure Vxlan access port configuration
+Access: create VPN
+create multicast group for UUC/MC/BC
+Access: add access port to VPN
+add port to vxlan 1
+add port to vxlan 1
+Access: create flow port vp
+Access: flow port=0xb0000001
+Access: create UL L3 interface
+Access: create OL L3 interface
+Access: create OL L3 egress object
+Access: create L3 ingress interface
+Access: update the vrf field in VFI table
+Access: add flow match (match: port,vlan criteria)
+Access: l2 station entry add
+Access: l2 station entry done
+Access: add the l3 route
+
+Setup network VP on port 2, 3
+Configure Vxlan network port configuration
+Configure Vxlan network port configuration
+Network: create VPN
+create multicast group for UUC/MC/BC
+Network: add network ports to VPN
+Network: create UNDERLAY 0th UL L3 interface
+Network: create 0th  UNDERLAY L3 egress object
+Network: create UNDERLAY 1th UL L3 interface
+Network: create 1th  UNDERLAY L3 egress object
+Create network L3 ECMP object for Underlay.
+Network: create flow port vp
+Network: flow port=0xb0000002
+Network: create OL L3 interface
+Network: create OL L3 egress object
+Network: create L3 ingress interface
+Create Overlay network L3 ECMP object for Overlay.
+Network: update the vrf field in VFI table
+Network: encap add, VFI-->VNID
+Network: set encapsulation. VP=>egress-obj{Device,Port}
+Network: configure match condition to derive VPN (Match:{VN_ID},Derive: VFI (VPN))
+Network: add flow match (match: SIP => network SVP)
+Network: underlay l2 station entry add
+Network: underlay l2 station entry add
+Network: overlay l2 host add
+Network: add the l3 route
+Tunnel_init: create flow tunnel initiator
+Tunnel_term: create flow tunnel terminator
+~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)
+vlan 10 ports ce0 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 11 ports ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 12 ports ce2 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+mac=00:00:00:01:01:01 vlan=32769 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+0       0        0.0.0.0/0           100001 0
+1       0        192.168.10.0/24     100002 0
+2       0        192.168.20.0/24     200001 0
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:00  16383     1            0 16383    overlay   no
+
+100002  00:00:00:11:11:11      1     1  flow      0 16383    overlay   no
+
+100003  00:00:00:02:02:02      2     2  flow      0 16383    overlay   no
+
+132769  00:00:00:00:aa:aa  16385     2            0     0   underlay   no
+
+132770  00:00:00:00:aa:ab  16386     3            0     0   underlay   no
+
+INTF  VID   MAC Address
+----------------------------------------------
+1     32768 00:00:00:22:22:22  OverLay
+
+2     32769 00:00:00:01:01:01  OverLay
+
+16385 11    00:00:00:00:bb:bb  UnderLay
+
+16386 12    00:00:00:00:bb:bc  UnderLay
+
+
+Sending known unicast packet No.[1] to ingress_port access side:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000222222} {000000111111} 8100 000a
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff da7e c0a8
+[bcmPWN.0]Packet[1]: data[0020]: 0a01 c0a8 1401 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 0000 0000
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0xa01424
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        PARSER_VHLEN_0_15_0=0x8a
+        ENTROPY_LABEL_LOW_15_0=0xe63
+        EFFECTIVE_TTL_7_0=0x40
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=2
+        L3_OIF_1_13_0=2
+        DVP_15_0=2
+        NHOP_2_OR_ECMP_GROUP_INDEX_1_15_0=0x8001
+        L3_IIF_13_0=1
+        INGRESS_PP_PORT_7_0=1
+        NHOP_INDEX_1_15_0=3
+        VFI_15_0=0x1000
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=2
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L4
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.10.1> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda7e>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 000b
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0064 0000 0000 3f11 3f6a 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a01 1414 1401 ce63 12b5 0050 0000 0800
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0123 4500 0000 0002 0202 0000 0001
+[bcmPWN.0]Packet[2]: data[0040]: 0101 0800 4500 002e 0000 0000 3fff db7e
+[bcmPWN.0]Packet[2]: data[0050]: c0a8 0a01 c0a8 1401 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0070]: 0000 0000 0000
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x7a
+        SRC_PORT_NUM=2
+        SWITCH=1
+        MATCH_ID_LO=0x120d424
+        MATCH_ID_HI=0x2805
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        DROP_CODE_15_0=0x1f1f
+        PARSER_VHLEN_0_15_0=0x8a8a
+        ENTROPY_LABEL_LOW_15_0=0xbe21
+        EFFECTIVE_TTL_7_0=0x3f
+        SYSTEM_SOURCE_15_0=2
+        INGRESS_PP_PORT_7_0=2
+        VFI_15_0=0xb
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_INNER_L2_HDR_L2
+        INGRESS_PKT_INNER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_INNER_L3_L4_HDR_IPV4
+        INGRESS_PKT_INNER_L3_L4_HDR_UNKNOWN_L4
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_VXLAN
+        INGRESS_PKT_SYS_HDR_LOOPBACK
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.1> dst<20.20.20.1> hl<5> service-type<0> tl<100> id<0> frg-off<0> ttl<63> > chk-sum<0x3f6a>
+Sleeping for 5 seconds
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   338                +338
+XLMIB_TBYT.ce0                        :                    72                 +72
+XLMIB_RBYT.ce0                        :                    72                 +72
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TVLN.ce0                        :                     1                  +1
+XLMIB_RVLN.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T127.ce0                        :                     1                  +1
+XLMIB_R127.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                   122                +122
+XLMIB_RBYT.ce1                        :                   122                +122
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                   122                +122
+
+Sending known unicast packet No.[2] to ingress_port access side:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {000000222222} {000000111111} 8100 000a
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 40ff da78 c0a8
+[bcmPWN.0]Packet[3]: data[0020]: 0a07 c0a8 1401 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0040]: 0000 0000
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0xa01424
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        PARSER_VHLEN_0_15_0=0x8a
+        ENTROPY_LABEL_LOW_15_0=0xe63
+        EFFECTIVE_TTL_7_0=0x40
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=2
+        L3_OIF_1_13_0=2
+        DVP_15_0=2
+        NHOP_2_OR_ECMP_GROUP_INDEX_1_15_0=0x8001
+        L3_IIF_13_0=1
+        INGRESS_PP_PORT_7_0=1
+        NHOP_INDEX_1_15_0=3
+        VFI_15_0=0x1000
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=2
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L4
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<192.168.10.7> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xda78>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 000b
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0064 0000 0000 3f11 3f6a 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0a01 1414 1401 ce63 12b5 0050 0000 0800
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0123 4500 0000 0002 0202 0000 0001
+[bcmPWN.0]Packet[4]: data[0040]: 0101 0800 4500 002e 0000 0000 3fff db78
+[bcmPWN.0]Packet[4]: data[0050]: c0a8 0a07 c0a8 1401 0000 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0070]: 0000 0000 0000
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x7a
+        SRC_PORT_NUM=2
+        SWITCH=1
+        MATCH_ID_LO=0x120d424
+        MATCH_ID_HI=0x2805
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        DROP_CODE_15_0=0x1f1f
+        PARSER_VHLEN_0_15_0=0x8a8a
+        ENTROPY_LABEL_LOW_15_0=0xbe21
+        EFFECTIVE_TTL_7_0=0x3f
+        SYSTEM_SOURCE_15_0=2
+        INGRESS_PP_PORT_7_0=2
+        VFI_15_0=0xb
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_INNER_L2_HDR_L2
+        INGRESS_PKT_INNER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_INNER_L3_L4_HDR_IPV4
+        INGRESS_PKT_INNER_L3_L4_HDR_UNKNOWN_L4
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_VXLAN
+        INGRESS_PKT_SYS_HDR_LOOPBACK
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x000b> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.1> dst<20.20.20.1> hl<5> service-type<0> tl<100> id<0> frg-off<0> ttl<63> > chk-sum<0x3f6a>
+Sleeping for 5 seconds
+MC_PERQ_PKT(0).cpu0                   :                     4                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   676                +338
+XLMIB_TBYT.ce0                        :                   144                 +72
+XLMIB_RBYT.ce0                        :                   144                 +72
+XLMIB_TPOK.ce0                        :                     2                  +1
+XLMIB_RPOK.ce0                        :                     2                  +1
+XLMIB_TVLN.ce0                        :                     2                  +1
+XLMIB_RVLN.ce0                        :                     2                  +1
+XLMIB_TUCA.ce0                        :                     2                  +1
+XLMIB_RUCA.ce0                        :                     2                  +1
+XLMIB_TPKT.ce0                        :                     2                  +1
+XLMIB_RPKT.ce0                        :                     2                  +1
+XLMIB_T127.ce0                        :                     2                  +1
+XLMIB_R127.ce0                        :                     2                  +1
+XLMIB_RPRM.ce0                        :                     2                  +1
+XLMIB_TBYT.ce1                        :                   244                +122
+XLMIB_RBYT.ce1                        :                   244                +122
+XLMIB_TPOK.ce1                        :                     2                  +1
+XLMIB_RPOK.ce1                        :                     2                  +1
+XLMIB_TVLN.ce1                        :                     2                  +1
+XLMIB_RVLN.ce1                        :                     2                  +1
+XLMIB_TUCA.ce1                        :                     2                  +1
+XLMIB_RUCA.ce1                        :                     2                  +1
+XLMIB_TPKT.ce1                        :                     2                  +1
+XLMIB_RPKT.ce1                        :                     2                  +1
+XLMIB_T127.ce1                        :                     2                  +1
+XLMIB_R127.ce1                        :                     2                  +1
+XLMIB_RPRM.ce1                        :                     2                  +1
+UC_PERQ_PKT(0).ce1                    :                     2                  +1
+UC_PERQ_BYTE(0).ce1                   :                   244                +122
+
+Sending known unicast packet No.[3] to ingress_port access side:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: Total 5
+[bcmPWN.0]Packet[5]: data[0000]: {000000222222} {000000111111} 8100 000a
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 40ff da77 c0a8
+[bcmPWN.0]Packet[5]: data[0020]: 0a08 c0a8 1401 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0040]: 0000 0000
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        IP_ROUTED=1
+        SWITCH=1
+        MATCH_ID_LO=0xa01424
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        PARSER_VHLEN_0_15_0=0x8a
+        ENTROPY_LABEL_LOW_15_0=0xe63
+        EFFECTIVE_TTL_7_0=0x40
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=3
+        L3_OIF_1_13_0=2
+        DVP_15_0=2
+        NHOP_2_OR_ECMP_GROUP_INDEX_1_15_0=0x8002
+        L3_IIF_13_0=1
+        INGRESS_PP_PORT_7_0=1
+        NHOP_INDEX_1_15_0=3
+        VFI_15_0=0x1000
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=3
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L4
+
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<192.168.10.8> dst<192.168.20.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-suR_L3_L4_HDR_VXLAN
+        INGRESS_PKT_SYS_HDR_LOOPBACK
+
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:aa:ab> src<00:00:00:00:bb:bc> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.1> dst<20.20.20.1> hl<5> service-type<0> tl<100> id<0> frg-off<0> ttl<63> > chk-sum<0x3f6a>
+Sleeping for 5 seconds
+MC_PERQ_PKT(0).cpu0                   :                     6                  +2
+MC_PERQ_BYTE(0).cpu0                  :                 1,014                +338
+XLMIB_TBYT.ce0                        :                   216                 +72
+XLMIB_RBYT.ce0                        :                   216                 +72
+XLMIB_TPOK.ce0                        :                     3                  +1
+XLMIB_RPOK.ce0                        :                     3                  +1
+XLMIB_TVLN.ce0                        :                     3                  +1
+XLMIB_RVLN.ce0                        :                     3                  +1
+XLMIB_TUCA.ce0                        :                     3                  +1
+XLMIB_RUCA.ce0                        :                     3                  +1
+XLMIB_TPKT.ce0                        :                     3                  +1
+XLMIB_RPKT.ce0                        :                     3                  +1
+XLMIB_T127.ce0                        :                     3                  +1
+XLMIB_R127.ce0                        :                     3                  +1
+XLMIB_RPRM.ce0                        :                     3                  +1
+XLMIB_TBYT.ce2                        :                   122                +122
+XLMIB_RBYT.ce2                        :                   122                +122
+XLMIB_TPOK.ce2                        :                     1                  +1
+XLMIB_RPOK.ce2                        :                     1                  +1
+XLMIB_TVLN.ce2                        :                     1                  +1
+XLMIB_RVLN.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :                     1                  +1
+XLMIB_RUCA.ce2                        :                     1                  +1
+XLMIB_TPKT.ce2                        :                     1                  +1
+XLMIB_RPKT.ce2                        :                     1                  +1
+XLMIB_T127.ce2                        :                     1                  +1
+XLMIB_R127.ce2                        :                     1                  +1
+XLMIB_RPRM.ce2                        :                     1                  +1
+UC_PERQ_PKT(0).ce2                    :                     1                  +1
+UC_PERQ_BYTE(0).ce2                   :                   122                +122
+
+verify l2 learning:
+mac=00:00:00:00:bb:bb vlan=11 GPORT=0x2 modid=0 port=2/ce1 Hit
+mac=00:00:00:00:bb:bc vlan=12 GPORT=0x3 modid=0 port=3/ce2 Hit
+mac=00:00:00:01:01:01 vlan=32769 GPORT=0x0 modid=0 port=0/cpu0 Static L3
+mac=00:00:00:11:11:11 vlan=32768 GPORT=0x1 modid=0 port=1/ce0 Hit
+
+verify l3 route hit
+        VRF      Net Addr           INTF UL_INTF
+--------------------------------------------
+0       0        0.0.0.0/0           100001 0
+1       0        192.168.10.0/24     100002 0
+2       0        192.168.20.0/24     200001 0
+
+ Vpn :32768
+
+ VpnInfo :
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 0 (0x0)
+        int igmp_query_action = 0 (0x0)
+        int igmp_unknown_msg_action = 0 (0x0)
+        int mld_report_done_action = 0 (0x0)
+        int mld_query_action = 0 (0x0)
+        int ip4_rsvd_mc_action = 0 (0x0)
+        int ip6_rsvd_mc_action = 0 (0x0)
+        int ip4_mc_router_adv_action = 0 (0x0)
+        int ip6_mc_router_adv_action = 0 (0x0)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 1rt_class = 0 (0x0)
+}
+
+ Flow Ports 1
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 2 (0x2)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+
+----------------------------------------------
+Distribution of 3 Packets on ECMP member ports:
+----------------------------------------------
+MC_PERQ_PKT(0).cpu0                   :                     6                  +0
+MC_PERQ_BYTE(0).cpu0                  :                 1,014                  +0
+XLMIB_TBYT.ce0                        :                   216                  +0
+XLMIB_RBYT.ce0                        :                   216                  +0
+XLMIB_TPOK.ce0                        :                     3                  +0
+XLMIB_RPOK.ce0                        :                     3                  +0
+XLMIB_TVLN.ce0                        :                     3                  +0
+XLMIB_RVLN.ce0                        :                     3                  +0
+XLMIB_TUCA.ce0                        :                     3                  +0
+XLMIB_RUCA.ce0                        :                     3                  +0
+XLMIB_TPKT.ce0                        :                     3                  +0
+XLMIB_RPKT.ce0                        :                     3                  +0
+XLMIB_T127.ce0                        :                     3                  +0
+XLMIB_R127.ce0                        :                     3                  +0
+XLMIB_RPRM.ce0                        :                     3                  +0
+XLMIB_TBYT.ce1                        :                   244                  +0
+XLMIB_RBYT.ce1                        :                   244                  +0
+XLMIB_TPOK.ce1                        :                     2                  +0
+XLMIB_RPOK.ce1                        :                     2                  +0
+XLMIB_TVLN.ce1                        :                     2                  +0
+XLMIB_RVLN.ce1                        :                     2                  +0
+XLMIB_TUCA.ce1                        :                     2                  +0
+XLMIB_RUCA.ce1                        :                     2                  +0
+XLMIB_TPKT.ce1                        :                     2                  +0
+XLMIB_RPKT.ce1                        :                     2                  +0
+XLMIB_T127.ce1                        :                     2                  +0
+XLMIB_R127.ce1                        :                     2                  +0
+XLMIB_RPRM.ce1                        :                     2                  +0
+UC_PERQ_PKT(0).ce1                    :                     2                  +0
+UC_PERQ_BYTE(0).ce1                   :                   244                  +0
+XLMIB_TBYT.ce2                        :                   122                  +0
+XLMIB_RBYT.ce2                        :                   122                  +0
+XLMIB_TPOK.ce2                        :                     1                  +0
+XLMIB_RPOK.ce2                        :                     1                  +0
+XLMIB_TVLN.ce2                        :                     1                  +0
+XLMIB_RVLN.ce2                        :                     1                  +0
+XLMIB_TUCA.ce2                        :                     1                  +0
+XLMIB_RUCA.ce2                        :                     1                  +0
+XLMIB_TPKT.ce2                        :                     1                  +0
+XLMIB_RPKT.ce2                        :                     1                  +0
+XLMIB_T127.ce2                        :                     1                  +0
+XLMIB_R127.ce2                        :                     1                  +0
+XLMIB_RPRM.ce2                        :                     1                  +0
+UC_PERQ_PKT(0).ce2                    :                     1                  +0
+UC_PERQ_BYTE(0).ce2                   :                   122                  +0
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

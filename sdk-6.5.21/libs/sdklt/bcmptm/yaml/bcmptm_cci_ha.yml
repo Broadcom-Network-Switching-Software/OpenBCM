@@ -1,0 +1,189 @@
+#
+# file: bcmptm_cci_ha.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    CTR_FIELD_NUM_MAX: 16
+
+component:
+    bcmptm_cci_ha:
+        cci_ctr_mode_t:
+            comment: Counter mode
+            type: enum
+            fields:
+                CCI_CTR_NORMAL_MODE: 0
+                CCI_CTR_WIDE_MODE: 1
+                CCI_CTR_SLIM_MODE: 2
+                CCI_CTR_NORMAL_DOUBLE_MODE: 3
+
+        cci_update_mode_t:
+            comment: Counter update mode
+            type: enum
+            fields:
+                CCI_UPDATE_NOOP: 0
+                CCI_UPDATE_SET_TO_CVALUE: 1
+                CCI_UPDATE_INC_BY_CVALUE: 2
+                CCI_UPDATE_DEC_BY_CVALUE: 3
+                CCI_UPDATE_MAX_VALUE: 4
+                CCI_UPDATE_MIN_VALUE: 5
+                CCI_UPDATE_AVERAGE_VALUE: 6
+                CCI_UPDATE_SETBIT: 7
+                CCI_UPDATE_RDEC_FROM_CVALUE: 8
+                CCI_UPDATE_XOR: 9
+                CCI_UPDATE_CLRBIT: 10
+                CCI_UPDATE_XORBIT: 11
+
+        cci_count_mode_t:
+            type: struct
+            fields:
+                ctr_mode:
+                    type: uint8_t
+                    comment: Indicate counter mode
+                update_mode:
+                    type: uint8_t
+                    comment: Indicate update mode
+
+        cci_count_mode_array_t:
+            type: struct
+            fields:
+                cnt_table:
+                    type: uint32_t
+                    comment: Number of entry nodes for a table
+                cnt_mode:
+                    type: uint32_t
+                    comment: Number of entry nodes for a mode
+                count_mode:
+                    type: cci_count_mode_t
+                    comment: Indicate counter mode and update mode
+                    table:
+                    size: cnt_mode
+
+        cci_evict_mode_t:
+            type: enum
+            fields:
+                CCI_EVICT_MODE_DISABLE: 0
+                CCI_EVICT_MODE_RANDOM: 1
+                CCI_EVICT_MODE_THD: 2
+                CCI_EVICT_MODE_CONDITIONAL: 3
+
+        cci_ctr_type_id:
+            type: enum
+            fields:
+                CCI_CTR_TYPE_PORT: 0
+                CCI_CTR_TYPE_TM: 1
+                CCI_CTR_TYPE_EPIPE: 2
+                CCI_CTR_TYPE_IPIPE: 3
+                CCI_CTR_TYPE_EVICT: 4
+                CCI_CTR_TYPE_SEC: 5
+                CCI_CTR_TYPE_NUM: 6
+
+        cci_field_t:
+            type: struct
+            fields:
+                minbit:
+                    type: uint16_t
+                maxbit:
+                    type: uint16_t
+
+        cci_ctr_cache_map_t:
+            type: struct
+            comment: base counter map object
+            fields:
+                sid:
+                    type: uint32_t
+                    comment: Symbol ID
+                offset:
+                    type: uint32_t
+                    comment: Fixed part of symbol address
+                blktype:
+                    type: int
+                    comment: Symbol blktype
+                pipe_map:
+                    type: uint32_t
+                    comment: map of valid pipes
+                cmp_key:
+                    type: uint64_t
+                    comment: Compare key for map sorting
+                tbl_inst:
+                    type: int
+                    comment: Number of table instances
+                ctrtype:
+                    type: cci_ctr_type_id
+                    comment: Counter Type
+                is_mem:
+                    type: bool
+                    comment: Sym is memory
+                enable:
+                    type: bool
+                    comment: enable to update
+                clr_on_read:
+                    type: bool
+                    comment: clear-on-read for sbus reads
+                frmt_in_frmt:
+                    type: bool
+                    comment: Symbol is format in format
+                evict_mode:
+                    type: cci_evict_mode_t
+                    comment: Eviction Mode
+                clr_on_ser:
+                    type: bool
+                    comment: Cache clear from SER event
+                size:
+                    type: uint32_t
+                    comment: size,number of entries in counter Table
+                mode_size:
+                    type: uint32_t
+                    comment: size,number of entries in counter mode array
+                state:
+                    type: uint8_t
+                    comment: state of the pool, disable, enable, shadow
+                index_min:
+                    type: uint32_t
+                    comment: Minimum valid index
+                index_max:
+                    type: uint32_t
+                    comment: Maximum valid index
+                ctr_table_offset:
+                    type: uint32_t
+                    comment: ctr_table_offset,in counter Table
+                ctr_mode_offset:
+                    type: uint32_t
+                    comment: ctr_mode_offset,in counter mode array
+                field_num:
+                    type: uint32_t
+                    comment: field_num, # of counter fields
+                slim_field_num:
+                    type: uint32_t
+                    comment: slim_field_num, # of slim counter fields
+                pt_entry_wsize:
+                    type: uint32_t
+                    comment: physical entry size in words
+                pt_field:
+                    type: cci_field_t
+                    length: CTR_FIELD_NUM_MAX
+                    comment: physical field
+                lt_field:
+                    type: cci_field_t
+                    length: CTR_FIELD_NUM_MAX
+                    comment: logical field
+                normal_double_field_num:
+                    type: uint32_t
+                    comment: normal_double_field_num, # of normal_double counter fields
+
+        cci_ctr_cache_map_array_t:
+            type: struct
+            fields:
+                cnt:
+                    type: uint32_t
+                    comment: Number of entry nodes for a table
+                ctr_map_table:
+                    type: cci_ctr_cache_map_t
+                    comment: base counter map object
+                    table:
+                    size: cnt

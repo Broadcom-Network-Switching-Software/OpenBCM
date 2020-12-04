@@ -1,0 +1,221 @@
+BCM.0> init all; c l3_tunnel_ip6in6.c
+*** unit 0: configured for normal latency
+*** skip counter eviction start for now
+0:_bcm_th3_modules_init: bcm_init: skipped auth init
+0:_bcm_th3_modules_init: bcm_init: skipped bfd init
+    phy_chain_rx_lane_map_physical{89.0}=0x02134657
+    portmap_120=193:400
+    portmap_121=201:400
+    portmap_122=209:400
+    phy_chain_rx_lane_map_physical{73.0}=0x45230617
+    device_clock_frequency=1325
+    portmap_123=217:400
+    phy_chain_rx_lane_map_physical{105.0}=0x16073425
+    ctr_evict_enable=0
+    parity_correction=1
+    portmap_140=225:400
+    portmap_20=33:400
+    phy_chain_tx_lane_map_physical{177.0}=0x74615230
+    ccmdma_intr_enable=0
+    portmap_141=233:400
+    portmap_21=41:400
+    serdes_core_tx_polarity_flip_physical{193}=0xdc
+    portmap_142=241:400
+    portmap_118=258:10
+    portmap_22=49:400
+    portmap_143=249:400
+    portmap_119=264:10
+    phy_chain_tx_lane_map_physical{161.0}=0x34567210
+    portmap_23=57:400
+    serdes_core_tx_polarity_flip_physical{177}=0x86
+    serdes_core_tx_polarity_flip_physical{73}=0xcb
+    phy_chain_rx_lane_map_physical{193.0}=0x25713064
+    portmap_40=65:400
+    phy_chain_rx_lane_map_physical{57.0}=0x04152736
+    serdes_core_rx_polarity_flip_physical{193}=0x2c
+    portmap_41=73:400
+    serdes_core_tx_polarity_flip_physical{57}=0x59
+    portmap_42=81:400
+    ccm_dma_enable=0
+    pll_bypass=1
+    portmap_139=265:10
+    serdes_core_rx_polarity_flip_physical{177}=0x46
+    portmap_43=89:400
+    portmap_19=259:10
+    portmap_60=97:400
+    phy_chain_tx_lane_map_physical{145.0}=0x57463012
+    portmap_61=105:400
+    serdes_core_rx_polarity_flip_physical{73}=0x96
+    serdes_core_tx_polarity_flip_physical{105}=0x30
+    phy_chain_rx_lane_map_physical{177.0}=0x50142376
+    portmap_62=113:400
+    portmap_38=257:10
+    os=unix
+    portmap_159=266:10
+    init_all_modules=0
+    portmap_63=121:400
+    portmap_39=260:10
+    serdes_core_rx_polarity_flip_physical{57}=0x63
+    portmap_80=129:400
+    phy_chain_rx_lane_map_physical{161.0}=0x02475316
+    portmap_81=137:400
+    serdes_core_rx_polarity_flip_physical{105}=0x98
+    port_flex_enable=1
+    portmap_82=145:400
+    portmap_83=153:400
+    portmap_59=261:10
+    phy_enable=0
+    phy_chain_tx_lane_map_physical{89.0}=0x35147260
+    phy_null=1
+    mem_cache_enable=1
+    parity_enable=1
+    pbmp_xport_xe.0=0x8000f8000fc000f8000f8000f8000fc000f8001e
+    core_clock_frequency=1325
+    phy_chain_tx_lane_map_physical{73.0}=0x64753210
+    serdes_core_tx_polarity_flip_physical{89}=0xa1
+    phy_chain_rx_lane_map_physical{145.0}=0x71604352
+    load_firmware=0x2
+    portmap_79=262:10
+    serdes_core_tx_polarity_flip_physical{161}=0xc2
+    portmap_1=1:400
+    phy_chain_tx_lane_map_physical{105.0}=0x57463210
+    dpr_clock_frequency=1000
+    portmap_2=9:400
+    serdes_core_tx_polarity_flip_physical{145}=0x6f
+    portmap_3=17:400
+    portmap_99=263:10
+    portmap_100=161:400
+    portmap_4=25:400
+    serdes_core_rx_polarity_flip_physical{161}=0x14
+    phy_chain_tx_lane_map_physical{57.0}=0x43516270
+    portmap_101=169:400
+    serdes_core_rx_polarity_flip_physical{89}=0x3c
+    portmap_102=177:400
+    serdes_core_rx_polarity_flip_physical{145}=0x96
+    phy_chain_tx_lane_map_physical{193.0}=0x71435260
+    portmap_103=185:400
+Attach: Unit 0 (BCM56980_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2018 Broadcom
+Release: sdk-6.5.13 built 20180320 (Tue Mar 20 22:37:09 2018)
+From root@lc-sj1-3912:/projects/ntsw_sw10_scratch/sdkrel/regress/sdk-master/src/sdk.esw.slk
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0,
+       BCM56840_A0, BCM56840_B0,
+      
+      
+       BCM88732_A0, BCM56440_A0,
+       BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+      
+      
+       BCM56160_A0, BCM56270_A0, BCM56965_A0, BCM56970_A0,
+       BCM56870_A0, BCM56870_B0, BCM53570_A0, BCM53570_B0,
+       BCM56980_A0, BCM53540_A0, BCM56670_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5324/FE, BCM5348/FE,
+    BCM53242/FE, BCM53262/FE, BCM53101/FE, BCM53280/FE,
+    BCM53600/FE, BCM5400, BCM5401, BCM5402,
+    BCM5404, BCM5424/34, BCM5411, BCM5461,
+    BCM5464, BCM5466, BCM5478, BCM5488,
+    BCM54980, BCM54980, BCM54980, BCM54980,
+    BCM53314, BCM5482/801x, BCM54684, BCM54640,
+    BCM54682E, BCM54684E, BCM54685, BCM54616,
+    BCM54618E, BCM54618SE, BCM84707, BCM84073,
+    BCM84074, BCM84728, BCM84748, BCM84727,
+    BCM84747, BCM84762, BCM84764, BCM84042,
+    BCM84044, BCM8806X, BCM54182, BCM54185,
+    BCM54180, BCM54140, BCM54192, BCM54195,
+    BCM54190, BCM54194, BCM54210, BCM54220,
+    BCM54280, BCM54282, BCM54240, BCM54285
+    BCM5428X, BCM54290, BCM54292, BCM54294,
+    BCM54295, BCM54296, BCM5421S, BCM54680,
+    BCM53324, BCM53125, BCM53128, BCM53010,
+    BCM53018, BCM5302X, BCM53134, BCM56160-GPHY,
+    BCM53540-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM89500, BCM54640E, BCM54880E,
+    BCM54680E, BCM52681E, BCM8703, BCM8704,
+    BCM8705/24/25, BCM8706/8726, BCM8727, BCM8728/8747,
+    BCM8072, BCM8073, BCM8074, BCM8040,
+    BCM8481X, BCM84812, BCM84821, BCM84822,
+    BCM84823, BCM84833, BCM84834, BCM84835,
+    BCM84836, BCM84844, BCM84846, BCM84848,
+    BCM84858, BCM84856, BCM84860, BCM84861,
+    BCM84864, BCM84868, BCM84888, BCM84884,
+    BCM84888E, BCM84884E, BCM84881, BCM84880,
+    BCM84888S, BCM84887, BCM84886, BCM84885
+    BCM8750, BCM8752, BCM8754, BCM84740,
+    BCM84164, BCM84758, BCM84780, BCM84784,
+    BCM84318, BCM84328, BCM84793, BCM82328,
+    Furia, Huracan, Sesto, Madura,
+    BCM82780, copper sfp
+   
+Completed test setup successfully.
+Completed configuration(i.e executing config_l3_tunnel_ip6in6()) successfully.
+Current header mode for unit 0 is now Ieee (0).
+
+Sending packet to access_port:1
+Packet from data=<>, length=68
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000001} {000000001111} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 86dd 6030 0000 0002 3bff aa00 0000 0000 
+[bcmPW.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0001 bb00 0000 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0001 0001 0cb1 f608 
+[bcmPW.0]Packet[1]: data[0040]: 0000 0000 
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> IP version 6
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000002222} {000000000002} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 86dd 6030 0000 002a 290a ee00 0000 0000 
+[bcmPW.0]Packet[2]: data[0020]: 0000 0000 0000 0000 0001 ff00 0000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0001 6030 0000 0002 
+[bcmPW.0]Packet[2]: data[0040]: 3bfe aa00 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0050]: 0001 bb00 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0060]: 0001 0001 0cb1 f608 0000 0000 
+[bcmPW.0]Packet[2]: length 108 (108). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0016> IP version 6
+
+Sending packet to network_port:2
+Packet from data=<>, length=116
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[3]: data[0010]: 86dd 6030 0000 002e 290a cc00 0000 0000 
+[bcmPW.0]Packet[3]: data[0020]: 0000 0000 0000 0000 0001 dd00 0000 0000 
+[bcmPW.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0001 6030 0000 0006 
+[bcmPW.0]Packet[3]: data[0040]: 3bfe bb00 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0050]: 0001 aa00 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0060]: 0001 0000 0000 0000 114c 3f26 0000 0000 
+[bcmPW.0]Packet[3]: data[0070]: 0000 0000 
+[bcmPW.0]Packet[3]: length 116 (116). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 1. dest-mod 0. src-port 2. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> IP version 6
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000001111} {000000000001} 8100 0015
+[bcmPW.0]Packet[4]: data[0010]: 86dd 6030 0000 0006 3b09 bb00 0000 0000 
+[bcmPW.0]Packet[4]: data[0020]: 0000 0000 0000 0000 0001 aa00 0000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0001 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0040]: 114c 3f26 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0015> IP version 6
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

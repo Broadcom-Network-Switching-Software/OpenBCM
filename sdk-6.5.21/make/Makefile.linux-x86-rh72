@@ -1,0 +1,11 @@
+# $Id: Makefile.linux-x86-rh72,v 1.4 2011/07/12 01:46:03 reldeeb Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# Default Linux include directory
+ifeq (,$(LINUX_INCLUDE))
+LINUX_INCLUDE = /projects/ntsw-tools/linux/headers/rh-7.2-x86/include
+endif
+
+include ${SDK}/make/Makefile.linux-x86-common

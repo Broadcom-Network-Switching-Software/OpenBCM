@@ -1,0 +1,243 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+*/
+
+
+#ifndef __SOC_PPC_API_FRWRD_IPV6_INCLUDED__
+
+#define __SOC_PPC_API_FRWRD_IPV6_INCLUDED__
+
+
+
+
+#include <soc/dpp/SAND/Utils/sand_header.h>
+
+#include <soc/dpp/SAND/Management/sand_general_macros.h>
+#include <soc/dpp/SAND/Management/sand_error_code.h>
+
+#include <soc/dpp/PPC/ppc_api_general.h>
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE_FEC = 0,
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE_ACTION_PROFILE = 1,
+  
+  SOC_PPC_NOF_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPES = 2
+}SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FEC_ID fec_id;
+  
+  SOC_PPC_ACTION_PROFILE action_profile;
+
+} SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE type;
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL value;
+
+} SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION uc_default_action;
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION mc_default_action;
+
+} SOC_PPC_FRWRD_IPV6_ROUTER_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_INFO router_info;
+
+} SOC_PPC_FRWRD_IPV6_GLBL_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_IPV6_ROUTER_INFO router_info;
+
+} SOC_PPC_FRWRD_IPV6_VRF_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_IPV6_SUBNET subnet;
+
+  
+  uint8 route_scale;
+
+} SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_IPV6_SUBNET group;
+  
+  SOC_SAND_PP_MASKED_VAL inrif;
+  
+  SOC_SAND_PP_IPV6_SUBNET source;
+  
+  SOC_PPC_VRF_ID vrf_ndx;
+  
+  uint32 compressed_sip;
+
+} SOC_PPC_FRWRD_IPV6_MC_ROUTE_KEY;
+
+
+typedef SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY                 SOC_PPC_FRWRD_IPV6_VPN_ROUTE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_SAND_PP_DESTINATION_ID dest_id;
+
+  uint32 flags;
+
+} SOC_PPC_FRWRD_IPV6_MC_ROUTE_INFO;
+
+
+
+
+
+
+
+
+
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_ROUTER_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_GLBL_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_VRF_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_VRF_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_MC_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_MC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_VPN_ROUTE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_VPN_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_MC_ROUTE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_IPV6_MC_ROUTE_INFO *info
+  );
+
+#if SOC_PPC_DEBUG_IS_LVL1
+
+const char*
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_TYPE enum_val
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_VAL *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_ROUTER_DEFAULT_ACTION *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_ROUTER_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_ROUTER_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_GLBL_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_VRF_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_VRF_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_UC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_MC_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_MC_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_VPN_ROUTE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_VPN_ROUTE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_IPV6_MC_ROUTE_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_IPV6_MC_ROUTE_INFO *info
+  );
+#endif 
+
+
+
+#include <soc/dpp/SAND/Utils/sand_footer.h>
+
+
+#endif
+

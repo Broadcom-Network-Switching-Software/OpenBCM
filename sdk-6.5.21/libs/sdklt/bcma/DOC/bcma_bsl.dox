@@ -1,0 +1,41 @@
+/*! \page bcma_bsl BSL Output Hooks Sample Implementation
+
+\section bsl_intro Overview
+
+The sample implementation of the BSL output hooks are fully functional
+and used across the SDK sample applications.
+
+The implementation supports multiple sinks as well as a set of CLI
+commands to enable and disable log messages based on component and
+severity.
+
+Below is a brief description of each module.
+
+\subsection bslmgmt bcma_bslmgmt.c
+
+This is the implementation of the BSL client hooks.  Customers are
+likely to replace this file to hook into the existing logging system
+for their software.
+
+For a complete API reference, please see \ref bcma_bslmgmt.h.
+
+\subsection bslenable bcma_bslenable.c
+
+Implementation of currently enabled severity state for the various BSL
+sources (SDK components). The BSL "check" hook will consult this
+module to determine if a log message should be sent to the output hook
+or not.
+
+Note that the output hook may perform additional filtering based on
+meta data and output sink.
+
+For a complete API reference, please see \ref bcma_bslenable.h.
+
+\subsection bslsink bcma_bslsink.c
+
+Implementation to support multiple output sinks. The actual sinks can
+be found in the \c sinks sub-directory.
+
+For a complete API reference, please see \ref bcma_bslsink.h.
+
+*/

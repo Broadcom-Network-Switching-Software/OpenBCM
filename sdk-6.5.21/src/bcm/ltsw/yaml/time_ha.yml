@@ -1,0 +1,21 @@
+#
+# file: time_ha.yml
+# Time YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_time:
+        bcmint_time_intf_ha_db_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                cnt:
+                    type: int
+                    comment: Reference cnt.

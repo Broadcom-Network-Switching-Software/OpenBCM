@@ -1,0 +1,256 @@
+BCM.0>c td4x9_hsdk_flexdigest_ecmp.c
+config show; attach; cancun stat; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Unknown command: cancun
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200811 (Tue Aug 11 11:22:23 2020)
+From da953591@xl-sj1-30:/projects/ntsw-sw-ae/home/daithal/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_INA_2_5_3
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_flexdigest_ecmp(): ** start **
+int egr_obj_id = 100001 (0x186a1)
+int egr_obj_id = 100002 (0x186a2)
+int egr_obj_id = 100003 (0x186a3)
+int egr_obj_id = 100004 (0x186a4)
+int egr_obj_id = 100005 (0x186a5)
+int egr_obj_id = 100006 (0x186a6)
+int ecmp_id_1 = 232769 (0x38d41)
+int ecmp_id_2 = 232770 (0x38d42)
+int ecmp_obj_id = 200001 (0x30d41)
+~~ #2) config_flexdigest_ecmp(): ** end **
+~~ #3) verify(): ** start **
+Verify 20 UC pkts from port 41 routing to ECMP group
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd750a3a40010a3a42740000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd740a3a40010a3a42750000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd730a3a40010a3a42760000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd720a3a40010a3a42770000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd710a3a40010a3a42780000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd700a3a40010a3a42790000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6f0a3a40010a3a427a0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6e0a3a40010a3a427b0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6d0a3a40010a3a427c0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6c0a3a40010a3a427d0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6b0a3a40010a3a427e0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd6a0a3a40010a3a427f0000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd690a3a40010a3a42800000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd680a3a40010a3a42810000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd670a3a40010a3a42820000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd660a3a40010a3a42830000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd650a3a40010a3a42840000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd640a3a40010a3a42850000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+tx 1 pbm=41 data=0x000000000001002a1077770008004500003c67620000ff01bd630a3a40010a3a42860000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869;sleep 1;
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+Sleeping for 1 second
+Executing 'l2 show'
+mac=00:00:00:00:fe:02 vlan=11 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:00:05 vlan=14 GPORT=0x2 modid=0 port=2/ce1 Hit
+mac=00:00:00:00:00:03 vlan=12 GPORT=0x47 modid=0 port=71/ce47 Hit
+mac=00:00:00:00:fe:06 vlan=15 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:fe:04 vlan=13 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:fe:07 vlan=16 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:fe:05 vlan=14 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:00:02 vlan=11 GPORT=0x4e modid=0 port=78/xe1 Hit
+mac=00:2a:10:77:77:00 vlan=17 GPORT=0x29 modid=0 port=41/ce25 Hit
+mac=00:00:00:00:00:06 vlan=15 GPORT=0x2b modid=0 port=43/ce27 Hit
+mac=00:00:00:00:00:07 vlan=16 GPORT=0x26 modid=0 port=38/xe0 Hit
+mac=00:00:00:00:00:04 vlan=13 GPORT=0x6 modid=0 port=6/ce5 Hit
+mac=00:00:00:00:fe:03 vlan=12 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+Executing 'l3 egress show'
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:fe:02      2    78            0 16383    overlay   no
+
+100002  00:00:00:00:fe:03      3    71            0 16383    overlay   no
+
+100003  00:00:00:00:fe:04      4     6            0 16383    overlay   no
+
+100004  00:00:00:00:fe:05      5     2            0 16383    overlay   no
+
+100005  00:00:00:00:fe:06      6    43            0 16383    overlay   no
+
+100006  00:00:00:00:fe:07      7    38            0 16383    overlay   no
+
+Executing 'l3 ecmp show'
+ECMP group 200001(OverLay):
+        Dynamic mode 0, Flags 0x8, Max path 2
+        Interfaces: (member count 2)
+        {232769} {232770}
+ECMP group 232769(UnderLay):
+        Dynamic mode 0, Flags 0x10, Max path 128
+        Interfaces: (member count 3)
+        {100001} {100002} {100003}
+ECMP group 232770(UnderLay):
+        Dynamic mode 0, Flags 0x10, Max path 128
+        Interfaces: (member count 3)
+        {100004} {100005} {100006}
+Executing 'show c'
+XLMIB_TBYT.ce1                        :                   492                +492
+XLMIB_RBYT.ce1                        :                   492                +492
+XLMIB_TPOK.ce1                        :                     6                  +6
+XLMIB_RPOK.ce1                        :                     6                  +6
+XLMIB_TVLN.ce1                        :                     6                  +6
+XLMIB_RVLN.ce1                        :                     6                  +6
+XLMIB_TUCA.ce1                        :                     6                  +6
+XLMIB_RUCA.ce1                        :                     6                  +6
+XLMIB_TPKT.ce1                        :                     6                  +6
+XLMIB_RPKT.ce1                        :                     6                  +6
+XLMIB_T127.ce1                        :                     6                  +6
+XLMIB_R127.ce1                        :                     6                  +6
+XLMIB_RPRM.ce1                        :                     6                  +6
+UC_PERQ_PKT(0).ce1                    :                     6                  +6
+UC_PERQ_BYTE(0).ce1                   :                   492                +492
+XLMIB_TBYT.ce5                        :                   246                +246
+XLMIB_RBYT.ce5                        :                   246                +246
+XLMIB_TPOK.ce5                        :                     3                  +3
+XLMIB_RPOK.ce5                        :                     3                  +3
+XLMIB_TVLN.ce5                        :                     3                  +3
+XLMIB_RVLN.ce5                        :                     3                  +3
+XLMIB_TUCA.ce5                        :                     3                  +3
+XLMIB_RUCA.ce5                        :                     3                  +3
+XLMIB_TPKT.ce5                        :                     3                  +3
+XLMIB_RPKT.ce5                        :                     3                  +3
+XLMIB_T127.ce5                        :                     3                  +3
+XLMIB_R127.ce5                        :                     3                  +3
+XLMIB_RPRM.ce5                        :                     3                  +3
+UC_PERQ_PKT(0).ce5                    :                     3                  +3
+UC_PERQ_BYTE(0).ce5                   :                   246                +246
+XLMIB_TBYT.xe0                        :                    82                 +82
+XLMIB_RBYT.xe0                        :                    82                 +82
+XLMIB_TPOK.xe0                        :                     1                  +1
+XLMIB_RPOK.xe0                        :                     1                  +1
+XLMIB_TVLN.xe0                        :                     1                  +1
+XLMIB_RVLN.xe0                        :                     1                  +1
+XLMIB_TUCA.xe0                        :                     1                  +1
+XLMIB_RUCA.xe0                        :                     1                  +1
+XLMIB_TPKT.xe0                        :                     1                  +1
+XLMIB_RPKT.xe0                        :                     1                  +1
+XLMIB_T127.xe0                        :                     1                  +1
+XLMIB_R127.xe0                        :                     1                  +1
+XLMIB_RPRM.xe0                        :                     1                  +1
+UC_PERQ_PKT(0).xe0                    :                     1                  +1
+UC_PERQ_BYTE(0).xe0                   :                    82                 +82
+XLMIB_TBYT.ce25                       :                 1,560              +1,560
+XLMIB_RBYT.ce25                       :                 1,560              +1,560
+XLMIB_TPOK.ce25                       :                    20                 +20
+XLMIB_RPOK.ce25                       :                    20                 +20
+XLMIB_TUCA.ce25                       :                    20                 +20
+XLMIB_RUCA.ce25                       :                    20                 +20
+XLMIB_TPKT.ce25                       :                    20                 +20
+XLMIB_RPKT.ce25                       :                    20                 +20
+XLMIB_T127.ce25                       :                    20                 +20
+XLMIB_R127.ce25                       :                    20                 +20
+XLMIB_RPRM.ce25                       :                    20                 +20
+XLMIB_TBYT.ce27                       :                   164                +164
+XLMIB_RBYT.ce27                       :                   164                +164
+XLMIB_TPOK.ce27                       :                     2                  +2
+XLMIB_RPOK.ce27                       :                     2                  +2
+XLMIB_TVLN.ce27                       :                     2                  +2
+XLMIB_RVLN.ce27                       :                     2                  +2
+XLMIB_TUCA.ce27                       :                     2                  +2
+XLMIB_RUCA.ce27                       :                     2                  +2
+XLMIB_TPKT.ce27                       :                     2                  +2
+XLMIB_RPKT.ce27                       :                     2                  +2
+XLMIB_T127.ce27                       :                     2                  +2
+XLMIB_R127.ce27                       :                     2                  +2
+XLMIB_RPRM.ce27                       :                     2                  +2
+UC_PERQ_PKT(0).ce27                   :                     2                  +2
+UC_PERQ_BYTE(0).ce27                  :                   164                +164
+XLMIB_TBYT.ce47                       :                   328                +328
+XLMIB_RBYT.ce47                       :                   328                +328
+XLMIB_TPOK.ce47                       :                     4                  +4
+XLMIB_RPOK.ce47                       :                     4                  +4
+XLMIB_TVLN.ce47                       :                     4                  +4
+XLMIB_RVLN.ce47                       :                     4                  +4
+XLMIB_TUCA.ce47                       :                     4                  +4
+XLMIB_RUCA.ce47                       :                     4                  +4
+XLMIB_TPKT.ce47                       :                     4                  +4
+XLMIB_RPKT.ce47                       :                     4                  +4
+XLMIB_T127.ce47                       :                     4                  +4
+XLMIB_R127.ce47                       :                     4                  +4
+XLMIB_RPRM.ce47                       :                     4                  +4
+UC_PERQ_PKT(0).ce47                   :                     4                  +4
+UC_PERQ_BYTE(0).ce47                  :                   328                +328
+XLMIB_TBYT.xe1                        :                   328                +328
+XLMIB_RBYT.xe1                        :                   328                +328
+XLMIB_TPOK.xe1                        :                     4                  +4
+XLMIB_RPOK.xe1                        :                     4                  +4
+XLMIB_TVLN.xe1                        :                     4                  +4
+XLMIB_RVLN.xe1                        :                     4                  +4
+XLMIB_TUCA.xe1                        :                     4                  +4
+XLMIB_RUCA.xe1                        :                     4                  +4
+XLMIB_TPKT.xe1                        :                     4                  +4
+XLMIB_RPKT.xe1                        :                     4                  +4
+XLMIB_T127.xe1                        :                     4                  +4
+XLMIB_R127.xe1                        :                     4                  +4
+XLMIB_RPRM.xe1                        :                     4                  +4
+UC_PERQ_PKT(0).xe1                    :                     4                  +4
+UC_PERQ_BYTE(0).xe1                   :                   328                +328
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

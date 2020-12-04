@@ -1,0 +1,10 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56782_A0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56782, BCM56782_VENDOR_ID, BCM56782_DEVICE_ID, BCM56782_REV_A0, \
+                     0, 0, \
+                     bcm56780_a0, bcm56782_a0, bcm56782_a0, \
+                     "Trident4-X9", "BCM56780", \
+                     "8 Tb/s 160x50G-PAM4 Programmable Switch w/MACsec", 0, 0)
+#endif
+#endif
+

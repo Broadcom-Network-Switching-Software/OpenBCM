@@ -1,0 +1,50 @@
+rack# ./bcm.user -y ./th4_hsdk_mmu_config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201021 (Wed Oct 21 03:35:53 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0>
+BCM.0> cint th4_hsdk_mmu_ebst_mc_queue.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201021 (Wed Oct 21 03:35:53 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE, BCM56996_A0_BASE
+
+Sending one unicast packet to ingress port : 1
+packet is DLF to egress port 2, and bouncing back and forth between the 2 ports
+Packet generate, length=2500
+
+ Total Array Count from ITM 0 is 1000
+
+Reading a Random EBST DATA Entry : 744
+-----
+ Bytes Value from Entry 744 is 2794
+
+ Green Drop State from Entry 744 is in ALLOW State
+
+ Yellow Drop State from Entry 744 is in ALLOW State
+
+ RED Drop State from Entry 744 is in ALLOW State
+
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+

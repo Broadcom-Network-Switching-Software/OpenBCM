@@ -1,0 +1,23 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport EP Recirculate RC (run commands) file
+#
+#       These are default commands that are for TechSupport EP Recirculate.
+#
+
+# Show EP Recirculate related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show EP Recirculate Profile LTs.
+local lt MON_REDIRECT_PROFILE_INFO;                 $traverse_lt;
+local lt MON_REDIRECT_PROFILE;                      $traverse_lt;
+
+# Show EP Recirculate Drop Event Control LTs.
+local lt MON_REDIRECT_DROP_EVENT_CONTROL;           $traverse_lt;
+
+# Show EP Recirculate Trace Event Control LTs.
+local lt MON_EGR_REDIRECT_TRACE_EVENT;              $traverse_lt;
+local lt MON_EGR_REDIRECT_TRACE_EVENT_CONTROL;      $traverse_lt;

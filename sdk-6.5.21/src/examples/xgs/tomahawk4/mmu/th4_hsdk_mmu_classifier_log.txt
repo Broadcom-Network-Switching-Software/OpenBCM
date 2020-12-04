@@ -1,0 +1,144 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[55469]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[34591]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+BCM.0> c th4_hsdk_mmu_classifier.c
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+
+==> Set up classifier ...
+Ingress port : 1
+Egress port: 2
+Created classifier ID: 0x10000001
+Printing after bcm_cosq_classifier_mapping_multi_get
+int[48] out_priority_array = {
+    int out_priority_array[0] = 0 (0x0)
+    int out_priority_array[1] = 1 (0x1)
+    int out_priority_array[2] = 2 (0x2)
+    int out_priority_array[3] = 3 (0x3)
+    int out_priority_array[4] = 4 (0x4)
+    int out_priority_array[5] = 5 (0x5)
+    int out_priority_array[6] = 6 (0x6)
+    int out_priority_array[7] = 7 (0x7)
+    int out_priority_array[8] = 8 (0x8)
+    int out_priority_array[9] = 9 (0x9)
+    int out_priority_array[10] = 10 (0xa)
+    int out_priority_array[11] = 11 (0xb)
+    int out_priority_array[12] = 12 (0xc)
+    int out_priority_array[13] = 13 (0xd)
+    int out_priority_array[14] = 14 (0xe)
+    int out_priority_array[15] = 15 (0xf)
+    int out_priority_array[16] = 0 (0x0)
+    int out_priority_array[17] = 1 (0x1)
+    int out_priority_array[18] = 2 (0x2)
+    int out_priority_array[19] = 3 (0x3)
+    int out_priority_array[20] = 4 (0x4)
+    int out_priority_array[21] = 5 (0x5)
+    int out_priority_array[22] = 6 (0x6)
+    int out_priority_array[23] = 7 (0x7)
+    int out_priority_array[24] = 8 (0x8)
+    int out_priority_array[25] = 9 (0x9)
+    int out_priority_array[26] = 10 (0xa)
+    int out_priority_array[27] = 11 (0xb)
+    int out_priority_array[28] = 12 (0xc)
+    int out_priority_array[29] = 13 (0xd)
+    int out_priority_array[30] = 14 (0xe)
+    int out_priority_array[31] = 15 (0xf)
+    int out_priority_array[32] = 0 (0x0)
+    int out_priority_array[33] = 1 (0x1)
+    int out_priority_array[34] = 2 (0x2)
+    int out_priority_array[35] = 3 (0x3)
+    int out_priority_array[36] = 4 (0x4)
+    int out_priority_array[37] = 5 (0x5)
+    int out_priority_array[38] = 6 (0x6)
+    int out_priority_array[39] = 7 (0x7)
+    int out_priority_array[40] = 8 (0x8)
+    int out_priority_array[41] = 9 (0x9)
+    int out_priority_array[42] = 10 (0xa)
+    int out_priority_array[43] = 11 (0xb)
+    int out_priority_array[44] = 12 (0xc)
+    int out_priority_array[45] = 13 (0xd)
+    int out_priority_array[46] = 14 (0xe)
+    int out_priority_array[47] = 15 (0xf)
+}
+int[48] out_cosq_array = {
+    int out_cosq_array[0] = 2 (0x2)
+    int out_cosq_array[1] = 6 (0x6)
+    int out_cosq_array[2] = 5 (0x5)
+    int out_cosq_array[3] = 4 (0x4)
+    int out_cosq_array[4] = 3 (0x3)
+    int out_cosq_array[5] = 2 (0x2)
+    int out_cosq_array[6] = 1 (0x1)
+    int out_cosq_array[7] = 3 (0x3)
+    int out_cosq_array[8] = 4 (0x4)
+    int out_cosq_array[9] = 3 (0x3)
+    int out_cosq_array[10] = 2 (0x2)
+    int out_cosq_array[11] = 1 (0x1)
+    int out_cosq_array[12] = 1 (0x1)
+    int out_cosq_array[13] = 2 (0x2)
+    int out_cosq_array[14] = 3 (0x3)
+    int out_cosq_array[15] = 4 (0x4)
+    int out_cosq_array[16] = 2 (0x2)
+    int out_cosq_array[17] = 1 (0x1)
+    int out_cosq_array[18] = 2 (0x2)
+    int out_cosq_array[19] = 3 (0x3)
+    int out_cosq_array[20] = 3 (0x3)
+    int out_cosq_array[21] = 1 (0x1)
+    int out_cosq_array[22] = 2 (0x2)
+    int out_cosq_array[23] = 3 (0x3)
+    int out_cosq_array[24] = 3 (0x3)
+    int out_cosq_array[25] = 1 (0x1)
+    int out_cosq_array[26] = 2 (0x2)
+    int out_cosq_array[27] = 3 (0x3)
+    int out_cosq_array[28] = 3 (0x3)
+    int out_cosq_array[29] = 1 (0x1)
+    int out_cosq_array[30] = 2 (0x2)
+    int out_cosq_array[31] = 3 (0x3)
+    int out_cosq_array[32] = 2 (0x2)
+    int out_cosq_array[33] = 1 (0x1)
+    int out_cosq_array[34] = 2 (0x2)
+    int out_cosq_array[35] = 3 (0x3)
+    int out_cosq_array[36] = 3 (0x3)
+    int out_cosq_array[37] = 1 (0x1)
+    int out_cosq_array[38] = 2 (0x2)
+    int out_cosq_array[39] = 3 (0x3)
+    int out_cosq_array[40] = 3 (0x3)
+    int out_cosq_array[41] = 1 (0x1)
+    int out_cosq_array[42] = 2 (0x2)
+    int out_cosq_array[43] = 3 (0x3)
+    int out_cosq_array[44] = 3 (0x3)
+    int out_cosq_array[45] = 1 (0x1)
+    int out_cosq_array[46] = 2 (0x2)
+    int out_cosq_array[47] = 3 (0x3)
+}
+int $$ = 1 (0x1)
+int $$ = 0 (0x0)
+==> Verify unicast pkt from port 1 forwarding to port 2
+Packet from data=<>, length=68
+FlexCtr Get : 1 packets / 72 bytes
+Per queue packet counter check successful.
+==>Cleaning up...
+Classifier mapping was not found after mapping_clear as expected
+bcm_error_t $$ = BCM_E_NONE (0)
+

@@ -1,0 +1,39 @@
+#
+# file: switch_ha.yml
+# Switch YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    BCMINT_SWITCH_PBMP_PORT_MAX: 512
+
+component:
+    bcmint_switch:
+        bcmint_switch_control_value_map_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                type:
+                    type: int
+                    comment: Switch control type.
+                value:
+                    type: int
+                    comment: Switch control value.
+        bcmint_switch_control_port_value_map_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                type:
+                    type: int
+                    comment: Switch control type.
+                value:
+                    type: int
+                    length: BCMINT_SWITCH_PBMP_PORT_MAX
+                    comment: Switch control value.

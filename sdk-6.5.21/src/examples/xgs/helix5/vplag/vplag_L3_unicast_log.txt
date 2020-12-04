@@ -1,0 +1,420 @@
+BCM.0> exit
+rack# ./bcm.user
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190206 (Wed Feb  6 11:07:03 2019)
+From hg941859@xl-blr-06:/projects/faes_ext/haribabu/SDK/master-sdk
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+DMA pool size: 33554432
+PCI unit 0: Dev 0xb375, Rev 0x01, Chip BCM56375_A0, Driver BCM56370_A0
+SOC unit 0 attached to PCI device BCM56375_A0
+rc: unit 0 device BCM56375_A0
+Loading M0 Firmware located at ../../../../rc/cmicfw/linkscan_led_fw.bin
+Loading M0 Firmware located at ../../../../rc/cmicfw/custom_led.bin
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.05
+
+	CMH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CCH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CEH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+rc: MMU initialized
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0> c /projects/faes_ext/haribabu/SDK/master-sdk/src/examples/xgs/maverick2/vplag/vplag_L3_unicast.c
+execute(): Start
+config show; attach; cancun stat; version
+    portmap_8=8:2.5
+    portmap_9=9:2.5
+    portmap_10=10:2.5
+    portmap_11=11:2.5
+    portmap_20=20:2.5
+    portmap_12=12:2.5
+    portmap_21=21:2.5
+    portmap_13=13:2.5
+    portmap_30=30:2.5
+    portmap_22=22:2.5
+    portmap_14=14:2.5
+    portmap_31=31:2.5
+    portmap_23=23:2.5
+    portmap_15=15:2.5
+    portmap_40=52:10
+    portmap_32=32:2.5
+    portmap_24=24:2.5
+    portmap_16=16:2.5
+    l3_ecmp_levels=2
+    port_gmii_mode_33=2
+    port_gmii_mode_17=2
+    portmap_41=53:10
+    portmap_33=33:2.5
+    portmap_25=25:2.5
+    portmap_17=17:2.5
+    portmap_50=73:100
+    portmap_42=54:10
+    portmap_34=34:2.5
+    portmap_26=26:2.5
+    portmap_18=18:2.5
+    portmap_51=69:100
+    portmap_43=55:10
+    portmap_35=35:2.5
+    portmap_27=27:2.5
+    portmap_19=19:2.5
+    portmap_44=56:10
+    portmap_36=36:2.5
+    portmap_28=28:2.5
+    port_gmii_mode_1=2
+    portmap_45=57:10
+    portmap_37=49:10
+    portmap_29=29:2.5
+    pbmp_xport_xe=0x1fffffffffffffe
+    portmap_46=58:10
+    portmap_38=50:10
+    os=unix
+    portmap_55=61:10
+    portmap_47=59:10
+    portmap_39=51:10
+    portmap_56=62:10
+    portmap_48=60:10
+    core_clock_frequency=893
+    mmu_lossless=0
+    portmap_1=1:2.5
+    portmap_2=2:2.5
+    portmap_3=3:2.5
+    portmap_4=4:2.5
+    portmap_5=5:2.5
+    portmap_6=6:2.5
+    portmap_7=7:2.5
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.05
+
+	CMH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CCH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+	CEH: LOADED
+	Ver: 03.00.05
+	SDK Ver: 06.05.17
+
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190206 (Wed Feb  6 11:07:03 2019)
+From hg941859@xl-blr-06:/projects/faes_ext/haribabu/SDK/master-sdk
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+      
+       BCM88732_A0,
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,
+      
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,
+       BCM56260_A0, BCM56260_B0,
+      
+      
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM56870_B0,
+       BCM53570_A0, BCM53570_B0, BCM56980_A0, BCM56980_B0,
+       BCM53540_A0, BCM56670_A0, BCM56670_B0, BCM56370_A0,
+       BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+   
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_vplag_l3_unicast(): ** start **
+int $$ = 0 (0x0)
+int $$ = 2047 (0x7ff)
+int $$ = 2113 (0x841)
+int $$ = 2367 (0x93f)
+trunk id=2047
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+trunk id=2367
+
+ bcm_l3_intf_create = Ok, R1_intf=11 
+
+ bcm_l3_intf_create = Ok, R1_intf=22 
+
+ bcm_l3_egress_create = Ok, egr_obj_acc1=400005 
+
+ bcm_l3_egress_create = Ok, egr_obj_acc1=400006 
+
+ bcm_l3_egress_create = Ok, egr_obj_acc1=400007 
+
+ bcm_l3_egress_multipath_create = Ok 
+
+ vplag_l3_host_add = Ok, R1_nh_ip_1=16843009 
+
+ vplag_l3_host_add = Ok, R1_nh_ip_2=16843010 
+
+ vplag_l3_host_add = Ok, R2_nh_ip_1=33686018 
+
+ vplag_l3_host_add = Ok, R2_nh_ip_2=33686019 
+~~~ #2) config_vplag_l3_unicast(): ** end **
+~~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1	ports cpu,ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dffffffffffff), untagged ce,ge,xe,qsgmii (0x000000000000000000000000000000000000000000000000018dfffffffffffe) MCAST_FLOOD_UNKNOWN
+vlan 2	ports ge0-ge1,qsgmii0-qsgmii1 (0x0000000000000000000000000000000000000000000000000000000000000006), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_ALL
+vlan 3	ports none (0x0000000000000000000000000000000000000000000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_ALL
+mac=00:00:00:00:00:22 vlan=3 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+mac=00:00:00:00:00:11 vlan=2 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT    H/W Index
+1     0    1.1.1.1          00:00:00:00:00:00  200768    0    0         0 n      1008       (ECMP)
+2     0    1.1.1.2          00:00:00:00:00:00  200768    0    0         0 n      3080       (ECMP)
+3     0    2.2.2.2          00:00:00:00:00:00  400007    0    0         0 n      5288 
+4     0    2.2.2.3          00:00:00:00:00:00  400007    0    0         0 n      6812 
+Free L3INTF entries: 8188
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     11    0     0     2    00:00:00:00:00:11  16383 0    0     0     0    
+0     22    0     0     3    00:00:00:00:00:22  16383 0    0     0     0    
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+400005  00:00:00:00:11:11    2   11     1   -1        -1   no   no    1   no
+400006  00:00:00:00:11:11    2   11     2   -1        -1   no   no    1   no
+400007  00:00:00:00:22:22    3   22     3    0        -1   no   no    2   no
+Device supports 2112 trunk groups:
+  2048 front panel trunks (0..2047), 256 ports/trunk
+  64 fabric trunks (2048..2111), 64 ports/trunk
+trunk 2047: (front panel, 1 ports)=ge0 dlf=any mc=any ipmc=any psc=srcmac (0x1)
+
+a) Sending packet with ETAG:0xc, VID:3, DIP:2.2.2.2 & SIP:1.1.1.1 to port:3
+
+Expected Result: Port1 receive etag 0xb, VID 2 packet and observe 'l2 show' for l2 address learning and 'l3 l3table show' for DIP 2.2.2.3 hit
+Packet from data=<>, length=68
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000022} {000000002222} 8888 0000
+[bcmPW.0]Packet[1]: data[0010]: 000c 0000 8100 0003 0800 4500 002e 0000 
+[bcmPW.0]Packet[1]: data[0020]: 0000 4011 74ba 0202 0202 0101 0101 003f 
+[bcmPW.0]Packet[1]: data[0030]: 003f 001a b0e5 0001 0001 0203 2fb3 acf2 
+[bcmPW.0]Packet[1]: data[0040]: 03e2 238d 
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 3. cos 0. prio_int 0. vlan 3. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -1946157054. src-gport -1946157053. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:22:22> Untagged Packet HP LanProbe test
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000001111} {000000000011} 8888 0000
+[bcmPW.0]Packet[2]: data[0010]: 000b 0000 8100 0002 0800 4500 002e 0000 
+[bcmPW.0]Packet[2]: data[0020]: 0000 3f11 75ba 0202 0202 0101 0101 003f 
+[bcmPW.0]Packet[2]: data[0030]: 003f 001a b0e5 0001 0001 0203 2fb3 acf2 
+[bcmPW.0]Packet[2]: data[0040]: f9b8 b246 
+[bcmPW.0]Packet[2]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 2. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-trunk 2047. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:11> Untagged Packet HP LanProbe test
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			136		   +136 	    133/s
+RUC_64.ge0		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ge0    :			  1		     +1 	      1/s
+TDBGC4_64.ge0		    :			  1		     +1 	      1/s
+GR127.ge0		    :			  1		     +1 	      1/s
+GRPKT.ge0		    :			  1		     +1 	      1/s
+GRBYT.ge0		    :			 68		    +68 	     67/s
+GRUC.ge0		    :			  1		     +1 	      1/s
+GRPOK.ge0		    :			  1		     +1 	      1/s
+GT127.ge0		    :			  1		     +1 	      1/s
+GTPKT.ge0		    :			  1		     +1 	      1/s
+GTBYT.ge0		    :			 68		    +68 	     67/s
+GTUC.ge0		    :			  1		     +1 	      1/s
+GTPOK.ge0		    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ge0	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ge0	    :			 68		    +68 	     67/s
+RIPC4_64.ge2		    :			  1		     +1 	      1/s
+RUC_64.ge2		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ge2    :			  1		     +1 	      1/s
+GR127.ge2		    :			  1		     +1 	      1/s
+GRPKT.ge2		    :			  1		     +1 	      1/s
+GRBYT.ge2		    :			 68		    +68 	     67/s
+GRUC.ge2		    :			  1		     +1 	      1/s
+GRPOK.ge2		    :			  1		     +1 	      1/s
+GT127.ge2		    :			  1		     +1 	      1/s
+GTPKT.ge2		    :			  1		     +1 	      1/s
+GTBYT.ge2		    :			 68		    +68 	     67/s
+GTUC.ge2		    :			  1		     +1 	      1/s
+GTPOK.ge2		    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ge2	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ge2	    :			 68		    +68 	     67/s
+mac=00:00:00:00:22:22 vlan=3 GPORT=0x8c000003 port=0x8c000003(extender) Hit
+mac=00:00:00:00:00:22 vlan=3 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:00:11 vlan=2 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT    H/W Index
+1     0    1.1.1.1          00:00:00:00:00:00  200768    0    0         0 y      1008       (ECMP)
+2     0    1.1.1.2          00:00:00:00:00:00  200768    0    0         0 n      3080       (ECMP)
+3     0    2.2.2.2          00:00:00:00:00:00  400007    0    0         0 y      5288 
+4     0    2.2.2.3          00:00:00:00:00:00  400007    0    0         0 n      6812 
+Sleeping for 4 seconds
+
+b) Modify DIP to 2.2.2.3 and re-sending packet with ETAG:0xc, VID:3, DIP:2.2.2.3 & SIP:1.1.1.1 to port:3
+
+Expected Result: Port1 receive etag 0xa, VID 2 packet and observe 'l3 l3table show' DIP 2.2.2.3 hit
+Packet from data=<>, length=68
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000022} {000000002222} 8888 0000
+[bcmPW.0]Packet[3]: data[0010]: 000c 0000 8100 0003 0800 4500 002e 0000 
+[bcmPW.0]Packet[3]: data[0020]: 0000 4011 74b9 0202 0203 0101 0101 003f 
+[bcmPW.0]Packet[3]: data[0030]: 003f 001a b0e5 0001 0001 0203 2fb3 acf2 
+[bcmPW.0]Packet[3]: data[0040]: 1425 c4a5 
+[bcmPW.0]Packet[3]: length 68 (68). rx-port 3. cos 0. prio_int 0. vlan 3. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-gport -1946157055. src-gport -1946157053. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:22:22> Untagged Packet HP LanProbe test
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000001111} {000000000011} 8888 0000
+[bcmPW.0]Packet[4]: data[0010]: 000a 0000 8100 0002 0800 4500 002e 0000 
+[bcmPW.0]Packet[4]: data[0020]: 0000 3f11 75b9 0202 0203 0101 0101 003f 
+[bcmPW.0]Packet[4]: data[0030]: 003f 001a b0e5 0001 0001 0203 2fb3 acf2 
+[bcmPW.0]Packet[4]: data[0040]: 8b74 2c07 
+[bcmPW.0]Packet[4]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 2. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-trunk 2047. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:11> Untagged Packet HP LanProbe test
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			136		   +136 	    133/s
+RUC_64.ge0		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ge0    :			  1		     +1 	      1/s
+TDBGC4_64.ge0		    :			  1		     +1 	      1/s
+GR127.ge0		    :			  1		     +1 	      1/s
+GRPKT.ge0		    :			  1		     +1 	      1/s
+GRBYT.ge0		    :			 68		    +68 	     67/s
+GRUC.ge0		    :			  1		     +1 	      1/s
+GRPOK.ge0		    :			  1		     +1 	      1/s
+GT127.ge0		    :			  1		     +1 	      1/s
+GTPKT.ge0		    :			  1		     +1 	      1/s
+GTBYT.ge0		    :			 68		    +68 	     67/s
+GTUC.ge0		    :			  1		     +1 	      1/s
+GTPOK.ge0		    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ge0	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ge0	    :			 68		    +68 	     67/s
+RIPC4_64.ge2		    :			  1		     +1 	      1/s
+RUC_64.ge2		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ge2    :			  1		     +1 	      1/s
+GR127.ge2		    :			  1		     +1 	      1/s
+GRPKT.ge2		    :			  1		     +1 	      1/s
+GRBYT.ge2		    :			 68		    +68 	     67/s
+GRUC.ge2		    :			  1		     +1 	      1/s
+GRPOK.ge2		    :			  1		     +1 	      1/s
+GT127.ge2		    :			  1		     +1 	      1/s
+GTPKT.ge2		    :			  1		     +1 	      1/s
+GTBYT.ge2		    :			 68		    +68 	     67/s
+GTUC.ge2		    :			  1		     +1 	      1/s
+GTPOK.ge2		    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ge2	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ge2	    :			 68		    +68 	     67/s
+mac=00:00:00:00:22:22 vlan=3 GPORT=0x8c000003 port=0x8c000003(extender) Hit
+mac=00:00:00:00:00:22 vlan=3 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:00:11 vlan=2 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT    H/W Index
+1     0    1.1.1.1          00:00:00:00:00:00  200768    0    0         0 y      1008       (ECMP)
+2     0    1.1.1.2          00:00:00:00:00:00  200768    0    0         0 n      3080       (ECMP)
+3     0    2.2.2.2          00:00:00:00:00:00  400007    0    0         0 y      5288 
+4     0    2.2.2.3          00:00:00:00:00:00  400007    0    0         0 y      6812 
+Sleeping for 4 seconds
+
+c) Sending packet with ETAG:0xa, VID:2, SIP:2.2.2.2 & DIP:1.1.1.1 to port:1
+
+Expected Result: A new mac address is learned on VPLAGi trunk port, observe 'l2 show'
+Packet from data=<>, length=68
+Warning:  Untagged packet read from file for tx.
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {000000002222} {000000001122} 8888 0000
+[bcmPW.0]Packet[5]: data[0010]: 000a 0000 8100 0002 0800 4500 002e 0000 
+[bcmPW.0]Packet[5]: data[0020]: 0000 4011 74ba 0101 0101 0202 0202 003f 
+[bcmPW.0]Packet[5]: data[0030]: 003f 001a b0e5 0001 0001 0203 2fb3 acf2 
+[bcmPW.0]Packet[5]: data[0040]: 908c 1b3a 
+[bcmPW.0]Packet[5]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 2. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-trunk 2047. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:11:22> Untagged Packet HP LanProbe test
+MC_PERQ_PKT(0).cpu0	    :			  1		     +1 	      1/s
+MC_PERQ_BYTE(0).cpu0	    :			 68		    +68 	     67/s
+RUC_64.ge0		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ge0    :			  1		     +1 	      1/s
+GR127.ge0		    :			  1		     +1 	      1/s
+GRPKT.ge0		    :			  1		     +1 	      1/s
+GRBYT.ge0		    :			 68		    +68 	     67/s
+GRUC.ge0		    :			  1		     +1 	      1/s
+GRPOK.ge0		    :			  1		     +1 	      1/s
+GT127.ge0		    :			  1		     +1 	      1/s
+GTPKT.ge0		    :			  1		     +1 	      1/s
+GTBYT.ge0		    :			 68		    +68 	     67/s
+GTUC.ge0		    :			  1		     +1 	      1/s
+GTPOK.ge0		    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ge0	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ge0	    :			 68		    +68 	     67/s
+mac=00:00:00:00:22:22 vlan=3 GPORT=0x8c000003 port=0x8c000003(extender) Hit
+mac=00:00:00:00:00:22 vlan=3 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+mac=00:00:00:00:00:11 vlan=2 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT    H/W Index
+1     0    1.1.1.1          00:00:00:00:00:00  200768    0    0         0 y      1008       (ECMP)
+2     0    1.1.1.2          00:00:00:00:00:00  200768    0    0         0 n      3080       (ECMP)
+3     0    2.2.2.2          00:00:00:00:00:00  400007    0    0         0 y      5288 
+4     0    2.2.2.3          00:00:00:00:00:00  400007    0    0         0 y      6812 
+Sleeping for 4 seconds
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

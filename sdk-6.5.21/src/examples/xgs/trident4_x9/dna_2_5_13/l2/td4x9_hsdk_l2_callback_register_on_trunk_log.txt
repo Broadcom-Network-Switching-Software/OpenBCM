@@ -1,0 +1,256 @@
+BCM.0> c td4x9_hsdk_l2_callback_register_on_trunk.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200811 (Tue Aug 11 11:22:23 2020)
+From da953591@xl-sj1-30:/projects/ntsw-sw-ae/home/daithal/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_INA_2_5_3
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+ingress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+egress_port_multi_setup port: 4 setup
+~~ #1) test_setup(): ** end **
+~~ #2) setup_l2_forwarding(): ** start **
+create vlan 20
+Ingress trunk ports configuration
+Trunk Create, tid=1, rv=Ok 
+Trunk Set Ok
+Egress trunk ports configuration
+Trunk Create, tid=2, rv=Ok 
+Trunk Set Ok
+setup callback function for l2 event
+~~ #2) setup_l2_forwarding(): ** end **
+~~ #3) verify(): ** start **
+vlan show
+vlan 1	ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe) 
+vlan 20	ports ce0-ce3 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001e), untagged ce0-ce3 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001e) 
+l2 show
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x0 Trunk=2 Static
+
+Sending unicast packet to ingress port:1
+Packet from data=<>, length=60
+Warning:  Untagged packet read from file for tx.
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000011} {000000000002} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=0x14
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+	L2_OIF_10_0=0x52
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {000000000011} {000000000002} 8100 0001
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+
+L[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=4
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0x9e00
+	SYSTEM_SOURCE_15_0=4
+	INGRESS_PP_PORT_7_0=4
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+2_[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+EVENT! MAC=00:00:00:00:00:02  VID=20  TRUNK=1  Operation=BCM_L2_CALLBACK_LEARN_EVENT
+show c
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   280                +280
+XLMIB_TBYT.ce0                        :                    64                 +64
+XLMIB_RBYT.ce0                        :                    64                 +64
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T64.ce0                         :                     1                  +1
+XLMIB_R64.ce0                         :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce3                        :                    64                 +64
+XLMIB_RBYT.ce3                        :                    64                 +64
+XLMIB_TPOK.ce3                        :                     1                  +1
+XLMIB_RPOK.ce3                        :                     1                  +1
+XLMIB_TUCA.ce3                        :                     1                  +1
+XLMIB_RUCA.ce3                        :                     1                  +1
+XLMIB_TPKT.ce3                        :                     1                  +1
+XLMIB_RPKT.ce3                        :                     1                  +1
+XLMIB_T64.ce3                         :                     1                  +1
+XLMIB_R64.ce3                         :                     1                  +1
+XLMIB_RPRM.ce3                        :                     1                  +1
+UC_PERQ_PKT(0).ce3                    :                     1                  +1
+UC_PERQ_BYTE(0).ce3                   :                    64                 +64
+
+verify l2 learning:
+MAC: 00:00:00:00:00:11  VID:20  TRUNK:2 
+MAC: 00:00:00:00:00:02  VID:20  TRUNK:1 
+
+Sending unicast packet to ingress port:2
+Packet from data=<>, length=60
+Warning:  Untagged packet read from file for tx.
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {000000000011} {000000000033} 8100 0014
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	ENTROPY_LABEL_LOW_15_0=0xb0c6
+	SYSTEM_SOURCE_15_0=2
+	SYSTEM_DESTINATION_15_0=3
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=0x14
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+	L2_OIF_10_0=0x52
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:33> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {000000000011} {000000000033} 8100 0001
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:33> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+L2_EVENT! MAC=00:00:00:00:00:33  VID=20  TRUNK=1  Operation=BCM_L2_CALLBACK_LEARN_EVENT
+show c
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   280                +280
+XLMIB_TBYT.ce1                        :                    64                 +64
+XLMIB_RBYT.ce1                        :                    64                 +64
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T64.ce1                         :                     1                  +1
+XLMIB_R64.ce1                         :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+XLMIB_TBYT.ce2                        :                    64                 +64
+XLMIB_RBYT.ce2                        :                    64                 +64
+XLMIB_TPOK.ce2                        :                     1                  +1
+XLMIB_RPOK.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :                     1                  +1
+XLMIB_RUCA.ce2                        :                     1                  +1
+XLMIB_TPKT.ce2                        :                     1                  +1
+XLMIB_RPKT.ce2                        :                     1                  +1
+XLMIB_T64.ce2                         :                     1                  +1
+XLMIB_R64.ce2                         :                     1                  +1
+XLMIB_RPRM.ce2                        :                     1                  +1
+UC_PERQ_PKT(0).ce2                    :                     1                  +1
+UC_PERQ_BYTE(0).ce2                   :                    64                 +64
+
+verify l2 learning:
+MAC: 00:00:00:00:00:11  VID:20  TRUNK:2 
+MAC: 00:00:00:00:00:02  VID:20  TRUNK:1 
+MAC: 00:00:00:00:00:33  VID:20  TRUNK:1 
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

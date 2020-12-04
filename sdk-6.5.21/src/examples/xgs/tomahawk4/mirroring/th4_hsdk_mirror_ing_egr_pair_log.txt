@@ -1,0 +1,82 @@
+BCM.0> cint th4_hsdk_mirror_ing_egr_pair.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 68
+Egress port1: 137
+MTP port: 17
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+ingress_port_multi_setup port: 68 setup
+egress_port_multi_setup port: 17 setup
+egress_port_multi_setup port: 137 setup
+int egr_obj_id = 100001 (0x186a1)
+Mirror destination create
+Mirror port destination add
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known L3 unicast pkt from port 68 forwarding to the egress port 137
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+pktioRxCallback: received from port 0x11
+pktioRxCallback: rx_count = 0x1
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[1]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[1]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x89
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[2]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[2]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[2]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[2]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x11
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[3]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[3]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[3]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[3]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+FlexCtr Get on port_egress1 : 1 packets / 82 bytes
+FlexCtr Get on port_mtp_port : 2 packets / 164 bytes
+
+-----------------------------------------------------------
+    RESULT OF EGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 68 cleanup
+egress_port_multi_cleanup port: 17 cleanup
+egress_port_multi_cleanup port: 137 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

@@ -1,0 +1,24 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport IFA RC (run commands) file
+#
+#       These are default commands that are for TechSupport IFA.
+#
+
+# Show IFA related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show IFA protocol number table.
+local lt R_IFA_2_PROTOCOL_NUMBER;                         $traverse_lt;
+
+# Show IFA header table.
+local lt EGR_L3_NEXT_HOP_2;                               $traverse_lt;
+
+# Show INT COSQ stat table.
+local lt MON_INBAND_TELEMETRY_TM_STATS_CONTROL;           $traverse_lt;
+
+# Show INT timestamp control table.
+local lt DEVICE_TS_CONTROL;                               $traverse_lt;

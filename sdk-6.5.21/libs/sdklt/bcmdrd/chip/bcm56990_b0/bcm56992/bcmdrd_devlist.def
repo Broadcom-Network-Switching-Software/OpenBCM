@@ -1,0 +1,10 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56992_B0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56992, BCM56992_VENDOR_ID, BCM56992_DEVICE_ID, BCM56992_REV_B0, \
+                     0, 0, \
+                     bcm56990_b0, bcm56992_b0, bcm56992_b0, \
+                     "Tomahawk4", "BCM56990", \
+                     "25.6 Tbps Multilayer Switch", 0, 0)
+#endif
+#endif
+

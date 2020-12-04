@@ -1,0 +1,145 @@
+BCM.0> c td4x9_hsdk_vlan_vfi_from_vfp.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200811 (Tue Aug 11 11:22:23 2020)
+From da953591@xl-sj1-30:/projects/ntsw-sw-ae/home/daithal/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_INA_2_5_3
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+~~ #1) test_setup(): ** end **
+~~ #2) setup_vlan_switching(): ** start **
+create vlan 20
+~~ #2) setup_vlan_switching(): ** end **
+~~ #3) verify(): ** start **
+vlan show
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)
+vlan 20 ports ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+l2 show
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x2 modid=0 port=2/ce1 Static
+
+Sending unicast packet to ingress port:1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000011} {000000000002} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 9100 000a 0806 0001 0800 0604 0001 0000
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0002 0a0a 0a02 0000 0000 0000 1414
+[bcmPWN.0]Packet[1]: data[0030]: 1402 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[1]: data[0040]: bc94 977f
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=1
+        SWITCH=1
+        MATCH_ID_LO=0x600464
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=2
+        INGRESS_PP_PORT_7_0=1
+        VFI_15_0=0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=2
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_ITAG
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0014> * Unknown/Experimental format * 00 00 00 00 00 11 00 00 00 00 00 02 81 00 00 14 91 00 00 0a 08 06 00 01 08 00 06 04 00 01 00 00 00 00 00 02 0a 0a 0a 02 00 00 00 00 00 00 14 14 14 02 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {000000000011} {000000000002} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 9100 000a 0806 0001 0800 0604 0001 0000
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0002 0a0a 0a02 0000 0000 0000 1414
+[bcmPWN.0]Packet[2]: data[0030]: 1402 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[2]: data[0040]: bc94 977f
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x48
+        SRC_PORT_NUM=2
+        SWITCH=1
+        MATCH_ID_LO=0x600464
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        DROP_CODE_15_0=0x1f1f
+        SYSTEM_SOURCE_15_0=2
+        SYSTEM_DESTINATION_15_0=2
+        INGRESS_PP_PORT_7_0=2
+        VFI_15_0=0x14
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=2
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_ITAG
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0014> * Unknown/Experimental format * 00 00 00 00 00 11 00 00 00 00 00 02 81 00 00 14 91 00 00 0a 08 06 00 01 08 00 06 04 00 01 00 00 00 00 00 02 0a 0a 0a 02 00 00 00 00 00 00 14 14 14 02 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d
+show c
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   288                +288
+XLMIB_TBYT.ce0                        :                    72                 +72
+XLMIB_RBYT.ce0                        :                    72                 +72
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TVLN.ce0                        :                     1                  +1
+XLMIB_RVLN.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T127.ce0                        :                     1                  +1
+XLMIB_R127.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                    72                 +72
+XLMIB_RBYT.ce1                        :                    72                 +72
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                    72                 +72
+
+verify l2 learning:
+l2 show
+mac=00:00:00:00:00:11 vlan=20 GPORT=0x2 modid=0 port=2/ce1 Static Hit
+mac=00:00:00:00:00:02 vlan=20 GPORT=0x1 modid=0 port=1/ce0 Hit
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

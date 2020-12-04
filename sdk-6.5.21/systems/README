@@ -1,0 +1,85 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+			      $SDK/systems
+
+------------------------------------------------------------------------------
+Build Hints
+------------------------------------------------------------------------------
+
+MAKE_PAR
+
+	Set this environment variable to "-j" to achieve fast
+	parallel builds of the BCM drivers.
+
+NO_BCM
+
+	Typing "gmake" in a systems/<TARGETBASE>/<TARGETPLAT> directory
+	ordinarily builds bcm_libraries, driver_libraries, then the BSP,
+	and links.  You can use "gmake NO_BCM=1" to avoid recompiling
+	bcm_libraries driver_libraries if they are already built to your
+	satisfaction.
+
+DEBUG_OPTIMIZE
+
+	When debugging, use "setenv DEBUG_OPTIMIZE FALSE" to turn off
+	the -O flag.  Optimization severely cripples debugger accuracy.
+	If DEBUG_OPTIMIZE is TRUE or not set, high optimization is used.
+	Alternately you can set DEBUG_OPTIMIZE to your own option string
+	such as "-O3".
+
+------------------------------------------------------------------------------
+BSP Descriptions
+------------------------------------------------------------------------------
+
+sim
+	This directory contains a simple main program stub that allows
+	compilation of the BCM56xx driver and diagnostics shell under
+	Linux and Solaris.  At Broadcom, this application connects via
+	network to software Verilog simulations of the BCM56xx and other
+	devices.  Building in this directory will also compile the
+	PCI Daemon (pcid), see below.
+
+sim/pcid
+	This directory contains a very rudimentary StrataSwitch
+	simulator called 'pcid', which models a subset of the chips,
+	mainly the CMIC and other simple non-packet-switching functions.
+	This has been useful for writing the BCM library and
+	diagnostics monitor commands without needing real hardware.
+
+drv
+	Systems driver library for miscellaneous additional drivers.
+
+	Contains VxWorks SENS (Enhanced Network Driver) for BCM.  This
+	requires either vxWorks 5.4 (Tornado 2) or VxWorks 5.3.x
+	(Tornado 1) with the SENS patch loaded.  To configure the
+	network driver from the BCM prompt:
+
+          maca * cbit=1  # Configure the network interface MAC address range
+          ifconfig 1 =   # Interactively configure and bring up port 1
+                         # with user-specified IP parameters.
+
+linux
+	Linux driver directory.  This directory contains the source code
+	for kernel driver modules.
+
+bde
+	Broadcom Device Enumerator.
+	This fundamental layer sits between the device driver and the
+	underlying hardware and O/S and abstracts the methods for
+	PCI setup, register access, and interrupt connection.
+
+        bde/pli
+                PCI access methods for PLI and PCID simulator.
+                Here, all PCI accesses are sent via RPC to a verilog model.
+        bde/linux/kernel
+                PCI access methods for Linux kernel.
+        bde/linux/user
+                PCI access methods for Linux user mode.
+                Here, PCI memory space is mapped into the user process
+                and device interrupts are turned into signals.
+                The entire driver and diagnostics shell can run in user mode.

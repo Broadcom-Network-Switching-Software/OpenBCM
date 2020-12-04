@@ -1,0 +1,61 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+Starting Interrupt service...
+[DMA-listener]DMA Controller listening on port[37658]
+[Interrupt-listener]ISR dispatcher listening on port[59770]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> cint th4_mmu_wred_latency_ecn.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+int $$ = 0 (0x0)
+
+Sending unicast packet to ingress port:1
+Packet from data=<>, length=68
+length = 68
+result_packet_check 0 result_port_check 0
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000fe02} {000000000202} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4503 002e 0000 4000 0906 eeae c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 0164 c0a8 0064 8181 5151 b1b2 b3b4 a1a2 
+[bcmPWN.0]Packet[1]: data[0030]: a3a4 500f 01f5 43ce 0000 1112 1314 1516 
+[bcmPWN.0]Packet[1]: data[0040]: 1718 191a 
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:02:02> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.1.100> dst<192.168.0.100> hl<5> service-type<3> tl<46> id<0> frg-off<16384> ttl<9> > chk-sum<0xeeae>
+Packet[1]:   TCP: sPort<33153> dPort<20817> Seq<2981278644> Ack<2711790500> Off<5> Flags<0x0f=FIN,SYN,RST,PUSH> Csum<0x43ce> Urp<0x0000>
+
+------------------------------------- 
+Result of packet verification : [PASS]
+------------------------------------- 
+FlexCtr Get : 1 packets / 72 bytes
+
+------------------------------------- 
+Result of FlexCTR verification : PASS
+------------------------------------- 
+==>Cleaning up...
+bcm_error_t $$ = BCM_E_NONE (0)
+

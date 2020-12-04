@@ -1,0 +1,161 @@
+BCM.0> c th4_hsdk_packet_trace.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+int $$ = 17 (0x11)
+setting ingress port:1 MAC loopback
+setting egress ports:2,3,4,17 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l3_mpls_init_ecmp_trunk(): ** start **
+int $$ = 1 (0x1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+
+Create trunk id:1 with member ports 2 and 3
+int trunk_gp_id = 201326593 (0xc000001)
+int $$ = 2 (0x2)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+
+Create trunk id:2 with member ports 4 and 17
+int trunk_gp2_id = 201326594 (0xc000002)
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+l3 egr intf2 = 2
+l3 egr obj = 100001
+l3 egr obj2 = 100002
+int ecmp_group_id = 200001 (0x30d41)
+uint32 tunnel_label_init = 22136 (0x5678)
+unsigned char exp = 1 (0x01)
+unsigned char ttl = 254 (0xfe)
+uint32 tunnel_label_init2 = 22137 (0x5679)
+unsigned char exp = 1 (0x01)
+unsigned char ttl = 254 (0xfe)
+Created flexctr stat_counter_id = 0x10000001.
+Flexctr stat_counter_id:0x10000001 attached to l3 ecmp group 200001
+~~~ #2) config_l3_mpls_init_ecmp_trunk(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+Sleeping for 1 second
+Flexctr Get : 10 packets / 820 bytes
+Configuring packet trace
+Decoding packet trace data fields
+
+FIELDS:
+	MY_STATION_HIT                  :1
+	FP_AND_PBM_ACTION_VALID         :0
+	FP_REPLACE_PBM_ACTION_VALID     :0
+	FP_OR_PBM_ACTION_VALID          :0
+	POST_VXLT_TAG_STATUS            :2
+	INCOMING_TAG_STATUS             :TAGGED
+	FORWARDING_FIELD                :1
+	FORWARDING_TYPE                 :VRF
+	EGRESS_MASK_TABLE_INDEX         :1
+	VLAN_MASK_INDEX                 :0
+	MAC_BLOCK_INDEX                 :0
+	NONUC_TRUNK_BLOCK_MASK_INDEX    :192
+	DGPP                            :4
+	NHOP                            :2
+	LAG_OFFSET                      :0
+	HASH_VALUE_LAG                  :796
+	LAG_ID                          :2
+	LAG_RESOLUTION_DONE             :1
+	ECMP_HASH_VALUE2                :50393
+	ECMP_OFFSET2                    :1
+	ECMP_GROUP2                     :1
+	ECMP_RESOLUTION_DONE2           :1
+	ECMP_HASH_VALUE1                :0
+	ECMP_OFFSET1                    :0
+	ECMP_GROUP1                     :0
+	ECMP_RESOLUTION_DONE1           :0
+	FWD_DESTINATION_FIELD           :1
+	FWD_DESTINATION_TYPE            :ECMP
+	PKT_RESOLUTION_VECTOR           :KNOWN_L3UC_PKT
+	VALID_VLAN_ID                   :1
+	INGRESS_STG_STATE               :4
+	DOS_ATTACK                      :0
+	L3_TUNNEL_HIT                   :0
+	MPLS_ENTRY_TABLE_LOOKUP_0_HIT   :0
+	MPLS_ENTRY_TABLE_LOOKUP_1_HIT   :0
+	MPLS_BOS_TERMINATED             :0
+	L2LU_SRC_INDEX                  :1988
+	L2LU_SRC_KEY_TYPE               :0
+	L2LU_SRC_HIT                    :1
+	L2LU_DST_IDX                    :0
+	L2LU_DST_KEY_TYPE               :0
+	L2LU_DST_HIT                    :0
+	MPLS_ENTRY_INDEX_2              :0
+	MPLS_ENTRY_KEY_TYPE_2           :0
+	MPLS_ENTRY_INDEX_1              :0
+	MPLS_ENTRY_KEY_TYPE_1           :0
+	MPLS_ENTRY_HIT_1                :0
+	MPLS_ENTRY_HIT_2                :0
+	MY_STATION_INDEX                :0
+	ENTROPY                         :0
+	L3_TUNNEL_HIT_1                 :0
+	L3_TUNNEL_INDEX_1               :0
+	L3_TUNNEL_KEY_TYPE_1            :0
+	COMP_DST_HIT                    :0
+	COMP_DST_HIT_INDEX              :0
+	COMP_DST_HIT_TABLE              :0
+	COMP_DST_SUB_DB_PRIORITY        :0
+	COMP_SRC_HIT                    :0
+	COMP_SRC_HIT_INDEX              :0
+	COMP_SRC_HIT_TABLE              :0
+	COMP_SRC_SUB_DB_PRIORITY        :0
+	LPM_DST_HIT                     :1
+	LPM_DST_HIT_INDEX               :24575
+	LPM_DST_HIT_TABLE               :2
+	LPM_DST_SUB_DB_PRIORITY         :1
+	LPM_SRC_HIT                     :0
+	LPM_SRC_HIT_INDEX               :0
+	LPM_SRC_HIT_TABLE               :0
+	LPM_SRC_SUB_DB_PRIORITY         :0
+	L3_TUNNEL_TCAM_HIT              :0
+	L3_TUNNEL_TCAM_INDEX            :0
+	DVP                             :0
+	SVP                             :0
+	INNER_L2_OUTER_TAGGED           :0
+	O_NEXT_HOP                      :0
+	VFI                             :11
+	MY_STATION_2_HIT                :1
+	MY_STATION_2_INDEX              :1
+
+DROP_REASON:
+
+COUNTER:
+	RIPC4                           
+	RUC                             
+
+DATA:
+[0000]: 00 00 00 00 30 10 00 00 - 00 00 00 00 00 00 00 00 
+[0010]: 00 00 00 00 00 00 00 00 - 07 00 00 00 00 00 80 c4 
+[0020]: 00 00 00 00 ff bf 80 01 - 00 00 00 00 00 00 00 00 
+[0030]: 00 00 00 00 00 00 2c 00 - 00 80 20 00 00 00 00 40 
+[0040]: 00 00 00 01 00 10 00 00 - 8e 05 80 00 d9 c4 01 00 
+[0050]: 00 30 00 00 04 02 00 01 - c0 05 00 00 01 a0 10 00 
+[0060]: 00 00 00 00 00 00 00 00 - 80 00 00 00 00 40 00 00 
+
+
+-------------------------------------------------------------------- 
+    RESULT OF PACKET TRACE VERIFICATION  
+-------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

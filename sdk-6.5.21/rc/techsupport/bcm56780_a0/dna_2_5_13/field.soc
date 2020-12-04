@@ -1,0 +1,116 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Field RC (run commands) file
+#
+#       These are default commands that are for TechSupport Field.
+#
+
+# Show S/W state in Field.
+fp show
+fp show presel
+fp show hint
+
+# Show Field related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+local traverse_def_lt 'bsh -c "lt \$lt attr=FILTER_DFLT traverse -l"'
+
+#FP system configs
+local lt FP_CONFIG;                                               $traverse_lt;
+local lt FP_DESTINATION_COS_Q_MAP;                                $traverse_lt;
+local lt FP_DESTINATION_COS_Q_STRENGTH_PROFILE;                   $traverse_lt;
+local lt FP_ING_COS_Q_INT_PRI_MAP;                                $traverse_lt;
+local lt FP_ING_COS_Q_MAP;                                        $traverse_lt;
+local lt FP_ING_COS_Q_STRENGTH_PROFILE;                           $traverse_lt;
+local lt FP_COMPRESSION_INFO;                                     $traverse_lt;
+local lt PORT_ING_EGR_BLOCK_3;                                    $traverse_lt;
+
+#Ingress Field Stage
+local lt DT_IFP_PRESEL_GRP_TEMPLATE;                              $traverse_lt;
+local lt DT_IFP_PRESEL_TEMPLATE;                                  $traverse_lt;
+local lt DT_IFP_PDD_TEMPLATE;                                     $traverse_lt;
+local lt DT_IFP_SBR_TEMPLATE;                                     $traverse_lt;
+local lt DT_IFP_GRP_TEMPLATE;                                     $traverse_lt;
+local lt DT_IFP_RULE_TEMPLATE;                                    $traverse_lt;
+local lt DT_IFP_ACTION_TEMPLATE;                                  $traverse_lt;
+local lt DT_IFP_ENTRY;                                            $traverse_lt;
+local lt FP_ING_GRP_TEMPLATE_INFO;                                $traverse_def_lt;
+local lt FP_ING_GRP_TEMPLATE_PARTITION_INFO;                      $traverse_def_lt;
+local lt FP_ING_PRESEL_GRP_TEMPLATE_PARITION_INFO;                $traverse_def_lt;
+local lt FP_ING_PDD_TEMPLATE_PARTITION_INFO;                      $traverse_def_lt;
+local lt FP_ING_INFO;                                             $traverse_lt;
+local lt FP_ING_SLICE_INFO;                                       $traverse_lt;
+local lt FP_COMPRESSION_INDEX_REMAP_0;                            $traverse_lt;
+local lt FP_COMPRESSION_INDEX_REMAP_1;                            $traverse_lt;
+local lt FP_COMPRESSION_INDEX_REMAP_2;                            $traverse_lt;
+local lt FP_COMPRESSION_INDEX_REMAP_3;                            $traverse_lt;
+local lt FP_COMPRESSION_MATCH_REMAP_0;                            $traverse_lt;
+local lt FP_COMPRESSION_MATCH_REMAP_1;                            $traverse_lt;
+
+#Egress Field Stage
+local lt DT_EFP_PRESEL_GRP_TEMPLATE;                              $traverse_lt;
+local lt DT_EFP_PRESEL_TEMPLATE;                                  $traverse_lt;
+local lt DT_EFP_PDD_TEMPLATE;                                     $traverse_lt;
+local lt DT_EFP_SBR_TEMPLATE;                                     $traverse_lt;
+local lt DT_EFP_GRP_TEMPLATE;                                     $traverse_lt;
+local lt DT_EFP_RULE_TEMPLATE;                                    $traverse_lt;
+local lt DT_EFP_ACTION_TEMPLATE;                                  $traverse_lt;
+local lt DT_EFP_ENTRY;                                            $traverse_lt;
+local lt FP_EGR_GRP_TEMPLATE_INFO;                                $traverse_def_lt;
+local lt FP_EGR_GRP_TEMPLATE_PARTITION_INFO;                      $traverse_def_lt;
+local lt FP_EGR_PRESEL_GRP_TEMPLATE_PARITION_INFO;                $traverse_def_lt;
+local lt FP_EGR_PDD_TEMPLATE_PARTITION_INFO;                      $traverse_def_lt;
+local lt FP_EGR_INFO;                                             $traverse_lt;
+local lt FP_EGR_SLICE_INFO;                                       $traverse_lt;
+
+#Lookup Field Stage
+local lt DT_VFP_PRESEL_GRP_TEMPLATE;                              $traverse_lt;
+local lt DT_VFP_PRESEL_TEMPLATE;                                  $traverse_lt;
+local lt DT_VFP_PDD_TEMPLATE;                                     $traverse_lt;
+local lt DT_VFP_SBR_TEMPLATE;                                     $traverse_lt;
+local lt DT_VFP_GRP_TEMPLATE;                                     $traverse_lt;
+local lt DT_VFP_RULE_TEMPLATE;                                    $traverse_lt;
+local lt DT_VFP_ACTION_TEMPLATE;                                  $traverse_lt;
+local lt DT_VFP_ENTRY;                                            $traverse_lt;
+local lt FP_VLAN_GRP_TEMPLATE_INFO;                               $traverse_def_lt;
+local lt FP_VLAN_GRP_TEMPLATE_PARTITION_INFO;                     $traverse_def_lt;
+local lt FP_VLAN_PRESEL_GRP_TEMPLATE_PARITION_INFO;               $traverse_def_lt;
+local lt FP_VLAN_PDD_TEMPLATE_PARTITION_INFO;                     $traverse_def_lt;
+local lt FP_VLAN_INFO;                                            $traverse_lt;
+local lt FP_VLAN_SLICE_INFO;                                      $traverse_lt;
+
+#Exact Match Field Stage
+local lt DT_EM_FP_PRESEL_GRP_TEMPLATE;                            $traverse_lt;
+local lt DT_EM_FP_PRESEL_TEMPLATE;                                $traverse_lt;
+local lt DT_EM_FP_PDD_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FP_SBR_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FP_GRP_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FP_RULE_TEMPLATE;                                  $traverse_lt;
+local lt DT_EM_FP_ACTION_TEMPLATE;                                $traverse_lt;
+local lt DT_EM_FP_ENTRY;                                          $traverse_lt;
+local lt FP_EM_GRP_TEMPLATE_INFO;                                 $traverse_def_lt;
+local lt FP_EM_GRP_TEMPLATE_PARTITION_INFO;                       $traverse_def_lt;
+local lt FP_EM_PRESEL_GRP_TEMPLATE_PARITION_INFO;                 $traverse_def_lt;
+local lt FP_EM_PDD_TEMPLATE_PARTITION_INFO;                       $traverse_def_lt;
+
+#Flow tracker Field Stage
+local lt DT_EM_FT_PRESEL_GRP_TEMPLATE;                            $traverse_lt;
+local lt DT_EM_FT_PRESEL_TEMPLATE;                                $traverse_lt;
+local lt DT_EM_FT_PDD_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FT_SBR_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FT_GRP_TEMPLATE;                                   $traverse_lt;
+local lt DT_EM_FT_RULE_TEMPLATE;                                  $traverse_lt;
+local lt DT_EM_FT_ACTION_TEMPLATE;                                $traverse_lt;
+local lt DT_EM_FT_ENTRY;                                          $traverse_lt;
+local lt FP_EM_GRP_TEMPLATE_INFO;                                 $traverse_def_lt;
+local lt FP_EM_GRP_TEMPLATE_PARTITION_INFO;                       $traverse_def_lt;
+local lt FP_EM_PRESEL_GRP_TEMPLATE_PARITION_INFO;                 $traverse_def_lt;
+local lt FP_EM_PDD_TEMPLATE_PARTITION_INFO;                       $traverse_def_lt;
+
+#compression LT
+local lt L3_IPV4_COMP_SRC;                                        $traverse_lt;
+local lt L3_IPV6_COMP_SRC;                                        $traverse_lt;
+local lt L3_IPV4_COMP_DST;                                        $traverse_lt;
+local lt L3_IPV4_COMP_DST;                                        $traverse_lt;

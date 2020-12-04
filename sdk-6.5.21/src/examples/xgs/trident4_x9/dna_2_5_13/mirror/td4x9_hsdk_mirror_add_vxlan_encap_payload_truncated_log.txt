@@ -1,0 +1,332 @@
+BCM.0> c td4x9_hsdk_mirror_add_vxlan_encap_payload_truncated.c                                                                                                                   
+execute(): Start                                                                                                                                                                 
+config show; attach; version                                                                                                                                                     
+~~ #1) test_setup(): ** start **                                                                                                                                                
+ingress_port_setup port: 1 setup                                                                                                                                                 
+egress_port_multi_setup port: 2 setup                                                                                                                                            
+egress_port_multi_setup port: 3 setup                                                                                                                                            
+~~ #1) test_setup(): ** end **                                                                                                                                                  
+~~ #2) configure_vxlan_port_mirror(): ** start **                                                                                                                               
+Add L2 Address for egress port 2.                                                                                                                                                
+int $$ = 1006632960 (0x3c000000)                                                                                                                                                 
+~~ #2) configure_vxlan_port_mirror(): ** end **                                                                                                                                 
+~~ #3) verify(): ** start **                                                                                                                                                    
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)                                                                                                           
+vlan 21 ports ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)                                                                                                                    
+
+SW Information MIRROR - Unit 0
+  Init       :    1           
+  Dest num       :  120       
+  Container num       :    8  
+  Session model       : Exclusive
+  Session array num       :    8 
+  Session instance num       :   16
+  Session num       :  128         
+  Session Reserve instance zero       : True
+  Sample profile num       :   64           
+  Reserve sample profile zero       : True  
+      MC[0]       : 0x01ff30c7              
+      MC[1]       : 0x000030c7              
+      MC[2]       : 0x000030db              
+      MC[3]       : 0x000030db              
+      MC[4]       : 0x000030da              
+      MC[5]       : 0x000030da              
+      MC[6]       : 0x000070c2              
+      MC[7]       : 0x000030c2              
+---------------- Mirror destinations----------------
+  Mirror dest: 0x3c000000  Ref count:    2          
+              MTP Gport : 0x08000003                
+              TOS       : 0x00                      
+              TTL       : 0x10                      
+              IP Version: 0x04                      
+              Src IP    : 0x06060606                
+              Dest IP   : 0x09090909                
+              Src MAC   : 00:00:00:00:06:66         
+              Dest MAC  : 00:00:00:00:09:99         
+              Flow label: 0x00000000                
+              TPID      : 0x8100                    
+              VLAN      : 0x00c8                    
+              Flags     :                           
+----------------     Mirror sessions----------------
+  Mirror session:    1  Ref count:    1             
+              EGR            : False                
+              Encap id       :    1                 
+              Mirror dest id :    0                 
+----------------   Mirror containers----------------
+  Mirror container:    0  Ref count:    1           
+              EGR            : False                
+              Source         :        1             
+  Mirror-on-drop destination num       :    1       
+  Mirror destination ids for MOD: dest[   0]      : 0xffffffff
+  Mirror Ingress sample:        0        0                    
+  Mirror Flex sample:        0        0                       
+
+
+
+Sending to ingress_port:1, packet will be forwarded to port 2 and mirror to port 3 in vxlan format 
+tx 1 pbm=1 data=0x00000000AAAA00000000BBBB810000150800450000500001000040117497010101010202020200350035003C32F6746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374;  sleep quiet 1                                                                     
+Packet from data=<>, length=214                                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[1]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                                                                         
+[bcmPWN.0]Packet[1]: data[0010]: 8100 0001 0800 4500 0050 0001 0000 4011                                                                                                         
+[bcmPWN.0]Packet[1]: data[0020]: 7497 0101 0101 0202 0202 0035 0035 003c                                                                                                         
+[bcmPWN.0]Packet[1]: data[0030]: 32f6 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[00d0]: 7374 7465 7374 7465 7374                                                                                                                        
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[1]:                                                                                                                                                             
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Wellfleet Communications                                          
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {00000000bbbb} 0800 4500                                                                                                         
+[bcmPWN.0]Packet[2]: data[0010]: 8100 0001 0050 0001 0000 4011 7497 0101                                                                                                         
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[2]: data[00d0]: 7374 7465 7374                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[2]:                                                                                                                                                             
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Untagged Packet Internet Protocol (IP)                                                                      
+Packet[2]:   IP: V(4) src<64.17.116.151> dst<1.1.1.1> hl<5> service-type<0> tl<33024> id<1> frg-off<80> ttl<0> > chk-sum<0x0000>                                                 
+Packet[2]:   ICMP: Type-2 (Unassigned [JBP]) Code-2                                                                                                                              
+Packet[2]:   Generic: Code <15360> Checksum <0x32f6> hun <74 65 73 74>                                                                                                           
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[3]: data[0000]: {000000000999} {000000000666} 8100 00c8                                                                                                         
+[bcmPWN.0]Packet[3]: data[0010]: 8100 0001 0800 4500 00f6 0000 0000 1011                                                                                                         
+[bcmPWN.0]Packet[3]: data[0020]: 8bda 0606 0606 0909 0909 ffff 2118 00e2                                                                                                         
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0800 0000 6543 2100 0000 0000 aaaa                                                                                                         
+[bcmPWN.0]Packet[3]: data[0040]: 0000 0000 bbbb 0800 4500 0050 0001 0000                                                                                                         
+[bcmPWN.0]Packet[3]: data[0050]: 4011 7497 0101 0101 0202 0202 0035 0035                                                                                                         
+[bcmPWN.0]Packet[3]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[0090]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00a0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00b0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00c0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00d0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00e0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[00f0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[3]: data[0100]: 7465 7374 7465 7374 7465 7374                                                                                                                   
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[3]:                                                                                                                                                             
+Packet[3]:   Ethernet: dst<00:00:00:00:09:99> src<00:00:00:00:06:66> Tagged Packet ProtID<0x8100> Ctrl<0x00c8> Wellfleet Communications                                          
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {00000000bbbb} 0800 4500                                                                                                         
+[bcmPWN.0]Packet[4]: data[0010]: 8100 0001 0050 0001 0000 4011 7497 0101                                                                                                         
+[bcmPWN.0]Packet[4]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[4]: data[00d0]: 7374 7465 7374                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[4]:                                                                                                                                                             
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Untagged Packet Internet Protocol (IP)                                                                      
+Packet[4]:   IP: V(4) src<64.17.116.151> dst<1.1.1.1> hl<5> service-type<0> tl<33024> id<1> frg-off<80> ttl<0> > chk-sum<0x0000>                                                 
+Packet[4]:   ICMP: Type-2 (Unassigned [JBP]) Code-2                                                                                                                              
+Packet[4]:   Generic: Code <15360> Checksum <0x32f6> hun <74 65 73 74>                                                                                                           
+Sleeping for 2 seconds                                                                                                                                                           
+MC_PERQ_PKT(0).cpu0                   :                     4                  +4                                                                                                
+MC_PERQ_BYTE(0).cpu0                  :                 1,218              +1,218                                                                                                
+XLMIB_TBYT.ce0                        :                   218                +218                                                                                                
+XLMIB_RBYT.ce0                        :                   218                +218                                                                                                
+XLMIB_TPOK.ce0                        :                     1                  +1                                                                                                
+XLMIB_RPOK.ce0                        :                     1                  +1                                                                                                
+XLMIB_TVLN.ce0                        :                     1                  +1                                                                                                
+XLMIB_RVLN.ce0                        :                     1                  +1                                                                                                
+XLMIB_TUCA.ce0                        :                     1                  +1                                                                                                
+XLMIB_RUCA.ce0                        :                     1                  +1                                                                                                
+XLMIB_TPKT.ce0                        :                     1                  +1                                                                                                
+XLMIB_RPKT.ce0                        :                     1                  +1                                                                                                
+XLMIB_T255.ce0                        :                     1                  +1                                                                                                
+XLMIB_R255.ce0                        :                     1                  +1                                                                                                
+XLMIB_RPRM.ce0                        :                     1                  +1                                                                                                
+XLMIB_TBYT.ce1                        :                   214                +214                                                                                                
+XLMIB_RBYT.ce1                        :                   214                +214                                                                                                
+XLMIB_TPOK.ce1                        :                     1                  +1                                                                                                
+XLMIB_RPOK.ce1                        :                     1                  +1                                                                                                
+XLMIB_TUCA.ce1                        :                     1                  +1                                                                                                
+XLMIB_RUCA.ce1                        :                     1                  +1                                                                                                
+XLMIB_TPKT.ce1                        :                     1                  +1                                                                                                
+XLMIB_RPKT.ce1                        :                     1                  +1                                                                                                
+XLMIB_T255.ce1                        :                     1                  +1                                                                                                
+XLMIB_R255.ce1                        :                     1                  +1                                                                                                
+XLMIB_RPRM.ce1                        :                     1                  +1                                                                                                
+MC_PERQ_PKT(0).ce1                    :                     1                  +1                                                                                                
+MC_PERQ_BYTE(0).ce1                   :                   214                +214                                                                                                
+XLMIB_TBYT.ce2                        :                   482                +482                                                                                                
+XLMIB_RBYT.ce2                        :                   482                +482                                                                                                
+XLMIB_TPOK.ce2                        :                     2                  +2                                                                                                
+XLMIB_RPOK.ce2                        :                     2                  +2                                                                                                
+XLMIB_TVLN.ce2                        :                     1                  +1                                                                                                
+XLMIB_RVLN.ce2                        :                     1                  +1                                                                                                
+XLMIB_TUCA.ce2                        :                     2                  +2                                                                                                
+XLMIB_RUCA.ce2                        :                     2                  +2                                                                                                
+XLMIB_TPKT.ce2                        :                     2                  +2                                                                                                
+XLMIB_RPKT.ce2                        :                     2                  +2                                                                                                
+XLMIB_T511.ce2                        :                     1                  +1                                                                                                
+XLMIB_R511.ce2                        :                     1                  +1                                                                                                
+XLMIB_T255.ce2                        :                     1                  +1                                                                                                
+XLMIB_R255.ce2                        :                     1                  +1                                                                                                
+XLMIB_RPRM.ce2                        :                     2                  +2                                                                                                
+MC_PERQ_PKT(0).ce2                    :                     2                  +2                                                                                                
+MC_PERQ_BYTE(0).ce2                   :                   482                +482                                                                                                
+int $$ = 0 (0x0)                                                                                                                                                                 
+
+Sending again and mirrored packet payload will be truncated in the mtp 3
+tx 1 pbm=1 data=0x00000000AAAA00000000BBBB810000150800450000500001000040117497010101010202020200350035003C32F6746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374;  sleep quiet 1                                                                     
+Packet from data=<>, length=214                                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[5]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                                                                         
+[bcmPWN.0]Packet[5]: data[0010]: 8100 0001 0800 4500 0050 0001 0000 4011                                                                                                         
+[bcmPWN.0]Packet[5]: data[0020]: 7497 0101 0101 0202 0202 0035 0035 003c                                                                                                         
+[bcmPWN.0]Packet[5]: data[0030]: 32f6 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[5]: data[00d0]: 7374 7465 7374 7465 7374                                                                                                                        
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[5]:                                                                                                                                                             
+Packet[5]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Wellfleet Communications                                          
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[6]: data[0000]: {00000000aaaa} {00000000bbbb} 0800 4500                                                                                                         
+[bcmPWN.0]Packet[6]: data[0010]: 8100 0001 0050 0001 0000 4011 7497 0101                                                                                                         
+[bcmPWN.0]Packet[6]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[6]: data[00d0]: 7374 7465 7374                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[6]:                                                                                                                                                             
+Packet[6]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Untagged Packet Internet Protocol (IP)                                                                      
+Packet[6]:   IP: V(4) src<64.17.116.151> dst<1.1.1.1> hl<5> service-type<0> tl<33024> id<1> frg-off<80> ttl<0> > chk-sum<0x0000>                                                 
+Packet[6]:   ICMP: Type-2 (Unassigned [JBP]) Code-2                                                                                                                              
+Packet[6]:   Generic: Code <15360> Checksum <0x32f6> hun <74 65 73 74>                                                                                                           
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[7]: data[0000]: {000000000999} {000000000666} 8100 00c8                                                                                                         
+[bcmPWN.0]Packet[7]: data[0010]: 8100 0001 0800 4500 012c 0000 0000 1011                                                                                                         
+[bcmPWN.0]Packet[7]: data[0020]: 8ba4 0606 0606 0909 0909 ffff 2118 0118                                                                                                         
+[bcmPWN.0]Packet[7]: data[0030]: 0000 0800 0000 6543 2100 0000 0000 aaaa                                                                                                         
+[bcmPWN.0]Packet[7]: data[0040]: 0000 0000 bbbb 0800 4500 0050 0001 0000                                                                                                         
+[bcmPWN.0]Packet[7]: data[0050]: 4011 7497 0101 0101 0202 0202 0035 0035                                                                                                         
+[bcmPWN.0]Packet[7]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[0090]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00a0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00b0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00c0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00d0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00e0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[00f0]: 7465 7374 7465 7374 7465 7374 7465 7374                                                                                                         
+[bcmPWN.0]Packet[7]: data[0100]: 7465 7374 7465 7374 7465 7374                                                                                                                   
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[7]:                                                                                                                                                             
+Packet[7]:   Ethernet: dst<00:00:00:00:09:99> src<00:00:00:00:06:66> Tagged Packet ProtID<0x8100> Ctrl<0x00c8> Wellfleet Communications                                          
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[8]: data[0000]: {00000000aaaa} {00000000bbbb} 0800 4500                                                                                                         
+[bcmPWN.0]Packet[8]: data[0010]: 8100 0001 0050 0001 0000 4011 7497 0101                                                                                                         
+[bcmPWN.0]Packet[8]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0060]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0070]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0080]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[0090]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[00a0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[00b0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[00c0]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[8]: data[00d0]: 7374 7465 7374                                                                                                                                  
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[8]:                                                                                                                                                             
+Packet[8]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Untagged Packet Internet Protocol (IP)                                                                      
+Packet[8]:   IP: V(4) src<64.17.116.151> dst<1.1.1.1> hl<5> service-type<0> tl<33024> id<1> frg-off<80> ttl<0> > chk-sum<0x0000>                                                 
+Packet[8]:   ICMP: Type-2 (Unassigned [JBP]) Code-2                                                                                                                              
+Packet[8]:   Generic: Code <15360> Checksum <0x32f6> hun <74 65 73 74>                                                                                                           
+Sleeping for 2 seconds                                                                                                                                                           
+MC_PERQ_PKT(0).cpu0                   :                     4                  +4                                                                                                
+MC_PERQ_BYTE(0).cpu0                  :                 1,218              +1,218                                                                                                
+XLMIB_TBYT.ce0                        :                   218                +218                                                                                                
+XLMIB_RBYT.ce0                        :                   218                +218                                                                                                
+XLMIB_TPOK.ce0                        :                     1                  +1                                                                                                
+XLMIB_RPOK.ce0                        :                     1                  +1                                                                                                
+XLMIB_TVLN.ce0                        :                     1                  +1                                                                                                
+XLMIB_RVLN.ce0                        :                     1                  +1                                                                                                
+XLMIB_TUCA.ce0                        :                     1                  +1                                                                                                
+XLMIB_RUCA.ce0                        :                     1                  +1                                                                                                
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T255.ce0                        :                     1                  +1
+XLMIB_R255.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                   214                +214
+XLMIB_RBYT.ce1                        :                   214                +214
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T255.ce1                        :                     1                  +1
+XLMIB_R255.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+MC_PERQ_PKT(0).ce1                    :                     1                  +1
+MC_PERQ_BYTE(0).ce1                   :                   214                +214
+XLMIB_TBYT.ce2                        :                   482                +482
+XLMIB_RBYT.ce2                        :                   482                +482
+XLMIB_TPOK.ce2                        :                     2                  +2
+XLMIB_RPOK.ce2                        :                     2                  +2
+XLMIB_TVLN.ce2                        :                     1                  +1
+XLMIB_RVLN.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :                     2                  +2
+XLMIB_RUCA.ce2                        :                     2                  +2
+XLMIB_TPKT.ce2                        :                     2                  +2
+XLMIB_RPKT.ce2                        :                     2                  +2
+XLMIB_T511.ce2                        :                     1                  +1
+XLMIB_R511.ce2                        :                     1                  +1
+XLMIB_T255.ce2                        :                     1                  +1
+XLMIB_R255.ce2                        :                     1                  +1
+XLMIB_RPRM.ce2                        :                     2                  +2
+MC_PERQ_PKT(0).ce2                    :                     2                  +2
+MC_PERQ_BYTE(0).ce2                   :                   482                +482
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

@@ -1,0 +1,60 @@
+BCM.0> cint th4_hsdk_mod_cosq_egress_limit.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 1
+Egress port1: 2
+MTP port: 3
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+Enabling MOD...done!
+Creating MOD prifile 0...done!
+Setting MOD profile...done!
+PSAMP Mirror destination create
+Adding source-to-destination for MOD
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known L3 unicast pkt from port 1 forwarding to the egress port 2
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+pktioRxCallback: received from port 0x3
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[1]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[1]: data[0030]: 0076 0000 0000 0000 000a 0000 0064 1234
+[bcmPWN.0]Packet[1]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0050]: 0001 0007 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[1]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[1]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[1]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[1]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[1]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+FlexCtr Get on port_egress1 : 0 packets / 0 bytes
+FlexCtr Get on port_mtp_port : 1 packets / 168 bytes
+
+-----------------------------------------------------------
+    RESULT OF EGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 1 cleanup
+egress_port_multi_cleanup port: 2 cleanup
+egress_port_multi_cleanup port: 3 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

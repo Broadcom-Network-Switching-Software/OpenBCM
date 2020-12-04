@@ -1,0 +1,162 @@
+# ./bcm.user -y bcm56990_a0-generic-64x400.config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:14:09 2020)
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint th4_hsdk_cosq_debug_stat.c
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:14:09 2020)
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56880_A0_BASE, BCM56990_A0_BASE, BCM56990_B0_BASE
+     BCM56996_A0_BASE, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Test configuration:
+   Name Port Pri VLAN
+    cd0    1   0 1000
+    cd3    4   1 1001
+    cd6   19   2 1002
+    cd9   35   3 1003
+   cd12   51   4 1004
+   cd15   54   5 1005
+   cd18   70   6 1006
+   cd21   86   7 1007
+   cd24  102   0 1008
+   cd27  105   1 1009
+   cd30  121   2 1010
+   cd33  137   3 1011
+   cd36  153   4 1012
+   cd39  156   5 1013
+   cd42  172   6 1014
+   cd45  188   7 1015
+   cd48  204   0 1016
+   cd51  207   1 1017
+   cd54  223   2 1018
+   cd57  239   3 1019
+   cd60  255   4 1020
+   cd63  258   5 1021
+
+Verify ...
+
+cosqDebugCounterSourcePortTest: Begin ...
+  cd0: Counter[0]: packets=1 [PASS]
+  cd3: Counter[1]: packets=2 [PASS]
+  cd6: Counter[2]: packets=3 [PASS]
+  cd9: Counter[3]: packets=4 [PASS]
+ cd12: Counter[4]: packets=5 [PASS]
+ cd15: Counter[5]: packets=6 [PASS]
+ cd18: Counter[6]: packets=7 [PASS]
+ cd21: Counter[7]: packets=8 [PASS]
+ cd24: Counter[0]: packets=1 [PASS]
+ cd27: Counter[1]: packets=2 [PASS]
+ cd30: Counter[2]: packets=3 [PASS]
+ cd33: Counter[3]: packets=4 [PASS]
+ cd36: Counter[4]: packets=5 [PASS]
+ cd39: Counter[5]: packets=6 [PASS]
+ cd42: Counter[6]: packets=7 [PASS]
+ cd45: Counter[7]: packets=8 [PASS]
+ cd48: Counter[0]: packets=1 [PASS]
+ cd51: Counter[1]: packets=2 [PASS]
+ cd54: Counter[2]: packets=3 [PASS]
+ cd57: Counter[3]: packets=4 [PASS]
+ cd60: Counter[4]: packets=5 [PASS]
+ cd63: Counter[5]: packets=6 [PASS]
+cosqDebugCounterSourcePortTest: PASS
+
+cosqDebugCounterDestinationPortQueueTest: Begin ...
+  cd6: COSQ Counter[0]: packets=0 [PASS]
+  cd6: COSQ Counter[1]: packets=3 [PASS]
+  cd6: COSQ Counter[2]: packets=0 [PASS]
+  cd6: COSQ Counter[3]: packets=0 [PASS]
+  cd6: COSQ Counter[4]: packets=0 [PASS]
+  cd6: COSQ Counter[5]: packets=0 [PASS]
+  cd6: COSQ Counter[6]: packets=0 [PASS]
+  cd6: COSQ Counter[7]: packets=0 [PASS]
+  cd9: COSQ Counter[0]: packets=0 [PASS]
+  cd9: COSQ Counter[1]: packets=0 [PASS]
+  cd9: COSQ Counter[2]: packets=4 [PASS]
+  cd9: COSQ Counter[3]: packets=0 [PASS]
+  cd9: COSQ Counter[4]: packets=0 [PASS]
+  cd9: COSQ Counter[5]: packets=0 [PASS]
+  cd9: COSQ Counter[6]: packets=0 [PASS]
+  cd9: COSQ Counter[7]: packets=0 [PASS]
+ cd12: COSQ Counter[0]: packets=0 [PASS]
+ cd12: COSQ Counter[1]: packets=0 [PASS]
+ cd12: COSQ Counter[2]: packets=0 [PASS]
+ cd12: COSQ Counter[3]: packets=1 [PASS]
+ cd12: COSQ Counter[4]: packets=0 [PASS]
+ cd12: COSQ Counter[5]: packets=0 [PASS]
+ cd12: COSQ Counter[6]: packets=0 [PASS]
+ cd12: COSQ Counter[7]: packets=0 [PASS]
+ cd15: COSQ Counter[0]: packets=0 [PASS]
+ cd15: COSQ Counter[1]: packets=0 [PASS]
+ cd15: COSQ Counter[2]: packets=0 [PASS]
+ cd15: COSQ Counter[3]: packets=0 [PASS]
+ cd15: COSQ Counter[4]: packets=2 [PASS]
+ cd15: COSQ Counter[5]: packets=0 [PASS]
+ cd15: COSQ Counter[6]: packets=0 [PASS]
+ cd15: COSQ Counter[7]: packets=0 [PASS]
+ cd18: COSQ Counter[0]: packets=0 [PASS]
+ cd18: COSQ Counter[1]: packets=0 [PASS]
+ cd18: COSQ Counter[2]: packets=0 [PASS]
+ cd18: COSQ Counter[3]: packets=0 [PASS]
+ cd18: COSQ Counter[4]: packets=0 [PASS]
+ cd18: COSQ Counter[5]: packets=3 [PASS]
+ cd18: COSQ Counter[6]: packets=0 [PASS]
+ cd18: COSQ Counter[7]: packets=0 [PASS]
+ cd21: COSQ Counter[0]: packets=0 [PASS]
+ cd21: COSQ Counter[1]: packets=0 [PASS]
+ cd21: COSQ Counter[2]: packets=0 [PASS]
+ cd21: COSQ Counter[3]: packets=0 [PASS]
+ cd21: COSQ Counter[4]: packets=0 [PASS]
+ cd21: COSQ Counter[5]: packets=0 [PASS]
+ cd21: COSQ Counter[6]: packets=4 [PASS]
+ cd21: COSQ Counter[7]: packets=0 [PASS]
+ cd24: COSQ Counter[0]: packets=0 [PASS]
+ cd24: COSQ Counter[1]: packets=0 [PASS]
+ cd24: COSQ Counter[2]: packets=0 [PASS]
+ cd24: COSQ Counter[3]: packets=0 [PASS]
+ cd24: COSQ Counter[4]: packets=0 [PASS]
+ cd24: COSQ Counter[5]: packets=0 [PASS]
+ cd24: COSQ Counter[6]: packets=0 [PASS]
+ cd24: COSQ Counter[7]: packets=1 [PASS]
+ cd27: COSQ Counter[0]: packets=2 [PASS]
+ cd27: COSQ Counter[1]: packets=0 [PASS]
+ cd27: COSQ Counter[2]: packets=0 [PASS]
+ cd27: COSQ Counter[3]: packets=0 [PASS]
+ cd27: COSQ Counter[4]: packets=0 [PASS]
+ cd27: COSQ Counter[5]: packets=0 [PASS]
+ cd27: COSQ Counter[6]: packets=0 [PASS]
+ cd27: COSQ Counter[7]: packets=0 [PASS]
+ cd30: COSQ Counter[0]: packets=0 [PASS]
+ cd30: COSQ Counter[1]: packets=3 [PASS]
+ cd30: COSQ Counter[2]: packets=0 [PASS]
+ cd30: COSQ Counter[3]: packets=0 [PASS]
+ cd30: COSQ Counter[4]: packets=0 [PASS]
+ cd30: COSQ Counter[5]: packets=0 [PASS]
+ cd30: COSQ Counter[6]: packets=0 [PASS]
+ cd30: COSQ Counter[7]: packets=0 [PASS]
+ cd33: COSQ Counter[0]: packets=0 [PASS]
+ cd33: COSQ Counter[1]: packets=0 [PASS]
+ cd33: COSQ Counter[2]: packets=4 [PASS]
+ cd33: COSQ Counter[3]: packets=0 [PASS]
+ cd33: COSQ Counter[4]: packets=0 [PASS]
+ cd33: COSQ Counter[5]: packets=0 [PASS]
+ cd33: COSQ Counter[6]: packets=0 [PASS]
+ cd33: COSQ Counter[7]: packets=0 [PASS]
+cosqDebugCounterDestinationPortQueueTest: PASS
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

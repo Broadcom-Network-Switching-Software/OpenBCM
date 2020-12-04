@@ -1,0 +1,59 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport FLOW RC (run commands) file
+#
+#       These are default commands that are for TechSupport FLOW.
+#
+
+# Show S/W state in FLOW.
+dump sw flow
+
+# Show available flow handles.
+flowdb flow show
+
+# Show available flow options.
+flowdb flow_option show
+
+# Show FLOW related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show FLOW related Ingress LTs.
+local lt ING_DVP_TABLE;                                            $traverse_lt;
+local lt ING_L3_NEXT_HOP_1_TABLE;                                  $traverse_lt;
+local lt ING_L3_NEXT_HOP_2_TABLE;                                  $traverse_lt;
+local lt ING_SVP_TABLE;                                            $traverse_lt;
+local lt ING_VFI_TABLE;                                            $traverse_lt;
+local lt ING_VLAN_XLATE_1_TABLE;                                   $traverse_lt;
+local lt ING_VLAN_XLATE_2_TABLE;                                   $traverse_lt;
+local lt ING_VLAN_XLATE_3_TABLE;                                   $traverse_lt;
+local lt L2_HOST_TABLE;                                            $traverse_lt;
+local lt L2_TUNNEL_IPV4_DIP_TABLE;                                 $traverse_lt;
+local lt L2_TUNNEL_IPV4_DIP_TABLE;                                 $traverse_lt;
+local lt L2_TUNNEL_VN_ID_TABLE;                                    $traverse_lt;
+local lt MY_STATION_TABLE;                                         $traverse_lt;
+local lt R_L2_TUNNEL_DEFAULT_NETWORK_SVP;                          $traverse_lt;
+local lt VLAN_XLATE_1_STRENGTH_PROFILE;                            $traverse_lt;
+local lt VLAN_XLATE_2_STRENGTH_PROFILE;                            $traverse_lt;
+local lt VLAN_XLATE_3_STRENGTH_PROFILE;                            $traverse_lt;
+
+# Show FLOW related TM LTs.
+local lt L2_MC_GROUP;                                              $traverse_lt;
+local lt L3_MC_CONTROL;                                            $traverse_lt;
+local lt TM_MC_AGG_LIST_MEMBER_REMAP;                              $traverse_lt;
+local lt TM_MC_GROUP;                                              $traverse_lt;
+local lt TM_MC_PORT_AGG_LIST;                                      $traverse_lt;
+local lt TM_MC_PORT_AGG_MAP;                                       $traverse_lt;
+
+# Show FLOW related Egress LTs.
+local lt EGR_DVP;                                                  $traverse_lt;
+local lt EGR_DVP_STR_PROFILE;                                      $traverse_lt;
+local lt EGR_L3_NEXT_HOP_1;                                        $traverse_lt;
+local lt EGR_L3_NEXT_HOP_2;                                        $traverse_lt;
+local lt EGR_L3_OIF_1;                                             $traverse_lt;
+local lt EGR_L3_OIF_2;                                             $traverse_lt;
+local lt EGR_L3_TUNNEL_0;                                          $traverse_lt;
+local lt EGR_L3_TUNNEL_1;                                          $traverse_lt;
+local lt EGR_VFI;                                                  $traverse_lt;

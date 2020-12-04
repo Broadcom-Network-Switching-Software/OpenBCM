@@ -1,0 +1,81 @@
+BCM.0> cint th4_hsdk_l3_weighted_ecmp_ipv4_route.c
+Ingress_port_multi_setup port: 139 setup
+Egress_port_multi_setup port: 51 setup
+Egress_port_multi_setup port: 122 setup
+Egress_port_multi_setup port: 173 setup
+int ecmp_if = 200001 (0x30d41)
+
+Completed test setup successfully.
+
+l3 ecmp show
+ECMP group 200001(UnderLay):
+        Dynamic mode 0, Flags 0x100, Max path 512
+        Interfaces: (member count 3)
+        {100001} {100002} {100003}
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      10.58.66.0/24       200001 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay
+
+2     40    00:00:00:00:11:11  UnderLay
+
+3     50    00:00:00:11:11:11  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1   173            0     0   underlay   no
+
+100002  00:00:00:00:22:22      2    51            0     0   underlay   no
+
+100003  00:00:00:22:22:22      3   122            0     0   underlay   no
+
+Sending packets to ingress port 139
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000002222} {000000001111} 8100 0028
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 003c 6762 0000 fe01 be75 0a3a
+[bcmPWN.0]Packet[2]: data[0020]: 4002 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[2]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+Packet from data=<>, length=78
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000222222} {000000111111} 8100 0032
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 003c 6762 0000 fe11 be65 0a3a
+[bcmPWN.0]Packet[3]: data[0020]: 4002 0a3a 4273 0000 550a 0028 6907 6162
+[bcmPWN.0]Packet[3]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+
+Routed : 3 packets / 246 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

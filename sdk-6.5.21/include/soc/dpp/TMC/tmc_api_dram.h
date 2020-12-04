@@ -1,0 +1,189 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+*/
+
+
+#ifndef __SOC_TMC_API_DRAM_INCLUDED__
+
+#define __SOC_TMC_API_DRAM_INCLUDED__
+
+
+
+
+
+#define SOC_TMC_BIST_NOF_PATTERNS 8  
+
+#define SOC_TMC_BIST_NOF_SEEDS 8
+
+   
+#define SOC_TMC_DRAM_BIST_FLAGS_CONS_ADDR_8_BANKS            (0x0001)
+#define SOC_TMC_DRAM_BIST_FLAGS_ADDRESS_SHIFT_MODE           (0X0002)
+#define SOC_TMC_DRAM_BIST_FLAGS_INFINITE                     (0x0004)
+#define SOC_TMC_DRAM_BIST_FLAGS_ALL_ADDRESS                  (0x0008)
+#define SOC_TMC_DRAM_BIST_FLAGS_STOP                         (0x0010)
+#define SOC_TMC_DRAM_BIST_FLAGS_GET_DATA                     (0x0020)
+#define SOC_TMC_DRAM_BIST_FLAGS_TWO_ADDRESS_MODE             (0x0040)
+#define SOC_TMC_DRAM_BIST_FLAGS_BG_INTERLEAVE                (0x0080)
+#define SOC_TMC_DRAM_BIST_FLAGS_SINGLE_BANK_TEST             (0x0100)
+#define SOC_TMC_DRAM_BIST_FLAGS_MPR_STAGGER_INCREMENT_MODE   (0x0400)
+#define SOC_TMC_DRAM_BIST_FLAGS_MPR_READOUT_MODE             (0x0800)
+#define SOC_TMC_DRAM_BIST_FLAGS_ADDRESS_PRBS_MODE            (0x1000)
+#define SOC_TMC_DRAM_BIST_FLAGS_USE_RANDOM_DATA_SEED         (0x2000)    
+#define SOC_TMC_DRAM_BIST_FLAGS_USE_RANDOM_DBI_SEED          (0x4000) 
+
+
+
+
+
+
+
+typedef enum
+{
+  
+  SOC_TMC_DRAM_TYPE_GDDR3=1,
+  
+  SOC_TMC_DRAM_TYPE_DDR2=2,
+  
+  SOC_TMC_DRAM_TYPE_DDR3=3,
+  
+  SOC_TMC_DRAM_TYPE_DDR4=4,
+  
+  SOC_TMC_DRAM_TYPE_GDDR5=5,
+  
+  SOC_TMC_DRAM_NOF_TYPES
+
+}SOC_TMC_DRAM_TYPE;
+
+typedef enum
+{
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_256=0,
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_512=1,
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_1024=2,
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_2048=3,
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_4096=4,
+  
+  SOC_TMC_DRAM_NUM_COLUMNS_8192=5,
+  
+  SOC_TMC_NOF_DRAM_NUMS_COLUMNS
+
+}SOC_TMC_DRAM_NUM_COLUMNS;
+
+typedef enum
+{
+ 
+  SOC_TMC_DRAM_NUM_ROWS_8192=8192,
+ 
+  SOC_TMC_DRAM_NUM_ROWS_16384=16384,
+  
+  SOC_TMC_NOF_DRAM_NUM_ROWS
+
+}SOC_TMC_DRAM_NUM_ROWS;
+
+typedef enum
+{
+  
+  SOC_TMC_DRAM_NUM_BANKS_4=4,
+  
+  SOC_TMC_DRAM_NUM_BANKS_8=8,
+  
+  SOC_TMC_NOF_DRAM_NUM_BANKS
+
+}SOC_TMC_DRAM_NUM_BANKS;
+
+typedef enum
+{
+  
+  SOC_TMC_DRAM_AP_POSITION_08=0,
+  
+   SOC_TMC_DRAM_AP_POSITION_09=1,
+  
+   SOC_TMC_DRAM_AP_POSITION_10=2,
+  
+   SOC_TMC_DRAM_AP_POSITION_11=3,
+  
+   SOC_TMC_DRAM_AP_POSITION_12=4,
+  
+  SOC_TMC_NOF_DRAM_AP_POSITIONS
+
+}SOC_TMC_DRAM_AP_POSITION;
+
+typedef enum
+{
+  
+  SOC_TMC_DRAM_BURST_SIZE_16=4,
+  
+  SOC_TMC_DRAM_BURST_SIZE_32=8,
+  
+  SOC_TMC_DRAM_NOF_BURST_SIZES
+
+}SOC_TMC_DRAM_BURST_SIZE;
+
+typedef enum {
+  
+  SOC_TMC_DRAM_CLAM_SHELL_MODE_DISABLED = 0,
+  
+  SOC_TMC_DRAM_CLAM_SHELL_MODE_DRAM_0 = 1,
+  
+  SOC_TMC_DRAM_CLAM_SHELL_MODE_DRAM_1 = 2,
+  
+  SOC_TMC_NOF_DRAM_CLAM_SHELL_MODE = 3
+
+} SOC_TMC_DRAM_CLAM_SHELL_MODE;
+
+
+typedef enum
+{
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_CUSTOM = 0,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_RANDOM_PRBS = 1,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_DIFF = 2,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_ONE = 3,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_ZERO = 4,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_BIT_MODE = 5,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_SHIFT_MODE = 6,
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_ADDR_MODE = 7,
+    
+    SOC_TMC_DRAM_BIST_NOF_DATA_PATTERN_MODES = 8
+}SOC_TMC_DRAM_BIST_DATA_PATTERN_MODE;
+
+
+typedef struct {
+    
+    uint32 write_weight;
+    
+    uint32 read_weight;
+    
+    uint32 bist_num_actions;
+    
+    uint32 bist_start_address;
+    
+    uint32 bist_end_address;
+    
+    SOC_TMC_DRAM_BIST_DATA_PATTERN_MODE pattern_mode;
+    
+    uint32 pattern[SOC_TMC_BIST_NOF_PATTERNS];  
+    
+    uint32 data_seed[SOC_TMC_BIST_NOF_SEEDS]; 
+    
+    uint32 arad_bist_flags;
+
+}SOC_TMC_DRAM_BIST_INFO;
+
+
+
+
+#endif 

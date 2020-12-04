@@ -1,0 +1,38 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Meter RC (run commands) file
+#
+#       These are default commands that are for TechSupport Meter.
+#
+
+# Show S/W state in Meter.
+
+# Show Meter related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+#Meter system config
+local lt METER_EGR_FP_DEVICE_INFO;                             $traverse_lt;
+local lt METER_ING_FP_DEVICE_INFO;                             $traverse_lt;
+local lt METER_EGR_FP_GRANULARITY_INFO;                        $traverse_lt;
+local lt METER_ING_FP_GRANULARITY_INFO;                        $traverse_lt;
+local lt METER_FP_CONFIG;                                      $traverse_lt;
+local lt METER_FP_CONTROL;                                     $traverse_lt;
+local lt METER_FP_SBR_OFFSET;                                  $traverse_lt;
+local lt DT_IFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG;      $traverse_lt;
+local lt DT_EFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG;      $traverse_lt;
+
+#Meter LT traverse
+local lt DT_IFP_METER_ACTION_ACTION_TEMPLATE_0;                $traverse_lt;
+local lt DT_IFP_METER_ACTION_ACTION_TEMPLATE_1;                $traverse_lt;
+local lt DT_IFP_METER_ACTION_ACTION_TEMPLATE_2;                $traverse_lt;
+local lt DT_IFP_METER_ACTION_ACTION_TEMPLATE_3;                $traverse_lt;
+local lt DT_IFP_METER_ACTION_PDD_TEMPLATE;                     $traverse_lt;
+local lt DT_IFP_METER_ACTION_SBR_TEMPLATE;                     $traverse_lt;
+local lt DT_EFP_METER_ACTION_ACTION_TEMPLATE_0;                $traverse_lt;
+local lt DT_EFP_METER_ACTION_PDD_TEMPLATE;                     $traverse_lt;
+local lt DT_EFP_METER_ACTION_SBR_TEMPLATE;                     $traverse_lt;
+local lt METER_EGR_FP_TEMPLATE;                                $traverse_lt;
+local lt METER_ING_FP_TEMPLATE;                                $traverse_lt;

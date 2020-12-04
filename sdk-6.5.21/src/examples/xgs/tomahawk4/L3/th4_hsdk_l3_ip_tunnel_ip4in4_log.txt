@@ -1,0 +1,63 @@
+BCM.0> cint th4_hsdk_l3_ip_tunnel_ip4in4.c
+Ingress_port_multi_setup port: 139 setup
+Egress_port_multi_setup port: 173 setup
+
+Completed test setup successfully.
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      1.1.1.1/32          100001 0    0
+2       100      2.2.2.2/32          100002 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     21    00:00:00:00:11:11  UnderLay
+
+2     22    00:00:00:00:22:22  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:02      2   173            0     0   underlay   no
+
+100002  00:00:00:00:00:01      1   139            0     0   underlay   no
+
+Sending 1 unicast packets to ingress port 139
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0042 c540 0000 4004 8f52 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0909 0909 4500 002e 0000 0000 3fff
+[bcmPWN.0]Packet[1]: data[0030]: 74cc 0202 0202 0101 0101 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0050]: 0000 0000 5886 3eca
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.10> dst<9.9.9.9> hl<5> service-type<0> tl<66> id<50496> frg-off<0> ttl<64> > chk-sum<0x8f52>
+Sending 1 unicast packets to ingress port 173
+Packet from data=<>, length=88
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000001} {000000001111} 8100 0015
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 3fff 74cc 0101
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0202 0202 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0040]: 8856 eef7
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<63> > chk-sum<0x74cc>
+Tunnel initiated Stats: 1 packets / 92 bytes
+Tunnel terminated Stats: 1 packets / 92 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

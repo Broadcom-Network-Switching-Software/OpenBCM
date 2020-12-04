@@ -1,0 +1,125 @@
+BCM.0> c TD4_HSDK_Mirror_trace_event.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191022 (Tue Oct 22 20:50:45 2019)
+From yp929377@lvnvde0743:/projects/ntsw-sw14/home/ypeng/TD4_Verify/hsdk-all-6.5.18-EA6/hsdk-all-6.5.18-EA6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+Ingress port: 2
+Mirrored to port: 61
+Block traffic ingress from MTP to avoid continuous traffic. This is for test only
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 2, hit the static L2_ENTRY with different source port
+Matching trace reason IngressL2SrcStaticMove, packet is mirror to port 61
+tx 1 pbm=2 data=0x00BBBBBBBBBB0011223344558100000208004500001C000000004002F95DC0A8001EC0A800141164EE9B00000000000102030405060708090A0B0C0D0E0F1011E544D79B;sleep 3
+Packet from data=<>, length=68
+Sleeping for 3 seconds
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[1]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x2(2)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x81222(528930)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_15_0         :0x4
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x202
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x2
+        L2_IIF_10_0                     :0x2
+        SYSTEM_SOURCE_15_0              :0x2
+        INGRESS_PP_PORT_7_0             :0x2
+        SYSTEM_DESTINATION_15_0         :0x800
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        L2_SRC_STATIC_MOVE
+        IFP
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8 
+[bcmPWN.0]Packet[2]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: e544 d79b 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH                      :0x48(72)
+        SRC_PORT_NUM                    :0x3d(61)
+        SWITCH                          :0x1(1)
+        MATCH_ID_LO                     :0x81222(528930)
+        MPB_FLEX_DATA_TYPE              :0x3(3)
+        EGR_ZONE_REMAP_CTRL             :0x1(1)
+        MULTICAST                       :0x1(1)
+        COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16        :0x4
+        DROP_CODE_15_0                  :0x1809
+        PARSER_VHLEN_0_15_0             :0x8a
+        VFI_15_0                        :0x2
+        L2_IIF_10_0                     :0x3d
+        SYSTEM_SOURCE_15_0              :0x3d
+        INGRESS_PP_PORT_7_0             :0x3d
+        SYSTEM_DESTINATION_15_0         :0x800
+        EFFECTIVE_TTL_7_0               :0x40
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+        SYSTEM_OPCODE_3_0               :0x3
+        PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+        IFP
+
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+XLMIB_TBYT.cd13                       :                    72                 +72
+XLMIB_RBYT.cd13                       :                    72                 +72
+XLMIB_TPOK.cd13                       :                     1                  +1
+XLMIB_RPOK.cd13                       :                     1                  +1
+XLMIB_TVLN.cd13                       :                     1                  +1
+XLMIB_RVLN.cd13                       :                     1                  +1
+XLMIB_TUCA.cd13                       :                     1                  +1
+XLMIB_RUCA.cd13                       :                     1                  +1
+XLMIB_TPKT.cd13                       :                     1                  +1
+XLMIB_RPKT.cd13                       :                     1                  +1
+XLMIB_T127.cd13                       :                     1                  +1
+XLMIB_R127.cd13                       :                     1                  +1
+XLMIB_RPRM.cd13                       :                     1                  +1
+mac=00:11:22:33:44:55 vlan=2 GPORT=0x3 modid=0 port=3/cd2 Static
+
+******Port stats check******
+--------Ingress port (2) stats--------
+Rx : 1 packets
+-------- MTP (61) stats--------
+Mirrored out: 1 packets
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

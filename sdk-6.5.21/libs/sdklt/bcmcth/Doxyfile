@@ -1,0 +1,12 @@
+PROJECT_NAME            = "Custom Table Handler Library (BCMCTH)"
+HTML_FOOTER             = ../doc/footer.html
+OPTIMIZE_OUTPUT_FOR_C   = yes
+SOURCE_BROWSER          = yes
+DISABLE_INDEX           = yes
+GENERATE_TREEVIEW       = yes
+RECURSIVE               = yes
+
+INPUT                   = DOC/bcmcth.dox \
+                          include
+
+EXCLUDE                 = include/bcmcth/generated

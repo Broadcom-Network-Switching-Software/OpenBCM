@@ -1,0 +1,42 @@
+BCM.0> cint th4_hsdk_l3_uc_ipv4_reduced_data_mode.c
+Ingress_port_multi_setup port: 1 setup
+Egress_port_multi_setup port: 2 setup
+
+Completed test setup successfully.
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.0/24      100001 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1     2            0     0   underlay   no
+
+Sending 1 unicast packet to ingress port 1
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

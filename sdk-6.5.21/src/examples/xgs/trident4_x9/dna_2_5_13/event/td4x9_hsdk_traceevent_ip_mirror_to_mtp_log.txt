@@ -1,0 +1,164 @@
+BCM.0> c td4x9_hsdk_traceevent_ip_mirror_to_mtp.c                                                     
+execute(): Start                                                                                      
+config show; attach; version                                                                          
+    os=unix                                                                                           
+Attach: Unit 0 (BCM56780_A0): attached (current unit)                                                 
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom                                            
+Release: sdk-6.5.21 built 20200906 (Sun Sep  6 09:23:21 2020)                                         
+From sdkrel@lc-sj1-4832:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780      
+Platform: SLK_BCM957812                                                                               
+OS: Unix (Posix)                                                                                      
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5             
+~~ #1) test_setup(): ** start **                             
+~~ #1) test_setup(): ** end **                               
+~~ #2) config_event_action(): ** start **                    
+Create a VLAN and add all member ports.                       
+Set the port learning mode.                                   
+Change the default outer TPID for mirror_to_port: 0x9100.     
+Create a static L2 MAC address on egress_port[1].             
+Enable the specific trace event and mirror it to MTP.         
+~~ #2) config_event_action(): ** end **                      
+~~ #3) verify(): ** start **                                 
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)                                                                                                           
+vlan 22 ports ce0-ce2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)                                                                                                                    
+mac=00:00:00:00:00:02 vlan=22 GPORT=0x2 modid=0 port=2/ce1 Static                                                                                                                
+
+Sending unknown unicast packet No.[1] to ingress_port access side:1
+Packet from data=<>, length=152                                    
+XLMIB_TBYT.ce0                        :                   156                +156
+XLMIB_RBYT.ce0                        :                   156                +156
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TVLN.ce0                        :                     1                  +1
+XLMIB_RVLN.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T255.ce0                        :                     1                  +1
+XLMIB_R255.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                   156                +156
+XLMIB_RBYT.ce1                        :                   156                +156
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T255.ce1                        :                     1                  +1
+XLMIB_R255.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+MC_PERQ_PKT(0).ce1                    :                     1                  +1
+MC_PERQ_BYTE(0).ce1                   :                   156                +156
+XLMIB_TBYT.ce2                        :                   156                +156
+XLMIB_RBYT.ce2                        :                   156                +156
+XLMIB_TPOK.ce2                        :                     1                  +1
+XLMIB_RPOK.ce2                        :                     1                  +1
+XLMIB_TVLN.ce2                        :                     1                  +1
+XLMIB_RVLN.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :                     1                  +1
+XLMIB_RUCA.ce2                        :                     1                  +1
+XLMIB_TPKT.ce2                        :                     1                  +1
+XLMIB_RPKT.ce2                        :                     1                  +1
+XLMIB_T255.ce2                        :                     1                  +1
+XLMIB_R255.ce2                        :                     1                  +1
+XLMIB_RPRM.ce2                        :                     1                  +1
+MC_PERQ_PKT(0).ce2                    :                     1                  +1
+MC_PERQ_BYTE(0).ce2                   :                   156                +156
+
+Sending unknown unicast packet No.[2] to ingress_port access side:1
+Packet from data=<>, length=152                                    
+[bcmPWN.0]                                                         
+[bcmPWN.0]Packet[1]: data[0000]: {000000aabbcc} {000000000002} 8100 0001
+[bcmPWN.0]Packet[1]: data[0010]: 8100 0016 0800 4500 0082 0000 4000 3f11 
+[bcmPWN.0]Packet[1]: data[0020]: 65b7 c0a8 0101 0a0a 0a01 d903 12b5 006e 
+[bcmPWN.0]Packet[1]: data[0030]: 790b 0800 0000 0123 4500 0000 0000 bbbb 
+[bcmPWN.0]Packet[1]: data[0040]: 0000 0000 aaaa 8100 0015 0800 4500 0050 
+[bcmPWN.0]Packet[1]: data[0050]: 0001 0000 4011 7497 0202 0202 0101 0101 
+[bcmPWN.0]Packet[1]: data[0060]: 0035 0035 003c 32f6 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374 
+[bcmPWN.0]Packet[1]: data[0090]: 7465 7374 7465 7374 7465 7374           
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0xa0                                                  
+        SRC_PORT_NUM=4                                                   
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x920d444                                            
+        MATCH_ID_HI=0x2035                                               
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        MULTICAST=1                                                      
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=4                                       
+        DROP_CODE_15_0=0x1f1f                                            
+        PARSER_VHLEN_0_15_0=0x8a8a                                       
+        SYSTEM_SOURCE_15_0=4                                             
+        INGRESS_PP_PORT_7_0=4                                            
+        EFFECTIVE_TTL_7_0=0x3f                                           
+        VFI_15_0=1                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=3                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+[RX reasons]                                                             
+        IFP                                                              
+[Decode match id]                                                        
+        INGRESS_PKT_INNER_L2_HDR_L2                                      
+        INGRESS_PKT_INNER_L2_HDR_OTAG                                    
+        INGRESS_PKT_INNER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_INNER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_INNER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_INNER_L3_L4_HDR_UNKNOWN_L5                           
+        INGRESS_PKT_OUTER_L2_HDR_ITAG                                    
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_VXLAN                                
+
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   232                +232
+XLMIB_TBYT.ce0                        :                   312                +156
+XLMIB_RBYT.ce0                        :                   312                +156
+XLMIB_TPOK.ce0                        :                     2                  +1
+XLMIB_RPOK.ce0                        :                     2                  +1
+XLMIB_TVLN.ce0                        :                     2                  +1
+XLMIB_RVLN.ce0                        :                     2                  +1
+XLMIB_TUCA.ce0                        :                     2                  +1
+XLMIB_RUCA.ce0                        :                     2                  +1
+XLMIB_TPKT.ce0                        :                     2                  +1
+XLMIB_RPKT.ce0                        :                     2                  +1
+XLMIB_T255.ce0                        :                     2                  +1
+XLMIB_R255.ce0                        :                     2                  +1
+XLMIB_RPRM.ce0                        :                     2                  +1
+XLMIB_TBYT.ce3                        :                   156                +156
+XLMIB_RBYT.ce3                        :                   156                +156
+XLMIB_TPOK.ce3                        :                     1                  +1
+XLMIB_RPOK.ce3                        :                     1                  +1
+XLMIB_TVLN.ce3                        :                     1                  +1
+XLMIB_RVLN.ce3                        :                     1                  +1
+XLMIB_TUCA.ce3                        :                     1                  +1
+XLMIB_RUCA.ce3                        :                     1                  +1
+XLMIB_TPKT.ce3                        :                     1                  +1
+XLMIB_RPKT.ce3                        :                     1                  +1
+XLMIB_T255.ce3                        :                     1                  +1
+XLMIB_R255.ce3                        :                     1                  +1
+XLMIB_RPRM.ce3                        :                     1                  +1
+MC_PERQ_PKT(0).ce3                    :                     1                  +1
+MC_PERQ_BYTE(0).ce3                   :                   156                +156
+
+Get the event counter for double confirmation:
+Counter 'bcmPktTraceEventIngressL2SrcStaticMove': 1.
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

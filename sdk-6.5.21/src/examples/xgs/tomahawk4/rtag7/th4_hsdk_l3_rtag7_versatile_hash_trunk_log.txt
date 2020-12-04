@@ -1,0 +1,143 @@
+BCM.0> c th4_hsdk_l3_rtag7_versatile_hash_trunk.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+setting ingress port:1 MAC loopback
+setting egress ports:2, 3 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l3_route_rtag7_trunk(): ** start **
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+bcm_trunk_create trunk_id = 1.
+
+Create trunk id:1 with member ports 2 and 3
+int trunk_gp_id = 201326593 (0xc000001)
+l3 egr obj = 100001
+Created flexctr stat_counter_id = 0x10002001.
+Flexctr stat_counter_id:0x10002001 attached to egress port 2
+Flexctr stat_counter_id:0x10002001 attached to egress port 3
+~~~ #2) config_l3_route_rtag7_trunk(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Flexctr Get : 42 packets / 3444 bytes from egress port 2
+Flexctr Get : 58 packets / 4756 bytes from egress port 3
+
+---------------------------------------------------------------------------------- 
+    RESULT OF L3 ROUTE TO TRUNK WITH RTAG7 with VERSATILE HASH ALGORITHM VERIFICATION  
+---------------------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+int $$ = 434 (0x1b2)
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

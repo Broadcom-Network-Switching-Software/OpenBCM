@@ -1,0 +1,35 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+Starting Interrupt service...
+[DMA-listener]DMA Controller listening on port[60354]
+[Interrupt-listener]ISR dispatcher listening on port[60977]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+
+BCM.0> cint th4_hsdk_mmu_fc_pause.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Set PAUSE frame smac
+Eenabling PAUSE
+bcm_error_t $$ = BCM_E_NONE (0)
+

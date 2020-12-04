@@ -1,0 +1,86 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Original:
+#  FEATURE_LIST := CINT BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI INTR APIMODE PTP
+# For Adaper, interrupts are not implemented so take INTR out
+#
+FEATURE_LIST := CINT  BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI APIMODE PTP
+
+DL_ENABLE=TRUE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+#
+# Specifying '-Werror=all' (below) does NOT guarantee all warnings to
+# be converted into errors. Only some do.
+# The warnings below need to be added one by one.
+# 
+CFLAGS += -Werror=strict-prototypes
+CFLAGS += -Werror=format
+CFLAGS += -Werror=maybe-uninitialized
+
+ifneq ($(DEBUG_OPTIMIZE),FALSE)
+DEBUG_CFLAGS += -O2
+endif
+
+BCM_PTL_SPT=1
+
+ifeq ($(ON_VM),1)
+# {
+DEBUG_CFLAGS += -Wno-variadic-macros
+DEBUG_CFLAGS += -Wno-format
+DEBUG_CFLAGS += -Wno-long-long
+# }
+endif
+#
+# This is for 'DNX only' compilation. Take DPP and DFE out.
+#
+# ALL_DPP_CHIPS = 1
+# ALL_DFE_CHIPS = 1
+ALL_DNX_CHIPS = 1
+ifeq ($(VALGRIND_SUPPORT),1)
+  VALGRIND_DIR = /projects/NTSW_SW_USRS/common/tools/valgrind-3.11.0
+  CFGFLAGS += -DUSE_EXTERNAL_MEM_CHECKING=1
+  CFGFLAGS += -DUSE_VALGRIND_CLIENT_REQUESTS -I$(VALGRIND_DIR) -I$(VALGRIND_DIR)/include
+  CFGFLAGS += -DVALGRIND_SUPPORT=1
+  #
+  # Indicate we want to use our string utilities (such as strcmp) and
+  # not the standard C-runtime-library. 
+  # This may be required because, for some compilers, the runtime-library accesses
+  # memory in resolution of 8 bytes, which collides with Valgrind.
+  #
+  CFGFLAGS += -DUSE_CUSTOM_STR_UTILS=1
+endif
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_API_TEST
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -DADAPTER_SERVER_MODE
+CFGFLAGS += -DINCLUDE_AUTOCOMPLETE
+CFGFLAGS += -DLONGS_ARE_64BITS
+CFGFLAGS += -DPTRS_ARE_64BITS
+CFGFLAGS += -DPHYS_ADDRS_ARE_64BITS
+
+ifneq ($(ON_VM),1)
+CFLAGS += -Werror=all
+endif
+
+#Set DWARF lvl 2.
+#Used to print Debug symbols in GCC v8.1.0
+CFLAGS   += -gdwarf-2
+
+CFGFLAGS += -DCINT_CONFIG_INCLUDE_LONGLONGS -DSAND_PEDANTIC
+DEBUG_PEDANTIC = TRUE
+DEBUG_CFLAGS += -Werror=vla
+
+ifneq ($(EXCLUDE_VENDORS),1)
+endif
+
+export GCCVER=8.1.0
+HCC=/tools/bin/gcc
+$(info $(shell GCCVER=$(GCCVER) $(HCC) --version))
+

@@ -1,0 +1,110 @@
+/*! \page drd_dev Device Management
+
+\section drd_dev_intro Introduction
+
+Before a switch device can be accessed it must be created in the
+Device Resource Database (DRD).
+
+Please refer to bcmdrd.h for the complete DRD device API reference.
+
+\section drd_dev_create Creating a device in the DRD
+
+An application must use the \ref bcmdrd_dev_create API to add devices
+to the DRD. A device is identified by an ID structure, which must be
+filled by the caller of \ref bcmdrd_dev_create.
+
+Example (error checking skipped for clarity):
+\code{.c}
+#include <bcmdrd/bcmdrd.h>
+
+void create_switch_device(pci_dev_t *pci_dev)
+{
+    bcmdrd_dev_id_t id;
+    int unit = 0;
+
+    id.vendor_id = pci_dev->vendor_id;
+    id.device_id = pci_dev->device_id;
+    id.revision = pci_dev->revision;
+
+    /* Create device */
+    bcmdrd_dev_create(unit, &id);
+}
+\endcode
+
+The unit number can be specied explicitly, or it can be set to -1 to
+automatically select the next available unit number. In either case
+the \ref bcmdrd_dev_create will return the actual unit number upon
+successful device creation.
+
+\section drd_assign_rsrc Assigning system resources to a device
+
+A switch device needs access to three types of system resources:
+
+1. I/O registers
+2. Hardware interrupts
+3. DMA memory
+
+The SDK will access these resources through a Hardware Abstraction
+Layer (HAL), which must be implemented by the application. To aid
+application dvelopment, the SDK source code includes HAL sample
+implementations for several system environments. Please refer to the
+BCMA software component.
+
+\subsection drd_rsrc_io I/O register access
+
+Depending on the system environment, the I/O register access can be
+done via function calls or memory-mapped registers.
+
+If memory-mapped access is used, the application must provide the
+physical base address of all I?O windows as well as function for
+mapping and unmapping these physical address spaces into the logical
+address space of the host CPU.
+
+If function calls are used, the application must implement functions
+for reading and writing registers.
+
+If both types of access are made available, memory-mapped access will
+take precendence.
+
+The I/O access information is assigned via the \ref
+bcmdrd_dev_hal_io_init function, which will install a \ref
+bcmdrd_hal_io_s structure into the DRD.
+
+Since switch devices always use a little endian memory model, a
+big-endian host CPU system may need to enable hardware byte-swapping
+in the switch in order to ensure that 32-bit entities are trasferred
+in the correct endianness.
+
+\subsection drd_rsrc_dma DMA memory
+
+The SDK requires access to several megabytes (MBs) of physically
+contiguous and cache-coherent DMA memory (typical 12 MB or more per
+device).
+
+The application must provide functions for allocating and freeing DMA
+memory by calling \ref bcmdrd_dev_hal_dma_init with an initialized
+\ref bcmdrd_hal_dma_s structure.
+
+Note that some SDK drivers do not need cache-coherent DMA memory, and
+such drivers will call a set of application-provided DMA map/unmap
+functions in order to flush and invalidate the DMA memory. The DMA
+map/unmap functions are also part of the \ref bcmdrd_hal_dma_s
+structure.
+
+\subsection drd_rsrc_intr Hardware interrupts
+
+The SDK relies heavily on hardware interrupts for optimal performance,
+so the application must allow the SDK to connect to the hardware
+interrupts of the host CPU system.
+
+Furthermore, a number of drivers need to share data between interrupt
+context and thread context, so the application must also provide a
+synchonization function, which ensures that the execution of critical
+code sections in thread context is serialized with the interrupt
+context execution.
+
+The system interrupt functions are assigned to the SDK via the \ref
+bcmdrd_dev_hal_intr_init function, which must be called with an
+initialized \ref bcmdrd_hal_intr_s structure.
+
+*/

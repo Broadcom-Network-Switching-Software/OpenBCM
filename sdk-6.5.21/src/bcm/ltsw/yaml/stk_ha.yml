@@ -1,0 +1,28 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    BCMINT_STK_PBMP_PORT_MAX: 512
+
+component:
+    bcmint_stk:
+        bcmint_stk_pbmp_info_ha_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                stack_ports_current:
+                    type: bool
+                    length: BCMINT_STK_PBMP_PORT_MAX
+                    comment: Ports currently engaged in stacking.
+                stack_ports_inactive:
+                    type: bool
+                    length: BCMINT_STK_PBMP_PORT_MAX
+                    comment: Ports stacked, but explicitly blocked.
+                stack_ports_previous:
+                    type: bool
+                    length: BCMINT_STK_PBMP_PORT_MAX
+                    comment: Last stack port; to detect changes.
+

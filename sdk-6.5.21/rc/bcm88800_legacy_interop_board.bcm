@@ -1,0 +1,13 @@
+# $Id: bcm88800_legacy_interop_board.bcm
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# The purpose of the file is to load the fabric links of DNX device with speed of 25G.
+# This will be done only for specific boards
+# where the DNX device is connected to legacy DPP device (for reference see rc/dnx.soc)
+
+#Board Properties
+
+port_init_speed_fabric.BCM8880X=25000
+

@@ -1,0 +1,42 @@
+#/*----------------------------------------------------------------------
+#* 
+#* This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+#* 
+#* Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#*
+#* Broadcom Corporation
+#* Proprietary and Confidential information
+#* All rights reserved
+#* This source file is the property of Broadcom Corporation, and
+#* may not be copied or distributed in any isomorphic form without the
+#* prior written consent of Broadcom Corporation.
+#*---------------------------------------------------------------------
+#* File       : an_cl37_1g.soc
+#* Description: an_cl37_1g
+#*---------------------------------------------------------------------*/
+
+link off
+phy xe0 0x2c050 0x001c
+phy xe1 0x2c050 0x001c
+
+port xe0,xe1 adv=1000full an=t
+
+phy xe0 0x2c180 0x0000
+phy xe1 0x2c180 0x0000
+phy xe0 0x2c181 0x10
+phy xe1 0x2c181 0x10
+
+phy xe0 0x9000 0x6600
+phy xe1 0x9000 0x6600
+
+phy xe0 0x2c180 0x0000
+phy xe1 0x2c180 0x0000
+phy xe0 0x2c180 0x0040
+phy xe1 0x2c180 0x0040
+
+#phy xe0 0x2c054
+#phy xe0 0x2c1ad
+#phy xe1 0x2c054
+#phy xe1 0x2c1ad
+
+

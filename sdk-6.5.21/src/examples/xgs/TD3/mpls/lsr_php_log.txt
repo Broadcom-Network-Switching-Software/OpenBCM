@@ -1,0 +1,642 @@
+BCM.0> init all;cint lsr_php.c
+0:soc_trident3_chip_reset: TS_PLL locked on unit 0 using internal reference clock
+0:soc_trident3_chip_reset: BS_PLL0 locked on unit 0 using internal reference clock
+0:soc_trident3_chip_reset: BS_PLL1 locked on unit 0 using internal reference clock
+*** unit 0: ports capable of limited speed range cut-thru
+0:bcmi_xgs5_bfd_init: uKernel BFD application not available
+execute(): Start
+config show; attach; cancun stat; version
+    phy_chain_rx_polarity_flip_physical{16.0}=0x1
+    phy_chain_tx_polarity_flip_physical{34.0}=0x1
+    phy_chain_tx_lane_map_physical{49.0}=0x2031
+    phy_chain_rx_lane_map_physical{89.0}=0x2031
+    portmap_120=118:10
+    phy_chain_rx_polarity_flip_physical{94.0}=0x0
+    portmap_112=110:10
+    phy_chain_rx_polarity_flip_physical{59.0}=0x1
+    portmap_104=102:10
+    portmap_8=8:10
+    phy_chain_tx_polarity_flip_physical{77.0}=0x0
+    phy_chain_rx_polarity_flip_physical{1.0}=0x1
+    phy_chain_rx_lane_map_physical{113.0}=0x2031
+    phy_chain_tx_polarity_flip_physical{2.0}=0x0
+    phy_chain_rx_polarity_flip_physical{9.0}=0x1
+    phy_chain_rx_polarity_flip_physical{117.0}=0x1
+    phy_chain_tx_polarity_flip_physical{117.0}=0x0
+    phy_chain_rx_polarity_flip_physical{60.0}=0x1
+    phy_chain_rx_polarity_flip_physical{25.0}=0x0
+    phy_chain_tx_lane_map_physical{93.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{43.0}=0x1
+    portmap_121=119:10
+    phy_chain_rx_polarity_flip_physical{68.0}=0x1
+    portmap_113=111:10
+    portmap_105=103:10
+    phy_chain_tx_polarity_flip_physical{86.0}=0x0
+    portmap_9=9:10
+    phy_chain_rx_polarity_flip_physical{126.0}=0x1
+    phy_chain_tx_polarity_flip_physical{126.0}=0x0
+    phy_chain_rx_lane_map_physical{21.0}=0x3120
+    phy_chain_rx_lane_map_physical{29.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{34.0}=0x0
+    phy_chain_tx_polarity_flip_physical{52.0}=0x1
+    phy_chain_tx_polarity_flip_physical{17.0}=0x0
+    portmap_130=128:10
+    phy_chain_rx_polarity_flip_physical{77.0}=0x0
+    phy_chain_rx_lane_map_physical{5.0}=0x3120
+    portmap_122=120:10
+    portmap_114=112:10
+    phy_chain_tx_polarity_flip_physical{95.0}=0x1
+    portmap_106=104:10
+    portmap_10=10:10
+    phy_chain_tx_lane_map_physical{33.0}=0x2031
+    phy_chain_rx_lane_map_physical{73.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{43.0}=0x1
+    phy_chain_tx_polarity_flip_physical{61.0}=0x0
+    phy_chain_tx_polarity_flip_physical{26.0}=0x1
+    phy_chain_rx_polarity_flip_physical{86.0}=0x0
+    portmap_131=131:10
+    portmap_123=121:10
+    portmap_115=113:10
+    phy_chain_tx_polarity_flip_physical{69.0}=0x0
+    phy_chain_rx_lane_map_physical{105.0}=0x2031
+    portmap_107=105:10
+    phy_chain_rx_polarity_flip_physical{101.0}=0x0
+    phy_chain_tx_polarity_flip_physical{101.0}=0x0
+    phy_chain_tx_lane_map_physical{125.0}=0x3120
+    portmap_11=11:10
+    phy_chain_rx_polarity_flip_physical{109.0}=0x1
+    phy_chain_tx_polarity_flip_physical{109.0}=0x0
+    phy_chain_rx_polarity_flip_physical{52.0}=0x0
+    phy_chain_rx_polarity_flip_physical{17.0}=0x1
+    dpp_clock_ratio=2:3
+    phy_chain_tx_polarity_flip_physical{70.0}=0x0
+    phy_chain_tx_lane_map_physical{85.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{35.0}=0x1
+    phy_chain_tx_lane_map_physical{1.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{95.0}=0x1
+    portmap_124=122:10
+    phy_chain_tx_polarity_flip_physical{78.0}=0x0
+    phy_chain_rx_polarity_flip_physical{2.0}=0x1
+    portmap_116=114:10
+    portmap_108=106:10
+    phy_chain_rx_polarity_flip_physical{110.0}=0x1
+    phy_chain_tx_polarity_flip_physical{3.0}=0x1
+    phy_chain_tx_lane_map_physical{9.0}=0x2031
+    phy_chain_tx_polarity_flip_physical{110.0}=0x0
+    portmap_20=20:10
+    phy_chain_rx_polarity_flip_physical{118.0}=0x1
+    portmap_12=12:10
+    phy_chain_tx_polarity_flip_physical{118.0}=0x0
+    phy_chain_rx_lane_map_physical{13.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{61.0}=0x1
+    phy_chain_rx_polarity_flip_physical{26.0}=0x0
+    phy_chain_tx_polarity_flip_physical{44.0}=0x1
+    phy_chain_rx_polarity_flip_physical{69.0}=0x1
+    phy_chain_tx_polarity_flip_physical{87.0}=0x1
+    portmap_125=123:10
+    portmap_117=115:10
+    portmap_109=107:10
+    phy_chain_rx_polarity_flip_physical{127.0}=0x0
+    portmap_21=21:10
+    portmap_13=13:10
+    phy_chain_tx_polarity_flip_physical{127.0}=0x1
+    phy_chain_tx_polarity_flip_physical{10.0}=0x0
+    phy_chain_tx_lane_map_physical{25.0}=0x2031
+    phy_chain_rx_lane_map_physical{65.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{70.0}=0x1
+    phy_chain_rx_polarity_flip_physical{35.0}=0x1
+    phy_chain_tx_polarity_flip_physical{53.0}=0x0
+    phy_chain_tx_polarity_flip_physical{18.0}=0x1
+    phy_chain_rx_polarity_flip_physical{78.0}=0x1
+    phy_chain_tx_polarity_flip_physical{96.0}=0x1
+    portmap_126=124:10
+    portmap_118=116:10
+    phy_chain_tx_lane_map_physical{117.0}=0x3120
+    portmap_30=30:10
+    portmap_22=22:10
+    portmap_14=14:10
+    oversubscribe_mode=1
+    phy_chain_rx_polarity_flip_physical{44.0}=0x1
+    phy_chain_tx_polarity_flip_physical{62.0}=0x0
+    phy_chain_tx_lane_map_physical{77.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{27.0}=0x1
+    phy_chain_rx_polarity_flip_physical{87.0}=0x1
+    portmap_127=125:10
+    phy_chain_rx_polarity_flip_physical{102.0}=0x0
+    portmap_119=117:10
+    phy_chain_tx_polarity_flip_physical{102.0}=0x0
+    portmap_31=31:10
+    portmap_23=23:10
+    portmap_15=15:10
+    phy_chain_rx_polarity_flip_physical{10.0}=0x1
+    phy_chain_rx_polarity_flip_physical{53.0}=0x1
+    phy_chain_rx_polarity_flip_physical{18.0}=0x1
+    phy_chain_tx_polarity_flip_physical{71.0}=0x1
+    phy_chain_tx_polarity_flip_physical{36.0}=0x1
+    phy_chain_rx_polarity_flip_physical{96.0}=0x1
+    phy_chain_tx_polarity_flip_physical{79.0}=0x1
+    phy_chain_rx_polarity_flip_physical{3.0}=0x1
+    phy_chain_rx_polarity_flip_physical{111.0}=0x0
+    portmap_128=126:10
+    phy_chain_tx_polarity_flip_physical{4.0}=0x1
+    phy_chain_tx_polarity_flip_physical{111.0}=0x1
+    phy_chain_rx_polarity_flip_physical{119.0}=0x0
+    portmap_40=40:10
+    portmap_32=32:10
+    phy_chain_tx_polarity_flip_physical{119.0}=0x1
+    portmap_24=24:10
+    portmap_16=16:10
+    phy_chain_tx_lane_map_physical{17.0}=0x2031
+    phy_chain_rx_lane_map_physical{57.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{62.0}=0x1
+    phy_chain_rx_polarity_flip_physical{27.0}=0x1
+    phy_chain_tx_polarity_flip_physical{80.0}=0x1
+    phy_chain_tx_polarity_flip_physical{45.0}=0x0
+    phy_chain_tx_lane_map_physical{101.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{88.0}=0x1
+    phy_chain_rx_polarity_flip_physical{120.0}=0x0
+    portmap_129=127:10
+    phy_chain_tx_polarity_flip_physical{120.0}=0x1
+    phy_chain_tx_lane_map_physical{109.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{128.0}=0x0
+    portmap_41=41:10
+    phy_chain_tx_polarity_flip_physical{128.0}=0x1
+    portmap_33=33:10
+    portmap_25=25:10
+    portmap_17=17:10
+    phy_chain_tx_lane_map_physical{61.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{11.0}=0x1
+    phy_chain_rx_polarity_flip_physical{71.0}=0x0
+    phy_chain_rx_polarity_flip_physical{36.0}=0x1
+    phy_chain_tx_polarity_flip_physical{54.0}=0x0
+    phy_chain_tx_lane_map_physical{69.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{19.0}=0x1
+    phy_chain_rx_polarity_flip_physical{79.0}=0x0
+    phy_chain_tx_polarity_flip_physical{97.0}=0x0
+    portmap_50=50:10
+    portmap_42=42:10
+    portmap_34=34:10
+    portmap_26=26:10
+    portmap_18=18:10
+    phy_chain_tx_polarity_flip_physical{20.0}=0x1
+    phy_chain_rx_polarity_flip_physical{80.0}=0x1
+    phy_chain_rx_polarity_flip_physical{45.0}=0x1
+    phy_chain_tx_polarity_flip_physical{63.0}=0x1
+    phy_chain_tx_polarity_flip_physical{28.0}=0x1
+    phy_chain_rx_polarity_flip_physical{88.0}=0x1
+    phy_chain_rx_polarity_flip_physical{103.0}=0x1
+    phy_chain_tx_polarity_flip_physical{103.0}=0x1
+    portmap_51=51:10
+    phy_chain_rx_lane_map_physical{41.0}=0x1302
+    portmap_43=43:10
+    portmap_35=35:10
+    portmap_27=27:10
+    phy_chain_rx_polarity_flip_physical{11.0}=0x0
+    portmap_19=19:10
+    phy_chain_rx_lane_map_physical{49.0}=0x2301
+    phy_chain_rx_polarity_flip_physical{54.0}=0x1
+    phy_chain_rx_polarity_flip_physical{19.0}=0x0
+    phy_chain_tx_polarity_flip_physical{72.0}=0x1
+    phy_chain_tx_polarity_flip_physical{37.0}=0x0
+    phy_chain_rx_polarity_flip_physical{97.0}=0x1
+    phy_chain_rx_polarity_flip_physical{4.0}=0x0
+    phy_chain_rx_polarity_flip_physical{112.0}=0x0
+    phy_chain_tx_polarity_flip_physical{5.0}=0x1
+    phy_chain_tx_polarity_flip_physical{112.0}=0x1
+    portmap_60=60:10
+    portmap_52=52:10
+    portmap_44=44:10
+    portmap_36=36:10
+    phy_chain_rx_polarity_flip_physical{20.0}=0x0
+    portmap_28=28:10
+    phy_chain_tx_lane_map_physical{53.0}=0x0213
+    phy_chain_rx_lane_map_physical{93.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{63.0}=0x0
+    phy_chain_rx_polarity_flip_physical{28.0}=0x1
+    phy_chain_tx_polarity_flip_physical{81.0}=0x0
+    phy_chain_tx_polarity_flip_physical{46.0}=0x0
+    phy_chain_tx_polarity_flip_physical{89.0}=0x0
+    phy_chain_rx_lane_map_physical{125.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{121.0}=0x0
+    phy_chain_tx_polarity_flip_physical{121.0}=0x0
+    phy_chain_rx_polarity_flip_physical{129.0}=0x0
+    phy_chain_tx_polarity_flip_physical{129.0}=0x0
+    portmap_61=61:10
+    portmap_53=53:10
+    portmap_45=45:10
+    portmap_37=37:10
+    portmap_29=29:10
+    phy_chain_tx_polarity_flip_physical{12.0}=0x1
+    phy_chain_rx_polarity_flip_physical{72.0}=0x0
+    phy_chain_rx_polarity_flip_physical{37.0}=0x1
+    phy_chain_tx_polarity_flip_physical{90.0}=0x1
+    phy_chain_tx_polarity_flip_physical{55.0}=0x1
+    phy_chain_tx_polarity_flip_physical{98.0}=0x1
+    phy_chain_rx_polarity_flip_physical{130.0}=0x0
+    phy_chain_tx_polarity_flip_physical{130.0}=0x0
+    portmap_70=68:10
+    phy_chain_rx_lane_map_physical{33.0}=0x1302
+    pbmp_xport_xe=0xFFFFFFFFFFFFFFFFFfffffffffffffffe
+    portmap_62=62:10
+    portmap_54=54:10
+    portmap_46=46:10
+    portmap_38=38:10
+    phy_chain_tx_polarity_flip_physical{21.0}=0x0
+    phy_chain_rx_polarity_flip_physical{81.0}=0x1
+    phy_chain_rx_polarity_flip_physical{46.0}=0x1
+    phy_chain_tx_polarity_flip_physical{64.0}=0x1
+    phy_chain_tx_polarity_flip_physical{29.0}=0x0
+    l2_mem_entries=32768
+    os=unix
+    phy_chain_rx_polarity_flip_physical{89.0}=0x1
+    phy_chain_rx_polarity_flip_physical{104.0}=0x1
+    phy_chain_tx_polarity_flip_physical{104.0}=0x1
+    portmap_71=69:10
+    portmap_63=63:10
+    portmap_55=55:10
+    phy_chain_rx_polarity_flip_physical{12.0}=0x0
+    portmap_47=47:10
+    portmap_39=39:10
+    phy_chain_tx_polarity_flip_physical{30.0}=0x0
+    phy_chain_tx_lane_map_physical{45.0}=0x0213
+    phy_chain_rx_lane_map_physical{85.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{90.0}=0x1
+    phy_chain_rx_polarity_flip_physical{55.0}=0x0
+    phy_chain_tx_polarity_flip_physical{73.0}=0x0
+    phy_chain_tx_polarity_flip_physical{38.0}=0x0
+    phy_chain_rx_polarity_flip_physical{98.0}=0x1
+    phy_chain_rx_polarity_flip_physical{5.0}=0x0
+    phy_chain_rx_lane_map_physical{117.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{113.0}=0x0
+    phy_chain_tx_polarity_flip_physical{6.0}=0x0
+    phy_chain_tx_polarity_flip_physical{113.0}=0x0
+    portmap_80=78:10
+    portmap_72=70:10
+    portmap_64=64:10
+    phy_chain_rx_polarity_flip_physical{21.0}=0x0
+    portmap_56=56:10
+    portmap_48=48:10
+    phy_chain_rx_polarity_flip_physical{64.0}=0x0
+    phy_chain_rx_polarity_flip_physical{29.0}=0x1
+    phy_chain_tx_polarity_flip_physical{82.0}=0x1
+    phy_chain_tx_lane_map_physical{97.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{47.0}=0x1
+    phy_chain_rx_polarity_flip_physical{122.0}=0x0
+    phy_chain_tx_polarity_flip_physical{122.0}=0x1
+    phy_chain_rx_lane_map_physical{25.0}=0x1302
+    portmap_81=79:10
+    portmap_73=71:10
+    phy_chain_rx_polarity_flip_physical{30.0}=0x1
+    portmap_65=130:10
+    portmap_57=57:10
+    portmap_49=49:10
+    phy_chain_tx_polarity_flip_physical{13.0}=0x0
+    phy_chain_rx_polarity_flip_physical{73.0}=0x0
+    phy_chain_rx_lane_map_physical{1.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{38.0}=0x1
+    phy_chain_tx_polarity_flip_physical{91.0}=0x1
+    phy_chain_tx_polarity_flip_physical{56.0}=0x1
+    phy_chain_rx_lane_map_physical{9.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{99.0}=0x1
+    phy_chain_rx_polarity_flip_physical{131.0}=0x0
+    phy_chain_tx_polarity_flip_physical{131.0}=0x0
+    portmap_90=88:10
+    portmap_82=80:10
+    portmap_74=72:10
+    portmap_66=129:10:m
+    portmap_58=58:10
+    phy_chain_tx_polarity_flip_physical{22.0}=0x0
+    phy_chain_tx_lane_map_physical{37.0}=0x0213
+    phy_chain_rx_lane_map_physical{77.0}=0x0123
+    phy_chain_rx_polarity_flip_physical{82.0}=0x1
+    phy_chain_rx_polarity_flip_physical{47.0}=0x0
+    phy_chain_tx_polarity_flip_physical{65.0}=0x0
+    phy_chain_rx_lane_map_physical{101.0}=0x0213
+    phy_chain_tx_lane_map_physical{121.0}=0x1302
+    phy_chain_rx_lane_map_physical{109.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{105.0}=0x0
+    phy_chain_tx_polarity_flip_physical{105.0}=0x0
+    phy_chain_tx_lane_map_physical{129.0}=0x3210
+    portmap_91=89:10
+    portmap_83=81:10
+    phy_chain_rx_polarity_flip_physical{13.0}=0x0
+    portmap_75=73:10
+    phy_chain_tx_lane_map_physical{81.0}=0x1302
+    portmap_67=65:10
+    phy_chain_tx_polarity_flip_physical{31.0}=0x1
+    portmap_59=59:10
+    phy_chain_rx_polarity_flip_physical{91.0}=0x0
+    phy_chain_rx_polarity_flip_physical{56.0}=0x0
+    phy_chain_tx_polarity_flip_physical{74.0}=0x1
+    phy_chain_tx_lane_map_physical{89.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{39.0}=0x1
+    phy_chain_tx_lane_map_physical{5.0}=0x0132
+    phy_chain_rx_polarity_flip_physical{99.0}=0x0
+    phy_chain_rx_polarity_flip_physical{6.0}=0x0
+    phy_chain_rx_polarity_flip_physical{114.0}=0x0
+    phy_chain_tx_polarity_flip_physical{7.0}=0x0
+    phy_chain_tx_polarity_flip_physical{114.0}=0x1
+    phy_chain_rx_lane_map_physical{17.0}=0x1302
+    portmap_92=90:10
+    phy_chain_rx_polarity_flip_physical{22.0}=0x0
+    portmap_84=82:10
+    portmap_76=74:10
+    phy_chain_tx_polarity_flip_physical{40.0}=0x1
+    portmap_68=66:10
+    phy_chain_rx_polarity_flip_physical{65.0}=0x0
+    phy_chain_tx_polarity_flip_physical{83.0}=0x1
+    phy_chain_tx_polarity_flip_physical{48.0}=0x1
+    mem_cache_enable=0
+    phy_chain_rx_polarity_flip_physical{123.0}=0x1
+    parity_enable=0
+    phy_chain_tx_polarity_flip_physical{123.0}=0x1
+    phy_chain_tx_lane_map_physical{21.0}=0x0213
+    phy_chain_rx_lane_map_physical{61.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{31.0}=0x0
+    portmap_93=91:10
+    portmap_85=83:10
+    core_clock_frequency=1525
+    portmap_77=75:10
+    phy_chain_tx_polarity_flip_physical{14.0}=0x0
+    phy_chain_tx_lane_map_physical{29.0}=0x0213
+    portmap_69=67:10
+    phy_chain_rx_lane_map_physical{69.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{74.0}=0x0
+    phy_chain_rx_polarity_flip_physical{39.0}=0x0
+    phy_chain_tx_polarity_flip_physical{92.0}=0x1
+    phy_chain_tx_polarity_flip_physical{57.0}=0x0
+    phy_chain_tx_lane_map_physical{113.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{132.0}=0x0
+    phy_chain_tx_polarity_flip_physical{132.0}=0x0
+    phy_chain_rx_polarity_flip_physical{40.0}=0x0
+    portmap_94=92:10
+    phy_chain_tx_lane_map_physical{73.0}=0x1302
+    portmap_86=84:10
+    phy_chain_tx_polarity_flip_physical{23.0}=0x1
+    portmap_78=76:10
+    phy_chain_rx_polarity_flip_physical{83.0}=0x0
+    phy_chain_rx_polarity_flip_physical{48.0}=0x0
+    phy_chain_tx_polarity_flip_physical{66.0}=0x1
+    phy_chain_rx_polarity_flip_physical{106.0}=0x0
+    l2xmsg_mode=1
+    phy_chain_tx_polarity_flip_physical{106.0}=0x1
+    phy_chain_rx_polarity_flip_physical{14.0}=0x0
+    portmap_95=93:10
+    phy_chain_tx_polarity_flip_physical{32.0}=0x1
+    portmap_87=85:10
+    portmap_79=77:10
+    phy_chain_rx_polarity_flip_physical{92.0}=0x0
+    phy_chain_rx_polarity_flip_physical{57.0}=0x0
+    phy_chain_tx_polarity_flip_physical{75.0}=0x1
+    phy_chain_rx_polarity_flip_physical{7.0}=0x1
+    phy_chain_rx_polarity_flip_physical{115.0}=0x1
+    phy_chain_tx_polarity_flip_physical{8.0}=0x1
+    phy_chain_tx_polarity_flip_physical{115.0}=0x1
+    phy_chain_tx_lane_map_physical{13.0}=0x0213
+    phy_chain_rx_lane_map_physical{53.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{23.0}=0x1
+    phy_chain_tx_polarity_flip_physical{41.0}=0x0
+    portmap_96=94:10
+    portmap_88=86:10
+    portmap_1=1:10
+    phy_chain_rx_polarity_flip_physical{66.0}=0x0
+    phy_chain_tx_polarity_flip_physical{84.0}=0x1
+    phy_chain_tx_polarity_flip_physical{49.0}=0x0
+    phy_chain_tx_lane_map_physical{105.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{124.0}=0x1
+    phy_chain_tx_polarity_flip_physical{124.0}=0x1
+    phy_chain_rx_polarity_flip_physical{32.0}=0x0
+    phy_chain_tx_polarity_flip_physical{50.0}=0x1
+    phy_chain_tx_lane_map_physical{65.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{15.0}=0x1
+    portmap_97=95:10
+    portmap_89=87:10
+    portmap_2=2:10
+    phy_chain_rx_polarity_flip_physical{75.0}=0x1
+    phy_chain_tx_polarity_flip_physical{93.0}=0x0
+    phy_chain_tx_polarity_flip_physical{58.0}=0x1
+    phy_chain_rx_polarity_flip_physical{41.0}=0x0
+    phy_chain_tx_polarity_flip_physical{24.0}=0x1
+    portmap_98=96:10
+    portmap_3=3:10
+    phy_chain_rx_polarity_flip_physical{84.0}=0x0
+    phy_chain_rx_polarity_flip_physical{49.0}=0x1
+    phy_chain_tx_polarity_flip_physical{67.0}=0x1
+    phy_chain_rx_polarity_flip_physical{107.0}=0x1
+    phy_chain_tx_polarity_flip_physical{107.0}=0x1
+    phy_chain_rx_lane_map_physical{45.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{50.0}=0x0
+    phy_chain_rx_polarity_flip_physical{15.0}=0x1
+    phy_chain_tx_polarity_flip_physical{33.0}=0x0
+    portmap_100=98:10
+    portmap_99=97:10
+    portmap_4=4:10
+    phy_chain_rx_polarity_flip_physical{93.0}=0x0
+    phy_chain_rx_polarity_flip_physical{58.0}=0x0
+    phy_chain_tx_polarity_flip_physical{76.0}=0x1
+    l3_mem_entries=212992
+    phy_chain_tx_polarity_flip_physical{1.0}=0x0
+    phy_chain_rx_polarity_flip_physical{8.0}=0x1
+    phy_chain_rx_polarity_flip_physical{116.0}=0x1
+    phy_chain_tx_polarity_flip_physical{9.0}=0x0
+    phy_chain_tx_polarity_flip_physical{116.0}=0x1
+    phy_chain_rx_polarity_flip_physical{24.0}=0x1
+    phy_chain_tx_polarity_flip_physical{42.0}=0x1
+    phy_chain_tx_lane_map_physical{57.0}=0x2031
+    phy_chain_rx_lane_map_physical{97.0}=0x2031
+    portmap_101=99:10
+    portmap_5=5:10
+    phy_chain_rx_polarity_flip_physical{67.0}=0x1
+    phy_chain_tx_polarity_flip_physical{85.0}=0x0
+    phy_chain_rx_lane_map_physical{121.0}=0x2031
+    phy_chain_rx_lane_map_physical{129.0}=0x3210
+    phy_chain_rx_polarity_flip_physical{125.0}=0x1
+    phy_chain_tx_polarity_flip_physical{125.0}=0x0
+    phy_chain_rx_polarity_flip_physical{33.0}=0x0
+    phy_chain_tx_polarity_flip_physical{51.0}=0x1
+    phy_chain_tx_polarity_flip_physical{16.0}=0x1
+    portmap_110=108:10
+    portmap_102=100:10
+    phy_chain_rx_polarity_flip_physical{76.0}=0x1
+    portmap_6=6:10
+    phy_chain_tx_polarity_flip_physical{94.0}=0x0
+    phy_chain_tx_polarity_flip_physical{59.0}=0x1
+    phy_chain_rx_lane_map_physical{37.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{42.0}=0x0
+    phy_chain_tx_polarity_flip_physical{60.0}=0x1
+    phy_chain_tx_polarity_flip_physical{25.0}=0x0
+    portmap_111=109:10
+    phy_chain_rx_polarity_flip_physical{85.0}=0x0
+    portmap_103=101:10
+    portmap_7=7:10
+    phy_chain_tx_polarity_flip_physical{68.0}=0x1
+    phy_chain_rx_polarity_flip_physical{100.0}=0x0
+    phy_chain_tx_polarity_flip_physical{100.0}=0x1
+    phy_chain_rx_polarity_flip_physical{108.0}=0x1
+    phy_chain_tx_polarity_flip_physical{108.0}=0x1
+    phy_chain_tx_lane_map_physical{41.0}=0x2031
+    phy_chain_rx_lane_map_physical{81.0}=0x2031
+    phy_chain_rx_polarity_flip_phx1
+Attach: Unysical{51.0}=0it 0 (BCM56870_A0): attached (current unit)
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 05.01.08
+
+        CMH: LOADED
+        Ver: 05.01.08
+        SDK Ver: 06.05.17
+
+        CCH: LOADED
+        Ver: 05.01.08
+        SDK Ver: 06.05.17
+
+        CEH: LOADED
+        Ver: 05.01.08
+        SDK Ver: 06.05.17
+
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.17 built 20190328 (Thu Mar 28 03:04:59 2019)
+From br930043@lvnvdc3607:/projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0,
+       BCM56440_A0, BCM56440_B0, BCM56640_A0,
+
+       BCM56850_A0, BCM56450_A0, BCM56450_B0, BCM56450_B1,
+       BCM56340_A0, BCM56142_A0, BCM56150_A0, BCM53400_A0,
+       BCM56960_A0, BCM56860_A0, BCM56560_A0, BCM56560_B0,
+       BCM56260_A0, BCM56260_B0,
+
+
+       BCM56160_A0,
+       BCM56270_A0, BCM56965_A0, BCM56970_A0, BCM56870_A0,
+       BCM56870_B0, BCM53570_A0, BCM53570_B0, BCM56980_A0,
+       BCM56980_B0, BCM53540_A0, BCM56670_A0, BCM56670_B0,
+       BCM56370_A0, BCM56275_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM56275-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM54640E, BCM54880E, BCM54680E,
+    BCM52681E, BCM8703, BCM8704, BCM8705/24/25,
+    BCM8706/8726, BCM8727, BCM8728/8747, BCM8072,
+    BCM8073, BCM8074, BCM8040, BCM8481X,
+    BCM84812, BCM84821, BCM84822, BCM84823,
+    BCM84833, BCM84834, BCM84835, BCM84836,
+    BCM84844, BCM84846, BCM84848, BCM84858,
+    BCM84856, BCM84860, BCM84861, BCM84864,
+    BCM84868, BCM84888, BCM84884, BCM84888E,
+    BCM84884E, BCM84881, BCM84880, BCM84888S,
+    BCM84887, BCM84886, BCM84885, BCM8750,
+    BCM8752, BCM8754, BCM84740, BCM84164,
+    BCM84758, BCM84780, BCM84784, BCM84318,
+    BCM84328, BCM84793, BCM82328, Furia
+    Huracan, Sesto, Madura, BCM82780,
+    copper sfp
+
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_lsr_php(): ** start **
+l3 intf = 10
+~~ #2) config_lsr_php(): ** end **
+~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports cpu,xe (0x00000000000000000000000000000007fffffffffffffffdffffffffffffffff), untagged xe (0x00000000000000000000000000000007fffffffffffffffdfffffffffffffffe) MCAST_FLOOD_UNKNOWN
+vlan 11 ports xe0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22 ports xe1 (0x0000000000000000000000000000000000000000000000000000000000000004), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+Free L3INTF entries: 16381
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     10    0     0     22   00:00:00:13:02:01  16383 0    0     0     0
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:13:02:02   22   10     2    0         5   no   no    2   no
+
+Sending MPLS Two Label packet to ingress_port:1
+Packet from data=<>, length=76
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000001303} {000000000201} 8100 000b
+[bcmPW.0]Packet[1]: data[0010]: 8847 0011 1040 000a 0140 8100 0002 8100
+[bcmPW.0]Packet[1]: data[0020]: 0003 ffff 0002 0000 0200 8100 0001 0001
+[bcmPW.0]Packet[1]: data[0030]: 0000 0001 0002 0000 0200 8100 0001 0001
+[bcmPW.0]Packet[1]: data[0040]: 0000 0001 0002 0000 b214 56ff
+[bcmPW.0]Packet[1]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 11. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:13:03> src<00:00:00:00:02:01> Tagged Packet ProtID<0x8100> Ctrl<0x000b> * Unknown/Experimental format * 00 00 00 00 13 03 00 00 00 00 02 01 81 00 00 0b 88 47 00 11 10 40 00 0a 01 40 81 00 00 02 81 00 00 03 ff ff 00 02 00 00 02 00 81 00 00 01 00 01 00 00 00 01 00 02 00 00 02 00 81 00 00 01 00 01
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000130202} {000000130201} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 8847 000a 013f 8100 0002 8100 0003 ffff
+[bcmPW.0]Packet[2]: data[0020]: 0002 0000 0200 8100 0001 0001 0000 0001
+[bcmPW.0]Packet[2]: data[0030]: 0002 0000 0200 8100 0001 0001 0000 0001
+[bcmPW.0]Packet[2]: data[0040]: 0002 0000 f00b 3955
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:13:02:02> src<00:00:00:13:02:01> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 13 02 02 00 00 00 13 02 01 81 00 00 16 88 47 00 0a 01 3f 81 00 00 02 81 00 00 03 ff ff 00 02 00 00 02 00 81 00 00 01 00 01 00 00 00 01 00 02 00 00 02 00 81 00 00 01 00 01 00 00 00 01
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   148                +148             143/s
+RUC_64.xe0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.xe0    :                     1                  +1               1/s
+CLMIB_R127.xe0              :                     1                  +1               1/s
+CLMIB_RPKT.xe0              :                     1                  +1               1/s
+CLMIB_RUCA.xe0              :                     1                  +1               1/s
+CLMIB_RPRM.xe0              :                     1                  +1               1/s
+CLMIB_RVLN.xe0              :                     1                  +1               1/s
+CLMIB_RPOK.xe0              :                     1                  +1               1/s
+CLMIB_RBYT.xe0              :                    76                 +76              74/s
+CLMIB_T127.xe0              :                     1                  +1               1/s
+CLMIB_TPOK.xe0              :                     1                  +1               1/s
+CLMIB_TPKT.xe0              :                     1                  +1               1/s
+CLMIB_TUCA.xe0              :                     1                  +1               1/s
+CLMIB_TVLN.xe0              :                     1                  +1               1/s
+CLMIB_TBYT.xe0              :                    76                 +76              74/s
+CLMIB_RPROG0.xe0            :                     1                  +1               1/s
+UC_PERQ_PKT(0).xe0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).xe0         :                    76                 +76              74/s
+RUC_64.xe1                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.xe1    :                     1                  +1               1/s
+CLMIB_R127.xe1              :                     1                  +1               1/s
+CLMIB_RPKT.xe1              :                     1                  +1               1/s
+CLMIB_RUCA.xe1              :                     1                  +1               1/s
+CLMIB_RPRM.xe1              :                     1                  +1               1/s
+CLMIB_RVLN.xe1              :                     1                  +1               1/s
+CLMIB_RPOK.xe1              :                     1                  +1               1/s
+CLMIB_RBYT.xe1              :                    72                 +72              70/s
+CLMIB_T127.xe1              :                     1                  +1               1/s
+CLMIB_TPOK.xe1              :                     1                  +1               1/s
+CLMIB_TPKT.xe1              :                     1                  +1               1/s
+CLMIB_TUCA.xe1              :                     1                  +1               1/s
+CLMIB_TVLN.xe1              :                     1                  +1               1/s
+CLMIB_TBYT.xe1              :                    72                 +72              70/s
+CLMIB_RPROG0.xe1            :                     1                  +1               1/s
+UC_PERQ_PKT(0).xe1          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).xe1         :                    72                 +72              70/s
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

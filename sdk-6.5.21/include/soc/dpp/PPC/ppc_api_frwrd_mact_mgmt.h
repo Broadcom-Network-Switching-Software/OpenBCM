@@ -1,0 +1,736 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ * $
+*/
+
+
+#ifndef __SOC_PPC_API_FRWRD_MACT_MGMT_INCLUDED__
+
+#define __SOC_PPC_API_FRWRD_MACT_MGMT_INCLUDED__
+
+
+
+
+#include <soc/dpp/SAND/Utils/sand_header.h>
+
+#include <soc/dpp/SAND/Management/sand_general_macros.h>
+#include <soc/dpp/SAND/Management/sand_error_code.h>
+
+#include <soc/dpp/PPC/ppc_api_general.h>
+#include <soc/dpp/PPC/ppc_api_frwrd_mact.h>
+#include <soc/dpp/TMC/tmc_api_packet.h>
+
+
+
+
+
+
+#define  SOC_PPC_FRWRD_MACT_MSG_HDR_SIZE (8)
+
+
+#define  SOC_PPC_FRWRD_MACT_EVENT_BUFF_MAX_SIZE (5)
+
+
+#define  SOC_PPC_FRWRD_MACT_NO_GLOBAL_LIMIT (0xFFFFFFFF)
+
+
+#define  SOC_PPC_MAX_NOF_MACT_LIMIT_LIF_RANGES          (4)
+
+
+#define  SOC_PPC_MAX_NOF_MACT_LIMIT_MAPPED_LIF_RANGES   (SOC_DPP_MAX_NOF_MACT_LIMIT_MAPPED_LIF_RANGES)
+
+
+#define  SOC_PPC_FRWRD_MACT_LEARN_LIMIT_MODE            ((SOC_DPP_CONFIG(unit))->l2.learn_limit_mode)
+
+
+#define  SOC_PPC_FRWRD_MACT_LEARN_VMAC_LIMIT            (0x1 << 15)
+
+
+#define  SOC_PPC_FRWRD_MACT_LEARN_MAX_VMAC_LIMIT        (16)
+
+
+
+
+
+
+#define  SOC_PPC_FRWRD_MACT_LEARN_LIF_RANGE_BASE(range_num)     ((SOC_DPP_CONFIG(unit))->l2.learn_limit_lif_range_base[range_num])
+
+
+
+
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_INGRESS_DISTRIBUTED = 0,
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_INGRESS_CENTRALIZED = 1,
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_EGRESS_DISTRIBUTED = 2,
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_EGRESS_CENTRALIZED = 3,
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_EGRESS_INDEPENDENT = 4,
+  
+  SOC_PPC_NOF_FRWRD_MACT_LEARNING_MODES= 5
+}SOC_PPC_FRWRD_MACT_LEARNING_MODE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE_NONE = 0,
+  
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE_ARP = 1,
+  
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE_LAG = 2,
+  
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE_ALL = (int)0xFFFFFFFF,
+  
+  SOC_PPC_NOF_FRWRD_MACT_SHADOW_MODES = 4
+}SOC_PPC_FRWRD_MACT_SHADOW_MODE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_RAW = 0,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_ITMH = 1,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_ETH_O_ITMH = 2,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_OTMH = 3,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_ETH_O_OTMH = 4,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_ETH_O_RAW = 5,
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_ETH_VLAN_O_ITMH = 6,
+  
+  SOC_PPC_NOF_FRWRD_MACT_MSG_HDR_TYPES = 7
+}SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE_NONE = 0,
+  
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE_INTERRUPT = 1,
+  
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE_MSG = 2,
+  
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE_EVENT = 4,
+  
+  SOC_PPC_NOF_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPES = 4
+}SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_TRAP_TYPE_SA_DROP = 0,
+  
+  SOC_PPC_FRWRD_MACT_TRAP_TYPE_SA_UNKNOWN = 1,
+  
+  SOC_PPC_NOF_FRWRD_MACT_TRAP_TYPES = 2
+}SOC_PPC_FRWRD_MACT_TRAP_TYPE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_NONE = 0x0,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_AGED_OUT = 0x1,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_LEARN = 0x2,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_TRANSPLANT = 0x4,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_REFRESH = 0x8,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_RETRIEVE = 0x10,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_LIMIT_EXCEED = 0x20,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_ACK = 0x40,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_REQ_FAIL = 0x80,
+  
+  SOC_PPC_NOF_FRWRD_MACT_EVENT_TYPES = 9
+}SOC_PPC_FRWRD_MACT_EVENT_TYPE;
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE_MSG_SINGLE = 0,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE_MSG_AGGR = 1,
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE_DIRECT_ACCESS = 2,
+  
+  SOC_PPC_NOF_FRWRD_MACT_EVENT_PATH_TYPES = 3
+}SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE;
+
+typedef enum
+{
+    
+    SOC_PPC_FRWRD_MACT_LOOKUP_TYPE_MIM = 0,
+
+    
+    SOC_PPC_FRWRD_MACT_LOOKUP_TYPE_SA_AUTH = 1,
+
+    
+    SOC_PPC_FRWRD_MACT_LOOKUP_TYPE_SA_LOOKUP = 2,
+#ifdef BCM_88660_A0
+    
+    SOC_PPC_FRWRD_MACT_LOOKUP_TYPE_SLB_LOOKUP = 3,
+#endif 
+    
+    SOC_PPC_NOF_FRWRD_MACT_LOOKUP_TYPES
+} SOC_PPC_FRWRD_MACT_LOOKUP_TYPE;
+
+
+typedef enum
+{
+    
+    SOC_PPC_FRWRD_MACT_LEARN_LIMIT_TYPE_VSI = 0,
+    
+    SOC_PPC_FRWRD_MACT_LEARN_LIMIT_TYPE_LIF = 1,
+    
+    SOC_PPC_FRWRD_MACT_LEARN_LIMIT_TYPE_TUNNEL = 2,
+    
+    SOC_PPC_NOF_FRWRD_MACT_LEARN_LIMIT_TYPES = 3
+} SOC_PPC_FRWRD_MACT_LEARN_LIMIT_TYPE;
+
+
+typedef enum
+{
+  
+  SOC_PPC_FRWRD_MACT_L3_LEARN_IPV4_UC = 0x1,
+  
+  SOC_PPC_FRWRD_MACT_L3_LEARN_IPV4_MC = 0x2,
+  
+  SOC_PPC_FRWRD_MACT_L3_LEARN_IPV6_UC = 0x4,
+  
+  SOC_PPC_FRWRD_MACT_L3_LEARN_IPV6_MC = 0x8,
+  
+  SOC_PPC_FRWRD_MACT_L3_LEARN_MPLS = 0x10
+} SOC_PPC_FRWRD_MACT_ROUTED_LEARNING_APP_TYPE;
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 enable_ipv4_mc_compatible;
+  
+  uint8 mask_fid;
+
+} SOC_PPC_FRWRD_MACT_IP_COMPATIBLE_MC_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 enable_aging;
+  
+  SOC_PPC_FRWRD_MACT_TIME aging_time;
+
+} SOC_PPC_FRWRD_MACT_AGING_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+
+} SOC_PPC_FRWRD_MACT_AGING_ONE_PASS_INFO;
+
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE event_type;
+  
+  uint8 is_lag;
+  
+  uint32 vsi_event_handle_profile;
+
+} SOC_PPC_FRWRD_MACT_EVENT_HANDLE_KEY;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 self_learning;
+  
+  uint8 send_to_learning_fifo;
+  
+  uint8 send_to_shadow_fifo;
+  
+  uint8 send_to_cpu_dma_fifo;
+
+} SOC_PPC_FRWRD_MACT_EVENT_HANDLE_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 delete_internally;
+  
+  uint8 event_when_aged_out;
+  
+  uint8 event_when_refreshed;
+  
+  uint8 clear_hit_bit;
+
+} SOC_PPC_FRWRD_MACT_AGING_EVENTS_HANDLE;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE olp_receive_header_type;
+  
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE header_type;
+  
+  uint32 header[SOC_PPC_FRWRD_MACT_MSG_HDR_SIZE];
+
+} SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE type;
+  
+  SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO info;
+
+} SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE learning_mode;
+  
+  uint8 soc_petra_a_compatible;
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO learn_msgs_info;
+  
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE shadow_mode;
+  
+  SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO shadow_msgs_info;
+  
+  uint8 learn_in_elk;
+  
+  uint8 disable_learning;
+
+} SOC_PPC_FRWRD_MACT_OPER_MODE_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 is_limited;
+  
+  uint32 nof_entries;
+  
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE action_when_exceed;
+
+} SOC_PPC_FRWRD_MACT_MAC_LIMIT_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FID fid_fail;
+  
+  SOC_PPC_FID fid_allowed;
+
+} SOC_PPC_FRWRD_MACT_MAC_LIMIT_EXCEEDED_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 enable;
+  
+  uint8 static_may_exceed;
+  
+  uint8 generate_event;
+  
+  uint32 glbl_limit;
+  
+  uint8 cpu_may_exceed;
+  
+  SOC_PPC_FID fid_base;
+
+} SOC_PPC_FRWRD_MACT_MAC_LIMIT_GLBL_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  int8  zero_msbs;
+  
+  int8  shift_right_bits;
+  
+  int16 base_add_val; 
+} SOC_PPC_FRWRD_MACT_MAC_LIMIT_RANGE_MAP_INFO;
+
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 invalid_ptr;
+  
+  int32 range_end[SOC_PPC_MAX_NOF_MACT_LIMIT_LIF_RANGES - 1];
+} SOC_PPC_FRWRD_MACT_MAC_LIMIT_MAPPING_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 sa_drop_action_profile;
+  
+  uint32 sa_unknown_action_profile;
+  
+  uint32 da_unknown_action_profile;
+
+} SOC_PPC_FRWRD_MACT_PORT_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8 is_lag;
+  
+  uint32 id;
+
+} SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE type;
+  
+  SOC_PPC_FRWRD_MACT_ENTRY_KEY key;
+  
+  SOC_PPC_FRWRD_MACT_ENTRY_VALUE value;
+  
+  SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO lag;
+
+} SOC_PPC_FRWRD_MACT_EVENT_INFO;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 buff[SOC_PPC_FRWRD_MACT_EVENT_BUFF_MAX_SIZE];
+  
+  uint32 buff_len;
+
+} SOC_PPC_FRWRD_MACT_EVENT_BUFFER;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint8  *msg_buffer;
+  
+  uint32   msg_len;
+  
+  uint8 max_nof_events;
+
+} SOC_PPC_FRWRD_MACT_LEARN_MSG;
+
+
+  
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  uint32 header_size;
+  
+  SOC_TMC_PKT_PACKET_RECV_MODE recv_mode; 
+
+  
+} SOC_PPC_FRWRD_MACT_LEARN_MSG_CONF;
+
+typedef struct
+{
+  SOC_SAND_MAGIC_NUM_VAR
+  
+  SOC_PPC_FRWRD_MACT_EVENT_INFO* events;
+  
+  uint32 nof_parsed_events;
+  
+  uint32 nof_events_in_msg;
+  
+  uint32 source_fap;
+  
+} SOC_PPC_FRWRD_MACT_LEARN_MSG_PARSE_INFO;
+
+
+
+
+
+
+
+
+
+
+void
+  SOC_PPC_FRWRD_MACT_IP_COMPATIBLE_MC_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_IP_COMPATIBLE_MC_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_AGING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_ONE_PASS_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_AGING_ONE_PASS_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_KEY_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_HANDLE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_HANDLE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_EVENTS_HANDLE_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_AGING_EVENTS_HANDLE *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_OPER_MODE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_OPER_MODE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MAC_LIMIT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_EXCEEDED_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MAC_LIMIT_EXCEEDED_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_GLBL_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MAC_LIMIT_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_RANGE_MAP_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MAC_LIMIT_RANGE_MAP_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_MAPPING_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_MAC_LIMIT_MAPPING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_PORT_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_PORT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_BUFFER_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_EVENT_BUFFER *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_LEARN_MSG *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_CONF_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_LEARN_MSG_CONF *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_PARSE_INFO_clear(
+    SOC_SAND_OUT SOC_PPC_FRWRD_MACT_LEARN_MSG_PARSE_INFO *info
+  );
+
+#if SOC_PPC_DEBUG_IS_LVL1
+
+const char*
+  SOC_PPC_FRWRD_MACT_LEARNING_MODE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_LEARNING_MODE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_SHADOW_MODE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_SHADOW_MODE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MSG_HDR_TYPE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_LIMIT_EXCEED_NOTIFY_TYPE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_TRAP_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_TRAP_TYPE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_EVENT_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_TYPE enum_val
+  );
+
+const char*
+  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE_to_string(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_PATH_TYPE enum_val
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_IP_COMPATIBLE_MC_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_IP_COMPATIBLE_MC_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_AGING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_ONE_PASS_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_AGING_ONE_PASS_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_KEY_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_KEY *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_HANDLE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_AGING_EVENTS_HANDLE_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_AGING_EVENTS_HANDLE *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MSG_DISTR_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_PROCESSING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_OPER_MODE_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_OPER_MODE_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MAC_LIMIT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_EXCEEDED_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MAC_LIMIT_EXCEEDED_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_GLBL_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MAC_LIMIT_GLBL_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_RANGE_MAP_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MAC_LIMIT_RANGE_MAP_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_MAC_LIMIT_MAPPING_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_MAC_LIMIT_MAPPING_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_PORT_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_PORT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_LAG_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_INFO_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_INFO *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_EVENT_BUFFER_print(
+    SOC_SAND_IN  SOC_PPC_FRWRD_MACT_EVENT_BUFFER *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_print(
+    SOC_SAND_IN SOC_PPC_FRWRD_MACT_LEARN_MSG *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_CONF_print(
+    SOC_SAND_IN SOC_PPC_FRWRD_MACT_LEARN_MSG_CONF *info
+  );
+
+void
+  SOC_PPC_FRWRD_MACT_LEARN_MSG_PARSE_INFO_print(
+    SOC_SAND_IN SOC_PPC_FRWRD_MACT_LEARN_MSG_PARSE_INFO *info
+  );
+#endif 
+
+
+
+#include <soc/dpp/SAND/Utils/sand_footer.h>
+
+
+#endif

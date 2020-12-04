@@ -1,0 +1,45 @@
+# ./bcm.user -y bcm56990_a0-generic-64x400_knet_config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200922 (Tue Sep 22 12:30:14 2020)
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+[ 1104.293135] device bcm0_0 entered promiscuous mode
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint th4_hsdk_knet_filter.c
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200922 (Tue Sep 22 12:30:14 2020)
+From sp933340@xl-sj1-30:/projects/ntsw-sw-ae/sparks/gerrit/hsdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56880_A0_BASE, BCM56990_A0_BASE, BCM56990_B0_BASE
+     BCM56996_A0_BASE, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Create a KNET interface to handle protocol and local station packets
+Registered RX Callback
+./th4_hsdk_knet_rx: Received multicast packet 1 (177 bytes)
+./th4_hsdk_knet_rx: Received broadcast packet 2 (86 bytes)
+./th4_hsdk_knet_rx: Received multicast packet 3 (177 bytes)
+./th4_hsdk_knet_rx: Received broadcast packet 4 (86 bytes)
+./th4_hsdk_knet_rx: Received multicast packet 5 (177 bytes)
+./th4_hsdk_knet_rx: Received broadcast packet 6 (86 bytes)
+TX Done; Send status packet
+Wait for TX and RX processes to complete
+Received TX App status: TX App sent 6 packets
+./th4_hsdk_knet_rx: Timed out after 2 seconds
+./th4_hsdk_knet_rx: DONE; Received 6 packets, Sending status packet
+Received RX App status: RX App received 6 packets
+KNET Test Status: Ok
+BCM.0> 
+

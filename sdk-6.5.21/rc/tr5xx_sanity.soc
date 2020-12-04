@@ -1,0 +1,110 @@
+# $Id: tr5xx_sanity.soc v 1.0 2017/02/14 22:10:08 spaulraj Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TR 5xx Sanity tests
+#
+# Script to run tr 5xx tests. Will be invoked by nightly regression
+# infrastructure to verify various tr tests across various cmcx.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+#Display some useful information
+date
+ver
+soc
+
+# Re-initialize to clean up of various read/wrires to MMU memories
+config add parity_enable=0
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+sramscan off
+
+#TR 500 tests on CMC0
+echo "Testing TR500 on CMC0"
+tr 500 tb=0x3 rb=0xc ps=64 npt=27 npr=27 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=9216 npt=6 npr=6 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=2048 npt=13 npr=13 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=9216 npt=3 npr=3 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=4096 npt=100 npr=100 ttt=2 ttr=2 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=9216 npt=25 npr=25 ttt=2 ttr=2 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=1024 npt=50 npr=50 ttt=3 ttr=3 cpi=1 pi=2 sto=0
+tr 500 tb=0x3 rb=0xc ps=9216 npt=12 npr=12 ttt=3 ttr=3 cpi=1 pi=2 sto=0
+$done
+
+#TR 500 tests on CMC0 and CMC1
+echo "Testing TR500 on CMC0 and CMC1"
+tr 500 tb=0x33 rb=0xcc ps=64 npt=27 npr=27 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x33 rb=0xcc ps=9216 npt=6 npr=6 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x33 rb=0xcc ps=1024 npt=13 npr=13 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+tr 500 tb=0x33 rb=0xcc ps=9216 npt=3 npr=3 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+$done
+
+#TR 500 tests on CMC0, CMC1 and CMC2
+echo "Testing TR500 on CMC0, CMC1 and CMC2"
+tr 500 tb=0x333 rb=0xccc ps=2048 npt=27 npr=27 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x333 rb=0xccc ps=9216 npt=6 npr=6 ttt=0 ttr=0 cpi=1 pi=2 sto=0
+tr 500 tb=0x333 rb=0xccc ps=4096 npt=13 npr=13 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+tr 500 tb=0x333 rb=0xccc ps=9216 npt=3 npr=3 ttt=1 ttr=1 cpi=1 pi=2 sto=0
+$done
+
+#TR 501 streaming test
+echo "Testing TR501"
+tr 501 ps=2048 rci=20
+tr 501 ps=9216 rci=20
+$done
+
+#TR 502 SBUSDMA tests
+echo "Running TR 502 tests.."
+tr 502 desc=0 nummem=1 mem0=VLAN
+tr 502 desc=1 nummem=1 mem0=VLAN
+tr 502 desc=1 nummem=2 mem0=VLAN mem1=EGR_VLAN
+tr 502 desc=1 nummem=3 mem0=VLAN mem1=EGR_VLAN mem2=MMU_REPL_LIST_TBL_PIPE0
+$done
+
+#TR 503 CCMDMA test on all CMC
+echo "Running TR 503 CCMDMA tests..."
+tr 503 cmcbitmap=0x1
+tr 503 cmcbitmap=0x3
+tr 503 cmcbitmap=0x7
+$done
+
+#TR 504 FIFO DMA test
+echo "Testing TR504"
+tr 504
+$done
+
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+#rcload rc.soc
+#counter off
+#l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

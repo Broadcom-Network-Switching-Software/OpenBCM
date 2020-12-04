@@ -1,0 +1,88 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Field RC (run commands) file
+#
+#       These are default commands that are for TechSupport Field.
+#
+
+# Show S/W state in Field.
+fp show
+fp show presel
+fp show hint
+
+# Show Field related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+local traverse_def_lt 'bsh -c "lt \$lt attr=FILTER_DFLT traverse -l"'
+
+#FP system configs
+local lt FP_CONFIG;                                                 $traverse_lt;
+local lt FP_CONTROL;                                                $traverse_lt;
+local lt FP_DELAYED_DROP;                                           $traverse_lt;
+local lt FP_DELAYED_REDIRECT;                                       $traverse_lt;
+local lt FP_EM_SRC_CLASS_MODE;                                      $traverse_lt;
+local lt FP_ING_ACTION_NHOP;                                        $traverse_lt;
+local lt FP_ING_ADD_REDIRECT_DATA;                                  $traverse_lt;
+local lt FP_ING_COS_Q_INT_PRI_MAP;                                  $traverse_lt;
+local lt FP_ING_REMOVE_REDIRECT_DATA;                               $traverse_lt;
+local lt FP_ING_SRC_CLASS_MODE;                                     $traverse_lt;
+local lt FP_VLAN_HASH_TABLE_A;                                      $traverse_lt;
+local lt FP_VLAN_HASH_TABLE_B;                                      $traverse_lt;
+
+#Ingress Field Stage
+local lt FP_ING_GRP_TEMPLATE;                                       $traverse_lt;
+local lt FP_ING_PRESEL_ENTRY_TEMPLATE;                              $traverse_lt;
+local lt FP_ING_RULE_TEMPLATE;                                      $traverse_lt;
+local lt FP_ING_POLICY_TEMPLATE;                                    $traverse_lt;
+local lt FP_ING_ENTRY;                                              $traverse_lt;
+local lt FP_ING_GRP_TEMPLATE_INFO;                                  $traverse_def_lt;
+local lt FP_ING_GRP_TEMPLATE_PARTITION_INFO;                        $traverse_def_lt;
+local lt FP_ING_PRESEL_TEMPLATE_PARTITION_INFO;                     $traverse_def_lt;
+local lt FP_ING_INFO;                                               $traverse_lt;
+local lt FP_ING_SLICE_INFO;                                         $traverse_lt;
+local lt FP_COMPRESSION_ETHERTYPE;                                  $traverse_lt;
+local lt FP_COMPRESSION_IP_PROTOCOL;                                $traverse_lt;
+local lt FP_COMPRESSION_IP_TOS;                                     $traverse_lt;
+local lt FP_COMPRESSION_IP_TTL;                                     $traverse_lt;
+local lt FP_COMPRESSION_TCP_FLAGS;                                  $traverse_lt;
+local lt FP_COMPRESSION_TNL_IP_TTL;                                 $traverse_lt;
+
+#Egress Field Stage
+local lt FP_EGR_GRP_TEMPLATE;                                       $traverse_lt;
+local lt FP_EGR_RULE_TEMPLATE;                                      $traverse_lt;
+local lt FP_EGR_POLICY_TEMPLATE;                                    $traverse_lt;
+local lt FP_EGR_ENTRY;                                              $traverse_lt;
+local lt FP_EGR_GRP_TEMPLATE_INFO;                                  $traverse_def_lt;
+local lt FP_EGR_GRP_TEMPLATE_PARTITION_INFO;                        $traverse_def_lt;
+local lt FP_EGR_INFO;                                               $traverse_lt;
+local lt FP_EGR_SLICE_INFO;                                         $traverse_lt;
+
+#Lookup Field Stage
+local lt FP_VLAN_GRP_TEMPLATE;                                      $traverse_lt;
+local lt FP_VLAN_RULE_TEMPLATE;                                     $traverse_lt;
+local lt FP_VLAN_POLICY_TEMPLATE;                                   $traverse_lt;
+local lt FP_VLAN_ENTRY;                                             $traverse_lt;
+local lt FP_VLAN_GRP_TEMPLATE_INFO;                                 $traverse_def_lt;
+local lt FP_VLAN_GRP_TEMPLATE_PARTITION_INFO;                       $traverse_def_lt;
+local lt FP_VLAN_INFO;                                              $traverse_lt;
+local lt FP_VLAN_SLICE_INFO;                                        $traverse_lt;
+
+#ExactMatch Field Stage
+local lt FP_EM_GRP_TEMPLATE;                                        $traverse_lt;
+local lt FP_EM_PRESEL_ENTRY_TEMPLATE;                               $traverse_lt;
+local lt FP_EM_PDD_TEMPLATE;                                        $traverse_lt;
+local lt FP_EM_RULE_TEMPLATE;                                       $traverse_lt;
+local lt FP_EM_POLICY_TEMPLATE;                                     $traverse_lt;
+local lt FP_EM_ENTRY;                                               $traverse_lt;
+local lt FP_EM_GRP_TEMPLATE_INFO;                                   $traverse_def_lt;
+local lt FP_EM_GRP_TEMPLATE_PARTITION_INFO;                         $traverse_def_lt;
+local lt FP_EM_PRESEL_TEMPLATE_PARTITION_INFO;                      $traverse_def_lt;
+local lt FP_EM_PDD_TEMPLATE_PARTITION_INFO;                         $traverse_def_lt;
+
+#compression LT
+local lt L3_IPV4_COMP_SRC;                                          $traverse_lt;
+local lt L3_IPV6_COMP_SRC;                                          $traverse_lt;
+local lt L3_IPV4_COMP_DST;                                          $traverse_lt;
+local lt L3_IPV4_COMP_DST;                                          $traverse_lt;

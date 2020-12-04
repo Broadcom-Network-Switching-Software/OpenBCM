@@ -1,0 +1,29 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport IP tunnel RC (run commands) file
+#
+#       These are default commands that are for TechSupport IP tunnel.
+#
+
+# Show IP tunnel related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show IP tunnel related Ingress LTs.
+local lt L3_IPV4_TUNNEL_TABLE;                                     $traverse_lt;
+local lt L3_IPV4_TUNNEL_EM_TABLE;                                  $traverse_lt;
+local lt L3_IPV6_TUNNEL_TABLE;                                     $traverse_lt;
+local lt L3_IPV6_TUNNEL_EM_TABLE;                                  $traverse_lt;
+local lt IPINIP_TUNNEL_DEFAULT_TABLE;                              $traverse_lt;
+
+# Show IP tunnel related Egress LTs.
+local lt EGR_L3_TUNNEL_0;                                          $traverse_lt;
+local lt EGR_L3_TUNNEL_1;                                          $traverse_lt;
+
+local lt EGR_L3_TNL_STR_PROFILE;                                   $traverse_lt;
+
+# Show sequence profile and sequence number LT
+local lt TNL_ENCAP_SEQUENCE_PROFILE;                               $traverse_lt;
+local lt TNL_ENCAP_SEQUENCE_NUMBER;                                $traverse_lt;

@@ -1,0 +1,55 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Version checker target for elfutils.
+#
+# The parent makefile should set ELFUTILS_MIN to enforce a minimum
+# version of the elfutils library, e.g. ELFUTILS_MIN=158 to enforce
+# version 0.158 (or newer).
+#
+# The parent makefile can optionally supply ELFUTILS_DIR, which must
+# be a path to an elfutils library that meets the minimum version
+# requirement.
+#
+
+# Get elfutils version of host system
+ELFUTILS_SYS := $(shell ldconfig -v 2>/dev/null | \
+			grep libelf | uniq | \
+			sed 's/.*libelf-0.\([0-9]*\).*/\1/g')
+ELFUTILS_VER := $(ELFUTILS_SYS)
+
+# Check elfutils version against minimum requirement
+OVERRIDE_LIBELF := $(shell if [ 0$(ELFUTILS_VER) -lt 0$(ELFUTILS_MIN) ]; then echo 1; fi)
+
+ifeq ($(OVERRIDE_LIBELF),1)
+# Override elfutils library if path was provided
+ifdef ELFUTILS_DIR
+ELFUTILS_OVR := $(shell ls $(ELFUTILS_DIR)/libelf-*  2>/dev/null | \
+			sed 's/.*libelf-0.\([0-9]*\).*/\1/g')
+ELFUTILS_VER := $(ELFUTILS_OVR)
+override LD_LIBRARY_PATH := $(ELFUTILS_DIR):$(LD_LIBRARY_PATH)
+export LD_LIBRARY_PATH
+endif
+endif
+
+elfutils::
+ifdef ELFUTILS_MIN
+ifdef ELFUTILS_OVR
+	@echo "Overriding default elfutils library"
+endif
+ifdef ELFUTILS_VERBOSE
+	@echo "elfutils version: 0.$(ELFUTILS_VER)"
+ifdef ELFUTILS_DEBUG
+	@echo "elfutils version: 0.$(ELFUTILS_SYS)"
+	@echo "LD_LIBRARY_PATH: $(LD_LIBRARY_PATH)"
+endif
+endif
+	if [ 0$(ELFUTILS_VER) -lt 0$(ELFUTILS_MIN) ]; then \
+	    echo "*** Error: elfutils version must be 0.$(ELFUTILS_MIN) or higher"; \
+	    exit 1; \
+	fi
+endif
+
+.PHONY: elfutils

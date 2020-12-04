@@ -1,0 +1,300 @@
+# $Id: tsanity.soc,v 1.9 2007/04/20 01:28:27 miyarn Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+echo "testsuite: started: sanity"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+# Avoid link messages while testing
+linkscan off
+
+# Use expected COS configuration for tests
+config add bcm_num_cos=4
+
+init 
+init misc
+init mmu
+
+local xqmax 55
+if $?magnum || $?BCM5650_B0 "local xqmax 29"
+
+local done 'echo "   Done"'
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+# Tests Start Here
+
+echo Running CPU benchmarks ...
+tr 21
+$done
+
+echo Running PCI tests ...
+tr 2
+$done
+
+echo Running register tests ...
+tr 3
+$done
+
+echo Running S-Channel message buffer test ...
+tr 4
+$done
+
+echo Running Switching Memory tests
+# Note: Switching memory tests automatically put MMU in debug mode
+
+echo "   DEF_IP_HI";		tr 50 m=DEF_IP_HI; tr 51 m=DEF_IP_HI
+echo "   DEF_IP_HIT_HI";	tr 50 m=DEF_IP_HIT_HI; tr 51 m=DEF_IP_HIT_HI
+echo "   DEF_IP_HIT_LO";	tr 50 m=DEF_IP_HIT_LO; tr 51 m=DEF_IP_HIT_LO
+echo "   DEF_IP_LO";		tr 50 m=DEF_IP_LO; tr 51 m=DEF_IP_LO
+echo "   PORT_DSCP_PRI";	tr 50 m=PORT_DSCP_PRI; tr 51 m=PORT_DSCP_PRI
+echo "   EGRESS_MASK";		tr 50 m=EGRESS_MASK; tr 51 m=EGRESS_MASK
+echo "   FE_IPMC_VEC";		tr 50 m=FE_IPMC_VEC; tr 51 m=FE_IPMC_VEC
+echo "   FE_IPMC_VLAN";		tr 50 m=FE_IPMC_VLAN; tr 51 m=FE_IPMC_VLAN
+echo "   IMASK";		tr 50 m=IMASK; tr 51 m=IMASK
+echo "   IRULE";		tr 50 m=IRULE; tr 51 m=IRULE
+echo "   GE_IPMC_VEC";		tr 50 m=GE_IPMC_VEC; tr 51 m=GE_IPMC_VEC
+echo "   GE_IPMC_VLAN";		tr 50 m=GE_IPMC_VLAN; tr 51 m=GE_IPMC_VLAN
+echo "   GFFPCOUNTERS";		tr 50 m=GFFPCOUNTERS; tr 51 m=GFFPCOUNTERS
+echo "   GIMASK";		tr 50 m=GIMASK; tr 51 m=GIMASK
+echo "   GIRULE";		tr 50 m=GIRULE; tr 51 m=GIRULE
+echo "   GMETERING";		tr 50 m=GMETERING; tr 51 m=GMETERING
+echo "   L2_TABLE";		tr 50 m=L2_TABLE; tr 51 m=L2_TABLE
+echo "   L2_HIT_BITS";		tr 50 m=L2_HIT_BITS; tr 51 m=L2_HIT_BITS
+echo "   L2MC_TABLE";		tr 50 m=L2MC_TABLE; tr 51 m=L2MC_TABLE
+echo "   L2_STATIC_BITS";	tr 50 m=L2_STATIC_BITS; tr 51 m=L2_STATIC_BITS
+echo "   L2_VALID_BITS";	tr 50 m=L2_VALID_BITS; tr 51 m=L2_VALID_BITS
+echo "   L3_TABLE";		tr 50 m=L3_TABLE; tr 51 m=L3_TABLE
+echo "   L3_HIT_BITS";		tr 50 m=L3_HIT_BITS; tr 51 m=L3_HIT_BITS
+echo "   L3_VALID_BITS";	tr 50 m=L3_VALID_BITS; tr 51 m=L3_VALID_BITS
+echo "   L3INTF";		tr 50 m=L3INTF; tr 51 m=L3INTF
+echo "   L3_IPMC";		tr 50 m=L3_IPMC; tr 51 m=L3_IPMC
+echo "   PORT_MAC_BLOCK";	tr 50 m=PORT_MAC_BLOCK; tr 51 m=PORT_MAC_BLOCK
+echo "   IPMCREP";		tr 50 m=IPMCREP; tr 51 m=IPMCREP
+echo "   PORT";			tr 50 m=PORT; tr 51 m=PORT
+echo "   PORT1";		tr 50 m=PORT1; tr 51 m=PORT1
+echo "   VLAN_STG";		tr 50 m=VLAN_STG; tr 51 m=VLAN_STG
+echo "   TRUNK_BITMAP";		tr 50 m=TRUNK_BITMAP; tr 51 m=TRUNK_BITMAP
+echo "   PORT_TRUNK_EGRESS";	tr 50 m=PORT_TRUNK_EGRESS;
+				tr 51 m=PORT_TRUNK_EGRESS
+echo "   TRUNK_GROUP";		tr 50 m=TRUNK_GROUP; tr 51 m=TRUNK_GROUP
+echo "   VLAN";			tr 50 m=VLAN; tr 51 m=VLAN
+echo "   PORT_VPLS_BITMAP_TABLE";  tr 50 m=PORT_VPLS_BITMAP_TABLE;
+				tr 51 m=PORT_VPLS_BITMAP_TABLE
+echo "   CCP";			tr 50 m=CCP; tr 51 m=CCP
+echo "   CFAP";			tr 50 m=CFAP; tr 51 m=CFAP
+echo "   XQ 0-$xqmax"
+for xq=0,$xqmax 'tr 50 m=XQ$xq; tr 51 m=XQ$xq'
+$done
+
+echo Running Table DMA Tests
+# Specify a zero count for each test to indicate entire memory.
+# Otherwise the count from the previous invocation is used.
+echo "   DEF_IP_HI";		tr 71 m=DEF_IP_HI c=0
+echo "   DEF_IP_HIT_HI";	tr 71 m=DEF_IP_HIT_HI c=0
+echo "   DEF_IP_HIT_LO";	tr 71 m=DEF_IP_HIT_LO c=0
+echo "   DEF_IP_LO";		tr 71 m=DEF_IP_LO c=0
+echo "   EGRESS_MASK";		tr 71 m=EGRESS_MASK c=0
+echo "   FE_IPMC_VEC";		tr 71 m=FE_IPMC_VEC c=0
+echo "   FE_IPMC_VLAN";		tr 71 m=FE_IPMC_VLAN c=0
+echo "   GFFPCOUNTERS";		tr 71 m=GFFPCOUNTERS c=0
+echo "   GE_IPMC_VEC";		tr 71 m=GE_IPMC_VEC c=0
+echo "   GE_IPMC_VLAN";		tr 71 m=GE_IPMC_VLAN c=0
+echo "   GMETERING";		tr 71 m=GMETERING c=0
+echo "   L2_TABLE";		tr 71 m=L2_TABLE c=0
+echo "   L2_HIT_BITS";		tr 71 m=L2_HIT_BITS c=0
+echo "   L2MC_TABLE";		tr 71 m=L2MC_TABLE c=0
+echo "   L2_STATIC_BITS";	tr 71 m=L2_STATIC_BITS c=0
+echo "   L2_VALID_BITS";	tr 71 m=L2_VALID_BITS c=0
+echo "   L3_TABLE";		tr 71 m=L3_TABLE c=0
+echo "   L3_HIT_BITS";		tr 71 m=L3_HIT_BITS c=0
+echo "   L3_VALID_BITS";	tr 71 m=L3_VALID_BITS c=0
+echo "   L3INTF";		tr 71 m=L3INTF c=0
+echo "   PORT_MAC_BLOCK";	tr 71 m=PORT_MAC_BLOCK c=0
+echo "   PORT";			tr 71 m=PORT c=0
+echo "   PORT1";		tr 71 m=PORT1 c=0
+echo "   VLAN_STG";		tr 71 m=VLAN_STG c=0
+echo "   TRUNK_BITMAP";		tr 71 m=TRUNK_BITMAP c=0
+echo "   PORT_TRUNK_EGRESS";	tr 71 m=PORT_TRUNK_EGRESS c=0
+echo "   TRUNK_GROUP";		tr 71 m=TRUNK_GROUP c=0
+echo "   VLAN";			tr 71 m=VLAN c=0
+echo "   PORT_VPLS_BITMAP_TABLE"; tr 71 m=PORT_VPLS_BITMAP_TABLE c=0
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+linkscan off
+
+echo Running counter width verification test ...
+tr 30
+$done
+
+echo Running counter read/write test ...
+tr 31
+$done
+
+echo Running L2 insert/delete/lookup test ...
+tr 32
+$done
+
+echo Running L2 overflow insert test ...
+tr 33
+$done
+
+echo Running L2 hash test ...
+tr 34
+$done
+
+echo Running L2 delete by port test ...
+tr 35
+$done
+
+echo Running L2 delete by vlan test ...
+tr 36
+$done
+
+echo Running L3 overflow insert test ...
+tr 37
+$done
+
+echo Running L3 hash test ...
+tr 38
+$done
+
+echo Running MDIO Linkscan test
+tr 60 readcount=10000
+$done
+
+# Loopback Tests
+# Each test loads rc.soc in case a previous test failed
+
+echo Testing CPU DMA loopback ...
+tr 17 c=5
+$done
+
+echo Testing CPU DMA, Scatter/Gather Reload ...
+tr 22
+$done
+
+echo Testing CPU DMA, Scatter/Gather Simple ...
+tr 23
+$done
+
+echo Testing CPU DMA, Scatter/Gather Random ...
+tr 24
+$done
+
+#--------- MAC Loopback ---------
+
+echo Testing MAC Loopback - 100 Mb/s all FE/GE ports
+tr 18 pbm=fe,ge speed=100
+
+echo Testing MAC Loopback - 1000 Mb/s all GE ports
+tr 18 pbm=ge speed=1000
+
+echo Testing MAC Loopback - 10000 Mb/s all HG ports
+tr 18 pbm=hg speed=10G
+
+echo Testing MAC Loopback - 10 Mb/s all FE/GE ports
+tr 18 pbm=fe,ge speed=10 ppc=1 le=500
+
+$done
+
+#--------- PHY Loopback ---------
+
+echo Testing PHY Loopback - 100 Mb/s all FE/GE ports
+tr 19 pbm=fe,ge speed=100 count=1
+
+echo Testing PHY Loopback - 1000 MB/s all GE ports
+tr 19 pbm=ge speed=1000
+
+echo Testing PHY Loopback - 10000 MB/s all HG ports
+tr 19 pbm=hg speed=10G
+
+echo Testing PHY Loopback - 10 Mb/s all FE/GE ports
+tr 19 pbm=fe,ge speed=10 ppc=1 le=500 count=1
+
+$done
+
+#--------- EXT Loopback ---------
+
+#TBD
+
+# If you have external loopback cables connected as follows
+#	1-2, 3-4, 5-6, 7-8, 9-10, 11-12
+# then you can enable this script to perform external loopback at
+# different speeds.  Before running this script, use:
+#	setenv ext10 1
+#	setenv ext100 1
+#	setenv ext1000 1
+# or
+#	setenv extall 1
+
+local fwd 0x55555505555555
+local bwd 0xaaaaaa0aaaaaaa
+local fwdg 0x5000000
+local bwdg 0xa000000
+
+if $?extall \
+	"local ext10 1; local ext100 1; local ext1000 1"
+
+if $?ext10 \
+	"echo Testing External Loopback - 10 MB/s forward; \
+		tr 20 tpbm=$fwd di=1 speed=10 count=10; \
+	 echo Testing External Loopback - 10 MB/s reverse; \
+		tr 20 tpbm=$bwd di=-1 speed=10 count=10"
+
+if $?ext100 \
+	"echo Testing External Loopback - 100 MB/s forward; \
+		tr 20 tpbm=$fwd di=1 speed=100 count=10; \
+	 echo Testing External Loopback - 100 MB/s reverse; \
+		tr 20 tpbm=$bwd di=-1 speed=100 count=10"
+
+if $?ext1000 \
+	"echo Testing External Loopback - 1000 MB/s forward; \
+		tr 20 tpbm=$fwdg di=1 speed=1000 count=10; \
+	 echo Testing External Loopback - 1000 MB/s reverse; \
+		tr 20 tpbm=$bwdg di=-1 speed=1000 count=10"
+
+#--------- INT snake Loopback ---------
+
+echo "Running internal snake on all ports, MAC loopback ..."
+tr 39 loopbackmode=mac snakepath=two
+
+echo "Running internal snake on all ports, PHY loopback ..."
+tr 39 loopbackmode=phy snakepath=two
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48 smi=103 dmi=42 vlan=5 pi=0x11335577 sendm=single
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49 smi=52 dmi=83 vlan=23 pi=0x01204007 sendm=array
+
+echo "Testing Filters"
+rcload rc.soc
+tr 70
+
+# Show status
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+rcload rc.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"

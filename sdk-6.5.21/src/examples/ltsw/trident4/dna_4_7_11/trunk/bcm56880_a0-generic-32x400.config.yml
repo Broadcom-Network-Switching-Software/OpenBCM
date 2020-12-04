@@ -1,0 +1,236 @@
+#
+# BCM56880 32x400g port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+---
+device:
+    0:
+        DEVICE_CONFIG:
+            # CORE CLOCK FREQUENCY
+            CORE_CLK_FREQ: CLK_1350MHZ
+            # PP CLOCK FREQUENCY
+            PP_CLK_FREQ: CLK_1350MHZ
+...
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                PORT_ID: 1
+            :
+                PC_PHYS_PORT_ID: 1
+            ?
+                PORT_ID: 2
+            :
+                PC_PHYS_PORT_ID: 9
+            ?
+                PORT_ID: 3
+            :
+                PC_PHYS_PORT_ID: 17
+            ?
+                PORT_ID: 4
+            :
+                PC_PHYS_PORT_ID: 25
+            ?
+                PORT_ID: 20
+            :
+                PC_PHYS_PORT_ID: 33
+            ?
+                PORT_ID: 21
+            :
+                PC_PHYS_PORT_ID: 41
+            ?
+                PORT_ID: 22
+            :
+                PC_PHYS_PORT_ID: 49
+            ?
+                PORT_ID: 23
+            :
+                PC_PHYS_PORT_ID: 57
+            ?
+                PORT_ID: 40
+            :
+                PC_PHYS_PORT_ID: 65
+            ?
+                PORT_ID: 41
+            :
+                PC_PHYS_PORT_ID: 73
+            ?
+                PORT_ID: 42
+            :
+                PC_PHYS_PORT_ID: 81
+            ?
+                PORT_ID: 43
+            :
+                PC_PHYS_PORT_ID: 89
+            ?
+                PORT_ID: 60
+            :
+                PC_PHYS_PORT_ID: 97
+            ?
+                PORT_ID: 61
+            :
+                PC_PHYS_PORT_ID: 105
+            ?
+                PORT_ID: 62
+            :
+                PC_PHYS_PORT_ID: 113
+            ?
+                PORT_ID: 63
+            :
+                PC_PHYS_PORT_ID: 121
+            ?
+                PORT_ID: 80
+            :
+                PC_PHYS_PORT_ID: 129
+            ?
+                PORT_ID: 81
+            :
+                PC_PHYS_PORT_ID: 137
+            ?
+                PORT_ID: 82
+            :
+                PC_PHYS_PORT_ID: 145
+            ?
+                PORT_ID: 83
+            :
+                PC_PHYS_PORT_ID: 153
+            ?
+                PORT_ID: 100
+            :
+                PC_PHYS_PORT_ID: 161
+            ?
+                PORT_ID: 101
+            :
+                PC_PHYS_PORT_ID: 169
+            ?
+                PORT_ID: 102
+            :
+                PC_PHYS_PORT_ID: 177
+            ?
+                PORT_ID: 103
+            :
+                PC_PHYS_PORT_ID: 185
+            ?
+                PORT_ID: 120
+            :
+                PC_PHYS_PORT_ID: 193
+            ?
+                PORT_ID: 121
+            :
+                PC_PHYS_PORT_ID: 201
+            ?
+                PORT_ID: 122
+            :
+                PC_PHYS_PORT_ID: 209
+            ?
+                PORT_ID: 123
+            :
+                PC_PHYS_PORT_ID: 217
+            ?
+                PORT_ID: 140
+            :
+                PC_PHYS_PORT_ID: 225
+            ?
+                PORT_ID: 141
+            :
+                PC_PHYS_PORT_ID: 233
+            ?
+                PORT_ID: 142
+            :
+                PC_PHYS_PORT_ID: 241
+            ?
+                PORT_ID: 143
+            :
+                PC_PHYS_PORT_ID: 249
+            ?
+                # management port
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 257
+            ?
+                # management port
+                PORT_ID: 78
+            :
+                PC_PHYS_PORT_ID: 258
+            ?
+                # management port
+                PORT_ID: 118
+            :
+                PC_PHYS_PORT_ID: 259
+            ?
+                # management port
+                PORT_ID: 158
+            :
+                PC_PHYS_PORT_ID: 260
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: 0
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [[1, 4],
+                          [20, 23],
+                          [40, 43],
+                          [60, 63],
+                          [80, 83],
+                          [100, 103],
+                          [120, 123],
+                          [140, 143]]
+            :
+                &port_mode_400g
+                ENABLE: 1
+                SPEED: 400000
+                NUM_LANES: 8
+                FEC_MODE: PC_FEC_RS544_2XN
+                MAX_FRAME_SIZE: 9416
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          78,     # Management port 1 (Pipe 3)
+                          118,    # Management port 2 (Pipe 5)
+                          158]    # Management port 3 (Pipe 7)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 9416
+...
+---
+device:
+    0:
+        # Per pipe flex counter configuration
+        CTR_EFLEX_CONFIG:
+            CTR_ING_EFLEX_OPERMODE_PIPEUNIQUE: 0
+            CTR_EGR_EFLEX_OPERMODE_PIPEUNIQUE: 0
+...

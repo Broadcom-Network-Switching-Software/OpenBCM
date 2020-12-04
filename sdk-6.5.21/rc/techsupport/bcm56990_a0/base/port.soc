@@ -1,0 +1,63 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport PORT RC (run commands) file
+#
+#       These are default commands that are for TechSupport PORT.
+#
+
+# S/W state of PORT.
+dump sw port
+dump sw l2_if
+
+# PORT CLI debugging.
+ps
+show portmap
+pbmp
+
+# Show PORT related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'        $traverse_lt;
+
+# Show PC LTs.                                          $traverse_lt;
+local lt PC_PORT;                                       $traverse_lt;
+local lt PC_PORT_PHYS_MAP;                              $traverse_lt;
+local lt PC_PORT_STATUS;                                $traverse_lt;
+local lt PC_MAC_CONTROL;                                $traverse_lt;
+local lt PC_PFC;                                        $traverse_lt;
+local lt PC_PHY_CONTROL;                                $traverse_lt;
+local lt PC_PHY_STATUS;                                 $traverse_lt;
+local lt PC_PMD_FIRMWARE;                               $traverse_lt;
+local lt PC_PMD_FIRMWARE_STATUS;                        $traverse_lt;
+local lt PC_TX_TAPS;                                    $traverse_lt;
+local lt PC_TX_TAPS_STATUS;                             $traverse_lt;
+local lt PC_PORT_TIMESYNC;                              $traverse_lt;
+local lt PC_AUTONEG_PROFILE;                            $traverse_lt;
+local lt PC_PORT_ABILITIES;                             $traverse_lt;
+
+# Show port basic LTs.                                  $traverse_lt;
+local lt PORT;                                          $traverse_lt;
+local lt PORT_PARSER_CONTROL;                           $traverse_lt;
+
+# Show system port LTs.                                 $traverse_lt;
+local lt ING_SYSTEM_PORT_TABLE;                         $traverse_lt;
+local lt ING_SYSTEM_DESTINATION_TABLE;                  $traverse_lt;
+local lt PORT_SYSTEM_DESTINATION;                       $traverse_lt;
+
+# Show L2 interface LTs.                                $traverse_lt;
+local lt ING_L2_IIF_TABLE;                              $traverse_lt;
+local lt ING_L2_IIF_ATTRIBUTES_TABLE;                   $traverse_lt;
+local lt EGR_L2_OIF;                                    $traverse_lt;
+local lt L2_EIF_SYSTEM_DESTINATION;                     $traverse_lt;
+
+# Show other port related LTs.                          $traverse_lt;
+local lt R_GSH_ETHERTYPE;                               $traverse_lt;
+local lt R_EGR_GSH_ETYPE_RESERVED;                      $traverse_lt;
+local lt PORT_POLICY;                                   $traverse_lt;
+local lt PORT_ING_VISIBILITY;                           $traverse_lt;
+local lt PORT_EGR_VISIBILITY;                           $traverse_lt;
+local lt MIRROR_PORT_ENCAP_SFLOW;                       $traverse_lt;
+local lt TM_SHAPER_PORT;                                $traverse_lt;
+local lt TM_OBM_PC_PM_PKT_PARSE;                        $traverse_lt;
+

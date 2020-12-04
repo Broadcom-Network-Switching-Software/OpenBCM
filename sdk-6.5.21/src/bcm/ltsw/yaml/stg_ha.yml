@@ -1,0 +1,24 @@
+#
+# file: stg_ha.yml
+# STG YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_stg:
+        bcmint_stg_stp_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                ing_state:
+                    type: uint8_t
+                    comment: STP state per port in IPIPE.
+                egr_state:
+                    type: uint8_t
+                    comment: STP state per port in EPIPE

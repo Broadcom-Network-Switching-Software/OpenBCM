@@ -1,0 +1,1718 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[49044]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[60810]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+BCM.0> 
+BCM.0> cint th4_hsdk_mmu_cosq_gport_traverse.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+--> cosq_gport_traverse_callback: gport for local_port: 1
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004000
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004001
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004002
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004003
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004004
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004005
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004006
+traverse_cb UC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x24004007
+traverse_cb MC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x30004000
+traverse_cb MC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x30004001
+traverse_cb MC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x30004002
+traverse_cb MC queue: local_port=1, mod_port=0x8000001, numq=1, gport=0x30004003
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37800001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37810001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37820001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37830001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37840001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37850001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37860001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37870001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37880001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x37890001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x378a0001
+traverse_cb scheduler: local_port=1, mod_port=0x8000001, numq=1, gport=0x378b0001
+--> cosq_gport_traverse_callback: gport for local_port: 2
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008000
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008001
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008002
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008003
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008004
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008005
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008006
+traverse_cb UC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x24008007
+traverse_cb MC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x30008000
+traverse_cb MC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x30008001
+traverse_cb MC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x30008002
+traverse_cb MC queue: local_port=2, mod_port=0x8000002, numq=1, gport=0x30008003
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37800002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37810002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37820002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37830002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37840002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37850002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37860002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37870002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37880002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x37890002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x378a0002
+traverse_cb scheduler: local_port=2, mod_port=0x8000002, numq=1, gport=0x378b0002
+--> cosq_gport_traverse_callback: gport for local_port: 3
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c000
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c001
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c002
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c003
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c004
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c005
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c006
+traverse_cb UC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x2400c007
+traverse_cb MC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x3000c000
+traverse_cb MC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x3000c001
+traverse_cb MC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x3000c002
+traverse_cb MC queue: local_port=3, mod_port=0x8000003, numq=1, gport=0x3000c003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37800003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37810003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37820003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37830003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37840003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37850003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37860003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37870003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37880003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x37890003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x378a0003
+traverse_cb scheduler: local_port=3, mod_port=0x8000003, numq=1, gport=0x378b0003
+--> cosq_gport_traverse_callback: gport for local_port: 4
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010000
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010001
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010002
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010003
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010004
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010005
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010006
+traverse_cb UC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x24010007
+traverse_cb MC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x30010000
+traverse_cb MC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x30010001
+traverse_cb MC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x30010002
+traverse_cb MC queue: local_port=4, mod_port=0x8000004, numq=1, gport=0x30010003
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37800004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37810004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37820004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37830004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37840004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37850004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37860004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37870004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37880004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x37890004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x378a0004
+traverse_cb scheduler: local_port=4, mod_port=0x8000004, numq=1, gport=0x378b0004
+--> cosq_gport_traverse_callback: gport for local_port: 17
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044000
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044001
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044002
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044003
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044004
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044005
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044006
+traverse_cb UC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x24044007
+traverse_cb MC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x30044000
+traverse_cb MC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x30044001
+traverse_cb MC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x30044002
+traverse_cb MC queue: local_port=17, mod_port=0x8000011, numq=1, gport=0x30044003
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37800011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37810011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37820011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37830011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37840011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37850011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37860011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37870011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37880011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x37890011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x378a0011
+traverse_cb scheduler: local_port=17, mod_port=0x8000011, numq=1, gport=0x378b0011
+--> cosq_gport_traverse_callback: gport for local_port: 18
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048000
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048001
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048002
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048003
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048004
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048005
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048006
+traverse_cb UC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x24048007
+traverse_cb MC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x30048000
+traverse_cb MC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x30048001
+traverse_cb MC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x30048002
+traverse_cb MC queue: local_port=18, mod_port=0x8000012, numq=1, gport=0x30048003
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37800012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37810012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37820012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37830012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37840012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37850012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37860012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37870012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37880012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x37890012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x378a0012
+traverse_cb scheduler: local_port=18, mod_port=0x8000012, numq=1, gport=0x378b0012
+--> cosq_gport_traverse_callback: gport for local_port: 19
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c000
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c001
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c002
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c003
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c004
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c005
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c006
+traverse_cb UC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x2404c007
+traverse_cb MC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x3004c000
+traverse_cb MC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x3004c001
+traverse_cb MC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x3004c002
+traverse_cb MC queue: local_port=19, mod_port=0x8000013, numq=1, gport=0x3004c003
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37800013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37810013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37820013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37830013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37840013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37850013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37860013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37870013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37880013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x37890013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x378a0013
+traverse_cb scheduler: local_port=19, mod_port=0x8000013, numq=1, gport=0x378b0013
+--> cosq_gport_traverse_callback: gport for local_port: 20
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050000
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050001
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050002
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050003
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050004
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050005
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050006
+traverse_cb UC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x24050007
+traverse_cb MC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x30050000
+traverse_cb MC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x30050001
+traverse_cb MC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x30050002
+traverse_cb MC queue: local_port=20, mod_port=0x8000014, numq=1, gport=0x30050003
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37800014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37810014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37820014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37830014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37840014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37850014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37860014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37870014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37880014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x37890014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x378a0014
+traverse_cb scheduler: local_port=20, mod_port=0x8000014, numq=1, gport=0x378b0014
+--> cosq_gport_traverse_callback: gport for local_port: 34
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088000
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088001
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088002
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088003
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088004
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088005
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088006
+traverse_cb UC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x24088007
+traverse_cb MC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x30088000
+traverse_cb MC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x30088001
+traverse_cb MC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x30088002
+traverse_cb MC queue: local_port=34, mod_port=0x8000022, numq=1, gport=0x30088003
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37800022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37810022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37820022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37830022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37840022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37850022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37860022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37870022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37880022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x37890022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x378a0022
+traverse_cb scheduler: local_port=34, mod_port=0x8000022, numq=1, gport=0x378b0022
+--> cosq_gport_traverse_callback: gport for local_port: 35
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c000
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c001
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c002
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c003
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c004
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c005
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c006
+traverse_cb UC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x2408c007
+traverse_cb MC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x3008c000
+traverse_cb MC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x3008c001
+traverse_cb MC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x3008c002
+traverse_cb MC queue: local_port=35, mod_port=0x8000023, numq=1, gport=0x3008c003
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37800023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37810023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37820023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37830023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37840023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37850023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37860023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37870023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37880023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x37890023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x378a0023
+traverse_cb scheduler: local_port=35, mod_port=0x8000023, numq=1, gport=0x378b0023
+--> cosq_gport_traverse_callback: gport for local_port: 36
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090000
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090001
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090002
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090003
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090004
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090005
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090006
+traverse_cb UC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x24090007
+traverse_cb MC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x30090000
+traverse_cb MC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x30090001
+traverse_cb MC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x30090002
+traverse_cb MC queue: local_port=36, mod_port=0x8000024, numq=1, gport=0x30090003
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37800024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37810024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37820024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37830024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37840024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37850024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37860024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37870024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37880024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x37890024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x378a0024
+traverse_cb scheduler: local_port=36, mod_port=0x8000024, numq=1, gport=0x378b0024
+--> cosq_gport_traverse_callback: gport for local_port: 37
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094000
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094001
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094002
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094003
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094004
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094005
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094006
+traverse_cb UC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x24094007
+traverse_cb MC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x30094000
+traverse_cb MC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x30094001
+traverse_cb MC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x30094002
+traverse_cb MC queue: local_port=37, mod_port=0x8000025, numq=1, gport=0x30094003
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37800025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37810025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37820025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37830025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37840025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37850025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37860025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37870025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37880025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x37890025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x378a0025
+traverse_cb scheduler: local_port=37, mod_port=0x8000025, numq=1, gport=0x378b0025
+--> cosq_gport_traverse_callback: gport for local_port: 51
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc000
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc001
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc002
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc003
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc004
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc005
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc006
+traverse_cb UC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x240cc007
+traverse_cb MC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x300cc000
+traverse_cb MC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x300cc001
+traverse_cb MC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x300cc002
+traverse_cb MC queue: local_port=51, mod_port=0x8000033, numq=1, gport=0x300cc003
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37800033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37810033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37820033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37830033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37840033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37850033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37860033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37870033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37880033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x37890033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x378a0033
+traverse_cb scheduler: local_port=51, mod_port=0x8000033, numq=1, gport=0x378b0033
+--> cosq_gport_traverse_callback: gport for local_port: 52
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0000
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0001
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0002
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0003
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0004
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0005
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0006
+traverse_cb UC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x240d0007
+traverse_cb MC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x300d0000
+traverse_cb MC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x300d0001
+traverse_cb MC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x300d0002
+traverse_cb MC queue: local_port=52, mod_port=0x8000034, numq=1, gport=0x300d0003
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37800034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37810034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37820034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37830034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37840034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37850034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37860034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37870034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37880034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x37890034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x378a0034
+traverse_cb scheduler: local_port=52, mod_port=0x8000034, numq=1, gport=0x378b0034
+--> cosq_gport_traverse_callback: gport for local_port: 53
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4000
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4001
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4002
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4003
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4004
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4005
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4006
+traverse_cb UC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x240d4007
+traverse_cb MC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x300d4000
+traverse_cb MC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x300d4001
+traverse_cb MC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x300d4002
+traverse_cb MC queue: local_port=53, mod_port=0x8000035, numq=1, gport=0x300d4003
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37800035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37810035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37820035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37830035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37840035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37850035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37860035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37870035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37880035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x37890035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x378a0035
+traverse_cb scheduler: local_port=53, mod_port=0x8000035, numq=1, gport=0x378b0035
+--> cosq_gport_traverse_callback: gport for local_port: 54
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8000
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8001
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8002
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8003
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8004
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8005
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8006
+traverse_cb UC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x240d8007
+traverse_cb MC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x300d8000
+traverse_cb MC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x300d8001
+traverse_cb MC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x300d8002
+traverse_cb MC queue: local_port=54, mod_port=0x8000036, numq=1, gport=0x300d8003
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37800036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37810036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37820036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37830036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37840036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37850036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37860036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37870036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37880036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x37890036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x378a0036
+traverse_cb scheduler: local_port=54, mod_port=0x8000036, numq=1, gport=0x378b0036
+--> cosq_gport_traverse_callback: gport for local_port: 68
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110000
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110001
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110002
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110003
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110004
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110005
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110006
+traverse_cb UC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x24110007
+traverse_cb MC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x30110000
+traverse_cb MC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x30110001
+traverse_cb MC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x30110002
+traverse_cb MC queue: local_port=68, mod_port=0x8000044, numq=1, gport=0x30110003
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37800044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37810044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37820044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37830044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37840044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37850044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37860044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37870044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37880044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x37890044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x378a0044
+traverse_cb scheduler: local_port=68, mod_port=0x8000044, numq=1, gport=0x378b0044
+--> cosq_gport_traverse_callback: gport for local_port: 69
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114000
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114001
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114002
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114003
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114004
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114005
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114006
+traverse_cb UC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x24114007
+traverse_cb MC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x30114000
+traverse_cb MC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x30114001
+traverse_cb MC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x30114002
+traverse_cb MC queue: local_port=69, mod_port=0x8000045, numq=1, gport=0x30114003
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37800045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37810045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37820045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37830045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37840045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37850045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37860045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37870045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37880045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x37890045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x378a0045
+traverse_cb scheduler: local_port=69, mod_port=0x8000045, numq=1, gport=0x378b0045
+--> cosq_gport_traverse_callback: gport for local_port: 70
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118000
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118001
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118002
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118003
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118004
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118005
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118006
+traverse_cb UC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x24118007
+traverse_cb MC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x30118000
+traverse_cb MC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x30118001
+traverse_cb MC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x30118002
+traverse_cb MC queue: local_port=70, mod_port=0x8000046, numq=1, gport=0x30118003
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37800046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37810046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37820046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37830046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37840046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37850046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37860046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37870046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37880046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x37890046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x378a0046
+traverse_cb scheduler: local_port=70, mod_port=0x8000046, numq=1, gport=0x378b0046
+--> cosq_gport_traverse_callback: gport for local_port: 71
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c000
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c001
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c002
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c003
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c004
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c005
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c006
+traverse_cb UC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x2411c007
+traverse_cb MC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x3011c000
+traverse_cb MC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x3011c001
+traverse_cb MC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x3011c002
+traverse_cb MC queue: local_port=71, mod_port=0x8000047, numq=1, gport=0x3011c003
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37800047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37810047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37820047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37830047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37840047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37850047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37860047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37870047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37880047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x37890047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x378a0047
+traverse_cb scheduler: local_port=71, mod_port=0x8000047, numq=1, gport=0x378b0047
+--> cosq_gport_traverse_callback: gport for local_port: 85
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154000
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154001
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154002
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154003
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154004
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154005
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154006
+traverse_cb UC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x24154007
+traverse_cb MC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x30154000
+traverse_cb MC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x30154001
+traverse_cb MC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x30154002
+traverse_cb MC queue: local_port=85, mod_port=0x8000055, numq=1, gport=0x30154003
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37800055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37810055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37820055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37830055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37840055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37850055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37860055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37870055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37880055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x37890055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x378a0055
+traverse_cb scheduler: local_port=85, mod_port=0x8000055, numq=1, gport=0x378b0055
+--> cosq_gport_traverse_callback: gport for local_port: 86
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158000
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158001
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158002
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158003
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158004
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158005
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158006
+traverse_cb UC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x24158007
+traverse_cb MC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x30158000
+traverse_cb MC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x30158001
+traverse_cb MC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x30158002
+traverse_cb MC queue: local_port=86, mod_port=0x8000056, numq=1, gport=0x30158003
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37800056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37810056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37820056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37830056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37840056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37850056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37860056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37870056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37880056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x37890056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x378a0056
+traverse_cb scheduler: local_port=86, mod_port=0x8000056, numq=1, gport=0x378b0056
+--> cosq_gport_traverse_callback: gport for local_port: 87
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c000
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c001
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c002
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c003
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c004
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c005
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c006
+traverse_cb UC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x2415c007
+traverse_cb MC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x3015c000
+traverse_cb MC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x3015c001
+traverse_cb MC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x3015c002
+traverse_cb MC queue: local_port=87, mod_port=0x8000057, numq=1, gport=0x3015c003
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37800057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37810057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37820057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37830057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37840057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37850057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37860057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37870057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37880057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x37890057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x378a0057
+traverse_cb scheduler: local_port=87, mod_port=0x8000057, numq=1, gport=0x378b0057
+--> cosq_gport_traverse_callback: gport for local_port: 88
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160000
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160001
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160002
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160003
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160004
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160005
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160006
+traverse_cb UC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x24160007
+traverse_cb MC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x30160000
+traverse_cb MC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x30160001
+traverse_cb MC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x30160002
+traverse_cb MC queue: local_port=88, mod_port=0x8000058, numq=1, gport=0x30160003
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37800058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37810058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37820058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37830058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37840058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37850058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37860058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37870058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37880058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x37890058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x378a0058
+traverse_cb scheduler: local_port=88, mod_port=0x8000058, numq=1, gport=0x378b0058
+--> cosq_gport_traverse_callback: gport for local_port: 102
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198000
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198001
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198002
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198003
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198004
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198005
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198006
+traverse_cb UC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x24198007
+traverse_cb MC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x30198000
+traverse_cb MC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x30198001
+traverse_cb MC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x30198002
+traverse_cb MC queue: local_port=102, mod_port=0x8000066, numq=1, gport=0x30198003
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37800066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37810066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37820066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37830066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37840066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37850066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37860066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37870066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37880066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x37890066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x378a0066
+traverse_cb scheduler: local_port=102, mod_port=0x8000066, numq=1, gport=0x378b0066
+--> cosq_gport_traverse_callback: gport for local_port: 103
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c000
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c001
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c002
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c003
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c004
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c005
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c006
+traverse_cb UC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x2419c007
+traverse_cb MC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x3019c000
+traverse_cb MC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x3019c001
+traverse_cb MC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x3019c002
+traverse_cb MC queue: local_port=103, mod_port=0x8000067, numq=1, gport=0x3019c003
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37800067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37810067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37820067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37830067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37840067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37850067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37860067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37870067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37880067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x37890067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x378a0067
+traverse_cb scheduler: local_port=103, mod_port=0x8000067, numq=1, gport=0x378b0067
+--> cosq_gport_traverse_callback: gport for local_port: 104
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0000
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0001
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0002
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0003
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0004
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0005
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0006
+traverse_cb UC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x241a0007
+traverse_cb MC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x301a0000
+traverse_cb MC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x301a0001
+traverse_cb MC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x301a0002
+traverse_cb MC queue: local_port=104, mod_port=0x8000068, numq=1, gport=0x301a0003
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37800068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37810068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37820068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37830068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37840068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37850068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37860068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37870068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37880068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x37890068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x378a0068
+traverse_cb scheduler: local_port=104, mod_port=0x8000068, numq=1, gport=0x378b0068
+--> cosq_gport_traverse_callback: gport for local_port: 105
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4000
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4001
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4002
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4003
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4004
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4005
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4006
+traverse_cb UC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x241a4007
+traverse_cb MC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x301a4000
+traverse_cb MC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x301a4001
+traverse_cb MC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x301a4002
+traverse_cb MC queue: local_port=105, mod_port=0x8000069, numq=1, gport=0x301a4003
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37800069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37810069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37820069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37830069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37840069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37850069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37860069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37870069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37880069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x37890069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x378a0069
+traverse_cb scheduler: local_port=105, mod_port=0x8000069, numq=1, gport=0x378b0069
+--> cosq_gport_traverse_callback: gport for local_port: 119
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc000
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc001
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc002
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc003
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc004
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc005
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc006
+traverse_cb UC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x241dc007
+traverse_cb MC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x301dc000
+traverse_cb MC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x301dc001
+traverse_cb MC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x301dc002
+traverse_cb MC queue: local_port=119, mod_port=0x8000077, numq=1, gport=0x301dc003
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37800077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37810077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37820077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37830077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37840077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37850077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37860077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37870077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37880077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x37890077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x378a0077
+traverse_cb scheduler: local_port=119, mod_port=0x8000077, numq=1, gport=0x378b0077
+--> cosq_gport_traverse_callback: gport for local_port: 120
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0000
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0001
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0002
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0003
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0004
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0005
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0006
+traverse_cb UC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x241e0007
+traverse_cb MC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x301e0000
+traverse_cb MC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x301e0001
+traverse_cb MC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x301e0002
+traverse_cb MC queue: local_port=120, mod_port=0x8000078, numq=1, gport=0x301e0003
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37800078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37810078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37820078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37830078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37840078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37850078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37860078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37870078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37880078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x37890078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x378a0078
+traverse_cb scheduler: local_port=120, mod_port=0x8000078, numq=1, gport=0x378b0078
+--> cosq_gport_traverse_callback: gport for local_port: 121
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4000
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4001
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4002
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4003
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4004
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4005
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4006
+traverse_cb UC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x241e4007
+traverse_cb MC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x301e4000
+traverse_cb MC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x301e4001
+traverse_cb MC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x301e4002
+traverse_cb MC queue: local_port=121, mod_port=0x8000079, numq=1, gport=0x301e4003
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37800079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37810079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37820079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37830079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37840079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37850079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37860079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37870079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37880079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x37890079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x378a0079
+traverse_cb scheduler: local_port=121, mod_port=0x8000079, numq=1, gport=0x378b0079
+--> cosq_gport_traverse_callback: gport for local_port: 122
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8000
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8001
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8002
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8003
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8004
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8005
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8006
+traverse_cb UC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x241e8007
+traverse_cb MC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x301e8000
+traverse_cb MC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x301e8001
+traverse_cb MC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x301e8002
+traverse_cb MC queue: local_port=122, mod_port=0x800007a, numq=1, gport=0x301e8003
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3780007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3781007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3782007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3783007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3784007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3785007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3786007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3787007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3788007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x3789007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x378a007a
+traverse_cb scheduler: local_port=122, mod_port=0x800007a, numq=1, gport=0x378b007a
+--> cosq_gport_traverse_callback: gport for local_port: 136
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220000
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220001
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220002
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220003
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220004
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220005
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220006
+traverse_cb UC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x24220007
+traverse_cb MC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x30220000
+traverse_cb MC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x30220001
+traverse_cb MC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x30220002
+traverse_cb MC queue: local_port=136, mod_port=0x8000088, numq=1, gport=0x30220003
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37800088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37810088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37820088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37830088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37840088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37850088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37860088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37870088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37880088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x37890088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x378a0088
+traverse_cb scheduler: local_port=136, mod_port=0x8000088, numq=1, gport=0x378b0088
+--> cosq_gport_traverse_callback: gport for local_port: 137
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224000
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224001
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224002
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224003
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224004
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224005
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224006
+traverse_cb UC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x24224007
+traverse_cb MC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x30224000
+traverse_cb MC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x30224001
+traverse_cb MC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x30224002
+traverse_cb MC queue: local_port=137, mod_port=0x8000089, numq=1, gport=0x30224003
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37800089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37810089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37820089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37830089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37840089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37850089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37860089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37870089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37880089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x37890089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x378a0089
+traverse_cb scheduler: local_port=137, mod_port=0x8000089, numq=1, gport=0x378b0089
+--> cosq_gport_traverse_callback: gport for local_port: 138
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228000
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228001
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228002
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228003
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228004
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228005
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228006
+traverse_cb UC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x24228007
+traverse_cb MC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x30228000
+traverse_cb MC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x30228001
+traverse_cb MC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x30228002
+traverse_cb MC queue: local_port=138, mod_port=0x800008a, numq=1, gport=0x30228003
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3780008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3781008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3782008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3783008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3784008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3785008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3786008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3787008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3788008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x3789008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x378a008a
+traverse_cb scheduler: local_port=138, mod_port=0x800008a, numq=1, gport=0x378b008a
+--> cosq_gport_traverse_callback: gport for local_port: 139
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c000
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c001
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c002
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c003
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c004
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c005
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c006
+traverse_cb UC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x2422c007
+traverse_cb MC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x3022c000
+traverse_cb MC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x3022c001
+traverse_cb MC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x3022c002
+traverse_cb MC queue: local_port=139, mod_port=0x800008b, numq=1, gport=0x3022c003
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3780008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3781008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3782008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3783008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3784008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3785008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3786008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3787008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3788008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x3789008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x378a008b
+traverse_cb scheduler: local_port=139, mod_port=0x800008b, numq=1, gport=0x378b008b
+--> cosq_gport_traverse_callback: gport for local_port: 152
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260000
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260001
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260002
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260003
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260004
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260005
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260006
+traverse_cb UC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x24260007
+traverse_cb MC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x30260000
+traverse_cb MC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x30260001
+traverse_cb MC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x30260002
+traverse_cb MC queue: local_port=152, mod_port=0x8000098, numq=1, gport=0x30260003
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37800098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37810098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37820098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37830098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37840098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37850098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37860098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37870098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37880098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x37890098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x378a0098
+traverse_cb scheduler: local_port=152, mod_port=0x8000098, numq=1, gport=0x378b0098
+--> cosq_gport_traverse_callback: gport for local_port: 153
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264000
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264001
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264002
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264003
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264004
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264005
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264006
+traverse_cb UC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x24264007
+traverse_cb MC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x30264000
+traverse_cb MC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x30264001
+traverse_cb MC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x30264002
+traverse_cb MC queue: local_port=153, mod_port=0x8000099, numq=1, gport=0x30264003
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37800099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37810099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37820099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37830099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37840099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37850099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37860099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37870099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37880099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x37890099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x378a0099
+traverse_cb scheduler: local_port=153, mod_port=0x8000099, numq=1, gport=0x378b0099
+--> cosq_gport_traverse_callback: gport for local_port: 154
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268000
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268001
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268002
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268003
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268004
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268005
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268006
+traverse_cb UC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x24268007
+traverse_cb MC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x30268000
+traverse_cb MC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x30268001
+traverse_cb MC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x30268002
+traverse_cb MC queue: local_port=154, mod_port=0x800009a, numq=1, gport=0x30268003
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3780009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3781009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3782009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3783009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3784009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3785009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3786009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3787009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3788009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x3789009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x378a009a
+traverse_cb scheduler: local_port=154, mod_port=0x800009a, numq=1, gport=0x378b009a
+--> cosq_gport_traverse_callback: gport for local_port: 155
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c000
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c001
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c002
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c003
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c004
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c005
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c006
+traverse_cb UC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x2426c007
+traverse_cb MC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x3026c000
+traverse_cb MC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x3026c001
+traverse_cb MC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x3026c002
+traverse_cb MC queue: local_port=155, mod_port=0x800009b, numq=1, gport=0x3026c003
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3780009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3781009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3782009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3783009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3784009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3785009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3786009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3787009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3788009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x3789009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x378a009b
+traverse_cb scheduler: local_port=155, mod_port=0x800009b, numq=1, gport=0x378b009b
+--> cosq_gport_traverse_callback: gport for local_port: 156
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270000
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270001
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270002
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270003
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270004
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270005
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270006
+traverse_cb UC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x24270007
+traverse_cb MC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x30270000
+traverse_cb MC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x30270001
+traverse_cb MC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x30270002
+traverse_cb MC queue: local_port=156, mod_port=0x800009c, numq=1, gport=0x30270003
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3780009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3781009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3782009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3783009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3784009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3785009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3786009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3787009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3788009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x3789009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x378a009c
+traverse_cb scheduler: local_port=156, mod_port=0x800009c, numq=1, gport=0x378b009c
+--> cosq_gport_traverse_callback: gport for local_port: 170
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8000
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8001
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8002
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8003
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8004
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8005
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8006
+traverse_cb UC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x242a8007
+traverse_cb MC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x302a8000
+traverse_cb MC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x302a8001
+traverse_cb MC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x302a8002
+traverse_cb MC queue: local_port=170, mod_port=0x80000aa, numq=1, gport=0x302a8003
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378000aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378100aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378200aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378300aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378400aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378500aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378600aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378700aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378800aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378900aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378a00aa
+traverse_cb scheduler: local_port=170, mod_port=0x80000aa, numq=1, gport=0x378b00aa
+--> cosq_gport_traverse_callback: gport for local_port: 171
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac000
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac001
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac002
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac003
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac004
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac005
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac006
+traverse_cb UC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x242ac007
+traverse_cb MC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x302ac000
+traverse_cb MC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x302ac001
+traverse_cb MC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x302ac002
+traverse_cb MC queue: local_port=171, mod_port=0x80000ab, numq=1, gport=0x302ac003
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378000ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378100ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378200ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378300ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378400ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378500ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378600ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378700ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378800ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378900ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378a00ab
+traverse_cb scheduler: local_port=171, mod_port=0x80000ab, numq=1, gport=0x378b00ab
+--> cosq_gport_traverse_callback: gport for local_port: 172
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0000
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0001
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0002
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0003
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0004
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0005
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0006
+traverse_cb UC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x242b0007
+traverse_cb MC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x302b0000
+traverse_cb MC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x302b0001
+traverse_cb MC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x302b0002
+traverse_cb MC queue: local_port=172, mod_port=0x80000ac, numq=1, gport=0x302b0003
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378000ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378100ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378200ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378300ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378400ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378500ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378600ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378700ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378800ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378900ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378a00ac
+traverse_cb scheduler: local_port=172, mod_port=0x80000ac, numq=1, gport=0x378b00ac
+--> cosq_gport_traverse_callback: gport for local_port: 173
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4000
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4001
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4002
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4003
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4004
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4005
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4006
+traverse_cb UC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x242b4007
+traverse_cb MC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x302b4000
+traverse_cb MC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x302b4001
+traverse_cb MC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x302b4002
+traverse_cb MC queue: local_port=173, mod_port=0x80000ad, numq=1, gport=0x302b4003
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378000ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378100ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378200ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378300ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378400ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378500ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378600ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378700ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378800ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378900ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378a00ad
+traverse_cb scheduler: local_port=173, mod_port=0x80000ad, numq=1, gport=0x378b00ad
+--> cosq_gport_traverse_callback: gport for local_port: 187
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec000
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec001
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec002
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec003
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec004
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec005
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec006
+traverse_cb UC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x242ec007
+traverse_cb MC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x302ec000
+traverse_cb MC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x302ec001
+traverse_cb MC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x302ec002
+traverse_cb MC queue: local_port=187, mod_port=0x80000bb, numq=1, gport=0x302ec003
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378000bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378100bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378200bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378300bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378400bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378500bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378600bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378700bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378800bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378900bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378a00bb
+traverse_cb scheduler: local_port=187, mod_port=0x80000bb, numq=1, gport=0x378b00bb
+--> cosq_gport_traverse_callback: gport for local_port: 188
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0000
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0001
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0002
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0003
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0004
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0005
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0006
+traverse_cb UC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x242f0007
+traverse_cb MC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x302f0000
+traverse_cb MC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x302f0001
+traverse_cb MC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x302f0002
+traverse_cb MC queue: local_port=188, mod_port=0x80000bc, numq=1, gport=0x302f0003
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378000bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378100bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378200bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378300bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378400bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378500bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378600bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378700bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378800bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378900bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378a00bc
+traverse_cb scheduler: local_port=188, mod_port=0x80000bc, numq=1, gport=0x378b00bc
+--> cosq_gport_traverse_callback: gport for local_port: 189
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4000
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4001
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4002
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4003
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4004
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4005
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4006
+traverse_cb UC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x242f4007
+traverse_cb MC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x302f4000
+traverse_cb MC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x302f4001
+traverse_cb MC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x302f4002
+traverse_cb MC queue: local_port=189, mod_port=0x80000bd, numq=1, gport=0x302f4003
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378000bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378100bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378200bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378300bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378400bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378500bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378600bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378700bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378800bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378900bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378a00bd
+traverse_cb scheduler: local_port=189, mod_port=0x80000bd, numq=1, gport=0x378b00bd
+--> cosq_gport_traverse_callback: gport for local_port: 190
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8000
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8001
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8002
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8003
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8004
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8005
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8006
+traverse_cb UC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x242f8007
+traverse_cb MC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x302f8000
+traverse_cb MC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x302f8001
+traverse_cb MC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x302f8002
+traverse_cb MC queue: local_port=190, mod_port=0x80000be, numq=1, gport=0x302f8003
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378000be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378100be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378200be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378300be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378400be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378500be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378600be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378700be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378800be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378900be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378a00be
+traverse_cb scheduler: local_port=190, mod_port=0x80000be, numq=1, gport=0x378b00be
+--> cosq_gport_traverse_callback: gport for local_port: 204
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330000
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330001
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330002
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330003
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330004
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330005
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330006
+traverse_cb UC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x24330007
+traverse_cb MC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x30330000
+traverse_cb MC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x30330001
+traverse_cb MC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x30330002
+traverse_cb MC queue: local_port=204, mod_port=0x80000cc, numq=1, gport=0x30330003
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378000cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378100cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378200cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378300cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378400cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378500cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378600cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378700cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378800cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378900cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378a00cc
+traverse_cb scheduler: local_port=204, mod_port=0x80000cc, numq=1, gport=0x378b00cc
+--> cosq_gport_traverse_callback: gport for local_port: 205
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334000
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334001
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334002
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334003
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334004
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334005
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334006
+traverse_cb UC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x24334007
+traverse_cb MC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x30334000
+traverse_cb MC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x30334001
+traverse_cb MC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x30334002
+traverse_cb MC queue: local_port=205, mod_port=0x80000cd, numq=1, gport=0x30334003
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378000cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378100cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378200cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378300cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378400cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378500cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378600cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378700cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378800cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378900cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378a00cd
+traverse_cb scheduler: local_port=205, mod_port=0x80000cd, numq=1, gport=0x378b00cd
+--> cosq_gport_traverse_callback: gport for local_port: 206
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338000
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338001
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338002
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338003
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338004
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338005
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338006
+traverse_cb UC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x24338007
+traverse_cb MC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x30338000
+traverse_cb MC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x30338001
+traverse_cb MC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x30338002
+traverse_cb MC queue: local_port=206, mod_port=0x80000ce, numq=1, gport=0x30338003
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378000ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378100ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378200ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378300ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378400ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378500ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378600ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378700ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378800ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378900ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378a00ce
+traverse_cb scheduler: local_port=206, mod_port=0x80000ce, numq=1, gport=0x378b00ce
+--> cosq_gport_traverse_callback: gport for local_port: 207
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c000
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c001
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c002
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c003
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c004
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c005
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c006
+traverse_cb UC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x2433c007
+traverse_cb MC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x3033c000
+traverse_cb MC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x3033c001
+traverse_cb MC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x3033c002
+traverse_cb MC queue: local_port=207, mod_port=0x80000cf, numq=1, gport=0x3033c003
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378000cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378100cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378200cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378300cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378400cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378500cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378600cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378700cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378800cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378900cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378a00cf
+traverse_cb scheduler: local_port=207, mod_port=0x80000cf, numq=1, gport=0x378b00cf
+--> cosq_gport_traverse_callback: gport for local_port: 221
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374000
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374001
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374002
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374003
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374004
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374005
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374006
+traverse_cb UC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x24374007
+traverse_cb MC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x30374000
+traverse_cb MC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x30374001
+traverse_cb MC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x30374002
+traverse_cb MC queue: local_port=221, mod_port=0x80000dd, numq=1, gport=0x30374003
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378000dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378100dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378200dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378300dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378400dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378500dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378600dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378700dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378800dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378900dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378a00dd
+traverse_cb scheduler: local_port=221, mod_port=0x80000dd, numq=1, gport=0x378b00dd
+--> cosq_gport_traverse_callback: gport for local_port: 222
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378000
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378001
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378002
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378003
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378004
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378005
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378006
+traverse_cb UC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x24378007
+traverse_cb MC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x30378000
+traverse_cb MC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x30378001
+traverse_cb MC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x30378002
+traverse_cb MC queue: local_port=222, mod_port=0x80000de, numq=1, gport=0x30378003
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378000de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378100de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378200de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378300de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378400de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378500de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378600de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378700de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378800de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378900de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378a00de
+traverse_cb scheduler: local_port=222, mod_port=0x80000de, numq=1, gport=0x378b00de
+--> cosq_gport_traverse_callback: gport for local_port: 223
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c000
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c001
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c002
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c003
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c004
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c005
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c006
+traverse_cb UC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x2437c007
+traverse_cb MC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x3037c000
+traverse_cb MC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x3037c001
+traverse_cb MC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x3037c002
+traverse_cb MC queue: local_port=223, mod_port=0x80000df, numq=1, gport=0x3037c003
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378000df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378100df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378200df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378300df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378400df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378500df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378600df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378700df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378800df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378900df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378a00df
+traverse_cb scheduler: local_port=223, mod_port=0x80000df, numq=1, gport=0x378b00df
+--> cosq_gport_traverse_callback: gport for local_port: 224
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380000
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380001
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380002
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380003
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380004
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380005
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380006
+traverse_cb UC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x24380007
+traverse_cb MC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x30380000
+traverse_cb MC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x30380001
+traverse_cb MC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x30380002
+traverse_cb MC queue: local_port=224, mod_port=0x80000e0, numq=1, gport=0x30380003
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378000e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378100e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378200e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378300e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378400e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378500e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378600e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378700e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378800e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378900e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378a00e0
+traverse_cb scheduler: local_port=224, mod_port=0x80000e0, numq=1, gport=0x378b00e0
+--> cosq_gport_traverse_callback: gport for local_port: 238
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8000
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8001
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8002
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8003
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8004
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8005
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8006
+traverse_cb UC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x243b8007
+traverse_cb MC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x303b8000
+traverse_cb MC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x303b8001
+traverse_cb MC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x303b8002
+traverse_cb MC queue: local_port=238, mod_port=0x80000ee, numq=1, gport=0x303b8003
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378000ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378100ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378200ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378300ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378400ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378500ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378600ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378700ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378800ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378900ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378a00ee
+traverse_cb scheduler: local_port=238, mod_port=0x80000ee, numq=1, gport=0x378b00ee
+--> cosq_gport_traverse_callback: gport for local_port: 239
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc000
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc001
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc002
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc003
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc004
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc005
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc006
+traverse_cb UC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x243bc007
+traverse_cb MC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x303bc000
+traverse_cb MC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x303bc001
+traverse_cb MC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x303bc002
+traverse_cb MC queue: local_port=239, mod_port=0x80000ef, numq=1, gport=0x303bc003
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378000ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378100ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378200ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378300ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378400ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378500ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378600ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378700ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378800ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378900ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378a00ef
+traverse_cb scheduler: local_port=239, mod_port=0x80000ef, numq=1, gport=0x378b00ef
+--> cosq_gport_traverse_callback: gport for local_port: 240
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0000
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0001
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0002
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0003
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0004
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0005
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0006
+traverse_cb UC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x243c0007
+traverse_cb MC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x303c0000
+traverse_cb MC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x303c0001
+traverse_cb MC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x303c0002
+traverse_cb MC queue: local_port=240, mod_port=0x80000f0, numq=1, gport=0x303c0003
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378000f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378100f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378200f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378300f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378400f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378500f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378600f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378700f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378800f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378900f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378a00f0
+traverse_cb scheduler: local_port=240, mod_port=0x80000f0, numq=1, gport=0x378b00f0
+--> cosq_gport_traverse_callback: gport for local_port: 241
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4000
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4001
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4002
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4003
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4004
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4005
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4006
+traverse_cb UC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x243c4007
+traverse_cb MC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x303c4000
+traverse_cb MC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x303c4001
+traverse_cb MC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x303c4002
+traverse_cb MC queue: local_port=241, mod_port=0x80000f1, numq=1, gport=0x303c4003
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378000f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378100f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378200f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378300f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378400f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378500f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378600f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378700f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378800f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378900f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378a00f1
+traverse_cb scheduler: local_port=241, mod_port=0x80000f1, numq=1, gport=0x378b00f1
+--> cosq_gport_traverse_callback: gport for local_port: 255
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc000
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc001
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc002
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc003
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc004
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc005
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc006
+traverse_cb UC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x243fc007
+traverse_cb MC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x303fc000
+traverse_cb MC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x303fc001
+traverse_cb MC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x303fc002
+traverse_cb MC queue: local_port=255, mod_port=0x80000ff, numq=1, gport=0x303fc003
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378000ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378100ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378200ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378300ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378400ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378500ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378600ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378700ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378800ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378900ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378a00ff
+traverse_cb scheduler: local_port=255, mod_port=0x80000ff, numq=1, gport=0x378b00ff
+--> cosq_gport_traverse_callback: gport for local_port: 256
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400000
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400001
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400002
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400003
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400004
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400005
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400006
+traverse_cb UC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x24400007
+traverse_cb MC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x30400000
+traverse_cb MC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x30400001
+traverse_cb MC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x30400002
+traverse_cb MC queue: local_port=256, mod_port=0x8000100, numq=1, gport=0x30400003
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37800100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37810100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37820100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37830100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37840100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37850100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37860100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37870100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37880100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x37890100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x378a0100
+traverse_cb scheduler: local_port=256, mod_port=0x8000100, numq=1, gport=0x378b0100
+--> cosq_gport_traverse_callback: gport for local_port: 257
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404000
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404001
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404002
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404003
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404004
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404005
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404006
+traverse_cb UC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x24404007
+traverse_cb MC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x30404000
+traverse_cb MC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x30404001
+traverse_cb MC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x30404002
+traverse_cb MC queue: local_port=257, mod_port=0x8000101, numq=1, gport=0x30404003
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37800101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37810101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37820101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37830101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37840101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37850101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37860101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37870101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37880101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x37890101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x378a0101
+traverse_cb scheduler: local_port=257, mod_port=0x8000101, numq=1, gport=0x378b0101
+--> cosq_gport_traverse_callback: gport for local_port: 258
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408000
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408001
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408002
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408003
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408004
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408005
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408006
+traverse_cb UC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x24408007
+traverse_cb MC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x30408000
+traverse_cb MC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x30408001
+traverse_cb MC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x30408002
+traverse_cb MC queue: local_port=258, mod_port=0x8000102, numq=1, gport=0x30408003
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37800102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37810102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37820102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37830102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37840102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37850102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37860102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37870102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37880102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x37890102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x378a0102
+traverse_cb scheduler: local_port=258, mod_port=0x8000102, numq=1, gport=0x378b0102
+--> cosq_gport_traverse_callback: gport for local_port: 0
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000000
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000001
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000002
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000003
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000004
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000005
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000006
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000007
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000008
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000009
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000a
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000b
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000c
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000d
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000e
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000000f
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000010
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000011
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000012
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000013
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000014
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000015
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000016
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000017
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000018
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000019
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001a
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001b
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001c
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001d
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001e
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000001f
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000020
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000021
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000022
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000023
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000024
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000025
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000026
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000027
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000028
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x30000029
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002a
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002b
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002c
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002d
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002e
+traverse_cb MC queue: local_port=0, mod_port=0x8000000, numq=1, gport=0x3000002f
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=48, gport=0x37800000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37810000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37820000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37830000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37840000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37850000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37860000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37870000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37880000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x37890000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x378a0000
+traverse_cb scheduler: local_port=0, mod_port=0x8000000, numq=0, gport=0x378b0000
+bcm_error_t $$ = BCM_E_NONE (0)
+

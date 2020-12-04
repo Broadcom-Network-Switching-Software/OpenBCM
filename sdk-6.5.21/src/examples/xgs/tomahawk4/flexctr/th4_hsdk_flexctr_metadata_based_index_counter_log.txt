@@ -1,0 +1,86 @@
+BCM.0> cint th4_hsdk_flexctr_metadata_based_index_counter.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:34:50 2020)
+From root@lc-lvn-1598:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_10, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_DNA_2_5_8, BCM56780_A0_INA_2_5_10, BCM56780_A0_INA_2_5_5, BCM56780_A0_INA_2_5_8
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2, BCM56880_A0_DNA_4_7_8
+     BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Choosing port 19 as ingress port and 51 as egress port
+ingress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 51 setup
+egress object id : 100001 created
+stat_counter_id == 268435457
+
+Completed test setup successfully
+vlan show
+vlan 1  ports cpu,cd (0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f), untagged cd (0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001e) MCAST_FLOOD_UNKNOWN
+vlan 2  ports cd6 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 30 ports cd12 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+l2 show
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.20/32     100001 0    0
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:22:11  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:33:22      1    51            0     0   underlay   no
+
+
+Sending 4 unicast packets to 19 ingress port
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000003322} {000000002211} 8100 001e
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:33:22> src<00:00:00:00:22:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000003322} {000000002211} 8100 001e
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:33:22> src<00:00:00:00:22:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000003322} {000000002211} 8100 001e
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:33:22> src<00:00:00:00:22:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000003322} {000000002211} 8100 001e
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:33:22> src<00:00:00:00:22:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+
+Stat - 4 packets / 272 bytes
+
+Completed test verify successfully
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

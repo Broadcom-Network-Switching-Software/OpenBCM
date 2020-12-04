@@ -1,0 +1,76 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[38412]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[42539]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> cint th4_hsdk_mmu_obm.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+--> PFC priorities mapped to OBM traffic class
+DONE
+--> port_codepoint_obm_class_mapping_test
+
+OBM classifier type bcmSwitchObmClassifierHigig3 not supported on TH4
+bcm_switch_obm_classifier_t obm_classifier_get = {
+    unsigned int flags = 0 (0x0)
+    uint8[6] obm_destination_mac = 00:00:00:02:01:02
+    uint8[6] obm_destination_mac_mask = FF:FF:FF:FF:FF:F0
+    unsigned short obm_ethertype = 2235 (0x08bb)
+    unsigned short obm_ethertype_mask = 65535 (0xffff)
+    int obm_code_point = 2 (0x2)
+    int obm_priority = 1 (0x1)
+}
+bcm_switch_obm_classifier_t[2] obm_classifier_get_arr = {
+    bcm_switch_obm_classifier_t obm_classifier_get_arr[0] = {
+        unsigned int flags = 0 (0x0)
+        uint8[6] obm_destination_mac = 00:00:00:02:01:02
+        uint8[6] obm_destination_mac_mask = FF:FF:FF:FF:FF:F0
+        unsigned short obm_ethertype = 2235 (0x08bb)
+        unsigned short obm_ethertype_mask = 65535 (0xffff)
+        int obm_code_point = 0 (0x0)
+        int obm_priority = 1 (0x1)
+    }
+    bcm_switch_obm_classifier_t obm_classifier_get_arr[1] = {
+        unsigned int flags = 0 (0x0)
+        uint8[6] obm_destination_mac = 00:00:00:02:01:01
+        uint8[6] obm_destination_mac_mask = FF:FF:FF:FF:FF:F0
+        unsigned short obm_ethertype = 2235 (0x08bb)
+        unsigned short obm_ethertype_mask = 65535 (0xffff)
+        int obm_code_point = 0 (0x0)
+        int obm_priority = 1 (0x1)
+    }
+}
+int count = 2 (0x2)
+DONE
+--> Max watermark mode test
+Default OBM port max usage mode is bcmObmMaxUsageModeAllTraffic
+DONE
+--> Max watermark counter test
+ OBM cell max usage : 0-0
+ OBM max byte usage : 0-0
+DONE
+==>Cleaning up...
+bcm_error_t $$ = BCM_E_NONE (0)
+

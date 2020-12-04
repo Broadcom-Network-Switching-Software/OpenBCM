@@ -1,0 +1,34 @@
+# $Id: Makefile.unix-netbsd,v 1.8 2007/10/08 22:25:12 iakramov Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Build rules for NetBSD/x86 (Little Endian) with PLI support
+
+include ${SDK}/make/Makefile.unix-common
+
+# Configuration Flags
+
+CFGFLAGS += -Dnetbsd
+
+ENDIAN_DEF = -DLE_HOST=1
+
+CC	= ${HCC}
+CXX	= g++
+LD	= ld
+AR	= ar
+ARFLAGS	= -rc
+STRIP	= strip
+RANLIB  = ranlib
+
+# Filter out features that cannot or should not be supported in Linux
+ifdef ESW_CHIPS
+_FEATURE_EXCLUDE_LIST += OOB_RCPU
+endif
+FEATURE_EXCLUDE_LIST = $(sort $(_FEATURE_EXCLUDE_LIST))
+
+# NetBSD
+LIBS= -lpthread -lm -lsem
+
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"unix-netbsd\"
+

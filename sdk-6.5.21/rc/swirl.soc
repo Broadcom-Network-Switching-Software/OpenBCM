@@ -1,0 +1,184 @@
+# $Id: swirl.soc,v 1.3 2002/01/29 02:43:10 jfd Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Swirl Setup Script
+#
+# Configure swirling of packets on consecutive pairs of ports
+# Used for EMI testing under full packet TX/RX load
+# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+# Ports MUST be configured in external loopback mode with ports
+# 1 connected to 2, 3 connected to 4, 5-6,7-8, and so on.
+#
+# Once this script has been executed, use the commands:
+# show counters (or g <counter>.fe) to view statistics.
+# Under normal operating mode, you can expect to see TPKT and RPKT
+# perpetually incrementing.
+#
+# Init chip
+socrc
+
+# Init ports (100 FDX)
+port all AN=T AF=F SP=1000 FD=True TPAU=F RPAU=F LS=SW LRN=5 DISC=None VF=F PRIO=0 PFM=0 PHYM=Auto E=T
+
+# Hardwire EPC_LINK so all ports forward
+s epc_link 0xffffffff
+
+# Clear stats
+clear counters
+
+# Initialize vtable to zero
+clear vtable
+
+#Ports 0-1 configuration
+modify ptable 0 1 vlan_tag=1 port_bitmap=0x3 ut_port_bitmap=0x3
+modify ptable 1 1 vlan_tag=2 port_bitmap=0x3 ut_port_bitmap=0x3
+insert vtable vlan_tag=1 port_bitmap=0x3 ut_port_bitmap=0x3
+insert vtable vlan_tag=2 port_bitmap=0x3 ut_port_bitmap=0x3
+insert arl mac_addr=1 vlan_tag=2 port=0
+insert arl mac_addr=2 vlan_tag=1 port=1
+#Packet coming in on p0 and going out on p1 will loop infinitely
+tx 1 PBM=0x2 UBM=0x2 L=68 VL=1 P=0x12345678 PI=1 SM=00:00:00:00:00:01 SMI=0 DM=00:00:00:00:00:02 DMI=0 COS=0 CRC=Recompute
+# Packet coming in on p1 and out on p0 will give us Full DupleX (0-1)
+tx 1 PBM=0x1 UBM=0x1 L=68 VL=1 P=0x12345678 PI=1 SM=00:00:00:00:00:02 SMI=0 DM=00:00:00:00:00:01 DMI=0 COS=0 CRC=Recompute
+
+# Ports 2-3 configuration
+modify ptable 2 1 vlan_tag=3 port_bitmap=0xc ut_port_bitmap=0xc
+modify ptable 3 1 vlan_tag=4 port_bitmap=0xc ut_port_bitmap=0xc
+insert vtable vlan_tag=3 port_bitmap=0xc ut_port_bitmap=0xc
+insert vtable vlan_tag=4 port_bitmap=0xc ut_port_bitmap=0xc
+insert arl mac_addr=3 vlan_tag=4 port=2
+insert arl mac_addr=4 vlan_tag=3 port=3
+# Come in on p2 and out on p3
+tx 1 PBM=0x8 UBM=0x8 L=68 VL=3 P=0x12345678 PI=1 SM=00:00:00:00:00:03 SMI=0 DM=00:00:00:00:00:04 DMI=0 COS=0 CRC=Recompute
+# FDX (2-3)
+tx 1 PBM=0x4 UBM=0x4 L=68 VL=3 P=0x12345678 PI=1 SM=00:00:00:00:00:04 SMI=0 DM=00:00:00:00:00:03 DMI=0 COS=0 CRC=Recompute
+
+# Ports 4-5 configuration
+modify ptable 4 1 vlan_tag=5 port_bitmap=0x30 ut_port_bitmap=0x30
+modify ptable 5 1 vlan_tag=6 port_bitmap=0x30 ut_port_bitmap=0x30
+insert vtable vlan_tag=5 port_bitmap=0x30 ut_port_bitmap=0x30
+insert vtable vlan_tag=6 port_bitmap=0x30 ut_port_bitmap=0x30
+insert arl mac_addr=5 vlan_tag=6 port=4
+insert arl mac_addr=6 vlan_tag=5 port=5
+# Come in on p4 and out on p5
+tx 1 PBM=0x20 UBM=0x20 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:05 SMI=0 DM=00:00:00:00:00:06 DMI=0 COS=0 CRC=Recompute
+# FDX (2-3)
+tx 1 PBM=0x10 UBM=0x10 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:06 SMI=0 DM=00:00:00:00:00:05 DMI=0 COS=0 CRC=Recompute
+
+# Ports 6-7 configuration
+modify ptable 6 1 vlan_tag=7 port_bitmap=0xc0 ut_port_bitmap=0xc0
+modify ptable 7 1 vlan_tag=8 port_bitmap=0xc0 ut_port_bitmap=0xc0
+insert vtable vlan_tag=7 port_bitmap=0xc0 ut_port_bitmap=0xc0
+insert vtable vlan_tag=8 port_bitmap=0xc0 ut_port_bitmap=0xc0
+insert arl mac_addr=7 vlan_tag=8 port=6
+insert arl mac_addr=8 vlan_tag=7 port=7
+# Come in on p6 and out on p7
+tx 1 PBM=0x80 UBM=0x80 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:07 SMI=0 DM=00:00:00:00:00:08 DMI=0 COS=0 CRC=Recompute
+# FDX (6-7)
+tx 1 PBM=0x40 UBM=0x40 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:08 SMI=0 DM=00:00:00:00:00:07 DMI=0 COS=0 CRC=Recompute
+
+# Ports 8-9 configuration
+modify ptable 8 1 vlan_tag=9 port_bitmap=0x300 ut_port_bitmap=0x300
+modify ptable 9 1 vlan_tag=10 port_bitmap=0x300 ut_port_bitmap=0x300
+insert vtable vlan_tag=9 port_bitmap=0x300 ut_port_bitmap=0x300
+insert vtable vlan_tag=10 port_bitmap=0x300 ut_port_bitmap=0x300
+insert arl mac_addr=9 vlan_tag=10 port=8
+insert arl mac_addr=10 vlan_tag=9 port=9
+# Come in on p8 and out on p9
+tx 1 PBM=0x200 UBM=0x200 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:09 SMI=0 DM=00:00:00:00:00:0a DMI=0 COS=0 CRC=Recompute
+# FDX (8-9)
+tx 1 PBM=0x100 UBM=0x100 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0a SMI=0 DM=00:00:00:00:00:09 DMI=0 COS=0 CRC=Recompute
+
+# Ports 10-11 configuration
+modify ptable 10 1 vlan_tag=11 port_bitmap=0xc00 ut_port_bitmap=0xc00
+modify ptable 11 1 vlan_tag=12 port_bitmap=0xc00 ut_port_bitmap=0xc00
+insert vtable vlan_tag=11 port_bitmap=0xc00 ut_port_bitmap=0xc00
+insert vtable vlan_tag=12 port_bitmap=0xc00 ut_port_bitmap=0xc00
+insert arl mac_addr=11 vlan_tag=12 port=10
+insert arl mac_addr=12 vlan_tag=11 port=11
+# Come in on p10 and out on p11
+tx 1 PBM=0x800 UBM=0x800 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0b SMI=0 DM=00:00:00:00:00:0c DMI=0 COS=0 CRC=Recompute
+# FDX (10-11)
+tx 1 PBM=0x400 UBM=0x400 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0c SMI=0 DM=00:00:00:00:00:0b DMI=0 COS=0 CRC=Recompute
+
+# Ports 12-13 configuration
+modify ptable 12 1 vlan_tag=13 port_bitmap=0x3000 ut_port_bitmap=0x3000
+modify ptable 13 1 vlan_tag=14 port_bitmap=0x3000 ut_port_bitmap=0x3000
+insert vtable vlan_tag=13 port_bitmap=0x3000 ut_port_bitmap=0x3000
+insert vtable vlan_tag=14 port_bitmap=0x3000 ut_port_bitmap=0x3000
+insert arl mac_addr=13 vlan_tag=14 port=12
+insert arl mac_addr=14 vlan_tag=13 port=13
+# Come in on p12 and out on p13
+tx 1 PBM=0x2000 UBM=0x2000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0d SMI=0 DM=00:00:00:00:00:0e DMI=0 COS=0 CRC=Recompute
+# FDX (12-13)
+tx 1 PBM=0x1000 UBM=0x1000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0e SMI=0 DM=00:00:00:00:00:0d DMI=0 COS=0 CRC=Recompute
+
+# Ports 14-15 configuration
+modify ptable 14 1 vlan_tag=15 port_bitmap=0xc000 ut_port_bitmap=0xc000
+modify ptable 15 1 vlan_tag=16 port_bitmap=0xc000 ut_port_bitmap=0xc000
+insert vtable vlan_tag=15 port_bitmap=0xc000 ut_port_bitmap=0xc000
+insert vtable vlan_tag=16 port_bitmap=0xc000 ut_port_bitmap=0xc000
+insert arl mac_addr=15 vlan_tag=16 port=14
+insert arl mac_addr=16 vlan_tag=15 port=15
+# Come in on p14 and out on p15
+tx 1 PBM=0x8000 UBM=0x8000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:0f SMI=0 DM=00:00:00:00:00:10 DMI=0 COS=0 CRC=Recompute
+# FDX (14-15)
+tx 1 PBM=0x4000 UBM=0x4000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:10 SMI=0 DM=00:00:00:00:00:0f DMI=0 COS=0 CRC=Recompute
+
+# Ports 16-17 configuration
+modify ptable 16 1 vlan_tag=17 port_bitmap=0x30000 ut_port_bitmap=0x30000
+modify ptable 17 1 vlan_tag=18 port_bitmap=0x30000 ut_port_bitmap=0x30000
+insert vtable vlan_tag=17 port_bitmap=0x30000 ut_port_bitmap=0x30000
+insert vtable vlan_tag=18 port_bitmap=0x30000 ut_port_bitmap=0x30000
+insert arl mac_addr=17 vlan_tag=18 port=16
+insert arl mac_addr=18 vlan_tag=17 port=17
+# Come in on p16 and out on p17
+tx 1 PBM=0x20000 UBM=0x20000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:11 SMI=0 DM=00:00:00:00:00:12 DMI=0 COS=0 CRC=Recompute
+# FDX (16-17)
+tx 1 PBM=0x10000 UBM=0x10000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:12 SMI=0 DM=00:00:00:00:00:11 DMI=0 COS=0 CRC=Recompute
+
+# Ports 18-19 configuration
+modify ptable 18 1 vlan_tag=19 port_bitmap=0xc0000 ut_port_bitmap=0xc0000
+modify ptable 19 1 vlan_tag=20 port_bitmap=0xc0000 ut_port_bitmap=0xc0000
+insert vtable vlan_tag=19 port_bitmap=0xc0000 ut_port_bitmap=0xc0000
+insert vtable vlan_tag=20 port_bitmap=0xc0000 ut_port_bitmap=0xc0000
+insert arl mac_addr=19 vlan_tag=20 port=18
+insert arl mac_addr=20 vlan_tag=19 port=19
+# Come in on p18 and out on p19
+tx 1 PBM=0x80000 UBM=0x80000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:13 SMI=0 DM=00:00:00:00:00:14 DMI=0 COS=0 CRC=Recompute
+# FDX (18-19)
+tx 1 PBM=0x40000 UBM=0x40000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:14 SMI=0 DM=00:00:00:00:00:13 DMI=0 COS=0 CRC=Recompute
+
+# Ports 20-21 configuration
+modify ptable 20 1 vlan_tag=21 port_bitmap=0x300000 ut_port_bitmap=0x300000
+modify ptable 21 1 vlan_tag=22 port_bitmap=0x300000 ut_port_bitmap=0x300000
+insert vtable vlan_tag=21 port_bitmap=0x300000 ut_port_bitmap=0x300000
+insert vtable vlan_tag=22 port_bitmap=0x300000 ut_port_bitmap=0x300000
+insert arl mac_addr=21 vlan_tag=22 port=20
+insert arl mac_addr=22 vlan_tag=21 port=21
+# Come in on p20 and out on p21
+tx 1 PBM=0x200000 UBM=0x200000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:15 SMI=0 DM=00:00:00:00:00:16 DMI=0 COS=0 CRC=Recompute
+# FDX (20-21)
+tx 1 PBM=0x100000 UBM=0x100000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:16 SMI=0 DM=00:00:00:00:00:15 DMI=0 COS=0 CRC=Recompute
+
+# Ports 22-23 configuration
+modify ptable 22 1 vlan_tag=23 port_bitmap=0xc00000 ut_port_bitmap=0xc00000
+modify ptable 23 1 vlan_tag=24 port_bitmap=0xc00000 ut_port_bitmap=0xc00000
+insert vtable vlan_tag=23 port_bitmap=0xc00000 ut_port_bitmap=0xc00000
+insert vtable vlan_tag=24 port_bitmap=0xc00000 ut_port_bitmap=0xc00000
+insert arl mac_addr=23 vlan_tag=24 port=22
+insert arl mac_addr=24 vlan_tag=23 port=23
+# Come in on p20 and out on p21
+tx 1 PBM=0x800000 UBM=0x800000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:17 SMI=0 DM=00:00:00:00:00:18 DMI=0 COS=0 CRC=Recompute
+# FDX (20-21)
+tx 1 PBM=0x400000 UBM=0x400000 L=68 VL=5 P=0x12345678 PI=1 SM=00:00:00:00:00:18 SMI=0 DM=00:00:00:00:00:17 DMI=0 COS=0 CRC=Recompute
+
+echo "The LED lights should now be blinking indicating activity."
+echo "The system will now attempt to detect a port failure "
+echo "In the event that you see any output below, the ports "
+echo "listed may have errors and should be verified."
+statclear;loop 1200 "statdump same nz fe"
+echo "Test done (note any errors and correct listed ports)"
+

@@ -1,0 +1,174 @@
+
+BCM.0> init all
+BCM.0> cint th4_hsdk_trunk_group_flexctr.c
+execute(): Start
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200929 (Tue Sep 29 10:07:05 2020)
+From hd957318@xl-sj1-30:/projects/faes_ext/harid/master/sdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+
+~~~ #1) test_setup(): ** start **
+Ingress port : 85
+Egress port1: 69
+Egress port2: 206
+Egress port3: 35
+ingress_port_multi_setup port: 85 setup
+egress_port_multi_setup port: 35 setup
+egress_port_multi_setup port: 69 setup
+egress_port_multi_setup port: 206 setup
+
+Create trunk with ports 69, 206 and 35
+trunk flex counter id = 0x10000001 object = 7
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+
+~~~ #2) test_verify(): ** start **
+
+Sending known unicast pkt on ingress port 85
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 69 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0051 0001 0000 4011 6388 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0100 0a0a 0200 1388 0050 003d ce40 2820
+[bcmPWN.0]Packet[1]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[1]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[1]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[1]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.1.0> dst<10.10.2.0> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6388>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 35 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0051 0001 0000 4011 6386 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0a0a 0201 1389 0051 003d ce3c 2820
+[bcmPWN.0]Packet[2]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[2]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[2]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[2]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.1.1> dst<10.10.2.1> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6386>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 35 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0051 0001 0000 4011 6384 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0102 0a0a 0202 138a 0052 003d ce38 2820
+[bcmPWN.0]Packet[3]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[3]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[3]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[3]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.1.2> dst<10.10.2.2> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6384>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 3 seconds
+pktioRxCallback: packet received from port 35 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x4
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0051 0001 0000 4011 6382 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0103 0a0a 0203 138b 0053 003d ce34 2820
+[bcmPWN.0]Packet[4]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[4]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[4]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[4]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.1.3> dst<10.10.2.3> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6382>
+int $$ = 0 (0x0)
+XLMIB_TBYT.cd9                        :                   309                +309
+XLMIB_RBYT.cd9                        :                   309                +309
+XLMIB_TPOK.cd9                        :                     3                  +3
+XLMIB_RPOK.cd9                        :                     3                  +3
+XLMIB_TVLN.cd9                        :                     3                  +3
+XLMIB_RVLN.cd9                        :                     3                  +3
+XLMIB_TUCA.cd9                        :                     3                  +3
+XLMIB_RUCA.cd9                        :                     3                  +3
+XLMIB_TPKT.cd9                        :                     3                  +3
+XLMIB_RPKT.cd9                        :                     3                  +3
+XLMIB_T127.cd9                        :                     3                  +3
+XLMIB_R127.cd9                        :                     3                  +3
+XLMIB_RPRM.cd9                        :                     3                  +3
+RUC_64.cd9                            :                     3                  +3
+XLMIB_TBYT.cd17                       :                   103                +103
+XLMIB_RBYT.cd17                       :                   103                +103
+XLMIB_TPOK.cd17                       :                     1                  +1
+XLMIB_RPOK.cd17                       :                     1                  +1
+XLMIB_TVLN.cd17                       :                     1                  +1
+XLMIB_RVLN.cd17                       :                     1                  +1
+XLMIB_TUCA.cd17                       :                     1                  +1
+XLMIB_RUCA.cd17                       :                     1                  +1
+XLMIB_TPKT.cd17                       :                     1                  +1
+XLMIB_RPKT.cd17                       :                     1                  +1
+XLMIB_T127.cd17                       :                     1                  +1
+XLMIB_R127.cd17                       :                     1                  +1
+XLMIB_RPRM.cd17                       :                     1                  +1
+RUC_64.cd17                           :                     1                  +1
+XLMIB_TBYT.cd20                       :                   412                +412
+XLMIB_RBYT.cd20                       :                   412                +412
+XLMIB_TPOK.cd20                       :                     4                  +4
+XLMIB_RPOK.cd20                       :                     4                  +4
+XLMIB_TVLN.cd20                       :                     4                  +4
+XLMIB_RVLN.cd20                       :                     4                  +4
+XLMIB_TUCA.cd20                       :                     4                  +4
+XLMIB_RUCA.cd20                       :                     4                  +4
+XLMIB_TPKT.cd20                       :                     4                  +4
+XLMIB_RPKT.cd20                       :                     4                  +4
+XLMIB_T127.cd20                       :                     4                  +4
+XLMIB_R127.cd20                       :                     4                  +4
+XLMIB_RPRM.cd20                       :                     4                  +4
+RUC_64.cd20                           :                     4                  +4
+int $$ = 0 (0x0)
+mac=00:00:00:00:aa:aa vlan=12 GPORT=0x0 Trunk=1 Hit
+mac=00:00:00:00:22:22 vlan=12 GPORT=0x55 modid=0 port=85/cd20 Hit
+int $$ = 0 (0x0)
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x0000019C}
+    }
+}
+
+Flexctr get on trunk group : 4 packets / 412 bytes
+Total pktio_rx_count : 4
+
+-----------------------------------------------------------
+    RESULT OF TRUNK VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) test_verify(): ** end **
+
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 85 cleanup
+egress_port_multi_cleanup port: 35 cleanup
+egress_port_multi_cleanup port: 69 cleanup
+egress_port_multi_cleanup port: 206 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

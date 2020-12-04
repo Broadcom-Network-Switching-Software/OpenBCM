@@ -1,0 +1,252 @@
+BCM.0>c td4x9_hsdk_flexdigest_diff_traffic_types.c
+config show; attach; cancun stat; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Unknown command: cancun
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200826 (Wed Aug 26 01:29:13 2020)
+From da953591@xl-sj1-31:/projects/ntsw-sw-ae/home/daithal/head
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_flexdigest_different_traffic(): ** start **
+Flex Digest Configuration:
+int $$ = 0 (0x0)
+Flex Digest Normalization setup:
+Flex Digest Lookup setup:
+Flex Digest Lookup Group 0:
+Flex Digest Lookup Group 1 Entry 0:
+Flex Digest Lookup Group 1 Entry 1:
+Flex Digest Hash setup:
+~~ #2) config_flexdigest_different_traffic(): ** end **
+~~ #3) verify(): ** start **
+Scenario-1 - Plain L2 packets with incrementing SMAC
+Sleeping for 1 second
+tx 1 pbm=38 sm=00:00:00:cc:cc:00 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=38 sm=00:00:00:cc:cc:01 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=38 sm=00:00:00:cc:cc:02 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+tx 1 pbm=38 sm=00:00:00:cc:cc:03 dm=00:00:00:bb:bb:bb vlan=11;sleep 1;
+Packet generate, length=64
+Sleeping for 1 second
+Executing 'l2 show'
+mac=00:00:00:cc:cc:03 vlan=11 GPORT=0x26 modid=0 port=38/xe0 Hit
+mac=00:00:00:bb:bb:bb vlan=11 GPORT=0x0 Trunk=0 Static Hit
+mac=00:00:00:cc:cc:02 vlan=11 GPORT=0x26 modid=0 port=38/xe0 Hit
+mac=00:00:00:cc:cc:00 vlan=11 GPORT=0x26 modid=0 port=38/xe0 Hit
+mac=00:00:00:cc:cc:01 vlan=11 GPORT=0x26 modid=0 port=38/xe0 Hit
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.ce1                        :                    68                 +68
+XLMIB_RBYT.ce1                        :                    68                 +68
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                    68                 +68
+XLMIB_TBYT.xe0                        :                   272                +272
+XLMIB_RBYT.xe0                        :                   272                +272
+XLMIB_TPOK.xe0                        :                     4                  +4
+XLMIB_RPOK.xe0                        :                     4                  +4
+XLMIB_TVLN.xe0                        :                     4                  +4
+XLMIB_RVLN.xe0                        :                     4                  +4
+XLMIB_TUCA.xe0                        :                     4                  +4
+XLMIB_RUCA.xe0                        :                     4                  +4
+XLMIB_TPKT.xe0                        :                     4                  +4
+XLMIB_RPKT.xe0                        :                     4                  +4
+XLMIB_T127.xe0                        :                     4                  +4
+XLMIB_R127.xe0                        :                     4                  +4
+XLMIB_RPRM.xe0                        :                     4                  +4
+XLMIB_TBYT.ce27                       :                    68                 +68
+XLMIB_RBYT.ce27                       :                    68                 +68
+XLMIB_TPOK.ce27                       :                     1                  +1
+XLMIB_RPOK.ce27                       :                     1                  +1
+XLMIB_TVLN.ce27                       :                     1                  +1
+XLMIB_RVLN.ce27                       :                     1                  +1
+XLMIB_TUCA.ce27                       :                     1                  +1
+XLMIB_RUCA.ce27                       :                     1                  +1
+XLMIB_TPKT.ce27                       :                     1                  +1
+XLMIB_RPKT.ce27                       :                     1                  +1
+XLMIB_T127.ce27                       :                     1                  +1
+XLMIB_R127.ce27                       :                     1                  +1
+XLMIB_RPRM.ce27                       :                     1                  +1
+UC_PERQ_PKT(0).ce27                   :                     1                  +1
+UC_PERQ_BYTE(0).ce27                  :                    68                 +68
+XLMIB_TBYT.xe1                        :                   136                +136
+XLMIB_RBYT.xe1                        :                   136                +136
+XLMIB_TPOK.xe1                        :                     2                  +2
+XLMIB_RPOK.xe1                        :                     2                  +2
+XLMIB_TVLN.xe1                        :                     2                  +2
+XLMIB_RVLN.xe1                        :                     2                  +2
+XLMIB_TUCA.xe1                        :                     2                  +2
+XLMIB_RUCA.xe1                        :                     2                  +2
+XLMIB_TPKT.xe1                        :                     2                  +2
+XLMIB_RPKT.xe1                        :                     2                  +2
+XLMIB_T127.xe1                        :                     2                  +2
+XLMIB_R127.xe1                        :                     2                  +2
+XLMIB_RPRM.xe1                        :                     2                  +2
+UC_PERQ_PKT(0).xe1                    :                     2                  +2
+UC_PERQ_BYTE(0).xe1                   :                   136                +136
+Sleeping for 2 seconds
+Scenario-2 - IPv4 UDP packets with incrementing L4 Src Port
+Sleeping for 1 second
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040113E84141414140A0A0A0A15B30019001A6561000102030405060708090A0B0C0D0E0F1011D4E6E27E
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040113E84141414140A0A0A0A15B40019001A6560000102030405060708090A0B0C0D0E0F1011249A5067
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040113E84141414140A0A0A0A15B50019001A655F000102030405060708090A0B0C0D0E0F1011FAD182B4
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040113E84141414140A0A0A0A15B60019001A655E000102030405060708090A0B0C0D0E0F1011F1E78D56
+Packet from data=<>, length=68
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.ce1                        :                    72                 +72
+XLMIB_RBYT.ce1                        :                    72                 +72
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                    72                 +72
+XLMIB_TBYT.xe0                        :                   288                +288
+XLMIB_RBYT.xe0                        :                   288                +288
+XLMIB_TPOK.xe0                        :                     4                  +4
+XLMIB_RPOK.xe0                        :                     4                  +4
+XLMIB_TVLN.xe0                        :                     4                  +4
+XLMIB_RVLN.xe0                        :                     4                  +4
+XLMIB_TUCA.xe0                        :                     4                  +4
+XLMIB_RUCA.xe0                        :                     4                  +4
+XLMIB_TPKT.xe0                        :                     4                  +4
+XLMIB_RPKT.xe0                        :                     4                  +4
+XLMIB_T127.xe0                        :                     4                  +4
+XLMIB_R127.xe0                        :                     4                  +4
+XLMIB_RPRM.xe0                        :                     4                  +4
+XLMIB_TBYT.ce47                       :                    72                 +72
+XLMIB_RBYT.ce47                       :                    72                 +72
+XLMIB_TPOK.ce47                       :                     1                  +1
+XLMIB_RPOK.ce47                       :                     1                  +1
+XLMIB_TVLN.ce47                       :                     1                  +1
+XLMIB_RVLN.ce47                       :                     1                  +1
+XLMIB_TUCA.ce47                       :                     1                  +1
+XLMIB_RUCA.ce47                       :                     1                  +1
+XLMIB_TPKT.ce47                       :                     1                  +1
+XLMIB_RPKT.ce47                       :                     1                  +1
+XLMIB_T127.ce47                       :                     1                  +1
+XLMIB_R127.ce47                       :                     1                  +1
+XLMIB_RPRM.ce47                       :                     1                  +1
+UC_PERQ_PKT(0).ce47                   :                     1                  +1
+UC_PERQ_BYTE(0).ce47                  :                    72                 +72
+XLMIB_TBYT.xe1                        :                   144                +144
+XLMIB_RBYT.xe1                        :                   144                +144
+XLMIB_TPOK.xe1                        :                     2                  +2
+XLMIB_RPOK.xe1                        :                     2                  +2
+XLMIB_TVLN.xe1                        :                     2                  +2
+XLMIB_RVLN.xe1                        :                     2                  +2
+XLMIB_TUCA.xe1                        :                     2                  +2
+XLMIB_RUCA.xe1                        :                     2                  +2
+XLMIB_TPKT.xe1                        :                     2                  +2
+XLMIB_RPKT.xe1                        :                     2                  +2
+XLMIB_T127.xe1                        :                     2                  +2
+XLMIB_R127.xe1                        :                     2                  +2
+XLMIB_RPRM.xe1                        :                     2                  +2
+UC_PERQ_PKT(0).xe1                    :                     2                  +2
+UC_PERQ_BYTE(0).xe1                   :                   144                +144
+Scenario-3 - Plain IPv4 packets(Unknown IP protocol=255) with incrementing SIP
+Sleeping for 1 second
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040FF3D96141414140A0A0A0A000102030405060708090A0B0C0D0E0F10111213141516171819BF08835D
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040FF3D94141414160A0A0A0A000102030405060708090A0B0C0D0E0F10111213141516171819CCF00104
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040FF3D92141414180A0A0A0A000102030405060708090A0B0C0D0E0F10111213141516171819D1BEB999
+Packet from data=<>, length=68
+tx 1 pbm=38 data=0x000000BBBBBB000000AAAAAA8100000B08004500002E0000000040FF3D91141414190A0A0A0A000102030405060708090A0B0C0D0E0F1011121314151617181919688D1C
+Packet from data=<>, length=68
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.xe0                        :                   576                +288
+XLMIB_RBYT.xe0                        :                   576                +288
+XLMIB_TPOK.xe0                        :                     8                  +4
+XLMIB_RPOK.xe0                        :                     8                  +4
+XLMIB_TVLN.xe0                        :                     8                  +4
+XLMIB_RVLN.xe0                        :                     8                  +4
+XLMIB_TUCA.xe0                        :                     8                  +4
+XLMIB_RUCA.xe0                        :                     8                  +4
+XLMIB_TPKT.xe0                        :                     8                  +4
+XLMIB_RPKT.xe0                        :                     8                  +4
+XLMIB_T127.xe0                        :                     8                  +4
+XLMIB_R127.xe0                        :                     8                  +4
+XLMIB_RPRM.xe0                        :                     8                  +4
+XLMIB_TBYT.ce27                       :                   144                +144
+XLMIB_RBYT.ce27                       :                   144                +144
+XLMIB_TPOK.ce27                       :                     2                  +2
+XLMIB_RPOK.ce27                       :                     2                  +2
+XLMIB_TVLN.ce27                       :                     2                  +2
+XLMIB_RVLN.ce27                       :                     2                  +2
+XLMIB_TUCA.ce27                       :                     2                  +2
+XLMIB_RUCA.ce27                       :                     2                  +2
+XLMIB_TPKT.ce27                       :                     2                  +2
+XLMIB_RPKT.ce27                       :                     2                  +2
+XLMIB_T127.ce27                       :                     2                  +2
+XLMIB_R127.ce27                       :                     2                  +2
+XLMIB_RPRM.ce27                       :                     2                  +2
+UC_PERQ_PKT(0).ce27                   :                     2                  +2
+UC_PERQ_BYTE(0).ce27                  :                   144                +144
+XLMIB_TBYT.ce47                       :                   144                 +72
+XLMIB_RBYT.ce47                       :                   144                 +72
+XLMIB_TPOK.ce47                       :                     2                  +1
+XLMIB_RPOK.ce47                       :                     2                  +1
+XLMIB_TVLN.ce47                       :                     2                  +1
+XLMIB_RVLN.ce47                       :                     2                  +1
+XLMIB_TUCA.ce47                       :                     2                  +1
+XLMIB_RUCA.ce47                       :                     2                  +1
+XLMIB_TPKT.ce47                       :                     2                  +1
+XLMIB_RPKT.ce47                       :                     2                  +1
+XLMIB_T127.ce47                       :                     2                  +1
+XLMIB_R127.ce47                       :                     2                  +1
+XLMIB_RPRM.ce47                       :                     2                  +1
+UC_PERQ_PKT(0).ce47                   :                     2                  +1
+UC_PERQ_BYTE(0).ce47                  :                   144                 +72
+XLMIB_TBYT.xe1                        :                   216                 +72
+XLMIB_RBYT.xe1                        :                   216                 +72
+XLMIB_TPOK.xe1                        :                     3                  +1
+XLMIB_RPOK.xe1                        :                     3                  +1
+XLMIB_TVLN.xe1                        :                     3                  +1
+XLMIB_RVLN.xe1                        :                     3                  +1
+XLMIB_TUCA.xe1                        :                     3                  +1
+XLMIB_RUCA.xe1                        :                     3                  +1
+XLMIB_TPKT.xe1                        :                     3                  +1
+XLMIB_RPKT.xe1                        :                     3                  +1
+XLMIB_T127.xe1                        :                     3                  +1
+XLMIB_R127.xe1                        :                     3                  +1
+XLMIB_RPRM.xe1                        :                     3                  +1
+UC_PERQ_PKT(0).xe1                    :                     3                  +1
+UC_PERQ_BYTE(0).xe1                   :                   216                 +72
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

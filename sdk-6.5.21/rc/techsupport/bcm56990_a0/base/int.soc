@@ -1,0 +1,40 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport INT RC (run commands) file
+#
+#       These are default commands that are for TechSupport INT.
+#
+
+# Show INT related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show INT packet detection LTs.
+local lt MON_INBAND_TELEMETRY_IFA_PARSE;                           $traverse_lt;
+local lt MON_INBAND_TELEMETRY_IOAM_PARSE;                          $traverse_lt;
+local lt MON_INBAND_TELEMETRY_DATAPLANE_PARSE;                     $traverse_lt;
+
+# Show INT request vector match LTs.
+local lt MON_INBAND_TELEMETRY_IFA_VECTOR_MATCH;                    $traverse_lt;
+local lt MON_INBAND_TELEMETRY_IOAM_VECTOR_MATCH;                   $traverse_lt;
+local lt MON_INBAND_TELEMETRY_DATAPLANE_VECTOR_MATCH;              $traverse_lt;
+
+# Show INT metadata fields determining LTs.
+local lt MON_INBAND_TELEMETRY_ACTION_PROFILE;                      $traverse_lt;
+local lt MON_INBAND_TELEMETRY_METADATA_PROFILE;                    $traverse_lt;
+local lt MON_INBAND_TELEMETRY_OPAQUE_DATA_PROFILE;                 $traverse_lt;
+local lt MON_INBAND_TELEMETRY_METADATA_FIELD_CONTROL;              $traverse_lt;
+
+# Show INT metadata construction LTs.
+local lt MON_INBAND_TELEMETRY_METADATA_SELECT_NARROW_PROFILE;      $traverse_lt;
+local lt MON_INBAND_TELEMETRY_METADATA_SELECT_WIDE_PROFILE;        $traverse_lt;
+local lt MON_INBAND_TELEMETRY_METADATA_CONSTRUCT_NARROW_PROFILE;   $traverse_lt;
+local lt MON_INBAND_TELEMETRY_METADATA_CONSTRUCT_WIDE_PROFILE;     $traverse_lt;
+
+# Show INT misc LTs.
+local lt MON_INBAND_TELEMETRY_DATAPLANE_CONTROL;                   $traverse_lt;
+
+# Show INT COSQ stat LTs.
+local lt MON_INBAND_TELEMETRY_TM_STATS_CONTROL;                    $traverse_lt;

@@ -1,0 +1,230 @@
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200830 (Sun Aug 30 10:05:34 2020)
+From root@lc-sj1-6510:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[58527]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[57984]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> c th4_hsdk_ifp_delayed_actions.c
+testExecute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200830 (Sun Aug 30 10:05:34 2020)
+From root@lc-sj1-6510:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_DNA_2_5_5, BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_3, BCM56880_A0_DNA_4_6_5, BCM56880_A0_DNA_4_6_6
+     BCM56880_A0_DNA_4_7_2, BCM56880_A0_DNA_4_7_4, BCM56880_A0_UTLTM
+port 189 is selected
+port 190 is selected
+port 204 is selected
+port 205 is selected
+port_lb_setup port: 189 setup
+port_lb_setup port: 190 setup
+port_lb_setup port: 204 setup
+port_lb_setup port: 205 setup
+stat_counter_id == 268435457
+Completed test setup successfully.
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:	      :tcam_sz=0(0), tcam_slices=0
+GID 0x00000001: gid=0x1, instance=-1 mode=Single, stage=Ingress lookup=Enabled, ActionResId={0},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={DstMac , InPort },
+         aset={CopyToCpu , MatchPbmpDrop , MatchPbmpRedirect },
+         preselectors={},
+         group_priority= 2
+         slice_primary= {slice_number=0, entries_total=256, entries_free=254 },
+         group_status=  entries_total=3071, entries_free=3069,
+                        meters_total=512, meters_free=512, counters_total=32, counters_free=0}
+EID 0x00000001: eid=0x1, gid=0x1,
+ prio=0x2, flags=0x20000002, hw_index=0x2, Installed
+ DstMac
+  HW info:
+    Part: 0 Offset0: 0 Width0: 16
+    Part: 0 Offset1: 20 Width1: 16
+    Part: 0 Offset2: 36 Width2: 16
+     DATA=00000000 aabbbb01
+     MASK=0000ffff ffffff00
+ InPort
+  HW info:
+    Part: 0 Offset0: 52 Width0: 9
+     DATA=000000bd
+     MASK=000001ff
+         action = {act=CopyToCpu, param0=0(0), param1=0(0), param2=0(0)
+         action = {act=MatchPbmpDrop, param0=0(0), param1=0(0), param2=0(0)
+         flex_counter = {flexctr_action_id=268435457(0x10000001), counter_id=1(0x1)}
+
+EID 0x00000002: eid=0x2, gid=0x1,
+ prio=0x14, flags=0x20000002, hw_index=0x1, Installed
+ DstMac
+  HW info:
+    Part: 0 Offset0: 0 Width0: 16
+    Part: 0 Offset1: 20 Width1: 16
+    Part: 0 Offset2: 36 Width2: 16
+     DATA=00000000 aabb01bb
+     MASK=0000ffff ffff00ff
+ InPort
+  HW info:
+    Part: 0 Offset0: 52 Width0: 9
+     DATA=000000bd
+     MASK=000001ff
+         action = {act=MatchPbmpRedirect, param0=205(0xcd), param1=0(0), param2=0(0)
+         flex_counter = {flexctr_action_id=268435457(0x10000001), counter_id=2(0x2)}
+
+
+Sending 3 tagged test packets to ingress port:189
+Packet from data=<>, length=68
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000aabbbb01} {000000000001} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4006 a4f0 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a14 c0a8 0114 138c 0569 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 5000 0000 b206 0000 0001 0203 0405
+[bcmPWN.0]Packet[1]: data[0040]: 225e b0b6
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x48
+	SRC_PORT_NUM=0xbd
+	OUTER_VID=2
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_FFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:aa:bb:bb:01> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.20> dst<192.168.1.20> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xa4f0>
+Packet[1]:   TCP: sPort<5004> dPort<1385> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0xb206> Urp<0x0000>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000aabb01bb} {000000000002} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 4006 a4f0 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a14 c0a8 0114 138c 0569 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 5000 0000 b206 0000 0001 0203 0405
+[bcmPWN.0]Packet[2]: data[0040]: 225e b0b6
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x48
+	SRC_PORT_NUM=0xcd
+	OUTER_VID=2
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_SFLOW
+	CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:aa:bb:01:bb> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.20> dst<192.168.1.20> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xa4f0>
+Packet[2]:   TCP: sPort<5004> dPort<1385> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0xb206> Urp<0x0000>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {0000aabb01bb} {000000000002} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4006 a4f0 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0a14 c0a8 0114 138c 0569 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 5000 0000 b206 0000 0001 0203 0405
+[bcmPWN.0]Packet[3]: data[0040]: 225e b0b6
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x48
+	SRC_PORT_NUM=0xcd
+	OUTER_VID=2
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_SFLOW
+	CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:aa:bb:01:bb> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.20> dst<192.168.1.20> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0xa4f0>
+Packet[3]:   TCP: sPort<5004> dPort<1385> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0xb206> Urp<0x0000>
+mac=00:00:00:00:00:01 vlan=2 GPORT=0xbd modid=0 port=189/cd46 Hit
+mac=00:00:aa:bb:bb:01 vlan=2 GPORT=0xbe modid=0 port=190/cd47 Static Hit
+mac=00:00:aa:bb:01:bb vlan=2 GPORT=0xbe modid=0 port=190/cd47 Static Hit
+mac=00:00:00:00:00:02 vlan=2 GPORT=0xbd modid=0 port=189/cd46 Hit
+XLMIB_TBYT.cd46                       :                   216                +216
+XLMIB_RBYT.cd46                       :                   216                +216
+XLMIB_TPOK.cd46                       :                     3                  +3
+XLMIB_RPOK.cd46                       :                     3                  +3
+XLMIB_TVLN.cd46                       :                     3                  +3
+XLMIB_RVLN.cd46                       :                     3                  +3
+XLMIB_TUCA.cd46                       :                     3                  +3
+XLMIB_RUCA.cd46                       :                     3                  +3
+XLMIB_TPKT.cd46                       :                     3                  +3
+XLMIB_RPKT.cd46                       :                     3                  +3
+XLMIB_T127.cd46                       :                     3                  +3
+XLMIB_R127.cd46                       :                     3                  +3
+XLMIB_RPRM.cd46                       :                     3                  +3
+RUC_64.cd46                           :                     3                  +3
+XLMIB_TBYT.cd49                       :                   144                +144
+XLMIB_RBYT.cd49                       :                   144                +144
+XLMIB_TPOK.cd49                       :                     2                  +2
+XLMIB_RPOK.cd49                       :                     2                  +2
+XLMIB_TVLN.cd49                       :                     2                  +2
+XLMIB_RVLN.cd49                       :                     2                  +2
+XLMIB_TUCA.cd49                       :                     2                  +2
+XLMIB_RUCA.cd49                       :                     2                  +2
+XLMIB_TPKT.cd49                       :                     2                  +2
+XLMIB_RPKT.cd49                       :                     2                  +2
+XLMIB_T127.cd49                       :                     2                  +2
+XLMIB_R127.cd49                       :                     2                  +2
+XLMIB_RPRM.cd49                       :                     2                  +2
+RUC_64.cd49                           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd49           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd49           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd49           :                     2                  +2
+
+-------------------------------------
+    RESULT OF RX PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+FlexCtr Get entry_id[0]-1 : 1 packets / 72 bytes
+FlexCtr Get entry_id[1]-2 : 2 packets / 144 bytes
+
+-------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+Completed test verify successfully.
+bcm_field_entry_destroy() FAILED: Entry not found
+testCleanup() failed, return Entry not found.
+bcm_error_t $$ = BCM_E_NOT_FOUND (-7)
+testExecute(): End
+BCM.0> bsh -c 'lt traverse FP_ING_POLICY_TEMPLATE'
+Traverse table [FP_ING_POLICY_TEMPLATE]:
+    FP_ING_POLICY_TEMPLATE_ID=2
+
+    FP_ING_POLICY_TEMPLATE_ID=0x3000(12288)
+  2 entries traversed.
+BCM.0> dsh -c 'get nz IFP_TCAMm'
+BCM.0>

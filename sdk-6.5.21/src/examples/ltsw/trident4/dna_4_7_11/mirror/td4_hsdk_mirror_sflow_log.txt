@@ -1,0 +1,162 @@
+BCM.0> cint td4_hsdk_mirror_sflow.c                                                             
+execute(): Start                                                                                
+config show; attach; version                                                                    
+    os=unix                                                                                     
+Attach: Unit 0 (BCM56880_A0): attached (current unit)                                           
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom                                      
+Release: sdk-6.5.18 built 20191105 (Tue Nov  5 08:35:27 2019)                                   
+From sdkrel@lc-sj1-4709:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812                                                                         
+OS: Unix (Posix)                                                                                
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_13, BCM56880_A0_DNA_4_5_0                         
+~ #1) test_setup(): ** start **                                          
+Ingress port: 2                                                            
+Egress  port: 61                                                           
+Mirrored port: 140                                                         
+~ #1) test_setup(): ** end **                                            
+~ #2) config_sflow_mirror(): ** start **                                 
+~ #2) config_sflow_mirror(): ** end **                                   
+~ #3) verify(): ** start **                                              
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 2, export forward to 61 and mirror to 140
+tx 1 pbm=2 data=0x00BBBBBBBBBB0011223344558100000208004500001C000000004002F95DC0A8001EC0A800141164EE9B00000000000102030405060708090A0B0C0D0E0F1011E544D79B;sleep 5
+Packet from data=<>, length=68                                                                                                                                    
+Sleeping for 5 seconds                                                                                                                                            
+[bcmPWN.0]                                                                                                                                                        
+[bcmPWN.0]Packet[1]: Total 1                                                                                                                                      
+[bcmPWN.0]Packet[1]: data[0000]: {00bbbbbbbbbb} {001122334455} 8100 0002                                                                                          
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 001c 0000 0000 4002 f95d c0a8                                                                                          
+[bcmPWN.0]Packet[1]: data[0020]: 001e c0a8 0014 1164 ee9b 0000 0000 0001                                                                                          
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                                                                                          
+[bcmPWN.0]Packet[1]: data[0040]: e544 d79b                                                                                                                        
+[bcmPWN.0]                                                                                                                                                        
+[bcmPWN.0][RX metadata information]                                                                                                                               
+        PKT_LENGTH                      :0x48(72)                                                                                                                 
+        SRC_PORT_NUM                    :0x2(2)                                                                                                                   
+        SWITCH                          :0x1(1)                                                                                                                   
+        MATCH_ID_LO                     :0x81222(528930)                                                                                                          
+        MPB_FLEX_DATA_TYPE              :0x3(3)                                                                                                                   
+        EGR_ZONE_REMAP_CTRL             :0x1(1)                                                                                                                   
+        COPY_TO_CPU                     :0x1(1)                                                                                                                   
+[FLEX fields]                                                                                                                                                     
+        L2_IIF_10_0                     :0x2                                                                                                                      
+        L2_OIF_10_0                     :0x3d                                                                                                                     
+        VFI_15_0                        :0x2                                                                                                                      
+        INGRESS_PP_PORT_7_0             :0x2                                                                                                                      
+        EFFECTIVE_TTL_7_0               :0x40                                                                                                                     
+        SYSTEM_OPCODE_3_0               :0x1                                                                                                                      
+        PKT_MISC_CTRL_0_3_0             :0x1                                                                                                                      
+        EVENT_TRACE_VECTOR_31_16        :0x100                                                                                                                    
+        PARSER_VHLEN_0_15_0             :0x8a                                                                                                                     
+        SYSTEM_SOURCE_15_0              :0x2                                                                                                                      
+        SYSTEM_DESTINATION_15_0         :0x3d                                                                                                                     
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2                                                                                                          
+[RX reasons]                                                                                                                                                      
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:bb:bb:bb:bb:bb> src<00:11:22:33:44:55> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.0.30> dst<192.168.0.20> hl<5> service-type<0> tl<28> id<0> frg-off<0> ttl<64> > chk-sum<0xf95d>    
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0]Packet[2]: Total 2                                                                                                         
+[bcmPWN.0]Packet[2]: data[0000]: {000000000011} {000000000022} 8100 0064                                                             
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0070 0000 0000 0511 8b54 0a0a                                                             
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0b0b 0b0b 5566 7788 005c 0000 0000                                                             
+[bcmPWN.0]Packet[2]: data[0030]: 0001 0002 003d 8080 1234 ffee ffee 00bb                                                             
+[bcmPWN.0]Packet[2]: data[0040]: bbbb bbbb 0011 2233 4455 8100 0002 0800                                                             
+[bcmPWN.0]Packet[2]: data[0050]: 4500 001c 0000 0000 4002 f95d c0a8 001e                                                             
+[bcmPWN.0]Packet[2]: data[0060]: c0a8 0014 1164 ee9b 0000 0000 0001 0203                                                             
+[bcmPWN.0]Packet[2]: data[0070]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 e544                                                             
+[bcmPWN.0]Packet[2]: data[0080]: d79b                                                                                                
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0][RX metadata information]                                                                                                  
+        PKT_LENGTH                      :0x86(134)                                                                                   
+        SRC_PORT_NUM                    :0x8c(140)                                                                                   
+        SWITCH                          :0x1(1)                                                                                      
+        MATCH_ID_LO                     :0x405222(4215330)                                                                           
+        MPB_FLEX_DATA_TYPE              :0x3(3)                                                                                      
+        EGR_ZONE_REMAP_CTRL             :0x1(1)                                                                                      
+        COPY_TO_CPU                     :0x1(1)                                                                                      
+[FLEX fields]                                                                                                                        
+        L2_IIF_10_0                     :0x8c                                                                                        
+        VFI_15_0                        :0x64                                                                                        
+        INGRESS_PP_PORT_7_0             :0x8c                                                                                        
+        EFFECTIVE_TTL_7_0               :0x5                                                                                         
+        SYSTEM_OPCODE_3_0               :0x1                                                                                         
+        EVENT_TRACE_VECTOR_15_0         :0x2                                                                                         
+        PKT_MISC_CTRL_0_3_0             :0x1                                                                                         
+        DROP_CODE_15_0                  :0x101                                                                                       
+        PARSER_VHLEN_0_15_0             :0x8a                                                                                        
+        SYSTEM_SOURCE_15_0              :0x8c                                                                                        
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2                                                                             
+[RX reasons]                                                                                                                         
+        CML_FLAGS                                                                                                                    
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:22> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.10> dst<11.11.11.11> hl<5> service-type<0> tl<112> id<0> frg-off<0> ttl<5> > chk-sum<0x8b54>      
+[AssistThreadExt.0]0:bcmbd_m0ssq_mbox_msg_send: [AssistThreadExt.0]No response for msg 5                                             
+[AssistThreadExt.0]Error rv -9: Unable to get speed for port 61                                                                      
+[AssistThreadExt.0]0:bcmbd_m0ssq_mbox_msg_send: [AssistThreadExt.0]No response for msg 5                                             
+[AssistThreadExt.0]Error rv -9: Unable to get speed for port 2                                                                       
+[AssistThreadExt.0]0:bcmbd_m0ssq_mbox_msg_send: [AssistThreadExt.0]No response for msg 5                                             
+[AssistThreadExt.0]Error rv -9: Unable to get speed for port 140                                                                     
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2                                                    
+MC_PERQ_BYTE(0).cpu0                  :                   350                +350                                                    
+XLMIB_TBYT.cd1                        :                    72                 +72                                                    
+XLMIB_RBYT.cd1                        :                    72                 +72                                                    
+XLMIB_TPOK.cd1                        :                     1                  +1                                                    
+XLMIB_RPOK.cd1                        :                     1                  +1                                                    
+XLMIB_TVLN.cd1                        :                     1                  +1                                                    
+XLMIB_RVLN.cd1                        :                     1                  +1                                                    
+XLMIB_TUCA.cd1                        :                     1                  +1                                                    
+XLMIB_RUCA.cd1                        :                     1                  +1                                                    
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+XLMIB_TBYT.cd13                       :                    68                 +68
+XLMIB_RBYT.cd13                       :                    68                 +68
+XLMIB_TPOK.cd13                       :                     1                  +1
+XLMIB_RPOK.cd13                       :                     1                  +1
+XLMIB_TUCA.cd13                       :                     1                  +1
+XLMIB_RUCA.cd13                       :                     1                  +1
+XLMIB_TPKT.cd13                       :                     1                  +1
+XLMIB_RPKT.cd13                       :                     1                  +1
+XLMIB_T127.cd13                       :                     1                  +1
+XLMIB_R127.cd13                       :                     1                  +1
+XLMIB_RPRM.cd13                       :                     1                  +1
+UC_PERQ_PKT(0).cd13                   :                     1                  +1
+UC_PERQ_BYTE(0).cd13                  :                    68                 +68
+XLMIB_TBYT.cd28                       :                   134                +134
+XLMIB_RBYT.cd28                       :                   134                +134
+XLMIB_TPOK.cd28                       :                     1                  +1
+XLMIB_RPOK.cd28                       :                     1                  +1
+XLMIB_TVLN.cd28                       :                     1                  +1
+XLMIB_RVLN.cd28                       :                     1                  +1
+XLMIB_TUCA.cd28                       :                     1                  +1
+XLMIB_RUCA.cd28                       :                     1                  +1
+XLMIB_TPKT.cd28                       :                     1                  +1
+XLMIB_RPKT.cd28                       :                     1                  +1
+XLMIB_T255.cd28                       :                     1                  +1
+XLMIB_R255.cd28                       :                     1                  +1
+XLMIB_RPRM.cd28                       :                     1                  +1
+MC_PERQ_PKT(0).cd28                   :                     1                  +1
+MC_PERQ_BYTE(0).cd28                  :                   134                +134
+
+******Port stats check******
+--------Ingress port (2) stats--------
+Rx : 1 packets
+--------Egress port (61) stats--------
+Tx : 1 packets
+--------Mirrored port (140) stats--------
+Tx : 1 packets
+~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

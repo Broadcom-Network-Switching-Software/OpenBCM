@@ -1,0 +1,30 @@
+/*! \page bcma_io System I/O
+
+The system I/O component is an abstraction layer for terminal I/O and
+file I/O. The default implementation should work for almost any
+POSIX-compliant C library, but an application can override each
+individual API separately.
+
+\section bcma_io_term Terminal I/O
+
+Terminal I/O is required for basic CLI operation (see \ref
+bcma_cli) as well as the default log message output device.
+
+For a complete API reference, please refer to \ref bcma_io_term.h.
+
+To support Ctrl-C in the CLI, please refer to \ref bcma_io_ctrlc.h and
+bcma_io_sig.h.
+
+To system shell access from the CLI, please refer to \ref
+bcma_io_shell.h.
+
+\section bcma_io_file File I/O
+
+File I/O is not strictly required to run the SDK, but it makes working
+with configuration files, LED firmware, etc. a lot easier. It also
+allows the default BSL output sink to direct log messages to a file.
+
+For a complete API reference, please refer to \ref bcma_io_file.h and
+\ref bcma_io_dir.h.
+
+*/

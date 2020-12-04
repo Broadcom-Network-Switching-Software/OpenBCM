@@ -1,0 +1,344 @@
+/* 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+*/
+
+#ifndef SOC_SAND_CELL_H_INCLUDED
+#define SOC_SAND_CELL_H_INCLUDED
+
+#include <soc/dpp/SAND/Utils/sand_header.h>
+
+#include <soc/dpp/SAND/Utils/sand_framework.h>
+#include <soc/dpp/SAND/SAND_FM/sand_chip_defines.h>
+
+
+
+#define DATA_CELL_TYPE_SOURCE_ROUTED      1
+#define DATA_CELL_TYPE_DESTINATION_ROUTED 0
+
+
+
+#define SOC_SAND_DATA_CELL_BYTE_SIZE 40
+#define SOC_SAND_DATA_CELL_UINT32_SIZE (SOC_SAND_DATA_CELL_BYTE_SIZE/sizeof(uint32))
+#define SOC_SAND_CTRL_CELL_BYTE_SIZE 10
+
+
+
+#define SOC_SAND_PATHS_RX_SRC_LVL_MS_BIT      10
+#define SOC_SAND_PATHS_RX_SRC_LVL_NUM_BITS    3
+#define SOC_SAND_PATHS_RX_SRC_LVL_LS_BIT      (SOC_SAND_PATHS_RX_SRC_LVL_MS_BIT + 1 - SOC_SAND_PATHS_RX_SRC_LVL_NUM_BITS)
+#define SOC_SAND_PATHS_RX_SRC_LVL_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_LVL_MS_BIT) - SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_LVL_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_LVL_MS_BIT))
+#define SOC_SAND_PATHS_RX_SRC_LVL_SHIFT       SOC_SAND_PATHS_RX_SRC_LVL_LS_BIT
+
+#define SOC_SAND_PATHS_RX_SRC_ID_MS_BIT       21
+#define SOC_SAND_PATHS_RX_SRC_ID_NUM_BITS     11
+#define SOC_SAND_PATHS_RX_SRC_ID_LS_BIT     (SOC_SAND_PATHS_RX_SRC_ID_MS_BIT + 1 - SOC_SAND_PATHS_RX_SRC_ID_NUM_BITS)
+#define SOC_SAND_PATHS_RX_SRC_ID_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_ID_MS_BIT) - SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_ID_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_RX_SRC_ID_MS_BIT))
+#define SOC_SAND_PATHS_RX_SRC_ID_SHIFT        SOC_SAND_PATHS_RX_SRC_ID_LS_BIT
+
+
+
+
+#define SOC_SAND_LAST_TX_MS_BIT                31
+#define SOC_SAND_LAST_TX_NUM_BITS              24
+#define SOC_SAND_LAST_TX_LS_BIT                (SOC_SAND_LAST_TX_MS_BIT + 1 - SOC_SAND_LAST_TX_NUM_BITS)
+#define SOC_SAND_LAST_TX_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_LAST_TX_MS_BIT) - SOC_SAND_BIT(SOC_SAND_LAST_TX_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_LAST_TX_MS_BIT))
+#define SOC_SAND_LAST_TX_SHIFT                 SOC_SAND_LAST_TX_LS_BIT
+
+
+
+#define SOC_SAND_SWITCHES_TX_FIRST_BYTE_MS_BIT     7
+#define SOC_SAND_SWITCHES_TX_FIRST_BYTE_NUM_BITS   8
+#define SOC_SAND_SWITCHES_TX_FIRST_BYTE_LS_BIT     (SOC_SAND_SWITCHES_TX_FIRST_BYTE_MS_BIT + 1 - SOC_SAND_SWITCHES_TX_FIRST_BYTE_NUM_BITS)
+#define SOC_SAND_SWITCHES_TX_FIRST_BYTE_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FIRST_BYTE_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FIRST_BYTE_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FIRST_BYTE_MS_BIT))
+#define SOC_SAND_SWITCHES_TX_FIRST_BYTE_SHIFT      SOC_SAND_SWITCHES_TX_FIRST_BYTE_LS_BIT
+
+
+#define SOC_SAND_SWITCHES_TX_FE3SW_MS_BIT         20
+#define SOC_SAND_SWITCHES_TX_FE3SW_NUM_BITS       5
+#define SOC_SAND_SWITCHES_TX_FE3SW_LS_BIT         (SOC_SAND_SWITCHES_TX_FE3SW_MS_BIT + 1 - SOC_SAND_SWITCHES_TX_FE3SW_NUM_BITS)
+#define SOC_SAND_SWITCHES_TX_FE3SW_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE3SW_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE3SW_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE3SW_MS_BIT))
+#define SOC_SAND_SWITCHES_TX_FE3SW_SHIFT          SOC_SAND_SWITCHES_TX_FE3SW_LS_BIT
+
+#define SOC_SAND_SWITCHES_TX_FE2SW_MS_BIT         26
+#define SOC_SAND_SWITCHES_TX_FE2SW_NUM_BITS       6
+#define SOC_SAND_SWITCHES_TX_FE2SW_LS_BIT         (SOC_SAND_SWITCHES_TX_FE2SW_MS_BIT + 1 - SOC_SAND_SWITCHES_TX_FE2SW_NUM_BITS)
+#define SOC_SAND_SWITCHES_TX_FE2SW_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE2SW_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE2SW_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_SWITCHES_TX_FE2SW_MS_BIT))
+#define SOC_SAND_SWITCHES_TX_FE2SW_SHIFT          SOC_SAND_SWITCHES_TX_FE2SW_LS_BIT
+
+
+
+
+
+#define SOC_SAND_PATHS_TX_DEST_LVL_MS_BIT     7
+#define SOC_SAND_PATHS_TX_DEST_LVL_NUM_BITS   3
+#define SOC_SAND_PATHS_TX_DEST_LVL_LS_BIT     (SOC_SAND_PATHS_TX_DEST_LVL_MS_BIT + 1 - SOC_SAND_PATHS_TX_DEST_LVL_NUM_BITS)
+#define SOC_SAND_PATHS_TX_DEST_LVL_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_TX_DEST_LVL_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_PATHS_TX_DEST_LVL_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_TX_DEST_LVL_MS_BIT))
+#define SOC_SAND_PATHS_TX_DEST_LVL_SHIFT      SOC_SAND_PATHS_TX_DEST_LVL_LS_BIT
+
+#define SOC_SAND_PATHS_TX_SRC_LVL_MS_BIT      10
+#define SOC_SAND_PATHS_TX_SRC_LVL_NUM_BITS    3
+#define SOC_SAND_PATHS_TX_SRC_LVL_LS_BIT      (SOC_SAND_PATHS_TX_SRC_LVL_MS_BIT + 1 - SOC_SAND_PATHS_TX_SRC_LVL_NUM_BITS)
+#define SOC_SAND_PATHS_TX_SRC_LVL_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_LVL_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_LVL_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_LVL_MS_BIT))
+#define SOC_SAND_PATHS_TX_SRC_LVL_SHIFT       SOC_SAND_PATHS_TX_SRC_LVL_LS_BIT
+
+#define SOC_SAND_PATHS_TX_SRC_ID_MS_BIT       21
+#define SOC_SAND_PATHS_TX_SRC_ID_NUM_BITS     11
+#define SOC_SAND_PATHS_TX_SRC_ID_LS_BIT     (SOC_SAND_PATHS_TX_SRC_ID_MS_BIT + 1 - SOC_SAND_PATHS_TX_SRC_ID_NUM_BITS)
+#define SOC_SAND_PATHS_TX_SRC_ID_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_ID_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_ID_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_TX_SRC_ID_MS_BIT))
+#define SOC_SAND_PATHS_TX_SRC_ID_SHIFT        SOC_SAND_PATHS_TX_SRC_ID_LS_BIT
+
+
+#define SOC_SAND_PATHS_TX_COLN_MS_BIT         29
+#define SOC_SAND_PATHS_TX_COLN_NUM_BITS       6
+#define SOC_SAND_PATHS_TX_COLN_LS_BIT         (SOC_SAND_PATHS_TX_COLN_MS_BIT + 1 - SOC_SAND_PATHS_TX_COLN_NUM_BITS)
+#define SOC_SAND_PATHS_TX_COLN_MASK   \
+    (((uint32)SOC_SAND_BIT(SOC_SAND_PATHS_TX_COLN_MS_BIT) - \
+    SOC_SAND_BIT(SOC_SAND_PATHS_TX_COLN_LS_BIT)) + SOC_SAND_BIT(SOC_SAND_PATHS_TX_COLN_MS_BIT))
+#define SOC_SAND_PATHS_TX_COLN_SHIFT          SOC_SAND_PATHS_TX_COLN_LS_BIT
+
+
+
+#define SOC_SAND_DATA_CELL_CELL_TYPE_START          (318)
+#define SOC_SAND_DATA_CELL_CELL_TYPE_LENGTH         (2  )
+#define SOC_SAND_DATA_CELL_SOURCE_ID_START          (307)
+#define SOC_SAND_DATA_CELL_SOURCE_ID_LENGTH         (11 )
+#define SOC_SAND_DATA_CELL_SRC_LEVEL_START          (304)
+#define SOC_SAND_DATA_CELL_SRC_LEVEL_LENGTH         (3  )
+#define SOC_SAND_DATA_CELL_DEST_LEVEL_START         (301)
+#define SOC_SAND_DATA_CELL_DEST_LEVEL_LENGTH        (3  )
+#define SOC_SAND_DATA_CELL_FIP_SWITCH_START         (296)
+#define SOC_SAND_DATA_CELL_FIP_SWITCH_LENGTH        (5  )
+#define SOC_SAND_DATA_CELL_FE1_SWITCH_START         (291)
+#define SOC_SAND_DATA_CELL_FE1_SWITCH_LENGTH        (5  )
+#define SOC_SAND_DATA_CELL_FE2_SWITCH_START         (285)
+#define SOC_SAND_DATA_CELL_FE2_SWITCH_LENGTH        (6  )
+#define SOC_SAND_DATA_CELL_FE3_SWITCH_START         (280)
+#define SOC_SAND_DATA_CELL_FE3_SWITCH_LENGTH        (5  )
+#define SOC_SAND_DATA_CELL_DEST_ID_START            (296 )
+#define SOC_SAND_DATA_CELL_DEST_ID_LENGTH           (11 )
+#define SOC_SAND_DATA_CELL_ORIGIN_TIME_START        (281 )
+#define SOC_SAND_DATA_CELL_ORIGIN_TIME_LENGTH       (15 )
+#define SOC_SAND_DATA_CELL_FRAG_NUMBER_START        (272 )
+#define SOC_SAND_DATA_CELL_FRAG_NUMBER_LENGTH       (9  )
+#define SOC_SAND_DATA_CELL_PAYLOAD_START            (16 )
+#define SOC_SAND_DATA_CELL_PAYLOAD_IN_UINT32S         (8  )
+#define SOC_SAND_DATA_CELL_PAYLOAD_IN_BYTES         (32 )
+
+#define SOC_SAND_SR_DATA_CELL_NOF_WORDS_IN_PAYLOAD  (5  )
+#define SOC_SAND_SR_DATA_CELL_WORD_LENGTH           (49 )
+#define SOC_SAND_SR_DATA_CELL_RW_START              (27 )
+#define SOC_SAND_SR_DATA_CELL_WRITE_LENGTH          (32 )
+#define SOC_SAND_SR_DATA_CELL_ADDRESS_START         (59 )
+#define SOC_SAND_SR_DATA_CELL_ADDRESS_LENGTH        (16 )
+#define SOC_SAND_SR_DATA_CELL_VALID_START           (75 )
+#define SOC_SAND_SR_DATA_CELL_CELL_IDENT_LENGTH     (9  )
+#define SOC_SAND_SR_DATA_CELL_CELL_IDENT_START      (18)
+#define SOC_SAND_SR_DATA_CELL_CELL_FORMAT_LENGTH    (2  )
+#define SOC_SAND_SR_DATA_CELL_CELL_FORMAT_START     (16)
+#define SOC_SAND_SR_DATA_CELL_FIP_SWITCH_START      (5  )
+#define SOC_SAND_SR_DATA_CELL_FIP_SWITCH_LENGTH     (1  )
+#define SOC_SAND_SR_DATA_CELL_FIP_SWITCH_POSITION   (279)
+#define SOC_SAND_SR_DATA_CELL_FE1_SWITCH_START      (5  )
+#define SOC_SAND_SR_DATA_CELL_FE1_SWITCH_LENGTH     (1  )
+#define SOC_SAND_SR_DATA_CELL_FE1_SWITCH_POSITION   (278)
+#define SOC_SAND_SR_DATA_CELL_FE2_SWITCH_START      (6  )
+#define SOC_SAND_SR_DATA_CELL_FE2_SWITCH_LENGTH     (1  )
+#define SOC_SAND_SR_DATA_CELL_FE2_SWITCH_POSITION   (277)
+#define SOC_SAND_SR_DATA_CELL_FE3_SWITCH_START      (5  )
+#define SOC_SAND_SR_DATA_CELL_FE3_SWITCH_LENGTH     (1  )
+#define SOC_SAND_SR_DATA_CELL_FE3_SWITCH_POSITION   (276)
+#define SOC_SAND_SR_DATA_CELL_INBAND_CELL_LENGTH    (1  )
+#define SOC_SAND_SR_DATA_CELL_INBAND_CELL_POSITION  (275)
+#define SOC_SAND_SR_DATA_CELL_ACK_LENGTH            (1  )
+#define SOC_SAND_SR_DATA_CELL_ACK_POSITION          (274)
+#define SOC_SAND_SR_DATA_CELL_INDIRECT_LENGTH       (1  )
+#define SOC_SAND_SR_DATA_CELL_INDIRECT_POSITION     (273)
+#define SOC_SAND_SR_DATA_CELL_RW_LENGTH             (1  )
+#define SOC_SAND_SR_DATA_CELL_RW_POSITION           (272)
+#define SOC_SAND_SR_DATA_CELL_NOT_COMMON_LENGTH     (307)
+
+#define SOC_SAND_SR_DATA_CELL_NOT_INBAND_ADDRESS_START         (32 )
+#define SOC_SAND_SR_DATA_CELL_NOT_INBAND_RW_START              (112 )
+#define SOC_SAND_SR_DATA_CELL_NOT_INBAND_CELL_IDENT_LENGTH     (16 )
+#define SOC_SAND_SR_DATA_CELL_NOT_INBAND_CELL_IDENT_START      (16)
+
+
+
+typedef enum
+{
+  SOC_SAND_CONTROL_CELL_TYPE_FLOW_STATUS = 0,
+
+  SOC_SAND_CONTROL_CELL_NOF_TYPES
+} SOC_SAND_CONTROL_CELL_TYPE;
+
+typedef enum
+{
+  SOC_SAND_SCHEDULER_FLOW_STATUS_OFF = 0,
+  SOC_SAND_SCHEDULER_FLOW_STATUS_ON  = 2,
+
+  SOC_SAND_SCHEDULER_FLOW_NUM_STATUS
+} SOC_SAND_SCHEDULER_FLOW_STATUS ;
+
+
+typedef struct
+{
+  
+  uint32               sched_flow_id; 
+  uint32               input_q_number;
+  SOC_SAND_SCHEDULER_FLOW_STATUS flow_status;   
+} SOC_SAND_CONTROL_CELL_FLOW_STATUS;
+
+
+typedef struct
+{
+  SOC_SAND_CONTROL_CELL_TYPE type;      
+  uint32           dest_id;   
+  uint32           source_id; 
+
+  union
+  {
+    SOC_SAND_CONTROL_CELL_FLOW_STATUS  flow_status_info;
+  } u;
+
+} SOC_SAND_CONTROL_CELL;
+
+
+
+
+
+#define SOC_SAND_SR_DATA_NOF_DATA_UINT32S (8)
+
+typedef struct
+{
+    
+  uint32  body_tx[SOC_SAND_SR_DATA_NOF_DATA_UINT32S] ;
+    
+  uint32   fe3_link ;
+    
+  uint32   fe2_link ;
+    
+  uint32   fe1_link ;
+    
+  SOC_SAND_DEVICE_ENTITY   destination_entity_type ;
+    
+  SOC_SAND_DEVICE_ENTITY   source_entity_type ;
+    
+  uint32   source_chip_id ;
+    
+  uint32   initial_output_link ;
+} SOC_SAND_TX_SR_DATA_CELL  ;
+
+typedef struct
+{
+    
+  uint32       body_tx[SOC_SAND_SR_DATA_NOF_DATA_UINT32S] ;
+    
+  SOC_SAND_DEVICE_ENTITY  source_entity_type ;
+    
+  uint32        source_chip_id ;
+} SOC_SAND_RX_SR_DATA_CELL  ;
+
+
+SOC_SAND_RET
+  soc_sand_pack_control_cell(
+    SOC_SAND_IN     SOC_SAND_CONTROL_CELL control_cell,
+    SOC_SAND_INOUT  unsigned char     *packed_control_cell
+  );
+
+SOC_SAND_RET
+  soc_sand_unpack_control_cell(
+    SOC_SAND_IN     unsigned char     *packed_control_cell,
+    SOC_SAND_INOUT  SOC_SAND_CONTROL_CELL *control_cell
+  );
+
+typedef struct
+{
+  
+  uint16   dest_or_mc_id;                              
+  uint16   origin_time;                                
+  uint16   frag_number;                                
+  uint8    cell_data[SOC_SAND_DATA_CELL_PAYLOAD_IN_BYTES]; 
+
+}__ATTRIBUTE_PACKED__ SOC_DESTINATION_ROUTED_CELL;
+
+typedef struct
+{
+  
+  uint8   src_level;      
+  uint8   dest_level;     
+  uint8   fip_switch;     
+  uint8   fe1_switch;     
+  uint8   fe2_switch;     
+  uint8   fe3_switch;     
+  uint8   inband_cell;    
+  uint8   ack;            
+  uint8   indirect;       
+  uint8   read_or_write;  
+  
+  uint32   data_wr_cell[SOC_SAND_SR_DATA_CELL_NOF_WORDS_IN_PAYLOAD];  
+  uint32   add_wr_cell[SOC_SAND_SR_DATA_CELL_NOF_WORDS_IN_PAYLOAD];   
+  uint16   cell_ident;                                            
+  uint8    cell_format;                                           
+
+}__ATTRIBUTE_PACKED__ SOC_SOURCE_ROUTED_CELL;
+
+
+typedef struct
+{
+  uint8    cell_type;                                  
+  uint16   source_id;                                  
+
+  union
+  {
+    SOC_DESTINATION_ROUTED_CELL dest_routed;
+    SOC_SOURCE_ROUTED_CELL source_routed;
+
+  }data_cell;
+}__ATTRIBUTE_PACKED__  SOC_SAND_DATA_CELL;
+
+
+uint32
+  soc_sand_data_cell_to_buffer(
+    SOC_SAND_IN  SOC_SAND_DATA_CELL   *data_cell,
+    SOC_SAND_OUT uint32         *packed_data_cell
+  );
+
+uint32
+  soc_sand_buffer_to_data_cell(
+    SOC_SAND_IN  uint32        *packed_data_cell,
+    SOC_SAND_IN  uint8       is_fe600,
+    SOC_SAND_OUT SOC_SAND_DATA_CELL  *data_cell
+  );
+
+
+
+uint32
+  soc_sand_actual_entity_value(
+    SOC_SAND_IN SOC_SAND_DEVICE_ENTITY device_entity
+  );
+
+SOC_SAND_DEVICE_ENTITY
+  soc_sand_real_entity_value(
+    SOC_SAND_IN SOC_SAND_ENTITY_LEVEL_TYPE device_entity_3b
+  );
+
+#include <soc/dpp/SAND/Utils/sand_footer.h>
+
+#endif

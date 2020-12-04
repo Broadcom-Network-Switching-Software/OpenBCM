@@ -1,0 +1,45 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section sal_intro Overview
+
+The SDK SAL library contains abstractions for essential C library
+types and functions as well as for multi-threading and time.
+
+The SDK components do not perform any kind of direct I/O, so console
+and file I/O is not part of the SAL API.
+
+The SAL does not define any device-related system abstractions such as
+device I/O, interrupt handling and DMA memory allocation. Please refer
+to the \htmlinclude bcmdrd.html for device-related system
+abstractions.
+
+\section sal_libc C Library
+
+The SDK will not call any C library function such as \c memcmp
+directly. This simplifies SDK integration where no standard C library
+and/or header files are available. Examples of this are the Linux
+kernel and various proprietary boot loaders.
+
+Since the common situation is that a standard C library is indeed
+available, the SAL C library functions will map to these by default,
+so for example \c sal_memcpy will map directly to \c memcpy and assume
+that the header file \c string.h is available.
+
+\section sal_examples Example Implementation
+
+The implementation of the SAL functions is the responsibility of the
+application environment, however the SDK provides an example
+implementation, which will work on most POSIX-compliant operating
+systems.
+
+An application may choose to override the example SAL implementation
+either partially or in full.
+
+\section sal_build Build
+
+The makefile for the SAL library is built upon the make include files
+in the <tt>$SDK/make</tt> directory.
+
+*/

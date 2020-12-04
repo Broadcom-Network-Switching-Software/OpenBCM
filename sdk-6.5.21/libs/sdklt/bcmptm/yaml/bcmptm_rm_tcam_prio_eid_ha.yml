@@ -1,0 +1,71 @@
+#
+# file: bcmptm_rm_tcam_prio_eid_ha.yml
+# PTRM HA memory YAML file describing the HA data structures for prio_only type TCAM
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+   bcmptm_rm_tcam_prio_eid_ha:
+      bcmptm_rm_tcam_prio_eid_info_t:
+         type: struct
+         fields:
+            ltid:
+               type: uint32_t
+               ltid:
+               comment: Logical Table ID
+            flags:
+               type: uint32_t
+               comment: TCAM Flags  of type BCMPTM_RM_TCAM_XXX
+            num_entries:
+               type: uint16_t
+               comment: Total number of TCAM entries
+            num_entries_ltid:
+               type: uint16_t
+               comment: Total number of TCAM entries on this LTID
+            free_entries:
+               type: uint16_t
+               comment: Number of free TCAM entries
+            slice_info_offset:
+               type: uint32_t
+               comment: Memory offset to Slice operational information
+            entry_info_offset:
+               type: uint32_t
+               comment: Memory offset to TCAM entry operational information
+            entry_hash_size:
+               type: uint16_t
+               comment: Depth of hash table which is used to lookup TCAM entry information
+            entry_hash_offset:
+               type: uint32_t
+               comment: Memory offset to TCAM entry hash information
+
+      bcmptm_rm_tcam_prio_eid_entry_info_t:
+         type: struct
+         fields:
+            entry_pri:
+               type: int
+               comment: TCAM entry priority set by the application layer
+            entry_id:
+               type: int
+               comment: Entry Id. Application provides a valid entry id.
+            entry_type:
+               type: int8_t
+               comment: TCAM entry type information
+            offset:
+               type: uint32_t
+               comment: Offset to TCAM entry information which has same hash as this TCAM entry
+            global_to_all_pipes:
+               type: bool
+               comment: Flag to indicate whether the entry is written per pipe or global
+
+      bcmptm_rm_tcam_prio_eid_slice_info_t:
+         type: struct
+         fields:
+            free_entries:
+               type: int
+               comment: No of free entries in this slice
+

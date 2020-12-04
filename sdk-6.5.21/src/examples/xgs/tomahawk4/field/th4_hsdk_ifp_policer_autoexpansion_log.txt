@@ -1,0 +1,374 @@
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201019 (Mon Oct 19 10:56:41 2020)
+From sdkrel@lc-sj1-3695:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+Starting Interrupt service...
+[DMA-listener]DMA Controller listening on port[37071]
+[Interrupt-listener]ISR dispatcher listening on port[54838]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+cvariant: base
+BCM.0> c th4_hsdk_ifp_policer_autoexpansion.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201019 (Mon Oct 19 10:56:41 2020)
+From sdkrel@lc-sj1-3695:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_10, BCM56780_A0_DNA_2_5_11
+     BCM56780_A0_DNA_2_5_8, BCM56780_A0_INA_2_5_10, BCM56780_A0_INA_2_5_11, BCM56780_A0_INA_2_5_8
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_10, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_DNA_4_7_9, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+port 51 is selected
+port 52 is selected
+port_lb_setup port: 51 setup
+port_lb_setup port: 52 setup
+Completed test setup successfully.
+PIPELINE STAGE INGRESS
+FP:        :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:        :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:        :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:        :tcam_sz=0(0), tcam_slices=0
+GID 0x0000000a: gid=0xa, instance=-1 mode=Triple, stage=Ingress lookup=Enabled, ActionResId={0},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={SrcIp6 , DstIp6 , OuterVlanId , RangeCheck , L4SrcPort , L4DstPort , IpProtocol , DSCP , Ttl , TcpControl , ExtensionHeaderType },
+         aset={RpPrioPktNew , YpDrop , GpDrop },
+         preselectors={},
+         group_priority= 1
+         slice_primary= {slice_number=0, entries_total=256, entries_free=0 }, {slice_number=3, entries_total=256, entries_free=0 }, {slice_number=6, entries_total=512, entries_free=2 },
+         slice_secondary= {slice_number=1, entries_total=256, entries_free=0 }, {slice_number=4, entries_total=256, entries_free=0 }, {slice_number=7, entries_total=512, entries_free=2 },
+         slice_ternary= {slice_number=2, entries_total=256, entries_free=0 }, {slice_number=5, entries_total=256, entries_free=0 }, {slice_number=8, entries_total=512, entries_free=2 },
+         group_status=  entries_total=1023, entries_free=1,
+                        meters_total=512, meters_free=258, counters_total=24576, counters_free=24576}
+EID 0x000000c0: eid=0xc0, gid=0xa,
+ prio=0, flags=0x3, hw_index=0xbe, Installed
+ OuterVlanId
+  HW info:
+    Part: 1 Offset0: 112 Width0: 4
+    Part: 1 Offset1: 116 Width1: 4
+    Part: 1 Offset2: 120 Width2: 4
+     DATA=000000c0
+     MASK=00000fff
+
+         action = {act=RpPrioPktNew, param0=4(0x4), param1=0(0), param2=0(0)
+         action = {act=YpDrop, param0=0(0), param1=0(0), param2=0(0)
+         action = {act=GpDrop, param0=0(0), param1=0(0), param2=0(0)
+         policer = {policer id 24}
+
+Sending vlan 192 tagged test packets to ingress port:51
+Packet generate, length=512
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000202} {000000000001} 8100 80c0
+[bcmPWN.0]Packet[1]: data[0010]: 01ee 0000 0000 0000 b84f 1d1e 1e68 2122
+[bcmPWN.0]Packet[1]: data[0020]: 226c 2526 2670 292a 2a74 2d2e 2e78 3132
+[bcmPWN.0]Packet[1]: data[0030]: 327c 3536 3680 393a 3a84 3d3e 3e88 4142
+[bcmPWN.0]Packet[1]: data[0040]: 428c 4546 4690 494a 4a94 4d4e 4e98 5152
+[bcmPWN.0]Packet[1]: data[0050]: 529c 5556 56a0 595a 5aa4 5d5e 5ea8 6162
+[bcmPWN.0]Packet[1]: data[0060]: 62ac 6566 66b0 696a 6ab4 6d6e 6eb8 7172
+[bcmPWN.0]Packet[1]: data[0070]: 72bc 7576 76c0 797a 7ac4 7d7e 7ec8 8182
+[bcmPWN.0]Packet[1]: data[0080]: 82cc 8586 86d0 898a 8ad4 8d8e 8ed8 9192
+[bcmPWN.0]Packet[1]: data[0090]: 92dc 9596 96e0 999a 9ae4 9d9e 9ee8 a1a2
+[bcmPWN.0]Packet[1]: data[00a0]: a2ec a5a6 a6f0 a9aa aaf4 adae aef8 b1b2
+[bcmPWN.0]Packet[1]: data[00b0]: b2fc b5b6 b700 b9ba bb04 bdbe bf08 c1c2
+[bcmPWN.0]Packet[1]: data[00c0]: c30c c5c6 c710 c9ca cb14 cdce cf18 d1d2
+[bcmPWN.0]Packet[1]: data[00d0]: d31c d5d6 d720 d9da db24 ddde df28 e1e2
+[bcmPWN.0]Packet[1]: data[00e0]: e32c e5e6 e730 e9ea eb34 edee ef38 f1f2
+[bcmPWN.0]Packet[1]: data[00f0]: f33c f5f6 f740 f9fa fb44 fdfe ff48 0203
+[bcmPWN.0]Packet[1]: data[0100]: 034c 0607 0750 0a0b 0b54 0e0f 0f58 1213
+[bcmPWN.0]Packet[1]: data[0110]: 135c 1617 1760 1a1b 1b64 1e1f 1f68 2223
+[bcmPWN.0]Packet[1]: data[0120]: 236c 2627 2770 2a2b 2b74 2e2f 2f78 3233
+[bcmPWN.0]Packet[1]: data[0130]: 337c 3637 3780 3a3b 3b84 3e3f 3f88 4243
+[bcmPWN.0]Packet[1]: data[0140]: 438c 4647 4790 4a4b 4b94 4e4f 4f98 5253
+[bcmPWN.0]Packet[1]: data[0150]: 539c 5657 57a0 5a5b 5ba4 5e5f 5fa8 6263
+[bcmPWN.0]Packet[1]: data[0160]: 63ac 6667 67b0 6a6b 6bb4 6e6f 6fb8 7273
+[bcmPWN.0]Packet[1]: data[0170]: 73bc 7677 77c0 7a7b 7bc4 7e7f 7fc8 8283
+[bcmPWN.0]Packet[1]: data[0180]: 83cc 8687 87d0 8a8b 8bd4 8e8f 8fd8 9293
+[bcmPWN.0]Packet[1]: data[0190]: 93dc 9697 97e0 9a9b 9be4 9e9f 9fe8 a2a3
+[bcmPWN.0]Packet[1]: data[01a0]: a3ec a6a7 a7f0 aaab abf4 aeaf aff8 b2b3
+[bcmPWN.0]Packet[1]: data[01b0]: b3fc b6b7 b800 babb bc04 bebf c008 c2c3
+[bcmPWN.0]Packet[1]: data[01c0]: c40c c6c7 c810 cacb cc14 cecf d018 d2d3
+[bcmPWN.0]Packet[1]: data[01d0]: d41c d6d7 d820 dadb dc24 dedf e028 e2e3
+[bcmPWN.0]Packet[1]: data[01e0]: e42c e6e7 e830 eaeb ec34 eeef f038 f2f3
+[bcmPWN.0]Packet[1]: data[01f0]: f43c f6f7 f840 fafb fc44 ff00 0048 0304
+[bcmPWN.0]
+
+[RX metadata information]
+  PKT_LENGTH=0x204
+  SRC_PORT_NUM=0x34
+  OUTER_VID=0xc0
+  OUTER_PRI=4
+  TIMESTAMP_TYPE=3
+  SWITCH=1
+  ING_TAG_TYPE=1
+[Higig2 fields]
+  START=0xfb
+  MCST=1
+  TC=4
+  DST_PORT_MGIDL=0xc0
+  SRC_PORT=0x34
+  CC=1
+  PPD_TYPE=0
+  PPD0_INGRESS_TAGGED=1
+  PPD0_VID_HIGH=0x80
+  PPD0_VID_LOW=0xc0
+  PPD0_PRESERVE_DOT1P=1
+  PPD0_OPCODE=2
+[RX reasons]
+  CPU_SFLOW
+  CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:02:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x80c0> 802.3 Packet
+Packet[1]:   IP: V(0) src<33.34.34.108> dst<37.38.38.112> hl<0> service-type<0> tl<0> id<0> frg-off<47183> ttl<29> > chk-sum<0x1e68>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {000000000202} {000000000001} 8100 80c0
+[bcmPWN.0]Packet[2]: data[0010]: 01ee 0000 0000 0000 b84f 1d1e 1e68 2122
+[bcmPWN.0]Packet[2]: data[0020]: 226c 2526 2670 292a 2a74 2d2e 2e78 3132
+[bcmPWN.0]Packet[2]: data[0030]: 327c 3536 3680 393a 3a84 3d3e 3e88 4142
+[bcmPWN.0]Packet[2]: data[0040]: 428c 4546 4690 494a 4a94 4d4e 4e98 5152
+[bcmPWN.0]Packet[2]: data[0050]: 529c 5556 56a0 595a 5aa4 5d5e 5ea8 6162
+[bcmPWN.0]Packet[2]: data[0060]: 62ac 6566 66b0 696a 6ab4 6d6e 6eb8 7172
+[bcmPWN.0]Packet[2]: data[0070]: 72bc 7576 76c0 797a 7ac4 7d7e 7ec8 8182
+[bcmPWN.0]Packet[2]: data[0080]: 82cc 8586 86d0 898a 8ad4 8d8e 8ed8 9192
+[bcmPWN.0]Packet[2]: data[0090]: 92dc 9596 96e0 999a 9ae4 9d9e 9ee8 a1a2
+[bcmPWN.0]Packet[2]: data[00a0]: a2ec a5a6 a6f0 a9aa aaf4 adae aef8 b1b2
+[bcmPWN.0]Packet[2]: data[00b0]: b2fc b5b6 b700 b9ba bb04 bdbe bf08 c1c2
+[bcmPWN.0]Packet[2]: data[00c0]: c30c c5c6 c710 c9ca cb14 cdce cf18 d1d2
+[bcmPWN.0]Packet[2]: data[00d0]: d31c d5d6 d720 d9da db24 ddde df28 e1e2
+[bcmPWN.0]Packet[2]: data[00e0]: e32c e5e6 e730 e9ea eb34 edee ef38 f1f2
+[bcmPWN.0]Packet[2]: data[00f0]: f33c f5f6 f740 f9fa fb44 fdfe ff48 0203
+[bcmPWN.0]Packet[2]: data[0100]: 034c 0607 0750 0a0b 0b54 0e0f 0f58 1213
+[bcmPWN.0]Packet[2]: data[0110]: 135c 1617 1760 1a1b 1b64 1e1f 1f68 2223
+[bcmPWN.0]Packet[2]: data[0120]: 236c 2627 2770 2a2b 2b74 2e2f 2f78 3233
+[bcmPWN.0]Packet[2]: data[0130]: 337c 3637 3780 3a3b 3b84 3e3f 3f88 4243
+[bcmPWN.0]Packet[2]: data[0140]: 438c 4647 4790 4a4b 4b94 4e4f 4f98 5253
+[bcmPWN.0]Packet[2]: data[0150]: 539c 5657 57a0 5a5b 5ba4 5e5f 5fa8 6263
+[bcmPWN.0]Packet[2]: data[0160]: 63ac 6667 67b0 6a6b 6bb4 6e6f 6fb8 7273
+[bcmPWN.0]Packet[2]: data[0170]: 73bc 7677 77c0 7a7b 7bc4 7e7f 7fc8 8283
+[bcmPWN.0]Packet[2]: data[0180]: 83cc 8687 87d0 8a8b 8bd4 8e8f 8fd8 9293
+[bcmPWN.0]Packet[2]: data[0190]: 93dc 9697 97e0 9a9b 9be4 9e9f 9fe8 a2a3
+[bcmPWN.0]Packet[2]: data[01a0]: a3ec a6a7 a7f0 aaab abf4 aeaf aff8 b2b3
+[bcmPWN.0]Packet[2]: data[01b0]: b3fc b6b7 b800 babb bc04 bebf c008 c2c3
+[bcmPWN.0]Packet[2]: data[01c0]: c40c c6c7 c810 cacb cc14 cecf d018 d2d3
+[bcmPWN.0]Packet[2]: data[01d0]: d41c d6d7 d820 dadb dc24 dedf e028 e2e3
+[bcmPWN.0]Packet[2]: data[01e0]: e42c e6e7 e830 eaeb ec34 eeef f038 f2f3
+[bcmPWN.0]Packet[2]: data[01f0]: f43c f6f7 f840 fafb fc44 ff00 0048 0304
+[bcmPWN.0]
+
+[RX metadata information]
+  PKT_LENGTH=0x204
+  SRC_PORT_NUM=0x34
+  OUTER_VID=0xc0
+  OUTER_PRI=4
+  TIMESTAMP_TYPE=3
+  SWITCH=1
+  ING_TAG_TYPE=1
+[Higig2 fields]
+  START=0xfb
+  MCST=1
+  TC=4
+  DST_PORT_MGIDL=0xc0
+  SRC_PORT=0x34
+  CC=1
+  PPD_TYPE=0
+  PPD0_INGRESS_TAGGED=1
+  PPD0_VID_HIGH=0x80
+  PPD0_VID_LOW=0xc0
+  PPD0_PRESERVE_DOT1P=1
+  PPD0_OPCODE=2
+[RX reasons]
+  CPU_SFLOW
+  CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:02:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x80c0> 802.3 Packet
+Packet[2]:   IP: V(0) src<33.34.34.108> dst<37.38.38.112> hl<0> service-type<0> tl<0> id<0> frg-off<47183> ttl<29> > chk-sum<0x1e68>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {000000000202} {000000000001} 8100 80c0
+[bcmPWN.0]Packet[3]: data[0010]: 01ee 0000 0000 0000 b84f 0304 044c 0708
+[bcmPWN.0]Packet[3]: data[0020]: 0850 0b0c 0c54 0f10 1058 1314 145c 1718
+[bcmPWN.0]Packet[3]: data[0030]: 1860 1b1c 1c64 1f20 2068 2324 246c 2728
+[bcmPWN.0]Packet[3]: data[0040]: 2870 2b2c 2c74 2f30 3078 3334 347c 3738
+[bcmPWN.0]Packet[3]: data[0050]: 3880 3b3c 3c84 3f40 4088 4344 448c 4748
+[bcmPWN.0]Packet[3]: data[0060]: 4890 4b4c 4c94 4f50 5098 5354 549c 5758
+[bcmPWN.0]Packet[3]: data[0070]: 58a0 5b5c 5ca4 5f60 60a8 6364 64ac 6768
+[bcmPWN.0]Packet[3]: data[0080]: 68b0 6b6c 6cb4 6f70 70b8 7374 74bc 7778
+[bcmPWN.0]Packet[3]: data[0090]: 78c0 7b7c 7cc4 7f80 80c8 8384 84cc 8788
+[bcmPWN.0]Packet[3]: data[00a0]: 88d0 8b8c 8cd4 8f90 90d8 9394 94dc 9798
+[bcmPWN.0]Packet[3]: data[00b0]: 98e0 9b9c 9ce4 9fa0 a0e8 a3a4 a4ec a7a8
+[bcmPWN.0]Packet[3]: data[00c0]: a8f0 abac acf4 afb0 b0f8 b3b4 b4fc b7b8
+[bcmPWN.0]Packet[3]: data[00d0]: b900 bbbc bd04 bfc0 c108 c3c4 c50c c7c8
+[bcmPWN.0]Packet[3]: data[00e0]: c910 cbcc cd14 cfd0 d118 d3d4 d51c d7d8
+[bcmPWN.0]Packet[3]: data[00f0]: d920 dbdc dd24 dfe0 e128 e3e4 e52c e7e8
+[bcmPWN.0]Packet[3]: data[0100]: e930 ebec ed34 eff0 f138 f3f4 f53c f7f8
+[bcmPWN.0]Packet[3]: data[0110]: f940 fbfc fd44 0001 0148 0405 054c 0809
+[bcmPWN.0]Packet[3]: data[0120]: 0950 0c0d 0d54 1011 1158 1415 155c 1819
+[bcmPWN.0]Packet[3]: data[0130]: 1960 1c1d 1d64 2021 2168 2425 256c 2829
+[bcmPWN.0]Packet[3]: data[0140]: 2970 2c2d 2d74 3031 3178 3435 357c 3839
+[bcmPWN.0]Packet[3]: data[0150]: 3980 3c3d 3d84 4041 4188 4445 458c 4849
+[bcmPWN.0]Packet[3]: data[0160]: 4990 4c4d 4d94 5051 5198 5455 559c 5859
+[bcmPWN.0]Packet[3]: data[0170]: 59a0 5c5d 5da4 6061 61a8 6465 65ac 6869
+[bcmPWN.0]Packet[3]: data[0180]: 69b0 6c6d 6db4 7071 71b8 7475 75bc 7879
+[bcmPWN.0]Packet[3]: data[0190]: 79c0 7c7d 7dc4 8081 81c8 8485 85cc 8889
+[bcmPWN.0]Packet[3]: data[01a0]: 89d0 8c8d 8dd4 9091 91d8 9495 95dc 9899
+[bcmPWN.0]Packet[3]: data[01b0]: 99e0 9c9d 9de4 a0a1 a1e8 a4a5 a5ec a8a9
+[bcmPWN.0]Packet[3]: data[01c0]: a9f0 acad adf4 b0b1 b1f8 b4b5 b5fc b8b9
+[bcmPWN.0]Packet[3]: data[01d0]: ba00 bcbd be04 c0c1 c208 c4c5 c60c c8c9
+[bcmPWN.0]Packet[3]: data[01e0]: ca10 cccd ce14 d0d1 d218 d4d5 d61c d8d9
+[bcmPWN.0]Packet[3]: data[01f0]: da20 dcdd de24 e0e1 e228 e4e5 e62c e8e9
+[bcmPWN.0]
+
+[RX metadata information]
+  PKT_LENGTH=0x204
+  SRC_PORT_NUM=0x34
+  OUTER_VID=0xc0
+  OUTER_PRI=4
+  TIMESTAMP_TYPE=3
+  SWITCH=1
+  ING_TAG_TYPE=1
+[Higig2 fields]
+  START=0xfb
+  MCST=1
+  TC=4
+  DST_PORT_MGIDL=0xc0
+  SRC_PORT=0x34
+  CC=1
+  PPD_TYPE=0
+  PPD0_INGRESS_TAGGED=1
+  PPD0_VID_HIGH=0x80
+  PPD0_VID_LOW=0xc0
+  PPD0_PRESERVE_DOT1P=1
+  PPD0_OPCODE=2
+[RX reasons]
+  CPU_SFLOW
+  CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:02:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x80c0> 802.3 Packet
+Packet[3]:   IP: V(0) src<7.8.8.80> dst<11.12.12.84> hl<0> service-type<0> tl<0> id<0> frg-off<47183> ttl<3> > chk-sum<0x044c>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {000000000202} {000000000001} 8100 80c0
+[bcmPWN.0]Packet[4]: data[0010]: 01ee 0000 0000 0000 b84f 0304 044c 0708
+[bcmPWN.0]Packet[4]: data[0020]: 0850 0b0c 0c54 0f10 1058 1314 145c 1718
+[bcmPWN.0]Packet[4]: data[0030]: 1860 1b1c 1c64 1f20 2068 2324 246c 2728
+[bcmPWN.0]Packet[4]: data[0040]: 2870 2b2c 2c74 2f30 3078 3334 347c 3738
+[bcmPWN.0]Packet[4]: data[0050]: 3880 3b3c 3c84 3f40 4088 4344 448c 4748
+[bcmPWN.0]Packet[4]: data[0060]: 4890 4b4c 4c94 4f50 5098 5354 549c 5758
+[bcmPWN.0]Packet[4]: data[0070]: 58a0 5b5c 5ca4 5f60 60a8 6364 64ac 6768
+[bcmPWN.0]Packet[4]: data[0080]: 68b0 6b6c 6cb4 6f70 70b8 7374 74bc 7778
+[bcmPWN.0]Packet[4]: data[0090]: 78c0 7b7c 7cc4 7f80 80c8 8384 84cc 8788
+[bcmPWN.0]Packet[4]: data[00a0]: 88d0 8b8c 8cd4 8f90 90d8 9394 94dc 9798
+[bcmPWN.0]Packet[4]: data[00b0]: 98e0 9b9c 9ce4 9fa0 a0e8 a3a4 a4ec a7a8
+[bcmPWN.0]Packet[4]: data[00c0]: a8f0 abac acf4 afb0 b0f8 b3b4 b4fc b7b8
+[bcmPWN.0]Packet[4]: data[00d0]: b900 bbbc bd04 bfc0 c108 c3c4 c50c c7c8
+[bcmPWN.0]Packet[4]: data[00e0]: c910 cbcc cd14 cfd0 d118 d3d4 d51c d7d8
+[bcmPWN.0]Packet[4]: data[00f0]: d920 dbdc dd24 dfe0 e128 e3e4 e52c e7e8
+[bcmPWN.0]Packet[4]: data[0100]: e930 ebec ed34 eff0 f138 f3f4 f53c f7f8
+[bcmPWN.0]Packet[4]: data[0110]: f940 fbfc fd44 0001 0148 0405 054c 0809
+[bcmPWN.0]Packet[4]: data[0120]: 0950 0c0d 0d54 1011 1158 1415 155c 1819
+[bcmPWN.0]Packet[4]: data[0130]: 1960 1c1d 1d64 2021 2168 2425 256c 2829
+[bcmPWN.0]Packet[4]: data[0140]: 2970 2c2d 2d74 3031 3178 3435 357c 3839
+[bcmPWN.0]Packet[4]: data[0150]: 3980 3c3d 3d84 4041 4188 4445 458c 4849
+[bcmPWN.0]Packet[4]: data[0160]: 4990 4c4d 4d94 5051 5198 5455 559c 5859
+[bcmPWN.0]Packet[4]: data[0170]: 59a0 5c5d 5da4 6061 61a8 6465 65ac 6869
+[bcmPWN.0]Packet[4]: data[0180]: 69b0 6c6d 6db4 7071 71b8 7475 75bc 7879
+[bcmPWN.0]Packet[4]: data[0190]: 79c0 7c7d 7dc4 8081 81c8 8485 85cc 8889
+[bcmPWN.0]Packet[4]: data[01a0]: 89d0 8c8d 8dd4 9091 91d8 9495 95dc 9899
+[bcmPWN.0]Packet[4]: data[01b0]: 99e0 9c9d 9de4 a0a1 a1e8 a4a5 a5ec a8a9
+[bcmPWN.0]Packet[4]: data[01c0]: a9f0 acad adf4 b0b1 b1f8 b4b5 b5fc b8b9
+[bcmPWN.0]Packet[4]: data[01d0]: ba00 bcbd be04 c0c1 c208 c4c5 c60c c8c9
+[bcmPWN.0]Packet[4]: data[01e0]: ca10 cccd ce14 d0d1 d218 d4d5 d61c d8d9
+[bcmPWN.0]Packet[4]: data[01f0]: da20 dcdd de24 e0e1 e228 e4e5 e62c e8e9
+[bcmPWN.0]
+
+[RX metadata information]
+  PKT_LENGTH=0x204
+  SRC_PORT_NUM=0x34
+  OUTER_VID=0xc0
+  OUTER_PRI=4
+  TIMESTAMP_TYPE=3
+  SWITCH=1
+  ING_TAG_TYPE=1
+[Higig2 fields]
+  START=0xfb
+  MCST=1
+  TC=4
+  DST_PORT_MGIDL=0xc0
+  SRC_PORT=0x34
+  CC=1
+  PPD_TYPE=0
+  PPD0_INGRESS_TAGGED=1
+  PPD0_VID_HIGH=0x80
+  PPD0_VID_LOW=0xc0
+  PPD0_PRESERVE_DOT1P=1
+  PPD0_OPCODE=2
+[RX reasons]
+  CPU_SFLOW
+  CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:02:02> src<00:00:00:00:00:01> Tagged Packet ProtID<0x8100> Ctrl<0x80c0> 802.3 Packet
+Packet[4]:   IP: V(0) src<7.8.8.80> dst<11.12.12.84> hl<0> service-type<0> tl<0> id<0> frg-off<47183> ttl<3> > chk-sum<0x044c>
+XLMIB_TBYT.cd12                       :                53,664             +53,664
+XLMIB_RBYT.cd12                       :                53,664             +53,664
+XLMIB_TPOK.cd12                       :                   104                +104
+XLMIB_RPOK.cd12                       :                   104                +104
+XLMIB_TVLN.cd12                       :                   104                +104
+XLMIB_RVLN.cd12                       :                   104                +104
+XLMIB_TUCA.cd12                       :                   104                +104
+XLMIB_RUCA.cd12                       :                   104                +104
+XLMIB_TPKT.cd12                       :                   104                +104
+XLMIB_RPKT.cd12                       :                   104                +104
+XLMIB_T1023.cd12                      :                   104                +104
+XLMIB_R1023.cd12                      :                   104                +104
+XLMIB_RPRM.cd12                       :                   104                +104
+RUC_64.cd12                           :                   104                +104
+RDBGC0_64.cd12                        :                    98                 +98
+XLMIB_TBYT.cd13                       :                 3,096              +3,096
+XLMIB_RBYT.cd13                       :                 2,064              +2,064
+XLMIB_TPOK.cd13                       :                     6                  +6
+XLMIB_RPOK.cd13                       :                     4                  +4
+XLMIB_TVLN.cd13                       :                     6                  +6
+XLMIB_RVLN.cd13                       :                     4                  +4
+XLMIB_TUCA.cd13                       :                     6                  +6
+XLMIB_RUCA.cd13                       :                     4                  +4
+XLMIB_TPKT.cd13                       :                     6                  +6
+XLMIB_RPKT.cd13                       :                     4                  +4
+XLMIB_T1023.cd13                      :                     6                  +6
+XLMIB_R1023.cd13                      :                     4                  +4
+XLMIB_RPRM.cd13                       :                     4                  +4
+RUC_64.cd13                           :                     4                  +4
+SFLOW_ING_DATA_SOURCEm.cd13           :                     4                  +4
+SFLOW_ING_DATA_SOURCEm.cd13           :                     4                  +4
+SFLOW_ING_DATA_SOURCEm.cd13           :                     4                  +4
+
+-------------------------------------
+    RESULT OF RX PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

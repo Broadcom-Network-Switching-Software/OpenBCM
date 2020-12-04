@@ -1,0 +1,37 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport BASIC RC (run commands) file
+#
+#       These are default commands that are for TechSupport BASIC.
+#
+
+# Show a current list of attached devices.
+attach
+
+# Show current build status.
+version
+
+# Display current variable list.
+printenv
+
+# Show packet rx/tx statistics.
+show counters
+
+# Show the linkscan status.
+linkscan
+
+# Show the port status.
+portstat
+
+# Show switch control status.
+switchcontrol
+
+# Show features.
+show features
+
+# Show configuration.
+dump sw config
+bsh -c "config"

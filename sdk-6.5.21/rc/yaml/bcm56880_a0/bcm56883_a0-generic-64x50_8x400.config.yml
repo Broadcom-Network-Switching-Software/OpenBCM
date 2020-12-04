@@ -1,0 +1,559 @@
+#
+# BCM56883
+# Core Clock 1350MHZ, PP Clock 950MHZ
+# 64x50g+8x400G port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+
+---
+device:
+    0:
+        DEVICE_CONFIG:
+            # CORE CLOCK FREQUENCY
+            CORE_CLK_FREQ: CLK_1350MHZ
+            # PP CLOCK FREQUENCY
+            PP_CLK_FREQ: CLK_950MHZ
+...
+---
+device:
+    0:
+        PC_PM_CORE:
+            ?
+                PC_PM_ID: 1
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x03652147
+                TX_LANE_MAP: 0x47216503
+                RX_POLARITY_FLIP: 0x55
+                TX_POLARITY_FLIP: 0x00
+            ?
+                PC_PM_ID: 2
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x47152036
+                TX_LANE_MAP: 0x21450367
+                RX_POLARITY_FLIP: 0x7c
+                TX_POLARITY_FLIP: 0x65
+            ?
+                PC_PM_ID: 4
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x76105432
+                TX_LANE_MAP: 0x01673245
+                RX_POLARITY_FLIP: 0x65
+                TX_POLARITY_FLIP: 0x30
+            ?
+                PC_PM_ID: 6
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x76105432
+                TX_LANE_MAP: 0x67014532
+                RX_POLARITY_FLIP: 0x30
+                TX_POLARITY_FLIP: 0x3f
+            ?
+                PC_PM_ID: 8
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x67014523
+                TX_LANE_MAP: 0x01673245
+                RX_POLARITY_FLIP: 0x9a
+                TX_POLARITY_FLIP: 0x30
+            ?
+                PC_PM_ID: 9
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x10753264
+                TX_LANE_MAP: 0x10673254
+                RX_POLARITY_FLIP: 0x3f
+                TX_POLARITY_FLIP: 0xcf
+            ?
+                PC_PM_ID: 11
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x01572346
+                TX_LANE_MAP: 0x67105432
+                RX_POLARITY_FLIP: 0x95
+                TX_POLARITY_FLIP: 0xc0
+            ?
+                PC_PM_ID: 13
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x01572346
+                TX_LANE_MAP: 0x10673254
+                RX_POLARITY_FLIP: 0xc0
+                TX_POLARITY_FLIP: 0xcf
+            ?
+                PC_PM_ID: 15
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x76420531
+                TX_LANE_MAP: 0x46015723
+                RX_POLARITY_FLIP: 0xff
+                TX_POLARITY_FLIP: 0x60
+            ?
+                PC_PM_ID: 16
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x67014523
+                TX_LANE_MAP: 0x67014523
+                RX_POLARITY_FLIP: 0x00
+                TX_POLARITY_FLIP: 0x00
+            ?
+                PC_PM_ID: 17
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x01672345
+                TX_LANE_MAP: 0x67014523
+                RX_POLARITY_FLIP: 0xaa
+                TX_POLARITY_FLIP: 0x00
+            ?
+                PC_PM_ID: 18
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x42763105
+                TX_LANE_MAP: 0x46015723
+                RX_POLARITY_FLIP: 0x55
+                TX_POLARITY_FLIP: 0x64
+            ?
+                PC_PM_ID: 20
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x57014623
+                TX_LANE_MAP: 0x10673254
+                RX_POLARITY_FLIP: 0x9a
+                TX_POLARITY_FLIP: 0xcf
+            ?
+                PC_PM_ID: 22
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x57014623
+                TX_LANE_MAP: 0x67105432
+                RX_POLARITY_FLIP: 0xcf
+                TX_POLARITY_FLIP: 0xc0
+            ?
+                PC_PM_ID: 24
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x75106432
+                TX_LANE_MAP: 0x10673254
+                RX_POLARITY_FLIP: 0x65
+                TX_POLARITY_FLIP: 0xcf
+            ?
+                PC_PM_ID: 25
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x01672345
+                TX_LANE_MAP: 0x01673245
+                RX_POLARITY_FLIP: 0xc0
+                TX_POLARITY_FLIP: 0x30
+            ?
+                PC_PM_ID: 27
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x10763254
+                TX_LANE_MAP: 0x67014532
+                RX_POLARITY_FLIP: 0x6a
+                TX_POLARITY_FLIP: 0x3f
+            ?
+                PC_PM_ID: 29
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x10763254
+                TX_LANE_MAP: 0x01673245
+                RX_POLARITY_FLIP: 0x3f
+                TX_POLARITY_FLIP: 0x30
+            ?
+                PC_PM_ID: 31
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x15473620
+                TX_LANE_MAP: 0x45216703
+                RX_POLARITY_FLIP: 0x0c
+                TX_POLARITY_FLIP: 0x6a
+            ?
+                PC_PM_ID: 32
+                CORE_INDEX: 0
+            :
+                RX_LANE_MAP: 0x65034721
+                TX_LANE_MAP: 0x21470365
+                RX_POLARITY_FLIP: 0xaa
+                TX_POLARITY_FLIP: 0xff
+...
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                PORT_ID: 1                       # Pipe0
+            :
+                PC_PHYS_PORT_ID: 1
+            ?
+                PORT_ID: 2
+            :
+                PC_PHYS_PORT_ID: 2
+            ?
+                PORT_ID: 3
+            :
+                PC_PHYS_PORT_ID: 3
+            ?
+                PORT_ID: 4
+            :
+                PC_PHYS_PORT_ID: 4
+            ?
+                PORT_ID: 9
+            :
+                PC_PHYS_PORT_ID: 9
+            ?
+                PORT_ID: 10
+            :
+                PC_PHYS_PORT_ID: 25
+            ?
+                PORT_ID: 11
+            :
+                PC_PHYS_PORT_ID: 26
+            ?
+                PORT_ID: 12
+            :
+                PC_PHYS_PORT_ID: 27
+            ?
+                PORT_ID: 13
+            :
+                PC_PHYS_PORT_ID: 28
+            ?
+                PORT_ID: 20                      # Pipe1
+            :
+                PC_PHYS_PORT_ID: 41
+            ?
+                PORT_ID: 21
+            :
+                PC_PHYS_PORT_ID: 42
+            ?
+                PORT_ID: 22
+            :
+                PC_PHYS_PORT_ID: 43
+            ?
+                PORT_ID: 23
+            :
+                PC_PHYS_PORT_ID: 44
+            ?
+                PORT_ID: 24
+            :
+                PC_PHYS_PORT_ID: 45
+            ?
+                PORT_ID: 25
+            :
+                PC_PHYS_PORT_ID: 46
+            ?
+                PORT_ID: 26
+            :
+                PC_PHYS_PORT_ID: 47
+            ?
+                PORT_ID: 27
+            :
+                PC_PHYS_PORT_ID: 48
+            ?
+                PORT_ID: 28
+            :
+                PC_PHYS_PORT_ID: 57
+            ?
+                PORT_ID: 40                      # Pipe2
+            :
+                PC_PHYS_PORT_ID: 65
+            ?
+                PORT_ID: 41
+            :
+                PC_PHYS_PORT_ID: 66
+            ?
+                PORT_ID: 42
+            :
+                PC_PHYS_PORT_ID: 67
+            ?
+                PORT_ID: 43
+            :
+                PC_PHYS_PORT_ID: 68
+            ?
+                PORT_ID: 44
+            :
+                PC_PHYS_PORT_ID: 69
+            ?
+                PORT_ID: 45
+            :
+                PC_PHYS_PORT_ID: 70
+            ?
+                PORT_ID: 46
+            :
+                PC_PHYS_PORT_ID: 71
+            ?
+                PORT_ID: 47
+            :
+                PC_PHYS_PORT_ID: 72
+            ?
+                PORT_ID: 48
+            :
+                PC_PHYS_PORT_ID: 81
+            ?
+                PORT_ID: 60                       # Pipe3
+            :
+                PC_PHYS_PORT_ID: 97
+            ?
+                PORT_ID: 61
+            :
+                PC_PHYS_PORT_ID: 98
+            ?
+                PORT_ID: 62
+            :
+                PC_PHYS_PORT_ID: 99
+            ?
+                PORT_ID: 63
+            :
+                PC_PHYS_PORT_ID: 100
+            ?
+                PORT_ID: 68
+            :
+                PC_PHYS_PORT_ID: 113
+            ?
+                PORT_ID: 69
+            :
+                PC_PHYS_PORT_ID: 121
+            ?
+                PORT_ID: 70
+            :
+                PC_PHYS_PORT_ID: 122
+            ?
+                PORT_ID: 71
+            :
+                PC_PHYS_PORT_ID: 123
+            ?
+                PORT_ID: 72
+            :
+                PC_PHYS_PORT_ID: 124
+            ?
+                PORT_ID: 80                       # Pipe4
+            :
+                PC_PHYS_PORT_ID: 129
+            ?
+                PORT_ID: 81
+            :
+                PC_PHYS_PORT_ID: 130
+            ?
+                PORT_ID: 82
+            :
+                PC_PHYS_PORT_ID: 131
+            ?
+                PORT_ID: 83
+            :
+                PC_PHYS_PORT_ID: 132
+            ?
+                PORT_ID: 88
+            :
+                PC_PHYS_PORT_ID: 137
+            ?
+                PORT_ID: 89
+            :
+                PC_PHYS_PORT_ID: 153
+            ?
+                PORT_ID: 90
+            :
+                PC_PHYS_PORT_ID: 154
+            ?
+                PORT_ID: 91
+            :
+                PC_PHYS_PORT_ID: 155
+            ?
+                PORT_ID: 92
+            :
+                PC_PHYS_PORT_ID: 156
+            ?
+                PORT_ID: 100                    # Pipe5
+            :
+                PC_PHYS_PORT_ID: 169
+            ?
+                PORT_ID: 101
+            :
+                PC_PHYS_PORT_ID: 170
+            ?
+                PORT_ID: 102
+            :
+                PC_PHYS_PORT_ID: 171
+            ?
+                PORT_ID: 103
+            :
+                PC_PHYS_PORT_ID: 172
+            ?
+                PORT_ID: 104
+            :
+                PC_PHYS_PORT_ID: 173
+            ?
+                PORT_ID: 105
+            :
+                PC_PHYS_PORT_ID: 174
+            ?
+                PORT_ID: 106
+            :
+                PC_PHYS_PORT_ID: 175
+            ?
+                PORT_ID: 107
+            :
+                PC_PHYS_PORT_ID: 176
+            ?
+                PORT_ID: 108
+            :
+                PC_PHYS_PORT_ID: 185
+            ?
+                PORT_ID: 120                   # Pipe6
+            :
+                PC_PHYS_PORT_ID: 193
+            ?
+                PORT_ID: 121
+            :
+                PC_PHYS_PORT_ID: 194
+            ?
+                PORT_ID: 122
+            :
+                PC_PHYS_PORT_ID: 195
+            ?
+                PORT_ID: 123
+            :
+                PC_PHYS_PORT_ID: 196
+            ?
+                PORT_ID: 124
+            :
+                PC_PHYS_PORT_ID: 197
+            ?
+                PORT_ID: 125
+            :
+                PC_PHYS_PORT_ID: 198
+            ?
+                PORT_ID: 126
+            :
+                PC_PHYS_PORT_ID: 199
+            ?
+                PORT_ID: 127
+            :
+                PC_PHYS_PORT_ID: 200
+            ?
+                PORT_ID: 128
+            :
+                PC_PHYS_PORT_ID: 209
+            ?
+                PORT_ID: 140                   # Pipe7
+            :
+                PC_PHYS_PORT_ID: 225
+            ?
+                PORT_ID: 141
+            :
+                PC_PHYS_PORT_ID: 226
+            ?
+                PORT_ID: 142
+            :
+                PC_PHYS_PORT_ID: 227
+            ?
+                PORT_ID: 143
+            :
+                PC_PHYS_PORT_ID: 228
+            ?
+                PORT_ID: 148
+            :
+                PC_PHYS_PORT_ID: 241
+            ?
+                PORT_ID: 149
+            :
+                PC_PHYS_PORT_ID: 249
+            ?
+                PORT_ID: 150
+            :
+                PC_PHYS_PORT_ID: 250
+            ?
+                PORT_ID: 151
+            :
+                PC_PHYS_PORT_ID: 251
+            ?
+                PORT_ID: 152
+            :
+                PC_PHYS_PORT_ID: 252
+            ?
+                # Management port 0 (Pipe 1)
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 257
+            ?
+                # Management port 3 (Pipe 7)
+                PORT_ID: 158
+            :
+                PC_PHYS_PORT_ID: 260
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: 0
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [[1, 4], [10, 13],
+                          [20, 27], [40, 47],
+                          [60, 63], [69, 72],
+                          [80, 83], [89, 92],
+                          [100, 107], [120, 127],
+                          [140, 143], [149, 152]]
+            :
+                ENABLE: 1
+                SPEED: 50000
+                NUM_LANES: 1
+                FEC_MODE: PC_FEC_RS528
+                MAX_FRAME_SIZE: 0x3fe8
+            ?
+                PORT_ID: [9,
+                          28,
+                          48,
+                          68,
+                          88,
+                          108,
+                          128,
+                          148]
+
+            :
+                ENABLE: 1
+                SPEED: 400000
+                NUM_LANES: 8
+                FEC_MODE: PC_FEC_RS544_2XN
+                MAX_FRAME_SIZE: 0x3fe8
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          158]    # Management port 3 (Pipe 7)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 0x3fe8
+...
+---
+device:
+    0:
+        TM_SCHEDULER_CONFIG:
+            NUM_MC_Q: NUM_MC_Q_4
+...

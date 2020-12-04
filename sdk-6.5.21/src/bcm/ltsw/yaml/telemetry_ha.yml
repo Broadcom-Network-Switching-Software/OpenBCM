@@ -1,0 +1,94 @@
+#
+# file: telemetry_ha.yml
+# TELEMETRY YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   BCMI_TELEMETRY_PORT_NAME_SIZE: 10
+   BCMI_TELEMETRY_BITWID: 32
+   BCMI_TELEMETRY_MAX_OBJECTS:   0x00000100
+   BCMI_TELEMETRY_HA_OBJ_BMP_SIZE:  (((BCMI_TELEMETRY_MAX_OBJECTS) + BCMI_TELEMETRY_BITWID - 1) / BCMI_TELEMETRY_BITWID)
+   BCMI_TELEMETRY_MAX_INSTANCES:   0x00000001
+   BCMI_TELEMETRY_HA_INST_BMP_SIZE:  (((BCMI_TELEMETRY_MAX_INSTANCES) + BCMI_TELEMETRY_BITWID - 1) / BCMI_TELEMETRY_BITWID)
+   BCMI_TELEMETRY_OBJ_TYPE_SIZE: 6
+
+component:
+    bcmi_telemetry:
+        bcmi_telemetry_obj_id_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMI_TELEMETRY_HA_OBJ_BMP_SIZE
+                    comment: Object ID bitmap array.
+        bcmi_telemetry_inst_idx_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMI_TELEMETRY_HA_INST_BMP_SIZE
+                    comment: Instance index bitmap array.
+        bcmi_telemetry_obj_type_t:
+           type: enum
+           attrib:
+                version: 1
+           fields:
+               BCMI_TELEMETRY_OBJ_TYPE_NONE: 0
+               BCMI_TELEMETRY_OBJ_TYPE_INTF_INGRESS: 1
+               BCMI_TELEMETRY_OBJ_TYPE_INTF_EGRESS: 2
+               BCMI_TELEMETRY_OBJ_TYPE_INTF_EGRESS_QUEUE: 3
+               BCMI_TELEMETRY_OBJ_TYPE_INTF_INGRESS_ERROR: 4
+               BCMI_TELEMETRY_OBJ_TYPE_METADATA: 5
+               BCMI_TELEMETRY_OBJ_TYPE_COUNT: 6
+           comment: Object type values.
+        bcmi_telemetry_config_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                obj_type:
+                    type: bcmi_telemetry_obj_type_t
+                    length: BCMI_TELEMETRY_OBJ_TYPE_SIZE
+                    comment: Type of stats need to be collected.
+                component_id:
+                    type: uint32_t
+                    comment: Component ID of the port.
+                gport:
+                    type: int
+                    comment: Port to be used to collect statistics.
+                port_name:
+                    type: uint8_t
+                    length: BCMI_TELEMETRY_PORT_NAME_SIZE
+                    comment: Port name array size.
+        bcmi_telemetry_ha_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                object_id_bmp:
+                    type: bcmi_telemetry_obj_id_bmp_t
+                    comment: Bitmap of configured object ids.
+                instance_idx_bmp:
+                    type: bcmi_telemetry_inst_idx_bmp_t
+                    comment: Bitmap of configured instance indexes.
+                instance_id_to_idx_map:
+                    type: int
+                    length: BCMI_TELEMETRY_MAX_INSTANCES
+                    comment: Instance ID to internal index mapping.
+                config_count:
+                    type: int
+                    comment: Number of configuration objects.
+                telemetry_config:
+                    type: bcmi_telemetry_config_t
+                    length: BCMI_TELEMETRY_MAX_OBJECTS
+                    comment: List of telemetry config objects.

@@ -1,0 +1,1236 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+echo "testsuite: started: sanity"
+# We need to print out port status since any cabling effects results.
+*:ps
+# Avoid link messages while testing
+linkscan off
+
+# Use expected COS configuration for test
+#config add bcm_num_cos=4
+
+init
+init misc
+
+local done 'echo "   Done"'
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Deselect all
+ts -*
+
+# Display some useful information
+date
+ver
+soc
+
+# Start Test
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+init soc;
+# Clean up after register read/write test.
+
+echo "Running CPU Benchmarks ..."
+tr 21
+$done
+
+echo "Running Switching Memory tests ..."
+echo "  ALTERNATE_EMIRROR_BITMAP"
+tr 50 M=ALTERNATE_EMIRROR_BITMAP
+tr 51 M=ALTERNATE_EMIRROR_BITMAP
+tr 52 M=ALTERNATE_EMIRROR_BITMAP
+echo "  DSCP_TABLE"
+tr 50 M=DSCP_TABLE
+tr 51 M=DSCP_TABLE
+tr 52 M=DSCP_TABLE
+echo "  E2E_HOL_STATUS"
+tr 50 M=E2E_HOL_STATUS
+tr 51 M=E2E_HOL_STATUS
+tr 52 M=E2E_HOL_STATUS
+echo "  EGR_DSCP_ECN_MAP"
+tr 50 M=EGR_DSCP_ECN_MAP
+tr 51 M=EGR_DSCP_ECN_MAP
+tr 52 M=EGR_DSCP_ECN_MAP
+echo "  EGR_DSCP_TABLE"
+tr 50 M=EGR_DSCP_TABLE
+tr 51 M=EGR_DSCP_TABLE
+tr 52 M=EGR_DSCP_TABLE
+echo "  EGR_EM_MTP_INDEX"
+tr 50 M=EGR_EM_MTP_INDEX
+tr 51 M=EGR_EM_MTP_INDEX
+tr 52 M=EGR_EM_MTP_INDEX
+echo "  EGR_IM_MTP_INDEX"
+tr 50 M=EGR_IM_MTP_INDEX
+tr 51 M=EGR_IM_MTP_INDEX
+tr 52 M=EGR_IM_MTP_INDEX
+echo "  EGR_IP_TUNNEL"
+tr 50 M=EGR_IP_TUNNEL
+tr 51 M=EGR_IP_TUNNEL
+tr 52 M=EGR_IP_TUNNEL
+echo "  EGR_L3_INTF"
+tr 50 M=EGR_L3_INTF
+tr 51 M=EGR_L3_INTF
+tr 52 M=EGR_L3_INTF
+echo "  EGR_L3_NEXT_HOP"
+tr 50 M=EGR_L3_NEXT_HOP
+tr 51 M=EGR_L3_NEXT_HOP
+tr 52 M=EGR_L3_NEXT_HOP
+echo "  EGRESS_MASK"
+tr 50 M=EGRESS_MASK
+tr 51 M=EGRESS_MASK
+tr 52 M=EGRESS_MASK
+echo "  EGR_MOD_MAP"
+tr 50 M=EGR_MOD_MAP
+tr 51 M=EGR_MOD_MAP
+tr 52 M=EGR_MOD_MAP
+echo "  EGR_VLAN"
+tr 50 M=EGR_VLAN
+tr 51 M=EGR_VLAN
+tr 52 M=EGR_VLAN
+echo "  EGR_VLAN_STG"
+tr 50 M=EGR_VLAN_STG
+tr 51 M=EGR_VLAN_STG
+tr 52 M=EGR_VLAN_STG
+echo "  EGR_VLAN_XLATE"
+tr 50 M=EGR_VLAN_XLATE
+tr 51 M=EGR_VLAN_XLATE
+tr 52 M=EGR_VLAN_XLATE
+echo "  EGR_VLAN_XLATE_DATA_ONLY"
+tr 50 M=EGR_VLAN_XLATE_DATA_ONLY
+tr 51 M=EGR_VLAN_XLATE_DATA_ONLY
+tr 52 M=EGR_VLAN_XLATE_DATA_ONLY
+echo "  EGR_VLAN_XLATE_MASK"
+tr 50 M=EGR_VLAN_XLATE_MASK
+tr 51 M=EGR_VLAN_XLATE_MASK
+tr 52 M=EGR_VLAN_XLATE_MASK
+echo "  EGR_VLAN_XLATE_ONLY"
+tr 50 M=EGR_VLAN_XLATE_ONLY
+tr 51 M=EGR_VLAN_XLATE_ONLY
+tr 52 M=EGR_VLAN_XLATE_ONLY
+echo "  EM_MTP_INDEX"
+tr 50 M=EM_MTP_INDEX
+tr 51 M=EM_MTP_INDEX
+tr 52 M=EM_MTP_INDEX
+echo "  FP_COUNTER_TABLE"
+tr 50 M=FP_COUNTER_TABLE
+tr 51 M=FP_COUNTER_TABLE
+tr 52 M=FP_COUNTER_TABLE
+echo "  FP_COUNTER_TABLE_X"
+tr 50 M=FP_COUNTER_TABLE_X
+tr 51 M=FP_COUNTER_TABLE_X
+tr 52 M=FP_COUNTER_TABLE_X
+echo "  FP_COUNTER_TABLE_Y"
+tr 50 M=FP_COUNTER_TABLE_Y
+tr 51 M=FP_COUNTER_TABLE_Y
+tr 52 M=FP_COUNTER_TABLE_Y
+echo "  FP_METER_TABLE"
+tr 50 M=FP_METER_TABLE
+tr 51 M=FP_METER_TABLE
+tr 52 M=FP_METER_TABLE
+echo "  FP_METER_TABLE_X"
+tr 50 M=FP_METER_TABLE_X
+tr 51 M=FP_METER_TABLE_X
+tr 52 M=FP_METER_TABLE_X
+echo "  FP_METER_TABLE_Y"
+tr 50 M=FP_METER_TABLE_Y
+tr 51 M=FP_METER_TABLE_Y
+tr 52 M=FP_METER_TABLE_Y
+echo "  FP_POLICY_TABLE"
+tr 50 M=FP_POLICY_TABLE
+tr 51 M=FP_POLICY_TABLE
+tr 52 M=FP_POLICY_TABLE
+echo "  FP_PORT_FIELD_SEL"
+tr 50 M=FP_PORT_FIELD_SEL
+tr 51 M=FP_PORT_FIELD_SEL
+tr 52 M=FP_PORT_FIELD_SEL
+echo "  FP_RANGE_CHECK"
+tr 50 M=FP_RANGE_CHECK
+tr 51 M=FP_RANGE_CHECK
+tr 52 M=FP_RANGE_CHECK
+echo "  FP_TCAM"
+tr 50 M=FP_TCAM
+tr 51 M=FP_TCAM
+tr 52 M=FP_TCAM
+echo "  FP_TCAM_PLUS_POLICY"
+tr 50 M=FP_TCAM_PLUS_POLICY
+tr 51 M=FP_TCAM_PLUS_POLICY
+tr 52 M=FP_TCAM_PLUS_POLICY
+echo "  UDF_OFFSET"
+tr 50 M=UDF_OFFSET
+tr 51 M=UDF_OFFSET
+tr 52 M=UDF_OFFSET
+echo "  HG_TRUNK_FAILOVER_SET"
+tr 50 M=HG_TRUNK_FAILOVER_SET
+tr 51 M=HG_TRUNK_FAILOVER_SET
+tr 52 M=HG_TRUNK_FAILOVER_SET
+echo "  IM_MTP_INDEX"
+tr 50 M=IM_MTP_INDEX
+tr 51 M=IM_MTP_INDEX
+tr 52 M=IM_MTP_INDEX
+echo "  ING_L3_NEXT_HOP"
+tr 50 M=ING_L3_NEXT_HOP
+tr 51 M=ING_L3_NEXT_HOP
+tr 52 M=ING_L3_NEXT_HOP
+echo "  ING_MOD_MAP"
+tr 50 M=ING_MOD_MAP
+tr 51 M=ING_MOD_MAP
+tr 52 M=ING_MOD_MAP
+echo "  IPORT_TABLE"
+tr 50 M=IPORT_TABLE
+tr 51 M=IPORT_TABLE
+tr 52 M=IPORT_TABLE
+echo "  L2MC"
+tr 50 M=L2MC
+tr 51 M=L2MC
+tr 52 M=L2MC
+echo "  L2_ENTRY"
+tr 50 M=L2_ENTRY
+tr 51 M=L2_ENTRY
+tr 52 M=L2_ENTRY
+echo "  L2_ENTRY_ONLY"
+tr 50 M=L2_ENTRY_ONLY
+tr 51 M=L2_ENTRY_ONLY
+tr 52 M=L2_ENTRY_ONLY
+echo "  L2_HITDA_ONLY"
+tr 50 M=L2_HITDA_ONLY
+tr 51 M=L2_HITDA_ONLY
+tr 52 M=L2_HITDA_ONLY
+echo "  L2_HITSA_ONLY"
+tr 50 M=L2_HITSA_ONLY
+tr 51 M=L2_HITSA_ONLY
+tr 52 M=L2_HITSA_ONLY
+echo "  L2_MOD_FIFO"
+tr 50 M=L2_MOD_FIFO
+tr 51 M=L2_MOD_FIFO
+tr 52 M=L2_MOD_FIFO
+echo "  L2_USER_ENTRY"
+tr 50 M=L2_USER_ENTRY
+tr 51 M=L2_USER_ENTRY
+tr 52 M=L2_USER_ENTRY
+echo "  L2_USER_ENTRY_DATA_ONLY"
+tr 50 M=L2_USER_ENTRY_DATA_ONLY
+tr 51 M=L2_USER_ENTRY_DATA_ONLY
+tr 52 M=L2_USER_ENTRY_DATA_ONLY
+echo "  L2_USER_ENTRY_ONLY"
+tr 50 M=L2_USER_ENTRY_ONLY
+tr 51 M=L2_USER_ENTRY_ONLY
+tr 52 M=L2_USER_ENTRY_ONLY
+echo "  L3_DEFIP"
+tr 50 M=L3_DEFIP
+tr 51 M=L3_DEFIP
+tr 52 M=L3_DEFIP
+echo "  L3_DEFIP_DATA_ONLY"
+tr 50 M=L3_DEFIP_DATA_ONLY
+tr 51 M=L3_DEFIP_DATA_ONLY
+tr 52 M=L3_DEFIP_DATA_ONLY
+echo "  L3_DEFIP_HIT_ONLY"
+tr 50 M=L3_DEFIP_HIT_ONLY
+tr 51 M=L3_DEFIP_HIT_ONLY
+tr 52 M=L3_DEFIP_HIT_ONLY
+echo "  L3_DEFIP_ONLY"
+tr 50 M=L3_DEFIP_ONLY
+tr 51 M=L3_DEFIP_ONLY
+tr 52 M=L3_DEFIP_ONLY
+echo "  L3_ECMP"
+tr 50 M=L3_ECMP
+tr 51 M=L3_ECMP
+tr 52 M=L3_ECMP
+echo "  L3_ENTRY_HIT_ONLY"
+tr 50 M=L3_ENTRY_HIT_ONLY
+tr 51 M=L3_ENTRY_HIT_ONLY
+tr 52 M=L3_ENTRY_HIT_ONLY
+echo "  L3_ENTRY_IPV4_MULTICAST"
+tr 50 M=L3_ENTRY_IPV4_MULTICAST
+tr 51 M=L3_ENTRY_IPV4_MULTICAST
+tr 52 M=L3_ENTRY_IPV4_MULTICAST
+echo "  L3_ENTRY_IPV4_UNICAST"
+tr 50 M=L3_ENTRY_IPV4_UNICAST
+tr 51 M=L3_ENTRY_IPV4_UNICAST
+tr 52 M=L3_ENTRY_IPV4_UNICAST
+echo "  L3_ENTRY_IPV6_MULTICAST"
+tr 50 M=L3_ENTRY_IPV6_MULTICAST
+tr 51 M=L3_ENTRY_IPV6_MULTICAST
+tr 52 M=L3_ENTRY_IPV6_MULTICAST
+echo "  L3_ENTRY_IPV6_UNICAST"
+tr 50 M=L3_ENTRY_IPV6_UNICAST
+tr 51 M=L3_ENTRY_IPV6_UNICAST
+tr 52 M=L3_ENTRY_IPV6_UNICAST
+echo "  L3_ENTRY_ONLY"
+tr 50 M=L3_ENTRY_ONLY
+tr 51 M=L3_ENTRY_ONLY
+tr 52 M=L3_ENTRY_ONLY
+echo "  L3_ENTRY_VALID_ONLY"
+tr 50 M=L3_ENTRY_VALID_ONLY
+tr 51 M=L3_ENTRY_VALID_ONLY
+tr 52 M=L3_ENTRY_VALID_ONLY
+echo "  L3_IPMC"
+tr 50 M=L3_IPMC
+tr 51 M=L3_IPMC
+tr 52 M=L3_IPMC
+echo "  L3_TUNNEL"
+tr 50 M=L3_TUNNEL
+tr 51 M=L3_TUNNEL
+tr 52 M=L3_TUNNEL
+echo "  PORT_MAC_BLOCK"
+tr 50 M=PORT_MAC_BLOCK
+tr 51 M=PORT_MAC_BLOCK
+tr 52 M=PORT_MAC_BLOCK
+echo "  AGING_CTR"
+tr 50 M=AGING_CTR
+tr 51 M=AGING_CTR
+tr 52 M=AGING_CTR
+echo "  AGING_EXP"
+tr 50 M=AGING_EXP
+tr 51 M=AGING_EXP
+tr 52 M=AGING_EXP
+echo "  CBPCELLHEADER"
+tr 50 M=CBPCELLHEADER
+tr 51 M=CBPCELLHEADER
+tr 52 M=CBPCELLHEADER
+echo "  CBPDATA0"
+tr 50 M=CBPDATA0
+tr 51 M=CBPDATA0
+tr 52 M=CBPDATA0
+echo "  CBPDATA1"
+tr 50 M=CBPDATA1
+tr 51 M=CBPDATA1
+tr 52 M=CBPDATA1
+echo "  CBPDATA2"
+tr 50 M=CBPDATA2
+tr 51 M=CBPDATA2
+tr 52 M=CBPDATA2
+echo "  CBPDATA3"
+tr 50 M=CBPDATA3
+tr 51 M=CBPDATA3
+tr 52 M=CBPDATA3
+echo "  CBPDATA4"
+tr 50 M=CBPDATA4
+tr 51 M=CBPDATA4
+tr 52 M=CBPDATA4
+echo "  CBPDATA5"
+tr 50 M=CBPDATA5
+tr 51 M=CBPDATA5
+tr 52 M=CBPDATA5
+echo "  CBPDATA6"
+tr 50 M=CBPDATA6
+tr 51 M=CBPDATA6
+tr 52 M=CBPDATA6
+echo "  CBPDATA7"
+tr 50 M=CBPDATA7
+tr 51 M=CBPDATA7
+tr 52 M=CBPDATA7
+echo "  CBPDATA8"
+tr 50 M=CBPDATA8
+tr 51 M=CBPDATA8
+tr 52 M=CBPDATA8
+echo "  CBPDATA9"
+tr 50 M=CBPDATA9
+tr 51 M=CBPDATA9
+tr 52 M=CBPDATA9
+echo "  CBPDATA10"
+tr 50 M=CBPDATA10
+tr 51 M=CBPDATA10
+tr 52 M=CBPDATA10
+echo "  CBPDATA11"
+tr 50 M=CBPDATA11
+tr 51 M=CBPDATA11
+tr 52 M=CBPDATA11
+echo "  CBPDATA12"
+tr 50 M=CBPDATA12
+tr 51 M=CBPDATA12
+tr 52 M=CBPDATA12
+echo "  CBPDATA13"
+tr 50 M=CBPDATA13
+tr 51 M=CBPDATA13
+tr 52 M=CBPDATA13
+echo "  CBPDATA14"
+tr 50 M=CBPDATA14
+tr 51 M=CBPDATA14
+tr 52 M=CBPDATA14
+echo "  CBPDATA15"
+tr 50 M=CBPDATA15
+tr 51 M=CBPDATA15
+tr 52 M=CBPDATA15
+echo "  CBPPKTHEADER0_MEM0"
+tr 50 M=CBPPKTHEADER0_MEM0
+tr 51 M=CBPPKTHEADER0_MEM0
+tr 52 M=CBPPKTHEADER0_MEM0
+echo "  CBPPKTHEADER0_MEM1"
+tr 50 M=CBPPKTHEADER0_MEM1
+tr 51 M=CBPPKTHEADER0_MEM1
+tr 52 M=CBPPKTHEADER0_MEM1
+echo "  CBPPKTHEADER0_MEM2"
+tr 50 M=CBPPKTHEADER0_MEM2
+tr 51 M=CBPPKTHEADER0_MEM2
+tr 52 M=CBPPKTHEADER0_MEM2
+echo "  CBPPKTHEADER1_MEM0"
+tr 50 M=CBPPKTHEADER1_MEM0
+tr 51 M=CBPPKTHEADER1_MEM0
+tr 52 M=CBPPKTHEADER1_MEM0
+echo "  CBPPKTHEADER1_MEM1"
+tr 50 M=CBPPKTHEADER1_MEM1
+tr 51 M=CBPPKTHEADER1_MEM1
+tr 52 M=CBPPKTHEADER1_MEM1
+echo "  CBPPKTHEADERCPU"
+tr 50 M=CBPPKTHEADERCPU
+tr 51 M=CBPPKTHEADERCPU
+tr 52 M=CBPPKTHEADERCPU
+echo "  CCP"
+tr 50 M=CCP
+tr 51 M=CCP
+tr 52 M=CCP
+echo "  CELLCHK"
+tr 50 M=CELLCHK
+tr 51 M=CELLCHK
+tr 52 M=CELLCHK
+echo "  CELLLINK"
+tr 50 M=CELLLINK
+tr 51 M=CELLLINK
+tr 52 M=CELLLINK
+echo "  CFAP"
+tr 50 M=CFAP
+tr 51 M=CFAP
+tr 52 M=CFAP
+echo "  IPMC_GROUP0"
+tr 50 M=IPMC_GROUP0
+tr 51 M=IPMC_GROUP0
+tr 52 M=IPMC_GROUP0
+echo "  IPMC_GROUP1"
+tr 50 M=IPMC_GROUP1
+tr 51 M=IPMC_GROUP1
+tr 52 M=IPMC_GROUP1
+echo "  IPMC_GROUP2"
+tr 50 M=IPMC_GROUP2
+tr 51 M=IPMC_GROUP2
+tr 52 M=IPMC_GROUP2
+echo "  IPMC_GROUP3"
+tr 50 M=IPMC_GROUP3
+tr 51 M=IPMC_GROUP3
+tr 52 M=IPMC_GROUP3
+echo "  IPMC_VLAN"
+tr 50 M=IPMC_VLAN
+tr 51 M=IPMC_VLAN
+tr 52 M=IPMC_VLAN
+echo "  IPMC_VLAN_MEM0"
+tr 50 M=IPMC_VLAN_MEM0
+tr 51 M=IPMC_VLAN_MEM0
+tr 52 M=IPMC_VLAN_MEM0
+echo "  IPMC_VLAN_MEM1"
+tr 50 M=IPMC_VLAN_MEM1
+tr 51 M=IPMC_VLAN_MEM1
+tr 52 M=IPMC_VLAN_MEM1
+echo "  PKTLINK0"
+tr 50 M=PKTLINK0
+tr 51 M=PKTLINK0
+tr 52 M=PKTLINK0
+echo "  PKTLINK1"
+tr 50 M=PKTLINK1
+tr 51 M=PKTLINK1
+tr 52 M=PKTLINK1
+echo "  PKTLINK2"
+tr 50 M=PKTLINK2
+tr 51 M=PKTLINK2
+tr 52 M=PKTLINK2
+echo "  PKTLINK3"
+tr 50 M=PKTLINK3
+tr 51 M=PKTLINK3
+tr 52 M=PKTLINK3
+echo "  PKTLINK4"
+tr 50 M=PKTLINK4
+tr 51 M=PKTLINK4
+tr 52 M=PKTLINK4
+echo "  PKTLINK5"
+tr 50 M=PKTLINK5
+tr 51 M=PKTLINK5
+tr 52 M=PKTLINK5
+echo "  PKTLINK6"
+tr 50 M=PKTLINK6
+tr 51 M=PKTLINK6
+tr 52 M=PKTLINK6
+echo "  PKTLINK7"
+tr 50 M=PKTLINK7
+tr 51 M=PKTLINK7
+tr 52 M=PKTLINK7
+echo "  PKTLINK8"
+tr 50 M=PKTLINK8
+tr 51 M=PKTLINK8
+tr 52 M=PKTLINK8
+echo "  PKTLINK9"
+tr 50 M=PKTLINK9
+tr 51 M=PKTLINK9
+tr 52 M=PKTLINK9
+echo "  PKTLINK10"
+tr 50 M=PKTLINK10
+tr 51 M=PKTLINK10
+tr 52 M=PKTLINK10
+echo "  PKTLINK11"
+tr 50 M=PKTLINK11
+tr 51 M=PKTLINK11
+tr 52 M=PKTLINK11
+echo "  PKTLINK12"
+tr 50 M=PKTLINK12
+tr 51 M=PKTLINK12
+tr 52 M=PKTLINK12
+echo "  PKTLINK13"
+tr 50 M=PKTLINK13
+tr 51 M=PKTLINK13
+tr 52 M=PKTLINK13
+echo "  PKTLINK14"
+tr 50 M=PKTLINK14
+tr 51 M=PKTLINK14
+tr 52 M=PKTLINK14
+echo "  PKTLINK15"
+tr 50 M=PKTLINK15
+tr 51 M=PKTLINK15
+tr 52 M=PKTLINK15
+echo "  PKTLINK16"
+tr 50 M=PKTLINK16
+tr 51 M=PKTLINK16
+tr 52 M=PKTLINK16
+echo "  PKTLINK17"
+tr 50 M=PKTLINK17
+tr 51 M=PKTLINK17
+tr 52 M=PKTLINK17
+echo "  PKTLINK18"
+tr 50 M=PKTLINK18
+tr 51 M=PKTLINK18
+tr 52 M=PKTLINK18
+echo "  PKTLINK19"
+tr 50 M=PKTLINK19
+tr 51 M=PKTLINK19
+tr 52 M=PKTLINK19
+echo "  PKTLINK20"
+tr 50 M=PKTLINK20
+tr 51 M=PKTLINK20
+tr 52 M=PKTLINK20
+echo "  MODPORT_MAP"
+tr 50 M=MODPORT_MAP
+tr 51 M=MODPORT_MAP
+tr 52 M=MODPORT_MAP
+echo "  MODPORT_MAP_EM"
+tr 50 M=MODPORT_MAP_EM
+tr 51 M=MODPORT_MAP_EM
+tr 52 M=MODPORT_MAP_EM
+echo "  MODPORT_MAP_IM"
+tr 50 M=MODPORT_MAP_IM
+tr 51 M=MODPORT_MAP_IM
+tr 52 M=MODPORT_MAP_IM
+echo "  MODPORT_MAP_SW"
+tr 50 M=MODPORT_MAP_SW
+tr 51 M=MODPORT_MAP_SW
+tr 52 M=MODPORT_MAP_SW
+echo "  NONUCAST_TRUNK_BLOCK_MASK"
+tr 50 M=NONUCAST_TRUNK_BLOCK_MASK
+tr 51 M=NONUCAST_TRUNK_BLOCK_MASK
+tr 52 M=NONUCAST_TRUNK_BLOCK_MASK
+echo "  PORT_LAG_FAILOVER_SET"
+tr 50 M=PORT_LAG_FAILOVER_SET
+tr 51 M=PORT_LAG_FAILOVER_SET
+tr 52 M=PORT_LAG_FAILOVER_SET
+echo "  PORT"
+tr 50 M=PORT
+tr 51 M=PORT
+tr 52 M=PORT
+echo "  SOURCE_TRUNK_MAP"
+tr 50 M=SOURCE_TRUNK_MAP
+tr 51 M=SOURCE_TRUNK_MAP
+tr 52 M=SOURCE_TRUNK_MAP
+echo "  SRC_MODID_BLOCK"
+tr 50 M=SRC_MODID_BLOCK
+tr 51 M=SRC_MODID_BLOCK
+tr 52 M=SRC_MODID_BLOCK
+echo "  VLAN_STG"
+tr 50 M=VLAN_STG
+tr 51 M=VLAN_STG
+tr 52 M=VLAN_STG
+echo "  TRUNK_BITMAP"
+tr 50 M=TRUNK_BITMAP
+tr 51 M=TRUNK_BITMAP
+tr 52 M=TRUNK_BITMAP
+echo "  PORT_TRUNK_EGRESS"
+tr 50 M=PORT_TRUNK_EGRESS
+tr 51 M=PORT_TRUNK_EGRESS
+tr 52 M=PORT_TRUNK_EGRESS
+echo "  TRUNK_GROUP"
+tr 50 M=TRUNK_GROUP
+tr 51 M=TRUNK_GROUP
+tr 52 M=TRUNK_GROUP
+echo "  VLAN_MAC"
+tr 50 M=VLAN_MAC
+tr 51 M=VLAN_MAC
+tr 52 M=VLAN_MAC
+echo "  VLAN_PROTOCOL"
+tr 50 M=VLAN_PROTOCOL
+tr 51 M=VLAN_PROTOCOL
+tr 52 M=VLAN_PROTOCOL
+echo "  VLAN_PROTOCOL_DATA"
+tr 50 M=VLAN_PROTOCOL_DATA
+tr 51 M=VLAN_PROTOCOL_DATA
+tr 52 M=VLAN_PROTOCOL_DATA
+echo "  VLAN_SUBNET"
+tr 50 M=VLAN_SUBNET
+tr 51 M=VLAN_SUBNET
+tr 52 M=VLAN_SUBNET
+echo "  VLAN_SUBNET_DATA_ONLY"
+tr 50 M=VLAN_SUBNET_DATA_ONLY
+tr 51 M=VLAN_SUBNET_DATA_ONLY
+tr 52 M=VLAN_SUBNET_DATA_ONLY
+echo "  VLAN_SUBNET_ONLY"
+tr 50 M=VLAN_SUBNET_ONLY
+tr 51 M=VLAN_SUBNET_ONLY
+tr 52 M=VLAN_SUBNET_ONLY
+echo "  VLAN"
+tr 50 M=VLAN
+tr 51 M=VLAN
+tr 52 M=VLAN
+echo "  VLAN_XLATE"
+tr 50 M=VLAN_XLATE
+tr 51 M=VLAN_XLATE
+tr 52 M=VLAN_XLATE
+echo "  VLAN_XLATE_DATA_ONLY"
+tr 50 M=VLAN_XLATE_DATA_ONLY
+tr 51 M=VLAN_XLATE_DATA_ONLY
+tr 52 M=VLAN_XLATE_DATA_ONLY
+echo "  VLAN_XLATE_MASK"
+tr 50 M=VLAN_XLATE_MASK
+tr 51 M=VLAN_XLATE_MASK
+tr 52 M=VLAN_XLATE_MASK
+echo "  VLAN_XLATE_ONLY"
+tr 50 M=VLAN_XLATE_ONLY
+tr 51 M=VLAN_XLATE_ONLY
+tr 52 M=VLAN_XLATE_ONLY
+$done
+
+# Table DMA/Table SLAM
+echo "Running Table DMA Tests ..."
+echo "  ALTERNATE_EMIRROR_BITMAP"
+tr 71 M=ALTERNATE_EMIRROR_BITMAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=ALTERNATE_EMIRROR_BITMAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=ALTERNATE_EMIRROR_BITMAP S=0 C=0 TSE=T SLTH=F
+echo "  DSCP_TABLE"
+tr 71 M=DSCP_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=DSCP_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=DSCP_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  E2E_HOL_STATUS"
+tr 71 M=E2E_HOL_STATUS S=0 C=0 TSE=F SLTH=T
+tr 71 M=E2E_HOL_STATUS S=0 C=0 TSE=T SLTH=T
+tr 71 M=E2E_HOL_STATUS S=0 C=0 TSE=T SLTH=F
+echo "  EGR_DSCP_ECN_MAP"
+tr 71 M=EGR_DSCP_ECN_MAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_DSCP_ECN_MAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_DSCP_ECN_MAP S=0 C=0 TSE=T SLTH=F
+echo "  EGR_DSCP_TABLE"
+tr 71 M=EGR_DSCP_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_DSCP_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_DSCP_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  EGR_EM_MTP_INDEX"
+tr 71 M=EGR_EM_MTP_INDEX S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_EM_MTP_INDEX S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_EM_MTP_INDEX S=0 C=0 TSE=T SLTH=F
+echo "  EGR_IM_MTP_INDEX"
+tr 71 M=EGR_IM_MTP_INDEX S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_IM_MTP_INDEX S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_IM_MTP_INDEX S=0 C=0 TSE=T SLTH=F
+echo "  EGR_IP_TUNNEL"
+tr 71 M=EGR_IP_TUNNEL S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_IP_TUNNEL S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_IP_TUNNEL S=0 C=0 TSE=T SLTH=F
+echo "  EGR_L3_INTF"
+tr 71 M=EGR_L3_INTF S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_L3_INTF S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_L3_INTF S=0 C=0 TSE=T SLTH=F
+echo "  EGR_L3_NEXT_HOP"
+tr 71 M=EGR_L3_NEXT_HOP S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_L3_NEXT_HOP S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_L3_NEXT_HOP S=0 C=0 TSE=T SLTH=F
+echo "  EGRESS_MASK"
+tr 71 M=EGRESS_MASK S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGRESS_MASK S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGRESS_MASK S=0 C=0 TSE=T SLTH=F
+echo "  EGR_MOD_MAP"
+tr 71 M=EGR_MOD_MAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_MOD_MAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_MOD_MAP S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN"
+tr 71 M=EGR_VLAN S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN_STG"
+tr 71 M=EGR_VLAN_STG S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN_STG S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN_STG S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN_XLATE"
+tr 71 M=EGR_VLAN_XLATE S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN_XLATE S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN_XLATE S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN_XLATE_DATA_ONLY"
+tr 71 M=EGR_VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN_XLATE_MASK"
+tr 71 M=EGR_VLAN_XLATE_MASK S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN_XLATE_MASK S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN_XLATE_MASK S=0 C=0 TSE=T SLTH=F
+echo "  EGR_VLAN_XLATE_ONLY"
+tr 71 M=EGR_VLAN_XLATE_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=EGR_VLAN_XLATE_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=EGR_VLAN_XLATE_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  EM_MTP_INDEX"
+tr 71 M=EM_MTP_INDEX S=0 C=0 TSE=F SLTH=T
+tr 71 M=EM_MTP_INDEX S=0 C=0 TSE=T SLTH=T
+tr 71 M=EM_MTP_INDEX S=0 C=0 TSE=T SLTH=F
+echo "  FP_COUNTER_TABLE"
+tr 71 M=FP_COUNTER_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_COUNTER_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_COUNTER_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  FP_COUNTER_TABLE_X"
+tr 71 M=FP_COUNTER_TABLE_X S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_COUNTER_TABLE_X S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_COUNTER_TABLE_X S=0 C=0 TSE=T SLTH=F
+echo "  FP_COUNTER_TABLE_Y"
+tr 71 M=FP_COUNTER_TABLE_Y S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_COUNTER_TABLE_Y S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_COUNTER_TABLE_Y S=0 C=0 TSE=T SLTH=F
+echo "  FP_METER_TABLE"
+tr 71 M=FP_METER_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_METER_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_METER_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  FP_METER_TABLE_X"
+tr 71 M=FP_METER_TABLE_X S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_METER_TABLE_X S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_METER_TABLE_X S=0 C=0 TSE=T SLTH=F
+echo "  FP_METER_TABLE_Y"
+tr 71 M=FP_METER_TABLE_Y S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_METER_TABLE_Y S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_METER_TABLE_Y S=0 C=0 TSE=T SLTH=F
+echo "  FP_POLICY_TABLE"
+tr 71 M=FP_POLICY_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_POLICY_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_POLICY_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  FP_PORT_FIELD_SEL"
+tr 71 M=FP_PORT_FIELD_SEL S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_PORT_FIELD_SEL S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_PORT_FIELD_SEL S=0 C=0 TSE=T SLTH=F
+echo "  FP_RANGE_CHECK"
+tr 71 M=FP_RANGE_CHECK S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_RANGE_CHECK S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_RANGE_CHECK S=0 C=0 TSE=T SLTH=F
+echo "  FP_TCAM"
+tr 71 M=FP_TCAM S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_TCAM S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_TCAM S=0 C=0 TSE=T SLTH=F
+echo "  FP_TCAM_PLUS_POLICY"
+tr 71 M=FP_TCAM_PLUS_POLICY S=0 C=0 TSE=F SLTH=T
+tr 71 M=FP_TCAM_PLUS_POLICY S=0 C=0 TSE=T SLTH=T
+tr 71 M=FP_TCAM_PLUS_POLICY S=0 C=0 TSE=T SLTH=F
+echo "  UDF_OFFSET"
+tr 71 M=UDF_OFFSET S=0 C=0 TSE=F SLTH=T
+tr 71 M=UDF_OFFSET S=0 C=0 TSE=T SLTH=T
+tr 71 M=UDF_OFFSET S=0 C=0 TSE=T SLTH=F
+echo "  HG_TRUNK_FAILOVER_SET"
+tr 71 M=HG_TRUNK_FAILOVER_SET S=0 C=0 TSE=F SLTH=T
+tr 71 M=HG_TRUNK_FAILOVER_SET S=0 C=0 TSE=T SLTH=T
+tr 71 M=HG_TRUNK_FAILOVER_SET S=0 C=0 TSE=T SLTH=F
+echo "  IM_MTP_INDEX"
+tr 71 M=IM_MTP_INDEX S=0 C=0 TSE=F SLTH=T
+tr 71 M=IM_MTP_INDEX S=0 C=0 TSE=T SLTH=T
+tr 71 M=IM_MTP_INDEX S=0 C=0 TSE=T SLTH=F
+echo "  ING_L3_NEXT_HOP"
+tr 71 M=ING_L3_NEXT_HOP S=0 C=0 TSE=F SLTH=T
+tr 71 M=ING_L3_NEXT_HOP S=0 C=0 TSE=T SLTH=T
+tr 71 M=ING_L3_NEXT_HOP S=0 C=0 TSE=T SLTH=F
+echo "  ING_MOD_MAP"
+tr 71 M=ING_MOD_MAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=ING_MOD_MAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=ING_MOD_MAP S=0 C=0 TSE=T SLTH=F
+echo "  IPORT_TABLE"
+tr 71 M=IPORT_TABLE S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPORT_TABLE S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPORT_TABLE S=0 C=0 TSE=T SLTH=F
+echo "  L2MC"
+tr 71 M=L2MC S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2MC S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2MC S=0 C=0 TSE=T SLTH=F
+echo "  L2_ENTRY"
+tr 71 M=L2_ENTRY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_ENTRY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_ENTRY S=0 C=0 TSE=T SLTH=F
+echo "  L2_ENTRY_ONLY"
+tr 71 M=L2_ENTRY_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_ENTRY_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_ENTRY_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L2_HITDA_ONLY"
+tr 71 M=L2_HITDA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_HITDA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_HITDA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L2_HITSA_ONLY"
+tr 71 M=L2_HITSA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_HITSA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_HITSA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L2_MOD_FIFO"
+tr 71 M=L2_MOD_FIFO S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_MOD_FIFO S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_MOD_FIFO S=0 C=0 TSE=T SLTH=F
+echo "  L2_USER_ENTRY"
+tr 71 M=L2_USER_ENTRY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_USER_ENTRY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_USER_ENTRY S=0 C=0 TSE=T SLTH=F
+echo "  L2_USER_ENTRY_DATA_ONLY"
+tr 71 M=L2_USER_ENTRY_DATA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_USER_ENTRY_DATA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_USER_ENTRY_DATA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L2_USER_ENTRY_ONLY"
+tr 71 M=L2_USER_ENTRY_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L2_USER_ENTRY_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L2_USER_ENTRY_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_DEFIP"
+tr 71 M=L3_DEFIP S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_DEFIP S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_DEFIP S=0 C=0 TSE=T SLTH=F
+echo "  L3_DEFIP_DATA_ONLY"
+tr 71 M=L3_DEFIP_DATA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_DEFIP_DATA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_DEFIP_DATA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_DEFIP_HIT_ONLY"
+tr 71 M=L3_DEFIP_HIT_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_DEFIP_HIT_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_DEFIP_HIT_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_DEFIP_ONLY"
+tr 71 M=L3_DEFIP_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_DEFIP_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_DEFIP_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_ECMP"
+tr 71 M=L3_ECMP S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ECMP S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ECMP S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_HIT_ONLY"
+tr 71 M=L3_ENTRY_HIT_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_HIT_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_HIT_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_IPV4_MULTICAST"
+tr 71 M=L3_ENTRY_IPV4_MULTICAST S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_IPV4_MULTICAST S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_IPV4_MULTICAST S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_IPV4_UNICAST"
+tr 71 M=L3_ENTRY_IPV4_UNICAST S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_IPV4_UNICAST S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_IPV4_UNICAST S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_IPV6_MULTICAST"
+tr 71 M=L3_ENTRY_IPV6_MULTICAST S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_IPV6_MULTICAST S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_IPV6_MULTICAST S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_IPV6_UNICAST"
+tr 71 M=L3_ENTRY_IPV6_UNICAST S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_IPV6_UNICAST S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_IPV6_UNICAST S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_ONLY"
+tr 71 M=L3_ENTRY_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_ENTRY_VALID_ONLY"
+tr 71 M=L3_ENTRY_VALID_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_ENTRY_VALID_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_ENTRY_VALID_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  L3_IPMC"
+tr 71 M=L3_IPMC S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_IPMC S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_IPMC S=0 C=0 TSE=T SLTH=F
+echo "  L3_TUNNEL"
+tr 71 M=L3_TUNNEL S=0 C=0 TSE=F SLTH=T
+tr 71 M=L3_TUNNEL S=0 C=0 TSE=T SLTH=T
+tr 71 M=L3_TUNNEL S=0 C=0 TSE=T SLTH=F
+echo "  PORT_MAC_BLOCK"
+tr 71 M=PORT_MAC_BLOCK S=0 C=0 TSE=F SLTH=T
+tr 71 M=PORT_MAC_BLOCK S=0 C=0 TSE=T SLTH=T
+tr 71 M=PORT_MAC_BLOCK S=0 C=0 TSE=T SLTH=F
+echo "  AGING_CTR"
+tr 71 M=AGING_CTR S=0 C=0 TSE=F SLTH=T
+tr 71 M=AGING_CTR S=0 C=0 TSE=T SLTH=T
+tr 71 M=AGING_CTR S=0 C=0 TSE=T SLTH=F
+echo "  AGING_EXP"
+tr 71 M=AGING_EXP S=0 C=0 TSE=F SLTH=T
+tr 71 M=AGING_EXP S=0 C=0 TSE=T SLTH=T
+tr 71 M=AGING_EXP S=0 C=0 TSE=T SLTH=F
+echo "  CFAP"
+tr 71 M=CFAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=CFAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=CFAP S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_GROUP0"
+tr 71 M=IPMC_GROUP0 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_GROUP0 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_GROUP0 S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_GROUP1"
+tr 71 M=IPMC_GROUP1 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_GROUP1 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_GROUP1 S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_GROUP2"
+tr 71 M=IPMC_GROUP2 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_GROUP2 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_GROUP2 S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_GROUP3"
+tr 71 M=IPMC_GROUP3 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_GROUP3 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_GROUP3 S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_VLAN"
+tr 71 M=IPMC_VLAN S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_VLAN S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_VLAN S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_VLAN_MEM0"
+tr 71 M=IPMC_VLAN_MEM0 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_VLAN_MEM0 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_VLAN_MEM0 S=0 C=0 TSE=T SLTH=F
+echo "  IPMC_VLAN_MEM1"
+tr 71 M=IPMC_VLAN_MEM1 S=0 C=0 TSE=F SLTH=T
+tr 71 M=IPMC_VLAN_MEM1 S=0 C=0 TSE=T SLTH=T
+tr 71 M=IPMC_VLAN_MEM1 S=0 C=0 TSE=T SLTH=F
+echo "  MODPORT_MAP"
+tr 71 M=MODPORT_MAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=MODPORT_MAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=MODPORT_MAP S=0 C=0 TSE=T SLTH=F
+echo "  MODPORT_MAP_EM"
+tr 71 M=MODPORT_MAP_EM S=0 C=0 TSE=F SLTH=T
+tr 71 M=MODPORT_MAP_EM S=0 C=0 TSE=T SLTH=T
+tr 71 M=MODPORT_MAP_EM S=0 C=0 TSE=T SLTH=F
+echo "  MODPORT_MAP_IM"
+tr 71 M=MODPORT_MAP_IM S=0 C=0 TSE=F SLTH=T
+tr 71 M=MODPORT_MAP_IM S=0 C=0 TSE=T SLTH=T
+tr 71 M=MODPORT_MAP_IM S=0 C=0 TSE=T SLTH=F
+echo "  MODPORT_MAP_SW"
+tr 71 M=MODPORT_MAP_SW S=0 C=0 TSE=F SLTH=T
+tr 71 M=MODPORT_MAP_SW S=0 C=0 TSE=T SLTH=T
+tr 71 M=MODPORT_MAP_SW S=0 C=0 TSE=T SLTH=F
+echo "  NONUCAST_TRUNK_BLOCK_MASK"
+tr 71 M=NONUCAST_TRUNK_BLOCK_MASK S=0 C=0 TSE=F SLTH=T
+tr 71 M=NONUCAST_TRUNK_BLOCK_MASK S=0 C=0 TSE=T SLTH=T
+tr 71 M=NONUCAST_TRUNK_BLOCK_MASK S=0 C=0 TSE=T SLTH=F
+echo "  PORT_LAG_FAILOVER_SET"
+tr 71 M=PORT_LAG_FAILOVER_SET S=0 C=0 TSE=F SLTH=T
+tr 71 M=PORT_LAG_FAILOVER_SET S=0 C=0 TSE=T SLTH=T
+tr 71 M=PORT_LAG_FAILOVER_SET S=0 C=0 TSE=T SLTH=F
+echo "  PORT"
+tr 71 M=PORT S=0 C=0 TSE=F SLTH=T
+tr 71 M=PORT S=0 C=0 TSE=T SLTH=T
+tr 71 M=PORT S=0 C=0 TSE=T SLTH=F
+echo "  SOURCE_TRUNK_MAP"
+tr 71 M=SOURCE_TRUNK_MAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=SOURCE_TRUNK_MAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=SOURCE_TRUNK_MAP S=0 C=0 TSE=T SLTH=F
+echo "  SRC_MODID_BLOCK"
+tr 71 M=SRC_MODID_BLOCK S=0 C=0 TSE=F SLTH=T
+tr 71 M=SRC_MODID_BLOCK S=0 C=0 TSE=T SLTH=T
+tr 71 M=SRC_MODID_BLOCK S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_STG"
+tr 71 M=VLAN_STG S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_STG S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_STG S=0 C=0 TSE=T SLTH=F
+echo "  TRUNK_BITMAP"
+tr 71 M=TRUNK_BITMAP S=0 C=0 TSE=F SLTH=T
+tr 71 M=TRUNK_BITMAP S=0 C=0 TSE=T SLTH=T
+tr 71 M=TRUNK_BITMAP S=0 C=0 TSE=T SLTH=F
+echo "  PORT_TRUNK_EGRESS"
+tr 71 M=PORT_TRUNK_EGRESS S=0 C=0 TSE=F SLTH=T
+tr 71 M=PORT_TRUNK_EGRESS S=0 C=0 TSE=T SLTH=T
+tr 71 M=PORT_TRUNK_EGRESS S=0 C=0 TSE=T SLTH=F
+echo "  TRUNK_GROUP"
+tr 71 M=TRUNK_GROUP S=0 C=0 TSE=F SLTH=T
+tr 71 M=TRUNK_GROUP S=0 C=0 TSE=T SLTH=T
+tr 71 M=TRUNK_GROUP S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_MAC"
+tr 71 M=VLAN_MAC S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_MAC S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_MAC S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_PROTOCOL"
+tr 71 M=VLAN_PROTOCOL S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_PROTOCOL S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_PROTOCOL S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_PROTOCOL_DATA"
+tr 71 M=VLAN_PROTOCOL_DATA S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_PROTOCOL_DATA S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_PROTOCOL_DATA S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_SUBNET"
+tr 71 M=VLAN_SUBNET S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_SUBNET S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_SUBNET S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_SUBNET_DATA_ONLY"
+tr 71 M=VLAN_SUBNET_DATA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_SUBNET_DATA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_SUBNET_DATA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_SUBNET_ONLY"
+tr 71 M=VLAN_SUBNET_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_SUBNET_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_SUBNET_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  VLAN"
+tr 71 M=VLAN S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_XLATE"
+tr 71 M=VLAN_XLATE S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_XLATE S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_XLATE S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_XLATE_DATA_ONLY"
+tr 71 M=VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_XLATE_DATA_ONLY S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_XLATE_MASK"
+tr 71 M=VLAN_XLATE_MASK S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_XLATE_MASK S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_XLATE_MASK S=0 C=0 TSE=T SLTH=F
+echo "  VLAN_XLATE_ONLY"
+tr 71 M=VLAN_XLATE_ONLY S=0 C=0 TSE=F SLTH=T
+tr 71 M=VLAN_XLATE_ONLY S=0 C=0 TSE=T SLTH=T
+tr 71 M=VLAN_XLATE_ONLY S=0 C=0 TSE=T SLTH=F
+$done
+
+#echo "Running BSAFE Self test"
+#tr 65
+#$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+# L2/L3 hashing tests
+if !$?humv '\
+echo "Running L2 insert/delete/lookup test ..."; \
+tr 32; \
+$done; \
+\
+echo "Running L2 overflow insert test ..."; \
+tr 33; \
+$done; \
+\
+echo "Running L2 hash test ...";\
+tr 34; \
+$done; \
+\
+echo "Running L2 delete by port test ..."; \
+tr 35; \
+$done; \
+\
+echo "Running L2 delete by vlan test ..."; \
+tr 36; \
+$done; \
+\
+echo "Running IPV4 overflow insert test ..."; \
+tr 87 IPMCEnable=False; \
+tr 87 IPMCEnable=True; \
+$done; \
+\
+echo "Running IPV4 hash test ..."; \
+tr 88 IPMCEnable=False; \
+tr 88 IPMCEnable=True; \
+$done; \
+\
+echo "Running IPV6 overflow insert test ..."; \
+tr 85 IPMCEnable=False; \
+tr 85 IPMCEnable=True; \
+$done; \
+\
+echo "Running IPV6 hash test ..."; \
+tr 86 IPMCEnable=False; \
+tr 86 IPMCEnable=True; \
+$done; \
+'
+
+echo "Running MDIO Linkscan test"
+# Unicore has 2 PHY IDs. The PHY ID changes based on the device configuration.
+# Therefore, turn off linkscan before running MDIO linkscan test so that
+# the linkscan doesn't change the device configuration while the test is 
+# running. 
+linkscan off
+tr 60 readcount=10000
+$done
+
+# Loopback Tests
+# Each test loads rc.soc in case a previous test failed
+
+if !$?humv '\
+echo "Testing CPU DMA loopback ..."; \
+tr 17 c=5; \
+$done; \
+'
+
+echo "Testing CPU DMA, Scatter/Gather Reload ..."
+tr 22
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Simple ..."
+tr 23
+$done
+
+echo "Testing CPU DMA, Scatter/Gather Random ..."
+tr 24
+$done
+
+# MAC Loopback
+echo "Testing MAC Loopback - 10 Mb/s all GE ports"
+tr 18 pbm=ge speed=10
+
+echo "Testing MAC Loopback - 100 Mb/s all GE ports"
+tr 18 pbm=ge speed=100
+
+echo "Testing MAC Loopback - 1000 Mb/s all E ports"
+tr 18 pbm=e speed=1000
+
+echo "Testing MAC Loopback - max speed all E ports"
+tr 18 pbm=e speed=MAX
+
+echo "Testing MAC Loopback - 10000 Mb/s all HG ports"
+tr 18 pbm=hg speed=10G
+
+echo "Testing MAC Loopback - max speed all HG ports"
+tr 18 pbm=hg speed=MAX
+
+$done
+
+# PHY Loopback
+echo "Testing PHY Loopback - 10 Mb/s all E ports"
+tr 19 pbm=ge speed=10
+
+echo "Testing PHY Loopback - 100 Mb/s all E ports"
+tr 19 pbm=ge speed=100
+
+echo "Testing PHY Loopback - 1000 Mb/s all E ports"
+tr 19 pbm=e speed=1000
+
+echo "Testing PHY Loopback - max speed all E ports"
+tr 19 pbm=e speed=MAX
+
+echo "Testing PHY Loopback - 10000 Mb/s all HG ports"
+tr 19 pbm=hg speed=10G
+
+echo "Testing PHY Loopback - max speed all HG ports"
+tr 19 pbm=hg speed=MAX
+$done
+
+# Internal snake Loopback 
+echo "Running internal snake on all ports, MAC loopback ..."
+tr 39 loopbackmode=mac snakepath=two
+$done
+
+echo "Running internal snake on all ports, PHY loopback ..."
+tr 39 loopbackmode=phy snakepath=two
+$done
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48 smi=103 dmi=42 vlan=5 pi=0x11335577 sendm=single
+$done
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49 smi=52 dmi=83 vlan=23 pi=0x01204007 sendm=array
+
+# Traffic Test
+echo "Running Traffic Test in MAC mode ..."
+tr 72 RM=MAC
+$done
+
+echo "Running Traffic Test in PHY mode ..."
+tr 72 RM=PHY
+$done
+
+# External Loopback
+# If you have external loopback cables connected as follows
+#       1-2,   3-4,   5-6,   7-8,   9-10, 
+#       11-12, 13-14, 15-16, 17-18, 19-20
+# then you can enable this script to perform external loopback at
+# different speeds.  Before running this script, use:
+#       setenv ext10   1
+#       setenv ext100  1
+#       setenv ext1000 1
+#       setenv ext2500 1
+#       setenv ext10G  1
+
+# External Loopback on GE port
+local fwd 0x55555
+local bwd 0xaaaaa
+if !$?humv && !$?goldwing && $?ext10 \
+         "echo Testing External Loopback - 10 MB/s forward; \
+                tr 20 tpbm=$fwd di=1 speed=10 count=10; \
+         echo Testing External Loopback - 10 MB/s reverse; \
+                tr 20 tpbm=$bwd di=-1 speed=10 count=10"
+
+local fwd 0x55555
+local bwd 0xaaaaa
+if !$?humv && !$?goldwing && $?ext100 \
+         "echo Testing External Loopback - 100 MB/s forward; \
+                tr 20 tpbm=$fwd di=1 speed=100 count=10; \
+         echo Testing External Loopback - 100 MB/s reverse; \
+                tr 20 tpbm=$bwd di=-1 speed=100 count=10"
+
+
+local fwd 0x55555
+local bwd 0xaaaaa
+if !$?humv && $?ext1000 \
+        "echo Testing External Loopback - 1000 MB/s forward; \
+                tr 20 tpbm=$fwd di=1 speed=1000 count=10; \
+         echo Testing External Loopback - 1000 MB/s reverse; \
+                tr 20 tpbm=$bwd di=-1 speed=1000 count=10"
+
+# External Loopback on 2.5 Fiber port
+local fwd 0x5555
+local bwd 0xaaaa
+if $?goldwing && $?ext2500 \
+        "echo Testing External Loopback - 1000 MB/s forward; \
+                tr 20 tpbm=$fwd di=1 speed=1000 count=10; \
+         echo Testing External Loopback - 1000 MB/s reverse; \
+                tr 20 tpbm=$bwd di=-1 speed=1000 count=10"
+
+# External Loopback on XE port
+config add pbmp_xport_xe=0xfffff
+local fwd 0x55555
+local bwd 0xaaaaa
+rcload rc.soc
+if !$?humv && $?ext10G \
+        "echo Testing External Loopback - 10 GB/s forward; \
+                tr 20 tpbm=$fwd di=1 speed=10G count=10; \
+         echo Testing External Loopback - 10 GB/s reverse; \
+                tr 20 tpbm=$bwd di=-1 speed=10G count=10"
+config delete pbmp_xport_xe
+rcload rc.soc
+
+# External Loopback on HG port
+
+# Show status
+date
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"

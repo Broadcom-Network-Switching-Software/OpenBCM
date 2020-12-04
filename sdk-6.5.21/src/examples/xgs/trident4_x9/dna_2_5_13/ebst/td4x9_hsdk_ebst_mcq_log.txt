@@ -1,0 +1,739 @@
+BCM.0>c td4x9_hsdk_ebst_mcq.c
+
+CPU start sending DLF packet
+Packet generate, length=1532
+              ena/        speed/ link auto    STP                  lrn             max    cut            loop
+        port  link  Lns   duplex scan neg?   state   pause  discrd ops   medium  frame   thru       FEC  back
+    ce0(  1)  down   2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN
+              ena/        speed/ link auto    STP                  lrn             max    cut            loop
+        port  link  Lns   duplex scan neg?   state   pause  discrd ops   medium  frame   thru       FEC  back
+    ce1(  2)  down   2  100G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-1xN
+
+XLMIB_TBYT.ce0                        :               131,832            +131,832
+XLMIB_RBYT.ce0                        :               131,832            +131,832
+XLMIB_TPKT.ce0                        :                    86                 +86
+XLMIB_RPKT.ce0                        :                    86                 +86
+XLMIB_T2047.ce0                       :                    86                 +86
+XLMIB_R2047.ce0                       :                    86                 +86
+XLMIB_TOVR.ce0                        :                    86                 +86
+XLMIB_ROVR.ce0                        :                    86                 +86
+XLMIB_TBYT.ce1                        :               101,112            +101,112
+XLMIB_RBYT.ce1                        :               101,112            +101,112
+XLMIB_TPKT.ce1                        :                    66                 +66
+XLMIB_RPKT.ce1                        :                    66                 +66
+XLMIB_T2047.ce1                       :                    66                 +66
+XLMIB_R2047.ce1                       :                    66                 +66
+XLMIB_TOVR.ce1                        :                    66                 +66
+XLMIB_ROVR.ce1                        :                    66                 +66
+
+EBST_DATA Count ...
+int array_count = 100 (0x64)
+
+EBST_DATA Status ...
+bcm_cosq_ebst_data_entry_t[100] stat_array = {
+    bcm_cosq_ebst_data_entry_t stat_array[0] = {
+        uint64 timestamp = {0x1D073136 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[1] = {
+        uint64 timestamp = {0x1D07F486 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[2] = {
+        uint64 timestamp = {0x1D08B7D6 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[3] = {
+        uint64 timestamp = {0x1D097B2E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[4] = {
+        uint64 timestamp = {0x1D0A3E7E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[5] = {
+        uint64 timestamp = {0x1D0B01CE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[6] = {
+        uint64 timestamp = {0x1D0BC51E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[7] = {
+        uint64 timestamp = {0x1D0C886E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[8] = {
+        uint64 timestamp = {0x1D0D4BBE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[9] = {
+        uint64 timestamp = {0x1D0E0F0E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[10] = {
+        uint64 timestamp = {0x1D0ED25E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[11] = {
+        uint64 timestamp = {0x1D0F95B4 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[12] = {
+        uint64 timestamp = {0x1D105904 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[13] = {
+        uint64 timestamp = {0x1D111C54 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[14] = {
+        uint64 timestamp = {0x1D11DFA4 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[15] = {
+        uint64 timestamp = {0x1D12A2F4 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[16] = {
+        uint64 timestamp = {0x1D136644 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[17] = {
+        uint64 timestamp = {0x1D142994 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[18] = {
+        uint64 timestamp = {0x1D14ECE4 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[19] = {
+        uint64 timestamp = {0x1D15B034 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[20] = {
+        uint64 timestamp = {0x1D16738A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[21] = {
+        uint64 timestamp = {0x1D1736DA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[22] = {
+        uint64 timestamp = {0x1D17FA2A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[23] = {
+        uint64 timestamp = {0x1D18BD7A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[24] = {
+        uint64 timestamp = {0x1D1980CA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[25] = {
+        uint64 timestamp = {0x1D1A441A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[26] = {
+        uint64 timestamp = {0x1D1B076A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[27] = {
+        uint64 timestamp = {0x1D1BCABA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[28] = {
+        uint64 timestamp = {0x1D1C8E0A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[29] = {
+        uint64 timestamp = {0x1D1D515A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[30] = {
+        uint64 timestamp = {0x1D1E14B2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[31] = {
+        uint64 timestamp = {0x1D1ED802 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[32] = {
+        uint64 timestamp = {0x1D1F9B52 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[33] = {
+        uint64 timestamp = {0x1D205EA2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[34] = {
+        uint64 timestamp = {0x1D2121F2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[35] = {
+        uint64 timestamp = {0x1D21E542 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[36] = {
+        uint64 timestamp = {0x1D22A892 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[37] = {
+        uint64 timestamp = {0x1D236BE2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[38] = {
+        uint64 timestamp = {0x1D242F38 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[39] = {
+        uint64 timestamp = {0x1D24F288 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[40] = {
+        uint64 timestamp = {0x1D25B5D8 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[41] = {
+        uint64 timestamp = {0x1D267928 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[42] = {
+        uint64 timestamp = {0x1D273C78 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[43] = {
+        uint64 timestamp = {0x1D27FFC8 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[44] = {
+        uint64 timestamp = {0x1D28C318 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[45] = {
+        uint64 timestamp = {0x1D298668 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[46] = {
+        uint64 timestamp = {0x1D2A49B8 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[47] = {
+        uint64 timestamp = {0x1D2B0D0E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[48] = {
+        uint64 timestamp = {0x1D2BD05E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[49] = {
+        uint64 timestamp = {0x1D2C93AE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[50] = {
+        uint64 timestamp = {0x1D2D56FE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[51] = {
+        uint64 timestamp = {0x1D2E1A4E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[52] = {
+        uint64 timestamp = {0x1D2EDD9E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[53] = {
+        uint64 timestamp = {0x1D2FA0EE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[54] = {
+        uint64 timestamp = {0x1D30643E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[55] = {
+        uint64 timestamp = {0x1D31278E 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[56] = {
+        uint64 timestamp = {0x1D31EADE 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[57] = {
+        uint64 timestamp = {0x1D32AE36 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[58] = {
+        uint64 timestamp = {0x1D337186 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[59] = {
+        uint64 timestamp = {0x1D3434D6 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[60] = {
+        uint64 timestamp = {0x1D34F826 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[61] = {
+        uint64 timestamp = {0x1D35BB76 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[62] = {
+        uint64 timestamp = {0x1D367EC6 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[63] = {
+        uint64 timestamp = {0x1D374216 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[64] = {
+        uint64 timestamp = {0x1D380566 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[65] = {
+        uint64 timestamp = {0x1D38C8BC 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[66] = {
+        uint64 timestamp = {0x1D398C0C 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[67] = {
+        uint64 timestamp = {0x1D3A4F5C 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[68] = {
+        uint64 timestamp = {0x1D3B12AC 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[69] = {
+        uint64 timestamp = {0x1D3BD5FC 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[70] = {
+        uint64 timestamp = {0x1D3C994C 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[71] = {
+        uint64 timestamp = {0x1D3D5C9C 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[72] = {
+        uint64 timestamp = {0x1D3E1FEC 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[73] = {
+        uint64 timestamp = {0x1D3EE33C 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[74] = {
+        uint64 timestamp = {0x1D3FA692 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[75] = {
+        uint64 timestamp = {0x1D4069E2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[76] = {
+        uint64 timestamp = {0x1D412D32 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[77] = {
+        uint64 timestamp = {0x1D41F082 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[78] = {
+        uint64 timestamp = {0x1D42B3D2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[79] = {
+        uint64 timestamp = {0x1D437722 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[80] = {
+        uint64 timestamp = {0x1D443A72 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[81] = {
+        uint64 timestamp = {0x1D44FDC2 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[82] = {
+        uint64 timestamp = {0x1D45C112 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[83] = {
+        uint64 timestamp = {0x1D468462 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[84] = {
+        uint64 timestamp = {0x1D4747BA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[85] = {
+        uint64 timestamp = {0x1D480B0A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[86] = {
+        uint64 timestamp = {0x1D48CE5A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[87] = {
+        uint64 timestamp = {0x1D4991AA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[88] = {
+        uint64 timestamp = {0x1D4A54FA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[89] = {
+        uint64 timestamp = {0x1D4B184A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[90] = {
+        uint64 timestamp = {0x1D4BDB9A 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[91] = {
+        uint64 timestamp = {0x1D4C9EEA 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[92] = {
+        uint64 timestamp = {0x1D4D6240 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[93] = {
+        uint64 timestamp = {0x1D4E2590 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[94] = {
+        uint64 timestamp = {0x1D4EE8E0 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[95] = {
+        uint64 timestamp = {0x1D4FAC30 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[96] = {
+        uint64 timestamp = {0x1D506F80 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[97] = {
+        uint64 timestamp = {0x1D5132D0 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[98] = {
+        uint64 timestamp = {0x1D51F620 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+    bcm_cosq_ebst_data_entry_t stat_array[99] = {
+        uint64 timestamp = {0x1D52B970 0x00000000}
+        unsigned int bytes = 38160 (0x9510)
+        bcm_cosq_color_packet_drop_state_t green_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t yellow_drop_state = bcmCosqColorPktAccept (0)
+        bcm_cosq_color_packet_drop_state_t red_drop_state = bcmCosqColorPktAccept (0)
+    }
+}
+
+Stop system level EBST scan
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

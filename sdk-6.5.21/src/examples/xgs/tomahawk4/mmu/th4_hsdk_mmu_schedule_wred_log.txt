@@ -1,0 +1,139 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[51583]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[58243]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> cint th4_hsdk_mmu_schedule_wred.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+
+... Set up the 4 WRED test cases
+wred_test_count=4
+
+... discard_profile_create profile id 1 created
+bcm_esw_cosq_discard_profile_get profile id 1, rule_count 6 
+rule_out[0]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 0 (0x0)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 0 (0x0)
+}
+rule_out[1]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 0 (0x0)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+rule_out[2]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 1 (0x1)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 0 (0x0)
+}
+rule_out[3]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 1 (0x1)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+rule_out[4]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 2 (0x2)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 0 (0x0)
+}
+rule_out[5]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 2 (0x2)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+
+... discard_profile_create profile id 1 updated
+bcm_esw_cosq_discard_profile_get profile id 1, rule_count 6 
+rule_out[0]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 0 (0x0)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 1 (0x1)
+}
+rule_out[1]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 0 (0x0)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+rule_out[2]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 1 (0x1)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 0 (0x0)
+}
+rule_out[3]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 1 (0x1)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+rule_out[4]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 2 (0x2)
+    unsigned int queue_min_congestion_state = 0 (0x0)
+    unsigned int action = 0 (0x0)
+}
+rule_out[5]: bcm_cosq_discard_rule_t $$ = {
+    unsigned int egress_pool_congestion_state = 2 (0x2)
+    unsigned int queue_min_congestion_state = 2 (0x2)
+    unsigned int action = 0 (0x0)
+}
+
+Test Case(#1): Color All + TCP
+        Port 1, Cos 0
+min_thresh(byte) in: 0, out: 0
+max_thresh(byte) in: 7590, out: 7620
+drop_prob in: 75, out: 75
+discard_profile in: 1, out: 1
+Test PASSED
+
+Test Case(#2): Color All + NONTCP
+        Port 2, Cos 0
+min_thresh(byte) in: 0, out: 0
+max_thresh(byte) in: 5000, out: 5080
+drop_prob in: 75, out: 75
+discard_profile in: 1, out: 1
+Test PASSED
+
+Test Case(#3): Color Green_Red + TCP
+        Port 1, Cos 3
+min_thresh(byte) in: 0, out: 0
+max_thresh(byte) in: 6072, out: 6096
+drop_prob in: 60, out: 50
+discard_profile in: 1, out: 1
+Test PASSED
+
+Test Case(#4): Color Yellow_Red + NONTCP
+        Port 2, Cos 2
+min_thresh(byte) in: 0, out: 0
+max_thresh(byte) in: 4000, out: 4064
+drop_prob in: 60, out: 50
+discard_profile in: 1, out: 1
+Test PASSED
+
+... test_wred_set_global
+Input flag: 0x1
+Returned flag: 0x1
+discard_profile_destroy profile id 1 destroyed
+
+bcm_error_t $$ = BCM_E_NONE (0)
+

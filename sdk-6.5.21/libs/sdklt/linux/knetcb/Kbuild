@@ -1,0 +1,19 @@
+# -*- Kbuild -*-
+#
+# Linux KNET Callback module.
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+obj-m := linux_ngknetcb.o
+
+ccflags-y := $(LKM_CFLAGS) \
+             -I$(SDK)/shr/include \
+             -I$(SDK)/bcmdrd/include \
+             -I$(SDK)/linux/include \
+             -I$(SDK)/linux/knet/include \
+             -I$(SDK)/linux/knet
+
+linux_ngknetcb-y := ngknetcb_main.o

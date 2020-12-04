@@ -1,0 +1,233 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port : 240
+Egress port1: 206
+Egress port2: 19
+Egress port3: 51
+ingress_port_multi_setup port: 240 setup
+egress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 51 setup
+egress_port_multi_setup port: 206 setup
+[New Thread 0x7ffff56c3700 (LWP 129676)]
+Completed test setup successfully.
+Verify UUC pkt from port 240 forwarding to the other ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x33
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test1 = [PASS]
+-------------------------------------
+Verify UMC pkt from port 240 forwarding to the other ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x33
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[5]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[5]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[5]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test2 = [PASS]
+-------------------------------------
+Verify BC pkt from port 240 forwarding to the other ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[7]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[7]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[7]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x33
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[8]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[8]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[8]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[8]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[9]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[9]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]:
+Packet[9]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[9]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test3 = [PASS]
+-------------------------------------
+Verify UUC pkt from port 240 forwarding to the other ports with UUC blocking to port 51
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[10]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[10]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[10]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[10]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[11]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[11]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[11]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[11]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test4 = [PASS]
+-------------------------------------
+Verify UMC pkt from port 240 forwarding to the other ports with UMC blocking to port 51
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[12]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[12]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[12]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]:
+Packet[12]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[12]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[13]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[13]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[13]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]:
+Packet[13]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[13]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test5 = [PASS]
+-------------------------------------
+Verify BC pkt from port 240 forwarding to the other ports with BC blocking to port 51
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[14]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[14]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[14]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]:
+Packet[14]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[14]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[15]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[15]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[15]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]:
+Packet[15]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[15]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test6 = [PASS]
+-------------------------------------
+Test = PASS
+ingress_port_multi_cleanup port: 240 cleanup
+egress_port_multi_cleanup port: 19 cleanup
+egress_port_multi_cleanup port: 51 cleanup
+egress_port_multi_cleanup port: 206 cleanup
+[Thread 0x7ffff56c3700 (LWP 129676) exited]
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

@@ -1,0 +1,1371 @@
+/*
+ *
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ *
+ * This file is private to cprif_drv and should not be included
+ * by any other file.
+ */
+#ifndef _CPRIH_DRV_PRIVATE_H_
+#define _CPRIF_DRV_PRIVATE_H_
+
+
+/* CPRI ECC interrupt information structure */
+
+typedef struct _cpri_ecc_interrupts_info_s {
+    soc_reg_t       ecc_en_reg;   /* ecc enable reg */
+    soc_field_t     ecc2b_en_fld; /* 2-bit ecc */
+    soc_field_t     ecc1b_en_fld; /* 1-bit ecc */
+    soc_reg_t       ecc_status_reg; /* ecc status reg */
+    soc_field_t     ecc_event_addr; /* ecc error address */
+    soc_field_t     ecc_multib_err_status_fld; /* multi-bit ecc error */
+    soc_field_t     ecc2b_err_status_fld; /* 2-bit ecc error */
+    soc_field_t     ecc1b_err_status_fld; /* 1-bit ecc error */
+    soc_mem_t       mem; /* mem info */
+    char            *mem_str; /* mem description */
+}_cpri_ecc_interrupts_info_t;
+
+/* CPRI ECC interrupt information structure */
+
+typedef struct _cpri_ecc_intr_report_s {
+    int     port;
+    soc_mem_t   err_mem_info;   /* ecc error mem */
+    soc_reg_t   err_reg_info;   /* ecc error reg */
+    int         ecc_num_bits_err; /* num bits ecc error */
+    uint32      err_addr; /* error address */
+    char        *mem_str; /* mem description */
+}_cpri_ecc_intr_report_t;
+
+STATIC _cpri_ecc_interrupts_info_t _cpri_port_ecc_intrs_info[] = {
+    {
+        CPRI_DECAP_CLS_QUEUE_INTR_ENABLE_CONTROLr,
+        CLS_QUEUE_ECC_2BIT_INTERRUPT_ENf,
+        CLS_QUEUE_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_CLS_QUEUE_ECC_INTR_STATUSr,
+        CLS_QUEUE_ERR_ADDRf,
+        CLS_QUEUE_MULTIPLE_ECC_ERRf,
+        CLS_QUEUE_ECC_2BIT_INTERRUPT_STATUSf,
+        CLS_QUEUE_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_CLS_TO_QUEUE_LOOKUP_0m,
+        "CPRI Decap Classification to Queue Control Memory for port"
+    },
+    {
+        CPRI_DECAP_COMP_TAB_I_0_INTR_ENABLE_CONTROLr,
+        COMP_TAB_I_0_ECC_2BIT_INTERRUPT_ENf,
+        COMP_TAB_I_0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_COMP_TAB_I_0_ECC_INTR_STATUSr,
+        COMP_TAB_I_0_ERR_ADDRf,
+        COMP_TAB_I_0_MULTIPLE_ECC_ERRf,
+        COMP_TAB_I_0_ECC_2BIT_INTERRUPT_STATUSf,
+        COMP_TAB_I_0_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_COMP_TAB_0m,
+        "CPRI Decap Compression Table I_0 for port"
+    },
+    {
+        CPRI_DECAP_COMP_TAB_I_1_INTR_ENABLE_CONTROLr,
+        COMP_TAB_I_1_ECC_2BIT_INTERRUPT_ENf,
+        COMP_TAB_I_1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_COMP_TAB_I_1_ECC_INTR_STATUSr,
+        COMP_TAB_I_1_ERR_ADDRf,
+        COMP_TAB_I_1_MULTIPLE_ECC_ERRf,
+        COMP_TAB_I_1_ECC_2BIT_INTERRUPT_STATUSf,
+        COMP_TAB_I_1_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_COMP_TAB_0m,
+        "CPRI Decap Compression Table I_1 for port"
+    },
+    {
+        CPRI_DECAP_COMP_TAB_Q_0_INTR_ENABLE_CONTROLr,
+        COMP_TAB_Q_0_ECC_2BIT_INTERRUPT_ENf,
+        COMP_TAB_Q_0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_COMP_TAB_Q_0_ECC_INTR_STATUSr,
+        COMP_TAB_Q_0_ERR_ADDRf,
+        COMP_TAB_Q_0_MULTIPLE_ECC_ERRf,
+        COMP_TAB_Q_0_ECC_2BIT_INTERRUPT_STATUSf,
+        COMP_TAB_Q_0_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_COMP_TAB_0m,
+        "CPRI Decap Compression Table Q_0 for port"
+    },
+    {
+        CPRI_DECAP_COMP_TAB_Q_1_INTR_ENABLE_CONTROLr,
+        COMP_TAB_Q_1_ECC_2BIT_INTERRUPT_ENf,
+        COMP_TAB_Q_1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_COMP_TAB_Q_1_ECC_INTR_STATUSr,
+        COMP_TAB_Q_1_ERR_ADDRf,
+        COMP_TAB_Q_1_MULTIPLE_ECC_ERRf,
+        COMP_TAB_Q_1_ECC_2BIT_INTERRUPT_STATUSf,
+        COMP_TAB_Q_1_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_COMP_TAB_0m,
+        "CPRI Decap Compression Table Q_1 for port"
+    },
+    {
+        CPRI_DECAP_DATA_MEM_INTR_ENABLE_CONTROLr,
+        DATA_MEM_ECC_2BIT_INTERRUPT_ENf,
+        DATA_MEM_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_DATA_MEM_ECC_INTR_STATUSr,
+        DECAP_DATA_MEM_ERR_ADDRf,
+        DECAP_DATA_MEM_MULTIPLE_ECC_ERRf,
+        DECAP_DATA_MEM_ECC_2BIT_INTERRUPT_STATUSf,
+        DECAP_DATA_MEM_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm, 
+        "CPRI Decap AxC Data Memory"
+    },
+    {
+        CPRI_DECAP_FLOWID_QUEUE_INTR_ENABLE_CONTROLr,
+        FLOWID_QUEUE_ECC_2BIT_INTERRUPT_ENf,
+        FLOWID_QUEUE_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_FLOWID_QUEUE_ECC_INTR_STATUSr,
+        FLOWID_QUEUE_ERR_ADDRf,
+        FLOWID_QUEUE_MULTIPLE_ECC_ERRf,
+        FLOWID_QUEUE_ECC_2BIT_INTERRUPT_STATUSf,
+        FLOWID_QUEUE_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_FLOWID_QUE_LOOKUP_0m,
+        "CPRI Decap Flow-id to Queue Lookup Table for port"
+    },
+    {
+        CPRI_DECAP_MEMBUF_0_INTR_ENABLE_CONTROLr,
+        MEMBUF_0_ECC_2BIT_INTERRUPT_ENf,
+        MEMBUF_0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_MEMBUF_0_ECC_INTR_STATUSr,
+        MEMBUF_0_ERR_ADDRf,
+        MEMBUF_0_MULTIPLE_ECC_ERRf,
+        MEMBUF_0_ECC_2BIT_INTERRUPT_STATUSf,
+        MEMBUF_0_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Decap TX MEMBUF-0 Memory"
+    },
+    {
+        CPRI_DECAP_MEMBUF_1_INTR_ENABLE_CONTROLr,
+        MEMBUF_1_ECC_2BIT_INTERRUPT_ENf,
+        MEMBUF_1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_MEMBUF_1_ECC_INTR_STATUSr,
+        MEMBUF_1_ERR_ADDRf,
+        MEMBUF_1_MULTIPLE_ECC_ERRf,
+        MEMBUF_1_ECC_2BIT_INTERRUPT_STATUSf,
+        MEMBUF_1_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Decap TX MEMBUF-1 Memory"
+    },
+    {
+        CPRI_DECAP_ORDERING_INFO_INTR_ENABLE_CONTROLr,
+        DECAP_ORDERING_INFO_ECC_2BIT_INTERRUPT_ENf,
+        DECAP_ORDERING_INFO_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_ORDERING_INFO_ECC_INTR_STATUSr,
+        DECAP_ORDERING_INFO_ERR_ADDRf,
+        DECAP_ORDERING_INFO_MULTIPLE_ECC_ERRf,
+        DECAP_ORDERING_INFO_ECC_2BIT_INTERRUPT_STATUSf,
+        DECAP_ORDERING_INFO_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_ORDERING_INFO_TAB_0m,
+        "CPRI Decap Ordering Table Infor memory for port"
+    },
+    {
+        CPRI_DECAP_PKT_CNT_INTR_ENABLE_CONTROLr,
+        DECAP_PKT_CNT_ECC_2BIT_INTERRUPT_ENf,
+        DECAP_PKT_CNT_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_PKT_CNT_ECC_INTR_STATUSr,
+        DECAP_PKT_CNT_ERR_ADDRf,
+        DECAP_PKT_CNT_MULTIPLE_ECC_ERRf,
+        DECAP_PKT_CNT_ECC_2BIT_INTERRUPT_STATUSf,
+        DECAP_PKT_CNT_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_QUEUE_STATS_0m,
+        "CPRI Decap Queue Statistics for Port"
+    },
+    {
+        CPRI_DECAP_Q_CFG_INTR_ENABLE_CONTROLr,
+        DECAP_Q_CFG_ECC_2BIT_INTERRUPT_ENf,
+        DECAP_Q_CFG_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_Q_CFG_ECC_INTR_STATUSr,
+        DECAP_Q_CFG_ERR_ADDRf,
+        DECAP_Q_CFG_MULTIPLE_ECC_ERRf,
+        DECAP_Q_CFG_ECC_2BIT_INTERRUPT_STATUSf,
+        DECAP_Q_CFG_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_DATA_0m,
+        "CPRI Decap Queue Setup memory"
+    },
+    {
+        CPRI_DECAP_SEQ_OFF_INTR_ENABLE_CONTROLr,
+        SEQ_OFF_ECC_2BIT_INTERRUPT_ENf,
+        SEQ_OFF_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_DECAP_SEQ_OFF_ECC_INTR_STATUSr,
+        SEQ_OFF_ERR_ADDRf,
+        SEQ_OFF_MULTIPLE_ECC_ERRf,
+        SEQ_OFF_ECC_2BIT_INTERRUPT_STATUSf,
+        SEQ_OFF_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_DECAP_ORDERING_SEQOFF_TAB_0m,
+        "CPRI Decap Ordering Seqoff Table"
+    },
+    {
+        CPRI_TXFRM_BFA_MAP_TAB0_INTR_ENABLE_CONTROLr,
+        BFA_MAP_TAB0_ECC_2BIT_INTERRUPT_ENf,
+        BFA_MAP_TAB0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_BFA_MAP_TAB0_INTR_STATUSr,
+        BFA_MAP_TAB0_ERR_EVENT_ADDRESSf,
+        BFA_MAP_TAB0_MULTIPLE_ECC_ERRf,
+        BFA_MAP_TAB0_ECC_2BIT_INTERRUPT_STATUSf,
+        BFA_MAP_TAB0_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_BFA_TAB0_CFG_0m,
+        "Basic frame assembly mapping table copy 0"
+    },
+    {
+        CPRI_TXFRM_BFA_MAP_TAB1_INTR_ENABLE_CONTROLr,
+        BFA_MAP_TAB1_ECC_2BIT_INTERRUPT_ENf,
+        BFA_MAP_TAB1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_BFA_MAP_TAB1_INTR_STATUSr,
+        BFA_MAP_TAB1_ERR_EVENT_ADDRESSf,
+        BFA_MAP_TAB1_MULTIPLE_ECC_ERRf,
+        BFA_MAP_TAB1_ECC_2BIT_INTERRUPT_STATUSf,
+        BFA_MAP_TAB1_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_BFA_TAB1_CFG_0m,
+        "Basic frame assembly mapping table copy 1"
+    },
+    {
+        CPRI_TXFRM_CA_MAP_TAB_INTR_ENABLE_CONTROLr,
+        CA_MAP_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CA_MAP_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CA_MAP_TAB_INTR_STATUSr,
+        CA_MAP_TAB_ERR_EVENT_ADDRESSf,
+        CA_MAP_TAB_MULTIPLE_ECC_ERRf,
+        CA_MAP_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CA_MAP_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CA_MAP_TAB_CFG_0m,
+        "CPRI Container Assembly Mapping Table memory"
+    },
+    {
+        CPRI_TXFRM_CA_PAY_TAB_INTR_ENABLE_CONTROLr,
+        CA_PAY_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CA_PAY_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CA_PAY_TAB_INTR_STATUSr,
+        CA_PAY_TAB_ERR_EVENT_ADDRESSf,
+        CA_PAY_TAB_MULTIPLE_ECC_ERRf,
+        CA_PAY_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CA_PAY_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CA_PAY_TAB_CFG_0m,
+        "CPRI Container Assembly Payload Table memory"
+    },
+    {
+        CPRI_TXFRM_CA_STATE_TAB_INTR_ENABLE_CONTROLr,
+        CA_STATE_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CA_STATE_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CA_STATE_TAB_INTR_STATUSr,
+        CA_STATE_TAB_ERR_EVENT_ADDRESSf,
+        CA_STATE_TAB_MULTIPLE_ECC_ERRf,
+        CA_STATE_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CA_STATE_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI container assembly state memory"
+    },
+    {
+        CPRI_TXFRM_CWA_FLOW_BUFFER0_INTR_ENABLE_CONTROLr,
+        FLOW_BUFFER0_ECC_2BIT_INTERRUPT_ENf,
+        FLOW_BUFFER0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CWA_FLOW_BUFFER0_INTR_STATUSr,
+        FLOW_BUFFER0_ERR_EVENT_ADDRESSf,
+        FLOW_BUFFER0_MULTIPLE_ECC_ERRf,
+        FLOW_BUFFER0_ECC_2BIT_INTERRUPT_STATUSf,
+        FLOW_BUFFER0_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CWA_VSD_CTRL_FLOW_BUFFER0_STS_0m,
+        "CPRI TX Per flow control axc data config table" 
+    },
+    {
+        CPRI_TXFRM_CWA_FLOW_BUFFER1_INTR_ENABLE_CONTROLr,
+        FLOW_BUFFER1_ECC_2BIT_INTERRUPT_ENf,
+        FLOW_BUFFER1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CWA_FLOW_BUFFER1_INTR_STATUSr,
+        FLOW_BUFFER1_ERR_EVENT_ADDRESSf,
+        FLOW_BUFFER1_MULTIPLE_ECC_ERRf,
+        FLOW_BUFFER1_ECC_2BIT_INTERRUPT_STATUSf,
+        FLOW_BUFFER1_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CWA_VSD_CTRL_FLOW_BUFFER1_STS_0m,
+        "CPRI TX Per flow control axc data config table" 
+    },
+    {
+        CPRI_TXFRM_CWA_FLOW_CONFIG_INTR_ENABLE_CONTROLr,
+        FLOW_CONFIG_ECC_2BIT_INTERRUPT_ENf,
+        FLOW_CONFIG_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_CWA_FLOW_CONFIG_INTR_STATUSr,
+        FLOW_CONFIG_ERR_EVENT_ADDRESSf,
+        FLOW_CONFIG_MULTIPLE_ECC_ERRf,
+        FLOW_CONFIG_ECC_2BIT_INTERRUPT_STATUSf,
+        FLOW_CONFIG_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CWA_VSD_CTRL_CONFIG_CFG_0m,
+        "CPRI TX Per flow axc data config table" 
+    },
+    {
+        CPRI_TXFRM_IQU_BUFFER_INTR_ENABLE_CONTROLr,
+        IQU_BUFFER_ECC_2BIT_INTERRUPT_ENf,
+        IQU_BUFFER_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_IQU_BUFFER_INTR_STATUSr,
+        IQU_BUFFER_ERR_EVENT_ADDRESSf,
+        IQU_BUFFER_MULTIPLE_ECC_ERRf,
+        IQU_BUFFER_ECC_2BIT_INTERRUPT_STATUSf,
+        IQU_BUFFER_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_IQU_BUFFER_STS_0m,
+        "CPRI IQ unpacking buffer payload table"
+    },
+    {
+        CPRI_TXFRM_IQU_STATE_INTR_ENABLE_CONTROLr,
+        IQU_STATE_ECC_2BIT_INTERRUPT_ENf,
+        IQU_STATE_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXFRM_IQU_STATE_INTR_STATUSr,
+        IQU_STATE_ERR_EVENT_ADDRESSf,
+        IQU_STATE_MULTIPLE_ECC_ERRf,
+        IQU_STATE_ECC_2BIT_INTERRUPT_STATUSf,
+        IQU_STATE_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_IQU_STATE_STS_0m,
+        "IQ unpacking buffer state table"
+    },
+    {
+        CPRI_TXPCS_TX_FIFO_INTR_ENABLE_CONTROLr,
+        TX_FIFO_ECC_2BIT_INTERRUPT_ENf,
+        TX_FIFO_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_TXPCS_TX_FIFO_INTR_STATUSr,
+        TX_FIFO_ERR_EVENT_ADDRESSf,
+        TX_FIFO_MULTIPLE_ECC_ERRf,
+        TX_FIFO_ECC_2BIT_INTERRUPT_STATUSf,
+        TX_FIFO_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI TX PCS FIFO"
+    },
+    {
+        CPRI_ENCAP_DATA_MEM_INTR_ENABLE_CONTROLr,
+        ENCAP_DATA_MEM_ECC_2BIT_INTERRUPT_ENf,
+        ENCAP_DATA_MEM_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_DATA_MEM_ECC_INTR_STATUSr,
+        ENCAP_DATA_MEM_ERR_ADDRf,
+        ENCAP_DATA_MEM_MULTIPLE_ECC_ERRf,
+        ENCAP_DATA_MEM_ECC_2BIT_INTERRUPT_STATUSf,
+        ENCAP_DATA_MEM_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap AxC Data Memory"
+    },
+    {
+        CPRI_ENCAP_ETH_HDR_INTR_ENABLE_CONTROLr,
+        ENCAP_ETH_HDR_ECC_2BIT_INTERRUPT_ENf,
+        ENCAP_ETH_HDR_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_ETH_HDR_ECC_INTR_STATUSr,
+        ENCAP_ETH_HDR_ERR_ADDRf,
+        ENCAP_ETH_HDR_MULTIPLE_ECC_ERRf,
+        ENCAP_ETH_HDR_ECC_2BIT_INTERRUPT_STATUSf,
+        ENCAP_ETH_HDR_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_ENCAP_QUE_ETH_HDR_0m,
+        "CPRI Encap Ethernet Header Encapsualtion Type memory"
+    },
+    {
+        CPRI_ENCAP_ORDERING_INFO_INTR_ENABLE_CONTROLr,
+        ENCAP_ORDERING_INFO_ECC_2BIT_INTERRUPT_ENf,
+        ENCAP_ORDERING_INFO_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_ORDERING_INFO_ECC_INTR_STATUSr,
+        ENCAP_ORDERING_INFO_ERR_ADDRf,
+        ENCAP_ORDERING_INFO_MULTIPLE_ECC_ERRf,
+        ENCAP_ORDERING_INFO_ECC_2BIT_INTERRUPT_STATUSf,
+        ENCAP_ORDERING_INFO_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_ENCAP_ORDERING_INFO_TAB_0m,
+        "CPRI Encap Ordering Table Info memory"
+    },
+    {
+        CPRI_ENCAP_PKT_CNT_INTR_ENABLE_CONTROLr,
+        ENCAP_PKT_CNT_ECC_2BIT_INTERRUPT_ENf,
+        ENCAP_PKT_CNT_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_PKT_CNT_ECC_INTR_STATUSr,
+        ENCAP_PKT_CNT_ERR_ADDRf,
+        ENCAP_PKT_CNT_MULTIPLE_ECC_ERRf,
+        ENCAP_PKT_CNT_ECC_2BIT_INTERRUPT_STATUSf,
+        ENCAP_PKT_CNT_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap Packet Count Memory"
+    },
+    {
+        CPRI_ENCAP_Q_CFG_INTR_ENABLE_CONTROLr,
+        ENCAP_Q_CFG_ECC_2BIT_INTERRUPT_ENf,
+        ENCAP_Q_CFG_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_Q_CFG_ECC_INTR_STATUSr,
+        ENCAP_Q_CFG_ERR_ADDRf,
+        ENCAP_Q_CFG_MULTIPLE_ECC_ERRf,
+        ENCAP_Q_CFG_ECC_2BIT_INTERRUPT_STATUSf,
+        ENCAP_Q_CFG_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_ENCAP_DATA_0m,
+        "CPRI Encap Data Queue memory error"
+    },
+    {
+        CPRI_ENCAP_RXFRM_0_INTR_ENABLE_CONTROLr,
+        RXFRM_0_ECC_2BIT_INTERRUPT_ENf,
+        RXFRM_0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_RXFRM_0_ECC_INTR_STATUSr,
+        RXFRM_0_ERR_ADDRf,
+        RXFRM_0_MULTIPLE_ECC_ERRf,
+        RXFRM_0_ECC_2BIT_INTERRUPT_STATUSf,
+        RXFRM_0_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap RX Framer-1 Memory"
+    },
+    {
+        CPRI_ENCAP_RXFRM_1_INTR_ENABLE_CONTROLr,
+        RXFRM_1_ECC_2BIT_INTERRUPT_ENf,
+        RXFRM_1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_RXFRM_1_ECC_INTR_STATUSr,
+        RXFRM_1_ERR_ADDRf,
+        RXFRM_1_MULTIPLE_ECC_ERRf,
+        RXFRM_1_ECC_2BIT_INTERRUPT_STATUSf,
+        RXFRM_1_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap RX Framer-1 Memory"
+    },
+    {
+        CPRI_ENCAP_SEQ_NUM_CTL_INTR_ENABLE_CONTROLr,
+        SEQ_NUM_CTL_ECC_2BIT_INTERRUPT_ENf,
+        SEQ_NUM_CTL_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_SEQ_NUM_CTL_ECC_INTR_STATUSr,
+        SEQ_NUM_CTL_ERR_ADDRf,
+        SEQ_NUM_CTL_MULTIPLE_ECC_ERRf,
+        SEQ_NUM_CTL_ECC_2BIT_INTERRUPT_STATUSf,
+        SEQ_NUM_CTL_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_ENCAP_ORDERING_INFO_STS_0m,
+        "CPRI Encap Ordering Info Table for Control" 
+    },
+    {
+        CPRI_ENCAP_SEQ_NUM_DATA_INTR_ENABLE_CONTROLr,
+        SEQ_NUM_DATA_ECC_2BIT_INTERRUPT_ENf,
+        SEQ_NUM_DATA_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_SEQ_NUM_DATA_ECC_INTR_STATUSr,
+        SEQ_NUM_DATA_ERR_ADDRf,
+        SEQ_NUM_DATA_MULTIPLE_ECC_ERRf,
+        SEQ_NUM_DATA_ECC_2BIT_INTERRUPT_STATUSf,
+        SEQ_NUM_DATA_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_ENCAP_ORDERING_INFO_STS_0m,
+        "CPRI Encap Ordering Info Table for Data" 
+    },
+    {
+        CPRI_ENCAP_WQ_0_INTR_ENABLE_CONTROLr,
+        WQ_0_ECC_2BIT_INTERRUPT_ENf,
+        WQ_0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_WQ_0_ECC_INTR_STATUSr,
+        WQ_0_ERR_ADDRf,
+        WQ_0_MULTIPLE_ECC_ERRf,
+        WQ_0_ECC_2BIT_INTERRUPT_STATUSf,
+        WQ_0_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap WQ-0 Memory"
+    },
+    {
+        CPRI_ENCAP_WQ_1_INTR_ENABLE_CONTROLr,
+        WQ_1_ECC_2BIT_INTERRUPT_ENf,
+        WQ_1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_WQ_1_ECC_INTR_STATUSr,
+        WQ_1_ERR_ADDRf,
+        WQ_1_MULTIPLE_ECC_ERRf,
+        WQ_1_ECC_2BIT_INTERRUPT_STATUSf,
+        WQ_1_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap WQ-1 Memory"
+    },
+    {
+        CPRI_ENCAP_WQ_2_INTR_ENABLE_CONTROLr,
+        WQ_2_ECC_2BIT_INTERRUPT_ENf,
+        WQ_2_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_WQ_2_ECC_INTR_STATUSr,
+        WQ_2_ERR_ADDRf,
+        WQ_2_MULTIPLE_ECC_ERRf,
+        WQ_2_ECC_2BIT_INTERRUPT_STATUSf,
+        WQ_2_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap WQ-2 Memory"
+    },
+    {
+        CPRI_ENCAP_WQ_3_INTR_ENABLE_CONTROLr,
+        WQ_3_ECC_2BIT_INTERRUPT_ENf,
+        WQ_3_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_ENCAP_WQ_3_ECC_INTR_STATUSr,
+        WQ_3_ERR_ADDRf,
+        WQ_3_MULTIPLE_ECC_ERRf,
+        WQ_3_ECC_2BIT_INTERRUPT_STATUSf,
+        WQ_3_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI Encap WQ-3 Memory"
+    },
+    {
+        CPRI_RXFRM_BFRM_MAP_TAB0_INTR_ENABLE_CONTROLr,
+        BFRM_MAP_TAB0_ECC_2BIT_INTERRUPT_ENf,
+        BFRM_MAP_TAB0_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_BFRM_MAP_TAB0_INTR_STATUSr,
+        BFRM_MAP_TAB0_ERR_EVENT_ADDRESSf,
+        BFRM_MAP_TAB0_MULTIPLE_ECC_ERRf,
+        BFRM_MAP_TAB0_ECC_2BIT_INTERRUPT_STATUSf,
+        BFRM_MAP_TAB0_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_BFP_TAB0_CFG_0m,
+        "CPRI Basic Frame Parser Mapping Table Copy 0"
+    },
+    {
+        CPRI_RXFRM_BFRM_MAP_TAB1_INTR_ENABLE_CONTROLr,
+        BFRM_MAP_TAB1_ECC_2BIT_INTERRUPT_ENf,
+        BFRM_MAP_TAB1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_BFRM_MAP_TAB1_INTR_STATUSr,
+        BFRM_MAP_TAB1_ERR_EVENT_ADDRESSf,
+        BFRM_MAP_TAB1_MULTIPLE_ECC_ERRf,
+        BFRM_MAP_TAB1_ECC_2BIT_INTERRUPT_STATUSf,
+        BFRM_MAP_TAB1_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_BFP_TAB1_CFG_0m,
+        "CPRI Basic Frame Parser Mapping Table Copy 1"
+    },
+    {
+        CPRI_RXFRM_CFLW_BUF_TAB_INTR_ENABLE_CONTROLr,
+        CFLW_BUF_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CFLW_BUF_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_CFLW_BUF_TAB_INTR_STATUSr,
+        CFLW_BUF_TAB_ERR_EVENT_ADDRESSf,
+        CFLW_BUF_TAB_MULTIPLE_ECC_ERRf,
+        CFLW_BUF_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CFLW_BUF_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_VSDCTRL_CFLW_BUF_TAB_STS_0m,
+        "CPRI Control Flow Buffer memory"
+    },
+    {
+        CPRI_RXFRM_CFLW_PGC_TAB_INTR_ENABLE_CONTROLr,
+        CFLW_PGC_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CFLW_PGC_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_CFLW_PGC_TAB_INTR_STATUSr,
+        CFLW_PGC_TAB_ERR_EVENT_ADDRESSf,
+        CFLW_PGC_TAB_MULTIPLE_ECC_ERRf,
+        CFLW_PGC_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CFLW_PGC_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_VSDCTRL_CFLW_PGC_TAB_CFG_0m,
+        "CPRI Control Flow Packet Generation Config Memory"
+    },
+    {
+        CPRI_RXFRM_CPRSR_MAP_TAB_INTR_ENABLE_CONTROLr,
+        CPRSR_MAP_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CPRSR_MAP_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_CPRSR_MAP_TAB_INTR_STATUSr,
+        CPRSR_MAP_TAB_ERR_EVENT_ADDRESSf,
+        CPRSR_MAP_TAB_MULTIPLE_ECC_ERRf,
+        CPRSR_MAP_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CPRSR_MAP_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CPRSR_MAP_TAB_CFG_0m,
+        "CPRI Container parser mapping table"
+    },
+    {
+        CPRI_RXFRM_CPRSR_STATE_MEM_INTR_ENABLE_CONTROLr,
+        CPRSR_MAP_STATE_TAB_ECC_2BIT_INTERRUPT_ENf,
+        CPRSR_MAP_STATE_TAB_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_CPRSR_STATE_MEM_INTR_STATUSr,
+        CPRSR_MAP_STATE_TAB_ERR_EVENT_ADDRESSf,
+        CPRSR_MAP_STATE_TAB_MULTIPLE_ECC_ERRf,
+        CPRSR_MAP_STATE_TAB_ECC_2BIT_INTERRUPT_STATUSf,
+        CPRSR_MAP_STATE_TAB_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CPRSR_MAP_STATE_TAB_STS_0m,
+        "CPRI Container parser mapping state table"
+    },
+    {
+        CPRI_RXFRM_IQ_PK_BUFF_AXC_PLD_MEM_INTR_ENABLE_CONTROLr,
+        IQ_PK_BUFF_AXC_PLD_ECC_2BIT_INTERRUPT_ENf,
+        IQ_PK_BUFF_AXC_PLD_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_IQ_PK_BUFF_AXC_PLD_MEM_INTR_STATUSr,
+        IQ_PK_BUFF_AXC_PLD_ERR_EVENT_ADDRESSf,
+        IQ_PK_BUFF_AXC_PLD_MULTIPLE_ECC_ERRf,
+        IQ_PK_BUFF_AXC_PLD_ECC_2BIT_INTERRUPT_STATUSf,
+        IQ_PK_BUFF_AXC_PLD_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_IQ_PK_BUFF_AXC_PLD_STS_0m,
+        "IQ packing buffer payload table memory"
+    },
+    {
+        CPRI_RXFRM_IQ_PK_BUFF_AXC_STATE_MEM_INTR_ENABLE_CONTROLr,
+        IQ_PK_BUFF_AXC_STATE_ECC_2BIT_INTERRUPT_ENf,
+        IQ_PK_BUFF_AXC_STATE_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_IQ_PK_BUFF_AXC_STATE_MEM_INTR_STATUSr,
+        IQ_PK_BUFF_AXC_STATE_ERR_EVENT_ADDRESSf,
+        IQ_PK_BUFF_AXC_STATE_MULTIPLE_ECC_ERRf,
+        IQ_PK_BUFF_AXC_STATE_ECC_2BIT_INTERRUPT_STATUSf,
+        IQ_PK_BUFF_AXC_STATE_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_IQ_PK_BUFF_AXC_STATE_STS_0m,
+        "CPRI IQ packing buffer state table memory"
+    },
+    {
+        CPRI_RXFRM_IQ_PK_BUFF_MEM_INTR_ENABLE_CONTROLr,
+        IQ_PK_BUFF_ECC_2BIT_INTERRUPT_ENf,
+        IQ_PK_BUFF_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXFRM_IQ_PK_BUFF_MEM_INTR_STATUSr,
+        IQ_PK_BUFF_ERR_EVENT_ADDRESSf,
+        IQ_PK_BUFF_MULTIPLE_ECC_ERRf,
+        IQ_PK_BUFF_ECC_2BIT_INTERRUPT_STATUSf,
+        IQ_PK_BUFF_ECC_1BIT_INTERRUPT_STATUSf,
+        CPRI_CPRSR_IQ_PK_BUFF_CFG_0m,
+        "CPRI Container Parser iq_pk buff memory" 
+    },
+    {
+        CPRI_RXPCS_EXTRACT_INTR_ENABLE_CONTROLr,
+        RXPCS_EXTRACT_ECC_2BIT_INTERRUPT_ENf,
+        RXPCS_EXTRACT_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXPCS_EXTRACT_INTR_STATUSr,
+        RXPCS_EXTRACT_ERR_EVENT_ADDRESSf,
+        RXPCS_EXTRACT_MULTIPLE_ECC_ERRf,
+        RXPCS_EXTRACT_ECC_2BIT_INTERRUPT_STATUSf,
+        RXPCS_EXTRACT_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI RX Extract FIFO"
+    },
+    {
+        CPRI_RXPCS_FEC_DECODER_RAM1_INTR_ENABLE_CONTROLr,
+        RXPCS_FEC_DECODER_RAM1_ECC_2BIT_INTERRUPT_ENf,
+        RXPCS_FEC_DECODER_RAM1_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXPCS_FEC_DECODER_RAM1_INTR_STATUSr,
+        RXPCS_FEC_DECODER_RAM1_ERR_EVENT_ADDRESSf,
+        RXPCS_FEC_DECODER_RAM1_MULTIPLE_ECC_ERRf,
+        RXPCS_FEC_DECODER_RAM1_ECC_2BIT_INTERRUPT_STATUSf,
+        RXPCS_FEC_DECODER_RAM1_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI RX FEC RAM1 Memory"
+    },
+    {
+        CPRI_RXPCS_FEC_DECODER_RAM2_INTR_ENABLE_CONTROLr,
+        RXPCS_FEC_DECODER_RAM2_ECC_2BIT_INTERRUPT_ENf,
+        RXPCS_FEC_DECODER_RAM2_ECC_1BIT_INTERRUPT_ENf,
+        CPRI_RXPCS_FEC_DECODER_RAM2_INTR_STATUSr,
+        RXPCS_FEC_DECODER_RAM2_ERR_EVENT_ADDRESSf,
+        RXPCS_FEC_DECODER_RAM2_MULTIPLE_ECC_ERRf,
+        RXPCS_FEC_DECODER_RAM2_ECC_2BIT_INTERRUPT_STATUSf,
+        RXPCS_FEC_DECODER_RAM2_ECC_1BIT_INTERRUPT_STATUSf,
+        INVALIDm,
+        "CPRI RX FEC RAM2 Memory"
+    },
+    {
+        INVALIDr, INVALIDf, INVALIDf,
+        INVALIDr, INVALIDf, INVALIDf, INVALIDf, INVALIDf,
+        INVALIDm, ""
+    }
+};
+
+/* CPRI Interrupts enable reg-fields info */
+typedef struct _cpri_interrupts_info_s {
+    int         is_64bit;
+    soc_reg_t   enable_reg;
+    soc_field_t enable_field;
+    int         min_id; /* min queue num or AxC id */
+    int         max_id; /* max queue num or AxC id */
+
+    int         is_status_64bit;
+    soc_reg_t   status_reg;
+    soc_field_t status_field;
+
+}_cpri_interrupts_info_t;
+
+STATIC _cpri_interrupts_info_t _cpri_port_intrs_info[_shrCpriIntrCount] = {
+    { /* _shrCpriIntrRx1588CapturedTs */
+        0,
+        CPRI_RX_1588_CAP_INTR_ENABLE_CONTROLr,
+        RX_CAPTURED_TS_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_RX_1588_CAP_INTR_STATUSr,
+        RX_CAPTURED_TS_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRx1588TsFifo */
+        0,
+        CPRI_RX_1588_FIFO_INTR_ENABLE_CONTROLr,
+        RX_TS_FIFO_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_RX_1588_FIFO_INTR_STATUSr,
+        RX_TS_FIFO_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxEncapCtrlQOverflow */
+        0,
+        CPRI_ENCAP_CTRL_QUEUE_INTR_ENABLEr,
+        ENCAP_CTRL_QUEUE_FAULT_INTERRUPT_ENABLE_0f, 0, 15,
+        0,
+        CPRI_ENCAP_CTRL_QUEUE_INTR_STATUSr,
+        ENCAP_CTRL_QUEUE_FAULT_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrRxEncapDataQOverflow, */
+        1,
+        CPRI_ENCAP_DATA_QUEUE_INTR_ENABLEr,
+        ENCAP_DATA_QUEUE_FAULT_INTERRUPT_ENABLE_0f, 0, 63,
+        1,
+        CPRI_ENCAP_DATA_QUEUE_INTR_STATUSr,
+        ENCAP_DATA_QUEUE_FAULT_INTERRUPT_STATUS_0f 
+    },
+    { /* _shrCpriIntrRxEncapGsmTsQErr */
+        1,
+        CPRI_ENCAP_GSM_TS_ERR_QUEUE_INTR_ENABLEr,
+        ENCAP_GSM_TS_ERR_QUEUE_INTERRUPT_ENABLE_0f, 0, 63,
+        1,
+        CPRI_ENCAP_GSM_TS_ERR_QUEUE_INTR_STATUSr,
+        ENCAP_GSM_TS_ERR_QUEUE_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrRxEncapIpsmCdcFifoErr */
+        0,
+        CPRI_ENCAP_MISC_FIFO_QUEUE_INTR_ENABLEr,
+        ENCAP_IPSM_CDC_FIFO_FAULT_INTERRUPT_ENABLEf, 0, 0,
+        0,
+        CPRI_ENCAP_MISC_FIFO_INTR_STATUSr,
+        ENCAP_IPSM_CDC_FIFO_FAULT_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxEncapRxFrmInFifoOverflow */
+        0,
+        CPRI_ENCAP_MISC_FIFO_QUEUE_INTR_ENABLEr,
+        ENCAP_RXFRM_IN_FIFO_FAULT_INTERRUPT_ENABLEf, 0, 0,
+        0,
+        CPRI_ENCAP_MISC_FIFO_INTR_STATUSr,
+        ENCAP_RXFRM_IN_FIFO_FAULT_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxEncapWqFiFoOverflow */
+        0,
+        CPRI_ENCAP_MISC_FIFO_QUEUE_INTR_ENABLEr,
+        ENCAP_WQ_FIFO_FAULT_INTERRUPT_ENABLE_0f, 0, 3,
+        0,
+        CPRI_ENCAP_MISC_FIFO_INTR_STATUSr,
+        ENCAP_WQ_FIFO_FAULT_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrRxFrmL1SigChange */
+        1,
+        CPRI_RXFRM_CPRSR_INTR_ENABLE_CONTROLr,
+        RXFRM_L1_SIG_CHANGE_INTERRUPT_MASKf, 0, 0,
+        1,
+        CPRI_RXFRM_CPRSR_STATUSr,
+        RXFRM_L1_SIG_CHANGE_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxFrmRsvd4SingleTsErr */
+        1,
+        BRCM_RESERVED_CPM_305r,
+        BRCM_RESERVED_CPM_305_0f, 0, 63,
+        1,
+        BRCM_RESERVED_CPM_304r,
+        BRCM_RESERVED_CPM_304_0f
+    },
+    { /* _shrCpriIntrRxFrmRsvd4Ts */
+        1,
+        BRCM_RESERVED_CPM_303r,
+        BRCM_RESERVED_CPM_303_0f, 0, 63,
+        BRCM_RESERVED_CPM_302r,
+        BRCM_RESERVED_CPM_302_0f
+    },
+    { /* _shrCpriIntrRxGcw */
+        0,
+        CPRI_RX_GCW_INTR_ENABLE_CONTROLr,
+        RXFRM_GCW_INTERRUPT_ENf, 0, 15,
+        0,
+        CPRI_RX_GCW_INTR_STATUSr,
+        RXFRM_GCW_WORD_0_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcs64B66BBlkLckLh */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_64B66B_BLOCK_LOCK_LH_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_64B66B_BLOCK_LOCK_LH_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcs64B66BBlkLckLl */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_64B66B_BLOCK_LOCK_LL_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_64B66B_BLOCK_LOCK_LL_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcs64B66BHiBerLh */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_64B66B_HI_BER_LH_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_64B66B_HI_BER_LH_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcs64B66BHiBerLl */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_64B66B_HI_BER_LL_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_64B66B_HI_BER_LL_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsExtractFifoOvrFlow */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_EXTRACT_FIFO_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_EXTRACT_FIFO_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsFecCsCwBad */
+        0,
+        CPRI_RXPCS_FEC_INTR_ENABLE_CONTROLr,
+        RXPCS_FEC_CS_CW_BAD_DURING_SYNC_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_FEC_INTR_STATUSr,
+        RXPCS_FEC_CS_CW_BAD_DURING_SYNC_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsLinkStatusLh */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_LINK_STATUS_LH_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_LINK_STATUS_LH_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsLinkStatusLl */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_LINK_STATUS_LL_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_LINK_STATUS_LL_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsLosLh */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_LOS_LH_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_LOS_LH_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrRxPcsLosLl */
+        0,
+        CPRI_RXPCS_INTR_ENABLEr,
+        RXPCS_LOS_LL_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_RXPCS_INTR_STATUSr,
+        RXPCS_LOS_LL_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTx1588CapturedTs */
+        0,
+        CPRI_TX_1588_CAP_INTR_ENABLE_CONTROLr,
+        TX_CAPTURED_TS_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_TX_1588_CAP_INTR_STATUSr,
+        TX_CAPTURED_TS_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTx1588TsFifo */
+        0,
+        CPRI_TX_1588_FIFO_INTR_ENABLE_CONTROLr,
+        TX_TS_FIFO_INTERRUPT_ENf, 0, 0,
+        0,
+        CPRI_TX_1588_FIFO_INTR_STATUSr,
+        TX_TS_FIFO_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxDecapAgModePktMiss */
+        1,
+        CPRI_DECAP_AGNOSTIC_MODE_INTR_ENABLEr,
+        DECAP_AGNOSTIC_MODE_MISSING_PKT_INTERRUPT_ENABLEf, 0, 0,
+        1,
+        CPRI_DECAP_AGNOSTIC_MODE_INTR_STATUSr,
+        DECAP_AGNOSTIC_MODE_MISSING_PKT_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxDecapDataQBuffSizeErr */
+        1,
+        CPRI_DECAP_DATA_QUEUE_BUFFSIZE_INTR_ENABLEr,
+        DECAP_DATA_QUEUE_BUFFSIZE_INTERRUPT_ENABLE_0f, 0, 63,
+        1,
+        CPRI_DECAP_DATA_QUEUE_BUFFSIZE_INTR_STATUSr,
+        DECAP_DATA_QUEUE_BUFFSIZE_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrTxDecapDataQOvflErr */
+        1,
+        CPRI_DECAP_DATA_QUEUE_OVERFLOW_INTR_ENABLEr,
+        DECAP_DATA_QUEUE_OVERFLOW_INTERRUPT_ENABLE_0f, 0,63,
+        1,
+        CPRI_DECAP_DATA_QUEUE_OVERFLOW_INTR_STATUSr,
+        DECAP_DATA_QUEUE_OVERFLOW_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrTxDecapDataQUdfllErr */
+        1,
+        CPRI_DECAP_DATA_QUEUE_UNDERFLOW_INTR_ENABLEr,
+        DECAP_DATA_QUEUE_UNDERFLOW_INTERRUPT_ENABLE_0f, 0, 63,
+        1,
+        CPRI_DECAP_DATA_QUEUE_UNDERFLOW_INTR_STATUSr,
+        DECAP_DATA_QUEUE_UNDERFLOW_INTERRUPT_STATUS_0f
+    },
+    { /* _shrCpriIntrTxFrmArbCpriAckMismatch */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_ARB_CPRI_ACK_MISMATCH_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_ARB_CPRI_ACK_MISMATCH_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmArbOBSAIAckMisalign */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_4f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_4f
+    },
+    { /* _shrCpriIntrTxFrmArbOBSAIReqConflict */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_3f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_3f
+    },
+    { /* _shrCpriIntrTxFrmArbPsizeZero */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_ARB_PSIZE_ZERO_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_ARB_PSIZE_ZERO_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmBfaHfStartMisalign */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_BFA_HF_START_MISALIGN_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_BFA_HF_START_MISALIGN_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmCwaCtrlPktFlowIdErr */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_CWA_CTRL_PACKET_FLOW_ID_ERR_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_CWA_CTRL_PACKET_FLOW_ID_ERR_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmCwaFastEthBufferOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_CWA_FAST_ETH_BUFFER_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_CWA_FAST_ETH_BUFFER_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmCwaHdlcBufferOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_CWA_HDLC_BUFFER_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_CWA_HDLC_BUFFER_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmCwaMultipleValids */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_CWA_MULTIPLE_VALIDS_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_CWA_MULTIPLE_VALIDS_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmCwaSdvmBufferOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_5f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_6f
+    },
+    { /* _shrCpriIntrTxFrmCwaSdvmProcOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_2f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_3f
+    },
+    { /* _shrCpriIntrTxFrmCwaVsdRawBufferOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        TXFRM_CWA_VSD_RAW_BUFFER_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        TXFRM_CWA_VSD_RAW_BUFFER_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxFrmDrAckMisalign */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_1f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_2f
+    },
+    { /* _shrCpriIntrTxFrmDrMultiEthPsizeUndersize */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_0f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_1f
+    },
+    { /* _shrCpriIntrTxFrmMultiEthBufferOverflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_6f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_7f
+    },
+    { /* _shrCpriIntrTxFrmMultiEthBufferUnderflow */
+        1,
+        CPRI_TXFRM_INTR_ENABLE_CONTROLr,
+        BRCM_RESERVED_CPM_11_7f, 0, 0,
+        1,
+        CPRI_TXFRM_INTR_STATUSr,
+        BRCM_RESERVED_CPM_10_8f
+    },
+    { /* _shrCpriIntrTxGcw */
+        0,
+        CPRI_TXFRM_CWA_GCW_INTR_ENABLE_CONTROLr,
+        TXFRM_GCW_WORD_INSERTED_INTERRUPT_ENf, 0, 15,
+        0,
+        CPRI_TXFRM_CWA_GCW_INTR_STATUSr,
+        TXFRM_GCW_WORD_INSERTED_0_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxPcsFifoOverflow */
+        1,
+        CPRI_TXPCS_INTR_ENABLE_CONTROLr,
+        TX_PCS_FIFO_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXPCS_INTR_STATUSr,
+        TX_PCS_FIFO_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxPcsFifoUnderflow */
+        1,
+        CPRI_TXPCS_INTR_ENABLE_CONTROLr,
+        TX_PCS_FIFO_UNDERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXPCS_INTR_STATUSr,
+        TX_PCS_FIFO_UNDERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxPcsGboxOverflow */
+        1,
+        CPRI_TXPCS_INTR_ENABLE_CONTROLr,
+        TX_PCS_GBOX_OVERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXPCS_INTR_STATUSr,
+        TX_PCS_GBOX_OVERFLOW_INTERRUPT_STATUSf
+    },
+    { /* _shrCpriIntrTxPcsGboxUnderflow */
+        1,
+        CPRI_TXPCS_INTR_ENABLE_CONTROLr,
+        TX_PCS_GBOX_UNDERFLOW_INTERRUPT_ENf, 0, 0,
+        1,
+        CPRI_TXPCS_INTR_STATUSr,
+        TX_PCS_GBOX_UNDERFLOW_INTERRUPT_STATUSf
+    }
+};
+
+#ifdef CPRIMOD_SUPPORT_ECC_INJECT
+
+/* CPRI ECC error inject types */
+typedef enum _cpri_ecc_inject_type_e{
+    _cpriEccInjectnoErr = 0,
+    _cpriEccInject2bErrOnWrite = 1,
+    _cpriEccInject1bErrOnRead = 2,
+    _cpriEccInject2bErrOnRead = 3,
+    _cpriEccInjectCount
+}_cpri_ecc_inject_type_t;
+
+/* CPRI ECC inject enable/disable info */
+
+typedef struct _cpri_ecc_inject_ctl_s {
+    soc_reg_t    en_r;   /* ecc error inject enable reg */
+    soc_field_t  en_f;   /* ecc(i-bit, 2-bit) error inject field */
+    soc_reg_t    dis_r;  /* ecc error inject disable reg */
+    soc_field_t  dis_f;  /* ecc error disable field */
+}_cpri_ecc_inject_ctrl_t;
+
+STATIC _cpri_ecc_inject_ctrl_t _cpri_ecc_err_ctrl_info[] =
+{
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        WQ_3_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        WQ_3_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        WQ_2_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        WQ_2_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        WQ_1_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        WQ_1_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        WQ_0_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        WQ_0_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        SEQ_NUM_DATA_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        SEQ_NUM_DATA_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        SEQ_NUM_CTL_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        SEQ_NUM_CTL_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        RX_FRM_1_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        RX_FRM_1_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        RX_FRM_0_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        RX_FRM_0_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        QUEUE_CFG_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        QUEUE_CFG_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        PKT_CNT_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        PKT_CNT_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        ORDERING_INFO_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        ORDERING_INFO_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        ETH_HDR_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        ETH_HDR_DISABLE_ECCf
+    },
+    {
+        CPRI_ENCAP_CORRUPT_ECC_CTRLr,
+        ENCAP_MEM_CORRUPT_ECCf,
+        CPRI_ENCAP_DISABLE_ECC_CTRLr,
+        ENCAP_MEM_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        SEQ_OFF_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        SEQ_OFF_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        QUEUE_CFG_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        QUEUE_CFG_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        PKT_CNT_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        PKT_CNT_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        ORDERING_INFO_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        ORDERING_INFO_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        MEM_BUF_1_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        MEM_BUF_1_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        MEM_BUF_0_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        MEM_BUF_0_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        FLOWID_QUEUE_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        FLOWID_QUEUE_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        DECAP_MEM_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        DECAP_MEM_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        COMP_TAB_Q_CORRUPT_ECC_Bf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        COMP_TAB_Q_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        COMP_TAB_Q_CORRUPT_ECC_Af,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        COMP_TAB_Q_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        COMP_TAB_I_CORRUPT_ECC_Bf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        COMP_TAB_I_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        COMP_TAB_I_CORRUPT_ECC_Af,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        COMP_TAB_I_DISABLE_ECCf
+    },
+    {
+        CPRI_DECAP_CORRUPT_ECC_CTRLr,
+        CLS_QUEUE_CORRUPT_ECCf,
+        CPRI_DECAP_DISABLE_ECC_CTRLr,
+        CLS_QUEUE_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        RXPCS_FEC_DECODER_RAM2_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        RXPCS_FEC_DECODER_RAM2_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        RXPCS_FEC_DECODER_RAM1_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        RXPCS_FEC_DECODER_RAM1_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        RXPCS_EXTRACT_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        RXPCS_EXTRACT_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        IQ_PK_BUFF_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        IQ_PK_BUFF_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        IQ_PK_BUFF_AXC_STATE_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        IQ_PK_BUFF_AXC_STATE_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        IQ_PK_BUFF_AXC_PLD_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        IQ_PK_BUFF_AXC_PLD_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        CPRSR_MAP_TAB_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        CPRSR_MAP_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        CPRSR_MAP_STATE_TAB_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        CPRSR_MAP_STATE_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        CFLW_PGC_TAB_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        CFLW_PGC_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        CFLW_BUF_TAB_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        CFLW_BUF_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        BFRM_MAP_TAB1_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        BFRM_MAP_TAB1_DISABLE_ECCf
+    },
+    {
+        CPRI_RXFRM_RXPCS_CORRUPT_ECC_CTRLr,
+        BFRM_MAP_TAB0_CORRUPT_ECCf,
+        CPRI_RXFRM_RXPCS_DISABLE_ECC_CTRLr,
+        BFRM_MAP_TAB0_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        TX_FIFO_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        TX_FIFO_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        IQU_STATE_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        IQU_STATE_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        IQU_BUFFER_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        IQU_BUFFER_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        FLOW_CONFIG_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        FLOW_CONFIG_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        FLOW_BUFFER1_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        FLOW_BUFFER1_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        FLOW_BUFFER0_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        FLOW_BUFFER0_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        CA_STATE_TAB_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        CA_STATE_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        CA_PAY_TAB_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        CA_PAY_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        CA_MAP_TAB_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        CA_MAP_TAB_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        BFA_MAP_TAB1_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        BFA_MAP_TAB1_DISABLE_ECCf
+    },
+    {
+        CPRI_TXFRM_TXPCS_CORRUPT_ECC_CTRLr,
+        BFA_MAP_TAB0_CORRUPT_ECCf,
+        CPRI_TXFRM_TXPCS_DISABLE_ECC_CTRLr,
+        BFA_MAP_TAB0_DISABLE_ECCf
+    },
+    {
+        INVALIDr,
+        INVALIDf,
+        INVALIDr,
+        INVALIDf
+    }
+};
+#endif /* CPRIMOD_SUPPORT_ECC_INJECT */
+
+#endif /* _CPRIF_DRV_PRIVATE_H_ */

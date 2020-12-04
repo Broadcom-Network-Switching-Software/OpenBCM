@@ -1,0 +1,162 @@
+BCM.0> c ifp_flex_stat_policer.c
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3)
+B_CM.0> fp show
+FP:	unit 0:
+PIPELINE STAGE FLOWTRACKER
+FP:	      :tcam_sz=508(0x1fc), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=18432(0x4800), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,
+GID          1: gid=0x1, instance=0 mode=Double, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000007fffffffffffff}
+         qset={DstMac, InPort, Stage, StageIngress},
+         aset={CosQNew, CosQCpuNew, UcastCosQNew, McastCosQNew, PrioPktCopy, PrioPktNew, PrioPktTos, PrioPktCancel, PrioIntCopy, PrioIntNew, PrioIntTos, PrioIntCancel, DscpNew, DscpCancel, EcnNew, CopyToCpu, CopyToCpuCancel, SwitchToCpuCancel, SwitchToCpuReinstate, TimeStampToCpu, TimeStampToCpuCancel, RedirectPort, RedirectTrunk, RedirectCancel, RedirectPbmp, RedirectIpmc, RedirectMcast, RedirectVlan, RedirectBcastPbmp, EgressMask, EgressPortsAdd, Drop, DropCancel, MirrorOverride, MirrorIngress, MirrorEgress, L3Switch, L3SwitchCancel, DropPrecedence, RpDrop, RpDropCancel, RpDropPrecedence, RpCopyToCpu, RpCopyToCpuCancel, RpSwitchToCpuCancel, RpSwitchToCpuReinstate, RpTimeStampToCpu, RpTimeStampToCpuCancel, RpDscpNew, RpDscpCancel, RpEcnNew, RpPrioPktCopy, RpPrioPktNew, RpPrioPktTos, RpPrioPktCancel, RpCosQNew, RpUcastCosQNew, RpMcastCosQNew, RpPrioIntCopy, RpPrioIntNew, RpPrioIntTos, RpPrioIntCancel, YpDrop, YpDropCancel, YpDropPrecedence, YpCopyToCpu, YpCopyToCpuCancel, YpSwitchToCpuCancel, YpSwitchToCpuReinstate, YpTimeStampToCpu, YpTimeStampToCpuCancel, YpDscpNew, YpDscpCancel, YpEcnNew, YpPrioPktCopy, YpPrioPktNew, YpPrioPktTos, YpPrioPktCancel, YpCosQNew, YpUcastCosQNew, YpMcastCosQNew, YpPrioIntCopy, YpPrioIntNew, YpPrioIntTos, YpPrioIntCancel, ColorIndependent, GpDrop, GpDropCancel, GpDropPrecedence, GpCopyToCpu, GpCopyToCpuCancel, GpSwitchToCpuCancel, GpSwitchToCpuReinstate, GpTimeStampToCpu, GpTimeStampToCpuCancel, GpDscpNew, GpDscpCancel, GpEcnNew, GpTosPrecedenceNew, GpTosPrecedenceCopy, GpPrioPktCopy, GpPrioPktNew, GpPrioPktTos, GpPrioPktCancel, GpCosQNew, GpUcastCosQNew, GpMcastCosQNew, GpPrioIntCopy, GpPrioIntNew, GpPrioIntTos, GpPrioIntCancel, DoNotChangeTtl, DoNotCheckUrpf, NewClassId, MultipathHash, FabricQueue, ServicePoolIdNew, RedirectEgrNextHop, EcmpLoadBalanceCancel, EgressClassSelect, HiGigClassSelect, PolicerGroup, StatGroup, NatCancel, Nat, NatEgressOverride, FibreChanVsanId, FibreChanZoneCheckActionCancel, FibreChanIntVsanPri, IngSampleEnable, UnmodifiedPacketRedirectPort, RpIntCongestionNotificationNew, YpIntCongestionNotificationNew, GpIntCongestionNotificationNew, RecoverableDropCancel, FabricEHAddOrUpdate, Dot1pPreserve, GpDot1pPreserve, YpDot1pPreserve, RpDot1pPreserve, DscpPreserve, GpDscpPreserve, YpDscpPreserve, RpDscpPreserve, ChangeL2FieldsCancel, BFDSessionIdNew, CosMapNew, GpCosMapNew, YpCosMapNew, RpCosMapNew, ChangeL2Fields, HgTrunkRandomRoundRobinHashCancel, TrunkRandomRoundRobinHashCancel, EcmpRandomRoundRobinHashCancel, PacketTraceEnable, UntaggedPacketPriorityNew, DoNotCutThrough, ServicePoolIdPrecedenceNew, EgressTimeStampInsert, IngressTimeStampInsert, IngressTimeStampInsertCancel, EgressTimeStampInsertCancel, DynamicEcmpEnable, Dgm, DgmThreshold, DgmBias, DgmCost, TrunkResilientHashEnable, TrunkResilientHashDisable, EcmpResilientHashEnable, EcmpResilientHashDisable, HiGigTrunkResilientHashEnable, HiGigTrunkResilientHashDisable, IntEncapEnable, IntTurnAround, AddIngOuterVlanToEgrOuterVlan, Erspan3HdrVlanCosPktCopy, IntEncapUpdate, LoopbackType, GbpClassifierAdd, GbpSrcIdNew, AssignOpaqueObject1, AssignOpaqueObject2, AssignOpaqueObject3, AssignOpaqueObject4, AssignExtractionCtrlId, AssignEditCtrlId, GbpSrcMacMcastBitSet, GbpDstIdNew, LoopbackSubtype, EgressFlowControlEnable, EgressFlowEncapEnable, OamCopyToCpu, GpOamCopyToCpu, YpOamCopyToCpu, RpOamCopyToCpu, FlowTimestampType, FlowTimestampSource0, FlowTimestampSource1},
+         Qualifiers in Part-0: {DstMac},
+         Qualifiers in Part-1: {DstMac->InPort},
+
+         group_priority= 0
+         slice_primary =  {slice_number=3, Entry count=1024(0x400), Entry free=1023(0x3ff)},
+         slice_secondary = {slice_number=4}
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=5120, entries_free=5119,
+                       counters_total=20480, counters_free=18429, meters_total=6144, meters_free=6142}
+EID 0x00000001: gid=0x1,
+         slice=3, slice_idx=0, part =0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+         slice=4, slice_idx=0, part =1, prio=0, flags=0x810604, Installed, Enabled, color_indep=1
+
+ DstMac 
+    Part:0 Offset0:  0 Width0:  16 
+    Part:0 Offset1: 20 Width1:  16 
+    Part:1 Offset2:  0 Width2:  16 
+    DATA=0x00000000 000000dd 
+    MASK=0x0000ffff ffffffff 
+ InPort 
+    Part:1 Offset0: 16 Width0:   4 
+    Part:1 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         policer={pid=0x1, level=0, peak_kbits_sec=0x190, peak_kbits_burst=0, commit_kbits_sec=0xa0, commit_kbits_burst=0, PacketBased=0, mode=0x3, entries=2, Clean}
+         statistics={stat id 1  slice = 10 idx=4 entries=3}{GreenPackets}{YellowPackets}{RedPackets}{GreenBytes}{YellowBytes}{RedBytes}{NotGreenPackets}{NotYellowPackets}{NotRedPackets}{NotGreenBytes}{NotYellowBytes}{NotRedBytes}{Packets}{Bytes}
+         Extended statistics=NULL
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000007fffffffffffff}
+         qset={InPort, Stage},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=1024(0x400), Entry free=1023(0x3ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=15360, entries_free=15359,
+                       counters_total=20480, counters_free=18431, meters_total=6144, meters_free=5376}
+EID 0x0001868d: gid=0x270e,
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000007fffffffffffff}
+         qset={InPort, Stage},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=1024(0x400), Entry free=1023(0x3ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=15360, entries_free=15359,
+                       counters_total=20480, counters_free=18431, meters_total=6144, meters_free=5376}
+EID 0x00018697: gid=0x270f,
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000003 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL
+############
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x01 green packets
+The value is 0x048 green bytes
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes
+The value is 0x00 red packets
+The value is 0x00 red bytes
+int $$ = 0 (0x0)
+############
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x01 green packets
+The value is 0x048 green bytes
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes
+The value is 0x00 red packets
+The value is 0x00 red bytes
+
+
+
+############
+Sending 500 packets so that GREEN+YELLOW+RED hits
+
+
+tx 500 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x010 green packets
+The value is 0x0480 green bytes
+The value is 0x01c yellow packets
+The value is 0x07e0 yellow bytes
+The value is 0x01c9 red packets
+The value is 0x08088 red bytes
+
+
+
+############
+Sending 100000 packets so that more of RED hits
+
+
+tx 100000 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x0c3c green packets
+The value is 0x0370e0 green bytes
+The value is 0x015ca yellow packets
+The value is 0x0620d0 yellow bytes
+The value is 0x01668f red packets
+The value is 0x064d838 red bytes
+
+
+For more accurate and controlled packet tx from CPU, you have to modify the SDK code.
+Code with which to modify is placed at the bottom of this CINT.
+Steps:
+	 1. Modify the SDK code and compile and then load the new bcm.user.
+	 2. Then execute this CINT which will run automated coarse tests.
+	 3. Then you can run the hacked memwatch command as described in the CINT code snippet.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+
+

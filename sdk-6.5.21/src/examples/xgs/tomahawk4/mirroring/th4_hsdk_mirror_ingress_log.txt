@@ -1,0 +1,55 @@
+BCM.0> cint th4_hsdk_mirror_ingress.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 68
+Egress port1: 137
+MTP port: 17
+ingress_port_multi_setup port: 68 setup
+egress_port_multi_setup port: 17 setup
+egress_port_multi_setup port: 137 setup
+Mirror destination create
+Mirror port destination add
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known unicast pkt from port 68 forwarding to the egress port 137
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x11
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x89
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress1 : 1 packets / 68 bytes
+FlexCtr Get on port_mtp_port : 1 packets / 68 bytes
+
+-----------------------------------------------------------
+    RESULT OF INGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 68 cleanup
+egress_port_multi_cleanup port: 17 cleanup
+egress_port_multi_cleanup port: 137 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

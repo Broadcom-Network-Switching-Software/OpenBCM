@@ -1,0 +1,487 @@
+BCM.0> cint th4_hsdk_mod_cosq_ingress_limit_stats.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 1
+Egress port1: 2
+MTP port: 3
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+Enabling MOD...done!
+Creating MOD prifile 0...done!
+Setting MOD profile...done!
+PSAMP Mirror destination create
+Adding source-to-destination for MOD
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known L3 unicast pkt from port 1 forwarding to the egress port 2
+Packet from data=<>, length=74
+Warning:  Untagged packet read from file for tx.
+pktioRxCallback: received from port 0x2
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[1]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[1]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[2]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[2]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[2]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[2]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[3]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[3]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[3]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[3]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[4]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[4]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[4]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[4]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[4]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x3
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[5]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[5]: data[0030]: 0076 0000 0000 0000 000a 0000 0064 1234
+[bcmPWN.0]Packet[5]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[5]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[5]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[5]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[5]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[5]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[5]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[6]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[6]: data[0030]: 0076 0000 0000 0000 000b 0000 0064 1234
+[bcmPWN.0]Packet[6]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[6]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[6]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[6]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[6]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[6]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[6]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[7]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[7]: data[0030]: 0076 0000 0000 0000 000c 0000 0064 1234
+[bcmPWN.0]Packet[7]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[7]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[7]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[7]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[7]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[7]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[7]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[8]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[8]: data[0030]: 0076 0000 0000 0000 000d 0000 0064 1234
+[bcmPWN.0]Packet[8]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[8]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[8]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[8]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[8]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[8]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[8]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[9]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[9]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[9]: data[0030]: 0076 0000 0000 0000 000e 0000 0064 1234
+[bcmPWN.0]Packet[9]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[9]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[9]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[9]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[9]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[9]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[9]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]:
+Packet[9]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[10]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[10]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[10]: data[0030]: 0076 0000 0000 0000 000f 0000 0064 1234
+[bcmPWN.0]Packet[10]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[10]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[10]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[10]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[10]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[10]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[10]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[11]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[11]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[11]: data[0030]: 0076 0000 0000 0000 0010 0000 0064 1234
+[bcmPWN.0]Packet[11]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[11]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[11]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[11]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[11]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[11]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[11]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[12]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[12]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[12]: data[0030]: 0076 0000 0000 0000 0011 0000 0064 1234
+[bcmPWN.0]Packet[12]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[12]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[12]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[12]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[12]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[12]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[12]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]:
+Packet[12]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[12]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[13]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[13]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[13]: data[0030]: 0076 0000 0000 0000 0012 0000 0064 1234
+[bcmPWN.0]Packet[13]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[13]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[13]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[13]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[13]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[13]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[13]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]:
+Packet[13]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[13]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[14]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[14]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[14]: data[0030]: 0076 0000 0000 0000 0013 0000 0064 1234
+[bcmPWN.0]Packet[14]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[14]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[14]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[14]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[14]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[14]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[14]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]:
+Packet[14]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[14]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[15]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[15]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[15]: data[0030]: 0076 0000 0000 0000 0014 0000 0064 1234
+[bcmPWN.0]Packet[15]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[15]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[15]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[15]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[15]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[15]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[15]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]:
+Packet[15]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[15]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[16]: data[0010]: 0800 4500 0092 0000 0000 0511 af56 0202
+[bcmPWN.0]Packet[16]: data[0020]: 0202 0101 0101 1234 4321 007e 0000 000a
+[bcmPWN.0]Packet[16]: data[0030]: 0076 0000 0000 0000 0015 0000 0064 1234
+[bcmPWN.0]Packet[16]: data[0040]: 0066 0000 0000 0000 0000 0000 0000 0002
+[bcmPWN.0]Packet[16]: data[0050]: 0001 0003 0000 00ff 004a 0000 0000 0001
+[bcmPWN.0]Packet[16]: data[0060]: 002a 1077 7700 0800 4500 003c 6762 0000
+[bcmPWN.0]Packet[16]: data[0070]: ff01 bd76 0a3a 4001 0a3a 4273 0000 550a
+[bcmPWN.0]Packet[16]: data[0080]: 0001 0051 6162 6364 6566 6768 696a 6b6c
+[bcmPWN.0]Packet[16]: data[0090]: 6d6e 6f70 7172 7374 7576 7761 6263 6465
+[bcmPWN.0]Packet[16]: data[00a0]: 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]:
+Packet[16]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[16]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<146> id<0> frg-off<0> ttl<5> > chk-sum<0xaf56>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[17]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[17]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[17]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[17]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]:
+Packet[17]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[17]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[17]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[17]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[18]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[18]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[18]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[18]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]:
+Packet[18]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[18]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[18]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[18]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[19]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[19]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[19]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[19]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[19]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[19]:
+Packet[19]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[19]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[19]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[19]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[20]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[20]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[20]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[20]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[20]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[20]:
+Packet[20]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[20]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[20]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[20]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[21]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[21]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[21]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[21]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[21]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[21]:
+Packet[21]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[21]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[21]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[21]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[22]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[22]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[22]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[22]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[22]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[22]:
+Packet[22]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[22]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[22]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[22]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[23]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[23]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[23]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[23]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[23]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[23]:
+Packet[23]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[23]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[23]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[23]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[24]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[24]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[24]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[24]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[24]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[24]:
+Packet[24]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[24]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[24]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[24]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[25]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[25]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[25]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[25]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[25]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[25]:
+Packet[25]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[25]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[25]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[25]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[26]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[26]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[26]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[26]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[26]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[26]:
+Packet[26]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[26]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[26]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[26]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[27]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[27]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[27]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[27]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[27]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[27]:
+Packet[27]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[27]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[27]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[27]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[28]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[28]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[28]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[28]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[28]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[28]:
+Packet[28]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[28]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[28]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[28]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[29]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[29]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[29]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[29]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[29]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[29]:
+Packet[29]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[29]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[29]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[29]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+pktioRxCallback: received from port 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[30]: data[0000]: {00000000fe02} {000000000002} 8100 000c
+[bcmPWN.0]Packet[30]: data[0010]: 0800 4500 003c 6762 0000 fe01 be76 0a3a
+[bcmPWN.0]Packet[30]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162
+[bcmPWN.0]Packet[30]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172
+[bcmPWN.0]Packet[30]: data[0040]: 7374 7576 7761 6263 6465 6667 6869
+[bcmPWN.0]
+[bcmPWN.0]Packet[30]:
+Packet[30]:   Ethernet: dst<00:00:00:00:fe:02> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[30]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<254> > chk-sum<0xbe76>
+Packet[30]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0
+Packet[30]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>
+FlexCtr Get on port_egress1 : 18 packets / 1476 bytes
+FlexCtr Get on port_mtp_port : 12 packets / 2016 bytes
+
+
+========== Display MOD stats ==========
+MOD pool full dropped packet:  0
+MOD mirrored packet:           12
+MOD pool current used count:   0
+
+-----------------------------------------------------------
+    RESULT OF EGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 1 cleanup
+egress_port_multi_cleanup port: 2 cleanup
+egress_port_multi_cleanup port: 3 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

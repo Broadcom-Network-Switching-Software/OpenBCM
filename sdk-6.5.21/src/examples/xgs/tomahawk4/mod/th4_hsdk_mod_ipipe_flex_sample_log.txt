@@ -1,0 +1,661 @@
+BCM.0> cint th4_hsdk_mod_ipipe_flex_sample.c
+
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 239
+Egress port1: 223
+MTP port: 139
+
+ingress_port_multi_setup port: 239 setup
+egress_port_multi_setup port: 139 setup
+egress_port_multi_setup port: 223 setup
+Mirror destination create
+int $$ = 0 (0x0)
+int profile_id = 6 (0x6)
+int $$ = 0 (0x0)
+int mirror_group_id = 1 (0x1)
+int profile_id = 6 (0x6)
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known unicast pkt from port 239 forwarding to the egress port 223 
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[2]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[2]: data[0030]: 006c 0000 0000 0000 0001 0000 0064 1234 
+[bcmPWN.0]Packet[2]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[2]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[2]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[2]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[2]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[2]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+pktioRxCallback: received from port 0xdf
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[5]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[5]: data[0030]: 006c 0000 0000 0000 0002 0000 0064 1234 
+[bcmPWN.0]Packet[5]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[5]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[5]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[5]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[5]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[5]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+pktioRxCallback: received from port 0xdf
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[7]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[7]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[7]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[8]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[8]: data[0030]: 006c 0000 0000 0000 0003 0000 0064 1234 
+[bcmPWN.0]Packet[8]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[8]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[8]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[8]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[8]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[8]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+pktioRxCallback: received from port 0xdf
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[9]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[9]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[9]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[10]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[10]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[10]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[10]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+pktioRxCallback: received from port 0xdf
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[11]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[11]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[11]: data[0030]: 006c 0000 0000 0000 0004 0000 0064 1234 
+[bcmPWN.0]Packet[11]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[11]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[11]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[11]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[11]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[11]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[11]: 
+Packet[11]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[12]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[12]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[12]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[12]: 
+Packet[12]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[12]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[13]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[13]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[13]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[13]: 
+Packet[13]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[13]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[14]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[14]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[14]: data[0030]: 006c 0000 0000 0000 0005 0000 0064 1234 
+[bcmPWN.0]Packet[14]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[14]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[14]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[14]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[14]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[14]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[14]: 
+Packet[14]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[14]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+pktioRxCallback: received from port 0xdf
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[15]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[15]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[15]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[15]: 
+Packet[15]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[15]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xef
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[16]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[16]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[16]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xef
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    DST_PORT_MGIDL=0xdf
+    SRC_PORT=0xef
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+    PPD0_OPCODE=1
+[RX reasons]
+    CPU_SFLOW
+    CPU_SFLOW_CPU_SFLOW_FLEX
+
+[bcmPWN.0]Packet[16]: 
+Packet[16]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[16]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x8b
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]: data[0000]: {111213141516} {010203040506} 8100 0005
+[bcmPWN.0]Packet[17]: data[0010]: 0800 4500 0088 0000 0000 0111 5300 5555 
+[bcmPWN.0]Packet[17]: data[0020]: 5555 dddd dddd 0000 0000 0074 0000 000a 
+[bcmPWN.0]Packet[17]: data[0030]: 006c 0000 0000 0000 0006 0000 0064 1234 
+[bcmPWN.0]Packet[17]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 00df 
+[bcmPWN.0]Packet[17]: data[0050]: 00ef 0c00 0001 00ff 0040 0000 0000 0022 
+[bcmPWN.0]Packet[17]: data[0060]: 0000 0000 0011 8100 0014 0806 0001 0800 
+[bcmPWN.0]Packet[17]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000 
+[bcmPWN.0]Packet[17]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607 
+[bcmPWN.0]Packet[17]: data[0090]: 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x9e
+    SRC_PORT_NUM=0x8b
+    OUTER_VID=5
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0x8b
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=5
+    PPD0_REP_ID=5
+    PPD0_VID_LOW=5
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[17]: 
+Packet[17]:   Ethernet: dst<11:12:13:14:15:16> src<01:02:03:04:05:06> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[17]:   IP: V(4) src<85.85.85.85> dst<221.221.221.221> hl<5> service-type<0> tl<136> id<0> frg-off<0> ttl<1> > chk-sum<0x5300>
+pktioRxCallback: received from port 0xdf
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[18]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[18]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001 
+[bcmPWN.0]Packet[18]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0]
+[RX metadata information]
+    PKT_LENGTH=0x44
+    SRC_PORT_NUM=0xdf
+    OUTER_VID=0x14
+    TIMESTAMP_TYPE=3
+    SWITCH=1
+    ING_TAG_TYPE=1
+[Higig2 fields]
+    START=0xfb
+    SRC_PORT=0xdf
+    CC=1
+    PPD_TYPE=0
+    PPD0_INGRESS_TAGGED=1
+    PPD0_VC_LABEL=0x14
+    PPD0_REP_ID=0x14
+    PPD0_ORIG_SRC_PORT=1
+    PPD0_MIRROR_CLASSIFICATION_TAG=1
+    PPD0_VID_LOW=0x14
+[RX reasons]
+    CPU_VFP
+
+[bcmPWN.0]Packet[18]: 
+Packet[18]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[18]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress1 : 6 packets / 408 bytes
+FlexCtr Get on port_mtp_port : 6 packets / 948 bytes
+Mirror sample stat flex packets : 6 
+Mirror sample stat flex sampled packets : 6 
+Mirror sample stat flex snapshot packets : 6 
+
+----------------------------------------------------------- 
+    RESULT OF INGRESS MIRROR VERIFICATION  
+----------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 239 cleanup
+egress_port_multi_cleanup port: 139 cleanup
+egress_port_multi_cleanup port: 223 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End

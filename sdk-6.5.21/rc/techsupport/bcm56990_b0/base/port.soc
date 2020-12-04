@@ -1,0 +1,94 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport PORT RC (run commands) file
+#
+#       These are default commands that are for TechSupport PORT.
+#
+
+# S/W state of PORT.
+dump sw port
+
+
+# PORT CLI debugging.
+ps
+show portmap
+pbmp
+
+# Show PORT related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'        $traverse_lt;
+
+# Show PC LTs.                                          $traverse_lt;
+local lt PC_PORT;                                       $traverse_lt;
+local lt PC_PORT_PHYS_MAP;                              $traverse_lt;
+local lt PC_PORT_STATUS;                                $traverse_lt;
+local lt PC_MAC_CONTROL;                                $traverse_lt;
+local lt PC_PFC;                                        $traverse_lt;
+local lt PC_PHY_CONTROL;                                $traverse_lt;
+local lt PC_PHY_STATUS;                                 $traverse_lt;
+local lt PC_PMD_FIRMWARE;                               $traverse_lt;
+local lt PC_PMD_FIRMWARE_STATUS;                        $traverse_lt;
+local lt PC_TX_TAPS;                                    $traverse_lt;
+local lt PC_TX_TAPS_STATUS;                             $traverse_lt;
+local lt PC_PORT_TIMESYNC;                              $traverse_lt;
+local lt PC_AUTONEG_PROFILE;                            $traverse_lt;
+local lt PC_PORT_ABILITIES;                             $traverse_lt;
+
+# Show port basic LTs.                                  $traverse_lt;
+local lt PORT;                                          $traverse_lt;
+local lt PORT_MEMBERSHIP_POLICY;                        $traverse_lt;
+local lt PORT_POLICY;                                   $traverse_lt;
+local lt PORT_LEARN;                                    $traverse_lt;
+local lt PORT_BRIDGE;                                   $traverse_lt;
+local lt PORT_FP;                                       $traverse_lt;
+local lt PORT_LB;                                       $traverse_lt;
+local lt PORT_PHB;                                      $traverse_lt;
+local lt PORT_ING_VISIBILITY;                           $traverse_lt;
+local lt PORT_EGR_VISIBILITY;                           $traverse_lt;
+local lt PORT_PVLAN;                                    $traverse_lt;
+local lt PORT_ECN;                                      $traverse_lt;
+local lt PORT_ING_TS_PTP;                               $traverse_lt;
+local lt PORT_EGR_TS_PTP;                               $traverse_lt;
+local lt PORT_FLOOD_BLOCK;                              $traverse_lt;
+
+# Show system port LTs.                                 $traverse_lt;
+local lt PORT_SYSTEM;                                   $traverse_lt;
+
+# Show system profile port LTs.                         $traverse_lt;
+local lt PORT_SYSTEM_BRIDGE_PROFILE;                    $traverse_lt;
+local lt PORT_SYSTEM_FP_PROFILE;                        $traverse_lt;
+local lt PORT_SYSTEM_ING_MIRROR_PROFILE;                $traverse_lt;
+local lt PORT_SYSTEM_LEARN_PROFILE;                     $traverse_lt;
+local lt PORT_SYSTEM_MEMBERSHIP_POLICY_PROFILE;         $traverse_lt;
+local lt PORT_SYSTEM_PHB_PROFILE;                       $traverse_lt;
+local lt PORT_SYSTEM_POLICY_PROFILE;                    $traverse_lt;
+local lt PORT_SYSTEM_PROFILE;                           $traverse_lt;
+local lt PORT_SYSTEM_PVLAN_PROFILE;                     $traverse_lt;
+local lt PORT_SYSTEM_TM_MIRROR_ON_DROP_PROFILE;         $traverse_lt;
+
+# Show port mirror related LTs.                         $traverse_lt;
+local lt PORT_ING_MIRROR;                               $traverse_lt;
+local lt PORT_EGR_MIRROR;                               $traverse_lt;
+local lt PORT_TM_MIRROR_ON_DROP;                        $traverse_lt;
+local lt PORT_MIRROR;                                   $traverse_lt;
+
+# Show VP related LTs.                                  $traverse_lt;
+local lt PORT_DVP;                                      $traverse_lt;
+local lt PORT_DVP_MTU_PROFILE;                          $traverse_lt;
+local lt PORT_SVP;                                      $traverse_lt;
+local lt PORT_SVP_ES_FILTERING;                         $traverse_lt;
+local lt PORT_SVP_ES_FILTERING_KEY_MASK;                $traverse_lt;
+local lt PORT_SVP_ING_EFLEX_ACTION;                     $traverse_lt;
+local lt PORT_SVP_ING_MIRROR;                           $traverse_lt;
+local lt PORT_SVP_NETWORK_GRP_PRUNE;                    $traverse_lt;
+
+# Show port configuration related LTs.                  $traverse_lt;
+local lt PORT_CONTROL;                                  $traverse_lt;
+local lt PORT_CONFIG;                                   $traverse_lt;
+
+# Show port packet control related LTs.                 $traverse_lt;
+local lt PORT_PKT_CONTROL;                              $traverse_lt;
+
+

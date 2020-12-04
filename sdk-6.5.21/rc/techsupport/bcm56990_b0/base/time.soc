@@ -1,0 +1,23 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Failover RC (run commands) file
+#
+#       These are default commands that are for TechSupport TIME.
+#
+
+# LT utilities.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Time related LTs.
+local lt DEVICE_TS_CONTROL;                     $traverse_lt;
+local lt DEVICE_TS_TOD;                         $traverse_lt;
+local lt TM_TS_TOD;                             $traverse_lt;
+local lt PORT_ING_TS_PTP;                       $traverse_lt;
+local lt PORT_EGR_TS_PTP;                       $traverse_lt;
+local lt DEVICE_TS_SYNCE_CLK_CONTROL;           $traverse_lt;
+local lt DEVICE_TS_PTP_MSG_CONTROL_PROFILE;     $traverse_lt;
+local lt PORT;                                  $traverse_lt;
+local lt PORT_SYSTEM_PROFILE;                   $traverse_lt;

@@ -1,0 +1,50 @@
+#
+# BCM56780 RDB port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+
+---
+device:
+    0:
+        PORT:
+            ?
+                PORT_ID: 19
+            :
+                ING_SYSTEM_PORT_TABLE_ID: 19
+            ?
+                PORT_ID: 59
+            :
+                ING_SYSTEM_PORT_TABLE_ID: 59
+...
+---
+device:
+    0:
+        PORT_PROPERTY:
+            ?
+                PORT_ID: 19
+            :
+                PORT_TYPE: 1
+                PORT_PARSER: 5
+                EGR_PORT_PROPERTY: 2
+            ?
+                PORT_ID: 59
+            :
+                PORT_TYPE: 1
+                PORT_PARSER: 5
+                EGR_PORT_PROPERTY: 2
+...
+

@@ -1,0 +1,52 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port1 : 257
+Ingress port2: 221
+Egress port1: 102
+ingress_port_multi_setup port: 221 setup
+ingress_port_multi_setup port: 257 setup
+egress_port_multi_setup port: 102 setup
+Completed test setup successfully.
+Verify L2 learning from port 257
+Packet from data=<>, length=64
+L2 LEARN: mac=00:00:00:00:00:11, vlan=2, MODID=0x0, PORT=0x101
+
+--------------------------------------------
+    RESULT OF l2 register cb for LEARN_EVENT
+--------------------------------------------
+Test = [PASS]
+-------------------------------------
+Verify L2 aging
+[New Thread 0x7ffff7f9e700 (LWP 116523)]
+L2 AGE: mac=00:00:00:00:00:11, vlan=2, MODID=0x0, PORT=0x101
+
+----[bcmL2age.0]0:l2_age_thread: [bcmL2age.0]l2_age_thread: exit
+--------------------------------------
+    RESULT OF l2 register cb for AGE_EVENT
+------------------------------------------
+Test = [PASS]
+-------------------------------------
+Verify L2 add
+[Thread 0x7ffff7f9e700 (LWP 116523) exited]
+L2 ADD: mac=00:00:00:00:00:11, vlan=2, MODID=0x0, PORT=0x101
+
+------------------------------------------
+    RESULT OF l2 register cb for ADD_EVENT
+------------------------------------------
+Test = [PASS]
+-------------------------------------
+Verify L2 delete and move
+Packet from data=<>, length=64
+L2 DEL: mac=00:00:00:00:00:11, vlan=2, MODID=0x0, PORT=0x101
+L2 MOVE: mac=00:00:00:00:00:11, vlan=2, MODID=0x0, PORT=0xdd
+
+-------------------------------------------------------
+    RESULT OF l2 register cb for DELETE and  MOVE_EVENT
+-------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+ingress_port_multi_cleanup port: 221 cleanup
+ingress_port_multi_cleanup port: 257 cleanup
+egress_port_multi_cleanup port: 102 cleanup
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

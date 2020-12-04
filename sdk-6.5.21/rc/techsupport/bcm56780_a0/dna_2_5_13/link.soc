@@ -1,0 +1,27 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport LINK RC (run commands) file
+#
+#       These are default commands that are for TechSupport LINK.
+#
+
+# Show S/W state in LINK.
+dump sw link
+
+# LINK commands.
+link
+
+# Show LINK related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show LT for configuration of link manager.
+local lt LM_CONTROL;                                               $traverse_lt;
+
+# Show LT for per-port link scan configuration.
+local lt LM_PORT_CONTROL;                                          $traverse_lt;
+
+# Show LT for the link state of the ports imaintained by the Link Manager.
+local lt LM_LINK_STATE;                                            $traverse_lt;

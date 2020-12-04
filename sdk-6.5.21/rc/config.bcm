@@ -1,0 +1,1557 @@
+#
+# $Id: config.bcm,v 1.124 2012/07/17 18:43:57 tusharty Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Sample Properties file used for Broadcom StrataSwitch.
+# Each entry in the file consists of a single line of the form:
+#	<Parameter>=<Value>
+#
+# See the file $SDK/doc/properties.txt for more documentation about how
+# to use properties.
+#
+# To allow different properties for different units or chips,
+# each property is looked up with the following suffixes in order:
+#	.<unit-num>		(e.g. "foo.0")
+#	.<CHIP_TYPE>		(e.g. foo.BCM5680_B0)
+#	.<CHIP_GROUP>		(e.g. foo.BCM5680)
+#	<nothing>		(e.g. foo)
+#
+# The per-port properties are looked up with various port related
+# suffixes in the following order:
+#	_<port_name>		phy_null_fe0
+#	_<port_type>		phy_null_fe
+#	_port<port_number>	phy_null_port1
+#	_<bcm_port_number>      phy_null_1
+#	<nothing>		phy_null
+#
+# <port_number> is counted from 1 up to the number of enabled ports on
+# the chip (deprecated).
+#
+# <bcm_port_number> is the (untranslated) port number used in the BCM
+# API. If port translation is enabled (INCLUDE_BCM_API_XLATE_PORT),
+# then this port number should match the port number used on the
+# driver side of the BCM dispatch layer.
+#
+# In order to support devices where the switch port number (as used in
+# the BCM API) does not map directly to the physical port number (as
+# described in the Programmer's Reference Guide), a special format
+# exists to specify a physical port number:
+#	{<phys_port>}           phy_null{1}
+#
+# For PHY configuration parameters, the physical port format is
+# extensible to support a specific PHY in a chain of multiple external
+# PHYs:
+#	{<phys_port>.<phy_num>} phy_null{1.1}
+#
+# The <phy_num> parameter counts from the innermost PHY and outwards,
+# such that the internal PHY (if present) is PHY number 0, the
+# innermost external PHY is 1, and so forth.
+#
+# The PHY configuration format can be extended further to specify a
+# PHY port (line side or system side) and optionally a specific lane:
+#	{<phys_port>[.<phy_num>[.<phy_port>[.<phy_lane]]]}
+#
+# For the <phy_port> parameter, use 0 for the line side and 1 for the
+# system side.
+#
+# All the per-port properties also have the unit or chip based
+# suffixes described above added as well.
+#
+# White space is NOT ignored, but blank lines are ignored.
+# Lines starting with '#' are comments and are ignored.
+#
+# All properties not specified have default values.  Our convention
+# here is to comment out properties that are best left at their
+# default, and to show the default value in the comment when feasible.
+#
+# In the Broadcom Command Monitor, the 'config' command may be used to
+# add and delete properties and manage them in non-volatile storage.
+#
+
+# Station mac address used for management through the switch ports
+# itself. If using the CPU network interface, the NVRAM setting is used
+# for MAC address assignment.
+
+#station_mac_address=00:00:00:00:01:00
+
+# Station IP address used for management through the switch ports
+# itself. If using the CPU network interface, the NVRAM setting is used
+# for IP address assignment.
+
+#station_ip_address=192.168.1.0
+
+# Station IP netmast used for management through the switch ports
+# itself. If using the CPU network interface, the NVRAM setting is used
+# for netmask assignment.
+
+#station_ip_netmask=255.255.255.0
+
+# Station host name used for management through the switch ports
+# itself. If using the CPU network interface, the NVRAM setting is used
+# for host name assignment.
+
+#station_hostname=StrataSwitch
+
+# Define default OS / SAL
+#os=vxworks
+
+# Enable polled IRQ mode (useful for board bringup and debugging).
+# IRQs will be polled from a dedicated thread and hardware interrupts
+# will remain disabled.
+#polled_irq_mode=0
+
+# The priority of the IRQ poll thread as well as the minimum delay
+# between IRQ polls can be configured if needed.
+#polled_irq_delay=0
+#polled_irq_priority=100
+
+#
+# Board Configuration Properties
+#
+# These are not per-unit and are not used by the driver.
+# They are used by scripts such as rc.soc and sanity.
+#
+
+# Black Knight
+#black_knight=1
+
+# White Knight (SDK5690P24S)
+#white_knight=1
+
+# Galahad (SDK5690R24)
+#galahad=1
+
+# Merlin (SDK5690R24S)
+#merlin=1
+
+# Lancelot (SDK5690R48S)
+#lancelot=1
+
+# Guenevere (BCM95695P24SX)
+#guenevere=1
+
+# Hercules 8-port (SDK5670K8)
+#herc8=1
+
+#
+# Driver Configuration Properties
+#
+
+#Allow PLL bypass mode to be configured.
+#pll_bypass.<unit-num>=0
+
+# debug can be set to initial DK_XXX mask to use on booting.
+
+#debug=0x10000
+
+# If reload support is compiled in, the buffer size must be large enough
+# for the platform.  Our worst-case platform is Herculynx with eight
+# BCM5673s at nearly 300k apiece.
+
+#reload_buffer_size=3145728
+#reload_file_name=flash:reload.dat
+
+# Allow filtering to be disabled in hardware if not being used.
+# Also, tables will not be cleared which can save time in simulation.
+
+#filter_enable=1
+
+# MMU SDRAM configuration
+
+#mmu_sdram_enable=1
+#mmu_sdram_width=128
+
+# For BCM5605, DLL values may need tuning.
+#mmu_sdram_dll0=4
+#mmu_sdram_dll1=0xd
+#mmu_sdram_dll2=7
+
+# For all other chips, DLL values should be 0.
+#mmu_sdram_dll0=0
+#mmu_sdram_dll1=0
+#mmu_sdram_dll2=0
+
+# Control 5615 MISCCONFIG2.SDCLK_133MHZ_EN (external vs internal SDRAM clock)
+#mmu_sdram_clock_external=1
+
+# HOLBLOCKINGMARKER and INGRESSBACKPRESSURE configuration.
+# These can be used to set the initial value of these registers in
+# StrataSwitch and G-Switch devices based on port type.
+
+#mmu_hbm_fe=
+#mmu_hbm_ge=
+#mmu_hbm_cpu=
+#mmu_ibp_fe=
+#mmu_ibp_ge=
+#mmu_ibp_cpu=
+
+# L3 switching enable
+
+#l3_enable=1
+#ipmc_enable=1
+#ipmc_do_vlan=1
+
+# Trunk extension control
+# For BCM5695, enables 128 trunk groups (affects HiGig header format).
+# Currently, this property must be commented out (or =0) if non-BCM5695
+# switch devices are connected via the HiGig port (fabric devices OK).
+#trunk_extend=1
+
+# Multicast ranges
+
+# The Higig2 header format concatenates the broadcast, multicast, and
+# IP multicast indices into one generic multicast index.  The mapping
+# between the individual indices and the combined index is specified by
+# these.  The default values are indicated.
+
+# higig2_multicast_vlan_range=4096
+# higig2_multicast_l2_range=4096
+# higig2_multicast_l3_range=4096
+
+# In BCM568xx and BCM567xx devices, the some L2 and L3 multicast
+# information is stored in a shared resource.  These specify the
+# division of this resource.
+
+# multicast_l2_range=4096
+# multicast_l3_range=4096
+
+# pbmp_valid allows assigning a port bitmap of valid ports.
+# Any port not in the bitmap is assumed to not exist.
+# Default value is PBMP_ALL(unit), all ports including CPU.
+# The cpu port cannot be disabled.
+# For BCM5671 this now defaults to 0x14b automatically (ports 1,3,6,8,CPU).
+#
+#pbmp_valid.0=0x14b
+
+# higig2_hdr_mode_<port> allows a HG port to default to HiGig2
+# encapsulation, instead of HiGig.  This is only available on devices
+# which support HiGig2.
+#higig2_hdr_mode_hg0=1
+# Uncomment the following line to make all HG ports default to HiGig2.
+#higig2_hdr_mode=1
+
+
+# pbmp_xport_xe is used to specify if a XPORT block is configured as xe port
+# By default, an XPORT block is treated as HG port.
+#pbmp_xport_xe.0=0x00000000
+# Uncomment the following line instead to set all XPORTs to XE ports.
+#pbmp_xport_xe.0=0x0f000000
+# On 568xx devices, the XPORT block defaults to XE ports.  Uncomment the
+# following line to change all ports to HG ports.  A specific bitmap
+# may be provided to select some XE and some HG ports, with the set
+# bits initialized to HG ports.  Note that HG and XE ports may be
+# exchanged through the bcm_port_encap_set API.
+#pbmp_xport_xe.0=0x00000000
+
+# pbmp_gport_stack is used to specify if a stack capable GE port is
+# configured as stack port
+# By default, a stack capable GE port is configured as stack port.
+#pbmp_gport_stack.0=0x00000006
+# Uncomment the following line instead to set all GE ports as regular
+# front panel Ethernet ports.
+#pbmp_gport_stack.0=0x00000000
+
+# pbmp_loopback is used to specify if a HIGIG/HIGIG-LITE port is
+# configured as loopback port
+# Uncomment the following line instead to set all HIGIG/HIGIG-LITE ports as regular
+# front panel Ethernet ports.
+#pbmp_loopback.0=0x3c000000
+
+# If phy_enable is set to 0, all ports will use the null PHY driver.
+# This is useful for simulations on Quickturn.
+
+#phy_enable=1
+
+# Override the MDIO bus address to access a phy for a particular port
+#port_phy_addr_xe0.0=24
+
+# If phy_null_<port> is set to 1, the port will use the null PHY driver.
+# This is useful for configuring direct-connect GMII links such as the
+# chip-to-chip links on a 48-port board (example shown for 48 port board).
+
+#phy_null_ge0.0=1
+#phy_null_ge1.1=1
+
+# If phy_simul_<port> is set to 1, the port will use the simulation
+# PHY driver.
+
+#phy_simul_ge0.0=1
+#phy_simul_ge1.1=1
+
+# Turbo port configuration (example shown for 48 port board)
+# Drive strength and phase control may be overridden from defaults.
+# All are controllable on a per-port basis.
+
+#turbo_ge0.0=1
+#turbo_ge1.1=1
+#turbo_drv=0
+#turbo_phase=0
+
+# I/O Voltage selection. (per-port controllable)
+# BCM5645B0 and later default turbo_iov to 1 for 2.5V
+# board design may require that gig_iov be 1 for 2.5V
+
+#turbo_iov=0
+#gig_iov=0
+
+# TBI vs. GMII configuration
+
+#if_tbi_ge0.0=1
+#if_tbi_ge1.1=1
+
+# Serdes Autonegotiation configuration
+# This per-port parameter specifies what will happen if autonegotiation is
+# on but the remote partner is not autonegotiating.  If the value is zero,
+# we will not link.  If the value is non-zero, we will link.
+
+#phy_serdes_autos=0
+
+# Per-port parameter indicating the only PHY is 5690 SERDES directly
+# connected to a fiber module.  This is needed on 24-port 5690 SDKs
+# which have resistors configuration to bypass external 5434/5464.
+# SERDES is used automatically if no PHY is detected on the MDIO.
+
+#phy_5690_ge10=0
+#phy_5690_ge11=0
+
+# Per-port parameter indicating the only PHY is 56XXX SERDES directly
+# connected to a fiber module.  This is needed on boards which have
+# which have resistors configuration to bypass external 5434/5464.
+# SERDES is used automatically if no PHY is detected on the MDIO.
+
+#phy_56xxx_ge10=0
+#phy_56xxx_ge11=0
+
+# The per-port parameter phy_5464S must be set if a BCM5464S or 5464SR
+# is used.  This is needed because the PHY device ID is the same for all
+# of 5464/5464R/5464S/5464SR.
+
+#phy_5464S_ge8=0
+#phy_5464S_ge9=0
+#phy_5464S_ge10=0
+#phy_5464S_ge11=0
+
+# The per-port parameter phy_8706 must be set if a BCM8706 or BCM8726
+# is used. This is needed because the PHY device ID is the same for
+# 8704/8706/8726.
+#phy_8706_xe0=0
+
+# Fiber vs. copper autodetection enable
+#
+# This property defaults to 1 for the 5421S and 5464S.
+# This property defaults to 0 for the 5464.
+
+#phy_automedium_ge0.0=1
+#phy_automedium_ge1.1=1
+
+# Fiber vs. copper preference
+#
+# When automedium is enabled, phy_fiber_pref indicates which medium to
+# prefer if BOTH are active.  Selects fiber (1) or copper (0).
+#
+# When automedium is disabled, phy_fiber_pref indicates which medium to
+# use.  Selects fiber (1) or copper (0).
+
+#phy_fiber_pref_ge0.0=1
+#phy_fiber_pref_ge1.1=1
+
+# This parameter can be used to skip probing for an external PHY connected
+# to a 5673 and just use the internal phy.
+#phy_5673_xe0=0
+
+# Per-port parameter on maximum time to wait for PHY autoneg busy condition.
+#phy_autoneg_timeout=250000
+
+# Per-port phy LED control values (currently only used by 546x phy driver)
+# see 546x phy data sheets:
+# ledN_mode are LED selector values from phy reg 0x1x[011101, 01110]
+# led_ctrl is phy reg 0x1x[01001]
+#phy_led1_mode=0
+#phy_led2_mode=1
+#phy_led3_mode=3
+#phy_led4_mode=6
+#phy_led_ctrl=0x8
+
+# Per-port control of fiber signal detection (for 546x phys)
+#	0	use the phy's default as signal detect
+#	1	use PECL SD as signal detect (default on 5461)
+#	4	use LED4 as signal detect (default on 5464)
+#	10	use EN_10B as signal detect
+# Negating value treats signal detect as loss of signal without
+# needing an external inverter on the board
+#
+
+# Initial number of COS queues bcm_init() configures the chip for.
+#bcm_num_cos=4
+
+# XQ distribution weighting (relative) for each COSQ.
+#
+# Some SOC devices allow weighted distribution of XQs among the COSQs.
+# The portion of a port's XQs allocated to any one COSQ is defined
+# by that COSQ's weight value divided by the sum of all applicable
+# weight values.
+#
+# A weight of 0 disables that COSQ. Non-zero weights must start at COSQ0
+# and occupy contiguous COSQs.
+#
+# Ideally, the sum of all weight values should add up to the smallest
+# power of 2 possible.
+
+#mmu_xq_weight_cos0=1
+#mmu_xq_weight_cos1=1
+#mmu_xq_weight_cos2=1
+#mmu_xq_weight_cos3=1
+#mmu_xq_weight_cos4=1
+#mmu_xq_weight_cos5=1
+#mmu_xq_weight_cos6=1
+#mmu_xq_weight_cos7=1
+
+# Per-XQ packet aging.
+#
+# Some SOC devices allow independent packet aging behavior among the COSQs.
+#
+# An aging value of 0 disables packet aging for that COSQ. Non-zero values
+# define the maximum age of a packet (for a COSQ), in milliseconds.
+#
+# The underlying hardware determines the supported granularity, as well
+# as the maximum ratio of the longest aging value to the smallest
+# (nonzero) aging value.
+
+#mmu_xq_aging_cos0=1000
+#mmu_xq_aging_cos1=1000
+#mmu_xq_aging_cos2=1000
+#mmu_xq_aging_cos3=1000
+#mmu_xq_aging_cos4=1000
+#mmu_xq_aging_cos5=1000
+#mmu_xq_aging_cos6=1000
+#mmu_xq_aging_cos7=1000
+
+# MMU Configuration for 56500 style memory managers.
+# Includes 56100, 56300, 56200, 53700 familes of devices.
+#
+# Default MMU xq (packet) controls allow for 8 queues to be used
+# even less than 8 are currently configured.  If less than 8 queues
+# will ever be used then the remaining queues mmu_xq_weight_cosN
+# values should be set to 0.  A 4 queue configuration should set
+# mmu_xq_weight_cosN=0 for N=4, 5, 6, 7.
+#
+# The defaults are indicated here.
+#
+#mmu_flow_percent=90
+#				percentage of per-port cells useable
+#				before flow control starts
+#mmu_flow_fanin=4
+#				number of simulteneous senders to each
+#				port for flow control purposes
+#mmu_red_drop_percent=60
+#mmu_yellow_drop_percent=80
+#				percentage of per-port/per-cos packets
+#				used before red or yellow packets will
+#				be dropped
+#mmu_static_bytes=1536
+#				per-port/per-cos static reserved limit.
+#				Rounded up from bytes to next cell size.
+#				Remaining cells are put in dynamic pool.
+#				If 0, then mmu_static_percent is used.
+#mmu_static_percent=50
+#				Percentage of per-port/per-cos cells to
+#				use as static reserved limit.
+#				Remaining cells are put in dynamic pool.
+#				Only used if mmu_static_bytes is 0.
+#mmu_reset_bytes=3072
+#				(1536 * 2)
+#				offset from dynamic cell set limits for
+#				reset (enable) limits.
+#				Rounded up from bytes to next cell size.
+#mmu_overcommit=1
+#				non-stack port overcommit factor for
+#				dynamic pool
+#mmu_overcommit_stack=2
+#				stack port overcommit factor for
+#				dynamic pool.  If 0, then use the
+#				mmu_overcommit value for stack ports
+
+#
+# Linkscan
+#
+
+# Specify ports on which bcm_init will run linkscan (default all).
+#bcm_linkscan_pbmp=
+
+# If non-zero, bcm_init() will start linkscan
+#bcm_linkscan_interval=250000
+
+# If linkscan detects more than bcm_linkscan_maxerr consecutive errors,
+# then it disables scanning of that port for bcm_linkscan_errtime usec.
+# This is mainly to prevent infinite error messages from scrolling by.
+# Use bcm_linkscan_maxerr=0 to disable this feature.
+#bcm_linkscan_maxerr=5
+#bcm_linkscan_errdelay=10000000
+
+#
+# BCM Statistics Collection
+#
+# Set bitmap of ports on which stat collection will be enabled.
+# Default is all ports.
+
+#bcm_stat_pbmp=
+
+# Set interval on which stat collection will be performed.
+# Setting this to 0 will prevent counters from being started.
+#bcm_stat_interval=1000000
+
+# Flag values to be ORd together:
+#   0x0 indicates that counter DMA should NOT be used
+#   0x1 indicates that counter DMA should be used (default).
+#bcm_stat_flags=0x1
+
+# Threshold value for oversize (*OVR) frame size.
+# Values over 1518 affect the *OVR statistics computation
+#bcm_stat_jumbo=1518
+
+# Size of ARL DMA buffer
+
+#arldma_size=1024
+
+# Timeout for hardware-accelerated ARL delete operations including:
+# delete by port, delete by port+modid, delete by VLAN, delete by trunk.
+#arl_clean_timeout_usec=5000000
+
+# L2 table is DMAed into memory to search for entries to delete
+# when no hardware assists are available.  DMA is done in smaller
+# parts to minimize memory use.  Must be power of 2.
+#l2delete_chunks=64
+
+# Enable L2X shadowing into AVL tree.
+#l2xmsg_avl=1
+
+# Synchronize the L2X table in chunks to spread out the work over
+# time and save memory on size of DMA buffer.  Must be power of 2.
+#l2xmsg_chunks=8
+
+# Period between synchronizations of the software L2X shadow table
+# with the hardware (5690 only).  The thread actually runs every
+# l2xmsg_thread_usec/l2xmsg_chunks microseconds.
+
+#l2xmsg_thread_usec=3000000
+
+# The l2xmsg thread will call back to the user any time an L2X address
+# is added, removed, or changed.  However, if only the hit bit changes,
+# it will not call back unless l2x_msg_shadow_hit_bits is set to 1.
+#l2xmsg_shadow_hit_bits=0
+
+# Mode control to select L2 Table DMA mode aka L2MODE_POLL (0) or
+# L2MOD_FIFO mechanism aka L2MODE_FIFO (1) for L2 table change notification.
+#l2xmsg_mode=0
+
+# Enable L2X address grouping
+#l2_group_enable=0
+
+# Run s/w based L2 aging
+#run_l2_sw_aging=1
+
+# Set default maximum number of entry moves for dual hash tables
+#dual_hash_recurse_depth=1
+
+# Set default maximum number of entry moves for multi hash tables
+#multi_hash_recurse_depth=1
+
+# Memory Built-In-Self-Test (BIST) timeout in milliseconds
+
+#bist_timeout_msec=1000
+
+# Normally, the system will use polling for register/memory S-Channel
+# operations and interrupts for time-consuming operations such as ARL
+# insert/delete.  If this schan_intr_enable is set to 0, polling will be
+# used for ALL operations.
+
+#schan_intr_enable=1
+
+# Length of time to block the S-Channel error interrupt after one occurs.
+# Prevents monopolizing the CPU (use 0 to disable any blocking).
+#schan_error_block_usec=250000
+
+# S-Channel operation timeout in microseconds.  Note that ARL
+# insert/delete messages can take a while if the ARL is highly active.
+
+#schan_timeout_usec=300000
+
+# If miim_intr_enable variable is set to 1, the system will use
+# interrupts for MII operations since they take a while (70 usec or so).
+# If this variable is set to 0, polling will be used for all MII
+# operations.
+
+#miim_intr_enable=1
+
+# MIIM operation timeout in microseconds
+
+#miim_timeout_usec=100000
+
+# Diagnostics loopback (tr 17 through tr 24) timeout in seconds for
+# link up
+
+#diag_lb_link_timeout=15
+
+# Diagnostics loopback (tr 17 through tr 24) timeout in seconds for
+# loopback packet reception
+
+#diag_lb_packet_timeout=5
+
+# Diagnostics loopback - if set to TRUE, all receive buffers are filled
+# with 0xdeadbeef before DMAing into them.  It is slow, but then you will
+# know if loopback miscompares are due to skipped PCI writes.
+#diag_lb_fill_rx=0
+
+# Packet watcher thread priority
+#diag_pw_thread_pri=100
+
+# Tab width for diagnostics (especially 'show counters')
+#diag_tabs=8
+
+# ASCII comma character for show counters
+# Use 44 for comma, 46 for period, 0 for none
+#diag_comma=44
+
+# arl_static_ff indicates that a static entry of VLAN TAG 0xfff must be
+# made in the ARL for proper operation, on chips where applicable.
+
+#arl_static_ff=1
+
+# The ARL lookup command (on chips supporting it) may fail and require
+# retry in the event the ARL is extra busy.
+
+#arl_lookup_tries=100
+
+# Limit the number of ARL messages/sec the software will process, to
+# keep it from hogging the CPU.  Set to 0 to disable.
+# Does not apply to L2X shadow table (see l2xmsg_thread_usec instead).
+
+#arl_rate_limit=3000
+
+# Delay this long after an ARL message overrun before a lengthy ARL-
+# resync process.  Setting to 0 to disables resync, in peril of getting
+# an inconsistent ARL message stream and/or corrupt L2 shadow table.
+
+#arl_resync_delay=3000000
+
+# Maximum number of consecutive S-channel errors the counter collection
+# code will tolerate before the counter thread gives up and exits.
+
+#soc_ctr_maxerr=5
+
+# Skip hardware reset (CMIC_CONFIG.RESET_CPS) when calling soc_reset().
+# This means that e.g. 'init soc' will NOT perform a hard reset.
+
+#soc_skip_reset=1
+
+# Packet DMA abort timeout
+
+#pdma_timeout_usec=500000
+
+# Counter DMA collection pass timeout in microseconds
+
+#cdma_timeout_usec=100000
+
+# Table DMA operation timeout in microseconds
+
+#tdma_timeout_usec=1000000
+
+# Table DMA operation should use interrupt rather than poll for completion
+
+#tdma_intr_enable=1
+
+# Table SLAM DMA operation timeout in microseconds
+
+#tslam_timeout_usec=1000000
+
+# Table SLAM DMA operation should use interrupt rather than poll for completion
+
+#tslam_intr_enable=1
+
+# Enable/Disable SLAM DMA
+#tslam_dma_enable=1
+
+# Enable/Disable TABLE DMA
+#table_dma_enable=1
+
+# gbpfull_warn_enable enables a warning message to be printed on GBPFULL
+# interrupt.  gbpfull_warn_time sets the minimum number of seconds
+# between successive GBPFULL messages, to avoid flooding the terminal.
+# These variables take affect only after the "init" command is run.
+
+#gbpfull_warn_enable=1
+#gbpfull_warn_time=5
+
+# Select memory tests run by cfapinit (default MT_PAT_FIVES and MT_PAT_AS)
+#cfap_tests=12
+
+# Memory scan: max errors, and max DMA buffer size in entries
+#mem_scan_maxerr=8
+#mem_scan_chunk_size=256
+
+# Miscellaneous thread priorities; 0 is highest and 255 is lowest
+
+#counter_thread_pri=50
+#arlmsg_thread_pri=50
+#l2xmsg_thread_pri=50
+#mem_scan_thread_pri=50
+#linkscan_thread_pri=50
+#bcm_tx_thread_pri=50
+#bcm_rx_thread_pri=200
+#l2age_thread_pri=150
+#error_thread_pri=50
+
+# When a link goes down for any reason, the driver waits for all packets
+# to that port to drain from the MMU before continuing.  There is a
+# timeout in case the packet count is non-zero AND non-decrementing.
+
+#lccdrain_timeout_usec=250000
+
+# PCI device/rev ID override allows you to pretend you are running
+# on a different chip (e.g. force 5605 driver to run on 5615)
+# NOTE: this one is actually in sysconf.c, not the driver.
+
+#pci_override_dev=0x5605
+#pci_override_rev=1
+
+# Generic SOC configuration registers located at reserved addresses in
+# PCI configuration space (usually address 0x44 and 0x48). Any arbitrary
+# 32-bit hex value may be specified.
+# NOTE: these settings only work with the VxWorks driver and are provided
+# for debugging purposes only.
+
+#pci_conf_soccfg0=0x0
+#pci_conf_soccfg1=0x0
+
+# Use crytal input for LCPLL
+#xgxs_lcpll_xtal_refclk=0
+
+# Fusion core reference clock selection
+# External Clock = 0, Internal LCPLL = 1
+#xgxs_lcpll=1
+
+# Fusion core LCPLL clock speed selection - 10Gbps = 0, 12Gbps = 1
+#xgxs_lcpll_12gbps=0
+
+# Unicore 10G parallel detect (10/12 Gbps legacy speed detection)
+#xgxs_pdetect_10g=1
+
+# Fusion/Uni core preemphasis, driver current and  pre-driver current
+# values 0-15 (can be changed per-port)
+#xgxs_preemphasis=1
+#xgxs_driver_current=1
+#xgxs_pre_driver_current=1
+
+# Fusion PLL lock range value 0-15 (can be changed per-port)
+#xgxs_plllock=15
+
+# Remap XGXS rx and tx lanes to desired mapping. Four bits were used for
+# specifying each lane in the format of Lane 0 (bit 15-12), Lane 1 (bit 11-8),
+# lane 2 (bit 7-4), and lane 3 (bit 3-0).
+# For example, to reverse the tx lane mapping in 3, 2, 1, 0 order,
+# set xgxs_tx_lane_map=0x3210.
+# efault setting is.
+#xgxs_tx_lane_map=0x0123
+#xgxs_rx_lane_map=0x0123
+
+# Serdes reference clock selection
+# External Clock = 0, Internal LCPLL = 1
+#serdes_lcpll=0
+
+# Combo Serdes core preemhasis, driver current and pre-driver current
+# values 0-15 (can be changed per-port)
+# serdes_preemphasis=1
+# serdes_driver_current=1
+# serdes_pre_driver_current=1
+
+# switch serdes SGMII master/slave mode configuration.  Default is slave.
+# serdes_sgmii_master=0
+
+# 10G PHY core preemphasis, driver current and pre-driver current
+# values 0-15 (can be changed per-port) for SFP+ application.
+#phy_preemphasis=1
+#phy_driver_current=1
+#phy_pre_driver_current=1
+
+# Unicore Serdes SGMII/fiber auto-detect (can be changed per-port)
+# Note that auto-detect only works when auto-negotiation is enabled.
+# If auto-detect or auto-negotiation is off then fiber_pref=0 will
+# select SGMII and fiber_pref=1 (default) will select fiber.
+#serdes_automedium=1
+#serdes_fiber_pref=1
+
+# Enable SGMII autonegotiation between the SOC and PHY if the
+# SOC supports SGMII autonegotiation. This feature is not enabled by
+# default.
+#phy_sgmii_autoneg_ge0.0=1
+
+# By default, 5670 will be configured to accept the maximum number of
+# packets per port, but may drop them if resources are oversubscribed due
+# to activity from other ports.  If lossless mode is enabled, 5670 will
+# instead be configured to accept packets only if sufficient processing
+# resources are guaranteed for all ports.  This may decrease overall
+# throughput, but no accepted packets will be dropped.
+
+#lossless_mode=0
+
+#24c64 EEPROM and XFP share the same I2C slave address. Set this to
+#1 to treat the #device found at this slave address as XFP.
+#i2c_nvram_skip=0
+
+#PCF8574 lpt2 and LTC4258 poe3 share the same I2C slave address. Set
+#this to 1 to treat the device found at this slave address as POE.
+#i2c_hclk_skip=0
+
+#PD63000 init power setting. Set this to 1 for 100W; otherwise
+#default of 37W is used.
+#i2c_poe_power=0
+
+#Set this to 1 for 189 MHz core, 25 MHz reference used for 12G in 5675.
+#core_clock_12G=0
+
+#Set this to 1 for 5670 compatiable mirror behavior in 5675.
+#mirror_5670_mode=0
+
+#BCM5675 HOL blocking avoidance mode (jitter and hysteresis)
+#Set this to 1 to enable jitter for comparing low cell/packet count thresholds
+#mmu_hol_jitter=0
+#Set this to 1 to enable hysteresis with recommended default low thresholds
+#mmu_hol_hysteresis=0
+
+#Swap XAUI lanes between phy8703/BCM5670 and BCM5673(lynxalot board)
+#phy_xaui_rx_lane_swap=0
+
+#Flip PHY lane TX polarity 8706 (all Lanes) and XGXS16G serdes
+#Format: phy_xaui_tx_polarity_flip_logicalPort = VALUE
+#VALUE:  1 - Flip TX polarity
+#        0 - Do not flip TX polarity
+#        Each bit represents one lane
+#        Logical lane 0 is the right most bit
+#        For TSCe12, which has 3 quads for a logical port, the right most nibble represents
+#        the first TSCe4 quad while middle nibble represents the second (middle) TSCe4 quad
+#phy_xaui_tx_polarity_flip=0
+
+#Flip PHY lane TX polarity on applicable ext PHY devices
+#Format: phy_tx_polarity_logicalPort = VALUE
+#VALUE: 1 - Flip TX polarity.
+#       0 - Do not flip TX polarity.
+#       Each bit represents one lane.
+#phy_tx_polarity_flip=0
+
+#Flip PHY lane RX polarity on applicable ext PHY devices
+#See detail above (TX polarity)
+#phy_rx_polarity_flip=0
+
+#Flip PHY lane TX polarity on applicable PHY devices
+#Format: phy_chain_tx_polarity_flip_physical[{<phys_port>.<phy:num>}] = VALUE
+#<phys_port>: Physical port number which is corresponding to a physical lane within a Serdes or an external phy.
+#<phy_num>:   Serdes or phy number.
+#             0 = internal Serdes.
+#             1 = the external phy directly attached to Serdes.
+#             2 = the external phy attached to phy1.
+#             3 = the external phy attached to phy2.
+#             etc.
+#VALUE:       1 - Flip TX polarity.
+#             0 - Do not flip TX polarity.
+#             Should be a 1-bit VALUE.
+#phy_chain_tx_polarity_flip_physical{0.0} = 0 
+
+#Flip PHY lane RX polarity on applicable PHY devices
+#See detail above (TX polarity)
+#phy_chain_rx_polarity_flip_physical{0.0} = 0
+
+#Invert PCS TX output to PMD. Supported only on BCM8705 PHY.
+#phy_tx_invert_ge0.0=0
+#phy_rx_invert_ge0.0=0
+
+#phy_port_primary_and_offset specifies the base port and phy index of a multi slice phy chip.
+#phy_port_primary_and_offset_<port>=0xPPOO 0xPP=primary port number 0xOO=offset of the slice
+#For example, for ports ge0-ge3 Primary Port number is 02 (address of base/first port)
+#phy_port_primary_and_offset_ge0=0x0200 primary port number=0x02 offset=00
+#phy_port_primary_and_offset_ge1=0x0201 primary port number=0x02 offset=01
+#phy_port_primary_and_offset_ge2=0x0202 primary port number=0x02 offset=02
+#phy_port_primary_and_offset_ge3=0x0203 primary port number=0x02 offset=03
+
+#Port property to set BCM5488 family PHY to operate in class A half amplitude
+#mode.
+#phy_half_pwr_mode_ge0.0=10    Enable half amplitude for all speed.
+#phy_half_pwr_mode_ge0.0=100   Enable half amplitude for all speed.
+#phy_half_pwr_mode_ge0.0=1000  Enable half amplitude for Giga speed.
+
+#Port property to set BCM5488 family PHY to operate in class A/B low power
+#mode. Accept value 0(lowest power) to 7(highest power).
+#phy_low_power_mode_ge0.0=0
+
+#Port Property to transform CX4 pinout to Higig pinout on 5650x/5660x
+#cx4_to_higig=0
+
+# 8704 and 8705 XFP clock
+# 8704 and 8705 can provide the clock for the XFPs (thus eliminating the need
+# for an external clock. By default we enable it, but if you are not using it,
+# it should be disabled.
+#phy_xfp_clock=1
+
+# 8705 WAN support
+# 8705 PHY driver can support both LAN and WAN mode. The default setting
+# is LAN mode.
+#phy_wan_mode_xe0=1
+
+# The following optical controls manage to force various PHY signal on
+# BCM8703/4/5
+# Control Active Optical Enable output level.
+#force_opttxenblvl=0
+
+# Control Active Optical Reset output level.
+#force_opttxrstlvl=0
+
+# Control Active Laser Bias Fault level.
+#force_optbiasfltlvl=0
+
+# Control Active Temperature level.
+#force_opttempfltlvl=0
+
+# Control Active Laser Power Fault level.
+#force_optprfltlvl=0
+
+# Control Active TX fault level.
+#force_opttxfltlvl=0
+
+# Control Active Laser Loss of light level.
+#force_optrxloslvl=0
+
+# Control Active RX fault level.
+#force_optrxfltlvl=0
+
+# Control Active TX on level.
+#force_opttxonlvl=0
+
+# BCM5665L and BCM5666L support
+# The BCM5665L and BCM5666L device IDs are 0x5665, same as the BCM5665.
+# However, these devices do not support the upper 24 FE ports.
+# The following property must be used to invalidate them.
+#pbmp_valid.BCM5665=0x010000001fffffff
+
+# BCM5665 family debug mode - bypass MCU, allows diagnostics such as
+# loopback to be run without initializing the MCU (but requires small
+# packet sizes and counts).
+#bypass_mcu=1
+
+# BCM5665 MCU configuration
+# See bcm5665 DDR bring up flow chart for MCU tuning procedure
+# These are the default values:
+
+# These are valid for BCM5650/55/65:
+#mcu_drv_str0_ch0=1
+#mcu_drv_str1_ch0=0
+#mcu_pad_data_class2_ch0=1
+#mcu_pad_data_drive_ch0=3
+#mcu_pad_data_slew_ch0=3
+#mcu_pad_addr_class2_ch0=0
+#mcu_pad_addr_drive_ch0=3
+#mcu_pad_addr_slew_ch0=3
+#mcu_delay_dqi_adj_dir_ch0=1
+#mcu_delay_dqi_adj_val_ch0=3
+#mcu_delay_addr_adj_dir_ch0=1
+#mcu_delay_addr_adj_val_ch0=0
+
+#mcu_drv_str0_ch1=1
+#mcu_drv_str1_ch1=0
+#mcu_pad_data_class2_ch1=1
+#mcu_pad_data_drive_ch1=3
+#mcu_pad_data_slew_ch1=3
+#mcu_pad_addr_class2_ch1=0
+#mcu_pad_addr_drive_ch1=3
+#mcu_pad_addr_slew_ch1=3
+#mcu_delay_dqi_adj_dir_ch1=1
+#mcu_delay_dqi_adj_val_ch1=3
+#mcu_delay_addr_adj_dir_ch1=1
+#mcu_delay_addr_adj_val_ch1=0
+
+# These following are only for BCM5665:
+#mcu_drv_str0_ch2=1
+#mcu_drv_str1_ch2=0
+#mcu_pad_data_class2_ch2=1
+#mcu_pad_data_drive_ch2=3
+#mcu_pad_data_slew_ch2=3
+#mcu_pad_addr_class2_ch2=0
+#mcu_pad_addr_drive_ch2=3
+#mcu_pad_addr_slew_ch2=3
+#mcu_delay_dqi_adj_dir_ch2=1
+#mcu_delay_dqi_adj_val_ch2=3
+#mcu_delay_addr_adj_dir_ch2=1
+#mcu_delay_addr_adj_val_ch2=0
+
+#mcu_drv_str0_ch3=1
+#mcu_drv_str1_ch3=0
+#mcu_pad_data_class2_ch3=1
+#mcu_pad_data_drive_ch3=3
+#mcu_pad_data_slew_ch3=3
+#mcu_pad_addr_class2_ch3=0
+#mcu_pad_addr_drive_ch3=3
+#mcu_pad_addr_slew_ch3=3
+#mcu_delay_dqi_adj_dir_ch3=1
+#mcu_delay_dqi_adj_val_ch3=3
+#mcu_delay_addr_adj_dir_ch3=1
+#mcu_delay_addr_adj_val_ch3=0
+
+# The values may be set for all channels (though a channel-specific setting
+# will override these):
+#mcu_drv_str0=1
+#mcu_drv_str1=0
+#mcu_pad_data_class2=1
+#mcu_pad_data_drive=3
+#mcu_pad_data_slew=3
+#mcu_pad_addr_class2=0
+#mcu_pad_addr_drive=3
+#mcu_pad_addr_slew=3
+#mcu_delay_dqi_adj_dir=1
+#mcu_delay_dqi_adj_val=3
+#mcu_delay_addr_adj_dir=1
+#mcu_delay_addr_adj_val=0
+
+# BCM5665 MCU 16bit DDR configuration
+#mcu_16bit_ddr=1
+
+# BCM5665 family filter sizes
+# The FE port filters on 5665/50/55 may be configured for two mask/rule sizes
+# 256 rules and 16 masks (default)
+# 128 rules and 24 masks
+# Use this to select the 128/24 configuation for the chip.
+#filter_resize=1
+
+#
+# Stacking related defines; see stk.soc for board related defines
+#
+#stkvlan=4092
+#stkcos=7
+#stkports="(0,24) (0,25)"
+#
+# Bitmap to indicate reserved modid's system wide
+#stk_rsvd_modids=0
+
+# Command memory controls
+#memcmd_timeout_usec=10000000
+#memcmd_intr_enable=1
+
+# Timeout value in microseconds for BCM5660x search engine initialization
+#seer_init_timeout_usec=50000
+
+# Control to disable parity messages
+#parity_enable=0
+
+# Control to disable parity correction
+#parity_correction=0
+
+# Set BCM5660x external packet buffer to 500 MHz instead of 600 MHz
+#pll600_slowclk=1
+
+# For MCU Channel 0 only (0x2 for Channel 1 only)
+#mcu_channel_bitmap=0x1
+
+# MCU tuning parameters (Default values)
+#mcu_tcrd=7
+#mcu_tcwd=8
+#mcu_twl=6
+#mcu_dll90_offset_tx=3
+#mcu_dll90_offset3=1
+#mcu_dll90_offset2=1
+#mcu_dll90_offset1=1
+#mcu_dll90_offset0_qk=1
+#mcu_dll90_offset_qkb=1
+#mcu_sel_early2_3=0
+#mcu_sel_early2_2=0
+#mcu_sel_early2_1=0
+#mcu_sel_early2_0=0
+#mcu_sel_early1_3=1
+#mcu_sel_early1_2=1
+#mcu_sel_early1_1=1
+#mcu_sel_early1_0=1
+#mcu_odt_imp_enable=1
+
+# Channel 0 only
+#mcu_tcrd_ch0=7
+#mcu_tcwd_ch0=8
+#mcu_twl_ch0=6
+#mcu_dll90_offset_tx_ch0=3
+#mcu_dll90_offset3_ch0=1
+#mcu_dll90_offset2_ch0=1
+#mcu_dll90_offset1_ch0=1
+#mcu_dll90_offset0_qk_ch0=1
+#mcu_dll90_offset_qkb_ch0=1
+#mcu_sel_early2_3_ch0=0
+#mcu_sel_early2_2_ch0=0
+#mcu_sel_early2_1_ch0=0
+#mcu_sel_early2_0_ch0=0
+#mcu_sel_early1_3_ch0=1
+#mcu_sel_early1_2_ch0=1
+#mcu_sel_early1_1_ch0=1
+#mcu_sel_early1_0_ch0=1
+#mcu_odt_imp_enable_ch0=1
+#mcu_ovrd_sm_en_ch0=0
+#mcu_phase_sel_ch0=0
+
+# Channel 1 only
+#mcu_tcrd_ch1=7
+#mcu_tcwd_ch1=8
+#mcu_twl_ch1=6
+#mcu_dll90_offset_tx_ch1=3
+#mcu_dll90_offset3_ch1=1
+#mcu_dll90_offset2_ch1=1
+#mcu_dll90_offset1_ch1=1
+#mcu_dll90_offset0_qk_ch1=1
+#mcu_dll90_offset_qkb_ch1=1
+#mcu_sel_early2_3_ch1=0
+#mcu_sel_early2_2_ch1=0
+#mcu_sel_early2_1_ch1=0
+#mcu_sel_early2_0_ch1=0
+#mcu_sel_early1_3_ch1=1
+#mcu_sel_early1_2_ch1=1
+#mcu_sel_early1_1_ch1=1
+#mcu_sel_early1_0_ch1=1
+#mcu_odt_imp_enable_ch1=1
+#mcu_ovrd_sm_en_ch1=0
+#mcu_phase_sel_ch1=0
+
+# DDR72 tuning parameters (Default values)
+#ddr72_dll90_offset_tx=4
+#ddr72_dll90_offset3=4
+#ddr72_dll90_offset2=4
+#ddr72_dll90_offset1=4
+#ddr72_dll90_offset0_qk=4
+#ddr72_dll90_offset_qkb=4
+#ddr72_sel_early2_3=0
+#ddr72_sel_early2_2=0
+#ddr72_sel_early2_1=0
+#ddr72_sel_early2_0=0
+#ddr72_sel_early1_3=1
+#ddr72_sel_early1_2=1
+#ddr72_sel_early1_1=1
+#ddr72_sel_early1_0=1
+#ddr72_ovrd_sm_en=0
+#ddr72_phase_sel=0
+
+# QDR36 tuning parameters (Default values)
+#qdr36_dll90_offset_tx=4
+#qdr36_dll90_offset_qk=4
+#qdr36_dll90_offset_qkb=4
+#qdr36_sel_early2_1=0
+#qdr36_sel_early2_0=0
+#qdr36_sel_early1_1=1
+#qdr36_sel_early1_0=1
+#qdr36_ovrd_sm_en=0
+#qdr36_phase_sel=0
+
+#BCAM tuning
+#seer_tunnel_sam=2
+
+# Memory configuration
+
+# No external mem (Default)
+#seer_ext_table_cfg=0
+
+# 512K L2
+#seer_ext_table_cfg=1
+
+# 256K LPM
+#seer_ext_table_cfg=2
+
+# 192K L4
+#seer_ext_table_cfg=3
+
+# 96K L4
+#seer_ext_table_cfg=4
+
+# 256K LPM 128K L4
+#seer_ext_table_cfg=5
+
+# 384K LPM 64K L4
+#seer_ext_table_cfg=6
+
+# 128K LPM 64K L4 (QDR testing)
+#seer_ext_table_cfg=7
+
+# 192K LPM 32K L4
+#seer_ext_table_cfg=8
+
+# 448K LPM
+#seer_ext_table_cfg=9
+
+# 896K LPM
+#seer_ext_table_cfg=10
+
+# No TCAM
+#seer_ext_tcam_select=0
+
+# Type 1 TCAM
+#seer_ext_tcam_select=1
+
+# Type 2 TCAM
+#seer_ext_tcam_select=2
+
+# All L2
+#seer_host_hash_table_cfg=0
+
+# Half L2, Half V4
+#seer_host_hash_table_cfg=1
+
+# Half L2, Quarter V4, Quarter V6 (Default)
+#seer_host_hash_table_cfg=2
+
+# Half L2, Half V6
+#seer_host_hash_table_cfg=3
+
+# Quarter L2, Half V4, Quarter V6
+#seer_host_hash_table_cfg=4
+
+# Quarter L2, Quarter V4, Half V6
+#seer_host_hash_table_cfg=5
+
+# All V4
+#seer_host_hash_table_cfg=6
+
+# Half V4, Half V6
+#seer_host_hash_table_cfg=7
+
+# All V6
+#seer_host_hash_table_cfg=8
+
+# All MAC_VLAN
+#seer_mvl_hash_table_cfg=0
+
+# Half MAC_VLAN, Half MYSTATION (Default)
+#seer_mvl_hash_table_cfg=1
+
+# All MYSTATION
+#seer_mvl_hash_table_cfg=2
+
+
+# External memory timing
+#seer_hse_em_latency7=0
+
+#seer_cse_em_latency7=0
+
+# This setting may be used to change the number of LPM entries caches
+# when performing traversals of the tables.  Increasing this number
+# uses more memory for increased speed.
+#seer_lpm_traverse_entries=100
+
+# On BCM5662x devices, enable external TCAM lookup on XPORT block
+# (back-panel ports) instead of XGPORT block (front-panel ports)
+#ext_lookup_on_xport=1
+
+# 72-bit external L2 forward table
+#ext_l2_fwd_table_size=0
+
+# 72-bit external IPv4 forward table
+#ext_ip4_fwd_table_size=0
+
+# 72-bit external IPv6 64-bit prefix length forward table
+#ext_ip6u_fwd_table_size=0
+
+# 144-bit external IPv6 128-bit prefix length forward table
+#ext_ip6_fwd_table_size=0
+
+# 288-bit external L2 ACL table
+#ext_l2_acl_table_size=0
+
+# 288-bit external IPv4 ACL table
+#ext_ip4_acl_table_size=0
+
+# 360-bit external IPv6 ACL table
+#ext_ip6s_acl_table_size=0
+
+# 432-bit external IPv6 ACL table
+#ext_ip6f_acl_table_size=0
+
+# 144-bit external L2 ACL table
+#ext_l2c_acl_table_size=0
+
+# 144-bit external IPv4 ACL table
+#ext_ip4c_acl_table_size=0
+
+# 144-bit external IPv6 ACL table
+#ext_ip6c_acl_table_size=0
+
+# 432-bit external L2 + IPv4 ACL table
+#ext_l2ip4_acl_table_size=0
+
+# 432-bit external L2 + IPv6 ACL table
+#ext_l2ip6_acl_table_size=0
+
+# External TCAM PLL frequency
+#ext_tcam_mode=500
+
+# External SRAM PLL frequency
+#ext_sram_mode=334
+
+# External TCAM mode, 0 for 6 cycles per pakcet, 1 for 4 cycles per packet
+#ext_tcam_mode=0
+
+# External SRAM mode, 0 for 1.5 clock latency, 1 for 2 clock latency
+#ext_sram_mode=1
+
+# External associated data mode:
+# 1: 250 MHz, L2 table in ES0
+# 2: 250 MHz, L2 table in ES1
+# 3: 250 MHz, L3 table in ES0
+# 4: 250 MHz, L3 table in ES1
+# 5: 250 MHz, L2 and L3 table in ES0
+# 6: 250 MHz, L2 and L3 table in ES1
+# 7: 334 MHz, ACL table in ES0
+# 8: 334 MHz, ACL table in ES1
+# 9: 250 MHz, ACL table in both ES0 and ES1
+# 10: 250 MHz, L2 and ACL table in both ES0 and ES1
+# 11: 250 MHz, L3 and ACL table in both ES0 and ES1
+# 12: 334 MHz, L2 and L3 and ACL table in both ES0 and ES1
+#ext_ad_mode=12
+
+# External IPv6 forwarding search key selection
+# 0 for 72-bit, 1 for 144-bit
+#ext_ip6_fwd_key=0
+
+# External ACL search key selection for L2 packet
+# 0 for disable, 1 for 288-bit, 2 for 144-bit
+#ext_l2_acl_key=1
+
+# External ACL search key selection for IPv4 packet
+# 0 for disable, 1 for 288-bit, 2 for 144-bit, 3 for using both L2 and IP4 key,
+# 4 for using L2 key
+#ext_ip4_acl_key=1
+
+# External ACL search key selection for IPV6 packet
+# 0 for disable, 1 for 360-bit, 2 for 432-bit, 3 for 144-bit,
+# 4 for using both L2 and IP6 key, 5 for using L2 key
+#ext_ip6_acl_key=1
+
+# RCPU master unit. This is unit which is used to inject pkts to slave rcpu device.
+#rcpu_master_unit=0
+
+# switch port connected to slave RCPU device.
+#rcpu_port=3
+
+# RCPU vlanid
+#rcpu_vlan=1
+
+# Use OOB (out of band) channel for sending/receiving rcpu packets
+#rcpu_use_oob=1
+
+# Mac driver/unit to use
+#rcpu_oob_channel
+
+# Valid ports on which RCPU packets can be receied by slave device.
+#rcpu_rx_pbmp=0x4
+
+# Enable diag shell port mapping. Port names will be assigned in
+# dport order, and the BCM shell will list multiple ports in
+# dport order regardless of the internal port numbering.
+#dport_map_enable=1
+
+# Port names for each port type (fe, ge, etc.) will increment
+# by one starting at zero, e.g. if a switch has four xe ports
+# with dport numbers 24, 25, 26, and 27, they will be named
+# xe0, xe1, xe2, and xe3. In non-indexed mode the ports would
+# be named xe24, xe25, xe26, and xe27.
+#dport_map_indexed=1
+
+# Traditionally, specifying a raw number instead of a port name
+# in the diag shell will be parsed as if port numbers are counted
+# from 1 up to the number of enabled ports. Typically this would
+# mean that for a gigabit switch, port 1 would correspond to ge0,
+# and so forth. Setting this flag causes raw port numbers to be
+# parsed as internal port numbers.
+#dport_map_direct=0
+
+# Map dport number <dport> to internal port number <port>.
+#dport_map_port_<port>=<dport>
+
+# Port number and bandwidth assignment.
+# For example:
+# portmap_5=9:40:EQ assigns physical port 9 as port 5, the
+# maximum bandwidth is 40Gb, the port is expected to support extended queueing.
+# portmap_2=1:40:2 assigns physical port 1 as port 2, mapping to 2 lanes.
+# The maximum bandwidth is 40Gb.
+# portmap_3=1:100:244 assigns physical port 1 as port 3 with 100Gb maximum bandwidth.
+# The port maps to the first 2 lanes in TSCe0, and 4 lanes in TSCe1 and in TSCe2.
+#portmap_<port>=<physical port number>:<bandwidth in Gb>[:EQ]
+#portmap_<port>=<physical port number>:<bandwidth in Gb>[:1/2/4]
+#portmap_<port>=<physical port number>:<bandwidth in Gb>[:343/442/244]
+
+# Flex port config per port group in terms of number of lanes per port in the group.
+# This can be used to configure the flex ports in any mode at system init time.
+# For example portgroup_0=1 creates 4 ports with single lane each in port group 0.
+# Valid values for num_lanes are 1, 2, 4.
+#portgroup_<group_no>=<num_lanes>
+
+# Indicates the maximum speed that any port can be set to in a device.
+# This is used to determine the maximum number of logical numbers
+# for the device.
+#port_flex_speed_max=42000
+#
+# For BCM56860 devices, indicates the maximum speed that a port on a pipe.
+# These fields are optional but if one is defined, the other MUST be as well.
+# If defined, these two fields take precedence over port_flex_speed_max. If
+# neither is defined, port_flex_speed_max is used for the device; these fields
+# DO NOT have a default value since they are optional.
+#port_flex_speed_max_x=42000
+#port_flex_speed_max_y=42000
+#
+# Indicates that the port module (macro) on which the given physical
+# port resides is flex capable (or flex enabled). Users always have
+# to give the first physical port residing on the port macro in
+# this config property. 
+#
+# For BCM56860 based devices, enabling flex on port macros 
+# consisting of smaller port macros enables flex on the entire
+# subset of smaller port macros. For example, in this device
+# a TSC-12 is comprised of three TSC-4. Enabling flex on the TSC-12
+# will enable flex on each of the three individual TSC-4.
+#
+#port_flex_enable{physical port number}=1
+#port_flex_enable=1
+# Valid values are 0 (disable) or 1 (enable)
+# Default value is 0
+# If given without physical port number as in the example above,
+# the config applies to all ports. Of course, if there is a more specific
+# config (with physical port) present, that takes precedence.
+
+# Indicates the maximum number of ports that the core could flex to.
+# Valid values are 1, 2 or 4. Default value is 4.
+# port_flex_enable must be enabled on that core to enable flex port.
+# The value of port_flex_max_ports must be equal or greater than the number of ports
+# that have been mapped to the core by property "portmap"
+# If given without index, the config applies to all cores.
+#port_flex_max_ports{physical port number}=4
+#port_flex_max_ports_core<core number>=2
+#port_flex_max_ports=1
+
+# Enable translation of physical port numbers within the BCM layer.
+# This feature allows a new device to emulate an older similar
+# device even if the physical port map is different. Note that
+# translation support must be compiled in as well.
+#bcm_xlate_api_port_enable=1
+
+# Specify a BCM port translation map.
+#bcm_xlate_port_map=bcm56524_to_bcm56504
+#bcm_xlate_port_map=bcm56620_to_bcm56504
+#bcm_xlate_port_map=bcm56630_to_bcm56504
+#bcm_xlate_port_map=bcm56524_single_modid
+#bcm_xlate_port_map=bcm56636_single_modid
+#bcm_xlate_port_map=bcm56636_single_modid_alt
+
+# Allow customized BCM translation maps. The example below will
+# map physical port 2 to BCM port 0.
+#bcm_xlate_port_2=0
+
+# Enable translation of system port numbers to physical port numbers
+# in hardware (if supported by the switch device). This feature may
+# be used to complement the BCM API translation feature, but can
+# also be used to limit the use of module IDs on devices with 32 or
+# fewer ports in case some physical port numbers reside beyond 31.
+#bcm_xlate_sysport_enable=0
+
+# Convenience variable that can be used to turn off both physical
+# and system port mapping. This variable overrides the dedicated
+# variables described above.
+#bcm_xlate_port_enable=1
+
+# Interval (in usecs) at which the port monitor thread will run.
+# The port monitor can be used to handle workarounds which are
+# required only with specific equipment configurations.
+#portmon_interval=0
+
+# Select whether to always attach the corresponding Serdes shadow
+# driver for Raptor and Raven devices. Note that when deciding
+# which driver to attach, MDIO accesses are also verified indepedently
+# and checked for corruption. If corruption is detected, the
+# shadow driver is attached regardless of this property.
+# To always attach the shadow driver for a port:
+#serdes_shadow_driver_<port>=1
+
+#MACSEC PHY properties
+#The following proporties are effective on MACSEC capable PHYs. Currently
+#BCM54580 family based PHYs are MACSEC capable.
+
+#Enable MACSEC feature on the MACSEC phys.
+#macsec_enable
+
+#MACSEC device address. MACSEC devices address, used to adress MACSEC core.
+#This is MDIO address that is being assigned to MACSEC core. The MDIO address
+#gets programmed to MACSEC PHY during initialization if MACSEC is enabled.
+#macsec_dev_addr
+
+#A MACSEC phy could be an integrated PHYs with multiple ports. This property
+#is needed to identify the index of each PHY port.
+#macsec_port_index
+
+#Define port bitmap of FE ports that use 100-FX mode.
+#pbmp_fe_100fx=0xffffff
+
+#
+# CES Properties
+#
+# ces_port_tdm_proto - This property selects the TDM protocol to be used for the TDM ports.
+# Valid values are T1 and E1, default is T1.
+#ces_port_tdm_proto=E1
+
+#
+# RX COS queues (5644x)
+#
+# Queues assignment to share across host CPU and uControllers.
+# By default, all 48 queues are assigned to the host CPU.  The sum
+# of all queues must be equal to 48.
+#
+#num_queues_pci=48
+#num_queues_uc0=0
+#num_queues_uc1=0
+#
+
+#
+# BFD
+#
+# BFD COS queue.  Default is highest available queue assigned to the uC
+# where the BFD application is running on.
+#bfd_cosq=
+#
+# Maximum number of BFD sessions
+#bfd_num_sessions=256
+#
+# Maximum number of Simple Password and SHA1 keys
+#bfd_simple_password_keys=0
+#bfd_sha1_keys=0
+#
+
+#
+# Triumph3 ESM
+#
+# Specifying MDIO port addresses for the external tcams. tcam0 default is 1
+# tcam1 default is 2 for broadcom boards.
+# port_phy_addr_ext_tcam0
+# port_phy_addr_ext_tcam1
+#
+
+# Memory table size configs in terms of the widest entry type.
+#l2_mem_entries=<>
+#l3_mem_entries=<>
+#vlan_xlate_mem_entries=<>
+#egr_vlan_xlate_mem_entries=<>
+#mpls_mem_entries=<>
+
+#
+# Accelerated Linkscan
+#
+# Enables accelerated linkscan mode on given port.
+# This feature is not enabled by default.
+# This is a per-port property.
+# rx_fast_los_link_<port>
+# rx_fast_los_link_xe=1
+# rx_fast_los_link=1
+#
+# Indicates the time interval in usecs when linkscan is in accelerated mode.
+# rx_fast_los_usec=100000
+#
+# Indicates the maximum number of times Linkscan will poll in
+# accelerated mode without a status change in any accelerated mode ports.
+# rx_fast_los_poll_count_max=10
+#

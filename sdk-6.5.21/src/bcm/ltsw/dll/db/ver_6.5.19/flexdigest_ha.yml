@@ -1,0 +1,126 @@
+#
+# file: flexdigest_ha.yml
+# FLEXDIGEST YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_flexdigest:
+        bcmint_flexdigest_lkup_entry_qualifier_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup entry qualifier flags.
+                qualifier:
+                    type: int
+                    comment: FD lookup entry qualifier.
+                data:
+                    type: uint16_t
+                    comment: FD lookup entry qualify data.
+                mask:
+                    type: uint16_t
+                    comment: FD lookup entry qualify mask.
+        bcmint_flexdigest_lkup_entry_action_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup entry action flags.
+                action:
+                    type: int
+                    comment: FD lookup entry action.
+                param0:
+                    type: uint16_t
+                    comment: FD lookup entry action parameter 0.
+                param1:
+                    type: uint16_t
+                    comment: FD lookup entry action parameter 1.
+        bcmint_flexdigest_lkup_entry_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup entry flags.
+                id:
+                    type: int
+                    comment: FD lookup entry identifier.
+                pri:
+                    type: int
+                    comment: FD lookup entry priority.
+        bcmint_flexdigest_lkup_group_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup group flags.
+                id:
+                    type: int
+                    comment: FD lookup group identifier.
+                pri:
+                    type: int
+                    comment: FD lookup group priority.
+                sub_comp_id_base:
+                    type: int
+                    comment: FD lookup group HA sub-component id base.
+                qualifier_max_per_entry:
+                    type: int
+                    comment: The maximum of FD lookup qualifier in an entry.
+                action_max_per_entry:
+                    type: int
+                    comment: The maximum of FD lookup action in an entry.
+                entry_id_base:
+                    type: int
+                    comment: FD lookup entry identifier base in group.
+                entry_id_count:
+                    type: int
+                    comment: FD lookup entry identifier count in group.
+        bcmint_flexdigest_lkup_group_qualifier_presel_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                valid:
+                    type: bool
+                    comment: FD lookup presel qualifier valid flags.
+                qualifier:
+                    type: int
+                    comment: FD lookup presel qualifier.
+        bcmint_flexdigest_lkup_match_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup match criteria flags.
+                match:
+                    type: int
+                    comment: FD lookup match criteria identifier.
+        bcmint_flexdigest_lkup_match_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: FD lookup match criteria identifer flags.
+                id:
+                    type: uint16_t
+                    comment: FD lookup match criteria identifer.
+                ref_count:
+                    type: uint32_t
+                    comment: FD lookup match criteria identifer reference count.

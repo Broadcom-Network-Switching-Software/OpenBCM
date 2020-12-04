@@ -1,0 +1,78 @@
+#
+# file: mon_int_ha.yml
+# YAML file describing the HA data structures for Inband Telemetry.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   OPER_STATE_COUNT: 6
+   BCMMON_PBMP_WORD_MAX: 18
+   MON_MIRROR_SESSION_MAX: 8
+
+component:
+   bcmcth_mon:
+       bcmcth_mon_int_ha_t:
+           type: struct
+           fields:
+               init:
+                   type: bool
+                   comment: Indicates that the embedded app was initialized or not.
+               run:
+                   type: bool
+                   comment: Indicates if the embedded app is running or not. If this field is true, then it implies init is also true.
+               collector:
+                   type: bool
+                   comment: Indicates that the collector has been created in the app. If this field is true, then it implies run is also true.
+               uc_num:
+                   type: uint8_t
+                   comment: The microcontroller number on which the embedded app is running.
+               oper_states:
+                   type: bool
+                   length: OPER_STATE_COUNT
+                   comment: Mapping of the operational states and their current status.
+               ipfix_enterprise_number:
+                   type: uint32_t
+                   comment: IPFIX enterprise number.
+
+       bcmmon_pbmp_t:
+           type: struct
+           fields:
+               w:
+                   type: uint32_t
+                   length: BCMMON_PBMP_WORD_MAX
+
+       bcmmon_trace_state_t:
+           type: struct
+           fields:
+               ievent_mirr:
+                    type: bcmmon_pbmp_t
+                    length: MON_MIRROR_SESSION_MAX
+                    comment: Instance bitmap of ingress mirror status.
+               ievent_cpu:
+                    type: bcmmon_pbmp_t
+                    comment: Instance bitmap of ingress copy-to-cpu status.
+
+       bcmmon_drop_state_t:
+           type: struct
+           fields:
+               ievent_mirr:
+                    type: bcmmon_pbmp_t
+                    comment: Instance bitmap of ingress mirror status.
+               ievent_cpu:
+                    type: bcmmon_pbmp_t
+                    comment: Instance bitmap of ingress copy-to-cpu status.
+               ievent_no_lp:
+                    type: bcmmon_pbmp_t
+                    comment: Instance bitmap of ingress drop loopback status.
+
+       bcmmon_redirect_trace_state_t:
+           type: struct
+           fields:
+               eevent_redirect:
+                    type: bcmmon_pbmp_t
+                    comment: Instance bitmap of egress redirect action status.

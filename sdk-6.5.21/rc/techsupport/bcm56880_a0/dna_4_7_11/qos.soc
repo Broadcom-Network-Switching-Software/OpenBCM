@@ -1,0 +1,43 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport QoS RC (run commands) file
+#
+#       These are default commands that are for TechSupport QoS.
+#
+
+# Show S/W state in QoS.
+dump sw qos
+
+# Show QoS related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show QoS egress information related LTs.
+local lt FLEX_QOS_EGR_INFO;                                        $traverse_lt;
+
+# Show QoS egress remarking related LTs.
+local lt FLEX_QOS_EGR_PHB_0;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_1;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_10;                                      $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_11;                                      $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_2;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_3;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_4;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_5;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_6;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_7;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_8;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_PHB_9;                                       $traverse_lt;
+local lt FLEX_QOS_EGR_POLICY;                                      $traverse_lt;
+
+# Show QoS ingress information LTs.
+local lt FLEX_QOS_ING_INFO;                                        $traverse_lt;
+
+# Show QoS ingress mapping related LTs.
+local lt FLEX_QOS_ING_ECN;                                         $traverse_lt;
+local lt FLEX_QOS_ING_PHB;                                         $traverse_lt;
+local lt FLEX_QOS_ING_PHB_INT_CNG_STRENGTH_PROFILE;                $traverse_lt;
+local lt FLEX_QOS_ING_PHB_INT_PRI_STRENGTH_PROFILE;                $traverse_lt;
+local lt FLEX_QOS_ING_POLICY;                                      $traverse_lt;

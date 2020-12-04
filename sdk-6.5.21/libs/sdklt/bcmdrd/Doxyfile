@@ -1,0 +1,11 @@
+PROJECT_NAME            = "Device Resource Database Library (BCMDRD)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+MAX_INITIALIZER_LINES   = 0
+INCLUDE_PATH            = include
+
+INPUT                   = DOC/bcmdrd.dox \
+                          DOC/bcmdrd_dev.dox \
+                          include
+
+EXCLUDE                 = include/bcmdrd/chip

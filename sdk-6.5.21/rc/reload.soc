@@ -1,0 +1,44 @@
+#
+# $Id: reload.soc,v 1.11 2013/06/28 00:40:32 tusharty Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+*:warmboot on
+*:init noreset
+
+if $?feature_cancun \
+    "cancun load cmh;" \
+    "cancun load cch;" \
+    "cancun load ceh;" \
+
+# M0 FW MUST be loaded before "init misc"
+if $?feature_cmicx \
+    "m0 load 0 0x0 linkscan_led_fw.bin" \
+    "m0 load 0 0x3800 custom_led.bin"
+
+*:init misc
+if $?feature_cancun \
+    "cancun load cih;" \
+    "cancun load cfh;"\
+    "cancun stat;"
+
+*:init mmu
+# Note: Un-comment the following debug verbose and dbm bcm lines to get more debug info.
+#       They are turned off by default to reduce init time.
+
+#debug +verbose
+#dbm bcm fp VVERbose
+MCSMsg INIT;
+MCSMsg 0;
+if !$?rcpu_only && $?num_ucs\
+    'if !"expr $num_ucs > 1" "MCSMsg 1";'\
+    'if !"expr $num_ucs > 2" "MCSMsg 2";'
+*:init bcm
+#dbm bcm -fp -VVERbose
+#debug -verbose
+*:linkscan 250000
+if $?feature_arl_hashed && !$?simulator && !$?rcpu_only \
+    "l2mode interval=3000000"
+sleep 1

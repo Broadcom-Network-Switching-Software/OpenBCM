@@ -1,0 +1,1741 @@
+#
+# $Id: config-sand.bcm,v 1.140 2013/09/22 14:29:47 tomerma Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+#########################################
+##cfg for BCM88640 (PetraB), BCM88650 (Arad) and BCM88202 (Ardon)
+#########################################
+
+## temporary suppressing unknown soc properties warnings - till adding them unknown to property.h/propgen
+## (need to be the first soc property in the file).
+suppress_unknown_prop_warnings=1
+
+## Multi device system (Negev): 2 devices, fabric mode is FE, mod id is slot id
+## (Top line card is 0, button is 1).
+#diag_chassis=1
+
+## Disable diag init application. Should be used if one wants to run his own
+## application instead of the diag init example
+#diag_disable=1
+
+## Skip cosq configuration in diag_init
+#diag_cosq_disable=1
+
+#########################################
+##cfg for BCM88650 - Arad
+#########################################
+
+### Device configuration ###
+
+## Activate Emulation partial init. Values: 0 - Normal, 1 - Emulation .Default: 0x0.
+diag_emulator_partial_init.BCM88650=0
+
+## General
+# Set the FAP Device mode
+# Options: PP / TM / TDM_OPTIMIZED / TDM_STANDARD
+fap_device_mode.BCM88650=PP
+
+## Credit worth size (Bytes)
+credit_size.BCM88650=1024
+
+## Clock configurations
+# Core clock speed (MHz). Default: 600 MHz
+core_clock_speed_khz.BCM88650=600000
+# System reference clock (MHz). Default: 600 MHz
+system_ref_core_clock_khz.BCM88650=600000
+
+### Network Interface configuration ###
+## Use of the ucode_port_<Local-Port-Id>=<Interface-type>[<Interface-Id>][.<Channel-Id>]
+## Local port range: 0 - 255.
+## Interface types: XAUI/RXAUI/SGMII/ILKN/10GBase-R/XLGE/CGE/CPU/IGNORE
+
+# Map bcm local port to CPU[.channel] interfaces
+ucode_port_180.BCM88650=CPU.0
+
+pon_application_support_enabled_0.BCM88650=TRUE
+pon_application_support_enabled_1.BCM88650=TRUE
+pon_application_support_enabled_2.BCM88650=TRUE
+pon_application_support_enabled_3.BCM88650=TRUE
+pon_application_support_enabled_4.BCM88650=TRUE
+pon_application_support_enabled_5.BCM88650=TRUE
+pon_application_support_enabled_6.BCM88650=TRUE
+pon_application_support_enabled_7.BCM88650=TRUE
+vlan_match_criteria_mode=PON_PCP_ETHERTYPE
+
+#Firmware mode:
+# 0=DEFAULT
+# 1=SFP_OPT_SR4     - optical short range
+# 2=SFP_DAC         - direct attach copper
+# 3=XLAUI           - 40G XLAUI mode
+# 4=FORCE_OSDFE     - force over sample digital feedback equalization
+# 5=FORCE_BRDFE     - force baud rate digital feedback equalization
+# 6=SW_CL72         - software cl72 with AN on
+# 7=CL72_WITHOUT_AN - cl72 without AN
+#For Negev2 chassis enable DFE is recommended
+
+serdes_if_type=1024
+
+#serdes_firmware_mode.BCM88650=3
+serdes_firmware_mode_il.BCM88650=4
+serdes_firmware_mode_sfi.BCM88650=0
+
+serdes_firmware_mode_xe0.BCM88650=0
+serdes_firmware_mode_xe1.BCM88650=0
+serdes_firmware_mode_xe2.BCM88650=0
+serdes_firmware_mode_xe3.BCM88650=0
+serdes_firmware_mode_xe4.BCM88650=0
+serdes_firmware_mode_xe5.BCM88650=0
+serdes_firmware_mode_xe6.BCM88650=0
+serdes_firmware_mode_xe7.BCM88650=0
+
+serdes_firmware_mode_xe128.BCM88650=2
+serdes_firmware_mode_xe129.BCM88650=2
+serdes_firmware_mode_xe130.BCM88650=2
+serdes_firmware_mode_xe131.BCM88650=2
+serdes_firmware_mode_xe132.BCM88650=2
+serdes_firmware_mode_xe133.BCM88650=2
+serdes_firmware_mode_xe134.BCM88650=2
+serdes_firmware_mode_xe135.BCM88650=2
+
+
+# Set ARAD "PON Ports" (connected to Pioneer) to 12.5G
+port_init_speed_xe0.BCM88650=12500
+port_init_speed_xe1.BCM88650=12500
+port_init_speed_xe2.BCM88650=12500
+port_init_speed_xe3.BCM88650=12500
+port_init_speed_xe4.BCM88650=12500
+port_init_speed_xe5.BCM88650=12500
+port_init_speed_xe6.BCM88650=12500
+port_init_speed_xe7.BCM88650=12500
+
+
+# Map bcm local port to Network-Interface[.channel] interfaces - TBD
+ucode_port_0.BCM88650=10GBase-R8
+ucode_port_1.BCM88650=10GBase-R9
+ucode_port_2.BCM88650=10GBase-R10
+ucode_port_3.BCM88650=10GBase-R11
+ucode_port_4.BCM88650=10GBase-R12
+ucode_port_5.BCM88650=10GBase-R13
+ucode_port_6.BCM88650=10GBase-R14
+ucode_port_7.BCM88650=10GBase-R15
+
+ucode_port_128.BCM88650=10GBase-R0
+ucode_port_129.BCM88650=10GBase-R2
+ucode_port_130.BCM88650=10GBase-R4
+ucode_port_131.BCM88650=10GBase-R6
+ucode_port_132.BCM88650=10GBase-R1
+ucode_port_133.BCM88650=10GBase-R3
+ucode_port_134.BCM88650=10GBase-R5
+ucode_port_135.BCM88650=10GBase-R7
+
+ucode_port_200.BCM88650=CPU.1
+ucode_port_201.BCM88650=CPU.2
+ucode_port_202.BCM88650=CPU.3
+ucode_port_203.BCM88650=CPU.4
+
+#40G
+#ucode_port_1.BCM88650=XLGE0
+#ucode_port_2.BCM88650=XLGE1
+#ucode_port_3.BCM88650=XLGE2
+#ucode_port_4.BCM88650=XLGE3
+#ucode_port_5.BCM88650=XLGE4
+#ucode_port_6.BCM88650=XLGE5
+#ucode_port_7.BCM88650=XLGE6
+
+#ILKN configuration - basic config
+#ucode_port_31.BCM88650=ILKN0
+#ucode_port_32.BCM88650=ILKN1
+#ilkn_num_lanes_0.BCM88650=12
+#ilkn_num_lanes_1.BCM88650=12
+#port_init_speed_il.BCM88650=10312
+
+
+#ILKN per port channel stat
+#ilkn_counters_mode.BCM88650=PACKET_PER_CHANNEL
+
+#ILKN configuration - advanced
+#ilkn_metaframe_sync_period=2048
+# Enable\Disable ILKN status message sent through an out-of-band interface.
+# ilkn_interface_status_oob_ignore.BCM88650=1
+
+##ILKN retransmit
+#ilkn_retransmit_enable_rx.BCM88650=1
+#ilkn_retransmit_enable_tx.BCM88650=1
+#ilkn_retransmit_buffer_size.BCM88650=250
+#ilkn_retransmit_num_requests_resent.BCM88650=15
+#ilkn_retransmit_num_sn_repetitions_tx.BCM88650=1
+#ilkn_retransmit_num_sn_repetitions_rx.BCM88650=1
+#ilkn_retransmit_rx_timeout_words.BCM88650=3800
+#ilkn_retransmit_rx_timeout_sn.BCM88650=250
+#ilkn_retransmit_rx_ignore.BCM88650=80
+#ilkn_retransmit_rx_reset_when_error_enable.BCM88650=1
+#ilkn_retransmit_rx_watchdog.BCM88650=0
+#ilkn_retransmit_rx_reset_when_alligned_error_enable.BCM88650=1
+#ilkn_retransmit_rx_reset_when_retry_error_enable.BCM88650=1
+#ilkn_retransmit_rx_reset_when_wrap_after_disc_error_enable.BCM88650=1
+#ilkn_retransmit_rx_reset_when_wrap_before_disc_error_enable.BCM88650=0
+#ilkn_retransmit_rx_reset_when_timout_error_enable.BCM88650=0
+#ilkn_retransmit_tx_wait_for_seq_num_change_enable.BCM88650=1
+#ilkn_retransmit_tx_ignore_requests_when_fifo_almost_empty.BCM88650=1
+
+#ucode_port_40.BCM88650=RCY.0
+#ucode_port_41.BCM88650=RCY.1
+#ucode_port_42.BCM88650=RCY.2
+
+## CAUI Configuration
+#ucode_port_41.BCM88650=CGE0
+#ucode_port_42.BCM88650=CGE1
+caui_num_lanes_0.BCM88650=10
+caui_num_lanes_1.BCM88650=10
+#Required for working IXIA 100G port:
+mld_lane_swap_lane20_ce.BCM88650=0
+mld_lane_swap_lane21_ce.BCM88650=1
+mld_lane_swap_lane0_ce.BCM88650=20
+mld_lane_swap_lane1_ce.BCM88650=21
+
+# This configures the lane polarity
+pb_serdes_lane_swap_polarity_tx_phy1.BCM88650=1
+pb_serdes_lane_swap_polarity_tx_phy2.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy3.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy4.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy5.BCM88650=1
+pb_serdes_lane_swap_polarity_tx_phy6.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy7.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy8.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy9.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy10.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy11.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy12.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy13.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy14.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy15.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy16.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy17.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy18.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy19.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy20.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy21.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy22.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy23.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy24.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy25.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy26.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy27.BCM88650=0
+pb_serdes_lane_swap_polarity_tx_phy28.BCM88650=0
+
+pb_serdes_lane_swap_polarity_rx_phy1.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy2.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy3.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy4.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy5.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy6.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy7.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy8.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy9.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy10.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy11.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy12.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy13.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy14.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy15.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy16.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy17.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy18.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy19.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy20.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy21.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy22.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy23.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy24.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy25.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy26.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy27.BCM88650=0
+pb_serdes_lane_swap_polarity_rx_phy28.BCM88650=0
+
+xgxs_tx_lane_map_quad0.BCM88650=0x3210
+xgxs_tx_lane_map_quad1.BCM88650=0x3210
+xgxs_tx_lane_map_quad2.BCM88650=0x3210
+xgxs_tx_lane_map_quad3.BCM88650=0x3210
+xgxs_tx_lane_map_quad4.BCM88650=0x3210
+xgxs_tx_lane_map_quad5.BCM88650=0x3210
+xgxs_tx_lane_map_quad6.BCM88650=0x3210
+
+xgxs_rx_lane_map_quad0.BCM88650=0x3210
+xgxs_rx_lane_map_quad1.BCM88650=0x3210
+xgxs_rx_lane_map_quad2.BCM88650=0x3210
+xgxs_rx_lane_map_quad3.BCM88650=0x3210
+xgxs_rx_lane_map_quad4.BCM88650=0x3210
+xgxs_rx_lane_map_quad5.BCM88650=0x3210
+xgxs_rx_lane_map_quad6.BCM88650=0x3210
+
+
+
+#High voltage driver strap. If 0, connected to 1.4V supply; if 1, connected to 1V mode.
+#for specific quad use srd_tx_drv_hv_disable_quad_X where X is (FSRD num * 4 + internal quad)
+srd_tx_drv_hv_disable.BCM88650=1
+
+#Port init mode
+#port_init_duplex=0
+#port_init_adv=0
+#port_init_autoneg=0
+
+
+# This disables serdes initialization
+# phy_null.BCM88650=1
+
+##  Number of Internal ports
+# Enable the ERP port. Values: 0 / 1.
+num_erp_tm_ports.BCM88650=1
+# Enable the OLP port. Values: 0 / 1.
+num_olp_tm_ports.BCM88650=1
+# Enable OAMP
+num_oamp_ports.BCM88650=0
+
+## Firmware Load Method
+load_firmware.BCM88650=0x102
+
+### Headers configuration ###
+
+## Use of the tm_port_header_type_<Local-Port-Id>=<Header-type>
+## Default header type is derived from fap_device_mode: If fap_device_mode is
+## PP, default header type is ETH. Otherwise, defualt header type is TM.
+## Header type per port can be overriden.
+## All options: ETH/RAW/TM/PROG/CPU/STACKING/TDM/TDM_RAW/UDH_ETH
+## Injected header types: if PTCH, INJECTED (local Port of type TM) or INJECTED_PP (PP)
+##                        if PTCH-2, INJECTED_2 (local Port of type TM) or INJECTED_2_PP (PP)
+
+# Set CPU to work with TM header (ITMH)
+#tm_port_header_type_0.BCM88650=TM
+
+tm_port_header_type_in_180.BCM88650=INJECTED_2
+tm_port_header_type_out_180.BCM88650=CPU
+
+tm_port_header_type_in_200.BCM88650=INJECTED_2_PP
+tm_port_header_type_out_200.BCM88650=ETH
+tm_port_header_type_in_201.BCM88650=INJECTED_2_PP
+tm_port_header_type_out_201.BCM88650=ETH
+tm_port_header_type_in_202.BCM88650=INJECTED_2_PP
+tm_port_header_type_out_202.BCM88650=ETH
+tm_port_header_type_in_203.BCM88650=INJECTED_2_PP
+tm_port_header_type_out_203.BCM88650=ETH
+
+### Parser Configuration ###
+# Parser has 4 custom macros that are allocated dynamically and
+# configured according to the following features and soc properties:
+# Trill (1 macro) - trill_mode
+# FCoE (2 macros) - bcm886xx_fcoe_switch_mode
+# VxLAN (1 macro) - bcm886xx_vxlan_enable
+# IPv6-Extension-header (2 macros) - bcm886xx_ipv6_ext_hdr_enable
+# UDP (1 macro) - UDP parsing is enabled by default, and can be 
+#  disabled with soc property custom_feature_udp_parse_disable
+#  When disabling UDP parsing VxLAN and 1588oUDP are affected
+
+# Enable IPv6 Extension Header, 0 - disable (default), 1 - enable
+#bcm886xx_ipv6_ext_hdr_enable=1
+
+# Disable UDP parsing, 0 - enable (default), 1 - disable
+#custom_feature_udp_parse_disable=1
+
+#OAMP port
+#tm_port_header_type_out_232.BCM88650=CPU
+
+#MPLS-TP channel types for OAM/BFD - If MPLS-TP used, channel should be specified
+#Available types: mplstp_bfd_control_channel_type
+#               mplstp_pw_ach_channel_type
+#               mplstp_dlm_channel_type
+#               mplstp_ilm_channel_type
+#               mplstp_dm_channel_type
+#               mplstp_ipv4_channel_type
+#               mplstp_cc_channel_type
+#               mplstp_cv_channel_type
+#               mplstp_on_demand_cv_channel_type
+#               mplstp_pwe_oam_channel_type
+#               mplstp_ipv6_channel_type
+#               mplstp_fault_oam_channel_type
+#               mplstp_g8113_channel_type
+#mplstp_g8113_channel_type=0x8902
+
+# Set the recycling port processing to be raw (static forwarding)
+tm_port_header_type_rcy.BCM88650=RAW
+
+### RCPU
+# Valid CPU local ports on which RCPU packets can be received by slave device.
+#rcpu_rx_pbmp=0xf00000000000000000000000000000000000000000000000001
+
+#tm_port_header_type_514.BCM88650=RAW
+
+## Header extensions
+# Set if an FTMH Out-LIF extension is present to Unicast and Multicast packets
+# Options: NEVER / IF_MC (only Multicast packets) / ALWAYS
+fabric_ftmh_outlif_extension.BCM88650=IF_MC
+
+# Set the FTMH Load-Balancing Key extension mode
+# Options for 88660: ENABLED, FULL_HASH
+# Options for 88650: ENABLED
+# Options for 88640 compatible: DISABLED / 8B_LB_KEY_8B_STACKING_ROUTE_HISTORY / 16B_STACKING_ROUTE_HISTORY / STANDBY_MC_LB (available only for AradPlus)
+# Default: DISABLED
+system_ftmh_load_balancing_ext_mode.BCM88650=DISABLED
+
+# Set if an OTMH Out-LIF (CUD) Extension is present to Unicast and Multicast packets
+# Options: NEVER / IF_MC (only Multicast packets) / ALWAYS / DOUBLE_TAG (two hop scheduling)
+# Default: NEVER
+# tm_port_otmh_outlif_ext_mode_13.BCM88650=NEVER
+
+# Set if an OTMH Source-System-Port Extension is present.
+# Option: 0/1
+# Default: 0
+# tm_port_otmh_src_ext_enable_13.BCM88650=0
+
+#Trunk hash format, relevant only for AradPlus. Possible values: NORMAL (default) / INVERTED / DUPLICATED.
+#trunk_hash_format=NORMAL
+
+## Stacking Application
+#stacking_enable.BCM88650=1
+
+## System RED
+# Set System-Red functionality.
+#system_red_enable.BCM88650=1
+
+# Indicate the size (Bytes) of a first header to skip
+# before the major header at ingress (e.g. Ethernet, ITMH)
+# It can be set per port also
+first_header_size.BCM88650=0
+
+# Indicate the size (Bytes) of the PMF Extension Headers
+# to remove for TM header type ports (expecting ITMH)
+# Set per port
+#post_headers_size_0.BCM88650=4
+
+# Indicate the size (Bytes) of the User-Headers: configurable
+# headers located in the fabric between internal headers and
+# Ethernet. Their values are set by Ingress FP, and can be used
+# by Egress FP or Egress Editor.
+# units: bits. 4 values can be set:
+# 0 - size of the 1st User-Header, for the Egress PMF. 0b / 8b / 16b
+# 1 - size of the 2nd User-Header, for the Egress PMF. 0b / 8b / 16b
+# The sum of these 2 values should be under 16b
+# 2, 3 - size of the 1st/2nd User-Header, for the Egress Editor.
+# 0b / 8b / 16b / 24b / 32b
+# Each of the global User-Header size must be under 32 bits, but not 24 bits.
+# The Egress FP field is always at the MSB of the User-Header
+# Not available for 88650-A0.
+#field_class_id_size_0.BCM88650=8
+#field_class_id_size_1.BCM88650=0
+#field_class_id_size_2.BCM88650=24
+#field_class_id_size_3.BCM88650=0
+
+
+### Trunk - LAG configuration ###
+# Set Set the number of LAGs: 1024, 512, 256, 128 or 64
+number_of_trunks.BCM88650=256
+
+### SYNCE configuration ###
+## Synchronous Ethernet Signal Mode.
+## Options: TWO_DIFF_CLK, TWO_CLK_AND_VALID. Default: TWO_CLK_AND_VALID
+#sync_eth_mode.BCM88650=TWO_CLK_AND_VALID
+
+## Clock Source (single SerDes) lane in the specified NIF port.
+## Usage: sync_eth_clk_to_nif_id_clk_<clk_number>=<serdes_number>
+#sync_eth_clk_to_nif_id_clk_0.BCM88650=1
+#sync_eth_clk_to_nif_id_clk_1.BCM88650=1
+
+## Clock Divider for the selected recovered clock. Valid values: 1/2/4. Default: 1.
+## Usage: sync_eth_clk_divider_clk_<clk_number>=<1/2/4>
+#sync_eth_clk_divider_clk_0.BCM88650=1
+#sync_eth_clk_divider_clk_1.BCM88650=1
+
+## Enable the automatic squelch function for the recovered clock. Valid values: 0/1. Default: 0.
+## Usage: sync_eth_clk_squelch_enable_clk_<clk_number>=<0/1>
+#sync_eth_clk_squelch_enable_clk_0.BCM88650=0
+#sync_eth_clk_squelch_enable_clk_1.BCM88650=0
+
+### ELK configuration ###
+## External lookup (TCAM) Device type select, Indicate the External lookup Device type.
+# Value Options: NONE/NL88650. Default: NONE.
+#ext_tcam_dev_type=NL88650
+
+## Set ELK FWD table Size.
+# format: ext_xxx_fwd_table_size.
+# where xxx replaced by FWD options: ip4_uc_rpf/ip4_mc/ip6_uc_rpf/ip6/ip6_mc/trill_uc/trill_mc/mpls/coup_mpls
+# Value Options: (0) - External table disabled, >0: number of entries. Default: 0.
+#ext_ip4_uc_rpf_fwd_table_size=8192
+#ext_ip4_mc_fwd_table_size=8192
+
+## Set ELK IP FWD use NetRoute  ALG.
+# Value Options: ALG_LPM_LPM/ALG_LPM_NETROUTE/ALG_LPM_TCAM. Default: ALG_LPM_TCAM.
+#ext_fwd_algorithm_lpm=ALG_LPM_TCAM
+
+## Set ELK interface mode.
+# Change ELK interface configuration to support CAUI port.
+# Value Options: 0/1. 0 - Normal mode, 1  2 CAUI port + ELK mode. Default: 0.
+#ext_interface_mode=0
+
+### Configure MDIO interface
+# External MDIO clock rate divisor . Default: 0x24.
+#rate_ext_mdio_divisor=0x36
+# External MDIO clock rate divisor. Default: 0x1.
+#rate_ext_mdio_dividend=1
+
+### TDM - OTN configuration ###
+#fap_tdm_bypass.BCM88650=0
+
+# Indicate if a Petra-B device is connected to the actual device
+# For TDM/OTN applications,
+# system_is_petra_b_in_system.BCM88650=0
+##Indicate if TDM can arrive throgh primary pipe.
+#Should be 1 for a System with PetraB that connected to fabric over primary pipe.
+fabric_tdm_over_primary_pipe.BCM88650=0
+
+### Fabric configuration ###
+#0-LFEC 1-8b\10b 2-FEC 3-BEC
+backplane_serdes_encoding.BCM88650=2
+#SFI speed rate
+port_init_speed_sfi.BCM88650=10312
+#CL72
+port_init_cl72_sfi.BCM88650=1
+fabric_segmentation_enable.BCM88650=1
+
+## Fabric transmission mode
+# Set the Connect mode to the Fabric
+# Options: FE - presence of a Fabric device (single stage) / MULT_STAGE_FE -  Multi-stage /
+# SINGLE_FAP - stand-alone device / MESH - mesh / BACK2BACK - 2 devices in Mesh
+#fabric_connect_mode.BCM88650=SINGLE_FAP
+fabric_connect_mode.BCM88650=FE
+
+## Cell format configuration
+# Indicate if the traffic can be sent in dual pipe
+is_dual_mode.BCM88650=0
+# Indicate the format of the cell:
+# A VCS128 cell is used if system_is_vcs_128_in_system or system_is_fe600_in_system is TRUE
+system_is_vcs_128_in_system.BCM88650=0
+system_is_fe600_in_system.BCM88650=0
+
+### WRED ###
+
+# Set the maximum packet size for WRED tests. 0 - means ignore max packet size.
+discard_mtu_size.BCM88650=0
+
+### OCB (On-Chip Buffer) configuration ###
+# Enable the OCB
+# Enable MODES:
+#   0/FALSE        -->  OCB_DISABLED     --> No OCB use
+#   1/TRUE         -->  OCB_ENABLED      --> Like in Arad-A0/B0. Some packets may use both DRAM and OCB resources
+#   ONE_WAY_BYPASS -->  Depends on number of present drams (available only for AradPlus):
+#                      0 drams:   - OCB_ONLY
+#                      1 drams:   - OCB_ONLY_1_DRAM     -->  : OCB-only with 1 DRAM for the free pointers
+#                      2-8 drams: - OCB_DRAM_SEPARATE   -->  : OCB and DRAM coexist separately
+#   Default: TRUE.
+bcm886xx_ocb_enable.BCM88650=1
+
+# OCB Data Buffer size. Possible values: 128/256/512/1024. Default: 256.
+bcm886xx_ocb_databuffer_size.BCM88650=256
+# Repartition between Unicast and Full Multicast buffers.
+# 0: 80% Unicast and 20% Multicast, 1: Unicast-Only
+bcm886xx_ocb_repartition.BCM88650=0
+
+### PDM configuration ###
+# Set the PDM Mode.
+# 0: simple (default), 1: extended (mandatory for LLFC-VSQ, PFC-VSQ, or ST-VSQ)
+bcm886xx_pdm_mode.BCM88650=0
+
+### Multicast Number of DBuff mode ###
+# Set IQM FMC buffers-replication sizes
+# Options for 88650: ARAD_INIT_FMC_4K_REP_64K_DBUFF_MODE/ARAD_INIT_FMC_64_REP_128K_DBUFF_MODE
+# Default: ARAD_INIT_FMC_4K_REP_64K_DBUFF_MODE
+multicast_nbr_full_dbuff.BCM88650=ARAD_INIT_FMC_4K_REP_64K_DBUFF_MODE
+
+### Multicast configuration ###
+# Multicast egress vlan membership range. By default: 0-4095.
+egress_multicast_direct_bitmap_min.BCM88650=0
+egress_multicast_direct_bitmap_max.BCM88650=4095
+
+### VOQ - Flow configuration ###
+
+# Set the VOQ mapping mode:
+# DIRECT: More than 4K System Ports are supported. System-level WRED is not supported.
+# INDIRECT: similar to Petra-B. Up to 4K System Ports.
+voq_mapping_mode.BCM88650=INDIRECT
+
+# Set the Base Queue to be added to the packet flow-id
+# when the Flow-Id is set explicitely either by the ITMH
+# or by the Destination resolution in the Packet processing
+flow_mapping_queue_base.BCM88650=0
+
+# Set the number of priorities supported at egress per Port
+# Options: 1 / 2 / 8
+port_priorities.BCM88650=8
+
+# Set the shared multicast resource mode: Strict / Discrete
+egress_shared_resources_mode.BCM88650=Strict
+
+# Define outgoing port rate mode in data rate or packet rate.
+# Options: DATA / PACKET
+otm_port_packet_rate.BCM88650=DATA
+
+# Set Port egress recycling scheduler configuration.
+# 0: Strict Priority Scheduler, 1: Round Robin Scheduler
+port_egress_recycling_scheduler_configuration.BCM88650=0
+
+# Set statically the region mode per region id
+# 0: queue connectors only (InterDigitated = FALSE, OddEven = TRUE)
+# 1: queue connectors, SE (InterDigitated =TRUE, OddEven = TRUE)
+# 2: queue connectors, SE (InterDigitated =TRUE, OddEven = FALSE)
+dtm_flow_mapping_mode_region_65.BCM88650=0
+dtm_flow_mapping_mode_region_66.BCM88650=0
+dtm_flow_mapping_mode_region_67.BCM88650=0
+dtm_flow_mapping_mode_region_68.BCM88650=0
+dtm_flow_mapping_mode_region_69.BCM88650=0
+dtm_flow_mapping_mode_region_70.BCM88650=0
+dtm_flow_mapping_mode_region_71.BCM88650=0
+dtm_flow_mapping_mode_region_72.BCM88650=0
+dtm_flow_mapping_mode_region_73.BCM88650=0
+dtm_flow_mapping_mode_region_74.BCM88650=0
+dtm_flow_mapping_mode_region_75.BCM88650=0
+dtm_flow_mapping_mode_region_76.BCM88650=0
+dtm_flow_mapping_mode_region_77.BCM88650=0
+dtm_flow_mapping_mode_region_78.BCM88650=0
+dtm_flow_mapping_mode_region_79.BCM88650=0
+dtm_flow_mapping_mode_region_80.BCM88650=0
+dtm_flow_mapping_mode_region_81.BCM88650=1
+dtm_flow_mapping_mode_region_82.BCM88650=1
+dtm_flow_mapping_mode_region_83.BCM88650=1
+dtm_flow_mapping_mode_region_84.BCM88650=1
+dtm_flow_mapping_mode_region_85.BCM88650=1
+dtm_flow_mapping_mode_region_86.BCM88650=1
+dtm_flow_mapping_mode_region_87.BCM88650=1
+dtm_flow_mapping_mode_region_88.BCM88650=1
+dtm_flow_mapping_mode_region_89.BCM88650=1
+dtm_flow_mapping_mode_region_90.BCM88650=1
+dtm_flow_mapping_mode_region_91.BCM88650=1
+dtm_flow_mapping_mode_region_92.BCM88650=1
+dtm_flow_mapping_mode_region_93.BCM88650=1
+dtm_flow_mapping_mode_region_94.BCM88650=1
+dtm_flow_mapping_mode_region_95.BCM88650=1
+dtm_flow_mapping_mode_region_96.BCM88650=1
+dtm_flow_mapping_mode_region_97.BCM88650=1
+dtm_flow_mapping_mode_region_98.BCM88650=1
+dtm_flow_mapping_mode_region_99.BCM88650=2
+dtm_flow_mapping_mode_region_100.BCM88650=2
+dtm_flow_mapping_mode_region_101.BCM88650=2
+dtm_flow_mapping_mode_region_102.BCM88650=2
+dtm_flow_mapping_mode_region_103.BCM88650=2
+dtm_flow_mapping_mode_region_104.BCM88650=2
+dtm_flow_mapping_mode_region_105.BCM88650=2
+dtm_flow_mapping_mode_region_106.BCM88650=2
+dtm_flow_mapping_mode_region_107.BCM88650=2
+dtm_flow_mapping_mode_region_108.BCM88650=2
+dtm_flow_mapping_mode_region_109.BCM88650=2
+dtm_flow_mapping_mode_region_110.BCM88650=2
+dtm_flow_mapping_mode_region_111.BCM88650=2
+dtm_flow_mapping_mode_region_112.BCM88650=2
+dtm_flow_mapping_mode_region_113.BCM88650=2
+dtm_flow_mapping_mode_region_114.BCM88650=2
+dtm_flow_mapping_mode_region_115.BCM88650=2
+dtm_flow_mapping_mode_region_116.BCM88650=2
+dtm_flow_mapping_mode_region_117.BCM88650=2
+dtm_flow_mapping_mode_region_118.BCM88650=2
+dtm_flow_mapping_mode_region_119.BCM88650=2
+dtm_flow_mapping_mode_region_120.BCM88650=2
+dtm_flow_mapping_mode_region_121.BCM88650=2
+dtm_flow_mapping_mode_region_122.BCM88650=2
+dtm_flow_mapping_mode_region_123.BCM88650=2
+dtm_flow_mapping_mode_region_124.BCM88650=2
+dtm_flow_mapping_mode_region_125.BCM88650=2
+dtm_flow_mapping_mode_region_126.BCM88650=2
+dtm_flow_mapping_mode_region_127.BCM88650=2
+dtm_flow_mapping_mode_region_128.BCM88650=2
+
+### Flow Control configuration ###
+# Set the Flow control type per Port.
+# Options: LL (Link-level) / CB2 (Class-Based - 2 classes) /
+# CB8 (Class-Based - 8 classes)
+# flow_control_type.BCM88650=LL
+
+## Out-Of-Band Flow control configuration
+#spn_FC_OOB_TYPE, spn_FC_OOB_MODE, spn_FC_OOB_CALENDER_LENGTH, spn_FC_OOB_CALENDER_REP_COUNT,
+
+## Set voltage mode for oob interfaces
+#HSTL_1.5V
+#3.3V
+#HSTL_1.5V_VDDO_DIV_2
+ext_voltage_mode_oob=3.3V
+
+## Inband Interlaken configuration
+# spn_FC_INBAND_INTLKN_MODE, spn_FC_INBAND_INTLKN_CALENDER_LENGTH, spn_FC_INBAND_INTLKN_CALENDER_REP_COUNT
+# spn_FC_INBAND_INTLKN_CALENDER_LLFC_MODE, spn_FC_INBAND_INTLKN_LLFC_MUB_ENABLE_MASK
+
+### Meter engine configuration ###
+
+# Specify meter operation mode
+# 32 - Two meters per packet (32k total)
+# 64 - One meter per packet (64k total)
+# Options: 0, 32, 64
+policer_ingress_count.BCM88650=32
+
+# For meters in double 32k mode, determine the sharing mode
+# Options:
+# 0 - NONE (only for 64k mode)
+# 1 - SERIAL (only for 32k mode)
+# 2 - PARALLEL (only for 32k mode)
+policer_ingress_sharing_mode.BCM88650=1
+
+# Applies only to Arad+ (88660)
+# For meters in parallel mode, determine the mapping
+# Options: BEST, WORST
+# policer_result_parallel_color_map.BCM88650=WORST
+
+# Applies only to Arad+ (88660)
+# For meters in parallel mode, determine how the buckets are changed
+# Options: CONSTANT, TRANSPARENT, DEFERRED
+# policer_result_parallel_bucket_update.BCM88650=CONSTANT
+
+# Applies only to Arad+ (88660)
+# Set the Ethernet policer to work in color blind mode
+# rate_color_blind.BCM88650=1
+
+# L2 learn limit mode
+# Options: VLAN, VLAN_PORT, TUNNEL or the numeric equivalent 0-2.
+# Default: VLAN
+# l2_learn_limit_mode = VLAN_PORT
+
+# Applies only to Arad+ (88660)
+# Determines the L2 learn limit ranges when l2_learn_limit_mode is set to VLAN_PORT
+# Two range bases can be selected, each of 16K size.
+# Options: 0, 16K, 32K, 48K.
+# Default: 0 & 16K
+# l2_learn_lif_range_base_0 = 0
+# l2_learn_lif_range_base_1 = 16K
+
+### Counter engine configuration ###
+
+# Set the Counter source
+# Options: INGRESS_FIELD / INGRESS_VOQ / INGRESS_VSQ
+# INGRESS_CNM / EGRESS_FIELD / EGRESS_VSI / EGRESS_OUT_LIF / EGRESS_TM (per queue) / EGRESS_TM_PORT (per port)
+# EGRESS_RECEIVE_VSI / EGRESS_RECEIVE_OUT_LIF / EGRESS_RECEIVE_TM (per queue) / EGRESS_RECEIVE_TM_PORT (per port)
+# INGRESS_OAM / EGRESS_OAM
+# 2 Counter-Pointers can be set (with _0 and _1) for
+# INGRESS_FIELD / EGRESS_VSI / EGRESS_OUT_LIF / EGRESS_TM / EGRESS_TM_PORT
+# Range extension can be set (with _LSB and _MSB) for
+# INGRESS_FIELD / EGRESS_VSI / EGRESS_OUT_LIF / EGRESS_TM / EGRESS_TM_PORT /EGRESS_RECEIVE_VSI /
+# EGRESS_RECEIVE_OUT_LIF / EGRESS_RECEIVE_TM / EGRESS_RECEIVE_TM_PORT
+counter_engine_source_0.BCM88650=INGRESS_FIELD
+counter_engine_source_1.BCM88650=INGRESS_FIELD_1
+counter_engine_source_2.BCM88650=INGRESS_VOQ
+counter_engine_source_3.BCM88650=EGRESS_FIELD
+
+# Configure the statistic interface egress source
+# Options: EGRESS_VSI / EGRESS_OUT_LIF / EGRESS_TM / EGRESS_TM_PORT (the default is TM)
+# valid just when there is no conflict with the other counter engines
+#counter_engine_source_stat0.BCM88650=EGRESS_TM
+#counter_engine_source_stat1.BCM88650=EGRESS_TM
+
+
+# Set the Counter engine resolution
+# SIMPLE_COLOR = green, not green
+# SIMPLE_COLOR_FWD = fwd green, fwd not green (BCM88660_A0 only)
+# SIMPLE_COLOR_DROP = drop green, drop not green (BCM88660_A0 only)
+# FWD_DROP = forwarded, dropped
+# GREEN_NOT_GREEN = fwd grn, drop grn, fwd not grn, drop not grn
+# FULL_COLOR = fwd grn, drop grn, fwd not grn, drop yel, drop red
+# ALL = received
+# FWD = forwarded, DROP = droped (not supported by ARAD_A0)
+# CONFIGURABLE = defined by counter_engine_map_ SOC properties (BCM88660_A0 only)
+counter_engine_statistics_0.BCM88650=FULL_COLOR
+counter_engine_statistics_1.BCM88650=FULL_COLOR
+counter_engine_statistics_2.BCM88650=FULL_COLOR
+counter_engine_statistics_3.BCM88650=FULL_COLOR
+
+# Set the Counter format
+# Options: PACKETS_AND_BYTES / PACKETS / BYTES
+# / MAX_QUEUE_SIZE / PACKETS_AND_PACKETS(supported just in FWD_DROP statistic in BCM88660_A0)
+# If not PACKETS_AND_BYTES or PACKETS_AND_PACKETS, the HW Counter width is 59 bits, thus
+# no background SW operation is performed
+counter_engine_format_0.BCM88650=PACKETS_AND_BYTES
+counter_engine_format_1.BCM88650=PACKETS_AND_BYTES
+counter_engine_format_2.BCM88650=PACKETS_AND_BYTES
+counter_engine_format_3.BCM88650=PACKETS_AND_BYTES
+
+# #enable/disable counter processor background thread (default:1-enable)
+# counter_engine_sampling_interval=1
+
+### Configurable mode configuration (BCM88660_A0 only)###
+# counter_engine_statistics_0.BCM88660_A0=CONFIGURABLE
+# counter_engine_map_enable_0.BCM88660_A0=1
+# counter_engine_map_size_0.BCM88660_A0=4
+# counter_engine_map_fwd_green_offset_0.BCM88660_A0=0
+# counter_engine_map_fwd_yellow_offset_0.BCM88660_A0=1
+# counter_engine_map_fwd_red_offset_0.BCM88660_A0=1
+# counter_engine_map_fwd_black_offset_0.BCM88660_A0=2
+# counter_engine_map_drop_green_offset_0.BCM88660_A0=3
+# counter_engine_map_drop_yellow_offset_0.BCM88660_A0=3
+# counter_engine_map_drop_red_offset_0.BCM88660_A0=3
+# counter_engine_map_drop_black_offset_0.BCM88660_A0=3
+
+### Statistic-Report configuration ###
+# Enable the Statistic-Interface configuration
+# stat_if_enable_<port> - not supported by ARAD_A0
+# stat_if_enable.BCM88650=1
+
+# ## Statistic-Report Properties
+# # Set the Statistic-Report mode
+# # Options: BILLING / BILLING_QUEUE_NUMBER (not supported by ARAD_A0)/ QSIZE
+# stat_if_report_mode.BCM88650=QSIZE
+# #Indicate if idle reports must be sent
+# #when the Statistic-report rate is too low
+# stat_if_idle_reports_present.BCM88650=0
+# # Indicate if the reported packet size is the original packet size
+# stat_if_report_original_pkt_size.BCM88650=1
+# #If set then a single ingress-billing report will be generated
+# #for the whole set of the multicast copies
+# stat_if_report_multicast_single_copy=1
+# ## Statistic Packet configurations
+# # Set the Statistic Packet size (Bytes)
+# # Valid values: 65B/126B/248B/492B (Queue-Size), 64B/128B/256B/512B/1024B (Billing).
+# stat_if_pkt_size=64B
+#
+# ## Scrubber configuration
+# # Set the range of VOQs to scrub. Range: 0 - 96K-1.
+# stat_if_scrubber_queue_min.BCM88650=0
+# stat_if_scrubber_queue_max.BCM88650=0
+#
+# # Set the scrubber rate range
+# # If set to 0 (default), the scrubber is disabled. Units: nanoseconds
+# stat_if_scrubber_rate_min.BCM88650=0
+# stat_if_scrubber_rate_max.BCM88650=0
+#
+# # Set the thresholds (thresh_id 0 - 15) defining
+# # occupancy range per resource type:
+# # DRAM Buffers, Buffer descriptors, Buffer descriptors buffers
+# stat_if_scrubber_bdb_th.BCM88650=0
+# stat_if_scrubber_buffer_descr_th.BCM88650=0
+# stat_if_uc_dram_buffer_descr_th.BCM88650=0
+#
+# #Relective report for queue size mode - not supported by ARAD_A0
+# #Reports will be created for queue num range (stat_if_selective_report_queue_min -stat_if_selective_report_queue_max)
+# #Default - all range
+# stat_if_selective_report_queue_min.BCM88650_B0=0
+# stat_if_selective_report_queue_max.BCM88650_B0=98303
+
+### Transaction - DMA configuration ###
+# Time to wait for SCHAN channel response (from CMIC). Units: microseconds.
+
+
+### Counter threads ###
+# spn_BCM_STAT_PBMP, spn_BCM_STAT_INTERVAL, spn_BCM_STAT_FLAGS
+
+### Interrupts ###
+## Set interrupts global parameters.
+# Options: 1 - Polling interrupt mode, 0 - Line/MSI interrupt mode. Default: 1.
+polled_irq_mode.BCM88650=0
+#  Set the delay in microsecond between the polling, relevant only to Polling mode.  Default: 0x0.
+polled_irq_delay.BCM88650=50000
+
+## CMIC interrupts:
+# Enable: Use interrupts completion instead of polling completion for the following operations.
+#         Options: 1 - Enable, 0 - Disable. Default: 0.
+# Timeout: delay in Microsecond between the polling, relevant only to Polling completion mode.
+# SCHAN:
+#schan_intr_enable.0=1
+schan_timeout_usec.BCM88650=300000
+# TDMA
+tdma_intr_enable.BCM88650=1
+tdma_timeout_usec.BCM88650=5000000
+# TSLAM
+tslam_intr_enable.BCM88650=1
+tslam_timeout_usec.BCM88650=5000000
+# MIIM
+#miim_intr_enable.0=1
+miim_timeout_usec.0=300000
+
+### DRAM configuration ###
+
+# DRAM buffer (Dbuff) size
+# Allowed values: 256/512/1024/2048.
+ext_ram_dbuff_size.BCM88650=1024
+
+# Number of external DRAMs.
+# Allowed values for 88650: 0/2/3/4/6/8. A value of 0 disables the DRAM.
+# Allowed values for 88660: 0/1/2/3/4/6/8. A value of 0 disables the DRAM.
+#                                          A value of 1 is permitted only in ONE WAY BYPASS ocb mode.
+ext_ram_present.BCM88650=8
+
+### Dram Tuning (Shmoo)
+# 2 = Use Dram saved config Parameters, if no Parameters Perform Shmoo on init. Default option.
+# 1 = Perform Shmoo on init.
+# 0 = Use Dram saved config Parameters, if no Parameters do nothing.
+ddr3_auto_tune.BCM88650=2
+
+### Enable BIST
+# Run Dram BIST on initialization, if BIST fail the initialization will fail. Defult: 1.
+# bist_enable_dram.BCM88650=1
+
+### Example for Dram Saved config Parameters.
+## This example is for ci=14 (Dram=7).
+#ddr3_tune_addrc_ci14=0x000000ae
+#ddr3_tune_wr_dq_wl1_ci14=0x92929292,0x92929292,0x92929292,0x92929292
+#ddr3_tune_wr_dq_wl0_ci14=0x93939393,0x93939393,0x92929292,0x92929292
+#ddr3_tune_wr_dq_ci14=0x80808080
+#ddr3_tune_vref_ci14=0x000007df
+#ddr3_tune_rd_dqs_ci14=0x96969191,0x90909191
+#ddr3_tune_rd_dq_wl1_rn_ci14=0x82828282,0x82828282,0x82828282,0x82828282
+#ddr3_tune_rd_dq_wl0_rn_ci14=0x82828282,0x82828282,0x89898989,0x89898989
+#ddr3_tune_rd_dq_wl1_rp_ci14=0x82828282,0x82828282,0x82828282,0x82828282
+#ddr3_tune_rd_dq_wl0_rp_ci14=0x82828282,0x82828282,0x89898989,0x89898989
+#ddr3_tune_rd_en_ci14=0x009d9e9d,0x00a2a3a1
+#ddr3_tune_rd_data_dly_ci14=0x00000505
+
+
+# Dram type: Select ONLY ONE of the following DRAM types, to configure all dram related parameteres per type.
+# Dram Type for Arad:
+dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_1066=1
+#dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_933=1
+#dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_800=1
+#dram_type_DDR3_MICRON_MT41J256M16_4GBIT_1066=1
+#dram_type_DDR3_MICRON_MT41J128M16HA_125_1066=1
+#dram_type_DDR3_MICRON_MT41J128M16HA_125_933=1
+#dram_type_DDR3_MICRON_MT41J128M16HA_125_800=1
+#dram_type_DDR3_MICRON_MT42J64M16LA_15E_667=1
+#dram_type_DDR3_SAMSUNG_K4B4G1646B_4GBIT_1066=1
+#dram_type_DDR3_SAMSUNG_K4B1G1646G_933=1
+#dram_type_DDR3_SAMSUNG_K4B1G1646G_800=1
+
+### Setting dram_type_DDR3_HYNIX_H5TQ2G63BFR_TEC_1066 Parameters as Default:
+## All other dram types parameter resides in arad.soc. choosing another Dram Type will override the following parameters.
+ext_ram_t_rrd=6000
+ext_ram_columns=1024
+ext_ram_banks=8
+ext_ram_ap_bit_pos=10
+ext_ram_burst_size=32
+ext_ram_t_ref=3900000
+ext_ram_t_wr=15000
+ext_ram_t_wtr=7500
+ext_ram_t_rtp=7500
+ext_ram_freq=1066
+ext_ram_rows=16384
+ext_ram_jedec=29
+ext_ram_t_rc=46090
+ext_ram_t_rcd_rd=13090
+ext_ram_t_rcd_wr=13090
+ext_ram_t_rp=13090
+ext_ram_t_rfc=160000
+ext_ram_t_ras=33000
+ext_ram_c_wr_latency=10
+ext_ram_t_faw=35000
+ext_ram_c_cas_latency=14
+ddr3_mem_grade=0x141414
+
+# DRAM pre-configurations according to config variables which defines
+# Dram Type. supports only DDR3.
+ext_ram_type.BCM88650=DDR3
+
+# Total Dram Size (MBytes)
+# For 8 drams interfaces, 2 channel each, Each channel 2Gbit Dram. the total DRAM size is 32GBits=4000MBytes.
+ext_ram_total_size.BCM88650=4000
+
+# Total buffer size allocated for User buffer. Units: Mbytes. Default: '0x0'.
+# Supported suffix:
+#       dram - the buffer size will be subtracted from the DRAM size available for packet memory.
+#user_buffer_size=0
+#user_buffer_size_dram=50
+
+# DRAM ClamShell (interface swap its HW PIN pairs during init. Note: Only one of DRAMs can have its PIN swapped)
+# Valid values: 0/1
+#dram0_clamshell_enable.BCM88650=1
+#dram1_clamshell_enable.BCM88650=1
+
+# DRAM maximum number of crc error per buffer, buffer deleted by interrupt application.
+#dram_crc_del_buffer_max_reclaims=0
+
+### Warmboot ###
+## Scache initialization for warmboot persistent storage.
+#Save the warm boot data in a file. Allowed values: 3.
+#stable_location.BCM88650=3
+#Set the warm boot data filename.
+#stable_filename.BCM88650=./warmboot_data
+#Set the warm boot data file size (At least 10MB for PETRA-B, 4MB for ARAD)
+#stable_size.BCM88650=1000000000
+
+
+##############################
+# Config variable below are only accessed from dune.soc, and are used to
+# configure BSP / example application / group of formal config variables.
+##############################
+
+## If set, always configures synthesizers, even if the configured rate is equal to
+## their nominal rate. Can be disabled to speedup bringup time (keep in mind that if
+## disabled, changing a synt to a non-nominal freq and than back to nominal will not
+## work
+#synt_over.BCM88650=1
+
+# Local variables for board synthesizers freq. Fabric, combo and nif also configure
+# the *_ref_clock soc properties for these frequencies. core, ddr and phy only
+# configures the synthesizer
+synt_core.BCM88650=100000000
+synt_ddr.BCM88650=125000000
+synt_phy.BCM88650=156250000
+synth_dram_freq.BCM88650=25
+
+#Configure the reference clock frequencies for NIF and Fabric SerDes
+# Options:  0 - 125MHZ, 1 - 156.25MHz
+serdes_nif_clk_freq.BCM88650=1
+serdes_fabric_clk_freq.BCM88650=1
+# IEEE 1588 -
+# configure clock (for 1588 debug, when Broadsync is disabled):
+#  DPLL mode/lock: 0 - eci ts pll clk disabled, 1 - configure eci ts pll clk
+#  DPLL phase/freq. Default initial: lo = 0x40000000, hi = 0x10000000.
+#phy_1588_dpll_frequency_lock.BCM88650=1
+#phy_1588_dpll_phase_initial_lo.BCM88650=0x40000000
+#phy_1588_dpll_phase_initial_hi.BCM88650=0x10000000
+# port external MAC
+#  indication whether external MAC exists or not.
+#  0: 1588 external MAC does not exist
+#  1: 1588 external MAC exists
+#  the external MAC substracts the RX time from the correction field
+#  and adds the TX time to the correction field.
+#ext_1588_mac_enable_14.BCM88650=1
+
+## Trill configurations
+# Trill mode: 0 (disabled) / 1 (coarse-grained) / 2 (fine-grained)
+#trill_mode.BCM88650=1
+
+# Trill multicast prunning mode:
+# 0: no prunning - vsi is not part of the key
+# 1: VSI prunning: Key is dist-tree,esadit-bit,VSI.
+trill_mc_prune_mode.BCM88650=0
+
+# Enable SA authentication
+#sa_auth_enabled=1
+
+# Bridge default logical interfaces allocation IDS
+logical_port_l2_bridge.BCM88650=0
+logical_port_drop.BCM88650=1
+
+#logical_port_mim_in.BCM88650=2
+#logical_port_mim_out.BCM88650=4096
+
+# Enable EVB application
+#evb_enable=1
+
+# Enable Flexible QinQ application
+#vlan_translation_match_ipv4=1
+
+# Enable presel mgmt advance mode
+#field_presel_mgmt_advanced_mode=1
+
+
+# Prepend tag to be 4 bytes or 8 bytes. Default: 4B.
+# Applicable only from ARAD+
+#prepend_tag_bytes=4B
+
+# The Prepend Tag is located at (12 + 2*offset) bytes from the start of the packet.
+# Range: 0-7. Default: 0
+#prepend_tag_offset=0
+
+# Enable ARP (next hop mac extension) feature
+bcm886xx_next_hop_mac_extension_enable.BCM88650=1
+
+# Set VLAN translate mode.
+# 0: normal
+# 1: advanced mode. Enable vlan edit settings with enhanced user control
+#bcm886xx_vlan_translate_mode=0
+
+# Set MPLS termination database mode
+# Set MPLS databases location for each MPLS namespace (L1,L2,L3)
+#bcm886xx_mpls_termination_database_mode=0
+
+# Enable , Disable MPLS indexed.
+# MPLS termination with known label stack location.
+# Must be enabled in case device supports more than 2 MPLS label terminations (L1,L2,L3)
+#mpls_termination_label_index_enable=1
+
+# Enable FastReRoute labels in device.
+#fast_reroute_labels_enable=0
+
+# Enable MPLS Context specific. Upstream label assignment in device.
+#mpls_context_specific_label_enable=0
+
+# MPLS context.
+# Can be global, per port , per interface or per port,interface.
+#mpls_context=global
+
+# MPLS TP MC reserved mac address (01-00-5E-90-00-00).
+# If set device will support My-MAC termination of reserved MC Ethernet
+#mpls_tp_mymac_reserved_address=0
+
+# MPLS ELI enable disable
+mpls_entropy_label_indicator_enable=0
+
+#########################################
+##cfg for BCM88202 - Ardon
+#########################################
+
+#Core clock and system reference clock (KHz)
+core_clock_speed_khz.BCM88202=450000 
+system_ref_core_clock_khz.BCM88202=300000
+
+#diag_disable.BCM88202=1
+diag_cosq_disable.BCM88202=1
+stack_enable.BCM88202=0
+
+fap_device_mode.BCM88202=TM
+
+## Disable ports that are defined in noraml application configuration
+ucode_port_17.BCM88202=IGNORE
+ucode_port_16.BCM88202=IGNORE
+ucode_port_15.BCM88202=IGNORE
+ucode_port_14.BCM88202=IGNORE
+ucode_port_13.BCM88202=IGNORE
+ucode_port_202.BCM88202=IGNORE
+ucode_port_203.BCM88202=IGNORE
+
+## Set Ardon Main port
+ucode_port_1.BCM88202=TM_INTERNAL_PKT.0
+#ucode_port_6.BCM88202=TM_INTERNAL_PKT.1
+
+## Set CPU ports header type
+tm_port_header_type_in_0.BCM88202=TM
+tm_port_header_type_out_0.BCM88202=TM
+tm_port_header_type_in_200.BCM88202=TM
+tm_port_header_type_out_200.BCM88202=TM
+tm_port_header_type_in_201.BCM88202=TM
+tm_port_header_type_out_201.BCM88202=TM
+
+## To use MC-ID in the range of < 255
+egress_multicast_direct_bitmap_max.BCM88202=255
+
+## Enable Flow Control to CL SCH. Relevant only to Priority Over Port application
+## Valid values: 1 - Enable, 0 - Disable. Default: 0x0.
+custom_feature_cl_scheduler_fc.BCM88202=1
+
+## Use lower CL. Ardon FC is mapped to CL 0-255.
+dtm_flow_mapping_mode_region_65.BCM88202=1
+dtm_flow_mapping_mode_region_66.BCM88202=1
+
+### Statistic-Report Properties
+## Set the Statistic-Report mode
+stat_if_report_mode.BCM88202=QSIZE
+## Enable statistics reports on EnQueue. Valid valued: 0/1. Default: '1'.
+stat_if_report_enqueue_enable.BCM88202=1
+## Enable statistics reports on DeQueue. Valid valued: 0/1. Default: '1'.
+stat_if_report_dequeue_enable.BCM88202=1
+
+## Disable removed features
+phy_1588_dpll_frequency_lock.BCM88202=0
+low_power_nif_mac.BCM88202=0
+low_power_fabric_mac.BCM88202=0
+
+### EMUL changes
+#diag_emulator_partial_init.BCM88202=1
+#schan_timeout_usec.BCM88202=100000000000
+#tdma_timeout_usec.BCM88202=100000000000
+#tslam_timeout_usec.BCM88202=100000000000
+#phy_null.BCM88202=0
+
+## Disable fabric links
+serdes_qrtt_active_0.BCM88202=0
+serdes_qrtt_active_1.BCM88202=0
+serdes_qrtt_active_2.BCM88202=0
+serdes_qrtt_active_3.BCM88202=0
+
+### Dram setup
+# Number of external DRAMs.
+# Allowed values for 88202: 0 / 1 (Dram C) / 2 (Dram's C, D) / 3 (Dram's A, C, D) / 4 (Dram's A, B, C, D) /
+ext_ram_present.BCM88202=0
+
+bcm886xx_ocb_databuffer_size.BCM88202=1024
+
+# DRAM frequency
+ext_ram_freq.BCM88202=1200
+
+# Dram Type. Ardon supports only DDR4.
+ext_ram_type.BCM88202=DDR4
+
+# Dram Type:
+dram_type_DDR4_MICRON_MT40A256M16HA_083EA_4GBIT=1
+#dram_type_DDR4_HYNIX_H5AN4G6NMFR_VJC_4GBIT=1
+
+### Dram Features
+
+## Dram Gear down mode. Valid values: 0 - Enable, 1 - Disable. Default: 0x0.
+#ext_ram_gear_down_mode.BCM88202=1
+
+## Alert_n de-assertion period above which error is considered parity error
+#ext_ram_alert_n_period_thrs.BCM88202=0
+
+## Dram Address bus inversion. Valid values: 0 - Enable, 1 - Disable. Default: 0x0.
+ext_ram_abi.BCM88202=0
+
+## Data bus inversion on write/read direction. Valid values: 0 - Enable, 1 - Disable. Default: 0x0.
+ext_ram_write_dbi.BCM88202=1
+ext_ram_read_dbi.BCM88202=1
+
+## Enable write/read CRC (DDR4 does not support read CRC). Default: 0x0.
+#ext_ram_write_crc=.BCM882021
+#ext_ram_read_crc=.BCM882021
+
+## Command parity latency. Valid values: 0 - Enable, 1 - Disable. Default: 0x0.
+#ext_ram_cmd_par_latency.BCM88202=4
+
+## DRAM ClamShell (interface swap its HW PIN pairs during init. Note: Only one of DRAMs can have its PIN swapped). Valid values: 0/1.
+#dram0_clamshell_enable_1.BCM88202=1
+#dram1_clamshell_enable_3.BCM88202=1
+
+## Dram DQ Swap.
+## Format: ext_ram_dq_swap_dramX_byteY_bitZ=M. Means, In dram X, Byte Y swap DQ Z and M. Default: No swapping.
+#ext_ram_dq_swap_dram1_byte2_bit3.BCM88202=4
+#ext_ram_dq_swap_dram4_byte3_bit2.BCM88202=1
+
+### Dram Tuning (Shmoo)
+# 1 = Perform Shmoo on init.
+# 0 = Use Dram saved config Parameters, if no Parameters do nothing.
+ddr3_auto_tune.BCM88202=0
+
+### Enable BIST
+# Run Dram BIST on initialization, if BIST fail the initialization will fail. Default: 1.
+bist_enable_dram.BCM88202=1
+
+#########################################
+##cfg for BCM88640_A0 - Petra
+#########################################
+
+force_clk_m_n_divisors_zero_nif0.BCM88640_A0=0
+force_clk_m_n_divisors_zero_fabric0.BCM88640_A0=1
+force_clk_m_n_divisors_zero_comb0.BCM88640_A0=0
+
+combo_ref_clock.BCM88640=312500
+
+nif_ref_clock.BCM88640_A0=312500
+
+# Use variable cell size
+system_cell_format.BCM88640_A0=VCS128
+
+# Core clock speed (MHz)
+core_clock_speed.BCM88640_A0=300
+
+# Map bcm local port to CPU/NIF interfaces
+ucode_port_0.BCM88640_A0=CPU.0
+ucode_port_73.BCM88640_A0=CPU.1
+ucode_port_74.BCM88640_A0=CPU.2
+ucode_port_75.BCM88640_A0=CPU.3
+ucode_port_76.BCM88640_A0=CPU.4
+ucode_port_77.BCM88640_A0=CPU.5
+ucode_port_78.BCM88640_A0=CPU.6
+
+# Interlaken ports basic configuration (temporary).
+# This configuration replaces the above XAUI/RXAUI ports config
+# The following PB design constraint is not enforced in SW, so must be taken
+# care of here, when mapping ports to interfaces:
+#   If using ilkn0, port 1 (if used) must be mapped to ilkn0
+#   If using ilkn1, port 2 (if used) must be mapped to ilkn1
+#   Note that in our default mapping, port 2 is mapped to RXAUI 6, thus won't
+#   work. If one wants to use front panel port 2 with ilkn1, he should be map
+#   RAXUI6 to a port != 2.
+#ilkn_num_lanes_0.BCM88640_A0=12
+#ucode_port_1.BCM88640_A0=ILKN0.0
+#ucode_port_2.BCM88640_A0=ILKN0.1
+#ucode_port_3.BCM88640_A0=ILKN0.2
+#ilkn_num_lanes_1.BCM88640_A0=12
+#ucode_port_4.BCM88640_A0=RXAUI6
+#ucode_port_5.BCM88640_A0=ILKN1.0
+#ucode_port_6.BCM88640_A0=ILKN1.1
+#ucode_port_7.BCM88640_A0=ILKN1.2
+
+# Default header type is derived from fap_device_mode: If fap_device_mode is
+# PP, default header type is ETH. Otherwise, defualt header type is TM.
+# Header type per port can be overriden.
+# All options: ETH/RAW/TM/PROG/CPU/STACKING/TDM/TDM_RAW/INJECTED
+
+# Set CPU to work with TM header (ITMH)
+#tm_port_header_type_0.BCM88640_A0=TM
+tm_port_header_type_in_0.BCM88640_A0=TM
+tm_port_header_type_out_0.BCM88640_A0=CPU
+tm_port_header_type_73.BCM88640_A0=TM
+tm_port_header_type_74.BCM88640_A0=TM
+tm_port_header_type_75.BCM88640_A0=TM
+tm_port_header_type_76.BCM88640_A0=TM
+tm_port_header_type_77.BCM88640_A0=TM
+tm_port_header_type_78.BCM88640_A0=TM
+# recycling port
+tm_port_header_type_40.BCM88640_A0=RAW
+ucode_port_40.BCM88640_A0=RCY.0
+
+# Enable ERP and OLP ports
+num_erp_tm_ports.BCM88640_A0=1
+num_olp_tm_ports.BCM88640_A0=1
+num_recycle_tm_ports.BCM88640_A0=1
+
+# Dram configuration
+# 600 Mhz
+ext_ram_pll_r.BCM88640_A0=4
+ext_ram_pll_f.BCM88640_A0=47
+ext_ram_pll_q.BCM88640_A0=1
+ext_ram_freq.BCM88640_A0=600
+
+# Dbuff size
+# Allowed values: 256/512/1024/2048.
+ext_ram_dbuff_size.BCM88640_A0=1024
+
+# Number of external DRAMs.
+# Allowed values for 88x4x: 0/2/3/4/6.
+# Allowed values for 88650: 0/2/3/4/6/8.
+# ext_ram_total_size below assumed this value is 6 for 88x4x and 8 for
+ext_ram_present.BCM88640_A0=6
+
+# Dram type: Select ONLY ONE of the following DRAM types, to configure all dram
+# related parameteres per type.
+# Dram Type for Pb:
+dram_type_DDR3_MICRON_MT41J64M16_15E.BCM88640_A0=1
+#dram_type_DDR2_MICRON_K4T51163QE_ZC_LF7.BCM88640_A0=1
+#dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1333.BCM88640_A0=1
+#dram_type_DDR3_SAMSUNG_K4B1G1646E_HCK0_1600.BCM88640_A0=1
+#dram_type_GDDR3_SAMSUNG_K4J52324QE.BCM88640_A0=1
+#dram_type_DDR3_MICRON_MT41J128M16HA_15E_2G.BCM88640_A0=1
+
+# QDR configuration
+# Parity. Allowed values: PARITY/ECC.
+ext_qdr_protection_type.BCM88640_A0=PARITY
+ext_qdr_size_mbit.BCM88640_A0=72
+#QDR type: QDR/QDR2P/QDR3/NONE.
+ext_qdr_type.BCM88640_A0=QDR
+
+# QDR can use the core clock, or using it's own pll. Current example is for 250MHz pll (if used).
+# QDR using own pll configuration
+#ext_qdr_use_core_clock_freq.BCM88640_A0=0
+#ext_qdr_pll_m.BCM88640_A0=4
+#ext_qdr_pll_n.BCM88640_A0=4
+#ext_qdr_pll_p.BCM88640_A0=0
+
+# QDR using core clock
+ext_qdr_use_core_clock_freq.BCM88640_A0=1
+
+#Configure MDIO. If parameter is not defined, MDIO is disabled.
+mdio_clock_freq_khz.BCM88640_A0=1000
+
+# Streaming interface configuration
+streaming_if_enable_timeoutcnt.BCM88640_A0=1
+streaming_if_timeout_prd.BCM88640_A0=70
+streaming_if_quiet_mode.BCM88640_A0=0
+streaming_if_discard_bad_parity.BCM88640_A0=0
+
+# maximum packet size for WRED tests. 0 - means ignore max packet size.
+discard_mtu_size.BCM88640_A0=0
+
+# multicast egress vlan membership range. By default: 0-4095.
+egress_multicast_direct_bitmap_min.BCM88640_A0=0
+egress_multicast_direct_bitmap_max.BCM88640_A0=4095
+
+# configure flow mapping base to 0
+flow_mapping_queue_base.BCM88640_A0=0
+
+dtm_flow_mapping_mode_region_25.BCM88640_A0=0
+dtm_flow_mapping_mode_region_26.BCM88640_A0=0
+dtm_flow_mapping_mode_region_27.BCM88640_A0=0
+dtm_flow_mapping_mode_region_28.BCM88640_A0=0
+dtm_flow_mapping_mode_region_29.BCM88640_A0=0
+dtm_flow_mapping_mode_region_30.BCM88640_A0=0
+dtm_flow_mapping_mode_region_31.BCM88640_A0=0
+dtm_flow_mapping_mode_region_32.BCM88640_A0=0
+dtm_flow_mapping_mode_region_33.BCM88640_A0=1
+dtm_flow_mapping_mode_region_34.BCM88640_A0=1
+dtm_flow_mapping_mode_region_35.BCM88640_A0=1
+dtm_flow_mapping_mode_region_36.BCM88640_A0=1
+dtm_flow_mapping_mode_region_37.BCM88640_A0=1
+dtm_flow_mapping_mode_region_38.BCM88640_A0=1
+dtm_flow_mapping_mode_region_39.BCM88640_A0=1
+dtm_flow_mapping_mode_region_40.BCM88640_A0=1
+dtm_flow_mapping_mode_region_41.BCM88640_A0=1
+dtm_flow_mapping_mode_region_42.BCM88640_A0=2
+dtm_flow_mapping_mode_region_43.BCM88640_A0=2
+dtm_flow_mapping_mode_region_44.BCM88640_A0=2
+dtm_flow_mapping_mode_region_45.BCM88640_A0=2
+dtm_flow_mapping_mode_region_46.BCM88640_A0=2
+dtm_flow_mapping_mode_region_47.BCM88640_A0=2
+dtm_flow_mapping_mode_region_48.BCM88640_A0=2
+dtm_flow_mapping_mode_region_49.BCM88640_A0=2
+dtm_flow_mapping_mode_region_50.BCM88640_A0=2
+dtm_flow_mapping_mode_region_51.BCM88640_A0=2
+dtm_flow_mapping_mode_region_52.BCM88640_A0=2
+dtm_flow_mapping_mode_region_53.BCM88640_A0=2
+dtm_flow_mapping_mode_region_54.BCM88640_A0=2
+dtm_flow_mapping_mode_region_55.BCM88640_A0=2
+
+# Power up state (DOWN/UP/UP_AND_RELOCK). Can be configured per lane.
+pb_serdes_lane_power_state.BCM88640_A0=UP_AND_RELOCK
+
+# SeDes media type: Pre-configuration for tx params, according to
+# media type.
+# Allowed values: SHORT_BACKPLANE/LONG_BACKPLANE/CHIP2CHIP
+pb_serdes_lane_tx_phys_media_type.BCM88640_A0=SHORT_BACKPLANE
+pb_serdes_lane_tx_phys_media_type_28.BCM88640_A0=CHIP2CHIP
+pb_serdes_lane_tx_phys_media_type_29.BCM88640_A0=CHIP2CHIP
+pb_serdes_lane_tx_phys_media_type_30.BCM88640_A0=CHIP2CHIP
+pb_serdes_lane_tx_phys_media_type_31.BCM88640_A0=CHIP2CHIP
+
+system_is_fe1600_in_system.BCM88640_A0=0
+
+# Counter engine configuration
+counter_engine_source_1.BCM88640_A0=0
+counter_engine_statistics_1.BCM88640_A0=4
+counter_engine_source_2.BCM88640_A0=1
+counter_engine_statistics_2.BCM88640_A0=4
+
+# Statistic Reporting
+stat_if_enable=0
+
+# Clock Phases: 0/90/180/270
+stat_if_phase=0
+
+# Rate in nm
+stat_if_sync_rate=0
+
+# TRUE/FALSE
+stat_if_parity_enable=FALSE
+
+# BILLING/FAP20V
+stat_if_report_mode=BILLING
+
+# Billing Mode
+# EGR_Q_NB/CUD/VSI_VLAN/BOTH_LIFS
+stat_if_report_billing_mode=VSI_VLAN
+
+# Fap20V Mode
+# QUEUE/PACKET
+stat_if_report_fap20v_mode=QUEUE
+
+# QUEUE_NUM/MC_ID (only valid in Fap20V PACKET mode)
+stat_if_report_fap20v_fabric_mc=QUEUE_NUM
+stat_if_report_fap20v_ing_mc=QUEUE_NUM
+
+# TRUE/FALSE (only valid in Fap20V PACKET mode)
+stat_if_report_fap20v_cnm_report=FALSE
+
+# TRUE/FALSE
+stat_if_report_fap20v_count_snoop=FALSE
+stat_if_report_original_pkt_size=FALSE
+stat_if_report_fap20v_single_copy_reported=FALSE
+
+schan_timeout_usec.BCM88640_A0=300000
+
+
+polled_irq_mode.BCM88640_A0=0
+polled_irq_delay.BCM88640_A0=1000
+
+# Set the FTMH Load-Balancing Key extension mode
+# Options for 88650: ENABLED
+# Options for 88640 compatible: DISABLED / 8B_LB_KEY_8B_STACKING_ROUTE_HISTORY / 16B_STACKING_ROUTE_HISTORY
+# Default: DISABLED
+system_ftmh_load_balancing_ext_mode.BCM88640=DISABLED
+
+#########################################
+##cfg for BCM88750 (FE1600)
+#########################################
+
+fabric_device_mode.BCM88750=SINGLE_STAGE_FE2
+
+is_dual_mode.BCM88750=0
+system_is_vcs_128_in_system.BCM88750=0
+
+system_is_dual_mode_in_system.BCM88750=0
+system_is_single_mode_in_system.BCM88750=1
+
+system_is_fe600_in_system.BCM88750=0
+
+system_ref_core_clock_khz.BCM88750=600000
+
+fabric_merge_cells.BCM88750=0
+fabric_multicast_mode.BCM88750=DIRECT
+fabric_load_balancing_mode.BCM88750=NORMAL_LOAD_BALANCE
+fabric_tdm_fragment.BCM88750=0x180
+##Allows single pipe device to send TDM traffic over the fabric primary pipe - available for Fe1600_B0 only
+#change  vcs128_unicast_priority to be lower than 2 - when enabling
+fabric_tdm_over_primary_pipe.BCM88750=0
+fabric_optimize_partial_links.BCM88750=0
+vcs128_unicast_priority.BCM88750=2
+
+polled_irq_mode.BCM88750=0
+polled_irq_delay.BCM88750=1000
+
+#Selects if to run MBIST (Memory Built In Self Test) of internal memory (tables) during startup.
+#Supported values: 0=don't run, 1=run, 2=run with extra logs
+#bist_enable.BCM88650=1
+bist_enable.BCM88750=1
+#High voltage driver strap. If 0, connected to 1.4V supply; if 1, connected to 1V mode.
+#for specific quad use srd_tx_drv_hv_disable_quad_X where X is (FSRD num * 4 + internal quad)
+srd_tx_drv_hv_disable.BCM88750=0
+load_firmware.BCM88750=2
+
+#0-LFEC 1-8b\10b 2-FEC 3-BEC
+backplane_serdes_encoding.BCM88750=2
+
+#enable\disable CL72
+port_init_cl72.BCM88750=1
+#Avaliable speeds for BCM88750: 5750, 6250, 10312, 11500, 12500
+port_init_speed.BCM88750=10312
+#LC PLL in\out 0=125MHz 1=156.25MHz
+serdes_fabric_clk_freq_in.BCM88750=1
+serdes_fabric_clk_freq_out.BCM88750=1
+serdes_mixed_rate_enable.BCM88750_B0=0
+
+# VSC128 or VSC256
+fabric_cell_format.BCM88750=VSC256
+
+# Core clock speed (MHz)
+core_clock_speed_khz.BCM88750=533333
+
+## CMIC interrupts:
+# Enable: Use interrupts completion instead of polling completion for the following operations.
+#         Options: 1 - Enable, 0 - Disable. Default: 0.
+# Timeout: delay in Microsecond between the polling,
+# SCHAN:
+schan_intr_enable.BCM88750=0
+schan_timeout_usec.BCM88750=300000
+# TDMA
+tdma_intr_enable.BCM88750=0
+tdma_timeout_usec.BCM88750=5000000
+# TSLAM
+tslam_intr_enable.BCM88750=0
+tslam_timeout_usec.BCM88750=5000000
+# MIIM
+miim_intr_enable.BCM88750=0
+miim_timeout_usec.BCM88750=300000
+
+
+### Warmboot ###
+## Scache initialization for warmboot persistent storage.
+#Save the warm boot data in a file. Allowed values: 3.
+stable_location.BCM88750=3
+#Set the warm boot data filename.
+stable_filename.BCM88750=./warmboot_data
+#Set the warm boot data file size
+stable_size.BCM88750=200000
+
+#########################################
+##cfg for BCM88950 (FE3200)
+#########################################
+#Device  operation
+fabric_device_mode.BCM88950=SINGLE_STAGE_FE2
+fabric_multicast_mode.BCM88950=DIRECT
+fabric_load_balancing_mode.BCM88950=NORMAL_LOAD_BALANCE
+
+#Cell format
+system_is_vcs_128_in_system.BCM88950=0
+
+#Fabric pipe configuration
+
+fabric_num_pipes.BCM88950=1
+fabric_pipe_map.BCM88950=0
+system_contains_multiple_pipe_device.BCM88950=0
+
+#Core clock and system reference clock (KHz)
+system_ref_core_clock_khz.BCM88950=800000
+core_clock_speed_khz.BCM88950=720000
+
+#LC PLL in\out 0=125MHz 1=156.25MHz
+serdes_fabric_clk_freq_in.BCM88950=1
+serdes_fabric_clk_freq_out.BCM88950=1
+
+
+#polled_irq_mode.BCM88950=0
+#polled_irq_delay.BCM88950=1000
+
+#Memory Bist
+bist_enable.BCM88950=1
+
+#High voltage driver strap. If 0, connected to 1.4V supply; if 1, connected to 1V mode.
+#for specific quad use srd_tx_drv_hv_disable_quad_X where X is (FSRD num * 4 + internal quad)
+srd_tx_drv_hv_disable.BCM88950=0
+load_firmware.BCM88950=0x102
+
+
+##Per port properties
+: support string values
+#Possible values - 2: KR_FEC, 4: 64_66, 5: RS_FEC, 6: LL_RS_FEC  
+backplane_serdes_encoding.BCM88950=2
+
+#enable\disable CL72
+port_init_cl72.BCM88950=1
+
+#link speed
+port_init_speed.BCM88950=21875
+
+#Link connecd to a reapter
+#Values: FE1600/FE3200/NONE
+#repeater_link_enable_<port>.BCM88950=FE3200
+
+##Fabric cell FIFO DMA
+fabric_cell_fifo_dma_enable.BCM88950=0
+
+## CMIC interrupts:
+# Enable: Use interrupts completion instead of polling completion for the following operations.
+#         Options: 1 - Enable, 0 - Disable. Default: 0.
+# Timeout: delay in Microsecond between the polling,
+# SCHAN:
+schan_intr_enable.BCM88950=0
+schan_timeout_usec.BCM88950=300000
+# TDMA
+tdma_intr_enable.BCM88950=0
+tdma_timeout_usec.BCM88950=5000000
+# TSLAM
+tslam_intr_enable.BCM88950=0
+tslam_timeout_usec.BCM88950=5000000
+# MIIM
+miim_intr_enable.BCM88950=0
+miim_timeout_usec.BCM88950=300000
+
+### Warmboot ###
+## Scache initialization for warmboot persistent storage.
+#Save the warm boot data in a file. Allowed values: 3.
+stable_location.BCM88950=3
+#Set the warm boot data filename.
+stable_filename.BCM88950=./warmboot_data
+#Set the warm boot data file size
+stable_size.BCM88950=200000
+
+##############################
+# Config variable below are only accessed from dune.soc, and are used to
+# configure BSP / example application / group of formal config variables.
+##############################
+
+# Support (and configure on init) packet processing features.
+# If not defined - only traffic management capabilities are enabled.
+packet_processing=1
+
+## PCP (Petra Co-Processor) features
+#pcp_elk.BCM88640_A0=1
+#pcp_oam.BCM88640_A0=1
+#pcp_dma.BCM88640_A0=1
+
+## Set/Override TDM related config variables
+#tdm.BCM88640_A0=1
+
+# If set, always configures synthesizers, even if the configured rate is
+# equal to
+# their nominal rate. Can be disabled to speedup bringup time
+# (keep in mind that if disabled, changing a synt to a non-nominal freq and
+# than back to nominal will not work
+#synt_over.BCM88640_A0=1
+
+# Local variables for board synthesizers freq. Fabric, combo and nif also configure
+# the *_ref_clock soc properties for these frequencies. core, ddr and phy only
+# configures the synthesizer
+synt_core.BCM88640_A0=100000000
+synt_ddr.BCM88640_A0=125000000
+synt_phy.BCM88640_A0=156250000
+
+## Scache initialization for warmboot persistent storage.
+## Valid values: 2: Store in dram. 3: Store in a file.
+stable_location=3
+stable_filename=./warmboot_data
+stable_flags=0
+stable_size=1000000000
+
+# Bridge default logical interfaces allocation IDS
+logical_port_l2_bridge.BCM88640=1
+logical_port_drop.BCM88640=-1
+
+#logical_port_mim_in.BCM88640=2
+#logical_port_mim_out.BCM88640=3
+
+## IPV6 tunnel
+bcm886xx_ipv6_tunnel_enable=1
+
+## Inlif Profile Management Mode - QoS L3 L2 marking mode
+#
+# BCM88660 ONLY
+#
+# QoS L3 L2 marking allows changing the DSCP and/or EXP values
+# of IP and/or MPLS packets according to the incoming port
+# (or inlif), and the Traffic Class/Drop Precedence.
+#
+# The inlif profile is used to control the DSCP/EXP marking.
+# This SOC property controls which mode is used for the inlif profile:
+# 1: Basic mode (1 bit of the inlif profile is reserved and is used for the DSCP/EXP marking).
+# 0: Advanced mode (the user controls which inlif profile values perform DSCP/EXP marking directly).
+#bcm886xx_qos_l3_l2_marking=1
+
+## Unicast RPF mode per RIF
+#
+# This SOC property allows the user to set the unicast RPF mode - loose, strict or disabled - per RIF.
+# If disabled, the unicast RPF mode of a RIF is set globally.
+# Options: 0 / 1
+
+# bcm886xx_l3_ingress_urpf_enable=1
+
+## BOS handling mode
+# BCM8866X ONLY
+#
+# There are two ways to handle BOS, controlled by bcm886xx_mpls_termination_mode:
+# 0 - Use BOS as key in lookup.
+# 1 - Don't use it (except for reserved labels).
+#
+#bcm886xx_mpls_termination_key_mode=0
+
+# Color resolution mode allows the user to have more detailed metering color information.
+# BCM88660 ONLY
+#
+# Options: 0/1
+# 0: A red result from both Ethernet policer and policer implies DP=3.
+# 1: A red result from the policer implies that DP=2, while a red result from rate (Ethernet policer) implies DP=3.
+#policer_color_resolution_mode=1
+
+## Inlif Profile Management Mode - Disable Same Interface Filter
+# BCM8866X ONLY
+#
+# Controls which mode is used for the inlif profile management.
+# 1: Basic mode (1 bit of the inlif profile is reserved and is used for the same-interface filter).
+# 0: Advanced mode (the user controls which inlif profile values have the same-interface filter disabled for them).
+#bcm886xx_logical_interface_bridge_filter_enable=1
+
+## Default Block Forwarding Strength
+#
+# Configure the default forwarding strength of blocks.
+#
+# SOC Properties:
+#block_trap_strength_vtt - VTT block forwarding strength
+#block_trap_strength_flp - FLP block forwarding strength
+#block_trap_strength_hash - SLB block forwarding strength (BCM8866X ONLY)
+#block_trap_strength_pmf_0 - PMF 1st lookup forwarding strength
+#block_trap_strength_pmf_1 - PMF 2nd lookup forwarding strength
+#
+# Options: 0-7
+
+## Stateful Load Balancing
+# BCM8866X ONLY
+#
+# Stateful Load Balancing (SLB) allows the load balancing of ECMP and LAG
+# groups to become stateful.
+# In standard load balancing, removing a member from the ECMP/LAG
+# group may affect the selected member, since the formula
+# depends on group size.
+# In stateful load balancing the member is selected once and saved.
+# Later, the member is always retrieved, and does not depend on
+# the size of the LAG/ECMP group.
+#
+# resilient_hash_enable - Enable/disable SLB. Values:
+# 1 - Enable SLB.
+# 0 - Disable SLB.
+#resilient_hash_enable=1
+
+#Make Arad SOC properties work for Arad+, by mapping the BCM88660 suffix to BCM88650
+soc_family.BCM88660=BCM88650
+soc_family.BCM88675=BCM88650
+#Make Arad SOC properties work for Ardon, by mapping the BCM88202 suffix to BCM88650
+soc_family.BCM88202=BCM88650
+
+# Use different mymac addresses for ipv4 and ipv6 when using vrrp for mymac termination.
+#l3_vrrp_ipv6_distinct=1
+
+# Enable multiple mymac termination mode. In order to enable it, also set l3_vrrp_ipv6_distinct=0 and l3_vrrp_max_vid=0 since vrrp and
+# multiple mymac mode can't co exist.
+#l3_multiple_mymac_termination_enable=1
+
+# Distinguish between ipv4 and all other l3 protocols when multiple mymac terminating
+#l3_multiple_mymac_termination_mode=1
+
+# Usually the final DP given by the meter (or the In-DP) is unchanged, and can be from 0-3.
+# When this SOC property is set to 1, when the final INGRESS DP is 2, it is mapped to 1 instead, and thus only the values 0-1 and 3 can be output.
+# This has no effect when policer_color_resolution_mode=1.
+#custom_feature_always_map_result_dp_2_to_1=1

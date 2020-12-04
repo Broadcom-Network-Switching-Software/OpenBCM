@@ -1,0 +1,61 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport VLAN RC (run commands) file
+#
+#       These are default commands that are for TechSupport VLAN.
+#
+
+# Show S/W state in VLAN.
+dump sw vlan
+dump sw stg
+
+# Show available VLAN handles.
+echo vlan show:
+vlan show
+echo stg show:
+stg show
+
+# Show VLAN related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show VLAN control LT.
+local lt VFI_CONTROL;                                     $traverse_lt;
+
+# Show TPID LTs.
+local lt VLAN_OUTER_TPID;                                 $traverse_lt;
+local lt VLAN_PAYLOAD_OUTER_TPID;                         $traverse_lt;
+
+# Show VLAN LTs.
+local lt VFI;                                             $traverse_lt;
+
+# Show VLAN profile LT.
+local lt VFI_PROFILE;                                     $traverse_lt;
+
+# Show VLAN member port profile LTs.
+local lt VFI_ING_MEMBER_PORTS_PROFILE;                    $traverse_lt;
+local lt VFI_ING_EGR_MEMBER_PORTS_PROFILE;                $traverse_lt;
+local lt VFI_EGR_MEMBER_PORTS_PROFILE;                    $traverse_lt;
+local lt VFI_EGR_UNTAGGED_MEMBER_PORTS_PROFILE;           $traverse_lt;
+
+# Show VLAN tag action profile LT.
+local lt VLAN_ING_TAG_ACTION_PROFILE;                     $traverse_lt;
+local lt VLAN_EGR_TAG_ACTION_PROFILE;                     $traverse_lt;
+
+# Show VLAN XLATE LTs.
+local lt VFI_ING_ADAPT_OVID_PORT_GRP;                     $traverse_lt;
+local lt VFI_EGR_ADAPT_PORT_GRP;                          $traverse_lt;
+
+# Show VLAN cross connect  LTs.
+local lt L2_VFI_FDB_CC;                                   $traverse_lt;
+
+# Show VLAN related LTs.
+local lt PORT;                                            $traverse_lt;
+local lt PORT_SYSTEM;                                     $traverse_lt;
+local lt PORT_POLICY;                                     $traverse_lt;
+local lt PORT_PKT_CONTROL;                                $traverse_lt;
+
+# Show VLAN STG LTs.
+local lt VFI_STG;                                         $traverse_lt;

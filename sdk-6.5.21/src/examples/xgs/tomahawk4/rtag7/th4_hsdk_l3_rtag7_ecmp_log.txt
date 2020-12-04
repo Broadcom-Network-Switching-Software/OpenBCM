@@ -1,0 +1,45 @@
+BCM.0> c th4_hsdk_l3_rtag7_ecmp.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+setting ingress port:1 MAC loopback
+setting egress ports:2, 3 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_rtag7_l3_route_ecmp(): ** start **
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+l3 egr intf2 = 2
+l3 egr obj = 100001
+l3 egr obj2 = 100002
+int ecmp_group_id = 200001 (0x30d41)
+unsigned int $$ = 268443649 (0x10002001)
+uint32 stat_counter_id = 268443649 (0x10002001)
+~~~ #2) config_rtag7_l3_route_ecmp(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Packet from data=<>, length=78
+Flexctr Get : 2 packets / 164 bytes from egr l3 obj
+Flexctr Get : 2 packets / 164 bytes from egr l3 obj2
+
+------------------------------------------------------------------------------- 
+    RESULT OF RTAG7 of L3 IPv4 ROUTE to ECMP GROUP with RTAG7 HASH VERIFICATION  
+------------------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+int $$ = 434 (0x1b2)
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

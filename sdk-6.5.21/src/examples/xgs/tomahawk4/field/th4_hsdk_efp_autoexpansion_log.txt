@@ -1,0 +1,142 @@
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201019 (Mon Oct 19 10:56:41 2020)
+From sdkrel@lc-sj1-3695:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[48272]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[59643]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> c th4_hsdk_efp_autoexpansion.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201019 (Mon Oct 19 10:56:41 2020)
+From sdkrel@lc-sj1-3695:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_10, BCM56780_A0_DNA_2_5_11
+     BCM56780_A0_DNA_2_5_8, BCM56780_A0_INA_2_5_10, BCM56780_A0_INA_2_5_11, BCM56780_A0_INA_2_5_8
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_10, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_DNA_4_7_9, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+port 102 is selected
+port 103 is selected
+port_lb_setup port: 102 setup
+port_lb_setup port: 103 setup
+Completed test setup successfully.
+PIPELINE STAGE INGRESS
+FP:        :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:        :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:        :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:        :tcam_sz=0(0), tcam_slices=0
+GID 0x01000001: gid=0x1, instance=-1 mode=Single, stage=Egress lookup=Enabled, ActionResId={3},
+         Mode_type={L2Single}, Packet_type={Default},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={OuterVlanId , OutPort },
+         aset={OuterVlanNew },
+         preselectors={},
+         group_priority= 1
+         slice_primary= {slice_number=0, entries_total=128, entries_free=1 }, {slice_number=1, entries_total=128, entries_free=0 }, {slice_number=2, entries_total=128, entries_free=0 }, {slice_number=3, entries_total=128, entries_free=1 },
+         group_status=  entries_total=511, entries_free=1,
+                        meters_total=0, meters_free=0, counters_total=2048, counters_free=0}
+
+Sending 1 test packets with OuterVlan 500 to ingress port:102
+Packet from data=<>, length=96
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {001111111111} {000000012222} 8100 03f4
+[bcmPWN.0]Packet[1]: data[0010]: 86dd 6335 5555 0026 06ff 3ffe 0000 0000
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000
+[bcmPWN.0]Packet[1]: data[0040]: 3232 0000 3333 5010 7788 57db 0000 1111
+[bcmPWN.0]Packet[1]: data[0050]: 1111 1111 1111 1111 1111 1111 1111 1111
+[bcmPWN.0]
+
+[RX metadata information]
+  PKT_LENGTH=0x64
+  SRC_PORT_NUM=0x67
+  OUTER_VID=0x3f4
+  SPECIAL_PACKET_TYPE=4
+  DSCP=0xc
+  ECN=3
+  TIMESTAMP_TYPE=3
+  SWITCH=1
+  ING_TAG_TYPE=1
+[Higig2 fields]
+  START=0xfb
+  SRC_PORT=0x67
+  CC=1
+  PPD_TYPE=0
+  PPD0_INGRESS_TAGGED=1
+  PPD0_VID_HIGH=3
+  PPD0_VID_LOW=0xf4
+[RX reasons]
+  CPU_SFLOW
+  CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:11:11:11:11:11> src<00:00:00:01:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x03f4> IP version 6
+XLMIB_TBYT.cd24                       :                   100                +100
+XLMIB_RBYT.cd24                       :                   100                +100
+XLMIB_TPOK.cd24                       :                     1                  +1
+XLMIB_RPOK.cd24                       :                     1                  +1
+XLMIB_TVLN.cd24                       :                     1                  +1
+XLMIB_RVLN.cd24                       :                     1                  +1
+XLMIB_TUCA.cd24                       :                     1                  +1
+XLMIB_RUCA.cd24                       :                     1                  +1
+XLMIB_TPKT.cd24                       :                     1                  +1
+XLMIB_RPKT.cd24                       :                     1                  +1
+XLMIB_T127.cd24                       :                     1                  +1
+XLMIB_R127.cd24                       :                     1                  +1
+XLMIB_RPRM.cd24                       :                     1                  +1
+RUC_64.cd24                           :                     1                  +1
+XLMIB_TBYT.cd25                       :                   100                +100
+XLMIB_RBYT.cd25                       :                   100                +100
+XLMIB_TPOK.cd25                       :                     1                  +1
+XLMIB_RPOK.cd25                       :                     1                  +1
+XLMIB_TVLN.cd25                       :                     1                  +1
+XLMIB_RVLN.cd25                       :                     1                  +1
+XLMIB_TUCA.cd25                       :                     1                  +1
+XLMIB_RUCA.cd25                       :                     1                  +1
+XLMIB_TPKT.cd25                       :                     1                  +1
+XLMIB_RPKT.cd25                       :                     1                  +1
+XLMIB_T127.cd25                       :                     1                  +1
+XLMIB_R127.cd25                       :                     1                  +1
+XLMIB_RPRM.cd25                       :                     1                  +1
+RUC_64.cd25                           :                     1                  +1
+SFLOW_ING_DATA_SOURCEm.cd25           :                     1                  +1
+SFLOW_ING_DATA_SOURCEm.cd25           :                     1                  +1
+SFLOW_ING_DATA_SOURCEm.cd25           :                     1                  +1
+
+-------------------------------------
+    RESULT OF RX PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+FlexCtr Get : 1 packets / 100 bytes
+
+-------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

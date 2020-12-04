@@ -1,0 +1,23 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Meter RC (run commands) file
+#
+#       These are default commands that are for TechSupport Meter.
+#
+
+# Show S/W state in Meter.
+
+# Show Meter related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+#Meter system config
+local lt METER_ING_FP_DEVICE_INFO;                              $traverse_lt;
+local lt METER_ING_FP_GRANULARITY_INFO;                         $traverse_lt;
+local lt METER_FP_CONFIG;                                       $traverse_lt;
+local lt METER_FP_CONTROL;                                      $traverse_lt;
+
+#Meter LT traverse
+local lt METER_ING_FP_TEMPLATE;                                 $traverse_lt;

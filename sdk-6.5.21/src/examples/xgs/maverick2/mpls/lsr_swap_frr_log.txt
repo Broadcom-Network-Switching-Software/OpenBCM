@@ -1,0 +1,479 @@
+BCM.0> init all;cint ../../maverick2/mpls/lsr_swap_frr.c
+0:soc_maverick2_chip_reset: TS_PLL locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL0 locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL1 locked on unit 0 using internal reference clock
+*** unit 0: ports capable of limited speed range cut-thru
+0:bcmi_xgs5_bfd_init: uKernel BFD application not available
+execute(): Start
+config show; attach; version
+    phy_chain_rx_polarity_flip_physical{61}=0x1
+    phy_chain_rx_polarity_flip_physical{44}=0x0
+    phy_chain_tx_lane_map_physical{49.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{27}=0x1
+    phy_chain_tx_polarity_flip_physical{81}=0x0
+    phy_chain_tx_polarity_flip_physical{64}=0x1
+    phy_chain_tx_polarity_flip_physical{47}=0x1
+    portmap_8=29:100
+    phy_chain_rx_polarity_flip_physical{70}=0x0
+    phy_chain_rx_polarity_flip_physical{53}=0x0
+    phy_chain_rx_polarity_flip_physical{36}=0x1
+    phy_chain_rx_polarity_flip_physical{19}=0x0
+    phy_chain_tx_polarity_flip_physical{73}=0x0
+    phy_chain_tx_polarity_flip_physical{56}=0x1
+    phy_chain_tx_polarity_flip_physical{39}=0x1
+    portmap_9=33:100
+    phy_chain_tx_polarity_flip_physical{2}=0x0
+    phy_chain_rx_lane_map_physical{21.0}=0x3120
+    phy_chain_rx_lane_map_physical{29.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{62}=0x1
+    phy_chain_rx_polarity_flip_physical{45}=0x0
+    phy_chain_rx_polarity_flip_physical{28}=0x1
+    phy_chain_tx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_lane_map_physical{5.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{48}=0x1
+    phy_chain_tx_lane_map_physical{33.0}=0x2031
+    phy_chain_rx_lane_map_physical{73.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{71}=0x1
+    phy_chain_rx_polarity_flip_physical{54}=0x0
+    phy_chain_rx_polarity_flip_physical{37}=0x1
+    phy_chain_tx_polarity_flip_physical{74}=0x1
+    phy_chain_tx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{3}=0x1
+    phy_chain_rx_polarity_flip_physical{80}=0x0
+    dpp_clock_ratio=2:3
+    phy_chain_rx_polarity_flip_physical{63}=0x0
+    phy_chain_rx_polarity_flip_physical{46}=0x0
+    phy_chain_rx_polarity_flip_physical{29}=0x0
+    phy_chain_tx_lane_map_physical{1.0}=0x2031
+    phy_chain_tx_polarity_flip_physical{66}=0x1
+    phy_chain_tx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_lane_map_physical{9.0}=0x2031
+    phy_chain_rx_lane_map_physical{13.0}=0x3120
+    portmap_65.0=82:10
+    phy_chain_rx_polarity_flip_physical{72}=0x1
+    phy_chain_rx_polarity_flip_physical{55}=0x1
+    phy_chain_rx_polarity_flip_physical{38}=0x1
+    phy_chain_tx_polarity_flip_physical{75}=0x1
+    phy_chain_tx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{4}=0x1
+    phy_chain_tx_lane_map_physical{25.0}=0x2031
+    phy_chain_rx_lane_map_physical{65.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{81}=0x0
+    phy_chain_rx_polarity_flip_physical{64}=0x0
+    phy_chain_rx_polarity_flip_physical{47}=0x1
+    phy_chain_tx_polarity_flip_physical{67}=0x1
+    oversubscribe_mode=1
+    phy_chain_tx_lane_map_physical{77.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{73}=0x0
+    phy_chain_rx_polarity_flip_physical{56}=0x1
+    phy_chain_rx_polarity_flip_physical{39}=0x0
+    phy_chain_tx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{1}=0x1
+    phy_chain_tx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{5}=0x1
+    phy_chain_rx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_polarity_flip_physical{48}=0x1
+    phy_chain_tx_polarity_flip_physical{68}=0x1
+    phy_chain_tx_polarity_flip_physical{10}=0x0
+    phy_chain_tx_lane_map_physical{17.0}=0x2031
+    phy_chain_rx_lane_map_physical{57.0}=0x2031
+    l3_ecmp_levels=2
+    phy_chain_rx_polarity_flip_physical{74}=0x0
+    phy_chain_rx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{77}=0x0
+    phy_chain_rx_polarity_flip_physical{2}=0x1
+    phy_chain_tx_polarity_flip_physical{6}=0x0
+    portmap_41=41:100
+    phy_chain_tx_lane_map_physical{61.0}=0x3120
+    phy_chain_tx_lane_map_physical{69.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{66}=0x0
+    phy_chain_rx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_polarity_flip_physical{69}=0x0
+    portmap_42=45:100
+    phy_chain_tx_polarity_flip_physical{11}=0x1
+    phy_chain_rx_polarity_flip_physical{75}=0x1
+    phy_chain_rx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{78}=0x0
+    phy_chain_rx_polarity_flip_physical{3}=0x1
+    phy_chain_tx_polarity_flip_physical{7}=0x0
+    phy_chain_rx_lane_map_physical{41.0}=0x2031
+    portmap_43=49:100
+    phy_chain_tx_polarity_flip_physical{20}=0x1
+    phy_chain_rx_lane_map_physical{49.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{67}=0x1
+    portmap_44=53:100
+    phy_chain_tx_lane_map_physical{53.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{12}=0x1
+    phy_chain_rx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{79}=0x1
+    phy_chain_rx_polarity_flip_physical{4}=0x0
+    phy_chain_tx_polarity_flip_physical{8}=0x1
+    portmap_45=57:100
+    phy_chain_tx_polarity_flip_physical{21}=0x0
+    phy_chain_rx_polarity_flip_physical{68}=0x1
+    fpem_mem_entries=16384
+    phy_chain_rx_lane_map_physical{33.0}=0x1302
+    pbmp_xport_xe=0x10003fe00000003fe
+    phy_chain_rx_polarity_flip_physical{10}=0x0
+    portmap_46=61:100
+    phy_chain_tx_polarity_flip_physical{30}=0x1
+    phy_chain_tx_polarity_flip_physical{13}=0x0
+    phy_chain_rx_polarity_flip_physical{77}=0x1
+    l2_mem_entries=32768
+    os=unix
+    phy_chain_rx_polarity_flip_physical{5}=0x0
+    phy_chain_tx_polarity_flip_physical{9}=0x0
+    portmap_47=65:100
+    phy_chain_tx_lane_map_physical{45.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{22}=0x0
+    phy_chain_rx_polarity_flip_physical{69}=0x0
+    phy_chain_rx_polarity_flip_physical{11}=0x1
+    portmap_64=81:10
+    portmap_48=69:100
+    phy_chain_tx_polarity_flip_physical{31}=0x1
+    phy_chain_tx_polarity_flip_physical{14}=0x0
+    phy_chain_rx_polarity_flip_physical{78}=0x1
+    phy_chain_rx_polarity_flip_physical{6}=0x0
+    phy_chain_rx_lane_map_physical{25.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{20}=0x0
+    portmap_49=73:100
+    phy_chain_tx_polarity_flip_physical{40}=0x1
+    phy_chain_tx_polarity_flip_physical{23}=0x1
+    phy_chain_rx_lane_map_physical{1.0}=0x1302
+    phy_chain_rx_lane_map_physical{9.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{12}=0x1
+    phy_chain_tx_lane_map_physical{37.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_lane_map_physical{77.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{15}=0x1
+    phy_chain_rx_polarity_flip_physical{79}=0x0
+    phy_chain_rx_polarity_flip_physical{7}=0x1
+    phy_chain_rx_polarity_flip_physical{21}=0x0
+    phy_chain_tx_lane_map_physical{81.0}=0x3210
+    phy_chain_tx_polarity_flip_physical{41}=0x0
+    phy_chain_tx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{5.0}=0x0132
+    phy_chain_rx_lane_map_physical{17.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{30}=0x0
+    phy_chain_rx_polarity_flip_physical{13}=0x0
+    phy_chain_tx_polarity_flip_physical{50}=0x0
+    phy_chain_tx_polarity_flip_physical{33}=0x0
+    phy_chain_tx_polarity_flip_physical{16}=0x1
+    phy_chain_rx_polarity_flip_physical{8}=0x1
+    phy_chain_tx_lane_map_physical{21.0}=0x0213
+    phy_chain_rx_lane_map_physical{61.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{22}=0x0
+    core_clock_frequency=1525
+    phy_chain_tx_lane_map_physical{29.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_lane_map_physical{69.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{25}=0x0
+    phy_chain_rx_polarity_flip_physical{31}=0x1
+    phy_chain_rx_polarity_flip_physical{14}=0x0
+    phy_chain_tx_lane_map_physical{73.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{51}=0x1
+    phy_chain_tx_polarity_flip_physical{34}=0x1
+    phy_chain_tx_polarity_flip_physical{17}=0x0
+    phy_chain_rx_polarity_flip_physical{9}=0x0
+    l2xmsg_mode=1
+    phy_chain_rx_polarity_flip_physical{40}=0x0
+    phy_chain_rx_polarity_flip_physical{23}=0x1
+    phy_chain_tx_polarity_flip_physical{60}=0x1
+    phy_chain_tx_polarity_flip_physical{43}=0x1
+    phy_chain_tx_polarity_flip_physical{26}=0x1
+    phy_chain_tx_lane_map_physical{13.0}=0x0213
+    phy_chain_rx_lane_map_physical{53.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_polarity_flip_physical{15}=0x1
+    portmap_1=1:100
+    phy_chain_tx_polarity_flip_physical{52}=0x1
+    phy_chain_tx_polarity_flip_physical{35}=0x1
+    phy_chain_tx_polarity_flip_physical{18}=0x0
+    phy_chain_rx_polarity_flip_physical{41}=0x1
+    phy_chain_rx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{65.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{61}=0x0
+    portmap_2=5:100
+    phy_chain_tx_polarity_flip_physical{44}=0x1
+    phy_chain_tx_polarity_flip_physical{27}=0x1
+    phy_chain_rx_polarity_flip_physical{50}=0x0
+    phy_chain_rx_polarity_flip_physical{33}=0x0
+    phy_chain_rx_polarity_flip_physical{16}=0x1
+    phy_chain_tx_polarity_flip_physical{70}=0x0
+    phy_chain_tx_polarity_flip_physical{53}=0x0
+    portmap_3=9:100
+    phy_chain_tx_polarity_flip_physical{36}=0x1
+    phy_chain_tx_polarity_flip_physical{19}=0x1
+    phy_chain_rx_lane_map_physical{45.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_polarity_flip_physical{25}=0x0
+    phy_chain_tx_polarity_flip_physical{62}=0x1
+    phy_chain_tx_polarity_flip_physical{45}=0x0
+    portmap_4=13:100
+    phy_chain_tx_polarity_flip_physical{28}=0x1
+    l3_mem_entries=16384
+    phy_chain_rx_polarity_flip_physical{51}=0x1
+    phy_chain_rx_polarity_flip_physical{34}=0x0
+    phy_chain_tx_lane_map_physical{57.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{17}=0x1
+    phy_chain_tx_polarity_flip_physical{71}=0x1
+    phy_chain_tx_polarity_flip_physical{54}=0x0
+    phy_chain_tx_polarity_flip_physical{37}=0x0
+    portmap_5=17:100
+    phy_chain_rx_polarity_flip_physical{60}=0x1
+    phy_chain_rx_polarity_flip_physical{43}=0x0
+    phy_chain_rx_polarity_flip_physical{26}=0x0
+    phy_chain_tx_polarity_flip_physical{80}=0x1
+    phy_chain_tx_polarity_flip_physical{63}=0x1
+    phy_chain_tx_polarity_flip_physical{46}=0x0
+    phy_chain_tx_polarity_flip_physical{29}=0x0
+    portmap_6=21:100
+    phy_chain_rx_lane_map_physical{37.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{52}=0x1
+    phy_chain_rx_polarity_flip_physical{35}=0x1
+    phy_chain_rx_polarity_flip_physical{18}=0x1
+    phy_chain_tx_polarity_flip_physical{72}=0x1
+    phy_chain_tx_polarity_flip_physical{55}=0x1
+    phy_chain_tx_polarity_flip_physical{38}=0x0
+    portmap_7=25:100
+    phy_chain_tx_polarity_flip_physical{1}=0x0
+    phy_chain_tx_lane_map_physical{41.0}=0x1302
+    phy_chain_rx_lane_map_physical{81.0}=0x3210
+Attach: Unit 0 (BCM56770_A0): attached (current unit)
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 03.00.00
+
+        CMH: LOADED
+        Ver: 03.00.00
+        SDK Ver: 06.05.14
+
+        CCH: LOADED
+        Ver: 03.00.00
+        SDK Ver: 06.05.14
+
+        CEH: LOADED
+        Ver: 03.00.00
+        SDK Ver: 06.05.14
+
+Broadcom Command Monitor: Copyright (c) 1998-2018 Broadcom
+Release: sdk-6.5.14 built 20180810 (Fri Aug 10 02:22:02 2018)
+From br930043@lvnvdc3607:/projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master
+Platform: X86
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0,
+       BCM56840_A0, BCM56840_B0,
+
+
+       BCM88732_A0, BCM56440_A0,
+       BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+
+
+       BCM56160_A0, BCM56270_A0, BCM56965_A0, BCM56970_A0,
+       BCM56870_A0, BCM56870_B0, BCM53570_A0, BCM53570_B0,
+       BCM56980_A0, BCM56980_B0, BCM53540_A0, BCM56670_A0,
+       BCM56670_B0, BCM56370_A0, BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5324/FE, BCM5348/FE,
+    BCM53242/FE, BCM53262/FE, BCM53101/FE, BCM53280/FE,
+    BCM53600/FE, BCM5400, BCM5401, BCM5402,
+    BCM5404, BCM5424/34, BCM5411, BCM5461,
+    BCM5464, BCM5466, BCM5478, BCM5488,
+    BCM54980, BCM54980, BCM54980, BCM54980,
+    BCM53314, BCM5482/801x, BCM54684, BCM54640,
+    BCM54682E, BCM54684E, BCM54685, BCM54616,
+    BCM54618E, BCM54618SE, BCM84707, BCM84073,
+    BCM84074, BCM84728, BCM84748, BCM84727,
+    BCM84747, BCM84762, BCM84764, BCM84042,
+    BCM84044, BCM8806X, BCM54182, BCM54185,
+    BCM54180, BCM54140, BCM54192, BCM54195,
+    BCM54190, BCM54194, BCM54210, BCM54220,
+    BCM54280, BCM54282, BCM54240, BCM54285
+    BCM5428X, BCM54290, BCM54292, BCM54294,
+    BCM54295, BCM54296, BCM5421S, BCM54680,
+    BCM53324, BCM53125, BCM53128, BCM53010,
+    BCM53018, BCM5302X, BCM53134, BCM56160-GPHY,
+    BCM53540-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM89500, BCM54640E, BCM54880E,
+    BCM54680E, BCM52681E, BCM8703, BCM8704,
+    BCM8705/24/25, BCM8706/8726, BCM8727, BCM8728/8747,
+    BCM8072, BCM8073, BCM8074, BCM8040,
+    BCM8481X, BCM84812, BCM84821, BCM84822,
+    BCM84823, BCM84833, BCM84834, BCM84835,
+    BCM84836, BCM84844, BCM84846, BCM84848,
+    BCM84858, BCM84856, BCM84860, BCM84861,
+    BCM84864, BCM84868, BCM84888, BCM84884,
+    BCM84888E, BCM84884E, BCM84881, BCM84880,
+    BCM84888S, BCM84887, BCM84886, BCM84885
+    BCM8750, BCM8752, BCM8754, BCM84740,
+    BCM84164, BCM84758, BCM84780, BCM84784,
+    BCM84318, BCM84328, BCM84793, BCM82328,
+    Furia, Huracan, Sesto, Madura,
+    BCM82780, copper sfp
+
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_lsr_swap_frr(): ** start **
+l3 intf = 20
+bcm_failover_create return=0
+backup_egr_obj=100002
+l3 intf = 10
+l3 primary_egr_obj = 100003
+~~ #2) config_lsr_swap_frr(): ** end **
+~~ #3) verify(): ** start **
+Current header mode for unit 0 is now Ieee (0).
+vlan 1  ports cpu,ce,xe (0x0000000000000000000000000000000000000000000000010003fe00000003ff), untagged ce,xe (0x0000000000000000000000000000000000000000000000010003fe00000003fe) MCAST_FLOOD_UNKNOWN
+vlan 21 ports ce0 (0x0000000000000000000000000000000000000000000000000000000000000002), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22 ports ce1 (0x0000000000000000000000000000000000000000000000000000000000000004), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 23 ports ce2 (0x0000000000000000000000000000000000000000000000000000000000000008), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+Free L3INTF entries: 16380
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     10    0     0     22   00:00:00:00:00:22  16383 0    0     0     0
+0     20    0     0     23   00:00:00:00:00:22  16383 0    2     0     0
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:00:33:33   23   20     3    0       546   no   no    0   no
+100003  00:00:00:00:22:22   22   10     2    0       546   no   no    1   no
+
+Sending MPLS Label packet to ingress_port:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000001111} {000000000011} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 8847 0006 4140 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[1]: data[0020]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[1]: data[0030]: 1a1b 1c1d 1e1f 2021 2223 2425 2627 2829
+[bcmPW.0]Packet[1]: data[0040]: 620f 4a16 1cdf 4421
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> * Unknown/Experimental format * 00 00 00 00 11 11 00 00 00 00 00 11 81 00 00 15 88 47 00 06 41 40 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000002222} {000000000022} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 8847 0022 213f 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0020]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0030]: 1a1b 1c1d 1e1f 2021 2223 2425 2627 2829
+[bcmPW.0]Packet[2]: data[0040]: 620f 4a16 c7b9 6474
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:00:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> * Unknown/Experimental format * 00 00 00 00 22 22 00 00 00 00 00 22 81 00 00 16 88 47 00 22 21 3f 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   144                +144             142/s
+RUC_64.ce0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ce0    :                     1                  +1               1/s
+CLMIB_R127.ce0              :                     1                  +1               1/s
+CLMIB_RPKT.ce0              :                     1                  +1               1/s
+CLMIB_RUCA.ce0              :                     1                  +1               1/s
+CLMIB_RPRM.ce0              :                     1                  +1               1/s
+CLMIB_RVLN.ce0              :                     1                  +1               1/s
+CLMIB_RPOK.ce0              :                     1                  +1               1/s
+CLMIB_RBYT.ce0              :                    72                 +72              71/s
+CLMIB_T127.ce0              :                     1                  +1               1/s
+CLMIB_TPOK.ce0              :                     1                  +1               1/s
+CLMIB_TPKT.ce0              :                     1                  +1               1/s
+CLMIB_TUCA.ce0              :                     1                  +1               1/s
+CLMIB_TVLN.ce0              :                     1                  +1               1/s
+CLMIB_TBYT.ce0              :                    72                 +72              71/s
+CLMIB_RPROG0.ce0            :                     1                  +1               1/s
+UC_PERQ_PKT(0).ce0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ce0         :                    72                 +72              71/s
+RUC_64.ce1                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ce1    :                     1                  +1               1/s
+CLMIB_R127.ce1              :                     1                  +1               1/s
+CLMIB_RPKT.ce1              :                     1                  +1               1/s
+CLMIB_RUCA.ce1              :                     1                  +1               1/s
+CLMIB_RPRM.ce1              :                     1                  +1               1/s
+CLMIB_RVLN.ce1              :                     1                  +1               1/s
+CLMIB_RPOK.ce1              :                     1                  +1               1/s
+CLMIB_RBYT.ce1              :                    72                 +72              71/s
+CLMIB_T127.ce1              :                     1                  +1               1/s
+CLMIB_TPOK.ce1              :                     1                  +1               1/s
+CLMIB_TPKT.ce1              :                     1                  +1               1/s
+CLMIB_TUCA.ce1              :                     1                  +1               1/s
+CLMIB_TVLN.ce1              :                     1                  +1               1/s
+CLMIB_TBYT.ce1              :                    72                 +72              71/s
+CLMIB_RPROG0.ce1            :                     1                  +1               1/s
+UC_PERQ_PKT(0).ce1          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ce1         :                    72                 +72              71/s
+Switch-over from primary-path to backup/protection-path
+
+Re-Sending MPLS Label packet to ingress_port:1
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000001111} {000000000011} 8100 0015
+[bcmPW.0]Packet[3]: data[0010]: 8847 0006 4140 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[3]: data[0020]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[3]: data[0030]: 1a1b 1c1d 1e1f 2021 2223 2425 2627 2829
+[bcmPW.0]Packet[3]: data[0040]: 620f 4a16 1cdf 4421
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:11:11> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0015> * Unknown/Experimental format * 00 00 00 00 11 11 00 00 00 00 00 11 81 00 00 15 88 47 00 06 41 40 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000003333} {000000000022} 8100 0017
+[bcmPW.0]Packet[4]: data[0010]: 8847 0099 9040 0022 213f 0001 0203 0405
+[bcmPW.0]Packet[4]: data[0020]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[4]: data[0030]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[4]: data[0040]: 2627 2829 620f 4a16 e3ed 1721
+[bcmPW.0]Packet[4]: length 76 (76). rx-port 3. cos 0. prio_int 0. vlan 23. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:33:33> src<00:00:00:00:00:22> Tagged Packet ProtID<0x8100> Ctrl<0x0017> * Unknown/Experimental format * 00 00 00 00 33 33 00 00 00 00 00 22 81 00 00 17 88 47 00 99 90 40 00 22 21 3f 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25
+MC_PERQ_PKT(0).cpu0         :                     2                  +2               2/s
+MC_PERQ_BYTE(0).cpu0        :                   148                +148             145/s
+RUC_64.ce0                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ce0    :                     1                  +1               1/s
+CLMIB_R127.ce0              :                     1                  +1               1/s
+CLMIB_RPKT.ce0              :                     1                  +1               1/s
+CLMIB_RUCA.ce0              :                     1                  +1               1/s
+CLMIB_RPRM.ce0              :                     1                  +1               1/s
+CLMIB_RVLN.ce0              :                     1                  +1               1/s
+CLMIB_RPOK.ce0              :                     1                  +1               1/s
+CLMIB_RBYT.ce0              :                    72                 +72              71/s
+CLMIB_T127.ce0              :                     1                  +1               1/s
+CLMIB_TPOK.ce0              :                     1                  +1               1/s
+CLMIB_TPKT.ce0              :                     1                  +1               1/s
+CLMIB_TUCA.ce0              :                     1                  +1               1/s
+CLMIB_TVLN.ce0              :                     1                  +1               1/s
+CLMIB_TBYT.ce0              :                    72                 +72              71/s
+CLMIB_RPROG0.ce0            :                     1                  +1               1/s
+UC_PERQ_PKT(0).ce0          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ce0         :                    72                 +72              71/s
+RUC_64.ce2                  :                     1                  +1               1/s
+ING_NIV_RX_FRAMES_VL.ce2    :                     1                  +1               1/s
+CLMIB_R127.ce2              :                     1                  +1               1/s
+CLMIB_RPKT.ce2              :                     1                  +1               1/s
+CLMIB_RUCA.ce2              :                     1                  +1               1/s
+CLMIB_RPRM.ce2              :                     1                  +1               1/s
+CLMIB_RVLN.ce2              :                     1                  +1               1/s
+CLMIB_RPOK.ce2              :                     1                  +1               1/s
+CLMIB_RBYT.ce2              :                    76                 +76              75/s
+CLMIB_T127.ce2              :                     1                  +1               1/s
+CLMIB_TPOK.ce2              :                     1                  +1               1/s
+CLMIB_TPKT.ce2              :                     1                  +1               1/s
+CLMIB_TUCA.ce2              :                     1                  +1               1/s
+CLMIB_TVLN.ce2              :                     1                  +1               1/s
+CLMIB_TBYT.ce2              :                    76                 +76              75/s
+CLMIB_RPROG0.ce2            :                     1                  +1               1/s
+UC_PERQ_PKT(0).ce2          :                     1                  +1               1/s
+UC_PERQ_BYTE(0).ce2         :                    76                 +76              75/s
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

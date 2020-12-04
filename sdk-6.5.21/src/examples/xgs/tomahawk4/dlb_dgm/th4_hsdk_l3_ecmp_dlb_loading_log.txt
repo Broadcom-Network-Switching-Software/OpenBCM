@@ -1,0 +1,88 @@
+BCM.0> c th4_hsdk_l3_ecmp_dlb_loading.c        
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+int $$ = 17 (0x11)
+setting ingress port:1 PHY loopback
+setting egress port:2 in PHY loopback
+setting egress port:3 in PHY loopback
+setting egress port:4 in PHY loopback
+setting egress port:17 in PHY loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_rtag7_l3_ecmp_dlb(): ** start **
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3_intf_id[0] = 1
+egr_obj_id[0] = 100001
+l3_intf_id[1] = 2
+egr_obj_id[1] = 100002
+l3_intf_id[2] = 3
+egr_obj_id[2] = 100003
+l3_intf_id[3] = 4
+egr_obj_id[3] = 100004
+int ecmp_group_id = 203968 (0x31cc0)
+unsigned int $$ = 268443649 (0x10002001)
+uint32 stat_counter_id = 268443649 (0x10002001)
+~~~ #2) config_rtag7_l3_ecmp_dlb(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1 first time
+Packet from data=<>, length=78
+Overide port:3 quality mapping value.
+[bcmcnetIntrHandler.0]Table DLB_ECMP_PORT_QUALITY_MAPPINGm:
+  set BCMLT_PT_INDEX=0x5ff ASSIGNED_QUALITY=6
+[bcmcnetIntrHandler.0]Table DLB_ECMP_QUANTIZE_CONTROLm:
+  set BCMLT_PT_INDEX=3 PORT_QUALITY_MAPPING_PROFILE_PTR=2
+Transmiting l3 packet into ingress_port:1 second time
+Packet from data=<>, length=78
+Overide port:17 quality mapping value.
+[bcmcnetIntrHandler.0]Table DLB_ECMP_PORT_QUALITY_MAPPINGm:
+  set BCMLT_PT_INDEX=0x5ff ASSIGNED_QUALITY=6
+[bcmcnetIntrHandler.0]Table DLB_ECMP_QUANTIZE_CONTROLm:
+  set BCMLT_PT_INDEX=0x11 PORT_QUALITY_MAPPING_PROFILE_PTR=2
+Transmiting l3 packet into ingress_port:1 third time
+Packet from data=<>, length=78
+Overide port:4 quality mapping value.
+[bcmcnetIntrHandler.0]Table DLB_ECMP_PORT_QUALITY_MAPPINGm:
+  set BCMLT_PT_INDEX=0x5ff ASSIGNED_QUALITY=6
+[bcmcnetIntrHandler.0]Table DLB_ECMP_QUANTIZE_CONTROLm:
+  set BCMLT_PT_INDEX=4 PORT_QUALITY_MAPPING_PROFILE_PTR=2
+Transmiting l3 packet into ingress_port:1 fourth time
+Packet from data=<>, length=78
+Overide port:2 quality mapping value.
+[bcmcnetIntrHandler.0]Table DLB_ECMP_PORT_QUALITY_MAPPINGm:
+  set BCMLT_PT_INDEX=0x5ff ASSIGNED_QUALITY=6
+[bcmcnetIntrHandler.0]Table DLB_ECMP_QUANTIZE_CONTROLm:
+  set BCMLT_PT_INDEX=2 PORT_QUALITY_MAPPING_PROFILE_PTR=2
+unsigned int[5] counter_index = {
+    unsigned int counter_index[0] = 0 (0x0)
+    unsigned int counter_index[1] = 1 (0x1)
+    unsigned int counter_index[2] = 2 (0x2)
+    unsigned int counter_index[3] = 3 (0x3)
+    unsigned int counter_index[4] = 4 (0x4)
+}
+Flexctr Get : 1 packets / 82 bytes from egr l3 obj:100001
+Flexctr Get : 1 packets / 82 bytes from egr l3 obj:100002
+Flexctr Get : 1 packets / 82 bytes from egr l3 obj:100003
+Flexctr Get : 1 packets / 82 bytes from egr l3 obj:100004
+
+----------------------------------------------------------------------------------- 
+    RESULT OF L3 IPv4 ROUTE to DLB ECMP GROUP with RTAG7 HASH VERIFICATION  
+----------------------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+int $$ = 434 (0x1b2)
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

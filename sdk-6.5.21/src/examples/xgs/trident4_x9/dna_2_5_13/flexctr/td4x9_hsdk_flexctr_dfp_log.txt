@@ -1,0 +1,483 @@
+BCM.0> c td4x9_hsdk_flexctr_dfp.c                                                                                                                           
+    os=unix                                                                                                                                                 
+Attach: Unit 0 (BCM56780_A0): attached (current unit)                                                                                                       
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom                                                                                                  
+Release: sdk-6.5.21 built 20200906 (Sun Sep  6 09:23:21 2020)                                                                                               
+From sdkrel@lc-sj1-4832:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780                                                            
+Platform: SLK_BCM957812                                                                                                                                     
+OS: Unix (Posix)                                                                                                                                            
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5             
+Completed test setup successfully.                            
+Stat Counter Id 268435463                                     
+bcm_error_t $$ = BCM_E_NONE (0)                               
+Stat counter id 0x10000007                                    
+Completed test configure successfully.                        
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 38
+tx 10 pbm=38 data=0x0000000000010000000000028100000208004500002E0000000040113EA00A0A0A0114141401006500C9001A7A1B000102030405060708090A0B0C0D0E0F1011;sleep 4
+Packet from data=<>, length=64                                                                                                                              
+Sleeping for 4 seconds                                                                                                                                      
+[bcmPWN.0]                                                                                                                                                  
+[bcmPWN.0]Packet[1]: data[0000]: {000000000001} {000000000002} 8100 0002                                                                                    
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a                                                                                    
+[bcmPWN.0]Packet[1]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001                                                                                    
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                                                                                    
+[bcmPWN.0]                                                                                                                                                  
+[bcmPWN.0][RX metadata information]                                                                                                                         
+        PKT_LENGTH=0x44                                                                                                                                     
+        SRC_PORT_NUM=0x26                                                                                                                                   
+        SWITCH=1                                                                                                                                            
+        MATCH_ID_LO=0x80d424                                                                                                                                
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                                              
+        EGR_ZONE_REMAP_CTRL=1                                                                                                                               
+        COPY_TO_CPU=1                                                                                                                                       
+[FLEX fields]                                                                                                                                               
+        EVENT_TRACE_VECTOR_31_16=0x14                                                                                                                       
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                                            
+        SYSTEM_SOURCE_15_0=0x26                                                                                                                             
+        SYSTEM_DESTINATION_15_0=2                                                                                                                           
+        INGRESS_PP_PORT_7_0=0x26                                                                                                                            
+        EFFECTIVE_TTL_7_0=0x40                                                                                                                              
+        VFI_15_0=2                                                                                                                                          
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                                                      
+        SYSTEM_OPCODE_3_0=1                                                                                                                                 
+        PKT_MISC_CTRL_0_3_0=1                                                                                                                               
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                                        
+        L2_OIF_10_0=0x52                                                                                                                                    
+        ING_TIMESTAMP_15_0=0x2e1c                                                                                                                           
+        ING_TIMESTAMP_31_16=0xac11                                                                                                                          
+[RX reasons]                                                                                                                                                
+        IFP                                                                                                                                                 
+        DST_FP                                                                                                                                              
+[Decode match id]                                                                                                                                           
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                                         
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                                       
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                                               
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                                                                                                     
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                                                                                                              
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[2]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0x9e92                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[3]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xa8e6                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[4]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xb11e                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[5]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xb97c                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[6]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xc08a                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[7]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xc7e2                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[8]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[8]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xcf22                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[9]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                               
+[bcmPWN.0][RX metadata information]                                      
+        PKT_LENGTH=0x44                                                  
+        SRC_PORT_NUM=0x26                                                
+        SWITCH=1                                                         
+        MATCH_ID_LO=0x80d424                                             
+        MPB_FLEX_DATA_TYPE=0xd                                           
+        EGR_ZONE_REMAP_CTRL=1                                            
+        COPY_TO_CPU=1                                                    
+[FLEX fields]                                                            
+        EVENT_TRACE_VECTOR_31_16=0x15                                    
+        PARSER_VHLEN_0_15_0=0x8a                                         
+        SYSTEM_SOURCE_15_0=0x26                                          
+        SYSTEM_DESTINATION_15_0=2                                        
+        INGRESS_PP_PORT_7_0=0x26                                         
+        EFFECTIVE_TTL_7_0=0x40                                           
+        VFI_15_0=2                                                       
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                   
+        SYSTEM_OPCODE_3_0=1                                              
+        PKT_MISC_CTRL_0_3_0=1                                            
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                     
+        L2_OIF_10_0=0x52                                                 
+        ING_TIMESTAMP_15_0=0xd654                                        
+        ING_TIMESTAMP_31_16=0xac11                                       
+[RX reasons]                                                             
+        LEARN_CACHE_FULL                                                 
+        IFP                                                              
+        DST_FP                                                           
+[Decode match id]                                                        
+        INGRESS_PKT_OUTER_L2_HDR_L2                                      
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                 
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                           
+
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {000000000001} {000000000002} 8100 0002
+[bcmPWN.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 4011 3ea0 0a0a 
+[bcmPWN.0]Packet[10]: data[0020]: 0a01 1414 1401 0065 00c9 001a 7a1b 0001 
+[bcmPWN.0]Packet[10]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]                                                                
+[bcmPWN.0][RX metadata information]                                       
+        PKT_LENGTH=0x44                                                   
+        SRC_PORT_NUM=0x26                                                 
+        SWITCH=1                                                          
+        MATCH_ID_LO=0x80d424                                              
+        MPB_FLEX_DATA_TYPE=0xd                                            
+        EGR_ZONE_REMAP_CTRL=1                                             
+        COPY_TO_CPU=1                                                     
+[FLEX fields]                                                             
+        EVENT_TRACE_VECTOR_31_16=0x15                                     
+        PARSER_VHLEN_0_15_0=0x8a                                          
+        SYSTEM_SOURCE_15_0=0x26                                           
+        SYSTEM_DESTINATION_15_0=2                                         
+        INGRESS_PP_PORT_7_0=0x26                                          
+        EFFECTIVE_TTL_7_0=0x40                                            
+        VFI_15_0=2                                                        
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                    
+        SYSTEM_OPCODE_3_0=1                                               
+        PKT_MISC_CTRL_0_3_0=1                                             
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                      
+        L2_OIF_10_0=0x52                                                  
+        ING_TIMESTAMP_15_0=0xdcc8                                         
+        ING_TIMESTAMP_31_16=0xac11                                        
+[RX reasons]                                                              
+        LEARN_CACHE_FULL                                                  
+        IFP                                                               
+        DST_FP                                                            
+[Decode match id]                                                         
+        INGRESS_PKT_OUTER_L2_HDR_L2                                       
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                     
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                             
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                  
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                   
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                            
+
+MC_PERQ_PKT(0).cpu0                   :                    10                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 1,400              +1,400
+XLMIB_TBYT.ce1                        :                   680                +680
+XLMIB_RBYT.ce1                        :                   680                +680
+XLMIB_TPOK.ce1                        :                    10                 +10
+XLMIB_RPOK.ce1                        :                    10                 +10
+XLMIB_TVLN.ce1                        :                    10                 +10
+XLMIB_RVLN.ce1                        :                    10                 +10
+XLMIB_TUCA.ce1                        :                    10                 +10
+XLMIB_RUCA.ce1                        :                    10                 +10
+XLMIB_TPKT.ce1                        :                    10                 +10
+XLMIB_RPKT.ce1                        :                    10                 +10
+XLMIB_T127.ce1                        :                    10                 +10
+XLMIB_R127.ce1                        :                    10                 +10
+XLMIB_RPRM.ce1                        :                    10                 +10
+UC_PERQ_PKT(0).ce1                    :                    10                 +10
+UC_PERQ_BYTE(0).ce1                   :                   680                +680
+XLMIB_TBYT.xe0                        :                   680                +680
+XLMIB_RBYT.xe0                        :                   680                +680
+XLMIB_TPOK.xe0                        :                    10                 +10
+XLMIB_RPOK.xe0                        :                    10                 +10
+XLMIB_TVLN.xe0                        :                    10                 +10
+XLMIB_RVLN.xe0                        :                    10                 +10
+XLMIB_TUCA.xe0                        :                    10                 +10
+XLMIB_RUCA.xe0                        :                    10                 +10
+XLMIB_TPKT.xe0                        :                    10                 +10
+XLMIB_RPKT.xe0                        :                    10                 +10
+XLMIB_T127.xe0                        :                    10                 +10
+XLMIB_R127.xe0                        :                    10                 +10
+XLMIB_RPRM.xe0                        :                    10                 +10
+XLMIB_TBYT.xe1                        :                   680                +680
+XLMIB_RBYT.xe1                        :                   680                +680
+XLMIB_TPOK.xe1                        :                    10                 +10
+XLMIB_RPOK.xe1                        :                    10                 +10
+XLMIB_TVLN.xe1                        :                    10                 +10
+XLMIB_RVLN.xe1                        :                    10                 +10
+XLMIB_TUCA.xe1                        :                    10                 +10
+XLMIB_RUCA.xe1                        :                    10                 +10
+XLMIB_TPKT.xe1                        :                    10                 +10
+XLMIB_RPKT.xe1                        :                    10                 +10
+XLMIB_T127.xe1                        :                    10                 +10
+XLMIB_R127.xe1                        :                    10                 +10
+XLMIB_RPRM.xe1                        :                    10                 +10
+UC_PERQ_PKT(0).xe1                    :                    10                 +10
+UC_PERQ_BYTE(0).xe1                   :                   680                +680
+Flex Counters collected on Dest FP Packets / Bytes : 0x0000000a / 0x000002a8
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

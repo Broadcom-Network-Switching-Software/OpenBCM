@@ -1,0 +1,81 @@
+BCM.0> cint th4_hsdk_l3_uc_ipv6_route.c
+Ingress_port_multi_setup port: 19 setup
+Egress_port_multi_setup port: 51 setup
+
+Completed test setup successfully.
+
+l3 route show v6=1
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      3ffe:0000:0000:0000:0000:0000:0000:0000/112 100001 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1    51            0     0   underlay   no
+
+Sending 4 unicast packets to ingress port 19
+Packet from data=<>, length=96
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[1]: data[0010]: 86dd 6335 5555 0022 06fe 3ffe 0000 0000
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000
+[bcmPWN.0]Packet[1]: data[0040]: 3232 0000 3333 5000 0107 3dd9 0000 0001
+[bcmPWN.0]Packet[1]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 2335 7d7f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> IP version 6
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[2]: data[0010]: 86dd 6335 5555 0022 06fe 3ffe 0000 0000
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000
+[bcmPWN.0]Packet[2]: data[0040]: 3232 0000 3333 5000 0107 3dd9 0000 0001
+[bcmPWN.0]Packet[2]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 2335 7d7f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> IP version 6
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[3]: data[0010]: 86dd 6335 5555 0022 06fe 3ffe 0000 0000
+[bcmPWN.0]Packet[3]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000
+[bcmPWN.0]Packet[3]: data[0040]: 3232 0000 3333 5000 0107 3dd9 0000 0001
+[bcmPWN.0]Packet[3]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 2335 7d7f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> IP version 6
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[4]: data[0010]: 86dd 6335 5555 0022 06fe 3ffe 0000 0000
+[bcmPWN.0]Packet[4]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000
+[bcmPWN.0]Packet[4]: data[0040]: 3232 0000 3333 5000 0107 3dd9 0000 0001
+[bcmPWN.0]Packet[4]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 2335 7d7f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> IP version 6
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+
+Routed : 4 packets / 400 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

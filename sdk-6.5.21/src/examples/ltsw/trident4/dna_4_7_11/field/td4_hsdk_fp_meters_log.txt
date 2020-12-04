@@ -1,0 +1,107 @@
+BCM.0> 
+BCM.0> cint cint fp_meters.c
+int ARGC = 1 (0x1)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageIngress (5)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageIngress (68)
+int opt_IsIfp = 1 (0x1)
+int opt_IsEfp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing port loopbacks...
+int fp_id_base = 0 (0x0)
+int ckbits_sec = 1 (0x1)
+int ckbits_burst = 1 (0x1)
+Doing policer create...
+int pol_id = 10 (0xa)
+int pol_id = 10 (0xa)
+Doing group config create...
+Doing entry create to group 0x00000001...
+Doing SrcPort qualify...
+Doing policer attach to entry...
+Doing actions add RpDrop...
+Doing actions add RpCopyToCpu...
+Doing flexctr create to group 0x00000001...
+OBJ2
+>>	 stat_action_id=0x10000006
+Doing flexctr stat attach GREEN to entry 0x00000001. StatID:0x10000006:0...
+Doing flexctr stat attach RED   to entry 0x00000001. StatID:0x10000006:1...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200212 (Wed Feb 12 10:53:03 2020)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_4, BCM56880_A0_DNA_4_5_5
+     BCM56880_A0_DNA_4_5_6, BCM56880_A0_DNA_4_5_8, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+
+
+##########  Sending 1 packet ########
+B_CM.0> tx 1 pbm=1 DestMac=00:00:00:00:00:DD SourceMac=00:00:00:00:00:CC SourceMacInc=1 VLantag=100 Length=128
+Packet generate, length=128
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 2 -------
+Ctr:0x10000006-0x00000000: VAL0LO:1(1)-VAL1LO:0x00000084
+--------------------------
+##########  Sending BURST of 3 packets ########
+B_CM.0> tx 3 pbm=1 DestMac=00:00:00:00:00:DD SourceMac=00:00:00:00:00:CC SourceMacInc=1 VLantag=100 Length=128
+Packet generate, length=128
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000ce} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 006e 6163 3d25 3032 583a c4c5 c6bc c8c9 
+[bcmPWN.0]Packet[1]: data[0020]: cac0 cccd cec4 d0d1 d2c8 d4d5 d6cc d8d9 
+[bcmPWN.0]Packet[1]: data[0030]: dad0 dcdd ded4 e0e1 e2d8 e4e5 e6dc e8e9 
+[bcmPWN.0]Packet[1]: data[0040]: eae0 eced eee4 f0f1 f2e8 f4f5 f6ec f8f9 
+[bcmPWN.0]Packet[1]: data[0050]: faf0 fcfd fef4 0102 02f8 0506 06fc 090a 
+[bcmPWN.0]Packet[1]: data[0060]: 0b00 0d0e 0f04 1112 1308 1516 170c 191a 
+[bcmPWN.0]Packet[1]: data[0070]: 1b10 1d1e 1f14 2122 2318 2526 271c 292a 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x84
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x2a
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	DROP_CODE_15_0=0x1919
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	INGRESS_PP_PORT_7_0=1
+	L2_OIF_10_0=4
+	VFI_15_0=0x64
+	SYSTEM_OPCODE_3_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP_METER
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:ce> Tagged Packet ProtID<0x8100> Ctrl<0x0064> 802.3 Packet
+Packet[1]:   IP: V(6) src<200.201.202.192> dst<204.205.206.196> hl<1> service-type<99> tl<15653> id<12338> frg-off<22586> ttl<196> > chk-sum<0xc6bc>
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 2 -------
+Ctr:0x10000006-0x00000000: VAL0LO:2(3)-VAL1LO:0x00000108
+Ctr:0x10000006-0x00000001: VAL0LO:1(1)-VAL1LO:0x00000084
+--------------------------
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

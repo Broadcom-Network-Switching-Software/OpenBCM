@@ -1,0 +1,41 @@
+#
+# file: port_ha.yml
+# Port YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_id_mgmt:
+        bcmint_id_gport_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: Gport usage flags.
+                gport:
+                    type: int
+                    comment: Gport ID.
+                l2_if:
+                    type: int
+                    comment: L2_IF of the gport.
+                lag:
+                    type: int
+                    comment: The LAG that the gport belongs to.
+        bcmint_id_l2_if_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: L2_IF usage flags.
+                gid:
+                    type: int
+                    comment: Index of gport info table.

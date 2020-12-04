@@ -1,0 +1,235 @@
+# $Id: hsanity.soc,v 1.12 2007/05/01 23:16:01 miyarn Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Sanity script for BCM5670/BCM5671/BCM5675/BCM5676
+#
+# Note: on 5671/5676, only ports 1, 3, 6, 8 are valid (hg0, hg2, hg5, hg7)
+#
+# Note: if pbmp_valid is 0x14b because you are running BCM5670 as a
+# BCM5671 or BCM5675 as a BCM5676, then set the following variable to tell
+# this script that is what you are doing:
+#
+#	setenv herc4 1
+#
+# External loopbacks are not done by default because external cabling
+# is required.  See below for variable settings that cause external
+# loopbacks to be run.
+#
+
+echo "testsuite: started: sanity"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+linkscan off
+set rcerror=f
+
+local done 'echo "   Done"'
+
+if $?BCM5671_A0 || $?BCM5671_A1 \
+	"local herc4 1"
+
+if $?BCM5676_A0 || $?BCM5676_A1 \
+	"local herc4_15 1"
+
+if $?black_knight || $?white_knight \
+	"local knight 1"
+
+if $?knight || $?lancelot || $?merlin || $?guenevere \
+	"local knightly 1"
+
+if $?herc8_15 \
+	"local herc8 1"
+
+if $?herc4_15 \
+	"local herc4 1"
+
+if $?herc4 "echo NOTE: Assuming 4-port configuration"
+
+# re-init
+rcload rc.soc
+
+if $?extall \
+	"pause Please ensure external loopback cables are plugged in."
+
+echo "Running CPU benchmarks ..."
+tr 21
+$done
+
+echo "Running PCI tests ..."
+tr 2
+$done
+
+echo "Running register tests ..."
+tr 3
+$done
+
+echo "Running S-Channel message buffer test ..."
+tr 4
+$done
+
+echo "Running Memory tests ..."
+echo "   XQ";			tr 50 m=XQ; tr 51 m=XQ
+echo "   LLA";			tr 50 m=LLA; tr 51 m=LLA
+echo "   MC";			tr 50 m=MC; tr 51 m=MC
+echo "   UC";			tr 50 m=UC; tr 51 m=UC
+echo "   VID";			tr 50 m=VID; tr 51 m=VID
+echo "   PP";			tr 50 m=PP; tr 51 m=PP
+
+if $?herc15 'echo "   EMODMAP";	tr 50 m=EMODMAP; tr 51 m=EMODMAP'
+if $?herc15 'echo "   IMODMAP";	tr 50 m=IMODMAP; tr 51 m=IMODMAP'
+if $?herc15 'echo "   MODBLK";	tr 50 m=MODBLK; tr 51 m=MODBLK'
+if $?herc15 'echo "   TRKPOOL";	tr 50 m=TRKPOOL; tr 51 m=TRKPOOL'
+if $?herc15 'echo "   IPMC";	tr 50 m=IPMC; tr 51 m=IPMC'
+
+# Memories not yet tested by default
+#if $?herc15 'echo "   INGBUF";	tr 50 m=INGBUF; tr 51 m=INGBUF'
+#if $?herc15 'echo "   XQ_PTRS";	tr 50 m=XQ_PTRS; tr 51 m=XQ_PTRS'
+$done
+
+#set rctest=f
+set rcerror=f
+#debug +test
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+linkscan off
+
+
+echo Testing CPU DMA, Scatter/Gather Reload ...
+tr 22
+$done
+
+echo Testing CPU DMA, Scatter/Gather Simple ...
+tr 23
+$done
+
+echo Testing CPU DMA, Scatter/Gather Random ...
+tr 24
+$done
+
+echo "Running MAC loopback on all ports ..."
+tr 18 dmod=25 smi=47 dmi=23 pi=0x01010101 vl=14
+$done
+
+# Test PHY loopback, one port at a time.
+echo "Running PHY loopback on all ports ..."
+tr 19 dmod=13 smi=9 dmi=37 pi=0x01020304 vl=57
+$done
+
+echo "Running internal snake on all ports, MAC loopback ..."
+tr 39 loopbackmode=mac snakepath=two
+$done
+
+echo "Running internal snake on all ports, PHY loopback ..."
+tr 39 loopbackmode=phy snakepath=two
+$done
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48 hgdmod=19 smi=103 dmi=42 pi=0x11335577 vl=427 sendm=single
+$done
+
+# Not ready for prime-time
+#echo "Running PHY loopback V2 on all ports ..."
+#tr 49 hgdmod=21 smi=52 dmi=83 pi=0x01204007 vl=39 sendm=array
+#$done
+
+#--------- EXT Loopback ---------
+
+# If external Higig loopback cables are connected, external loopbacks
+# may be performed by setting the extall variable:
+#	setenv extall 1
+# The loopbacks that run are platform-dependent and are run on
+# adjacent pairs of connectors:
+#	white_knight:		one external cable
+#	merlin:			one external cable
+#	lancelot:		two external cables
+#	herc8, herc8_15:	four external cables
+#	herc4, herc4_15:	two external cables
+#	guenevere:		one external cables
+
+if $?extall \
+	"rcload rc.soc"
+
+if $?extall && $?herc8 "\
+	echo 'External Loopback Port1->Port2 ...'; \
+	tr 20 tpbm=hg0 di=1; \
+	echo 'External Loopback Port2->Port1 ...'; \
+	tr 20 tpbm=hg1 di=-1; \
+	\
+	echo 'External Loopback Port3->Port4 ...'; \
+	tr 20 tpbm=hg2 di=1; \
+	echo 'External Loopback Port4->Port3 ...'; \
+	tr 20 tpbm=hg3 di=-1; \
+	\
+	echo 'External Loopback Port5->Port6 ...'; \
+	tr 20 tpbm=hg4 di=1; \
+	echo 'External Loopback Port6->Port5 ...'; \
+	tr 20 tpbm=hg5 di=-1; \
+	\
+	echo 'External Loopback Port7->Port8 ...'; \
+	tr 20 tpbm=hg6 di=1; \
+	echo 'External Loopback Port8->Port7 ...'; \
+	tr 20 tpbm=hg7 di=-1"
+
+if $?extall && $?herc4 && !$?knightly "\
+	echo 'External Loopback Port1->Port2 ...'; \
+	tr 20 tpbm=hg0 di=1; \
+	echo 'External Loopback Port2->Port1 ...'; \
+	tr 20 tpbm=hg1 di=-1; \
+	\
+	echo 'External Loopback Port3->Port4 ...'; \
+	tr 20 tpbm=hg2 di=1; \
+	echo 'External Loopback Port4->Port3 ...'; \
+	tr 20 tpbm=hg3 di=-1"
+
+if $?extall && $?white_knight "\
+	echo 'External Loopback Port2->Port3 ...'; \
+	tr 20 tpbm=hg1 di=1; \
+	echo 'External Loopback Port3->Port2 ...'; \
+	tr 20 tpbm=hg2 di=-1"
+
+if $?extall && $?merlin "\
+	echo 'External Loopback Port2->Port3 ...'; \
+	tr 20 tpbm=hg1 di=1; \
+	echo 'External Loopback Port3->Port2 ...'; \
+	tr 20 tpbm=hg2 di=-1"
+
+if $?extall && $?lancelot "\
+	echo 'External Loopback Port3->Port4 ...'; \
+	tr 20 tpbm=hg2 di=1; \
+	echo 'External Loopback Port4->Port3 ...'; \
+	tr 20 tpbm=hg3 di=-1; \
+	\
+	echo 'External Loopback Port5->Port6 ...'; \
+	tr 20 tpbm=hg4 di=1; \
+	echo 'External Loopback Port6->Port5 ...'; \
+	tr 20 tpbm=hg5 di=-1"
+
+if $?extall && $?guenevere "\
+	echo 'External Loopback Port3->Port4 ...'; \
+	tr 20 tpbm=hg2 di=1; \
+	echo 'External Loopback Port4->Port3 ...'; \
+	tr 20 tpbm=hg3 di=-1"
+
+# Traffic test
+# (This test can be run in external mode but that is not currently done)
+
+echo 'Running Traffic test on all ports for one minute in Phy Mode ...'
+tr 72 TIS=60 CPI=5 RM=Phy SP=MAX L=1500 PBM=hg
+
+rcload rc.soc
+
+# Show status
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+rcload rc.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"

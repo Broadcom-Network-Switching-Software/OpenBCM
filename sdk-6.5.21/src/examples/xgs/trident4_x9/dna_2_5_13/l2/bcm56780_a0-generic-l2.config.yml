@@ -1,0 +1,537 @@
+#
+# BCM56780 48x100g + 8x400g port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+
+---
+device:
+    0:
+        DEVICE_CONFIG:
+            # CORE CLOCK FREQUENCY
+            CORE_CLK_FREQ: CLK_1350MHZ
+            # PP CLOCK FREQUENCY
+            PP_CLK_FREQ: CLK_1350MHZ
+...
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                # pipe 0
+                PORT_ID: 1
+            :
+                PC_PHYS_PORT_ID: 1
+            ?
+                PORT_ID: 2
+            :
+                PC_PHYS_PORT_ID: 3
+            ?
+                PORT_ID: 3
+            :
+                PC_PHYS_PORT_ID: 5
+            ?
+                PORT_ID: 4
+            :
+                PC_PHYS_PORT_ID: 7
+            ?
+                PORT_ID: 5
+            :
+                PC_PHYS_PORT_ID: 9
+            ?
+                PORT_ID: 6
+            :
+                PC_PHYS_PORT_ID: 11
+            ?
+                PORT_ID: 7
+            :
+                PC_PHYS_PORT_ID: 13
+            ?
+                PORT_ID: 8
+            :
+                PC_PHYS_PORT_ID: 15
+            ?
+                PORT_ID: 9
+            :
+                PC_PHYS_PORT_ID: 17
+            ?
+                PORT_ID: 10
+            :
+                PC_PHYS_PORT_ID: 19
+            ?
+                PORT_ID: 11
+            :
+                PC_PHYS_PORT_ID: 21
+            ?
+                PORT_ID: 12
+            :
+                PC_PHYS_PORT_ID: 23
+            ?
+                PORT_ID: 13
+            :
+                PC_PHYS_PORT_ID: 25
+            ?
+                PORT_ID: 14
+            :
+                PC_PHYS_PORT_ID: 33
+            ?
+                # pipe 1
+                PORT_ID: 20
+            :
+                PC_PHYS_PORT_ID: 41
+            ?
+                PORT_ID: 21
+            :
+                PC_PHYS_PORT_ID: 43
+            ?
+                PORT_ID: 22
+            :
+                PC_PHYS_PORT_ID: 45
+            ?
+                PORT_ID: 23
+            :
+                PC_PHYS_PORT_ID: 47
+            ?
+                PORT_ID: 24
+            :
+                PC_PHYS_PORT_ID: 49
+            ?
+                PORT_ID: 25
+            :
+                PC_PHYS_PORT_ID: 51
+            ?
+                PORT_ID: 26
+            :
+                PC_PHYS_PORT_ID: 53
+            ?
+                PORT_ID: 27
+            :
+                PC_PHYS_PORT_ID: 55
+            ?
+                PORT_ID: 28
+            :
+                PC_PHYS_PORT_ID: 57
+            ?
+                PORT_ID: 29
+            :
+                PC_PHYS_PORT_ID: 59
+            ?
+                PORT_ID: 30
+            :
+                PC_PHYS_PORT_ID: 61
+            ?
+                PORT_ID: 31
+            :
+                PC_PHYS_PORT_ID: 63
+            ?
+                PORT_ID: 32
+            :
+                PC_PHYS_PORT_ID: 65
+            ?
+                PORT_ID: 33
+            :
+                PC_PHYS_PORT_ID: 73
+            ?
+                # pipe 2
+                PORT_ID: 40
+            :
+                PC_PHYS_PORT_ID: 81
+            ?
+                PORT_ID: 41
+            :
+                PC_PHYS_PORT_ID: 83
+            ?
+                PORT_ID: 42
+            :
+                PC_PHYS_PORT_ID: 85
+            ?
+                PORT_ID: 43
+            :
+                PC_PHYS_PORT_ID: 87
+            ?
+                PORT_ID: 44
+            :
+                PC_PHYS_PORT_ID: 89
+            ?
+                PORT_ID: 45
+            :
+                PC_PHYS_PORT_ID: 91
+            ?
+                PORT_ID: 46
+            :
+                PC_PHYS_PORT_ID: 93
+            ?
+                PORT_ID: 47
+            :
+                PC_PHYS_PORT_ID: 95
+            ?
+                PORT_ID: 48
+            :
+                PC_PHYS_PORT_ID: 97
+            ?
+                PORT_ID: 49
+            :
+                PC_PHYS_PORT_ID: 99
+            ?
+                PORT_ID: 50
+            :
+                PC_PHYS_PORT_ID: 101
+            ?
+                PORT_ID: 51
+            :
+                PC_PHYS_PORT_ID: 103
+            ?
+                PORT_ID: 52
+            :
+                PC_PHYS_PORT_ID: 105
+            ?
+                PORT_ID: 53
+            :
+                PC_PHYS_PORT_ID: 113
+            ?
+                # pipe 3
+                PORT_ID: 60
+            :
+                PC_PHYS_PORT_ID: 121
+            ?
+                PORT_ID: 61
+            :
+                PC_PHYS_PORT_ID: 123
+            ?
+                PORT_ID: 62
+            :
+                PC_PHYS_PORT_ID: 125
+            ?
+                PORT_ID: 63
+            :
+                PC_PHYS_PORT_ID: 127
+            ?
+                PORT_ID: 64
+            :
+                PC_PHYS_PORT_ID: 129
+            ?
+                PORT_ID: 65
+            :
+                PC_PHYS_PORT_ID: 131
+            ?
+                PORT_ID: 66
+            :
+                PC_PHYS_PORT_ID: 133
+            ?
+                PORT_ID: 67
+            :
+                PC_PHYS_PORT_ID: 135
+            ?
+                PORT_ID: 68
+            :
+                PC_PHYS_PORT_ID: 137
+            ?
+                PORT_ID: 69
+            :
+                PC_PHYS_PORT_ID: 139
+            ?
+                PORT_ID: 70
+            :
+                PC_PHYS_PORT_ID: 141
+            ?
+                PORT_ID: 71
+            :
+                PC_PHYS_PORT_ID: 143
+            ?
+                PORT_ID: 72
+            :
+                PC_PHYS_PORT_ID: 145
+            ?
+                PORT_ID: 73
+            :
+                PC_PHYS_PORT_ID: 153
+            ?
+                # management port
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 161
+            ?
+                PORT_ID: 78
+            :
+                PC_PHYS_PORT_ID: 162
+            ?
+                # loopback port
+                PORT_ID: 39
+            :
+                PC_PHYS_PORT_ID: 163
+            ?
+                PORT_ID: 79
+            :
+                PC_PHYS_PORT_ID: 164
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: 0
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [[1, 12],
+                          [20, 31],
+                          [40, 51],
+                          [60, 71]]
+            :
+                &port_mode_100g
+                ENABLE: 1
+                SPEED: 100000
+                NUM_LANES: 2
+                FEC_MODE: PC_FEC_RS544
+                MAX_FRAME_SIZE: 9416
+            ?
+                PORT_ID: [[13, 14],
+                          [32, 33],
+                          [52, 53],
+                          [72, 73]]
+            :
+                &port_mode_400g
+                ENABLE: 1
+                SPEED: 400000
+                NUM_LANES: 8
+                FEC_MODE: PC_FEC_RS544_2XN
+                MAX_FRAME_SIZE: 9416
+            ?
+                PORT_ID: [39,     # Loopback port 0 (Pipe 1)
+                          79]     # Loopback port 1 (Pipe 3)
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          78]     # Management port 1 (Pipe 3)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 9416
+
+...
+#
+# BCM56780 20x400g port configuration.
+#
+# configuration yaml file
+#   device:
+#       <unit>:
+#           <table>:
+#               ?
+#                   <key_fld_1>: <value>
+#                   <key_fld_2>: <value>
+#                   ...
+#                   <key_fld_n>: <value>
+#               :
+#                   <data_fld_1>: <value>
+#                   <data_fld_2>: <value>
+#                   ...
+#                   <data_fld_n>: <value>
+#
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                # Management port
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 161
+            ?
+                PORT_ID: 78
+            :
+                PC_PHYS_PORT_ID: 162
+            ?
+                # Loopback port
+                PORT_ID: 39
+            :
+                PC_PHYS_PORT_ID: 163
+            ?
+                PORT_ID: 79
+            :
+                PC_PHYS_PORT_ID: 164
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: 0
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [39,     # Loopback port 0 (Pipe 1)
+                          79]     # Loopback port 1 (Pipe 3)
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          78]     # Management port 1 (Pipe 3)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 9416
+
+...
+---
+bcm_device:
+    0:
+        port:
+            5:
+                encap_mode: HIGIG3
+            6:
+                encap_mode: HIGIG3
+            7:
+                encap_mode: HIGIG3
+            8:
+                encap_mode: HIGIG3
+            14:
+                encap_mode: HIGIG3
+            33:
+                encap_mode: HIGIG3
+            52:
+                encap_mode: HIGIG3
+            68:
+                encap_mode: HIGIG3
+            69:
+                encap_mode: HIGIG3
+            70:
+                encap_mode: HIGIG3
+            71:
+                encap_mode: HIGIG3
+            73:
+                encap_mode: HIGIG3
+...
+#
+# $Copyright:.$
+#
+# BCM56780 BCM device configuration.
+#
+# configuration yaml file
+#
+# bcm_device:
+#     <unit>:
+#         global:
+#             <property_1>: <value>
+#             <property_2>: <value>
+#         port:
+#             <key>:
+#                 <property_1>: <value>
+#                 <property_2>: <value>
+#
+# $Copyright:.$
+#
+
+---
+bcm_device:
+    0:
+        global:
+            l3_enable: 1
+            l2_hitbit_enable: 1
+...
+---
+bcm_device:
+    0:
+        port:
+            "*":
+                encap_mode: IEEE
+...
+---
+bcm_device:
+    0:
+        global:
+            bcm_tunnel_term_compatible_mode: 1
+...
+---
+bcm_device:
+    0:
+        global:
+            vlan_flooding_l2mc_num_reserved: 0 
+...
+---
+device:
+    0:
+        SER_CONFIG:
+            SER_LOG_DEPTH: 10
+            SER_ENABLE: 1
+            MESSAGE_Q_DEPTH: 8
+...
+---
+device:
+    0:
+        FP_CONFIG:
+            FP_ING_OPERMODE: GLOBAL_PIPE_AWARE
+            FP_VLAN_OPERMODE_PIPEUNIQUE: 0
+            FP_EGR_OPERMODE_PIPEUNIQUE: 0
+#            FP_EM_OPERMODE_PIPEUNIQUE: 0
+...
+---
+device:
+        0:
+                TM_SCHEDULER_CONFIG:
+                        NUM_MC_Q: NUM_MC_Q_4
+...
+---
+component:
+    trm_resources:
+        max_entries: 32768
+...
+---
+bcm_device:
+    0:
+        global:
+            flexctr_action_reserved_ipmc_hitbit: 1
+...
+---
+bcm_device:
+    0:
+        global:
+            l3_alpm_template: 2
+            l3_alpm2_bnk_threshold: 100
+...
+---
+bcm_device:
+    0:
+        global:
+            uft_mode: 3
+...
+

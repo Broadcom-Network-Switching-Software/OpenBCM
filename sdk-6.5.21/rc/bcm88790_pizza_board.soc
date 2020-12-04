@@ -1,0 +1,466 @@
+# $Id: bcm88790_pizza_board.soc
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# 3 development boards are supported for BCM8879X device:
+# - Negev
+# - DVT
+# - Pizza box
+# This file is for Pizza box configuration
+
+#Board Properties
+
+#Polarity configuration required for Broadcom BCM8879X Pizza box board
+#RX polarity
+config add phy_rx_polarity_flip.BCM8879X=0
+config add phy_rx_polarity_flip_fabric0.BCM8879X=1
+config add phy_rx_polarity_flip_fabric1.BCM8879X=1
+config add phy_rx_polarity_flip_fabric3.BCM8879X=1
+config add phy_rx_polarity_flip_fabric4.BCM8879X=1
+config add phy_rx_polarity_flip_fabric7.BCM8879X=1
+config add phy_rx_polarity_flip_fabric16.BCM8879X=1
+config add phy_rx_polarity_flip_fabric21.BCM8879X=1
+config add phy_rx_polarity_flip_fabric22.BCM8879X=1
+config add phy_rx_polarity_flip_fabric25.BCM8879X=1
+config add phy_rx_polarity_flip_fabric26.BCM8879X=1
+config add phy_rx_polarity_flip_fabric28.BCM8879X=1
+config add phy_rx_polarity_flip_fabric32.BCM8879X=1
+config add phy_rx_polarity_flip_fabric34.BCM8879X=1
+config add phy_rx_polarity_flip_fabric35.BCM8879X=1
+config add phy_rx_polarity_flip_fabric39.BCM8879X=1
+config add phy_rx_polarity_flip_fabric40.BCM8879X=1
+config add phy_rx_polarity_flip_fabric41.BCM8879X=1
+config add phy_rx_polarity_flip_fabric42.BCM8879X=1
+config add phy_rx_polarity_flip_fabric44.BCM8879X=1
+config add phy_rx_polarity_flip_fabric46.BCM8879X=1
+config add phy_rx_polarity_flip_fabric49.BCM8879X=1
+config add phy_rx_polarity_flip_fabric51.BCM8879X=1
+config add phy_rx_polarity_flip_fabric52.BCM8879X=1
+config add phy_rx_polarity_flip_fabric57.BCM8879X=1
+config add phy_rx_polarity_flip_fabric64.BCM8879X=1
+config add phy_rx_polarity_flip_fabric65.BCM8879X=1
+config add phy_rx_polarity_flip_fabric66.BCM8879X=1
+config add phy_rx_polarity_flip_fabric68.BCM8879X=1
+config add phy_rx_polarity_flip_fabric70.BCM8879X=1
+config add phy_rx_polarity_flip_fabric71.BCM8879X=1
+config add phy_rx_polarity_flip_fabric74.BCM8879X=1
+config add phy_rx_polarity_flip_fabric76.BCM8879X=1
+config add phy_rx_polarity_flip_fabric77.BCM8879X=1
+config add phy_rx_polarity_flip_fabric80.BCM8879X=1
+config add phy_rx_polarity_flip_fabric81.BCM8879X=1
+config add phy_rx_polarity_flip_fabric82.BCM8879X=1
+config add phy_rx_polarity_flip_fabric84.BCM8879X=1
+config add phy_rx_polarity_flip_fabric85.BCM8879X=1
+config add phy_rx_polarity_flip_fabric86.BCM8879X=1
+config add phy_rx_polarity_flip_fabric87.BCM8879X=1
+config add phy_rx_polarity_flip_fabric88.BCM8879X=1
+config add phy_rx_polarity_flip_fabric90.BCM8879X=1
+config add phy_rx_polarity_flip_fabric93.BCM8879X=1
+config add phy_rx_polarity_flip_fabric96.BCM8879X=1
+config add phy_rx_polarity_flip_fabric97.BCM8879X=1
+config add phy_rx_polarity_flip_fabric100.BCM8879X=1
+config add phy_rx_polarity_flip_fabric102.BCM8879X=1
+config add phy_rx_polarity_flip_fabric104.BCM8879X=1
+config add phy_rx_polarity_flip_fabric106.BCM8879X=1
+config add phy_rx_polarity_flip_fabric109.BCM8879X=1
+config add phy_rx_polarity_flip_fabric110.BCM8879X=1
+config add phy_rx_polarity_flip_fabric113.BCM8879X=1
+config add phy_rx_polarity_flip_fabric114.BCM8879X=1
+config add phy_rx_polarity_flip_fabric119.BCM8879X=1
+config add phy_rx_polarity_flip_fabric120.BCM8879X=1
+config add phy_rx_polarity_flip_fabric121.BCM8879X=1
+config add phy_rx_polarity_flip_fabric125.BCM8879X=1
+config add phy_rx_polarity_flip_fabric129.BCM8879X=1
+config add phy_rx_polarity_flip_fabric130.BCM8879X=1
+config add phy_rx_polarity_flip_fabric132.BCM8879X=1
+config add phy_rx_polarity_flip_fabric135.BCM8879X=1
+config add phy_rx_polarity_flip_fabric137.BCM8879X=1
+config add phy_rx_polarity_flip_fabric140.BCM8879X=1
+config add phy_rx_polarity_flip_fabric141.BCM8879X=1
+config add phy_rx_polarity_flip_fabric143.BCM8879X=1
+config add phy_rx_polarity_flip_fabric144.BCM8879X=1
+config add phy_rx_polarity_flip_fabric145.BCM8879X=1
+config add phy_rx_polarity_flip_fabric147.BCM8879X=1
+config add phy_rx_polarity_flip_fabric148.BCM8879X=1
+config add phy_rx_polarity_flip_fabric149.BCM8879X=1
+config add phy_rx_polarity_flip_fabric150.BCM8879X=1
+config add phy_rx_polarity_flip_fabric158.BCM8879X=1
+config add phy_rx_polarity_flip_fabric159.BCM8879X=1
+config add phy_rx_polarity_flip_fabric161.BCM8879X=1
+config add phy_rx_polarity_flip_fabric164.BCM8879X=1
+config add phy_rx_polarity_flip_fabric167.BCM8879X=1
+config add phy_rx_polarity_flip_fabric169.BCM8879X=1
+config add phy_rx_polarity_flip_fabric170.BCM8879X=1
+config add phy_rx_polarity_flip_fabric171.BCM8879X=1
+config add phy_rx_polarity_flip_fabric177.BCM8879X=1
+config add phy_rx_polarity_flip_fabric180.BCM8879X=1
+config add phy_rx_polarity_flip_fabric183.BCM8879X=1
+config add phy_rx_polarity_flip_fabric191.BCM8879X=1
+
+#TX polarity
+config add phy_tx_polarity_flip.BCM8879X=0
+config add phy_tx_polarity_flip_fabric0.BCM8879X=1
+config add phy_tx_polarity_flip_fabric1.BCM8879X=1
+config add phy_tx_polarity_flip_fabric3.BCM8879X=1
+config add phy_tx_polarity_flip_fabric6.BCM8879X=1
+config add phy_tx_polarity_flip_fabric8.BCM8879X=1
+config add phy_tx_polarity_flip_fabric9.BCM8879X=1
+config add phy_tx_polarity_flip_fabric10.BCM8879X=1
+config add phy_tx_polarity_flip_fabric11.BCM8879X=1
+config add phy_tx_polarity_flip_fabric14.BCM8879X=1
+config add phy_tx_polarity_flip_fabric15.BCM8879X=1
+config add phy_tx_polarity_flip_fabric16.BCM8879X=1
+config add phy_tx_polarity_flip_fabric18.BCM8879X=1
+config add phy_tx_polarity_flip_fabric19.BCM8879X=1
+config add phy_tx_polarity_flip_fabric20.BCM8879X=1
+config add phy_tx_polarity_flip_fabric22.BCM8879X=1
+config add phy_tx_polarity_flip_fabric23.BCM8879X=1
+config add phy_tx_polarity_flip_fabric25.BCM8879X=1
+config add phy_tx_polarity_flip_fabric27.BCM8879X=1
+config add phy_tx_polarity_flip_fabric28.BCM8879X=1
+config add phy_tx_polarity_flip_fabric30.BCM8879X=1
+config add phy_tx_polarity_flip_fabric31.BCM8879X=1
+config add phy_tx_polarity_flip_fabric32.BCM8879X=1
+config add phy_tx_polarity_flip_fabric34.BCM8879X=1
+config add phy_tx_polarity_flip_fabric35.BCM8879X=1
+config add phy_tx_polarity_flip_fabric36.BCM8879X=1
+config add phy_tx_polarity_flip_fabric38.BCM8879X=1
+config add phy_tx_polarity_flip_fabric39.BCM8879X=1
+config add phy_tx_polarity_flip_fabric40.BCM8879X=1
+config add phy_tx_polarity_flip_fabric41.BCM8879X=1
+config add phy_tx_polarity_flip_fabric43.BCM8879X=1
+config add phy_tx_polarity_flip_fabric45.BCM8879X=1
+config add phy_tx_polarity_flip_fabric46.BCM8879X=1
+config add phy_tx_polarity_flip_fabric47.BCM8879X=1
+config add phy_tx_polarity_flip_fabric49.BCM8879X=1
+config add phy_tx_polarity_flip_fabric50.BCM8879X=1
+config add phy_tx_polarity_flip_fabric51.BCM8879X=1
+config add phy_tx_polarity_flip_fabric53.BCM8879X=1
+config add phy_tx_polarity_flip_fabric54.BCM8879X=1
+config add phy_tx_polarity_flip_fabric56.BCM8879X=1
+config add phy_tx_polarity_flip_fabric60.BCM8879X=1
+config add phy_tx_polarity_flip_fabric63.BCM8879X=1
+config add phy_tx_polarity_flip_fabric64.BCM8879X=1
+config add phy_tx_polarity_flip_fabric65.BCM8879X=1
+config add phy_tx_polarity_flip_fabric66.BCM8879X=1
+config add phy_tx_polarity_flip_fabric67.BCM8879X=1
+config add phy_tx_polarity_flip_fabric68.BCM8879X=1
+config add phy_tx_polarity_flip_fabric69.BCM8879X=1
+config add phy_tx_polarity_flip_fabric70.BCM8879X=1
+config add phy_tx_polarity_flip_fabric72.BCM8879X=1
+config add phy_tx_polarity_flip_fabric73.BCM8879X=1
+config add phy_tx_polarity_flip_fabric77.BCM8879X=1
+config add phy_tx_polarity_flip_fabric80.BCM8879X=1
+config add phy_tx_polarity_flip_fabric81.BCM8879X=1
+config add phy_tx_polarity_flip_fabric82.BCM8879X=1
+config add phy_tx_polarity_flip_fabric83.BCM8879X=1
+config add phy_tx_polarity_flip_fabric84.BCM8879X=1
+config add phy_tx_polarity_flip_fabric86.BCM8879X=1
+config add phy_tx_polarity_flip_fabric88.BCM8879X=1
+config add phy_tx_polarity_flip_fabric90.BCM8879X=1
+config add phy_tx_polarity_flip_fabric91.BCM8879X=1
+config add phy_tx_polarity_flip_fabric92.BCM8879X=1
+config add phy_tx_polarity_flip_fabric94.BCM8879X=1
+config add phy_tx_polarity_flip_fabric95.BCM8879X=1
+config add phy_tx_polarity_flip_fabric97.BCM8879X=1
+config add phy_tx_polarity_flip_fabric99.BCM8879X=1
+config add phy_tx_polarity_flip_fabric102.BCM8879X=1
+config add phy_tx_polarity_flip_fabric103.BCM8879X=1
+config add phy_tx_polarity_flip_fabric104.BCM8879X=1
+config add phy_tx_polarity_flip_fabric106.BCM8879X=1
+config add phy_tx_polarity_flip_fabric110.BCM8879X=1
+config add phy_tx_polarity_flip_fabric112.BCM8879X=1
+config add phy_tx_polarity_flip_fabric114.BCM8879X=1
+config add phy_tx_polarity_flip_fabric116.BCM8879X=1
+config add phy_tx_polarity_flip_fabric117.BCM8879X=1
+config add phy_tx_polarity_flip_fabric120.BCM8879X=1
+config add phy_tx_polarity_flip_fabric121.BCM8879X=1
+config add phy_tx_polarity_flip_fabric123.BCM8879X=1
+config add phy_tx_polarity_flip_fabric128.BCM8879X=1
+config add phy_tx_polarity_flip_fabric131.BCM8879X=1
+config add phy_tx_polarity_flip_fabric132.BCM8879X=1
+config add phy_tx_polarity_flip_fabric133.BCM8879X=1
+config add phy_tx_polarity_flip_fabric136.BCM8879X=1
+config add phy_tx_polarity_flip_fabric137.BCM8879X=1
+config add phy_tx_polarity_flip_fabric141.BCM8879X=1
+config add phy_tx_polarity_flip_fabric142.BCM8879X=1
+config add phy_tx_polarity_flip_fabric143.BCM8879X=1
+config add phy_tx_polarity_flip_fabric145.BCM8879X=1
+config add phy_tx_polarity_flip_fabric148.BCM8879X=1
+config add phy_tx_polarity_flip_fabric150.BCM8879X=1
+config add phy_tx_polarity_flip_fabric152.BCM8879X=1
+config add phy_tx_polarity_flip_fabric153.BCM8879X=1
+config add phy_tx_polarity_flip_fabric155.BCM8879X=1
+config add phy_tx_polarity_flip_fabric157.BCM8879X=1
+config add phy_tx_polarity_flip_fabric158.BCM8879X=1
+config add phy_tx_polarity_flip_fabric159.BCM8879X=1
+config add phy_tx_polarity_flip_fabric160.BCM8879X=1
+config add phy_tx_polarity_flip_fabric161.BCM8879X=1
+config add phy_tx_polarity_flip_fabric164.BCM8879X=1
+config add phy_tx_polarity_flip_fabric165.BCM8879X=1
+config add phy_tx_polarity_flip_fabric166.BCM8879X=1
+config add phy_tx_polarity_flip_fabric167.BCM8879X=1
+config add phy_tx_polarity_flip_fabric168.BCM8879X=1
+config add phy_tx_polarity_flip_fabric173.BCM8879X=1
+config add phy_tx_polarity_flip_fabric174.BCM8879X=1
+config add phy_tx_polarity_flip_fabric176.BCM8879X=1
+config add phy_tx_polarity_flip_fabric177.BCM8879X=1
+config add phy_tx_polarity_flip_fabric182.BCM8879X=1
+config add phy_tx_polarity_flip_fabric188.BCM8879X=1
+
+#lane swap
+
+config add lane_to_serdes_map_fabric_lane0.BCM8879X=rx0:tx0
+config add lane_to_serdes_map_fabric_lane1.BCM8879X=rx1:tx1
+config add lane_to_serdes_map_fabric_lane2.BCM8879X=rx2:tx2
+config add lane_to_serdes_map_fabric_lane3.BCM8879X=rx3:tx3
+
+config add lane_to_serdes_map_fabric_lane4.BCM8879X=rx4:tx4
+config add lane_to_serdes_map_fabric_lane5.BCM8879X=rx5:tx5
+config add lane_to_serdes_map_fabric_lane6.BCM8879X=rx6:tx6
+config add lane_to_serdes_map_fabric_lane7.BCM8879X=rx7:tx7
+
+config add lane_to_serdes_map_fabric_lane8.BCM8879X=rx8:tx8
+config add lane_to_serdes_map_fabric_lane9.BCM8879X=rx9:tx9
+config add lane_to_serdes_map_fabric_lane10.BCM8879X=rx10:tx10
+config add lane_to_serdes_map_fabric_lane11.BCM8879X=rx11:tx11
+
+config add lane_to_serdes_map_fabric_lane12.BCM8879X=rx12:tx15
+config add lane_to_serdes_map_fabric_lane13.BCM8879X=rx13:tx14
+config add lane_to_serdes_map_fabric_lane14.BCM8879X=rx14:tx13
+config add lane_to_serdes_map_fabric_lane15.BCM8879X=rx15:tx12
+
+config add lane_to_serdes_map_fabric_lane16.BCM8879X=rx16:tx16
+config add lane_to_serdes_map_fabric_lane17.BCM8879X=rx17:tx17
+config add lane_to_serdes_map_fabric_lane18.BCM8879X=rx18:tx18
+config add lane_to_serdes_map_fabric_lane19.BCM8879X=rx19:tx19
+
+config add lane_to_serdes_map_fabric_lane20.BCM8879X=rx20:tx23
+config add lane_to_serdes_map_fabric_lane21.BCM8879X=rx21:tx22
+config add lane_to_serdes_map_fabric_lane22.BCM8879X=rx22:tx21
+config add lane_to_serdes_map_fabric_lane23.BCM8879X=rx23:tx20
+
+config add lane_to_serdes_map_fabric_lane24.BCM8879X=rx24:tx26
+config add lane_to_serdes_map_fabric_lane25.BCM8879X=rx25:tx27
+config add lane_to_serdes_map_fabric_lane26.BCM8879X=rx26:tx24
+config add lane_to_serdes_map_fabric_lane27.BCM8879X=rx27:tx25
+
+config add lane_to_serdes_map_fabric_lane28.BCM8879X=rx28:tx28
+config add lane_to_serdes_map_fabric_lane29.BCM8879X=rx29:tx29
+config add lane_to_serdes_map_fabric_lane30.BCM8879X=rx30:tx30
+config add lane_to_serdes_map_fabric_lane31.BCM8879X=rx31:tx31
+
+config add lane_to_serdes_map_fabric_lane32.BCM8879X=rx32:tx32
+config add lane_to_serdes_map_fabric_lane33.BCM8879X=rx33:tx33
+config add lane_to_serdes_map_fabric_lane34.BCM8879X=rx34:tx34
+config add lane_to_serdes_map_fabric_lane35.BCM8879X=rx35:tx35
+
+config add lane_to_serdes_map_fabric_lane36.BCM8879X=rx36:tx39
+config add lane_to_serdes_map_fabric_lane37.BCM8879X=rx37:tx38
+config add lane_to_serdes_map_fabric_lane38.BCM8879X=rx38:tx37
+config add lane_to_serdes_map_fabric_lane39.BCM8879X=rx39:tx36
+
+config add lane_to_serdes_map_fabric_lane40.BCM8879X=rx40:tx42
+config add lane_to_serdes_map_fabric_lane41.BCM8879X=rx41:tx43
+config add lane_to_serdes_map_fabric_lane42.BCM8879X=rx42:tx40
+config add lane_to_serdes_map_fabric_lane43.BCM8879X=rx43:tx41
+
+config add lane_to_serdes_map_fabric_lane44.BCM8879X=rx44:tx44
+config add lane_to_serdes_map_fabric_lane45.BCM8879X=rx45:tx45
+config add lane_to_serdes_map_fabric_lane46.BCM8879X=rx46:tx46
+config add lane_to_serdes_map_fabric_lane47.BCM8879X=rx47:tx47
+
+config add lane_to_serdes_map_fabric_lane48.BCM8879X=rx48:tx49
+config add lane_to_serdes_map_fabric_lane49.BCM8879X=rx49:tx50
+config add lane_to_serdes_map_fabric_lane50.BCM8879X=rx50:tx48
+config add lane_to_serdes_map_fabric_lane51.BCM8879X=rx51:tx51
+
+config add lane_to_serdes_map_fabric_lane52.BCM8879X=rx52:tx55
+config add lane_to_serdes_map_fabric_lane53.BCM8879X=rx53:tx53
+config add lane_to_serdes_map_fabric_lane54.BCM8879X=rx54:tx54
+config add lane_to_serdes_map_fabric_lane55.BCM8879X=rx55:tx52
+
+config add lane_to_serdes_map_fabric_lane56.BCM8879X=rx56:tx59
+config add lane_to_serdes_map_fabric_lane57.BCM8879X=rx57:tx58
+config add lane_to_serdes_map_fabric_lane58.BCM8879X=rx58:tx56
+config add lane_to_serdes_map_fabric_lane59.BCM8879X=rx59:tx57
+
+config add lane_to_serdes_map_fabric_lane60.BCM8879X=rx60:tx62
+config add lane_to_serdes_map_fabric_lane61.BCM8879X=rx61:tx61
+config add lane_to_serdes_map_fabric_lane62.BCM8879X=rx62:tx60
+config add lane_to_serdes_map_fabric_lane63.BCM8879X=rx63:tx63
+
+config add lane_to_serdes_map_fabric_lane64.BCM8879X=rx64:tx66
+config add lane_to_serdes_map_fabric_lane65.BCM8879X=rx65:tx67
+config add lane_to_serdes_map_fabric_lane66.BCM8879X=rx66:tx64
+config add lane_to_serdes_map_fabric_lane67.BCM8879X=rx67:tx65
+
+config add lane_to_serdes_map_fabric_lane68.BCM8879X=rx68:tx68
+config add lane_to_serdes_map_fabric_lane69.BCM8879X=rx69:tx69
+config add lane_to_serdes_map_fabric_lane70.BCM8879X=rx70:tx70
+config add lane_to_serdes_map_fabric_lane71.BCM8879X=rx71:tx71
+
+config add lane_to_serdes_map_fabric_lane72.BCM8879X=rx72:tx72
+config add lane_to_serdes_map_fabric_lane73.BCM8879X=rx73:tx74
+config add lane_to_serdes_map_fabric_lane74.BCM8879X=rx74:tx73
+config add lane_to_serdes_map_fabric_lane75.BCM8879X=rx75:tx75
+
+config add lane_to_serdes_map_fabric_lane76.BCM8879X=rx76:tx76
+config add lane_to_serdes_map_fabric_lane77.BCM8879X=rx77:tx77
+config add lane_to_serdes_map_fabric_lane78.BCM8879X=rx78:tx78
+config add lane_to_serdes_map_fabric_lane79.BCM8879X=rx79:tx79
+
+config add lane_to_serdes_map_fabric_lane80.BCM8879X=rx80:tx82
+config add lane_to_serdes_map_fabric_lane81.BCM8879X=rx81:tx83
+config add lane_to_serdes_map_fabric_lane82.BCM8879X=rx82:tx80
+config add lane_to_serdes_map_fabric_lane83.BCM8879X=rx83:tx81
+
+config add lane_to_serdes_map_fabric_lane84.BCM8879X=rx84:tx84
+config add lane_to_serdes_map_fabric_lane85.BCM8879X=rx85:tx85
+config add lane_to_serdes_map_fabric_lane86.BCM8879X=rx86:tx86
+config add lane_to_serdes_map_fabric_lane87.BCM8879X=rx87:tx87
+
+config add lane_to_serdes_map_fabric_lane88.BCM8879X=rx88:tx88
+config add lane_to_serdes_map_fabric_lane89.BCM8879X=rx89:tx89
+config add lane_to_serdes_map_fabric_lane90.BCM8879X=rx90:tx90
+config add lane_to_serdes_map_fabric_lane91.BCM8879X=rx91:tx91
+
+config add lane_to_serdes_map_fabric_lane92.BCM8879X=rx92:tx95
+config add lane_to_serdes_map_fabric_lane93.BCM8879X=rx93:tx94
+config add lane_to_serdes_map_fabric_lane94.BCM8879X=rx94:tx93
+config add lane_to_serdes_map_fabric_lane95.BCM8879X=rx95:tx92
+
+config add lane_to_serdes_map_fabric_lane96.BCM8879X=rx96:tx99
+config add lane_to_serdes_map_fabric_lane97.BCM8879X=rx97:tx97
+config add lane_to_serdes_map_fabric_lane98.BCM8879X=rx98:tx98
+config add lane_to_serdes_map_fabric_lane99.BCM8879X=rx99:tx96
+
+config add lane_to_serdes_map_fabric_lane100.BCM8879X=rx100:tx100
+config add lane_to_serdes_map_fabric_lane101.BCM8879X=rx101:tx101
+config add lane_to_serdes_map_fabric_lane102.BCM8879X=rx102:tx103
+config add lane_to_serdes_map_fabric_lane103.BCM8879X=rx103:tx102
+
+config add lane_to_serdes_map_fabric_lane104.BCM8879X=rx104:tx104
+config add lane_to_serdes_map_fabric_lane105.BCM8879X=rx105:tx105
+config add lane_to_serdes_map_fabric_lane106.BCM8879X=rx106:tx106
+config add lane_to_serdes_map_fabric_lane107.BCM8879X=rx107:tx107
+
+config add lane_to_serdes_map_fabric_lane108.BCM8879X=rx108:tx108
+config add lane_to_serdes_map_fabric_lane109.BCM8879X=rx109:tx109
+config add lane_to_serdes_map_fabric_lane110.BCM8879X=rx110:tx110
+config add lane_to_serdes_map_fabric_lane111.BCM8879X=rx111:tx111
+
+config add lane_to_serdes_map_fabric_lane112.BCM8879X=rx112:tx112
+config add lane_to_serdes_map_fabric_lane113.BCM8879X=rx113:tx113
+config add lane_to_serdes_map_fabric_lane114.BCM8879X=rx114:tx114
+config add lane_to_serdes_map_fabric_lane115.BCM8879X=rx115:tx115
+
+config add lane_to_serdes_map_fabric_lane116.BCM8879X=rx116:tx116
+config add lane_to_serdes_map_fabric_lane117.BCM8879X=rx117:tx117
+config add lane_to_serdes_map_fabric_lane118.BCM8879X=rx118:tx118
+config add lane_to_serdes_map_fabric_lane119.BCM8879X=rx119:tx119
+
+config add lane_to_serdes_map_fabric_lane120.BCM8879X=rx120:tx120
+config add lane_to_serdes_map_fabric_lane121.BCM8879X=rx121:tx121
+config add lane_to_serdes_map_fabric_lane122.BCM8879X=rx122:tx122
+config add lane_to_serdes_map_fabric_lane123.BCM8879X=rx123:tx123
+
+config add lane_to_serdes_map_fabric_lane124.BCM8879X=rx124:tx124
+config add lane_to_serdes_map_fabric_lane125.BCM8879X=rx125:tx125
+config add lane_to_serdes_map_fabric_lane126.BCM8879X=rx126:tx126
+config add lane_to_serdes_map_fabric_lane127.BCM8879X=rx127:tx127
+
+config add lane_to_serdes_map_fabric_lane128.BCM8879X=rx128:tx128
+config add lane_to_serdes_map_fabric_lane129.BCM8879X=rx129:tx129
+config add lane_to_serdes_map_fabric_lane130.BCM8879X=rx130:tx130
+config add lane_to_serdes_map_fabric_lane131.BCM8879X=rx131:tx131
+
+config add lane_to_serdes_map_fabric_lane132.BCM8879X=rx132:tx132
+config add lane_to_serdes_map_fabric_lane133.BCM8879X=rx133:tx133
+config add lane_to_serdes_map_fabric_lane134.BCM8879X=rx134:tx134
+config add lane_to_serdes_map_fabric_lane135.BCM8879X=rx135:tx135
+
+config add lane_to_serdes_map_fabric_lane136.BCM8879X=rx136:tx136
+config add lane_to_serdes_map_fabric_lane137.BCM8879X=rx137:tx137
+config add lane_to_serdes_map_fabric_lane138.BCM8879X=rx138:tx138
+config add lane_to_serdes_map_fabric_lane139.BCM8879X=rx139:tx139
+
+config add lane_to_serdes_map_fabric_lane140.BCM8879X=rx140:tx140
+config add lane_to_serdes_map_fabric_lane141.BCM8879X=rx141:tx141
+config add lane_to_serdes_map_fabric_lane142.BCM8879X=rx142:tx142
+config add lane_to_serdes_map_fabric_lane143.BCM8879X=rx143:tx143
+
+config add lane_to_serdes_map_fabric_lane144.BCM8879X=rx144:tx144
+config add lane_to_serdes_map_fabric_lane145.BCM8879X=rx145:tx145
+config add lane_to_serdes_map_fabric_lane146.BCM8879X=rx146:tx146
+config add lane_to_serdes_map_fabric_lane147.BCM8879X=rx147:tx147
+
+config add lane_to_serdes_map_fabric_lane148.BCM8879X=rx148:tx148
+config add lane_to_serdes_map_fabric_lane149.BCM8879X=rx149:tx149
+config add lane_to_serdes_map_fabric_lane150.BCM8879X=rx150:tx150
+config add lane_to_serdes_map_fabric_lane151.BCM8879X=rx151:tx151
+
+config add lane_to_serdes_map_fabric_lane152.BCM8879X=rx152:tx152
+config add lane_to_serdes_map_fabric_lane153.BCM8879X=rx153:tx153
+config add lane_to_serdes_map_fabric_lane154.BCM8879X=rx154:tx154
+config add lane_to_serdes_map_fabric_lane155.BCM8879X=rx155:tx155
+
+config add lane_to_serdes_map_fabric_lane156.BCM8879X=rx156:tx156
+config add lane_to_serdes_map_fabric_lane157.BCM8879X=rx157:tx157
+config add lane_to_serdes_map_fabric_lane158.BCM8879X=rx158:tx158
+config add lane_to_serdes_map_fabric_lane159.BCM8879X=rx159:tx159
+
+config add lane_to_serdes_map_fabric_lane160.BCM8879X=rx160:tx160
+config add lane_to_serdes_map_fabric_lane161.BCM8879X=rx161:tx161
+config add lane_to_serdes_map_fabric_lane162.BCM8879X=rx162:tx162
+config add lane_to_serdes_map_fabric_lane163.BCM8879X=rx163:tx163
+
+config add lane_to_serdes_map_fabric_lane164.BCM8879X=rx164:tx164
+config add lane_to_serdes_map_fabric_lane165.BCM8879X=rx165:tx165
+config add lane_to_serdes_map_fabric_lane166.BCM8879X=rx166:tx166
+config add lane_to_serdes_map_fabric_lane167.BCM8879X=rx167:tx167
+
+config add lane_to_serdes_map_fabric_lane168.BCM8879X=rx168:tx168
+config add lane_to_serdes_map_fabric_lane169.BCM8879X=rx169:tx169
+config add lane_to_serdes_map_fabric_lane170.BCM8879X=rx170:tx170
+config add lane_to_serdes_map_fabric_lane171.BCM8879X=rx171:tx171
+
+config add lane_to_serdes_map_fabric_lane172.BCM8879X=rx172:tx172
+config add lane_to_serdes_map_fabric_lane173.BCM8879X=rx173:tx173
+config add lane_to_serdes_map_fabric_lane174.BCM8879X=rx174:tx174
+config add lane_to_serdes_map_fabric_lane175.BCM8879X=rx175:tx175
+
+config add lane_to_serdes_map_fabric_lane176.BCM8879X=rx176:tx176
+config add lane_to_serdes_map_fabric_lane177.BCM8879X=rx177:tx177
+config add lane_to_serdes_map_fabric_lane178.BCM8879X=rx178:tx178
+config add lane_to_serdes_map_fabric_lane179.BCM8879X=rx179:tx179
+
+config add lane_to_serdes_map_fabric_lane180.BCM8879X=rx180:tx180
+config add lane_to_serdes_map_fabric_lane181.BCM8879X=rx181:tx181
+config add lane_to_serdes_map_fabric_lane182.BCM8879X=rx182:tx182
+config add lane_to_serdes_map_fabric_lane183.BCM8879X=rx183:tx183
+
+config add lane_to_serdes_map_fabric_lane184.BCM8879X=rx184:tx184
+config add lane_to_serdes_map_fabric_lane185.BCM8879X=rx185:tx185
+config add lane_to_serdes_map_fabric_lane186.BCM8879X=rx186:tx186
+config add lane_to_serdes_map_fabric_lane187.BCM8879X=rx187:tx187
+
+config add lane_to_serdes_map_fabric_lane188.BCM8879X=rx188:tx188
+config add lane_to_serdes_map_fabric_lane189.BCM8879X=rx189:tx189
+config add lane_to_serdes_map_fabric_lane190.BCM8879X=rx190:tx190
+config add lane_to_serdes_map_fabric_lane191.BCM8879X=rx191:tx191
+
+
+# Tx parameters
+# serdes_tx_taps:
+# for 3 taps mode encoded as follows: <signalling mode>:<pre>:<main>:<post>
+# for 6 taps mode encoded as follows: <signalling mode>:<pre>:<main>:<post>:<pre2>:<post2>:<post3>
+# see property.h for more information
+
+# Tx params for 25G
+#config add serdes_tx_taps.BCM8879X=nrz:-6:69:0
+
+# Tx params for 50G
+#config add serdes_tx_taps.BCM8879X=pam4:-16:132:0

@@ -1,0 +1,68 @@
+BCM.0> c th4_hsdk_l3mpls_init_ecmp.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+setting ingress port:1 MAC loopback
+setting egress ports:2, 3 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l3_mpls_init_ecmp(): ** start **
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+l3 egr intf2 = 2
+l3 egr obj = 100001
+l3 egr obj2 = 100002
+int ecmp_group_id = 200001 (0x30d41)
+uint32 tunnel_label_init = 22136 (0x5678)
+unsigned char exp = 1 (0x01)
+unsigned char ttl = 254 (0xfe)
+uint32 tunnel_label_init2 = 22137 (0x5679)
+unsigned char exp = 1 (0x01)
+unsigned char ttl = 254 (0xfe)
+Created flexctr stat_counter_id = 0x10000001.
+Flexctr stat_counter_id:0x10000001 attached to l3 ecmp group 200001
+~~~ #2) config_l3_mpls_init_ecmp(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+Flexctr Get : 10 packets / 820 bytes
+
+------------------------------------------------------------------------- 
+    RESULT OF L3MPLS TUNNEL MPLS LABEL INITIATION to ECMP GROUP VERIFICATION  
+------------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

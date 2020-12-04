@@ -1,0 +1,48 @@
+BCM.0> c th4_hsdk_l2_rtag7_udf_trunk.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+setting ingress port:1 MAC loopback
+setting egress ports:2, 3 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l2_rtag7_trunk(): ** start **
+bcm_trunk_create trunk_id = 1.
+
+Create trunk id:1 with member ports 2 and 3
+int trunk_gp_id = 201326593 (0xc000001)
+Created flexctr stat_counter_id = 0x10002001.
+Flexctr stat_counter_id:0x10002001 attached to egress port 2
+Flexctr stat_counter_id:0x10002001 attached to egress port 3
+~~~ #2) config_l2_rtag7_trunk(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting test packets into ingress_port:1
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Packet from data=<>, length=99
+Sleeping for 2 seconds
+Flexctr Get : 5 packets / 515 bytes from egress port 2
+Flexctr Get : 5 packets / 515 bytes from egress port 3
+
+-------------------------------------------------------------------- 
+    RESULT OF L2 SWITCH TO TRUNK WITH UDF RTAG7 LOAD BALANCE VERIFICATION  
+-------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

@@ -1,0 +1,199 @@
+BCM.0> 
+BCM.0> aa
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 21 (0x15)
+execute(): Start
+B_CM.0> config show stats
+    buffer_stats_collect_mode=0x0
+    buffer_stats_collect_type=0x2
+Doing gport traverse..
+uc_cosq_num = 8
+mc_cosq_num = 4
+gp_cosq_num = 9
+Total ports available is 54
+total ele num = 440   440
+Doing pstat session create...
+sid = 1
+Sending burst of packets from CPU...
+B_CM.0> tx 10000 pbm=2
+Doing pstat data sync...
+Doing pstat session data get...
+timestamp 
+bcm_pstats_timestamp_t ts = {
+    uint64 seconds = {0x00000000 0x00000000}
+    unsigned int nanoseconds = 0 (0x0)
+}
+data array count 440
+Building packet header...
+Building packet header...
+Sending packet for ing pool...
+int buf_len = 12 (0xc)
+int pkt_len = 68 (0x44)
+int pkt_len = 68 (0x44)
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000001} {000000000002} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 006c 0000 0000 4011 f72d 0101 
+[bcmPW.0]Packet[1]: data[0020]: c0a8 0102 c0a8 1234 5678 1000 0100 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[1]: data[0040]: 0000 0000 9e3a a1d9 
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.192.168> dst<1.2.192.168> hl<5> service-type<0> tl<108> id<0> frg-off<0> ttl<64> > chk-sum<0xf72d>
+Sending packet for egr pool...
+int buf_len = 12 (0xc)
+int pkt_len = 68 (0x44)
+int pkt_len = 68 (0x44)
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000001} {000000000002} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 006c 0000 0000 4011 f72d 0101 
+[bcmPW.0]Packet[2]: data[0020]: c0a8 0102 c0a8 1234 5678 1000 0100 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0040]: 0000 0000 9e3a a1d9 
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<1.1.192.168> dst<1.2.192.168> hl<5> service-type<0> tl<108> id<0> frg-off<0> ttl<64> > chk-sum<0xf72d>
+Sending uc packet...
+int buf_len = 576 (0x240)
+int pkt_len = 632 (0x278)
+int pkt_len = 632 (0x278)
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000001} {000000000002} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 006c 0000 0000 4011 f72d 0101 
+[bcmPW.0]Packet[3]: data[0020]: c0a8 0102 c0a8 1234 5678 1000 0100 0000 
+[bcmPW.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0070]: 0000 0000 0000 0000 0000 0000 0000 0000 
+S[bcmPW.0]Packet[3]: data[0080]: 0000 0000 0000 0000 0000 0000 0000 0000 
+en[bcmPW.0]Packet[3]: data[0090]: 0000 0000 0000 0000 0000 0000 0000 0000 
+ding uc p[bcmPW.0]Packet[3]: data[00a0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+acke[bcmPW.0]Packet[3]: data[00b0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+t.[bcmPW.0]Packet[3]: data[00c0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+..[bcmPW.0]Packet[3]: data[00d0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+
+[bcmPW.0]Packet[3]: data[00e0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[00f0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0100]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0110]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0120]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0130]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0140]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0150]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0160]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0170]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0180]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0190]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01a0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01b0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01c0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01d0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01e0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[01f0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0200]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0210]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0220]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0230]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0240]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0250]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0260]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0270]: 0000 0000 0000 0000 4de1 bc17 
+[bcmPW.0]Packet[3]: length 636 (636). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<1.1.192.168> dst<1.2.192.168> hl<5> service-type<0> tl<108> id<0> frg-off<0> ttl<64> > chk-sum<0xf72d>
+int buf_len = 576 (0x240)
+int pkt_len = 632 (0x278)
+int pkt_len = 632 (0x278)
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000001} {000000000002} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 006c 0000 0000 4011 f72d 0101 
+[bcmPW.0]Packet[4]: data[0020]: c0a8 0102 c0a8 1234 5678 1000 0100 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0070]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0080]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0090]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[00a0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[00b0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[00c0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[00d0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[00e0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+Sending uc packet...
+[bcmPW.0]Packet[4]: data[00f0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0100]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0110]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0120]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0130]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0140]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0150]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0160]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0170]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0180]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0190]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01a0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01b0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01c0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01d0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01e0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[01f0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0200]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0210]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0220]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0230]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0240]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0250]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0260]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0270]: 0000 0000 0000 0000 4de1 bc17 
+[bcmPW.0]Packet[4]: length 636 (636). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<1.1.192.168> dst<1.2.192.168> hl<5> service-type<0> tl<108> id<0> frg-off<0> ttl<64> > chk-sum<0xf72d>
+int buf_len = 144 (0x90)
+int pkt_len = 200 (0xc8)
+int pkt_len = 200 (0xc8)
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {000000000001} {000000000002} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 006c 0000 0000 4011 f72d 0101 
+[bcmPW.0]Packet[5]: data[0020]: c0a8 0102 c0a8 1234 5678 1000 0100 0000 
+[bcmPW.0]Packet[5]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0070]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0080]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[0090]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[00a0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[00b0]: 0000 0000 0000 0000 0000 0000 0000 0000 
+[bcmPW.0]Packet[5]: data[00c0]: 0000 0000 0000 0000 ab98 60ea 
+[bcmPW.0]Packet[5]: length 204 (204). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:00:01> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<1.1.192.168> dst<1.2.192.168> hl<5> service-type<0> tl<108> id<0> frg-off<0> ttl<64> > chk-sum<0xf72d>
+pkt count 5
+Doing clear session...1
+Doing destroy session...
+
+
+	 Expected Result: You will see encapsulated packet in proper format...
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> 
+BCM.0> 

@@ -1,0 +1,24 @@
+#
+# file: pktio_ha.yml
+# Pktio YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_pktio:
+        ltsw_pktio_info_ha_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                drv_type:
+                    type: int
+                    comment: Packet IO working mode.
+                netif_id:
+                    type: int
+                    comment: API network interface id.

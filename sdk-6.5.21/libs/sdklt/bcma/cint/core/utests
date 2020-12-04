@@ -1,0 +1,5603 @@
+#
+# $Id: utests,v 1.69 2013/02/07 01:13:38 ganglv Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# File:        utests
+# Purpose:     CINT unit tests
+#
+
+STARTCODE
+# Place any code to be executed at the beginning of every test case here.
+
+ENDCODE
+# Place any code to be executed after every test case here:
+quit;
+END
+
+
+#
+# Testcases
+#
+# Test 1
+CODE
+# This is a comment
+int x;
+print x;
+RESULT
+int x = 0 (0x0)
+END
+
+# Test 2
+CODE
+int x = 10;
+print x;
+RESULT
+int x = 10 (0xa)
+END
+
+# Test 3
+CODE
+unsigned int x = 0xDEADBEEF;
+print x;
+RESULT
+unsigned int x = 3735928559 (0xdeadbeef)
+END
+
+# Test 4
+CODE
+int x = -1;
+print x;
+RESULT
+int x = -1 (0xffffffff)
+END
+
+# Test 5
+CODE
+short x = -1;
+print x;
+RESULT
+short x = -1 (0xffff)
+END
+
+# Test 6
+CODE
+unsigned short x = 0xbeef;
+print x;
+RESULT
+unsigned short x = 48879 (0xbeef)
+END
+
+# Test 7
+CODE
+unsigned int x = -1;
+print x;
+RESULT
+unsigned int x = 4294967295 (0xffffffff)
+END
+
+# Test 8
+CODE
+int x = 10;
+x++;
+print x;
+RESULT
+int x = 11 (0xb)
+END
+
+# Test 9
+CODE
+int x = 10;
+int y = 20;
+int z = x*y;
+print z;
+RESULT
+int z = 200 (0xc8)
+END
+
+# Test 10
+CODE
+int x;
+x = 1;
+if(x && x == 1) print "PASS\n";
+RESULT
+PASS
+END
+
+# Test 11
+CODE
+int x;
+x = 0;
+if(x == 0) print "PASS\n";
+RESULT
+PASS
+END
+
+# Test 12
+CODE
+int x;
+x = 0;
+if(!x) print "PASS\n";
+RESULT
+PASS
+END
+
+# Test 13
+CODE
+int x = 1;
+if((x % 2)) {
+  print "PASS\n";
+}
+RESULT
+PASS
+END
+
+# Test 14
+CODE
+int x;
+for(x = 0; x < 33; x++)
+{
+        print x;
+}
+RESULT
+int x = 0 (0x0)
+int x = 1 (0x1)
+int x = 2 (0x2)
+int x = 3 (0x3)
+int x = 4 (0x4)
+int x = 5 (0x5)
+int x = 6 (0x6)
+int x = 7 (0x7)
+int x = 8 (0x8)
+int x = 9 (0x9)
+int x = 10 (0xa)
+int x = 11 (0xb)
+int x = 12 (0xc)
+int x = 13 (0xd)
+int x = 14 (0xe)
+int x = 15 (0xf)
+int x = 16 (0x10)
+int x = 17 (0x11)
+int x = 18 (0x12)
+int x = 19 (0x13)
+int x = 20 (0x14)
+int x = 21 (0x15)
+int x = 22 (0x16)
+int x = 23 (0x17)
+int x = 24 (0x18)
+int x = 25 (0x19)
+int x = 26 (0x1a)
+int x = 27 (0x1b)
+int x = 28 (0x1c)
+int x = 29 (0x1d)
+int x = 30 (0x1e)
+int x = 31 (0x1f)
+int x = 32 (0x20)
+END
+
+# Test 15
+CODE
+int x;
+for(x = 0; x < 33; x++)
+{
+        print x;
+        if( x == 16) {
+             break;
+        }
+}
+RESULT
+int x = 0 (0x0)
+int x = 1 (0x1)
+int x = 2 (0x2)
+int x = 3 (0x3)
+int x = 4 (0x4)
+int x = 5 (0x5)
+int x = 6 (0x6)
+int x = 7 (0x7)
+int x = 8 (0x8)
+int x = 9 (0x9)
+int x = 10 (0xa)
+int x = 11 (0xb)
+int x = 12 (0xc)
+int x = 13 (0xd)
+int x = 14 (0xe)
+int x = 15 (0xf)
+int x = 16 (0x10)
+END
+
+# Test 16
+CODE
+print interp;
+RESULT
+cint_interpreter_state_t interp = {
+    cint_interpreter_debug_state_t debug = {
+        int dtrace = 0 (0x0)
+        int atrace = 0 (0x0)
+        int ftrace = 0 (0x0)
+        int aunique = 0 (0x0)
+    }
+    int parse_only = 0 (0x0)
+    int print_expr = 0 (0x0)
+}
+END
+
+# Test 17
+CODE
+interp.debug.ftrace = 1;
+print interp;
+RESULT
+cint_interpreter_state_t interp = {
+    cint_interpreter_debug_state_t debug = {
+        int dtrace = 0 (0x0)
+        int atrace = 0 (0x0)
+        int ftrace = 1 (0x1)
+        int aunique = 0 (0x0)
+    }
+    int parse_only = 0 (0x0)
+    int print_expr = 0 (0x0)
+}
+END
+
+# Test 18
+CODE
+void f(void)
+{
+        print "f\n";
+}
+f();
+f();
+RESULT
+f
+f
+END
+
+# Test 19
+CODE
+void f(int x)
+{
+        print x;
+}
+f(1);
+f(2);
+f(0xdeadbeef);
+f(-1);
+RESULT
+int x = 1 (0x1)
+int x = 2 (0x2)
+int x = -559038737 (0xdeadbeef)
+int x = -1 (0xffffffff)
+END
+
+# Test 20
+CODE
+int z = 1;
+do {
+        print z;
+} while(z--);
+RESULT
+int z = 1 (0x1)
+int z = 0 (0x0)
+END
+
+# Test 21
+CODE
+int z = 1;
+while(z--) {
+        print z;
+}
+RESULT
+int z = 0 (0x0)
+END
+
+# Test 22
+CODE
+switch(7)
+{
+        case 1: print "1";
+        case 2: print "2";
+        case 7: print "7\n"; break;
+        case 8: print "8";
+        default: break;
+}
+RESULT
+7
+END
+
+# Test 23
+CODE
+switch(7)
+{
+        case 1: print "1";
+        case 2: print "2";
+        case 7: print "7\n";
+        case 8: print "8\n"; break;
+        default: print "def\n";
+}
+RESULT
+7
+8
+END
+
+# Test 24
+CODE
+switch(7)
+{
+        case 1: print "1";
+        case 2: print "2";
+        case 7: print "7\n";
+        case 8: print "8\n";
+        default: print "def\n";
+}
+RESULT
+7
+8
+def
+END
+
+# Test 25
+CODE
+int r = 0x1;
+int z = (r == 0x1) ? 64 : 65;
+print z;
+RESULT
+int z = 64 (0x40)
+END
+
+# Test 26
+CODE
+int r = 0x1;
+int z = (r == 0x0) ? 64 : 65;
+print z;
+RESULT
+int z = 65 (0x41)
+END
+
+# Test 27
+CODE
+int x = 10;
+
+int finc(int x) { return x+1; }
+
+print x;
+int z = finc(x);
+print x;
+print z;
+z = finc(finc(z));
+print x;
+print z;
+RESULT
+int x = 10 (0xa)
+int x = 10 (0xa)
+int z = 11 (0xb)
+int x = 10 (0xa)
+int z = 13 (0xd)
+END
+
+# Test 28
+CODE
+void fibs(int a1,int a2,int n)
+{
+     switch(n){
+     case 1:
+          print  a1;
+          break;
+     case 2:
+          print a1;
+          print a2;
+          break;
+     default:
+          {
+               int a3=a1+a2;
+               print a1;
+               fibs(a2,a3,n-1);
+          }
+     }
+}
+fibs(0,1,10);
+fibs(0,1,21);
+RESULT
+int a1 = 0 (0x0)
+int a1 = 1 (0x1)
+int a1 = 1 (0x1)
+int a1 = 2 (0x2)
+int a1 = 3 (0x3)
+int a1 = 5 (0x5)
+int a1 = 8 (0x8)
+int a1 = 13 (0xd)
+int a1 = 21 (0x15)
+int a2 = 34 (0x22)
+int a1 = 0 (0x0)
+int a1 = 1 (0x1)
+int a1 = 1 (0x1)
+int a1 = 2 (0x2)
+int a1 = 3 (0x3)
+int a1 = 5 (0x5)
+int a1 = 8 (0x8)
+int a1 = 13 (0xd)
+int a1 = 21 (0x15)
+int a1 = 34 (0x22)
+int a1 = 55 (0x37)
+int a1 = 89 (0x59)
+int a1 = 144 (0x90)
+int a1 = 233 (0xe9)
+int a1 = 377 (0x179)
+int a1 = 610 (0x262)
+int a1 = 987 (0x3db)
+int a1 = 1597 (0x63d)
+int a1 = 2584 (0xa18)
+int a1 = 4181 (0x1055)
+int a2 = 6765 (0x1a6d)
+END
+
+# Test 29
+CODE
+int x = 10;
+int *xp;
+print x;
+print xp;
+int z = *xp;
+print z;
+xp = &x;
+if(xp == &x) print "PASS\n";
+*xp = 5;
+print x;
+z = *xp;
+print z;
+RESULT
+int x = 10 (0xa)
+int* xp = NULL
+** error: attempt to dereference NULL pointer
+** error: invalid operand(s) to '='
+int z = 0 (0x0)
+PASS
+int x = 5 (0x5)
+int z = 5 (0x5)
+END
+
+# Test 30
+CODE
+int x[10];
+print x;
+x[5] = 5;
+print x;
+RESULT
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 0 (0x0)
+    int x[2] = 0 (0x0)
+    int x[3] = 0 (0x0)
+    int x[4] = 0 (0x0)
+    int x[5] = 0 (0x0)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 0 (0x0)
+    int x[2] = 0 (0x0)
+    int x[3] = 0 (0x0)
+    int x[4] = 0 (0x0)
+    int x[5] = 5 (0x5)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+END
+
+# Test 31
+CODE
+char c;
+if(sizeof(c) == 1) {
+        print "PASS\n";
+}
+RESULT
+PASS
+END
+
+# Test 32
+CODE
+int x[10];
+if( (sizeof(x)/sizeof(x[0])) == 10 ) {
+        print "PASS\n";
+}
+else {
+        print "FAIL\n";
+}
+RESULT
+PASS
+END
+
+# Test 33
+CODE
+int x[10];
+int z;
+for(z = 0; z < sizeof(x)/sizeof(x[0]); z++) {
+        x[z] = z;
+}
+print z;
+print x;
+RESULT
+int z = 10 (0xa)
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 1 (0x1)
+    int x[2] = 2 (0x2)
+    int x[3] = 3 (0x3)
+    int x[4] = 4 (0x4)
+    int x[5] = 5 (0x5)
+    int x[6] = 6 (0x6)
+    int x[7] = 7 (0x7)
+    int x[8] = 8 (0x8)
+    int x[9] = 9 (0x9)
+}
+END
+
+# Test 34
+CODE
+int x[10];
+int* xp = x;
+int z;
+for(z = 0, xp = x; z < 10; z++, xp++) {
+        *xp = z;
+}
+print z;
+print (xp-x);
+print x;
+RESULT
+int z = 10 (0xa)
+int $$ = 10 (0xa)
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 1 (0x1)
+    int x[2] = 2 (0x2)
+    int x[3] = 3 (0x3)
+    int x[4] = 4 (0x4)
+    int x[5] = 5 (0x5)
+    int x[6] = 6 (0x6)
+    int x[7] = 7 (0x7)
+    int x[8] = 8 (0x8)
+    int x[9] = 9 (0x9)
+}
+END
+
+# Test 35
+CODE
+void* p = NULL;
+print p;
+p = (void*)0xdead;
+print p;
+RESULT
+void* p = NULL
+void* p = 0xdead
+END
+
+# Test 36
+CODE
+int x;
+void* p = &x;
+int* xp = p;
+if(&x == p) print "PASS\n";
+RESULT
+PASS
+END
+
+#
+# The following code tests the cint_test_data dataset
+#
+# Test 37
+CODE
+ct_bitmap_t b;
+print b;
+b = "1 0 1 1 0 1 1 1 0";
+print b;
+RESULT
+ct_bitmap_t b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ct_bitmap_t b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,1,0 }
+END
+
+# Test 38
+CODE
+ct_enum_t e0;
+print e0;
+ct_enum_t e = ctEnum1;
+print e;
+e = e + 1;
+print e;
+RESULT
+ct_enum_t e0 = ctEnum0 (0)
+ct_enum_t e = ctEnum1 (1)
+ct_enum_t e = ctEnum2 (2)
+END
+
+# Test 39
+CODE
+ct_struct_t s;
+ct_struct_t* sp = &s;
+print s;
+s.bitmap = "1101";
+s.uc = 0xFE;
+s.i = 0x10;
+s.ui = -1;
+sp->d = 3.14159;
+sp->cbuffer[6] = 60;
+print s;
+RESULT
+ct_struct_t s = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+}
+ct_struct_t s = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 254 (0xfe)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 16 (0x10)
+    unsigned int ui = 4294967295 (0xffffffff)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 3.14159
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 60 (0x3c) '<'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1 }
+}
+END
+
+# Test 40
+CODE
+ct_void_void_function();
+RESULT
+__ct_void_void_function
+END
+
+# Test 41
+CODE
+ct_void_int_function(0x64);
+RESULT
+__ct_void_int_function: 100
+END
+
+# Test 42
+CODE
+print ct_int_int_function(0x63);
+RESULT
+__ct_int_int_function: 99
+int $$ = 100 (0x64)
+END
+
+# Test 43
+CODE
+ct_void_int_function(ct_int_int_function(ct_int_int_function(99))+1);
+RESULT
+__ct_int_int_function: 99
+__ct_int_int_function: 100
+__ct_void_int_function: 101
+END
+
+# Test 44
+CODE
+char c = 0x60;
+short s = 0xdead;
+int i = 0xbeefcafe;
+const char* str = "this is the string";
+ct_enum_t e = ctEnum3;
+ct_bitmap_t b = "10101010101010101";
+ct_struct_t ss;
+ss.bitmap = "1";
+_Bool bl = ct_true;
+print ct_kitchen_sink(c, s, i, str, e, b, &ss, bl);
+RESULT
+__ct_kitchen_sink ENTER
+c=96 0x60
+s=-8531 0xdead
+i=-1091581186 0xbeefcafe
+str=this is the string
+e=3
+b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1 }
+sp->bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 }
+bl=1 0x1
+__ct_kitchen_sink EXIT
+ct_enum_t $$ = ctEnum1 (1)
+END
+
+# Test 45
+CODE
+ct_voidp_t p = NULL;
+print p;
+RESULT
+void* p = NULL
+END
+
+# Test 46
+CODE
+ct_bitmap_t b;
+ct_bitmapp_t p = &b;
+*p = "101";
+print *p;
+RESULT
+ct_bitmap_t $$ = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1 }
+END
+
+# Test 47
+CODE
+print ct_constant_db;
+print ct_constant_null;
+print ct_constant_cafe;
+if( (ct_constant_db == 0xdeadbeef) &&
+    (ct_constant_null == 0) &&
+    (ct_constant_cafe == 0xcafe) ) {
+        print "PASS\n";
+}
+RESULT
+int $$ = -559038737 (0xdeadbeef)
+int $$ = 0 (0x0)
+int $$ = 51966 (0xcafe)
+PASS
+END
+
+# Test 48
+CODE
+ct_callback0_f p = NULL;
+print p;
+RESULT
+ct_callback0_f p = NULL
+END
+
+# Test 49
+CODE
+void f(void) { };
+print f;
+print ct_compiled_callback0;
+RESULT
+$$ = dynamic function 'void f(void)'
+$$ = compiled function 'void ct_compiled_callback0(void)'
+END
+
+# Test 50
+CODE
+ct_callback0_f fp;
+
+fp = ct_compiled_callback0;
+
+ct_function_callbacker0(1,fp);
+
+void foo(void)
+{
+        print "FOO\n";
+}
+
+void foo2(void)
+{
+        print "FOO2\n";
+}
+
+fp = foo;
+ct_function_callbacker0(2,fp);
+fp = foo2;
+ct_function_callbacker0(2,fp);
+RESULT
+__ct_function_callbacker ENTER
+x=1
+__ct_compiled_callback0 ENTER
+__ct_compiled_callback0 EXIT
+__ct_function_callbacker EXIT
+__ct_function_callbacker ENTER
+x=2
+FOO
+__ct_function_callbacker EXIT
+__ct_function_callbacker ENTER
+x=2
+FOO2
+__ct_function_callbacker EXIT
+END
+
+# Test 51
+CODE
+int foo(int x, char* str)
+{
+        print x;
+        print str[0];
+        print str[1];
+        print str[2];
+        print str[3];
+        return x+1;
+}
+
+print foo(1, "string");
+RESULT
+int x = 1 (0x1)
+char $$ = 115 (0x73) 's'
+char $$ = 116 (0x74) 't'
+char $$ = 114 (0x72) 'r'
+char $$ = 105 (0x69) 'i'
+int $$ = 2 (0x2)
+END
+
+# Test 52
+CODE
+ct_kitchen_sink_callback_f fp;
+
+/* Test callbacker function */
+print ct_kitchen_sink_callbacker(0, fp);
+
+/* Test compiled-in callback function */
+fp = ct_kitchen_sink;
+print ct_kitchen_sink_callbacker(1, fp);
+
+/* Test dynamic function */
+ct_enum_t kitchen_sink(char c,
+                          short s,
+                          int i,
+                          char* str,
+                          ct_enum_t e,
+                          ct_bitmap_t b,
+                          ct_struct_t* sp,
+                          _Bool bl)
+
+{
+        print "kitchen_sink ENTER\n";
+        print c;
+        print s;
+        print i;
+        print str[0];
+        print str[1];
+        print e;
+        print b;
+        print *sp;
+        print bl;
+        print "kitchen_sink EXIT\n";
+        return ctEnum1;
+}
+
+fp = kitchen_sink;
+print ct_kitchen_sink_callbacker(2, fp);
+RESULT
+__ct_kitchen_sink_callbacker ENTER
+x = 0
+cb = NULL
+__ct_kitchen_sink_callbacker EXIT
+ct_enum_t $$ = ctEnum0 (0)
+__ct_kitchen_sink_callbacker ENTER
+x = 1
+__ct_kitchen_sink ENTER
+c=1 0x1
+s=2 0x2
+i=3 0x3
+str=4
+e=0
+b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+sp->bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+bl=1 0x1
+__ct_kitchen_sink EXIT
+rc = 1
+__ct_kitchen_sink_callbacker EXIT
+ct_enum_t $$ = ctEnum1 (1)
+__ct_kitchen_sink_callbacker ENTER
+x = 2
+kitchen_sink ENTER
+char c = 1 (0x01) '.'
+short s = 2 (0x0002)
+int i = 3 (0x3)
+char $$ = 52 (0x34) '4'
+char $$ = 0 (0x00) '.'
+ct_enum_t e = ctEnum0 (0)
+ct_bitmap_t b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+ct_struct_t $$ = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+}
+_Bool bl = true
+kitchen_sink EXIT
+rc = 1
+__ct_kitchen_sink_callbacker EXIT
+ct_enum_t $$ = ctEnum1 (1)
+END
+
+# Test 53
+CODE
+int x = 0xdeadbeef;
+printf("%X\n", x);
+RESULT
+DEADBEEF
+END
+
+# Test 54
+CODE
+short s = 0xcafe;
+printf("%hd %hx\n", s, s);
+RESULT
+-13570 cafe
+END
+
+# Test 55
+CODE
+printf("%d %.2f \"%s\" %i %x\n",
+        10,
+        3.14,
+        "String me",
+        42,
+        0xbeef);
+RESULT
+10 3.14 "String me" 42 beef
+END
+
+# Test 56
+CODE
+char str[32];
+str[0] = 65;
+str[1] = 66;
+str[2] = 67;
+str[3] = 0;
+printf("%s\n", str);
+RESULT
+ABC
+END
+
+# Test 57
+CODE
+printf("%%\n");
+RESULT
+%
+END
+
+# Test 58
+CODE
+ct_struct_simple_t sst = { 0x42, { 1, 2, 3 }, "111" };
+print sst;
+RESULT
+ct_struct_simple_t sst = {
+    int x = 66 (0x42)
+    ct_struct_t ct_struct = {
+        char c = 1 (0x01) '.'
+        unsigned char uc = 2 (0x02)
+        short s = 3 (0x0003)
+        unsigned short us = 0 (0x0000)
+        int i = 0 (0x0)
+        unsigned int ui = 0 (0x0)
+        long l = 0 (0x00000000)
+        unsigned long ul = 0 (0x00000000)
+        long long ll = 0 (0x0000000000000000)
+        unsigned long long ull = 0 (0x0000000000000000)
+        double d = 0
+        int* ip = NULL
+        void* vp = NULL
+        char[16] cbuffer = {
+            char cbuffer[0] = 0 (0x00) '.'
+            char cbuffer[1] = 0 (0x00) '.'
+            char cbuffer[2] = 0 (0x00) '.'
+            char cbuffer[3] = 0 (0x00) '.'
+            char cbuffer[4] = 0 (0x00) '.'
+            char cbuffer[5] = 0 (0x00) '.'
+            char cbuffer[6] = 0 (0x00) '.'
+            char cbuffer[7] = 0 (0x00) '.'
+            char cbuffer[8] = 0 (0x00) '.'
+            char cbuffer[9] = 0 (0x00) '.'
+            char cbuffer[10] = 0 (0x00) '.'
+            char cbuffer[11] = 0 (0x00) '.'
+            char cbuffer[12] = 0 (0x00) '.'
+            char cbuffer[13] = 0 (0x00) '.'
+            char cbuffer[14] = 0 (0x00) '.'
+            char cbuffer[15] = 0 (0x00) '.'
+        }
+        int**[8] pbuffer = {
+            int** pbuffer[0] = NULL
+            int** pbuffer[1] = NULL
+            int** pbuffer[2] = NULL
+            int** pbuffer[3] = NULL
+            int** pbuffer[4] = NULL
+            int** pbuffer[5] = NULL
+            int** pbuffer[6] = NULL
+            int** pbuffer[7] = NULL
+        }
+        ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1 }
+    ct_struct_t[2] ct_structs = {
+        ct_struct_t ct_structs[0] = {
+            char c = 0 (0x00) '.'
+            unsigned char uc = 0 (0x00)
+            short s = 0 (0x0000)
+            unsigned short us = 0 (0x0000)
+            int i = 0 (0x0)
+            unsigned int ui = 0 (0x0)
+            long l = 0 (0x00000000)
+            unsigned long ul = 0 (0x00000000)
+            long long ll = 0 (0x0000000000000000)
+            unsigned long long ull = 0 (0x0000000000000000)
+            double d = 0
+            int* ip = NULL
+            void* vp = NULL
+            char[16] cbuffer = {
+                char cbuffer[0] = 0 (0x00) '.'
+                char cbuffer[1] = 0 (0x00) '.'
+                char cbuffer[2] = 0 (0x00) '.'
+                char cbuffer[3] = 0 (0x00) '.'
+                char cbuffer[4] = 0 (0x00) '.'
+                char cbuffer[5] = 0 (0x00) '.'
+                char cbuffer[6] = 0 (0x00) '.'
+                char cbuffer[7] = 0 (0x00) '.'
+                char cbuffer[8] = 0 (0x00) '.'
+                char cbuffer[9] = 0 (0x00) '.'
+                char cbuffer[10] = 0 (0x00) '.'
+                char cbuffer[11] = 0 (0x00) '.'
+                char cbuffer[12] = 0 (0x00) '.'
+                char cbuffer[13] = 0 (0x00) '.'
+                char cbuffer[14] = 0 (0x00) '.'
+                char cbuffer[15] = 0 (0x00) '.'
+            }
+            int**[8] pbuffer = {
+                int** pbuffer[0] = NULL
+                int** pbuffer[1] = NULL
+                int** pbuffer[2] = NULL
+                int** pbuffer[3] = NULL
+                int** pbuffer[4] = NULL
+                int** pbuffer[5] = NULL
+                int** pbuffer[6] = NULL
+                int** pbuffer[7] = NULL
+            }
+            ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        }
+        ct_struct_t ct_structs[1] = {
+            char c = 0 (0x00) '.'
+            unsigned char uc = 0 (0x00)
+            short s = 0 (0x0000)
+            unsigned short us = 0 (0x0000)
+            int i = 0 (0x0)
+            unsigned int ui = 0 (0x0)
+            long l = 0 (0x00000000)
+            unsigned long ul = 0 (0x00000000)
+            long long ll = 0 (0x0000000000000000)
+            unsigned long long ull = 0 (0x0000000000000000)
+            double d = 0
+            int* ip = NULL
+            void* vp = NULL
+            char[16] cbuffer = {
+                char cbuffer[0] = 0 (0x00) '.'
+                char cbuffer[1] = 0 (0x00) '.'
+                char cbuffer[2] = 0 (0x00) '.'
+                char cbuffer[3] = 0 (0x00) '.'
+                char cbuffer[4] = 0 (0x00) '.'
+                char cbuffer[5] = 0 (0x00) '.'
+                char cbuffer[6] = 0 (0x00) '.'
+                char cbuffer[7] = 0 (0x00) '.'
+                char cbuffer[8] = 0 (0x00) '.'
+                char cbuffer[9] = 0 (0x00) '.'
+                char cbuffer[10] = 0 (0x00) '.'
+                char cbuffer[11] = 0 (0x00) '.'
+                char cbuffer[12] = 0 (0x00) '.'
+                char cbuffer[13] = 0 (0x00) '.'
+                char cbuffer[14] = 0 (0x00) '.'
+                char cbuffer[15] = 0 (0x00) '.'
+            }
+            int**[8] pbuffer = {
+                int** pbuffer[0] = NULL
+                int** pbuffer[1] = NULL
+                int** pbuffer[2] = NULL
+                int** pbuffer[3] = NULL
+                int** pbuffer[4] = NULL
+                int** pbuffer[5] = NULL
+                int** pbuffer[6] = NULL
+                int** pbuffer[7] = NULL
+            }
+            ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        }
+    }
+}
+END
+
+# Test 59
+CODE
+int x[10] = { 1, 2, 3, 4, 5 };
+print x;
+RESULT
+int[10] x = {
+    int x[0] = 1 (0x1)
+    int x[1] = 2 (0x2)
+    int x[2] = 3 (0x3)
+    int x[3] = 4 (0x4)
+    int x[4] = 5 (0x5)
+    int x[5] = 0 (0x0)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+END
+
+# Test 60
+CODE
+int x[3] = { 1, 2, 3, 4, 5 };
+print x;
+RESULT
+** error: too many initializers
+int[3] x = {
+    int x[0] = 1 (0x1)
+    int x[1] = 2 (0x2)
+    int x[2] = 3 (0x3)
+}
+END
+
+# Test 61
+CODE
+ct_struct_simple_t ct[2] =
+        {
+          {
+            0x42,
+            { 1, 2, 3 },
+            "111",
+            {
+              { 4, 5, 6 },
+              { 7, 8, 9 },
+            }
+          },
+          {
+            0x43,
+            { 14, 15, 16 },
+            "1110111",
+            {
+              { 17, 18, 19 },
+              { 20, 21, 22 },
+              { 100, 110, 120 }
+            }
+           }
+         };
+print ct;
+RESULT
+** error: too many initializers
+ct_struct_simple_t[2] ct = {
+    ct_struct_simple_t ct[0] = {
+        int x = 66 (0x42)
+        ct_struct_t ct_struct = {
+            char c = 1 (0x01) '.'
+            unsigned char uc = 2 (0x02)
+            short s = 3 (0x0003)
+            unsigned short us = 0 (0x0000)
+            int i = 0 (0x0)
+            unsigned int ui = 0 (0x0)
+            long l = 0 (0x00000000)
+            unsigned long ul = 0 (0x00000000)
+            long long ll = 0 (0x0000000000000000)
+            unsigned long long ull = 0 (0x0000000000000000)
+            double d = 0
+            int* ip = NULL
+            void* vp = NULL
+            char[16] cbuffer = {
+                char cbuffer[0] = 0 (0x00) '.'
+                char cbuffer[1] = 0 (0x00) '.'
+                char cbuffer[2] = 0 (0x00) '.'
+                char cbuffer[3] = 0 (0x00) '.'
+                char cbuffer[4] = 0 (0x00) '.'
+                char cbuffer[5] = 0 (0x00) '.'
+                char cbuffer[6] = 0 (0x00) '.'
+                char cbuffer[7] = 0 (0x00) '.'
+                char cbuffer[8] = 0 (0x00) '.'
+                char cbuffer[9] = 0 (0x00) '.'
+                char cbuffer[10] = 0 (0x00) '.'
+                char cbuffer[11] = 0 (0x00) '.'
+                char cbuffer[12] = 0 (0x00) '.'
+                char cbuffer[13] = 0 (0x00) '.'
+                char cbuffer[14] = 0 (0x00) '.'
+                char cbuffer[15] = 0 (0x00) '.'
+            }
+            int**[8] pbuffer = {
+                int** pbuffer[0] = NULL
+                int** pbuffer[1] = NULL
+                int** pbuffer[2] = NULL
+                int** pbuffer[3] = NULL
+                int** pbuffer[4] = NULL
+                int** pbuffer[5] = NULL
+                int** pbuffer[6] = NULL
+                int** pbuffer[7] = NULL
+            }
+            ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        }
+        ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1 }
+        ct_struct_t[2] ct_structs = {
+            ct_struct_t ct_structs[0] = {
+                char c = 4 (0x04) '.'
+                unsigned char uc = 5 (0x05)
+                short s = 6 (0x0006)
+                unsigned short us = 0 (0x0000)
+                int i = 0 (0x0)
+                unsigned int ui = 0 (0x0)
+                long l = 0 (0x00000000)
+                unsigned long ul = 0 (0x00000000)
+                long long ll = 0 (0x0000000000000000)
+                unsigned long long ull = 0 (0x0000000000000000)
+                double d = 0
+                int* ip = NULL
+                void* vp = NULL
+                char[16] cbuffer = {
+                    char cbuffer[0] = 0 (0x00) '.'
+                    char cbuffer[1] = 0 (0x00) '.'
+                    char cbuffer[2] = 0 (0x00) '.'
+                    char cbuffer[3] = 0 (0x00) '.'
+                    char cbuffer[4] = 0 (0x00) '.'
+                    char cbuffer[5] = 0 (0x00) '.'
+                    char cbuffer[6] = 0 (0x00) '.'
+                    char cbuffer[7] = 0 (0x00) '.'
+                    char cbuffer[8] = 0 (0x00) '.'
+                    char cbuffer[9] = 0 (0x00) '.'
+                    char cbuffer[10] = 0 (0x00) '.'
+                    char cbuffer[11] = 0 (0x00) '.'
+                    char cbuffer[12] = 0 (0x00) '.'
+                    char cbuffer[13] = 0 (0x00) '.'
+                    char cbuffer[14] = 0 (0x00) '.'
+                    char cbuffer[15] = 0 (0x00) '.'
+                }
+                int**[8] pbuffer = {
+                    int** pbuffer[0] = NULL
+                    int** pbuffer[1] = NULL
+                    int** pbuffer[2] = NULL
+                    int** pbuffer[3] = NULL
+                    int** pbuffer[4] = NULL
+                    int** pbuffer[5] = NULL
+                    int** pbuffer[6] = NULL
+                    int** pbuffer[7] = NULL
+                }
+                ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+            }
+            ct_struct_t ct_structs[1] = {
+                char c = 7 (0x07) '.'
+                unsigned char uc = 8 (0x08)
+                short s = 9 (0x0009)
+                unsigned short us = 0 (0x0000)
+                int i = 0 (0x0)
+                unsigned int ui = 0 (0x0)
+                long l = 0 (0x00000000)
+                unsigned long ul = 0 (0x00000000)
+                long long ll = 0 (0x0000000000000000)
+                unsigned long long ull = 0 (0x0000000000000000)
+                double d = 0
+                int* ip = NULL
+                void* vp = NULL
+                char[16] cbuffer = {
+                    char cbuffer[0] = 0 (0x00) '.'
+                    char cbuffer[1] = 0 (0x00) '.'
+                    char cbuffer[2] = 0 (0x00) '.'
+                    char cbuffer[3] = 0 (0x00) '.'
+                    char cbuffer[4] = 0 (0x00) '.'
+                    char cbuffer[5] = 0 (0x00) '.'
+                    char cbuffer[6] = 0 (0x00) '.'
+                    char cbuffer[7] = 0 (0x00) '.'
+                    char cbuffer[8] = 0 (0x00) '.'
+                    char cbuffer[9] = 0 (0x00) '.'
+                    char cbuffer[10] = 0 (0x00) '.'
+                    char cbuffer[11] = 0 (0x00) '.'
+                    char cbuffer[12] = 0 (0x00) '.'
+                    char cbuffer[13] = 0 (0x00) '.'
+                    char cbuffer[14] = 0 (0x00) '.'
+                    char cbuffer[15] = 0 (0x00) '.'
+                }
+                int**[8] pbuffer = {
+                    int** pbuffer[0] = NULL
+                    int** pbuffer[1] = NULL
+                    int** pbuffer[2] = NULL
+                    int** pbuffer[3] = NULL
+                    int** pbuffer[4] = NULL
+                    int** pbuffer[5] = NULL
+                    int** pbuffer[6] = NULL
+                    int** pbuffer[7] = NULL
+                }
+                ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+            }
+        }
+    }
+    ct_struct_simple_t ct[1] = {
+        int x = 67 (0x43)
+        ct_struct_t ct_struct = {
+            char c = 14 (0x0e) '.'
+            unsigned char uc = 15 (0x0f)
+            short s = 16 (0x0010)
+            unsigned short us = 0 (0x0000)
+            int i = 0 (0x0)
+            unsigned int ui = 0 (0x0)
+            long l = 0 (0x00000000)
+            unsigned long ul = 0 (0x00000000)
+            long long ll = 0 (0x0000000000000000)
+            unsigned long long ull = 0 (0x0000000000000000)
+            double d = 0
+            int* ip = NULL
+            void* vp = NULL
+            char[16] cbuffer = {
+                char cbuffer[0] = 0 (0x00) '.'
+                char cbuffer[1] = 0 (0x00) '.'
+                char cbuffer[2] = 0 (0x00) '.'
+                char cbuffer[3] = 0 (0x00) '.'
+                char cbuffer[4] = 0 (0x00) '.'
+                char cbuffer[5] = 0 (0x00) '.'
+                char cbuffer[6] = 0 (0x00) '.'
+                char cbuffer[7] = 0 (0x00) '.'
+                char cbuffer[8] = 0 (0x00) '.'
+                char cbuffer[9] = 0 (0x00) '.'
+                char cbuffer[10] = 0 (0x00) '.'
+                char cbuffer[11] = 0 (0x00) '.'
+                char cbuffer[12] = 0 (0x00) '.'
+                char cbuffer[13] = 0 (0x00) '.'
+                char cbuffer[14] = 0 (0x00) '.'
+                char cbuffer[15] = 0 (0x00) '.'
+            }
+            int**[8] pbuffer = {
+                int** pbuffer[0] = NULL
+                int** pbuffer[1] = NULL
+                int** pbuffer[2] = NULL
+                int** pbuffer[3] = NULL
+                int** pbuffer[4] = NULL
+                int** pbuffer[5] = NULL
+                int** pbuffer[6] = NULL
+                int** pbuffer[7] = NULL
+            }
+            ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        }
+        ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1 }
+        ct_struct_t[2] ct_structs = {
+            ct_struct_t ct_structs[0] = {
+                char c = 17 (0x11) '.'
+                unsigned char uc = 18 (0x12)
+                short s = 19 (0x0013)
+                unsigned short us = 0 (0x0000)
+                int i = 0 (0x0)
+                unsigned int ui = 0 (0x0)
+                long l = 0 (0x00000000)
+                unsigned long ul = 0 (0x00000000)
+                long long ll = 0 (0x0000000000000000)
+                unsigned long long ull = 0 (0x0000000000000000)
+                double d = 0
+                int* ip = NULL
+                void* vp = NULL
+                char[16] cbuffer = {
+                    char cbuffer[0] = 0 (0x00) '.'
+                    char cbuffer[1] = 0 (0x00) '.'
+                    char cbuffer[2] = 0 (0x00) '.'
+                    char cbuffer[3] = 0 (0x00) '.'
+                    char cbuffer[4] = 0 (0x00) '.'
+                    char cbuffer[5] = 0 (0x00) '.'
+                    char cbuffer[6] = 0 (0x00) '.'
+                    char cbuffer[7] = 0 (0x00) '.'
+                    char cbuffer[8] = 0 (0x00) '.'
+                    char cbuffer[9] = 0 (0x00) '.'
+                    char cbuffer[10] = 0 (0x00) '.'
+                    char cbuffer[11] = 0 (0x00) '.'
+                    char cbuffer[12] = 0 (0x00) '.'
+                    char cbuffer[13] = 0 (0x00) '.'
+                    char cbuffer[14] = 0 (0x00) '.'
+                    char cbuffer[15] = 0 (0x00) '.'
+                }
+                int**[8] pbuffer = {
+                    int** pbuffer[0] = NULL
+                    int** pbuffer[1] = NULL
+                    int** pbuffer[2] = NULL
+                    int** pbuffer[3] = NULL
+                    int** pbuffer[4] = NULL
+                    int** pbuffer[5] = NULL
+                    int** pbuffer[6] = NULL
+                    int** pbuffer[7] = NULL
+                }
+                ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+            }
+            ct_struct_t ct_structs[1] = {
+                char c = 20 (0x14) '.'
+                unsigned char uc = 21 (0x15)
+                short s = 22 (0x0016)
+                unsigned short us = 0 (0x0000)
+                int i = 0 (0x0)
+                unsigned int ui = 0 (0x0)
+                long l = 0 (0x00000000)
+                unsigned long ul = 0 (0x00000000)
+                long long ll = 0 (0x0000000000000000)
+                unsigned long long ull = 0 (0x0000000000000000)
+                double d = 0
+                int* ip = NULL
+                void* vp = NULL
+                char[16] cbuffer = {
+                    char cbuffer[0] = 0 (0x00) '.'
+                    char cbuffer[1] = 0 (0x00) '.'
+                    char cbuffer[2] = 0 (0x00) '.'
+                    char cbuffer[3] = 0 (0x00) '.'
+                    char cbuffer[4] = 0 (0x00) '.'
+                    char cbuffer[5] = 0 (0x00) '.'
+                    char cbuffer[6] = 0 (0x00) '.'
+                    char cbuffer[7] = 0 (0x00) '.'
+                    char cbuffer[8] = 0 (0x00) '.'
+                    char cbuffer[9] = 0 (0x00) '.'
+                    char cbuffer[10] = 0 (0x00) '.'
+                    char cbuffer[11] = 0 (0x00) '.'
+                    char cbuffer[12] = 0 (0x00) '.'
+                    char cbuffer[13] = 0 (0x00) '.'
+                    char cbuffer[14] = 0 (0x00) '.'
+                    char cbuffer[15] = 0 (0x00) '.'
+                }
+                int**[8] pbuffer = {
+                    int** pbuffer[0] = NULL
+                    int** pbuffer[1] = NULL
+                    int** pbuffer[2] = NULL
+                    int** pbuffer[3] = NULL
+                    int** pbuffer[4] = NULL
+                    int** pbuffer[5] = NULL
+                    int** pbuffer[6] = NULL
+                    int** pbuffer[7] = NULL
+                }
+                ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+            }
+        }
+    }
+}
+END
+
+# Test 62
+CODE
+int x[] = { 1, 2, 3, 4, 5 };
+print x;
+RESULT
+int[5] x = {
+    int x[0] = 1 (0x1)
+    int x[1] = 2 (0x2)
+    int x[2] = 3 (0x3)
+    int x[3] = 4 (0x4)
+    int x[4] = 5 (0x5)
+}
+END
+
+# Test 63
+CODE
+int x[10] = { 1, 2, 3, 4, 5 };
+print x;
+RESULT
+int[10] x = {
+    int x[0] = 1 (0x1)
+    int x[1] = 2 (0x2)
+    int x[2] = 3 (0x3)
+    int x[3] = 4 (0x4)
+    int x[4] = 5 (0x5)
+    int x[5] = 0 (0x0)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+END
+
+# Test 64
+CODE
+int x[];
+RESULT
+** error: illegal array definition
+END
+
+# Test 65
+CODE
+
+int foo(char c, void* p)
+{
+        printf("%c %p\n", c, p);
+        return 0;
+}
+foo(65, (void*)0x65);
+RESULT
+A 0x65
+END
+
+# Test 66
+CODE
+struct foo_t {
+        int x;
+        int y;
+};
+
+foo_t x = { 1, 2 };
+print x;
+x.x = 2;
+x.y = 3;
+print x;
+RESULT
+foo_t x = {
+    int x = 1 (0x1)
+    int y = 2 (0x2)
+}
+foo_t x = {
+    int x = 2 (0x2)
+    int y = 3 (0x3)
+}
+END
+
+# Test 67
+CODE
+struct s1_t {
+  int y[4];
+  int z;
+};
+struct s2_t {
+  s1_t s1[4];
+  int z;
+};
+s1_t s1;
+s2_t s2;
+print s1;
+print s2;
+RESULT
+s1_t s1 = {
+    int[4] y = {
+        int y[0] = 0 (0x0)
+        int y[1] = 0 (0x0)
+        int y[2] = 0 (0x0)
+        int y[3] = 0 (0x0)
+    }
+    int z = 0 (0x0)
+}
+s2_t s2 = {
+    s1_t[4] s1 = {
+        s1_t s1[0] = {
+            int[4] y = {
+                int y[0] = 0 (0x0)
+                int y[1] = 0 (0x0)
+                int y[2] = 0 (0x0)
+                int y[3] = 0 (0x0)
+            }
+            int z = 0 (0x0)
+        }
+        s1_t s1[1] = {
+            int[4] y = {
+                int y[0] = 0 (0x0)
+                int y[1] = 0 (0x0)
+                int y[2] = 0 (0x0)
+                int y[3] = 0 (0x0)
+            }
+            int z = 0 (0x0)
+        }
+        s1_t s1[2] = {
+            int[4] y = {
+                int y[0] = 0 (0x0)
+                int y[1] = 0 (0x0)
+                int y[2] = 0 (0x0)
+                int y[3] = 0 (0x0)
+            }
+            int z = 0 (0x0)
+        }
+        s1_t s1[3] = {
+            int[4] y = {
+                int y[0] = 0 (0x0)
+                int y[1] = 0 (0x0)
+                int y[2] = 0 (0x0)
+                int y[3] = 0 (0x0)
+            }
+            int z = 0 (0x0)
+        }
+    }
+    int z = 0 (0x0)
+}
+END
+
+# Test 68
+CODE
+struct s1_t {
+  int y[4];
+  int z;
+};
+struct s2_t {
+  s1_t s1[2];
+  int z;
+};
+
+s2_t x =
+    {
+        {
+            {
+                { 1, 2, 3, 4},
+                5,
+            },
+            {
+                { 10, 20, 30, 40 },
+                50,
+            }
+        },
+        100
+    };
+print x;
+RESULT
+s2_t x = {
+    s1_t[2] s1 = {
+        s1_t s1[0] = {
+            int[4] y = {
+                int y[0] = 1 (0x1)
+                int y[1] = 2 (0x2)
+                int y[2] = 3 (0x3)
+                int y[3] = 4 (0x4)
+            }
+            int z = 5 (0x5)
+        }
+        s1_t s1[1] = {
+            int[4] y = {
+                int y[0] = 10 (0xa)
+                int y[1] = 20 (0x14)
+                int y[2] = 30 (0x1e)
+                int y[3] = 40 (0x28)
+            }
+            int z = 50 (0x32)
+        }
+    }
+    int z = 100 (0x64)
+}
+END
+
+# Test 69
+CODE
+int f1(int x)
+{
+        int r1 = 1;
+        int r2 = 2;
+
+        if(x == r1) {
+                return r1;
+        }
+        if(x == r2) {
+                return r2;
+        }
+        return -1;
+}
+int _f1(int x)
+{
+        int r1 = 1;
+        int r2 = 2;
+        int rc = -1;
+
+        if(x == r1) {
+                rc = r1;
+        }
+        if(x == r2) {
+                rc = r2;
+        }
+        return rc;
+}
+int f2(int x)
+{
+        x = f1(x);
+        print x;
+        return x;
+}
+int _f2(int x)
+{
+        x = _f1(x);
+        print x;
+        return x;
+}
+f2(0);
+f2(1);
+f2(2);
+f2(3);
+_f2(0);
+_f2(1);
+_f2(2);
+_f2(3);
+RESULT
+int x = -1 (0xffffffff)
+int x = 1 (0x1)
+int x = 2 (0x2)
+int x = -1 (0xffffffff)
+int x = -1 (0xffffffff)
+int x = 1 (0x1)
+int x = 2 (0x2)
+int x = -1 (0xffffffff)
+END
+
+# Test 70
+CODE
+ct_bitmap_t bt = "1 0 0 0 0 0 1";
+int idx;
+CT_BITMAP_ITER(bt, idx) {
+        print idx;
+}
+bt = "1 1 0 1";
+CT_BITMAP_ITER(bt, idx) print idx;
+CT_BITMAP_ITER(0);
+CT_BITMAP_ITER(1,2,3);
+CT_BITMAP_ITER();
+CT_BITMAP_ITER(bt, idx) print idx;
+RESULT
+int idx = 0 (0x0)
+int idx = 6 (0x6)
+int idx = 0 (0x0)
+int idx = 2 (0x2)
+int idx = 3 (0x3)
+** error: wrong number of arguments to CT_BITMAP_ITER() -- expected 2, received 1
+** error: wrong number of arguments to CT_BITMAP_ITER() -- expected 2, received 3
+** error: wrong number of arguments to CT_BITMAP_ITER() -- expected 2, received 0
+int idx = 0 (0x0)
+int idx = 2 (0x2)
+int idx = 3 (0x3)
+END
+
+# Test 71
+CODE
+int check(int x)
+{
+        CT_IF_ERROR_RETURN(x);
+        return 100;
+}
+print check(0);
+print check(-1);
+print check(2);
+print check(-100);
+RESULT
+int $$ = 100 (0x64)
+int $$ = -1 (0xffffffff)
+int $$ = 100 (0x64)
+int $$ = -100 (0xffffff9c)
+END
+
+# Test 72
+CODE
+int f()
+{
+        print "PASS\n";
+}
+f();
+RESULT
+PASS
+END
+
+# Test 73
+CODE
+unsigned int x, y;
+print x;
+print y;
+RESULT
+unsigned int x = 0 (0x0)
+unsigned int y = 0 (0x0)
+END
+
+# Test 74
+CODE
+unsigned int x, *y, z[10], **w[5];
+
+print x;
+print y;
+print z;
+print w;
+
+RESULT
+unsigned int x = 0 (0x0)
+unsigned int* y = NULL
+unsigned int[10] z = {
+    unsigned int z[0] = 0 (0x0)
+    unsigned int z[1] = 0 (0x0)
+    unsigned int z[2] = 0 (0x0)
+    unsigned int z[3] = 0 (0x0)
+    unsigned int z[4] = 0 (0x0)
+    unsigned int z[5] = 0 (0x0)
+    unsigned int z[6] = 0 (0x0)
+    unsigned int z[7] = 0 (0x0)
+    unsigned int z[8] = 0 (0x0)
+    unsigned int z[9] = 0 (0x0)
+}
+unsigned int**[5] w = {
+    unsigned int** w[0] = NULL
+    unsigned int** w[1] = NULL
+    unsigned int** w[2] = NULL
+    unsigned int** w[3] = NULL
+    unsigned int** w[4] = NULL
+}
+END
+
+# Test 75
+CODE
+int i;
+for(i = 1; i < 100; i++) {
+    int j;
+    for(j = 1; j < 100; j++) {
+        int x = i * j;
+        if(i % 10 == 0 && j % 10 == 0) {
+            printf("%d = %d (%d) * %d (%d)\n", x, x / i, i, x / j, j);
+        }
+    }
+}
+cint_variable_dump();
+RESULT
+100 = 10 (10) * 10 (10)
+200 = 20 (10) * 10 (20)
+300 = 30 (10) * 10 (30)
+400 = 40 (10) * 10 (40)
+500 = 50 (10) * 10 (50)
+600 = 60 (10) * 10 (60)
+700 = 70 (10) * 10 (70)
+800 = 80 (10) * 10 (80)
+900 = 90 (10) * 10 (90)
+200 = 10 (20) * 20 (10)
+400 = 20 (20) * 20 (20)
+600 = 30 (20) * 20 (30)
+800 = 40 (20) * 20 (40)
+1000 = 50 (20) * 20 (50)
+1200 = 60 (20) * 20 (60)
+1400 = 70 (20) * 20 (70)
+1600 = 80 (20) * 20 (80)
+1800 = 90 (20) * 20 (90)
+300 = 10 (30) * 30 (10)
+600 = 20 (30) * 30 (20)
+900 = 30 (30) * 30 (30)
+1200 = 40 (30) * 30 (40)
+1500 = 50 (30) * 30 (50)
+1800 = 60 (30) * 30 (60)
+2100 = 70 (30) * 30 (70)
+2400 = 80 (30) * 30 (80)
+2700 = 90 (30) * 30 (90)
+400 = 10 (40) * 40 (10)
+800 = 20 (40) * 40 (20)
+1200 = 30 (40) * 40 (30)
+1600 = 40 (40) * 40 (40)
+2000 = 50 (40) * 40 (50)
+2400 = 60 (40) * 40 (60)
+2800 = 70 (40) * 40 (70)
+3200 = 80 (40) * 40 (80)
+3600 = 90 (40) * 40 (90)
+500 = 10 (50) * 50 (10)
+1000 = 20 (50) * 50 (20)
+1500 = 30 (50) * 50 (30)
+2000 = 40 (50) * 50 (40)
+2500 = 50 (50) * 50 (50)
+3000 = 60 (50) * 50 (60)
+3500 = 70 (50) * 50 (70)
+4000 = 80 (50) * 50 (80)
+4500 = 90 (50) * 50 (90)
+600 = 10 (60) * 60 (10)
+1200 = 20 (60) * 60 (20)
+1800 = 30 (60) * 60 (30)
+2400 = 40 (60) * 60 (40)
+3000 = 50 (60) * 60 (50)
+3600 = 60 (60) * 60 (60)
+4200 = 70 (60) * 60 (70)
+4800 = 80 (60) * 60 (80)
+5400 = 90 (60) * 60 (90)
+700 = 10 (70) * 70 (10)
+1400 = 20 (70) * 70 (20)
+2100 = 30 (70) * 70 (30)
+2800 = 40 (70) * 70 (40)
+3500 = 50 (70) * 70 (50)
+4200 = 60 (70) * 70 (60)
+4900 = 70 (70) * 70 (70)
+5600 = 80 (70) * 70 (80)
+6300 = 90 (70) * 70 (90)
+800 = 10 (80) * 80 (10)
+1600 = 20 (80) * 80 (20)
+2400 = 30 (80) * 80 (30)
+3200 = 40 (80) * 80 (40)
+4000 = 50 (80) * 80 (50)
+4800 = 60 (80) * 80 (60)
+5600 = 70 (80) * 80 (70)
+6400 = 80 (80) * 80 (80)
+7200 = 90 (80) * 80 (90)
+900 = 10 (90) * 90 (10)
+1800 = 20 (90) * 90 (20)
+2700 = 30 (90) * 90 (30)
+3600 = 40 (90) * 90 (40)
+4500 = 50 (90) * 90 (50)
+5400 = 60 (90) * 90 (60)
+6300 = 70 (90) * 90 (70)
+7200 = 80 (90) * 90 (80)
+8100 = 90 (90) * 90 (90)
+V 0 L 0: i
+V 0 L 0: ARGV
+V 0 L 0: ARGC
+V 0 L 0: interp
+END
+
+# Test 76
+CODE
+interp.debug.atrace=1;
+int* f(int* x) {};
+interp.debug.atrace=0;
+RESULT
+{ATRACE: }
+        { FunctionDef
+            { DECLARATION
+                { Declaration
+                    { TYPE
+                        { Type
+                            'int'
+                        }
+                    }
+                    { PCOUNT 1 }
+                    { DIMENSIONS
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                    }
+                    { IDENT
+                        { Identifier
+                            'f'
+                        }
+                    }
+                    { INIT
+                        NULL
+                    }
+                    { ARRAYDIMENSIONS 0 }
+                }
+            }
+            { PARAMETERS
+                { Declaration
+                    { TYPE
+                        { Type
+                            'int'
+                        }
+                    }
+                    { PCOUNT 1 }
+                    { DIMENSIONS
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                        NULL
+                    }
+                    { IDENT
+                        { Identifier
+                            'x'
+                        }
+                    }
+                    { INIT
+                        NULL
+                    }
+                    { ARRAYDIMENSIONS 0 }
+                }
+            }
+            { STATEMENTS
+                { Empty
+                }
+            }
+        }
+{ATRACE: }
+        { Empty
+        }
+{ATRACE: }
+        { Operator
+            { OP = '=' }
+            { LEFT
+                { Operator
+                    { OP = '.' }
+                    { LEFT
+                        { Operator
+                            { OP = '.' }
+                            { LEFT
+                                { Identifier
+                                    'interp'
+                                }
+                            }
+                            { RIGHT
+                                { Identifier
+                                    'debug'
+                                }
+                            }
+                            { EXTRA
+                                NULL
+                            }
+                        }
+                    }
+                    { RIGHT
+                        { Identifier
+                            'atrace'
+                        }
+                    }
+                    { EXTRA
+                        NULL
+                    }
+                }
+            }
+            { RIGHT
+                { Integer
+                    0x0 - 0 - 0
+                }
+            }
+            { EXTRA
+                NULL
+            }
+        }
+{ATRACE: }
+        { Operator
+            { OP = '.' }
+            { LEFT
+                { Operator
+                    { OP = '.' }
+                    { LEFT
+                        { Identifier
+                            'interp'
+                        }
+                    }
+                    { RIGHT
+                        { Identifier
+                            'debug'
+                        }
+                    }
+                    { EXTRA
+                        NULL
+                    }
+                }
+            }
+            { RIGHT
+                { Identifier
+                    'atrace'
+                }
+            }
+            { EXTRA
+                NULL
+            }
+        }
+{ATRACE: }
+        { Operator
+            { OP = '.' }
+            { LEFT
+                { Identifier
+                    'interp'
+                }
+            }
+            { RIGHT
+                { Identifier
+                    'debug'
+                }
+            }
+            { EXTRA
+                NULL
+            }
+        }
+{ATRACE: }
+        { Identifier
+            'interp'
+        }
+{ATRACE: }
+        { Integer
+            0x0 - 0 - 0
+        }
+END
+
+# Test 77
+CODE
+enum cint_test_enum_t { ct_a = 10, ct_b = -1, ct_c, ct_d, ct_e, ct_f };
+cint_test_enum_t x;
+int i;
+for(i = -2; i < 12; i++) { x = i; print x; }
+int r = ct_f;
+print r;
+RESULT
+cint_test_enum_t x = <invalid enum> (-2)
+cint_test_enum_t x = ct_b (-1)
+cint_test_enum_t x = ct_c (0)
+cint_test_enum_t x = ct_d (1)
+cint_test_enum_t x = ct_e (2)
+cint_test_enum_t x = ct_f (3)
+cint_test_enum_t x = <invalid enum> (4)
+cint_test_enum_t x = <invalid enum> (5)
+cint_test_enum_t x = <invalid enum> (6)
+cint_test_enum_t x = <invalid enum> (7)
+cint_test_enum_t x = <invalid enum> (8)
+cint_test_enum_t x = <invalid enum> (9)
+cint_test_enum_t x = ct_a (10)
+cint_test_enum_t x = <invalid enum> (11)
+int r = 3 (0x3)
+END
+
+# Test 78
+CODE
+xct_array_t at;
+print at;
+at[10] = 0x10;
+print at;
+RESULT
+unsigned int[16] at = {
+    unsigned int at[0] = 0 (0x0)
+    unsigned int at[1] = 0 (0x0)
+    unsigned int at[2] = 0 (0x0)
+    unsigned int at[3] = 0 (0x0)
+    unsigned int at[4] = 0 (0x0)
+    unsigned int at[5] = 0 (0x0)
+    unsigned int at[6] = 0 (0x0)
+    unsigned int at[7] = 0 (0x0)
+    unsigned int at[8] = 0 (0x0)
+    unsigned int at[9] = 0 (0x0)
+    unsigned int at[10] = 0 (0x0)
+    unsigned int at[11] = 0 (0x0)
+    unsigned int at[12] = 0 (0x0)
+    unsigned int at[13] = 0 (0x0)
+    unsigned int at[14] = 0 (0x0)
+    unsigned int at[15] = 0 (0x0)
+}
+unsigned int[16] at = {
+    unsigned int at[0] = 0 (0x0)
+    unsigned int at[1] = 0 (0x0)
+    unsigned int at[2] = 0 (0x0)
+    unsigned int at[3] = 0 (0x0)
+    unsigned int at[4] = 0 (0x0)
+    unsigned int at[5] = 0 (0x0)
+    unsigned int at[6] = 0 (0x0)
+    unsigned int at[7] = 0 (0x0)
+    unsigned int at[8] = 0 (0x0)
+    unsigned int at[9] = 0 (0x0)
+    unsigned int at[10] = 16 (0x10)
+    unsigned int at[11] = 0 (0x0)
+    unsigned int at[12] = 0 (0x0)
+    unsigned int at[13] = 0 (0x0)
+    unsigned int at[14] = 0 (0x0)
+    unsigned int at[15] = 0 (0x0)
+}
+END
+
+# Test 79
+CODE
+ct_array_t ct;
+print ct;
+ct[4] = 10;
+print ct;
+RESULT
+unsigned int[16] ct = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+unsigned int[16] ct = 0:0:0:0:10:0:0:0:0:0:0:0:0:0:0:0
+END
+
+# Test 80
+CODE
+void* p;
+print p[0];
+RESULT
+** error: cannot dereference void pointer
+END
+
+# Test 81
+CODE
+ct_array_t m="";
+void *p=&m;
+int* ip = p;
+print p[0];
+print ip[0];
+ip = NULL;
+print ip[0];
+RESULT
+** error: cannot dereference void pointer
+int $$ = 0 (0x0)
+** error: subscripted value is NULL
+END
+
+# Test 82
+CODE
+int x;
+print x;
+typedef struct foo_t {
+        int x;
+};
+foo_t fx;
+print fx;
+void f(void) {
+        return;
+}
+print f;
+enum cint_test_enum_t { ct_a = 10, ct_b = -1, ct_c, ct_d, ct_e, ct_f };
+cint_test_enum_t ex;
+print ex;
+cint_variable_dump();
+printf("RESET\n");
+ct_install_reset_handler();
+cint_reset();
+cint_variable_dump();
+print x;
+print fx;
+print f;
+print ex;
+
+int x;
+print x;
+typedef struct foo_t {
+        int x;
+};
+foo_t fx;
+print fx;
+void f(void) {
+        return;
+}
+print f;
+enum cint_test_enum_t { ct_a = 10, ct_b = -1, ct_c, ct_d, ct_e, ct_f };
+cint_test_enum_t ex;
+print ex;
+cint_variable_dump();
+RESULT
+int x = 0 (0x0)
+foo_t fx = {
+    int x = 0 (0x0)
+}
+$$ = dynamic function 'void f(void)'
+cint_test_enum_t ex = ct_c (0)
+V 0 L 0: ex
+V 0 L 0: __auto$2
+V 0 L 0: fx
+V 0 L 0: x
+V 0 L 0: ARGV
+V 0 L 0: ARGC
+V 0 L 0: interp
+RESET
+RESET HANDLER: cookie=0x1, event=1
+V 0 L 0: ARGV
+V 0 L 0: ARGC
+V 0 L 0: interp
+** error: identifier 'x' undeclared
+** error: identifier 'fx' undeclared
+** error: identifier 'f' undeclared
+** error: identifier 'ex' undeclared
+int x = 0 (0x0)
+foo_t fx = {
+    int x = 0 (0x0)
+}
+$$ = dynamic function 'void f(void)'
+cint_test_enum_t ex = ct_c (0)
+V 0 L 0: ex
+V 0 L 0: __auto$9
+V 0 L 0: fx
+V 0 L 0: x
+V 0 L 0: ARGV
+V 0 L 0: ARGC
+V 0 L 0: interp
+END
+
+# Test 83
+CODE
+ct_test_handlers();
+RESULT
+START
+event_handler1: event=0 cookie=0x1
+event_handler2: event=0 cookie=0x2
+event_handler1: event=0 cookie=0x1
+event_handler2: event=0 cookie=0x2
+event_handler2: event=0 cookie=0x2
+NO MORE EVENT HANDLERS
+NO MORE INIT HANDLERS
+DONE
+END
+
+# Test 84
+CODE
+print ct_enum_t;
+print ct_struct_t;
+print ct_kitchen_sink_callback_f;
+print ct_kitchen_sink;
+void foo ( int x, ct_enum_t z) { }
+int foo2 (void) { }
+print foo;
+print foo2;
+RESULT
+enum ct_enum_t {
+    ctEnum0 = 0
+    ctEnum1 = 1
+    ctEnum2 = 2
+    ctEnum3 = 3
+}
+struct ct_struct_t {
+    char c;
+    unsigned char uc;
+    short s;
+    unsigned short us;
+    int i;
+    unsigned int ui;
+    long l;
+    unsigned long ul;
+    long long ll;
+    unsigned long long ull;
+    double d;
+    int* ip;
+    void* vp;
+    char[16] cbuffer;
+    int**[8] pbuffer;
+    ct_bitmap_t bitmap;
+}
+size is 160 bytes
+function pointer: 'ct_enum_t (*ct_kitchen_sink_callback_f)(char c, short s, int i, char* str, ct_enum_t e, ct_bitmap_t b, ct_struct_t* sp, _Bool bl)'
+$$ = compiled function 'ct_enum_t ct_kitchen_sink(char c, short s, int i, char* str, ct_enum_t e, ct_bitmap_t b, ct_struct_t* sp, _Bool bl)'
+$$ = dynamic function 'void foo(int x, ct_enum_t z)'
+$$ = dynamic function 'int foo2(void)'
+END
+
+# Test 85
+CODE
+cint list;
+RESULT
+ct_bitmap_t (atomic)
+ct_array_t (atomic)
+char (atomic)
+signed char (atomic)
+unsigned char (atomic)
+short (atomic)
+signed short (atomic)
+unsigned short (atomic)
+int (atomic)
+signed int (atomic)
+unsigned int (atomic)
+_Bool (atomic)
+long (atomic)
+signed long (atomic)
+unsigned long (atomic)
+long long (atomic)
+signed long long (atomic)
+unsigned long long (atomic)
+double (atomic)
+float (atomic)
+void (atomic)
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+ct_enum_t (enum)
+ct_constant_db (constant)
+ct_constant_null (constant)
+ct_constant_cafe (constant)
+ct_true (constant)
+ct_false (constant)
+ct_install_reset_handler (function)
+ct_test_handlers (function)
+ct_void_void_function (function)
+ct_void_int_function (function)
+ct_int_int_function (function)
+ct_kitchen_sink (function)
+ct_function_callbacker0 (function)
+ct_compiled_callback0 (function)
+ct_kitchen_sink_callbacker (function)
+CT_BITMAP_MEMBER (function)
+ct_void_callbacker (function)
+CT_IF_ERROR_RETURN (macro)
+CT_BITMAP_ITER (iterator)
+ct_voidp_t typedef for void* (atomic)
+ct_int_t typedef for int (atomic)
+ct_bitmapp_t typedef for ct_bitmap_t* (atomic)
+ct_array_t typedef for unsigned int[16] (atomic)
+xct_array_t typedef for unsigned int[16] (atomic)
+ct_callback0_f (function pointer)
+ct_kitchen_sink_callback_f (function pointer)
+ct_void_parameter_callback_f (function pointer)
+cint_interpreter_state_t (struct)
+cint_interpreter_debug_state_t (struct)
+CINT_CONFIG_INCLUDE_DOUBLES (constant)
+CINT_CONFIG_INCLUDE_LONGLONGS (constant)
+CINT_CONFIG_INCLUDE_MAIN (constant)
+CINT_CONFIG_MAX_VARIABLE_NAME (constant)
+CINT_CONFIG_INCLUDE_CINT_LOAD (constant)
+CINT_CONFIG_INCLUDE_CINT_SOURCE (constant)
+CINT_CONFIG_INCLUDE_DTRACE (constant)
+CINT_CONFIG_INCLUDE_DEBUG (constant)
+CINT_CONFIG_INCLUDE_STDLIB (constant)
+CINT_CONFIG_INCLUDE_SDK_SAL (constant)
+CINT_CONFIG_INCLUDE_TEST_DATA (constant)
+cint_variable_dump (function)
+cint_timer_start (function)
+cint_timer_stop (function)
+cint_timer_get (function)
+cint_reset (function)
+printf (function)
+sprintf (function)
+snprintf (function)
+cint_defined (function)
+END
+
+# Test 86
+CODE
+cint list atomic;
+RESULT
+ct_bitmap_t (atomic)
+ct_array_t (atomic)
+char (atomic)
+signed char (atomic)
+unsigned char (atomic)
+short (atomic)
+signed short (atomic)
+unsigned short (atomic)
+int (atomic)
+signed int (atomic)
+unsigned int (atomic)
+_Bool (atomic)
+long (atomic)
+signed long (atomic)
+unsigned long (atomic)
+long long (atomic)
+signed long long (atomic)
+unsigned long long (atomic)
+double (atomic)
+float (atomic)
+void (atomic)
+ct_voidp_t typedef for void* (atomic)
+ct_int_t typedef for int (atomic)
+ct_bitmapp_t typedef for ct_bitmap_t* (atomic)
+ct_array_t typedef for unsigned int[16] (atomic)
+xct_array_t typedef for unsigned int[16] (atomic)
+END
+
+# Test 87
+CODE
+void f(void) { }
+cint list function;
+RESULT
+ct_install_reset_handler (function)
+ct_test_handlers (function)
+ct_void_void_function (function)
+ct_void_int_function (function)
+ct_int_int_function (function)
+ct_kitchen_sink (function)
+ct_function_callbacker0 (function)
+ct_compiled_callback0 (function)
+ct_kitchen_sink_callbacker (function)
+CT_BITMAP_MEMBER (function)
+ct_void_callbacker (function)
+cint_variable_dump (function)
+cint_timer_start (function)
+cint_timer_stop (function)
+cint_timer_get (function)
+cint_reset (function)
+printf (function)
+sprintf (function)
+snprintf (function)
+cint_defined (function)
+f (function)
+END
+
+# Test 88
+CODE
+struct foo_t { int x; };
+cint list struct;
+RESULT
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+cint_interpreter_state_t (struct)
+cint_interpreter_debug_state_t (struct)
+foo_t (struct)
+END
+
+# Test 89
+CODE
+enum foo_e { x };
+cint list enum;
+RESULT
+ct_enum_t (enum)
+foo_e (enum)
+END
+
+# Test 90
+CODE
+cint list fp;
+RESULT
+ct_callback0_f (function pointer)
+ct_kitchen_sink_callback_f (function pointer)
+ct_void_parameter_callback_f (function pointer)
+END
+
+# Test 91
+CODE
+cint list ct_;
+RESULT
+ct_bitmap_t (atomic)
+ct_array_t (atomic)
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+ct_enum_t (enum)
+ct_constant_db (constant)
+ct_constant_null (constant)
+ct_constant_cafe (constant)
+ct_true (constant)
+ct_false (constant)
+ct_install_reset_handler (function)
+ct_test_handlers (function)
+ct_void_void_function (function)
+ct_void_int_function (function)
+ct_int_int_function (function)
+ct_kitchen_sink (function)
+ct_function_callbacker0 (function)
+ct_compiled_callback0 (function)
+ct_kitchen_sink_callbacker (function)
+ct_void_callbacker (function)
+ct_voidp_t typedef for void* (atomic)
+ct_int_t typedef for int (atomic)
+ct_bitmapp_t typedef for ct_bitmap_t* (atomic)
+ct_array_t typedef for unsigned int[16] (atomic)
+xct_array_t typedef for unsigned int[16] (atomic)
+ct_callback0_f (function pointer)
+ct_kitchen_sink_callback_f (function pointer)
+ct_void_parameter_callback_f (function pointer)
+END
+
+# Test 92
+CODE
+cint list atomic ct_;
+RESULT
+ct_bitmap_t (atomic)
+ct_array_t (atomic)
+ct_voidp_t typedef for void* (atomic)
+ct_int_t typedef for int (atomic)
+ct_bitmapp_t typedef for ct_bitmap_t* (atomic)
+ct_array_t typedef for unsigned int[16] (atomic)
+xct_array_t typedef for unsigned int[16] (atomic)
+END
+
+# Test 93
+CODE
+void f(void) {}
+cint list function ct_;
+RESULT
+ct_install_reset_handler (function)
+ct_test_handlers (function)
+ct_void_void_function (function)
+ct_void_int_function (function)
+ct_int_int_function (function)
+ct_kitchen_sink (function)
+ct_function_callbacker0 (function)
+ct_compiled_callback0 (function)
+ct_kitchen_sink_callbacker (function)
+ct_void_callbacker (function)
+END
+
+# Test 94
+CODE
+struct foo_t { int x; };
+cint list struct ct_;
+RESULT
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+END
+
+# Test 95
+CODE
+enum foo_e { x };
+cint list enum ct_;
+RESULT
+ct_enum_t (enum)
+END
+
+# Test 96
+CODE
+cint list fp kitchen;
+RESULT
+ct_kitchen_sink_callback_f (function pointer)
+END
+
+# Test 97
+CODE
+void f(void) {}
+struct foo_t { int x; };
+cint list struct function ct;
+RESULT
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+ct_install_reset_handler (function)
+ct_test_handlers (function)
+ct_void_void_function (function)
+ct_void_int_function (function)
+ct_int_int_function (function)
+ct_kitchen_sink (function)
+ct_function_callbacker0 (function)
+ct_compiled_callback0 (function)
+ct_kitchen_sink_callbacker (function)
+ct_void_callbacker (function)
+END
+
+# Test 98
+CODE
+struct foo_t { int x; };
+enum foo_e { x };
+cint list struct enum;
+RESULT
+ct_struct_t (struct)
+ct_struct_simple_t (struct)
+ct_enum_t (enum)
+cint_interpreter_state_t (struct)
+cint_interpreter_debug_state_t (struct)
+foo_t (struct)
+foo_e (enum)
+END
+
+# Test 99
+CODE
+cint list macro;
+RESULT
+CT_IF_ERROR_RETURN (macro)
+END
+
+# Test 100
+CODE
+cint list iterator;
+RESULT
+CT_BITMAP_ITER (iterator)
+END
+
+# Test 101
+CODE
+struct foo1_t { int x[4]; };
+struct foo2_t { int x[4]; };
+int x = 0xdead;
+
+foo1_t f1 = { { 101, 102, 103, 104 } };
+foo2_t f2 = { { 201, 202, 203, 204 } };
+
+print f1;
+print f2;
+f1 = f2;
+print f1;
+print f2;
+f1 = (auto)f2;
+print f1;
+print f2;
+f1 = f2;
+f2 = f1;
+
+x = (auto)f2;
+print x;
+
+RESULT
+foo1_t f1 = {
+    int[4] x = {
+        int x[0] = 101 (0x65)
+        int x[1] = 102 (0x66)
+        int x[2] = 103 (0x67)
+        int x[3] = 104 (0x68)
+    }
+}
+foo2_t f2 = {
+    int[4] x = {
+        int x[0] = 201 (0xc9)
+        int x[1] = 202 (0xca)
+        int x[2] = 203 (0xcb)
+        int x[3] = 204 (0xcc)
+    }
+}
+** error: incompatible types in assignment (foo1_t = foo2_t)
+foo1_t f1 = {
+    int[4] x = {
+        int x[0] = 101 (0x65)
+        int x[1] = 102 (0x66)
+        int x[2] = 103 (0x67)
+        int x[3] = 104 (0x68)
+    }
+}
+foo2_t f2 = {
+    int[4] x = {
+        int x[0] = 201 (0xc9)
+        int x[1] = 202 (0xca)
+        int x[2] = 203 (0xcb)
+        int x[3] = 204 (0xcc)
+    }
+}
+foo1_t f1 = {
+    int[4] x = {
+        int x[0] = 201 (0xc9)
+        int x[1] = 202 (0xca)
+        int x[2] = 203 (0xcb)
+        int x[3] = 204 (0xcc)
+    }
+}
+foo2_t f2 = {
+    int[4] x = {
+        int x[0] = 201 (0xc9)
+        int x[1] = 202 (0xca)
+        int x[2] = 203 (0xcb)
+        int x[3] = 204 (0xcc)
+    }
+}
+** error: incompatible types in assignment (foo1_t = foo2_t)
+** error: incompatible types in assignment (foo2_t = foo1_t)
+** error: incompatible sizes in assignment (int = foo2_t)
+int x = 57005 (0xdead)
+END
+
+
+# Test 102
+CODE
+
+struct f1_t { int x; };
+struct f2_t { int y; };
+struct f3_t { int x[2]; };
+
+void f(f1_t p)
+{
+        print p;
+}
+void fp(f1_t* p)
+{
+        print *p;
+}
+
+f1_t f1 = { 0xdead };
+f2_t f2 = { 0xbeef };
+f3_t f3 = { { 0xdead, 0xbeef } };
+f(f1);
+f(f2);
+f((auto)f2);
+f(f2);
+f((auto)f3);
+
+
+fp(&f1);
+fp((auto)&f2);
+fp(&f3);
+fp((auto)&f3);
+RESULT
+f1_t p = {
+    int x = 57005 (0xdead)
+}
+** error: incompatible types in assignment (f1_t = f2_t)
+** error: arg 1 to function 'f' was wrong type: expected f1_t, received f2_t
+f1_t p = {
+    int x = 48879 (0xbeef)
+}
+** error: incompatible types in assignment (f1_t = f2_t)
+** error: arg 1 to function 'f' was wrong type: expected f1_t, received f2_t
+** error: incompatible sizes in assignment (f1_t = f3_t)
+** error: arg 1 to function 'f' was wrong type: expected f1_t, received f3_t
+f1_t $$ = {
+    int x = 57005 (0xdead)
+}
+f1_t $$ = {
+    int x = 48879 (0xbeef)
+}
+** error: incompatible types in assignment (f1_t* = f3_t*)
+** error: arg 1 to function 'fp' was wrong type: expected f1_t*, received f3_t*
+f1_t $$ = {
+    int x = 57005 (0xdead)
+}
+END
+
+# Test 103
+CODE
+// cpp comment
+int x; // more comment
+// another comment
+print x;
+
+// split
+int // next comes the variable
+y // next comes the semicolon
+;
+// so many comments
+// print y;
+print y;
+
+RESULT
+int x = 0 (0x0)
+int y = 0 (0x0)
+END
+
+# Test 104
+CODE
+char c = 1;
+print c;
+c = 'A';
+print c;
+c = '\n';
+print c;
+c = '\0';
+print c;
+c = 'AA';
+print c;
+c = '\g';
+print c;
+c = 'X';
+int x = 'X';
+print x;
+print c;
+RESULT
+char c = 1 (0x01) '.'
+char c = 65 (0x41) 'A'
+char c = 10 (0x0a) '.'
+char c = 0 (0x00) '.'
+** warning: multi-byte characters not supported ('AA')
+char c = 65 (0x41) 'A'
+** warning: invalid escape sequence ('\g')
+char c = 103 (0x67) 'g'
+int x = 88 (0x58)
+char c = 88 (0x58) 'X'
+END
+
+# Test 105
+CODE
+char c = 'A';
+print c;
+printf("$c\n");
+double d = 3.15;
+printf("pi is $d\n");
+ct_bitmap_t ct;
+print ct;
+printf("ct bitmap is $ct\n");
+ct_array_t ct_array;
+print ct_array;
+printf("array is $ct_array\n");
+ct_struct_t s;
+print s;
+printf("struct var = $s\n");
+int x[10];
+print x;
+printf("array x is $x\n");
+printf("all variables are $c:$d:$ct:$ct_array:$s:$x...\n");
+RESULT
+char c = 65 (0x41) 'A'
+A
+pi is 3.15
+ct_bitmap_t ct = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ct bitmap is { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+unsigned int[16] ct_array = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+array is 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+ct_struct_t s = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+}
+struct var = <structure variable>
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 0 (0x0)
+    int x[2] = 0 (0x0)
+    int x[3] = 0 (0x0)
+    int x[4] = 0 (0x0)
+    int x[5] = 0 (0x0)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+array x is <array variable>
+all variables are A:3.15:{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:<structure variable>:<array variable>...
+END
+
+# Test 106
+CODE
+char c = 'A';
+print c;
+printf("${c}\n");
+double d = 3.15;
+printf("pi is ${d}\n");
+ct_bitmap_t ct;
+print ct;
+printf("ct bitmap is ${ct}\n");
+ct_array_t ct_array;
+print ct_array;
+printf("array is ${ct_array}\n");
+ct_struct_t s;
+print s;
+printf("struct var = ${s}\n");
+int x[10];
+print x;
+printf("array x is ${x}\n");
+printf("all variables are ${c}:${d}:${ct}:${ct_array}:${s}:${x}...\n");
+RESULT
+char c = 65 (0x41) 'A'
+A
+pi is 3.15
+ct_bitmap_t ct = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ct bitmap is { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+unsigned int[16] ct_array = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+array is 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+ct_struct_t s = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+}
+struct var = <structure variable>
+int[10] x = {
+    int x[0] = 0 (0x0)
+    int x[1] = 0 (0x0)
+    int x[2] = 0 (0x0)
+    int x[3] = 0 (0x0)
+    int x[4] = 0 (0x0)
+    int x[5] = 0 (0x0)
+    int x[6] = 0 (0x0)
+    int x[7] = 0 (0x0)
+    int x[8] = 0 (0x0)
+    int x[9] = 0 (0x0)
+}
+array x is <array variable>
+all variables are A:3.15:{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:<structure variable>:<array variable>...
+END
+
+# Test 107
+CODE
+char c = 'A';
+int i = 56;
+printf("$c");
+printf("\n");
+printf("${c}");
+printf("\n");
+printf("$i");
+printf("\n");
+printf("${i}\n");
+printf("\n");
+RESULT
+A
+A
+56
+56
+
+END
+
+# Test 108
+CODE
+int* xp;
+print xp;
+print *xp;
+*xp = 1;
+
+RESULT
+int* xp = NULL
+** error: attempt to dereference NULL pointer
+** error: attempt to dereference NULL pointer
+** error: invalid operand(s) to '='
+END
+
+# Test 109
+CODE
+struct foo_t {
+        int x;
+        int* xp;
+};
+struct foo2_t {
+        int x;
+        int* xp;
+        foo_t f;
+        foo_t* fp;
+};
+
+foo_t x;
+print x.xp;
+print *x.xp;
+foo2_t x2;
+print x2.fp->x;
+
+RESULT
+int* $$ = NULL
+** error: attempt to dereference NULL pointer
+** error: attempt to dereference a NULL structure member pointer
+END
+
+# Test 110
+CODE
+/* PR 37026 */
+void foo (void);
+int foo (void);
+extern void foo (void);
+extern unsigned char foo (void);
+
+void foo ();
+int foo ();
+extern void foo ();
+extern unsigned char foo ();
+
+void foo (int);
+int foo (int);
+extern void foo (int);
+extern unsigned char foo (int);
+
+void foo (unsigned int);
+int foo (unsigned int);
+extern void foo (unsigned int);
+extern unsigned char foo (unsigned int);
+
+printf("OK\n");
+RESULT
+OK
+END
+
+# Test 111
+CODE
+/* PR 40270 */
+struct my_data_t {
+  unsigned int value;
+  unsigned int mode;
+  unsigned int flags;
+  unsigned char raw_data[20];
+};
+
+struct A {
+  int a, b, c;
+};
+
+struct B {
+  unsigned int a, b, c;
+};
+printf("OK\n");
+RESULT
+OK
+END
+
+# Test 112
+CODE
+/* PR 40954 */
+enum bar {ba, bb};
+int f(int *x) { print *x; return *x; }
+f(1);
+f(bb);
+RESULT
+int $$ = 1 (0x1)
+bar $$ = bb (1)
+END
+
+# Test 113
+CODE
+/* SDK-29742
+   Test explicit and default switch cases for break, return, and fall-through
+   directly and recursively.
+*/
+void
+test(int i,char *s)
+{
+    switch (i) {
+    default:
+        if ((i&3) == 0) {
+            printf("%dB\n",i);
+            break;
+        } else if ((i&3) == 1) {
+            printf("%dR\n",i);
+            return;
+        } else  {
+            printf("%dF\n",i);
+            /* fall through */
+        }
+    case 0:
+        printf("0F*\n");
+        /* fall through */
+    case 1:
+        printf("1B*\n");
+        break;
+    case 2:
+        printf("2R*\n");
+        return;
+    case 3:
+        test(0,"U");
+        test(1,"V");
+        test(2,"W");
+        test(4,"X");
+        test(5,"Y");
+        test(6,"Z");
+        break;
+    }
+    printf("%s\n", s);
+}
+
+int
+main(void)
+{
+    int i;
+    char s[2];
+    s[1] = 0;
+    for (i=0; i<10; i++) {
+        s[0] = 'A'+i;
+        test(i,s);
+    }
+    return 0;
+}
+main();
+RESULT
+0F*
+1B*
+A
+1B*
+B
+2R*
+0F*
+1B*
+U
+1B*
+V
+2R*
+4B
+X
+5R
+6F
+0F*
+1B*
+Z
+D
+4B
+E
+5R
+6F
+0F*
+1B*
+G
+7F
+0F*
+1B*
+H
+8B
+I
+9R
+END
+
+# Test 114
+CODE
+void
+test(int i,char *s)
+{
+    int j;
+
+    for (j=i; j != 0; j>>=2) {
+        if ((j&3) == 3) {
+            printf("%d/%dB\n",i,j);
+            break;
+        } else if ((j&3) == 2) {
+            printf("%d/%dR\n",i,j);
+            return;
+        } else if ((j&3) == 1) {
+            printf("%d/%dC\n",i,j);
+            continue;
+        } else {
+            printf("%d/%dF\n",i,j);
+            /* normal */
+        }
+        printf("%d/%dL\n",i,j);
+    }
+    printf("%d %s\n",i,s);
+}
+
+int
+main(void)
+{
+    int i;
+    char s[2];
+    s[1] = 0;
+    for (i=0; i<64; i++) {
+        s[0] = '!'+i;
+        test(i,s);
+    }
+    return 0;
+}
+main();
+RESULT
+0 !
+1/1C
+1 "
+2/2R
+3/3B
+3 $
+4/4F
+4/4L
+4/1C
+4 %
+5/5C
+5/1C
+5 &
+6/6R
+7/7B
+7 (
+8/8F
+8/8L
+8/2R
+9/9C
+9/2R
+10/10R
+11/11B
+11 ,
+12/12F
+12/12L
+12/3B
+12 -
+13/13C
+13/3B
+13 .
+14/14R
+15/15B
+15 0
+16/16F
+16/16L
+16/4F
+16/4L
+16/1C
+16 1
+17/17C
+17/4F
+17/4L
+17/1C
+17 2
+18/18R
+19/19B
+19 4
+20/20F
+20/20L
+20/5C
+20/1C
+20 5
+21/21C
+21/5C
+21/1C
+21 6
+22/22R
+23/23B
+23 8
+24/24F
+24/24L
+24/6R
+25/25C
+25/6R
+26/26R
+27/27B
+27 <
+28/28F
+28/28L
+28/7B
+28 =
+29/29C
+29/7B
+29 >
+30/30R
+31/31B
+31 @
+32/32F
+32/32L
+32/8F
+32/8L
+32/2R
+33/33C
+33/8F
+33/8L
+33/2R
+34/34R
+35/35B
+35 D
+36/36F
+36/36L
+36/9C
+36/2R
+37/37C
+37/9C
+37/2R
+38/38R
+39/39B
+39 H
+40/40F
+40/40L
+40/10R
+41/41C
+41/10R
+42/42R
+43/43B
+43 L
+44/44F
+44/44L
+44/11B
+44 M
+45/45C
+45/11B
+45 N
+46/46R
+47/47B
+47 P
+48/48F
+48/48L
+48/12F
+48/12L
+48/3B
+48 Q
+49/49C
+49/12F
+49/12L
+49/3B
+49 R
+50/50R
+51/51B
+51 T
+52/52F
+52/52L
+52/13C
+52/3B
+52 U
+53/53C
+53/13C
+53/3B
+53 V
+54/54R
+55/55B
+55 X
+56/56F
+56/56L
+56/14R
+57/57C
+57/14R
+58/58R
+59/59B
+59 \
+60/60F
+60/60L
+60/15B
+60 ]
+61/61C
+61/15B
+61 ^
+62/62R
+63/63B
+63 `
+END
+
+# Test 115
+CODE
+void
+test(int i,char *s)
+{
+    int j;
+
+    j=i;
+    while (j != 0) {
+        if ((j&3) == 3) {
+            printf("%d/%dB\n",i,j);
+            break;
+        } else if ((j&3) == 2) {
+            printf("%d/%dR\n",i,j);
+            return;
+        } else if ((j&3) == 1) {
+            printf("%d/%dC\n",i,j);
+            j>>=2;
+            continue;
+        } else {
+            printf("%d/%dF\n",i,j);
+            /* normal */
+        }
+        printf("%d/%dL\n",i,j);
+        j>>=2;
+    }
+    printf("%d %s\n",i,s);
+}
+
+int
+main(void)
+{
+    int i;
+    char s[2];
+    s[1] = 0;
+    for (i=0; i<64; i++) {
+        s[0] = '!'+i;
+        test(i,s);
+    }
+    return 0;
+}
+main();
+RESULT
+0 !
+1/1C
+1 "
+2/2R
+3/3B
+3 $
+4/4F
+4/4L
+4/1C
+4 %
+5/5C
+5/1C
+5 &
+6/6R
+7/7B
+7 (
+8/8F
+8/8L
+8/2R
+9/9C
+9/2R
+10/10R
+11/11B
+11 ,
+12/12F
+12/12L
+12/3B
+12 -
+13/13C
+13/3B
+13 .
+14/14R
+15/15B
+15 0
+16/16F
+16/16L
+16/4F
+16/4L
+16/1C
+16 1
+17/17C
+17/4F
+17/4L
+17/1C
+17 2
+18/18R
+19/19B
+19 4
+20/20F
+20/20L
+20/5C
+20/1C
+20 5
+21/21C
+21/5C
+21/1C
+21 6
+22/22R
+23/23B
+23 8
+24/24F
+24/24L
+24/6R
+25/25C
+25/6R
+26/26R
+27/27B
+27 <
+28/28F
+28/28L
+28/7B
+28 =
+29/29C
+29/7B
+29 >
+30/30R
+31/31B
+31 @
+32/32F
+32/32L
+32/8F
+32/8L
+32/2R
+33/33C
+33/8F
+33/8L
+33/2R
+34/34R
+35/35B
+35 D
+36/36F
+36/36L
+36/9C
+36/2R
+37/37C
+37/9C
+37/2R
+38/38R
+39/39B
+39 H
+40/40F
+40/40L
+40/10R
+41/41C
+41/10R
+42/42R
+43/43B
+43 L
+44/44F
+44/44L
+44/11B
+44 M
+45/45C
+45/11B
+45 N
+46/46R
+47/47B
+47 P
+48/48F
+48/48L
+48/12F
+48/12L
+48/3B
+48 Q
+49/49C
+49/12F
+49/12L
+49/3B
+49 R
+50/50R
+51/51B
+51 T
+52/52F
+52/52L
+52/13C
+52/3B
+52 U
+53/53C
+53/13C
+53/3B
+53 V
+54/54R
+55/55B
+55 X
+56/56F
+56/56L
+56/14R
+57/57C
+57/14R
+58/58R
+59/59B
+59 \
+60/60F
+60/60L
+60/15B
+60 ]
+61/61C
+61/15B
+61 ^
+62/62R
+63/63B
+63 `
+END
+
+# Test 116
+CODE
+void
+test(int i,char *s)
+{
+    int j;
+
+    j=i;
+    do {
+        if ((j&3) == 3) {
+            printf("%d/%dB\n",i,j);
+            break;
+        } else if ((j&3) == 2) {
+            printf("%d/%dR\n",i,j);
+            return;
+        } else if ((j&3) == 1) {
+            printf("%d/%dC\n",i,j);
+            j>>=2;
+            continue;
+        } else {
+            printf("%d/%dF\n",i,j);
+            /* normal */
+        }
+        printf("%d/%dL\n",i,j);
+        j>>=2;
+    } while (j != 0);
+    printf("%d %s\n",i,s);
+}
+
+int
+main(void)
+{
+    int i;
+    char s[2];
+    s[1] = 0;
+    for (i=0; i<64; i++) {
+        s[0] = '!'+i;
+        test(i,s);
+    }
+    return 0;
+}
+main();
+RESULT
+0/0F
+0/0L
+0 !
+1/1C
+1 "
+2/2R
+3/3B
+3 $
+4/4F
+4/4L
+4/1C
+4 %
+5/5C
+5/1C
+5 &
+6/6R
+7/7B
+7 (
+8/8F
+8/8L
+8/2R
+9/9C
+9/2R
+10/10R
+11/11B
+11 ,
+12/12F
+12/12L
+12/3B
+12 -
+13/13C
+13/3B
+13 .
+14/14R
+15/15B
+15 0
+16/16F
+16/16L
+16/4F
+16/4L
+16/1C
+16 1
+17/17C
+17/4F
+17/4L
+17/1C
+17 2
+18/18R
+19/19B
+19 4
+20/20F
+20/20L
+20/5C
+20/1C
+20 5
+21/21C
+21/5C
+21/1C
+21 6
+22/22R
+23/23B
+23 8
+24/24F
+24/24L
+24/6R
+25/25C
+25/6R
+26/26R
+27/27B
+27 <
+28/28F
+28/28L
+28/7B
+28 =
+29/29C
+29/7B
+29 >
+30/30R
+31/31B
+31 @
+32/32F
+32/32L
+32/8F
+32/8L
+32/2R
+33/33C
+33/8F
+33/8L
+33/2R
+34/34R
+35/35B
+35 D
+36/36F
+36/36L
+36/9C
+36/2R
+37/37C
+37/9C
+37/2R
+38/38R
+39/39B
+39 H
+40/40F
+40/40L
+40/10R
+41/41C
+41/10R
+42/42R
+43/43B
+43 L
+44/44F
+44/44L
+44/11B
+44 M
+45/45C
+45/11B
+45 N
+46/46R
+47/47B
+47 P
+48/48F
+48/48L
+48/12F
+48/12L
+48/3B
+48 Q
+49/49C
+49/12F
+49/12L
+49/3B
+49 R
+50/50R
+51/51B
+51 T
+52/52F
+52/52L
+52/13C
+52/3B
+52 U
+53/53C
+53/13C
+53/3B
+53 V
+54/54R
+55/55B
+55 X
+56/56F
+56/56L
+56/14R
+57/57C
+57/14R
+58/58R
+59/59B
+59 \
+60/60F
+60/60L
+60/15B
+60 ]
+61/61C
+61/15B
+61 ^
+62/62R
+63/63B
+63 `
+END
+
+# Test 117
+CODE
+# Validate parser error recovery
+int
+my_vlan_create(int unit, int vlan_id)
+{
+    print("Create VLAN %d for UNIT %d\n", vlan_id, unit);
+    return CMD_FAIL;
+}
+
+int
+MY_FAILURE(int rv)
+{
+    return rv < 0;
+}
+
+int rv; /* Return value */
+
+/* ... */
+
+printf("Create VLAN\n");
+rv = my_vlan_create(unit, vlan_id);
+
+printf("Check Return Status\n");
+if (MY_FAILURE(rv)) {
+    /* Print message with error string. */
+    printf("my_vlan_create: %d\n", rv);
+    return CMD_FAIL;    /* Application specific return code */
+}
+RESULT
+Create VLAN
+** error: identifier 'unit' undeclared
+** error: error evaluating argument 1 to function 'my_vlan_create'
+** error: invalid operand(s) to '='
+Check Return Status
+END
+
+# Test 118
+CODE
+# Verify syntax error printing.
+bla bla bla bla;
+RESULT
+bla bla bla bla;
+    ^^^ syntax error, unexpected IDENTIFIER, expecting ',' or ';' [1]
+bla bla bla bla;
+            ^^^ syntax error, unexpected IDENTIFIER, expecting ',' or ';' [1]
+END
+
+# Test 119
+CODE
+interp.print_expr=1;
+interp.print_expr=0;
+RESULT
+int  = 1 (0x1)
+END
+
+# Test 120
+CODE
+/* SDK-30721 */
+unsigned long long big;
+big = 20ll;
+RESULT
+END
+
+# Test 121
+CODE
+/* SDK-30183 */
+char buf50[50];
+char buf101[101];
+char buf16[16];
+long l = 0x12345;
+long long ll;
+double d = 1271184992;
+char *s = "kgfdjfgsd";
+void *v = buf50;
+char *p = buf50;
+
+sprintf(buf50, "this is %d", 1);
+printf("%s\n", buf50);
+
+/* should start at the beginning */
+sprintf(buf50, "now this is %d", 2);
+printf("%s\n", buf50);
+
+/* long */
+sprintf(buf50, "long=0x%x", l);
+printf("%s\n", buf50);
+
+/* long long */
+sprintf(buf50, "long long=%lld", ll);
+printf("%s\n", buf50);
+
+/* double */
+sprintf(buf50, "double=%f", d);
+printf("%s\n", buf50);
+
+/* string */
+sprintf(buf50, "string=%s", s);
+printf("%s\n", buf50);
+
+/* how to test void? */
+
+/* char */
+sprintf(buf50, "char=%c%c%c", s[1],s[3],s[5]);
+printf("%s\n", buf50);
+
+/* fmt */
+sprintf(buf50, "this is a test");
+printf("%s\n", buf50);
+
+/* fmt error */
+sprintf(buf50, s);
+
+/* overflow */
+sprintf(buf50, "1%s2%s3%s4%s5%s6%s7%s8%s9%sA%s",s,s,s,s,s,s,s,s,s,s);
+printf("%s\n", buf50);
+
+sprintf(buf101, "1%s2%s3%s4%s5%s6%s7%s8%s9%sA%s",s,s,s,s,s,s,s,s,s,s);
+printf("%s\n", buf101);
+
+/* off by 1 */
+sprintf(buf16, "%16.5f", 3.14159);
+printf("%s\n", buf16);
+sprintf(buf16, "%15.5f", 3.14159);
+printf("%s\n", buf16);
+
+/* print into void pointer (SDK-39668) */
+sprintf(v, "%15.5f", 2.71828);
+
+/* print into char pointer (SDK-39668) */
+sprintf(p, "%15.5f", 2.71828);
+printf("%s\n", p);
+
+/* for argument not found */
+sprintf(foo, "%15.5f", 2.71828);
+
+RESULT
+this is 1
+now this is 2
+long=0x12345
+long long=0
+double=1271184992.000000
+string=kgfdjfgsd
+char=gdf
+this is a test
+** error: format argument to 'sprintf' must be a string literal
+** error: buffer length too small, allocated 50 chars, needs 101 chars
+1kgfdjfgsd2kgfdjfgsd3kgfdjfgsd4kgfdjfgsd5
+1kgfdjfgsd2kgfdjfgsd3kgfdjfgsd4kgfdjfgsd5kgfdjfgsd6kgfdjfgsd7kgfdjfgsd8kgfdjfgsd9kgfdjfgsdAkgfdjfgsd
+** error: buffer length too small, allocated 16 chars, needs 17 chars
+
+        3.14159
+** error: the first argument (str) must be a char* or char[]
+        2.71828
+** error: identifier 'foo' undeclared
+** error: could not evaluate the first argument (string)
+END
+
+# Test 122
+CODE
+char *b = "x";
+printf(b);
+RESULT
+** error: format argument to 'printf' must be a string literal
+END
+
+# Test 123
+CODE
+// SDK-30789
+int y;
+void *x;
+int *z;
+x = &y;
+y = *x;
+RESULT
+** error: attempt to dereference void pointer
+** error: invalid operand(s) to '='
+END
+
+# Test 124
+CODE
+typedef struct _foo foo;
+RESULT
+** error: identifier 'foo' has unknown type
+END
+
+# Test 125
+CODE
+struct foo
+{
+  long x;
+  long bar[0];
+};
+RESULT
+** error: illegal array definition
+END
+
+# Test 126
+CODE
+void *f(void)
+{
+    extern char g[];
+    return (void *) &g;
+}
+f();
+RESULT
+** error: 'extern' variables are not supported
+END
+
+# Test 127
+CODE
+// test for memory leak in __cint_eval_ast_FunctionDef
+void f2(int *, int);
+RESULT
+END
+
+# Test 128
+CODE
+// test for memory leak
+char *s[] = { "a" };
+RESULT
+END
+
+# Test 129
+CODE
+// test for memory leak
+typedef struct S { char *s; };
+S s = { "a" };
+RESULT
+END
+
+# Test 130
+CODE
+// SDK-30825
+cint_defined();
+print cint_defined("foo");
+print cint_defined(NULL);
+print cint_defined("interp");
+print cint_defined("ct_bitmap_t");
+print cint_defined("ct_struct_t");
+print cint_defined("ct_constant_db");
+print cint_defined("ct_install_reset_handler");
+print cint_defined("CT_IF_ERROR_RETURN");
+print cint_defined("CT_BITMAP_ITER");
+print cint_defined("ct_kitchen_sink_callback_f");
+print cint_defined("ct_enum_t");
+print cint_defined("ctEnum2");
+RESULT
+** error: wrong number of parameters to function 'cint_defined' (expected 1 but received 0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+END
+
+# Test 131
+CODE
+// SDK-31069
+long long LL;
+unsigned long long ULL;
+int p1 = 1;
+int m2 = -2;
+LL = 0x123456789abcdef0LL;
+printf("%llx\n", LL);
+LL = p1;
+printf("%llx\n", LL);
+LL = m2;
+printf("%llx\n", LL);
+ULL = 0x123456789abcdef0LL;
+printf("%llx\n", ULL);
+ULL = p1;
+printf("%llx\n", ULL);
+ULL = m2;
+printf("%llx\n", ULL);
+RESULT
+123456789abcdef0
+1
+fffffffffffffffe
+123456789abcdef0
+1
+fffffffffffffffe
+END
+
+# Test 132
+CODE
+// SDK-31067
+long long x;
+
+x=0LL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=1LL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=0x7fffffffLL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=0x80000000LL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=-2LL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=-1LL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+RESULT
+long long x = 0 (0x0000000000000000)
+0
+0
+0
+long long x = 1 (0x0000000000000001)
+1
+1
+1
+long long x = 2147483647 (0x000000007FFFFFFF)
+2147483647
+2147483647
+7fffffff
+long long x = 2147483648 (0x0000000080000000)
+2147483648
+2147483648
+80000000
+long long x = -2 (0xFFFFFFFFFFFFFFFE)
+-2
+18446744073709551614
+fffffffffffffffe
+long long x = -1 (0xFFFFFFFFFFFFFFFF)
+-1
+18446744073709551615
+ffffffffffffffff
+END
+
+# Test 133
+CODE
+// SDK-31067
+unsigned long long x;
+
+x=0ULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=1ULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=0x7fffffffULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=0x80000000ULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=-2ULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+x=-1ULL;
+print x;
+printf("%lld\n", x);
+printf("%llu\n", x);
+printf("%llx\n", x);
+RESULT
+unsigned long long x = 0 (0x0000000000000000)
+0
+0
+0
+unsigned long long x = 1 (0x0000000000000001)
+1
+1
+1
+unsigned long long x = 2147483647 (0x000000007FFFFFFF)
+2147483647
+2147483647
+7fffffff
+unsigned long long x = 2147483648 (0x0000000080000000)
+2147483648
+2147483648
+80000000
+unsigned long long x = 18446744073709551614 (0xFFFFFFFFFFFFFFFE)
+-2
+18446744073709551614
+fffffffffffffffe
+unsigned long long x = 18446744073709551615 (0xFFFFFFFFFFFFFFFF)
+-1
+18446744073709551615
+ffffffffffffffff
+END
+
+# Test 134
+CODE
+// SDK-31067
+print 0LL;
+print 1LL;
+print -1LL;
+RESULT
+0
+1
+long long $$ = -1 (0xFFFFFFFFFFFFFFFF)
+END
+
+# Test 135
+CODE
+// SDK-31293
+print 0;
+print 1LL;
+print "x";
+print "y\n";
+print "\nz";
+print "a\nb\n";
+RESULT
+0
+1
+x
+y
+
+z
+a
+b
+END
+
+# Test 136
+CODE
+// SDK-31245
+// utest.pl does not run in AST mode, so there's no
+// test output.
+int f1(void) { return (auto)0; }
+void *f2(int *p) { return (void *)p; }
+RESULT
+END
+
+# Test 137
+CODE
+// SDK-31171
+ct_kitchen_sink_callback_f fp;
+ct_enum_t kitchen_sink(char c,
+                          short s,
+                          int i,
+                          char* str,
+                          ct_enum_t e,
+                          ct_bitmap_t b,
+                          ct_struct_t* sp,
+                          _Bool bl)
+
+{
+        print *sp;
+        // note: missing 'return' is deliberate - that's what triggers
+        // the problem
+}
+fp = kitchen_sink;
+print ct_kitchen_sink_callbacker(2, fp);
+RESULT
+__ct_kitchen_sink_callbacker ENTER
+x = 2
+ct_struct_t $$ = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+}
+** error: return type mismatch
+rc = 0
+__ct_kitchen_sink_callbacker EXIT
+ct_enum_t $$ = ctEnum0 (0)
+END
+
+# Test 138
+CODE
+// SDK-25188
+long x,y;
+x = cint_timer_start(x);
+x = cint_timer_stop(x);
+print (x>0);
+print (x<1000000);
+x = cint_timer_get();
+y = cint_timer_get();
+print (x!=y);
+RESULT
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 1 (0x1)
+END
+
+# Test 139
+CODE
+// SDK-34564 - if
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+if(1){
+     f(1);
+};
+RESULT
+1 0 1
+END
+
+# Test 140
+CODE
+// SDK-34564 - do
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+do {
+     f(1);
+     break;
+} while(1);
+RESULT
+1 0 1
+END
+
+# Test 141
+CODE
+// SDK-34564 - while
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+while(1) {
+     f(1);
+     break;
+};
+RESULT
+1 0 1
+END
+
+# Test 142
+CODE
+// SDK-34564 + SDK-34637 - for
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+for(;;) {
+     f(1);
+     break;
+};
+RESULT
+1 0 1
+END
+
+# Test 143
+CODE
+// SDK-34564 - switch
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+switch(x) {
+ default:
+     f(1);
+     break;
+};
+RESULT
+1 0 1
+END
+
+# Test 144
+CODE
+// SDK-34564 - scope
+int x = 1;
+void f(int y){
+    int c = (x > y);
+    printf("%d %d %d\n",y,c,x);
+}
+{
+   f(1);
+};
+RESULT
+1 0 1
+END
+
+# Test 145
+CODE
+// SDK-34564 - minimal example
+void r(void){
+    print interp.parse_only;
+}
+{r();}
+RESULT
+int $$ = 0 (0x0)
+END
+
+# Test 146
+CODE
+// SDK-36904
+print printf;
+RESULT
+$$ = compiled function 'int printf(...)'
+END
+
+# Test 147
+CODE
+// SDK-36904
+print sprintf;
+RESULT
+$$ = compiled function 'int sprintf(...)'
+END
+
+# Test 148
+CODE
+// SDK-36904
+printf();
+RESULT
+** error: format argument to 'printf' must be a string literal
+END
+
+# Test 149
+CODE
+// SDK-36980 - bare !
+int a, *p, *q;
+p = &a;
+print !p;
+print !q;
+RESULT
+int $$ = 0 (0x0)
+int $$ = 1 (0x1)
+END
+
+# Test 150
+CODE
+// SDK-36980 - if !
+int a, *p, *q;
+p = &a;
+void test(void *v)
+{
+  if (!v) {
+    printf("!v\n");
+  } else {
+    printf("v\n");
+  }
+}
+test(p);
+test(q);
+RESULT
+v
+!v
+END
+
+# Test 151
+CODE
+// SDK-36980
+int a, *p, *q;
+p = &a;
+int test(void *v)
+{
+  return v ? 1 : 0;
+}
+print test(p);
+print test(q);
+RESULT
+int $$ = 1 (0x1)
+int $$ = 0 (0x0)
+END
+
+# Test 152
+CODE
+// SDK-34118
+ct_enum_t f1(char c,
+        short s,
+        int i,
+        char* str,
+        ct_enum_t e,
+        ct_bitmap_t b,
+        ct_struct_t* sp,
+        _Bool bl)
+{
+        print "kitchen_sink ENTER\n";
+        print c;
+        print s;
+        print i;
+        print str[0];
+        print str[1];
+        print e;
+        print b;
+        print *sp;
+        print bl;
+        print "kitchen_sink EXIT\n";
+        print "3\n";
+        return ctEnum1;
+}
+
+void f2(void)
+{
+        print "2\n";
+        print ct_kitchen_sink_callbacker(1,f1);
+        print "4\n";
+}
+print "1\n";
+f2();
+print "5\n";
+RESULT
+1
+2
+__ct_kitchen_sink_callbacker ENTER
+x = 1
+kitchen_sink ENTER
+char c = 1 (0x01) '.'
+short s = 2 (0x0002)
+int i = 3 (0x3)
+char $$ = 52 (0x34) '4'
+char $$ = 0 (0x00) '.'
+ct_enum_t e = ctEnum0 (0)
+ct_bitmap_t b = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+ct_struct_t $$ = {
+    char c = 0 (0x00) '.'
+    unsigned char uc = 0 (0x00)
+    short s = 0 (0x0000)
+    unsigned short us = 0 (0x0000)
+    int i = 0 (0x0)
+    unsigned int ui = 0 (0x0)
+    long l = 0 (0x00000000)
+    unsigned long ul = 0 (0x00000000)
+    long long ll = 0 (0x0000000000000000)
+    unsigned long long ull = 0 (0x0000000000000000)
+    double d = 0
+    int* ip = NULL
+    void* vp = NULL
+    char[16] cbuffer = {
+        char cbuffer[0] = 0 (0x00) '.'
+        char cbuffer[1] = 0 (0x00) '.'
+        char cbuffer[2] = 0 (0x00) '.'
+        char cbuffer[3] = 0 (0x00) '.'
+        char cbuffer[4] = 0 (0x00) '.'
+        char cbuffer[5] = 0 (0x00) '.'
+        char cbuffer[6] = 0 (0x00) '.'
+        char cbuffer[7] = 0 (0x00) '.'
+        char cbuffer[8] = 0 (0x00) '.'
+        char cbuffer[9] = 0 (0x00) '.'
+        char cbuffer[10] = 0 (0x00) '.'
+        char cbuffer[11] = 0 (0x00) '.'
+        char cbuffer[12] = 0 (0x00) '.'
+        char cbuffer[13] = 0 (0x00) '.'
+        char cbuffer[14] = 0 (0x00) '.'
+        char cbuffer[15] = 0 (0x00) '.'
+    }
+    int**[8] pbuffer = {
+        int** pbuffer[0] = NULL
+        int** pbuffer[1] = NULL
+        int** pbuffer[2] = NULL
+        int** pbuffer[3] = NULL
+        int** pbuffer[4] = NULL
+        int** pbuffer[5] = NULL
+        int** pbuffer[6] = NULL
+        int** pbuffer[7] = NULL
+    }
+    ct_bitmap_t bitmap = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,1 }
+}
+_Bool bl = true
+kitchen_sink EXIT
+3
+rc = 1
+__ct_kitchen_sink_callbacker EXIT
+ct_enum_t $$ = ctEnum1 (1)
+4
+5
+END
+
+# Test 153
+CODE
+/* SDK-39668 */
+char buf50[50];
+char buf101[101];
+char buf16[16];
+char c;
+short ss;
+int i;
+long l = 0x12345;
+long long ll;
+float f;
+double d = 1271184992;
+char *s = "kgfdjfgsd";
+void *v = buf50;
+char *p = buf50;
+
+snprintf(buf50, sizeof(buf50), "this is %d", 1);
+printf("%s\n", buf50);
+
+/* should start at the beginning */
+snprintf(buf50, sizeof(buf50), "now this is %d", 2);
+printf("%s\n", buf50);
+
+/* long */
+snprintf(buf50, sizeof(buf50), "long=0x%x", l);
+printf("%s\n", buf50);
+
+/* long long */
+snprintf(buf50, sizeof(buf50), "long long=%lld", ll);
+printf("%s\n", buf50);
+
+/* double */
+snprintf(buf50, sizeof(buf50), "double=%f", d);
+printf("%s\n", buf50);
+
+/* string */
+snprintf(buf50, sizeof(buf50), "string=%s", s);
+printf("%s\n", buf50);
+
+/* how to test void? */
+
+/* char */
+snprintf(buf50, sizeof(buf50), "char=%c%c%c", s[1],s[3],s[5]);
+printf("%s\n", buf50);
+
+/* fmt */
+snprintf(buf50, sizeof(buf50), "this is a test");
+printf("%s\n", buf50);
+
+/* fmt error */
+snprintf(buf50, sizeof(buf50), s);
+
+/* size arg error */
+snprintf(buf50, s, s);
+
+/* overflow */
+snprintf(buf50, sizeof(buf50), "1%s2%s3%s4%s5%s6%s7%s8%s9%sA%s",s,s,s,s,s,s,s,s,s,s);
+printf("%s\n", buf50);
+
+snprintf(buf101, sizeof(buf101), "1%s2%s3%s4%s5%s6%s7%s8%s9%sA%s",s,s,s,s,s,s,s,s,s,s);
+printf("%s\n", buf101);
+
+/* off by 1 */
+snprintf(buf16,  sizeof(buf16), "%16.5f", 3.14159);
+printf("%s\n", buf16);
+snprintf(buf16,  sizeof(buf16), "%15.5f", 3.14159);
+printf("%s\n", buf16);
+
+/* print into void pointer */
+snprintf(v, sizeof(buf50), "%15.5f", 2.71828);
+
+/* print into char pointer */
+snprintf(p, sizeof(buf50), "%15.5f", 2.71828);
+printf("%s\n", p);
+
+/* for argument not found */
+snprintf(foo, sizeof(buf50), "%15.5f", 2.71828);
+
+/* other integral types for length should be ok */
+c = ss = i = l = ll = f = d = sizeof(buf50);
+snprintf(buf50, c, "c\n"); printf("%s", buf50);
+snprintf(buf50, ss, "s\n"); printf("%s", buf50);
+snprintf(buf50, i, "i\n"); printf("%s", buf50);
+snprintf(buf50, l, "l\n"); printf("%s", buf50);
+snprintf(buf50, ll, "ll\n"); printf("%s", buf50);
+snprintf(buf50, f, "f\n"); /* error: floting point types not an integer */
+snprintf(buf50, d, "d\n"); /* error: floting point types not an integer */
+RESULT
+this is 1
+now this is 2
+long=0x12345
+long long=0
+double=1271184992.000000
+string=kgfdjfgsd
+char=gdf
+this is a test
+** error: format argument to 'snprintf' must be a string literal
+** error: the second argument (size) must be an integral type
+** error: buffer length too small, allocated 50 chars, needs 101 chars
+1kgfdjfgsd2kgfdjfgsd3kgfdjfgsd4kgfdjfgsd5
+1kgfdjfgsd2kgfdjfgsd3kgfdjfgsd4kgfdjfgsd5kgfdjfgsd6kgfdjfgsd7kgfdjfgsd8kgfdjfgsd9kgfdjfgsdAkgfdjfgsd
+** error: buffer length too small, allocated 16 chars, needs 17 chars
+
+        3.14159
+** error: the first argument (str) must be a char* or char[]
+        2.71828
+** error: identifier 'foo' undeclared
+** error: could not evaluate the first argument (string)
+c
+s
+i
+l
+ll
+** error: the second argument (size) must be an integral type
+** error: the second argument (size) must be an integral type
+END
+
+# Test 154
+CODE
+/* SDK-40188 */
+struct c { int b; };
+struct { int b; } c;
+RESULT
+** error: structure name not found
+END
+
+# Test 155
+CODE
+/* SDK-39256 */
+/* %include is converted to avoid the hash comment syntax */
+%include <utest-a.h>
+print 2;
+%include <utest-a.h>
+print 3;
+%include <utest-a.h>
+print 4;
+%include <utest-a.h>
+print 5;
+%include <utest-a.h>
+print 6;
+%include <utest-x.h> /* doesn't exist */
+print 7;
+%include <utest-a.h>
+print 8;
+%include <utest-a.h>
+print 9;
+%include <utest-a.h>
+print 10;
+%include <utest-a.h>
+print 11;
+%include <utest-a.h>
+print 12;
+RESULT
+1
+2
+1
+3
+1
+4
+1
+5
+1
+6
+Cannot open include file 'utest-x.h'
+7
+1
+8
+1
+9
+1
+10
+1
+11
+1
+12
+END
+
+# Test 156
+CODE
+int a[2][3][4];
+print a;
+RESULT
+int[2][3][4] a = {
+    int a[0][0][0] = 0 (0x0)
+    int a[0][0][1] = 0 (0x0)
+    int a[0][0][2] = 0 (0x0)
+    int a[0][0][3] = 0 (0x0)
+    int a[0][1][0] = 0 (0x0)
+    int a[0][1][1] = 0 (0x0)
+    int a[0][1][2] = 0 (0x0)
+    int a[0][1][3] = 0 (0x0)
+    int a[0][2][0] = 0 (0x0)
+    int a[0][2][1] = 0 (0x0)
+    int a[0][2][2] = 0 (0x0)
+    int a[0][2][3] = 0 (0x0)
+    int a[1][0][0] = 0 (0x0)
+    int a[1][0][1] = 0 (0x0)
+    int a[1][0][2] = 0 (0x0)
+    int a[1][0][3] = 0 (0x0)
+    int a[1][1][0] = 0 (0x0)
+    int a[1][1][1] = 0 (0x0)
+    int a[1][1][2] = 0 (0x0)
+    int a[1][1][3] = 0 (0x0)
+    int a[1][2][0] = 0 (0x0)
+    int a[1][2][1] = 0 (0x0)
+    int a[1][2][2] = 0 (0x0)
+    int a[1][2][3] = 0 (0x0)
+}
+END
+
+# Test 157
+CODE
+int a[3][3];
+a[0][0] = 1;
+a[1][1] = 2;
+a[2][2] = 3;
+print a;
+short b[2][2];
+b[0][0] = 10;
+b[1][1] = 20;
+print b;
+RESULT
+int[3][3] a = {
+    int a[0][0] = 1 (0x1)
+    int a[0][1] = 0 (0x0)
+    int a[0][2] = 0 (0x0)
+    int a[1][0] = 0 (0x0)
+    int a[1][1] = 2 (0x2)
+    int a[1][2] = 0 (0x0)
+    int a[2][0] = 0 (0x0)
+    int a[2][1] = 0 (0x0)
+    int a[2][2] = 3 (0x3)
+}
+short[2][2] b = {
+    short b[0][0] = 10 (0x000a)
+    short b[0][1] = 0 (0x0000)
+    short b[1][0] = 0 (0x0000)
+    short b[1][1] = 20 (0x0014)
+}
+END
+
+# Test 158
+CODE
+int a;
+int *b = &a;
+int **c = &b;
+int **d[10];
+d[9] = c;
+**d[9] = 10;
+print a;
+RESULT
+int a = 10 (0xa)
+END
+
+# Test 159
+CODE
+ct_array_t a[5];
+print a[4];
+print a;
+a[4][0] = 1;
+a[0][15] = 16;
+a[1] = "0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16";
+print a[4];
+print a;
+RESULT
+unsigned int[16] $$ = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+unsigned int[5][16] a = {
+    unsigned int a[0] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[1] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[2] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[3] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[4] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+}
+unsigned int[16] $$ = 1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+unsigned int[5][16] a = {
+    unsigned int a[0] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:16
+    unsigned int a[1] = 0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15
+    unsigned int a[2] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[3] = 0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+    unsigned int a[4] = 1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0
+}
+END
+
+# Test 160
+CODE
+int foo(void) { return 5; }
+print ct_void_callbacker(foo);
+RESULT
+int $$ = 5 (0x5)
+END
+
+# Test 161
+CODE
+// SDK-44640
+struct ct_data_t {
+    unsigned int d0;
+    unsigned int d1;
+    unsigned int d2;
+    unsigned int d3;
+    unsigned int d4;
+    unsigned int d5;
+    unsigned int d6;
+    unsigned int d7;
+    unsigned int d8;
+    unsigned int d9;
+};
+ct_data_t test_data;
+test_data.d0 = 0;
+test_data.d1 = 0;
+test_data.d2 = 0;
+test_data.d3 = 0;
+test_data.d4 = 0;
+test_data.d5 = 0;
+test_data.d6 = 0;
+test_data.d7 = 0;
+test_data.d8 = 0;
+test_data.d9 = 0;
+print test_data;
+cint_reset();
+struct ct_data_t {
+    unsigned int d0;
+    unsigned int d1;
+    unsigned int d2;
+    unsigned int d3;
+    unsigned int d4;
+    unsigned int d5;
+    unsigned int d6;
+    unsigned int d7;
+    unsigned int d8;
+    unsigned int d9;
+};
+ct_data_t test_data;
+test_data.d0 = 0;
+test_data.d1 = 0;
+test_data.d2 = 0;
+test_data.d3 = 0;
+test_data.d4 = 0;
+test_data.d5 = 0;
+test_data.d6 = 0;
+test_data.d7 = 0;
+test_data.d8 = 0;
+test_data.d9 = 0;
+print test_data;
+RESULT
+ct_data_t test_data = {
+    unsigned int d0 = 0 (0x0)
+    unsigned int d1 = 0 (0x0)
+    unsigned int d2 = 0 (0x0)
+    unsigned int d3 = 0 (0x0)
+    unsigned int d4 = 0 (0x0)
+    unsigned int d5 = 0 (0x0)
+    unsigned int d6 = 0 (0x0)
+    unsigned int d7 = 0 (0x0)
+    unsigned int d8 = 0 (0x0)
+    unsigned int d9 = 0 (0x0)
+}
+ct_data_t test_data = {
+    unsigned int d0 = 0 (0x0)
+    unsigned int d1 = 0 (0x0)
+    unsigned int d2 = 0 (0x0)
+    unsigned int d3 = 0 (0x0)
+    unsigned int d4 = 0 (0x0)
+    unsigned int d5 = 0 (0x0)
+    unsigned int d6 = 0 (0x0)
+    unsigned int d7 = 0 (0x0)
+    unsigned int d8 = 0 (0x0)
+    unsigned int d9 = 0 (0x0)
+}
+END
+
+# Test 162
+CODE
+// SDK-44640
+int rc = 0;
+char *int_type = "unsigned int";
+char *char_type = "char";
+char *struct_type = "ct_data_t";
+rc = cint_defined(int_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", int_type);
+} else {
+    printf("Type %s found.\n", int_type);
+}
+rc = cint_defined(char_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", char_type);
+} else {
+    printf("Type %s found.\n", char_type);
+}
+rc = cint_defined(struct_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", struct_type);
+} else {
+    printf("Type %s found.\n", struct_type);
+}
+struct ct_data_t {
+    unsigned int d0;
+    unsigned int d1;
+    unsigned int d2;
+    unsigned int d3;
+    unsigned int d4;
+    unsigned int d5;
+    unsigned int d6;
+    unsigned int d7;
+    unsigned int d8;
+    unsigned int d9;
+};
+rc = cint_defined(struct_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", struct_type);
+} else {
+    printf("Type %s found.\n", struct_type);
+}
+cint_reset();
+int rc = 0;
+char *int_type = "unsigned int";
+char *char_type = "char";
+char *struct_type = "ct_data_t";
+rc = cint_defined(int_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", int_type);
+} else {
+    printf("Type %s found.\n", int_type);
+}
+rc = cint_defined(char_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", char_type);
+} else {
+    printf("Type %s found.\n", char_type);
+}
+rc = cint_defined(struct_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", struct_type);
+} else {
+    printf("Type %s found.\n", struct_type);
+}
+struct ct_data_t {
+    unsigned int d0;
+    unsigned int d1;
+    unsigned int d2;
+    unsigned int d3;
+    unsigned int d4;
+    unsigned int d5;
+    unsigned int d6;
+    unsigned int d7;
+    unsigned int d8;
+    unsigned int d9;
+};
+rc = cint_defined(struct_type);
+if (0 == rc) {
+    printf("Type %s not found.\n", struct_type);
+} else {
+    printf("Type %s found.\n", struct_type);
+}
+RESULT
+Type unsigned int found.
+Type char found.
+Type ct_data_t not found.
+Type ct_data_t found.
+Type unsigned int found.
+Type char found.
+Type ct_data_t not found.
+Type ct_data_t found.
+END
+
+
+# Test 163
+CODE
+// SDK-44733
+print 1;
+%include <utest-a.h>
+print 2;
+%include "utest-a.h"
+print 3;
+%include utest-a.h
+print 11;
+%include <utest-b.h>
+print 12;
+%include "utest-b.h"
+print 13;
+%include utest-b.h
+print 14;
+RESULT
+1
+1
+2
+1
+3
+1
+11
+1
+121
+1
+12
+1
+121
+1
+13
+1
+121
+1
+14
+END
+
+# Test 164
+CODE
+// SDK-51182
+void foo(void) { print 1; }
+void foo(void) { print 2; }
+foo();
+void foo(int a) { print a; }
+foo(100);
+RESULT
+2
+int a = 100 (0x64)
+END
+
+# Test 165
+CODE
+// SDK-51182
+void foo1(void) { print 1; }
+void foo(void) { print 2; }
+int foo(int a) { print a; return a;}
+foo(100);
+RESULT
+int a = 100 (0x64)
+END
+
+# Test 166
+CODE
+// SDK-59034
+int a = 1/0;
+int b = 1%0;
+RESULT
+** error: attempt to divide by zero
+** error: invalid operand(s) to '='
+** error: attempt to divide by zero
+** error: invalid operand(s) to '='
+END
+
+# Test 167
+CODE
+// SDK-39723
+int d(void) {
+    int a=1;
+    switch(a) {
+    case 1:
+        a = 10;
+        return a;
+    }
+    a = 100;
+    return a;
+}
+int e(void) {
+    int a=2;
+    switch(a) {
+    case 1:
+        break;
+    default:
+        a = 10;
+        return a;
+    }
+    a = 100;
+    return a;
+}
+print d();
+print e();
+RESULT
+int $$ = 10 (0xa)
+int $$ = 10 (0xa)
+END
+
+# Test 168
+CODE
+// SDK-40423
+void func(void);
+void func(int a);
+void func(short int a);
+void func(long int a);
+void func(long long int a);
+void func(short a);
+void func(long a);
+void func(long long a);
+void func(unsigned int *a);
+void func(unsigned short int *a);
+void func(unsigned long int *a);
+void func(unsigned long long int *a);
+void func(unsigned short *a);
+void func(unsigned long *a);
+void func(unsigned long long *a);
+extern void func(void);
+printf("OK\n");
+void func(int int a);
+void func(int short a);
+void func(int long a);
+void func(char a);
+void g(unsigned long long *p) { return; }
+unsigned long long a;
+g(&a);
+RESULT
+OK
+** error: two or more data types in declaration
+** error: param type not found
+** error: two or more data types in declaration
+** error: param type not found
+** error: two or more data types in declaration
+** error: param type not found
+END
+
+# Test 169
+CODE
+// SDK-42509
+char *s1 = "The quick brown fox jump over the head of the lazy dog.";
+print *s1;
+print *(s1+0);
+print *(s1+1);
+print("OK");
+RESULT
+char $$ = 84 (0x54) 'T'
+char $$ = 84 (0x54) 'T'
+char $$ = 104 (0x68) 'h'
+OK
+END
+
+# Test 170
+CODE
+// SDK-40422
+unsigned long long foo(void){return 100LL;}
+print foo();
+print("OK");
+RESULT
+long long $$ = 100 (0x0000000000000064)
+OK
+END
+
+# Test 171
+CODE
+// SDK-59696
+typedef struct S { int adata; char *sdata; } ;
+S s = { 123, "ABC" };
+printf("%d\n", s.adata);
+printf("%s\n", s.sdata);
+print("OK");
+RESULT
+123
+ABC
+OK
+END
+
+# Test 172
+CODE
+// SDK-59696
+int a[] = { 1,2,3 };
+print a[0];
+print a[1];
+print a[2];
+print("OK");
+RESULT
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+OK
+END
+
+# Test 173
+CODE
+// SDK-59696
+char *s[] = { "AAA", "BBB", "CCC" } ;
+printf("%s\n", s[0]);
+printf("%s\n", s[1]);
+printf("%s\n", s[2]);
+print("OK");
+RESULT
+AAA
+BBB
+CCC
+OK
+END
+
+# Test 174
+CODE
+//SDK-55406
+int a = 0;
+a;
+"ABC";
+12;
+printf("OK\n");
+RESULT
+** warning: statement with no effect
+** warning: statement with no effect
+** warning: statement with no effect
+OK
+END
+
+# Test 175
+CODE
+//SDK-54124
+int num = 0;
+num = printf("Hello\n");
+printf("%d\n", num);
+num = printf("Helllo %d\n", 123);
+printf("%d\n", num);
+char s[64] = {'\0'};
+char *str = "Hello";
+int digit = 10;
+num = snprintf(s, 64, "str %s, digit %d\n", str, digit);
+printf("%d\n", num);
+printf("OK\n");
+RESULT
+Hello
+6
+Helllo 123
+11
+20
+OK
+END
+
+# Test 176
+CODE
+// SDK-59696 : Overwrite string in multi dimension array
+char *s[] = { "AAA", "BBB", "CCC" };
+int i = 0;
+for ( i = 0 ; i < 10 ; ++i ) {
+    sprintf(s[0], "%s %d", "AAA", i);
+    sprintf(s[1], "%s %d", "BBB", i);
+    s[2] = "ccc";
+    printf("s[0] : %s\n", s[0]);
+    printf("s[1] : %s\n", s[1]);
+    printf("s[2] : %s\n", s[2]);
+}
+RESULT
+s[0] : AAA 0
+s[1] : BBB 0
+s[2] : ccc
+s[0] : AAA 1
+s[1] : BBB 1
+s[2] : ccc
+s[0] : AAA 2
+s[1] : BBB 2
+s[2] : ccc
+s[0] : AAA 3
+s[1] : BBB 3
+s[2] : ccc
+s[0] : AAA 4
+s[1] : BBB 4
+s[2] : ccc
+s[0] : AAA 5
+s[1] : BBB 5
+s[2] : ccc
+s[0] : AAA 6
+s[1] : BBB 6
+s[2] : ccc
+s[0] : AAA 7
+s[1] : BBB 7
+s[2] : ccc
+s[0] : AAA 8
+s[1] : BBB 8
+s[2] : ccc
+s[0] : AAA 9
+s[1] : BBB 9
+s[2] : ccc
+END
+
+# Test 177
+CODE
+int f(){
+    char *str[4] = { "AAA", "BBB","CCC","DDD"};
+    char *str2[1] = { "AAA" };
+    int rv;
+    int i = 0;
+    for( ; i < 10 ; ++i ){
+        printf("%d", i );
+        str2[0] = str[i%4];
+    }
+    printf("\n");
+    return rv;
+}
+print f();
+print f();
+printf("OK\n");
+RESULT
+0123456789
+int $$ = 0 (0x0)
+0123456789
+int $$ = 0 (0x0)
+OK
+END
+
+# Test 178
+CODE
+int i = 0;
+for (i = 0;i < 5;++i){ printf("Exit\n"); exit; }
+printf("OK\n");
+RESULT
+Exit
+END
+
+# Test 179
+CODE
+int i = 0;
+while (i < 5){ printf("Exit\n"); exit; }
+printf("OK\n");
+RESULT
+Exit
+END
+
+# Test 180
+CODE
+// SDK-63112 : CINT memory management issue
+int i = 0;
+for (i=0; i<1000000; i++) { int a=1; int b=2; int c=3; }
+printf("OK\n");
+RESULT
+OK
+END
+
+# Test 181
+CODE
+// SDK-83978 : CINT char signedness issue
+char a = -1;
+char b = 1;
+if (a > b) { print("FAIL\n");};
+if (a < b) { print("OK\n");};
+
+RESULT
+OK
+END
+
+# Test 182
+CODE
+// SDK-61826, SDK-92535 cint_reset() resets ARGC
+printf ("ARGC=%d\n", ARGC);
+cint_reset();
+printf ("ARGC=%d\n", ARGC);
+RESULT
+ARGC=0
+ARGC=0
+END
+
+# Test 183
+CODE
+// SDK-88875 : Error in evaluates logical operator &&
+int test[5] = { 1, 2, 3, 4, 5 };
+
+int is_test_defined(int a) {
+    int i = 0;
+    while (i < 5 && test[i]) {
+        if (test[i] == a) {
+            return 1;
+        }
+        i++;
+    }
+    return 0;
+}
+
+if (!is_test_defined(6)) {
+    printf("test 6 is not defined\n");
+}
+if (is_test_defined(1) | is_test_defined(5)) {
+    printf("test 1 or test 5 is defined\n");
+}
+RESULT
+test 6 is not defined
+test 1 or test 5 is defined
+END
+

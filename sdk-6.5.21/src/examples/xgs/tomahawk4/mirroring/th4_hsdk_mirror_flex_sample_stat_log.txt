@@ -1,0 +1,223 @@
+BCM.0> cint th4_hsdk_mirror_flex_sample_stat.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 85
+Egress port1: 69
+MTP port: 206
+ingress_port_multi_setup port: 85 setup
+egress_port_multi_setup port: 69 setup
+egress_port_multi_setup port: 206 setup
+Mirror destination create
+Mirror port destination add
+int $$ = 0 (0x0)
+int profile_id = 6 (0x6)
+int $$ = 0 (0x0)
+int mirror_group_id = 1 (0x1)
+int profile_id = 6 (0x6)
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known unicast pkt from port 85 forwarding to the egress port 69
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[5]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[5]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[5]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[7]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[7]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[7]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[8]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[8]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[8]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[8]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[9]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[9]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]:
+Packet[9]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[9]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[10]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[10]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[10]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[10]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[11]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[11]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[11]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[11]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[12]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[12]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[12]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]:
+Packet[12]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[12]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[13]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[13]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[13]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]:
+Packet[13]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[13]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[14]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[14]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[14]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]:
+Packet[14]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[14]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[15]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[15]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[15]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]:
+Packet[15]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[15]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x55
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[16]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[16]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[16]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]:
+Packet[16]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[16]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x45
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[17]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[17]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[17]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]:
+Packet[17]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[17]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[18]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[18]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[18]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]:
+Packet[18]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[18]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress1 : 6 packets / 408 bytes
+FlexCtr Get on port_mtp_port : 6 packets / 408 bytes
+Mirror sample stat flex packets : 6
+Mirror sample stat flex sampled packets : 6
+Mirror sample stat flex snapshot packets : 6
+
+-----------------------------------------------------------
+    RESULT OF INGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 85 cleanup
+egress_port_multi_cleanup port: 69 cleanup
+egress_port_multi_cleanup port: 206 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

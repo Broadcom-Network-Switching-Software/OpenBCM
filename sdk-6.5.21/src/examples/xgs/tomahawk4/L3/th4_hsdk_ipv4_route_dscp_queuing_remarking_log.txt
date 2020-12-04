@@ -1,0 +1,78 @@
+% ./bcm.user -y th4_hsdk_l3_64x400.config.yml 
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint th4_hsdk_ipv4_route_dscp_queuing_remarking.c
+attach; version
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_CNA_1_2_3, BCM56780_A0_DNA_2_5_11
+     BCM56780_A0_DNA_2_5_13, BCM56780_A0_INA_2_5_11, BCM56780_A0_INA_2_5_13, BCM56880_A0_CNA_1_2_0
+     BCM56880_A0_CNA_1_2_3, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_11, BCM56880_A0_DNA_4_8_1
+     BCM56880_A0_NFA_0_1_0, BCM56880_A0_UTLTM
+
+Ingress_port_multi_setup port: 139 setup
+Egress_port_multi_setup port: 173 setup
+Completed test setup successfully.
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.0/24      100001 0    0   
+
+l3 intf show
+INTF  VID   MAC Address       
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay 
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1   173            0     0   underlay   no
+
+Sending 6 unicast packets to ingress port 139
+Packet from data=<>, length=64
+Checking Rx Packet: 1
+Checking Rx Packet: 2
+Checking Rx Packet: 3
+Checking Rx Packet: 4
+Checking Rx Packet: 5
+Checking Rx Packet: 6
+------------------------------------- 
+    RESULT OF PACKET VERIFICATION
+------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+
+FLEX COUNTER: Routed 6 packets/408 bytes
+-------------------------------------------- 
+    RESULT OF FLEX COUNTER VERIFICATION
+-------------------------------------------- 
+Test = [PASS]
+-------------------------------------------- 
+
+-------------------------------------------- 
+    RESULT OF RX CALLBACK VERIFICATION
+-------------------------------------------- 
+Test = [PASS]
+-------------------------------------------- 
+
+Completed test verification successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> quit
+% 

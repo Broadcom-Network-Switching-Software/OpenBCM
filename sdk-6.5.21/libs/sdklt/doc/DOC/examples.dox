@@ -1,0 +1,51 @@
+/*! \page build_ex Build Examples
+
+\section lib_only SDKLT Library
+
+The SDKLT library can be built for different targets from the
+following directory:
+
+\verbatim
+$SDK/appl/sdklib
+\endverbatim
+
+\section Linux Kernel Modules
+
+The Linux kernel modules required by the \c ngbde system interface can
+be built for different targets from the following directory:
+
+\verbatim
+$SDK/appl/linux
+\endverbatim
+
+\section demo_app Demo Application
+
+The SDKLT demo application can be built for different targets from the
+following directory:
+
+\verbatim
+$SDK/appl/demo
+\endverbatim
+
+Before the application is built and linked, the makefile will build
+the SDKLT library from the \c $SDK/appl/sdklib directory and the Linux
+kernel modules (if applicable) from the $SDK/appl/linux directory.
+
+\section nocli_app Minimal Application
+
+A minimal SDKLT "No CLI" application can be built for different
+targets from the following directory:
+
+\verbatim
+$SDK/appl/nocli
+\endverbatim
+
+Before the application is built and linked, the makefile will build
+the SDKLT library from the \c $SDK/appl/sdklib directory and the Linux
+kernel modules (if applicable) from the $SDK/appl/linux directory.
+
+This application will only use the \c bcma_sys_probe function from the
+SDKLT application library, while the remaining initialization is done
+directly via the core SDKLT APIs.
+
+*/

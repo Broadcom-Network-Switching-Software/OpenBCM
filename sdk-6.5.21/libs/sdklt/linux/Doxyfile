@@ -1,0 +1,9 @@
+PROJECT_NAME            = "Linux Driver Library (LINUX)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INPUT                   = DOC/linux.dox \
+                          DOC/bcmlu.dox \
+                          DOC/ngbde.dox \
+                          bcmlu/include \
+                          include/lkm/ngbde_ioctl.h \
+                          include/lkm/ngbde_kapi.h

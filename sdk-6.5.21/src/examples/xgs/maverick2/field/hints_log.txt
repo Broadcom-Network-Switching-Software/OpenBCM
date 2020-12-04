@@ -1,0 +1,216 @@
+BCM.0> 
+BCM.0> cint hint.c
+int ing_port1 = 1 (0x1)                                     
+int ing_port2 = 2 (0x2)                                     
+int egr_port = 3 (0x3)                                      
+BCM.0> fp show                                              
+FP:     unit 0:                                             
+PIPELINE STAGE EXACTMATCH                                   
+FP:           :tcam_sz=32768(0x8000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS                                               
+FP:           :tcam_sz=18432(0x4800), tcam_slices=12, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS                                                 
+FP:           :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,   
+PIPELINE STAGE LOOKUP                                                 
+FP:           :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,   
+Intra-slice double wide group, GID          1: gid=0x1, instance=0 mode=IntraSliceDouble, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000000000000000000000001ffffffe1fffffff}
+         qset={SrcIp6, DstMac, Stage},                                           
+         aset={CopyToCpu, Drop, PolicerGroup, StatGroup},                        
+         HintId=1           
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=768(0x300), Entry free=767(0x2ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=7680, entries_free=7679,
+                       counters_total=83968, counters_free=80895, meters_total=6144, meters_free=6144}  
+EID 0x00000001: gid=0x1,               
+         slice=2, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ SrcIp6 
+    Part:0 Offset0:  0 Width0:  16 
+    Part:0 Offset1: 20 Width1:  16 
+    Part:0 Offset2: 48 Width2:  16 
+    Part:0 Offset3: 64 Width3:  16 
+    Part:0 Offset4: 16 Width4:   4 
+    Part:0 Offset5: 36 Width5:   4 
+    Part:0 Offset6: 40 Width6:   4 
+    Part:0 Offset7: 44 Width7:   4 
+    DATA=0xfe800000 020102ff fe030405 
+    MASK=0xffff0000 ffffffff ffffffff 
+ DstMac                               
+    Part:0 Offset0: 80 Width0:   4    
+    Part:0 Offset1: 84 Width1:   4    
+    Part:0 Offset2: 88 Width2:   4    
+    Part:0 Offset3: 92 Width3:   4    
+    Part:0 Offset4: 96 Width4:   4    
+    Part:0 Offset5: 148 Width5:   2   
+    Part:0 Offset6: 158 Width6:   1   
+    DATA=0x007d0202                   
+    MASK=0x007fffff                   
+         action={act=Drop, param0=0(0), param1=0(0), param2=0(0), param3=0(0)}
+         policer=        
+         statistics={stat id 1  slice = 10 idx=3 entries=1}{Packets}          
+         Extended statistics=NULL                                             
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000000000000000000000001ffffffe1fffffff}
+         qset={InPort, Stage},             
+         aset={CopyToCpu, PolicerGroup, StatGroup},    
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=1536(0x600), Entry free=1535(0x5ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=15360, entries_free=15359,
+                       counters_total=83968, counters_free=80895, meters_total=6144, meters_free=6144}    
+EID 0x0001868d: gid=0x270e,              
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1          
+
+ InPort 
+    Part:0 Offset0: 80 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=        
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL    
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000000000000000000000001ffffffe1fffffff}
+         qset={InPort, Stage},             
+         aset={CopyToCpu, PolicerGroup, StatGroup},    
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=1536(0x600), Entry free=1535(0x5ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=15360, entries_free=15359,
+                       counters_total=83968, counters_free=80895, meters_total=6144, meters_free=6144}    
+EID 0x00018697: gid=0x270f,              
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1          
+
+ InPort 
+    Part:0 Offset0: 80 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000003                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=        
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL    
+
+############  Sending Matching IP   #######
+BCM.0> tx 1 pbm=1 data=01005E7D02020000000000CC8100006486DD60300000002606FFFE80000000000000020102FFFE0304053555555566666666777777778888888811112222000000000000000050000000D74D0000000102030405060708090A0B0C0D0E0F10111681294E
+Packet from data=<>, length=104         
+BCM.0> sleep 2              
+Sleeping for 2 seconds      
+[bcmPW.0]                   
+[bcmPW.0]Packet[1]: data[0000]: {01005e7d0202} {0000000000cc} 8100 0064                      
+[bcmPW.0]Packet[1]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0000                      
+[bcmPW.0]Packet[1]: data[0020]: 0000 0201 02ff fe03 0405 3555 5555 6666                      
+[bcmPW.0]Packet[1]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000                      
+[bcmPW.0]Packet[1]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001                      
+[bcmPW.0]Packet[1]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                      
+[bcmPW.0]Packet[1]: data[0060]: 1681 294e 1cdf 4421                                          
+[bcmPW.0]Packet[1]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.  
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 16. src-port 1. src-mod 0. opcode 3.  matched 222. classification-tag 0.                                            
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:         
+Packet[1]:   Ethernet: dst<01:00:5e:7d:02:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6                                   
+BCM.0> fp stat get si=1 t=p 
+The value is: 0x000000001   
+
+############  Sending Mis-Matching IP in non-hinted area  #######
+BCM.0> tx 1 pbm=1 data=01005E7D02020000000000CC8100006486DD60300000002606FFFE80000000010000020102FFFE0304053555555566666666777777778888888811112222000000000000000050000000D74D0000000102030405060708090A0B0C0D0E0F10111681294E
+Packet from data=<>, length=104         
+[bcmPW.0]                   
+[bcmPW.0]Packet[2]: data[0000]: {01005e7d0202} {0000000000cc} 8100 0064                      
+[bcmPW.0]Packet[2]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0001                      
+[bcmPW.0]Packet[2]: data[0020]: 0000 0201 02ff fe03 0405 3555 5555 6666                      
+[bcmPW.0]Packet[2]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000                      
+[bcmPW.0]Packet[2]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001                      
+[bcmPW.0]Packet[2]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                      
+[bcmPW.0]Packet[2]: data[0060]: 1681 294e 60a3 41f4                                          
+[bcmPW.0]Packet[2]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.  
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 16. src-port 1. src-mod 0. opcode 3.  matched 222. classification-tag 0.                                            
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:         
+Packet[2]:   Ethernet: dst<01:00:5e:7d:02:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6                                   
+BCM.0> sleep 2              
+Sleeping for 2 seconds      
+BCM.0> fp stat get si=1 t=p 
+The value is: 0x000000002   
+
+############  Sending Mis-Matching IP in hinted area  #######
+BCM.0> tx 1 pbm=1 data=01005E7D02020000000000CC8100006486DD60300000002606FFFE80000000000000020102FFFE0304063555555566666666777777778888888811112222000000000000000050000000D74D0000000102030405060708090A0B0C0D0E0F10111681294E
+Packet from data=<>, length=104         
+[bcmPW.0]                   
+[bcmPW.0]Packet[3]: data[0000]: {01005e7d0202} {0000000000cc} 8100 0064                      
+[bcmPW.0]Packet[3]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0000                      
+[bcmPW.0]Packet[3]: data[0020]: 0000 0201 02ff fe03 0406 3555 5555 6666                      
+[bcmPW.0]Packet[3]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000                      
+[bcmPW.0]Packet[3]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001                      
+[bcmPW.0]Packet[3]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                      
+[bcmPW.0]Packet[3]: data[0060]: 1681 294e 0fd1 909a                                          
+[bcmPW.0]Packet[3]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.  
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 16. src-port 1. src-mod 0. opcode 3.  matched 222. classification-tag 0.                                            
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:         
+Packet[3]:   Ethernet: dst<01:00:5e:7d:02:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6                                   
+BCM.0> sleep 2              
+Sleeping for 2 seconds      
+BCM.0> fp stat get si=1 t=p 
+The value is: 0x000000002   
+
+############  Sending Mis-Matching DMAC in non-hinted area  #######
+BCM.0> tx 1 pbm=1 data=01005E7D03020000000000CC8100006486DD60300000002606FFFE80000000000000020102FFFE0304053555555566666666777777778888888811112222000000000000000050000000D74D0000000102030405060708090A0B0C0D0E0F10111681294E
+Packet from data=<>, length=104         
+[bcmPW.0]                   
+[bcmPW.0]Packet[4]: data[0000]: {01005e7d0302} {0000000000cc} 8100 0064                      
+[bcmPW.0]Packet[4]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0000                      
+[bcmPW.0]Packet[4]: data[0020]: 0000 0201 02ff fe03 0405 3555 5555 6666                      
+[bcmPW.0]Packet[4]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000
+[bcmPW.0]Packet[4]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001
+[bcmPW.0]Packet[4]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[4]: data[0060]: 1681 294e de52 42fe
+[bcmPW.0]Packet[4]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 100. dest-mod 0. src-port 1. src-mod 0. opcode 2.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:5e:7d:03:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {01005e7d0302} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0000
+[bcmPW.0]Packet[5]: data[0020]: 0000 0201 02ff fe03 0405 3555 5555 6666
+[bcmPW.0]Packet[5]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000
+[bcmPW.0]Packet[5]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001
+[bcmPW.0]Packet[5]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[5]: data[0060]: 1681 294e de52 42fe
+[bcmPW.0]Packet[5]: length 104 (104). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+BCM.0> sleep 2
+Sleeping for 2 seconds
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]:
+Packet[5]:   Ethernet: dst<01:00:5e:7d:03:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6
+BCM.0> fp stat get si=1 t=p
+The value is: 0x000000002
+
+############  Sending Mis-Matching DMAC in hinted area  #######
+BCM.0> tx 1 pbm=1 data=02005E7D02020000000000CC8100006486DD60300000002606FFFE80000000000000020102FFFE0304053555555566666666777777778888888811112222000000000000000050000000D74D0000000102030405060708090A0B0C0D0E0F10111681294E
+Packet from data=<>, length=104
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {02005e7d0202} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[6]: data[0010]: 86dd 6030 0000 0026 06ff fe80 0000 0000
+[bcmPW.0]Packet[6]: data[0020]: 0000 0201 02ff fe03 0405 3555 5555 6666
+[bcmPW.0]Packet[6]: data[0030]: 6666 7777 7777 8888 8888 1111 2222 0000
+[bcmPW.0]Packet[6]: data[0040]: 0000 0000 0000 5000 0000 d74d 0000 0001
+[bcmPW.0]Packet[6]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[6]: data[0060]: 1681 294e bb94 e4bf
+[bcmPW.0]Packet[6]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 100. dest-mod 0. src-port 1. src-mod 0. opcode 2.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]:
+Packet[6]:   Ethernet: dst<02:00:5e:7d:02:02> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6
+BCM.0> sleep 2
+Sleeping for 2 seconds
+BCM.0> fp stat get si=1 t=p
+The value is: 0x000000003
+
+
+Final count of stat should be 3
+BCM.0> fp stat get si=1 t=p
+The value is: 0x000000003
+bcm_error_t $$ = BCM_E_NONE (0)

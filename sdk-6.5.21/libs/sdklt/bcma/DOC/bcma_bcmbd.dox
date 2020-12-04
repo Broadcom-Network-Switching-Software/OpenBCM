@@ -1,0 +1,41 @@
+/*! \page bcma_bcmbdcmd CLI Commands for Base Drivers (BD)
+
+\section bcma_bcmbdcmd_intro Introduction
+
+The CLI BD commands are able to access the target switch device in
+low level view. These commands are usually used for debugging purposes.
+To utilize the BD commands, users need to have the knowledge on how
+different types of register or memory symobols are accessed in hardware.
+
+\section bcma_bcmbdcmd_info Show Device Information
+
+Command \c unit can be used to show device information like device ID, etc.
+
+\section bcma_bcmbdcmd_acc Access to Device Registers and Memories
+
+Command \c list can be used to list the specified symbol information.
+
+\b Example:
+\verbatim
+# List memory symbol VRFm information
+> list VRFm
+\endverbatim
+
+Commands \c get and \c set are used to get and set data to registers or
+memories in symbol name respectively.
+
+Commands \c geti and \c seti are used to get and set raw data to registers
+or memories in raw address respectively.
+
+Commands \c lookup, \c insert, and \c delete are used to deal with memories
+types of hash tables.
+
+\section bcma_bcmbdcmd_proc Reset and Init Sequence of Device
+
+Commands \c reset and \c init are used to perform reset and init sequence
+on the target device. The two commands will make the current device
+go to reset and init state and make previous setting of the device invalid.
+User must be aware of what the result will be before running the \c reset
+and \c init commands.
+
+*/

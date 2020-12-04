@@ -1,0 +1,27 @@
+BCM.0> cint th4_hsdk_mod_max_mtp.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 69
+Egress port1: 206
+MTP port: 35
+ingress_port_multi_setup port: 69 setup
+egress_port_multi_setup port: 35 setup
+egress_port_multi_setup port: 206 setup
+Mirror destination created id = 1006632960
+Mirror destination created id = 1006632961
+Mirror destination created id = 1006632962
+Mirror destination created id = 1006632963
+Mirror destination created id = 1006632964
+Mirror destination created id = 1006632965
+Mirror destination created id = 1006632966
+Mirror destination created id = 1006632967
+
+Error: Max mirror session = 8: No resources for operation.
+~~~ #1) test_setup(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 69 cleanup
+egress_port_multi_cleanup port: 35 cleanup
+egress_port_multi_cleanup port: 206 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End

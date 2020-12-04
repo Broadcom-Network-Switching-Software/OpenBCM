@@ -1,0 +1,347 @@
+/*******************************************************************************
+*******************************************************************************
+*  File Name     :  eagle_pll_config.c                                        *
+*  Created On    :  14/07/2013                                                *
+*  Created By    :  Kiran Divakar                                             *
+*  Description   :  Eagle PLL Configuration API                               *
+*  Revision      :  $Id: eagle_pll_config.c 1103 2015-08-14 16:57:21Z kirand $ *
+*                                                                             *
+* This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+* 
+* Copyright 2007-2020 Broadcom Inc. All rights reserved.                                                       *
+*  No portions of this material may be reproduced in any form without         *
+*  the written permission of:                                                 *
+*      Broadcom Corporation                                                   *
+*      5300 California Avenue                                                 *
+*      Irvine, CA  92617                                                      *
+*                                                                             *
+*  All information contained in this document is Broadcom Corporation         *
+*  company private proprietary, and trade secret.                             *
+ */
+
+/** @file
+ * Eagle PLL Configuration
+ */
+
+#include "eagle_tsc_enum.h"
+
+err_code_t eagle_tsc_configure_pll( const phymod_access_t *pa, enum eagle_tsc_pll_enum pll_cfg){
+
+	/* KVH VCO Range          */
+	/* 00  11.5    -  13.125  */
+	/* 01  10.3125 - <11.5    */
+	/* 10   9.375  - <10.3125 */
+	/* 11   8.125  - < 9.375  */
+
+	/* CKBWVCO Range          */
+	/* 00  12.5               */
+	/* 10  10.625  - 11.5G    */
+	/* 01   9.375  - 10.3125G */
+	/* 11  <9.375G            */
+
+#ifndef ATE_LOG
+	uint8_t reset_state;
+#endif
+	/*  Use this to restore defaults if reprogramming the PLL under dp-reset (typically Auto-Neg FW) */
+	  EFUN(wrc_pll_mode              (   0xA)); 
+	  EFUN(wrc_ams_pll_fracn_ndiv_int(   0x0)); 
+	  EFUN(wrc_ams_pll_fracn_div_h   (   0x0)); 
+	  EFUN(wrc_ams_pll_fracn_div_l   (   0x0)); 
+	  EFUN(wrc_ams_pll_fracn_bypass  (   0x0)); 
+	  EFUN(wrc_ams_pll_fracn_divrange(   0x0)); 
+	  EFUN(wrc_ams_pll_fracn_sel     (   0x0)); 
+	  EFUN(wrc_ams_pll_ditheren      (   0x0)); 
+	  EFUN(wrc_ams_pll_force_kvh_bw  (   0x0)); 
+	  EFUN(wrc_ams_pll_kvh_force     (   0x0)); 
+	  EFUN(wrc_ams_pll_2rx_clkbw     (   0x0)); 
+	  EFUN(wrc_ams_pll_vco_div2      (   0x0)); 
+	  EFUN(wrc_ams_pll_vco_div4      (   0x0)); 
+	  EFUN(wrc_ams_pll_refclk_doubler(   0x0)); 
+	  EFUN(wrc_ams_pll_fp3_ctrl      (   0x0)); 
+	  EFUN(wrc_ams_pll_fp3_rh        (   0x0)); 
+
+	/* Use core_s_rstb to re-initialize all registers to default before calling this function. */
+#ifndef ATE_LOG
+
+	ESTM(reset_state = rdc_core_dp_reset_state());
+	if (reset_state < 7) {
+		EFUN_PRINTF(("ERROR: eagle_tsc_configure_pll( pa, ..) called without core_dp_s_rstb=0\n"));
+		return _error(ERR_CODE_CORE_DP_NOT_RESET);
+	}
+#endif
+	switch (pll_cfg) {
+	/******************/
+	/*  Integer Mode  */
+	/******************/
+	case EAGLE_TSC_pll_div_80x_refc125: /* pll_mode<3:0> 1101 VCO 10G      REF 125   MHz */
+		EFUN(wrc_pll_mode( 0xD));
+		EFUN(wrc_ams_pll_force_kvh_bw( 0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw( 0x1));
+		EFUN(wrc_ams_pll_kvh_force( 0x2));
+		EFUN(wrc_ams_pll_vco_div2( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_80x_refc106: /* pll_mode<3:0> 1101 VCO  8.5G    REF 106.25MHz */
+		EFUN(wrc_pll_mode( 0xD));
+		EFUN(wrc_ams_pll_force_kvh_bw( 0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw( 0x3));
+		EFUN(wrc_ams_pll_kvh_force( 0x3));
+		EFUN(wrc_ams_pll_vco_div2( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_80x:
+	case EAGLE_TSC_pll_div_80x_refc156: /* pll_mode<3:0> 1101 VCO 12.5G    REF 156.25MHz */
+		EFUN(wrc_pll_mode( 0xD));
+		EFUN(wrc_ams_pll_force_kvh_bw( 0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw( 0x0));
+		EFUN(wrc_ams_pll_kvh_force( 0x2));
+		EFUN(wrc_ams_pll_vco_div2( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_46x:     /* pll_mode<3:0> 0000 VCO  5.75G   REF 125   MHz */
+		EFUN(wrc_pll_mode( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_50x:     /* pll_mode<3:0> 0101 VCO  6.25G   REF 125   MHz */
+		EFUN(wrc_pll_mode( 0x5));
+		break;
+	case EAGLE_TSC_pll_div_68x:     /* pll_mode<3:0> 1011 VCO  8.5G    REF 125   MHz */
+		EFUN(wrc_pll_mode( 0xB));
+		break;
+	case EAGLE_TSC_pll_div_92x:     /* pll_mode<3:0> 1110 VCO 11.5G    REF 125   MHz */
+		EFUN(wrc_pll_mode( 0xE));
+		break;
+	case EAGLE_TSC_pll_div_100x:    /* pll_mode<3:0> 1111 VCO 12.5G    REF 125   MHz */
+		EFUN(wrc_pll_mode( 0xF));
+		break;
+	case EAGLE_TSC_pll_div_40x:     /* pll_mode<3:0> 0010 VCO  6.25G   REF 156.25MHz  */
+		EFUN(wrc_pll_mode( 0x2));
+		EFUN(wrc_ams_pll_force_kvh_bw( 0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw( 0x3));
+		EFUN(wrc_ams_pll_kvh_force( 0x2));
+		EFUN(wrc_ams_pll_vco_div2( 0x1));
+		break;
+	case EAGLE_TSC_pll_div_42x:     /* pll_mode<3:0> 0011 VCO  6.5625G REF 156.25MHz */
+		EFUN(wrc_pll_mode( 0x3));
+		EFUN(wrc_ams_pll_force_kvh_bw( 0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw( 0x3));
+		EFUN(wrc_ams_pll_kvh_force( 0x2));
+		EFUN(wrc_ams_pll_vco_div2( 0x1));
+		break;
+	case EAGLE_TSC_pll_div_52x:     /* pll_mode<3:0> 0110 VCO  8.125G  REF 156.25MHz */
+		EFUN(wrc_pll_mode( 0x6));
+		break;
+	/* 5.0G   mode NOT verified by digital team or DVT */
+	/* case EAGLE_TSC_pll_div_32x:       *//* pll_mode<3:0> 0111 VCO  5.0G    REF 156.25MHz  */
+	/*     EFUN(wrc_pll_mode              (   0x7));   */
+	/*     break;                                      */
+	/* 3.125G mode NOT verified by digital team or DVT */
+	/* case EAGLE_TSC_pll_div_20x:       *//* pll_mode<3:0> 0100 VCO  3.125G  REF 156.25MHz  */
+	/*     EFUN(wrc_pll_mode              (   0x4));   */
+	/*     break;                                      */
+	case EAGLE_TSC_pll_div_60x:
+		/* pll_mode<3:0> 1000 VCO  9.375 G REF 156.25MHz */
+		EFUN(wrc_pll_mode(   0x8));
+		break;
+	case EAGLE_TSC_pll_div_64x_refc161:
+		/* pll_mode<3:0> 1001 VCO 10.3125G REF 161.13MHz */
+		EFUN(wrc_pll_mode(   0x9));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x1));
+		EFUN(wrc_ams_pll_kvh_force(   0x2));
+		EFUN(wrc_ams_pll_vco_div2( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_64x:
+	case EAGLE_TSC_pll_div_64x_refc156:
+		/* pll_mode<3:0> 1001 VCO 10G      REF 156.25MHzMHz */
+		EFUN(wrc_pll_mode(   0x9));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x1));
+		EFUN(wrc_ams_pll_kvh_force(   0x1));
+		EFUN(wrc_ams_pll_vco_div2( 0x0));
+		break;
+	case EAGLE_TSC_pll_div_66x:
+		/* pll_mode<3:0> 1010 VCO 10.3125G REF 156.25MHz */
+		EFUN(wrc_pll_mode(   0xA));
+		break;
+	case EAGLE_TSC_pll_div_70x:
+		/* pll_mode<3:0> 1100 VCO 10.9375G REF 156.25MHz  */
+		EFUN(wrc_pll_mode(   0xC));
+		break;
+	case EAGLE_TSC_pll_div_72x:
+		/* pll_mode<3:0> 0001 VCO 11.25  G REF 156.25MHz */
+		EFUN(wrc_pll_mode(   0x1));
+		break;
+	/*****************/
+	/*  Frac-N Mode  */
+	/*****************/
+	case EAGLE_TSC_pll_div_82p5x: /* DIV  82.5  VCO 10.3125G REF 125   MHz */
+		EFUN(wrc_ams_pll_fracn_ndiv_int(  0x52));
+		EFUN(wrc_ams_pll_fracn_div_l(0x0000));
+		EFUN(wrc_ams_pll_fracn_div_h(   0x2));
+		EFUN(wrc_ams_pll_fracn_bypass(   0x0));
+		EFUN(wrc_ams_pll_fracn_divrange(   0x0));
+		EFUN(wrc_ams_pll_fracn_sel(   0x1));
+		EFUN(wrc_ams_pll_ditheren(   0x1));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x1));
+		EFUN(wrc_ams_pll_kvh_force(   0x1));
+		EFUN(wrc_ams_pll_vco_div2(   0x0));
+		EFUN(wrc_ams_pll_vco_div4(   0x0));
+		EFUN(wrc_ams_pll_refclk_doubler(   0x0));
+		EFUN(wrc_ams_pll_fp3_ctrl(   0x3));
+		EFUN(wrc_ams_pll_fp3_rh(   0x1));
+		break;
+	case EAGLE_TSC_pll_div_87p5x: /* DIV  87.5  VCO 10.9375G REF 125   MHz */
+		EFUN(wrc_ams_pll_fracn_ndiv_int(  0x57));
+		EFUN(wrc_ams_pll_fracn_div_l(0x0000));
+		EFUN(wrc_ams_pll_fracn_div_h(   0x2));
+		EFUN(wrc_ams_pll_fracn_bypass(   0x0));
+		EFUN(wrc_ams_pll_fracn_divrange(   0x0));
+		EFUN(wrc_ams_pll_fracn_sel(   0x1));
+		EFUN(wrc_ams_pll_ditheren(   0x1));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x2));
+		EFUN(wrc_ams_pll_kvh_force(   0x1));
+		EFUN(wrc_ams_pll_vco_div2(   0x0));
+		EFUN(wrc_ams_pll_vco_div4(   0x0));
+		EFUN(wrc_ams_pll_refclk_doubler(   0x0));
+		EFUN(wrc_ams_pll_fp3_ctrl(   0x3));
+		EFUN(wrc_ams_pll_fp3_rh(   0x1));
+		break;
+	case EAGLE_TSC_pll_div_73p6x: /* DIV  73.6  VCO 11.5G    REF 156.25MHz */
+		EFUN(wrc_ams_pll_fracn_ndiv_int(  0x49));
+		EFUN(wrc_ams_pll_fracn_div_l(0x6666));
+		EFUN(wrc_ams_pll_fracn_div_h(   0x2));
+		EFUN(wrc_ams_pll_fracn_bypass(   0x0));
+		EFUN(wrc_ams_pll_fracn_divrange(   0x0));
+		EFUN(wrc_ams_pll_fracn_sel(   0x1));
+		EFUN(wrc_ams_pll_ditheren(   0x1));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x2));
+		EFUN(wrc_ams_pll_kvh_force(   0x0));
+		EFUN(wrc_ams_pll_vco_div2(   0x0));
+		EFUN(wrc_ams_pll_vco_div4(   0x0));
+		EFUN(wrc_ams_pll_refclk_doubler(   0x0));
+		EFUN(wrc_ams_pll_fp3_ctrl(   0x3));
+		EFUN(wrc_ams_pll_fp3_rh(   0x1));
+		break;
+	case EAGLE_TSC_pll_div_36p8x: /* DIV  73.6  VCO 11.5G/2  REF 156.25MHz */
+		EFUN(wrc_ams_pll_fracn_ndiv_int(  0x49));
+		EFUN(wrc_ams_pll_fracn_div_l(0x6666));
+		EFUN(wrc_ams_pll_fracn_div_h(   0x2));
+		EFUN(wrc_ams_pll_fracn_bypass(   0x0));
+		EFUN(wrc_ams_pll_fracn_divrange(   0x0));
+		EFUN(wrc_ams_pll_fracn_sel(   0x1));
+		EFUN(wrc_ams_pll_ditheren(   0x1));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_kvh_force(   0x0));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x3));
+		EFUN(wrc_ams_pll_vco_div2(   0x1));
+		EFUN(wrc_ams_pll_vco_div4(   0x0));
+		EFUN(wrc_ams_pll_refclk_doubler(   0x0));
+		EFUN(wrc_ams_pll_fp3_ctrl(   0x3));
+		EFUN(wrc_ams_pll_fp3_rh(   0x1));
+		break;
+	case EAGLE_TSC_pll_div_199p04x: /* DIV 199.04 VCO  9.952G  REF  25   MHz */
+		EFUN(wrc_ams_pll_fracn_ndiv_int(  0xc7));
+		EFUN(wrc_ams_pll_fracn_div_l(0x28f5));
+		EFUN(wrc_ams_pll_fracn_div_h(   0x0));
+		EFUN(wrc_ams_pll_fracn_bypass(   0x0));
+		EFUN(wrc_ams_pll_fracn_divrange(   0x0));
+		EFUN(wrc_ams_pll_fracn_sel(   0x1));
+		EFUN(wrc_ams_pll_ditheren(   0x1));
+		EFUN(wrc_ams_pll_force_kvh_bw(   0x1));
+		EFUN(wrc_ams_pll_2rx_clkbw(   0x1));
+		EFUN(wrc_ams_pll_kvh_force(   0x2));
+		EFUN(wrc_ams_pll_vco_div2(   0x0));
+		EFUN(wrc_ams_pll_vco_div4(   0x0));
+		EFUN(wrc_ams_pll_refclk_doubler(   0x1));
+		EFUN(wrc_ams_pll_fp3_ctrl(   0x3));
+		EFUN(wrc_ams_pll_fp3_rh(   0x1));
+		break;
+	/*******************************/
+	/*  Invalid 'pll_cfg' Selector */
+	/*******************************/
+	default:                 /* Invalid pll_cfg value  */
+		return _error(ERR_CODE_INVALID_PLL_CFG);
+		break;
+	} /* switch (pll_cfg) */
+	return ERR_CODE_NONE;
+}   /* eagle_tsc_configure_pll */
+
+err_code_t eagle_tsc_get_pll_div_from_enum (enum eagle_tsc_pll_enum pll_cfg, uint32_t *new_pll_div){
+
+    switch (pll_cfg) {
+	/******************/
+	/*  Integer Mode  */
+	/******************/
+	case EAGLE_TSC_pll_div_80x_refc125: /* pll_mode<3:0> 1101 VCO 10G      REF 125   MHz */
+		*new_pll_div  = 0xD;
+		break;
+	case EAGLE_TSC_pll_div_80x_refc106: /* pll_mode<3:0> 1101 VCO  8.5G    REF 106.25MHz */
+		*new_pll_div  = 0xD;
+		break;
+	case EAGLE_TSC_pll_div_80x:
+	case EAGLE_TSC_pll_div_80x_refc156: /* pll_mode<3:0> 1101 VCO 12.5G    REF 156.25MHz */
+		*new_pll_div  = 0xD;
+		break;
+	case EAGLE_TSC_pll_div_46x:     /* pll_mode<3:0> 0000 VCO  5.75G   REF 125   MHz */
+		*new_pll_div  = 0x0;
+		break;
+	case EAGLE_TSC_pll_div_50x:     /* pll_mode<3:0> 0101 VCO  6.25G   REF 125   MHz */
+		*new_pll_div  = 0x5;
+		break;
+	case EAGLE_TSC_pll_div_68x:     /* pll_mode<3:0> 1011 VCO  8.5G    REF 125   MHz */
+		*new_pll_div  = 0xB;
+		break;
+	case EAGLE_TSC_pll_div_92x:     /* pll_mode<3:0> 1110 VCO 11.5G    REF 125   MHz */
+		*new_pll_div  = 0xE;
+		break;
+	case EAGLE_TSC_pll_div_100x:    /* pll_mode<3:0> 1111 VCO 12.5G    REF 125   MHz */
+		*new_pll_div  = 0xF;
+		break;
+	case EAGLE_TSC_pll_div_40x:     /* pll_mode<3:0> 0010 VCO  6.25G   REF 156.25MHz  */
+		*new_pll_div  = 0x2;
+		break;
+	case EAGLE_TSC_pll_div_42x:     /* pll_mode<3:0> 0011 VCO  6.5625G REF 156.25MHz */
+		*new_pll_div  = 0x3;
+		break;
+	case EAGLE_TSC_pll_div_52x:     /* pll_mode<3:0> 0110 VCO  8.125G  REF 156.25MHz */
+		*new_pll_div  = 0x6;
+		break;
+	/* 5.0G   mode NOT verified by digital team or DVT */
+	/* case EAGLE_TSC_pll_div_32x:       *//* pll_mode<3:0> 0111 VCO  5.0G    REF 156.25MHz  */
+	/*     EFUN(wrc_pll_mode              (   0x7));   */
+	/*     break;                                      */
+	/* 3.125G mode NOT verified by digital team or DVT */
+	/* case EAGLE_TSC_pll_div_20x:       *//* pll_mode<3:0> 0100 VCO  3.125G  REF 156.25MHz  */
+	/*     EFUN(wrc_pll_mode              (   0x4));   */
+	/*     break;                                      */
+	case EAGLE_TSC_pll_div_60x:
+		/* pll_mode<3:0> 1000 VCO  9.375 G REF 156.25MHz */
+		*new_pll_div  = 0x8;
+		break;
+	case EAGLE_TSC_pll_div_64x_refc161:
+		/* pll_mode<3:0> 1001 VCO 10.3125G REF 161.13MHz */
+		*new_pll_div  = 0x9;
+		break;
+	case EAGLE_TSC_pll_div_64x:
+	case EAGLE_TSC_pll_div_64x_refc156:
+		/* pll_mode<3:0> 1001 VCO 10G      REF 156.25MHzMHz */
+		*new_pll_div  = 0x9;
+		break;
+	case EAGLE_TSC_pll_div_66x:
+		/* pll_mode<3:0> 1010 VCO 10.3125G REF 156.25MHz */
+		*new_pll_div  = 0xA;
+		break;
+	case EAGLE_TSC_pll_div_70x:
+		/* pll_mode<3:0> 1100 VCO 10.9375G REF 156.25MHz  */
+		*new_pll_div  = 0xC;
+		break;
+	case EAGLE_TSC_pll_div_72x:
+		/* pll_mode<3:0> 0001 VCO 11.25  G REF 156.25MHz */
+		*new_pll_div  = 0x1;
+		break;
+	default:                 /* Invalid pll_cfg value  */
+		return _error(ERR_CODE_INVALID_PLL_CFG);
+		break;
+	}
+    return ERR_CODE_NONE;
+}

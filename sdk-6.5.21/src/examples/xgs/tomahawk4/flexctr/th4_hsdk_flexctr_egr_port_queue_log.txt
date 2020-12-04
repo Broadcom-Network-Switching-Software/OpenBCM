@@ -1,0 +1,414 @@
+% ./bcm.user -y bcm56990_a0-generic-64x400.config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200916 (Wed Sep 16 10:33:36 2020)
+From sp933340@xl-sj1-30:/projects/ntsw-sw-ae/sparks/gerrit/hsdk
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cd case
+BCM.0> cint th4_hsdk_flexctr_egr_port_queue.c
+Ports:   1(cd0)   2(cd1)   3(cd2)   4(cd3)  17(cd4)  18(cd5)  19(cd6)  20(cd7)  34(cd8)  35(cd9) 
+    36(cd10)  37(cd11)  51(cd12)  52(cd13)  53(cd14)  54(cd15)  68(cd16)  69(cd17)  70(cd18)  71(cd19) 
+    85(cd20)  86(cd21)  87(cd22)  88(cd23) 102(cd24) 103(cd25) 104(cd26) 105(cd27) 119(cd28) 120(cd29) 
+   121(cd30) 122(cd31) 136(cd32) 137(cd33) 138(cd34) 139(cd35) 153(cd36) 154(cd37) 155(cd38) 156(cd39) 
+   170(cd40) 171(cd41) 172(cd42) 173(cd43) 187(cd44) 188(cd45) 189(cd46) 190(cd47) 204(cd48) 205(cd49) 
+   206(cd50) 207(cd51) 221(cd52) 222(cd53) 223(cd54) 224(cd55) 238(cd56) 239(cd57) 240(cd58) 241(cd59) 
+   255(cd60) 256(cd61) 257(cd62) 258(cd63) 
+Created Flex Counter Action: ID=0x10002001
+ADD: mac=00:00:00:00:00:01 vlan=1 GPORT=0x1 modid=0 port=1/cd0 Static
+>> l2 add Port=cd0 vlan=1 mac=00:00:00:00:00:01 static=true
+Packet generate, length=100
+>> tx 1 Length=100 VlanPrio=0 dm=00:00:00:00:00:01 sm=80:80:80:80:80:40 [100 bytes]
+ADD: mac=00:00:00:00:00:02 vlan=1 GPORT=0x2 modid=0 port=2/cd1 Static
+>> l2 add Port=cd1 vlan=1 mac=00:00:00:00:00:02 static=true
+Packet generate, length=104
+>> tx 2 Length=104 VlanPrio=1 dm=00:00:00:00:00:02 sm=80:80:80:80:80:41 [208 bytes]
+ADD: mac=00:00:00:00:00:03 vlan=1 GPORT=0x3 modid=0 port=3/cd2 Static
+>> l2 add Port=cd2 vlan=1 mac=00:00:00:00:00:03 static=true
+Packet generate, length=108
+>> tx 3 Length=108 VlanPrio=2 dm=00:00:00:00:00:03 sm=80:80:80:80:80:42 [324 bytes]
+ADD: mac=00:00:00:00:00:04 vlan=1 GPORT=0x4 modid=0 port=4/cd3 Static
+>> l2 add Port=cd3 vlan=1 mac=00:00:00:00:00:04 static=true
+Packet generate, length=112
+>> tx 4 Length=112 VlanPrio=3 dm=00:00:00:00:00:04 sm=80:80:80:80:80:43 [448 bytes]
+ADD: mac=00:00:00:00:00:05 vlan=1 GPORT=0x11 modid=0 port=17/cd4 Static
+>> l2 add Port=cd4 vlan=1 mac=00:00:00:00:00:05 static=true
+Packet generate, length=116
+>> tx 5 Length=116 VlanPrio=4 dm=00:00:00:00:00:05 sm=80:80:80:80:80:44 [580 bytes]
+ADD: mac=00:00:00:00:00:06 vlan=1 GPORT=0x12 modid=0 port=18/cd5 Static
+>> l2 add Port=cd5 vlan=1 mac=00:00:00:00:00:06 static=true
+Packet generate, length=120
+>> tx 6 Length=120 VlanPrio=5 dm=00:00:00:00:00:06 sm=80:80:80:80:80:45 [720 bytes]
+ADD: mac=00:00:00:00:00:07 vlan=1 GPORT=0x13 modid=0 port=19/cd6 Static
+>> l2 add Port=cd6 vlan=1 mac=00:00:00:00:00:07 static=true
+Packet generate, length=124
+>> tx 7 Length=124 VlanPrio=6 dm=00:00:00:00:00:07 sm=80:80:80:80:80:46 [868 bytes]
+ADD: mac=00:00:00:00:00:08 vlan=1 GPORT=0x14 modid=0 port=20/cd7 Static
+>> l2 add Port=cd7 vlan=1 mac=00:00:00:00:00:08 static=true
+Packet generate, length=128
+>> tx 8 Length=128 VlanPrio=7 dm=00:00:00:00:00:08 sm=80:80:80:80:80:47 [1024 bytes]
+ADD: mac=00:00:00:00:00:09 vlan=1 GPORT=0x22 modid=0 port=34/cd8 Static
+>> l2 add Port=cd8 vlan=1 mac=00:00:00:00:00:09 static=true
+Packet generate, length=132
+>> tx 9 Length=132 VlanPrio=0 dm=00:00:00:00:00:09 sm=80:80:80:80:80:48 [1188 bytes]
+ADD: mac=00:00:00:00:00:0a vlan=1 GPORT=0x23 modid=0 port=35/cd9 Static
+>> l2 add Port=cd9 vlan=1 mac=00:00:00:00:00:0A static=true
+Packet generate, length=136
+>> tx 10 Length=136 VlanPrio=1 dm=00:00:00:00:00:0A sm=80:80:80:80:80:49 [1360 bytes]
+ADD: mac=00:00:00:00:00:0b vlan=1 GPORT=0x24 modid=0 port=36/cd10 Static
+>> l2 add Port=cd10 vlan=1 mac=00:00:00:00:00:0B static=true
+Packet generate, length=140
+>> tx 11 Length=140 VlanPrio=2 dm=00:00:00:00:00:0B sm=80:80:80:80:80:4A [1540 bytes]
+ADD: mac=00:00:00:00:00:0c vlan=1 GPORT=0x25 modid=0 port=37/cd11 Static
+>> l2 add Port=cd11 vlan=1 mac=00:00:00:00:00:0C static=true
+Packet generate, length=144
+>> tx 12 Length=144 VlanPrio=3 dm=00:00:00:00:00:0C sm=80:80:80:80:80:4B [1728 bytes]
+ADD: mac=00:00:00:00:00:0d vlan=1 GPORT=0x33 modid=0 port=51/cd12 Static
+>> l2 add Port=cd12 vlan=1 mac=00:00:00:00:00:0D static=true
+Packet generate, length=148
+>> tx 13 Length=148 VlanPrio=4 dm=00:00:00:00:00:0D sm=80:80:80:80:80:4C [1924 bytes]
+ADD: mac=00:00:00:00:00:0e vlan=1 GPORT=0x34 modid=0 port=52/cd13 Static
+>> l2 add Port=cd13 vlan=1 mac=00:00:00:00:00:0E static=true
+Packet generate, length=152
+>> tx 14 Length=152 VlanPrio=5 dm=00:00:00:00:00:0E sm=80:80:80:80:80:4D [2128 bytes]
+ADD: mac=00:00:00:00:00:0f vlan=1 GPORT=0x35 modid=0 port=53/cd14 Static
+>> l2 add Port=cd14 vlan=1 mac=00:00:00:00:00:0F static=true
+Packet generate, length=156
+>> tx 15 Length=156 VlanPrio=6 dm=00:00:00:00:00:0F sm=80:80:80:80:80:4E [2340 bytes]
+ADD: mac=00:00:00:00:00:10 vlan=1 GPORT=0x36 modid=0 port=54/cd15 Static
+>> l2 add Port=cd15 vlan=1 mac=00:00:00:00:00:10 static=true
+Packet generate, length=160
+>> tx 16 Length=160 VlanPrio=7 dm=00:00:00:00:00:10 sm=80:80:80:80:80:4F [2560 bytes]
+ADD: mac=00:00:00:00:00:11 vlan=1 GPORT=0x44 modid=0 port=68/cd16 Static
+>> l2 add Port=cd16 vlan=1 mac=00:00:00:00:00:11 static=true
+Packet generate, length=164
+>> tx 17 Length=164 VlanPrio=0 dm=00:00:00:00:00:11 sm=80:80:80:80:80:50 [2788 bytes]
+ADD: mac=00:00:00:00:00:12 vlan=1 GPORT=0x45 modid=0 port=69/cd17 Static
+>> l2 add Port=cd17 vlan=1 mac=00:00:00:00:00:12 static=true
+Packet generate, length=168
+>> tx 18 Length=168 VlanPrio=1 dm=00:00:00:00:00:12 sm=80:80:80:80:80:51 [3024 bytes]
+ADD: mac=00:00:00:00:00:13 vlan=1 GPORT=0x46 modid=0 port=70/cd18 Static
+>> l2 add Port=cd18 vlan=1 mac=00:00:00:00:00:13 static=true
+Packet generate, length=172
+>> tx 19 Length=172 VlanPrio=2 dm=00:00:00:00:00:13 sm=80:80:80:80:80:52 [3268 bytes]
+ADD: mac=00:00:00:00:00:14 vlan=1 GPORT=0x47 modid=0 port=71/cd19 Static
+>> l2 add Port=cd19 vlan=1 mac=00:00:00:00:00:14 static=true
+Packet generate, length=176
+>> tx 20 Length=176 VlanPrio=3 dm=00:00:00:00:00:14 sm=80:80:80:80:80:53 [3520 bytes]
+ADD: mac=00:00:00:00:00:15 vlan=1 GPORT=0x55 modid=0 port=85/cd20 Static
+>> l2 add Port=cd20 vlan=1 mac=00:00:00:00:00:15 static=true
+Packet generate, length=180
+>> tx 21 Length=180 VlanPrio=4 dm=00:00:00:00:00:15 sm=80:80:80:80:80:54 [3780 bytes]
+ADD: mac=00:00:00:00:00:16 vlan=1 GPORT=0x56 modid=0 port=86/cd21 Static
+>> l2 add Port=cd21 vlan=1 mac=00:00:00:00:00:16 static=true
+Packet generate, length=184
+>> tx 22 Length=184 VlanPrio=5 dm=00:00:00:00:00:16 sm=80:80:80:80:80:55 [4048 bytes]
+ADD: mac=00:00:00:00:00:17 vlan=1 GPORT=0x57 modid=0 port=87/cd22 Static
+>> l2 add Port=cd22 vlan=1 mac=00:00:00:00:00:17 static=true
+Packet generate, length=188
+>> tx 23 Length=188 VlanPrio=6 dm=00:00:00:00:00:17 sm=80:80:80:80:80:56 [4324 bytes]
+ADD: mac=00:00:00:00:00:18 vlan=1 GPORT=0x58 modid=0 port=88/cd23 Static
+>> l2 add Port=cd23 vlan=1 mac=00:00:00:00:00:18 static=true
+Packet generate, length=192
+>> tx 24 Length=192 VlanPrio=7 dm=00:00:00:00:00:18 sm=80:80:80:80:80:57 [4608 bytes]
+ADD: mac=00:00:00:00:00:19 vlan=1 GPORT=0x66 modid=0 port=102/cd24 Static
+>> l2 add Port=cd24 vlan=1 mac=00:00:00:00:00:19 static=true
+Packet generate, length=196
+>> tx 25 Length=196 VlanPrio=0 dm=00:00:00:00:00:19 sm=80:80:80:80:80:58 [4900 bytes]
+ADD: mac=00:00:00:00:00:1a vlan=1 GPORT=0x67 modid=0 port=103/cd25 Static
+>> l2 add Port=cd25 vlan=1 mac=00:00:00:00:00:1A static=true
+Packet generate, length=200
+>> tx 26 Length=200 VlanPrio=1 dm=00:00:00:00:00:1A sm=80:80:80:80:80:59 [5200 bytes]
+ADD: mac=00:00:00:00:00:1b vlan=1 GPORT=0x68 modid=0 port=104/cd26 Static
+>> l2 add Port=cd26 vlan=1 mac=00:00:00:00:00:1B static=true
+Packet generate, length=204
+>> tx 27 Length=204 VlanPrio=2 dm=00:00:00:00:00:1B sm=80:80:80:80:80:5A [5508 bytes]
+ADD: mac=00:00:00:00:00:1c vlan=1 GPORT=0x69 modid=0 port=105/cd27 Static
+>> l2 add Port=cd27 vlan=1 mac=00:00:00:00:00:1C static=true
+Packet generate, length=208
+>> tx 28 Length=208 VlanPrio=3 dm=00:00:00:00:00:1C sm=80:80:80:80:80:5B [5824 bytes]
+ADD: mac=00:00:00:00:00:1d vlan=1 GPORT=0x77 modid=0 port=119/cd28 Static
+>> l2 add Port=cd28 vlan=1 mac=00:00:00:00:00:1D static=true
+Packet generate, length=212
+>> tx 29 Length=212 VlanPrio=4 dm=00:00:00:00:00:1D sm=80:80:80:80:80:5C [6148 bytes]
+ADD: mac=00:00:00:00:00:1e vlan=1 GPORT=0x78 modid=0 port=120/cd29 Static
+>> l2 add Port=cd29 vlan=1 mac=00:00:00:00:00:1E static=true
+Packet generate, length=216
+>> tx 30 Length=216 VlanPrio=5 dm=00:00:00:00:00:1E sm=80:80:80:80:80:5D [6480 bytes]
+ADD: mac=00:00:00:00:00:1f vlan=1 GPORT=0x79 modid=0 port=121/cd30 Static
+>> l2 add Port=cd30 vlan=1 mac=00:00:00:00:00:1F static=true
+Packet generate, length=220
+>> tx 31 Length=220 VlanPrio=6 dm=00:00:00:00:00:1F sm=80:80:80:80:80:5E [6820 bytes]
+ADD: mac=00:00:00:00:00:20 vlan=1 GPORT=0x7a modid=0 port=122/cd31 Static
+>> l2 add Port=cd31 vlan=1 mac=00:00:00:00:00:20 static=true
+Packet generate, length=224
+>> tx 32 Length=224 VlanPrio=7 dm=00:00:00:00:00:20 sm=80:80:80:80:80:5F [7168 bytes]
+ADD: mac=00:00:00:00:00:21 vlan=1 GPORT=0x88 modid=0 port=136/cd32 Static
+>> l2 add Port=cd32 vlan=1 mac=00:00:00:00:00:21 static=true
+Packet generate, length=228
+>> tx 33 Length=228 VlanPrio=0 dm=00:00:00:00:00:21 sm=80:80:80:80:80:60 [7524 bytes]
+ADD: mac=00:00:00:00:00:22 vlan=1 GPORT=0x89 modid=0 port=137/cd33 Static
+>> l2 add Port=cd33 vlan=1 mac=00:00:00:00:00:22 static=true
+Packet generate, length=232
+>> tx 34 Length=232 VlanPrio=1 dm=00:00:00:00:00:22 sm=80:80:80:80:80:61 [7888 bytes]
+ADD: mac=00:00:00:00:00:23 vlan=1 GPORT=0x8a modid=0 port=138/cd34 Static
+>> l2 add Port=cd34 vlan=1 mac=00:00:00:00:00:23 static=true
+Packet generate, length=236
+>> tx 35 Length=236 VlanPrio=2 dm=00:00:00:00:00:23 sm=80:80:80:80:80:62 [8260 bytes]
+ADD: mac=00:00:00:00:00:24 vlan=1 GPORT=0x8b modid=0 port=139/cd35 Static
+>> l2 add Port=cd35 vlan=1 mac=00:00:00:00:00:24 static=true
+Packet generate, length=240
+>> tx 36 Length=240 VlanPrio=3 dm=00:00:00:00:00:24 sm=80:80:80:80:80:63 [8640 bytes]
+ADD: mac=00:00:00:00:00:25 vlan=1 GPORT=0x99 modid=0 port=153/cd36 Static
+>> l2 add Port=cd36 vlan=1 mac=00:00:00:00:00:25 static=true
+Packet generate, length=244
+>> tx 37 Length=244 VlanPrio=4 dm=00:00:00:00:00:25 sm=80:80:80:80:80:64 [9028 bytes]
+ADD: mac=00:00:00:00:00:26 vlan=1 GPORT=0x9a modid=0 port=154/cd37 Static
+>> l2 add Port=cd37 vlan=1 mac=00:00:00:00:00:26 static=true
+Packet generate, length=248
+>> tx 38 Length=248 VlanPrio=5 dm=00:00:00:00:00:26 sm=80:80:80:80:80:65 [9424 bytes]
+ADD: mac=00:00:00:00:00:27 vlan=1 GPORT=0x9b modid=0 port=155/cd38 Static
+>> l2 add Port=cd38 vlan=1 mac=00:00:00:00:00:27 static=true
+Packet generate, length=252
+>> tx 39 Length=252 VlanPrio=6 dm=00:00:00:00:00:27 sm=80:80:80:80:80:66 [9828 bytes]
+ADD: mac=00:00:00:00:00:28 vlan=1 GPORT=0x9c modid=0 port=156/cd39 Static
+>> l2 add Port=cd39 vlan=1 mac=00:00:00:00:00:28 static=true
+Packet generate, length=256
+>> tx 40 Length=256 VlanPrio=7 dm=00:00:00:00:00:28 sm=80:80:80:80:80:67 [10240 bytes]
+ADD: mac=00:00:00:00:00:29 vlan=1 GPORT=0xaa modid=0 port=170/cd40 Static
+>> l2 add Port=cd40 vlan=1 mac=00:00:00:00:00:29 static=true
+Packet generate, length=260
+>> tx 41 Length=260 VlanPrio=0 dm=00:00:00:00:00:29 sm=80:80:80:80:80:68 [10660 bytes]
+ADD: mac=00:00:00:00:00:2a vlan=1 GPORT=0xab modid=0 port=171/cd41 Static
+>> l2 add Port=cd41 vlan=1 mac=00:00:00:00:00:2A static=true
+Packet generate, length=264
+>> tx 42 Length=264 VlanPrio=1 dm=00:00:00:00:00:2A sm=80:80:80:80:80:69 [11088 bytes]
+ADD: mac=00:00:00:00:00:2b vlan=1 GPORT=0xac modid=0 port=172/cd42 Static
+>> l2 add Port=cd42 vlan=1 mac=00:00:00:00:00:2B static=true
+Packet generate, length=268
+>> tx 43 Length=268 VlanPrio=2 dm=00:00:00:00:00:2B sm=80:80:80:80:80:6A [11524 bytes]
+ADD: mac=00:00:00:00:00:2c vlan=1 GPORT=0xad modid=0 port=173/cd43 Static
+>> l2 add Port=cd43 vlan=1 mac=00:00:00:00:00:2C static=true
+Packet generate, length=272
+>> tx 44 Length=272 VlanPrio=3 dm=00:00:00:00:00:2C sm=80:80:80:80:80:6B [11968 bytes]
+ADD: mac=00:00:00:00:00:2d vlan=1 GPORT=0xbb modid=0 port=187/cd44 Static
+>> l2 add Port=cd44 vlan=1 mac=00:00:00:00:00:2D static=true
+Packet generate, length=276
+>> tx 45 Length=276 VlanPrio=4 dm=00:00:00:00:00:2D sm=80:80:80:80:80:6C [12420 bytes]
+ADD: mac=00:00:00:00:00:2e vlan=1 GPORT=0xbc modid=0 port=188/cd45 Static
+>> l2 add Port=cd45 vlan=1 mac=00:00:00:00:00:2E static=true
+Packet generate, length=280
+>> tx 46 Length=280 VlanPrio=5 dm=00:00:00:00:00:2E sm=80:80:80:80:80:6D [12880 bytes]
+ADD: mac=00:00:00:00:00:2f vlan=1 GPORT=0xbd modid=0 port=189/cd46 Static
+>> l2 add Port=cd46 vlan=1 mac=00:00:00:00:00:2F static=true
+Packet generate, length=284
+>> tx 47 Length=284 VlanPrio=6 dm=00:00:00:00:00:2F sm=80:80:80:80:80:6E [13348 bytes]
+ADD: mac=00:00:00:00:00:30 vlan=1 GPORT=0xbe modid=0 port=190/cd47 Static
+>> l2 add Port=cd47 vlan=1 mac=00:00:00:00:00:30 static=true
+Packet generate, length=288
+>> tx 48 Length=288 VlanPrio=7 dm=00:00:00:00:00:30 sm=80:80:80:80:80:6F [13824 bytes]
+ADD: mac=00:00:00:00:00:31 vlan=1 GPORT=0xcc modid=0 port=204/cd48 Static
+>> l2 add Port=cd48 vlan=1 mac=00:00:00:00:00:31 static=true
+Packet generate, length=292
+>> tx 49 Length=292 VlanPrio=0 dm=00:00:00:00:00:31 sm=80:80:80:80:80:70 [14308 bytes]
+ADD: mac=00:00:00:00:00:32 vlan=1 GPORT=0xcd modid=0 port=205/cd49 Static
+>> l2 add Port=cd49 vlan=1 mac=00:00:00:00:00:32 static=true
+Packet generate, length=296
+>> tx 50 Length=296 VlanPrio=1 dm=00:00:00:00:00:32 sm=80:80:80:80:80:71 [14800 bytes]
+ADD: mac=00:00:00:00:00:33 vlan=1 GPORT=0xce modid=0 port=206/cd50 Static
+>> l2 add Port=cd50 vlan=1 mac=00:00:00:00:00:33 static=true
+Packet generate, length=300
+>> tx 51 Length=300 VlanPrio=2 dm=00:00:00:00:00:33 sm=80:80:80:80:80:72 [15300 bytes]
+ADD: mac=00:00:00:00:00:34 vlan=1 GPORT=0xcf modid=0 port=207/cd51 Static
+>> l2 add Port=cd51 vlan=1 mac=00:00:00:00:00:34 static=true
+Packet generate, length=304
+>> tx 52 Length=304 VlanPrio=3 dm=00:00:00:00:00:34 sm=80:80:80:80:80:73 [15808 bytes]
+ADD: mac=00:00:00:00:00:35 vlan=1 GPORT=0xdd modid=0 port=221/cd52 Static
+>> l2 add Port=cd52 vlan=1 mac=00:00:00:00:00:35 static=true
+Packet generate, length=308
+>> tx 53 Length=308 VlanPrio=4 dm=00:00:00:00:00:35 sm=80:80:80:80:80:74 [16324 bytes]
+ADD: mac=00:00:00:00:00:36 vlan=1 GPORT=0xde modid=0 port=222/cd53 Static
+>> l2 add Port=cd53 vlan=1 mac=00:00:00:00:00:36 static=true
+Packet generate, length=312
+>> tx 54 Length=312 VlanPrio=5 dm=00:00:00:00:00:36 sm=80:80:80:80:80:75 [16848 bytes]
+ADD: mac=00:00:00:00:00:37 vlan=1 GPORT=0xdf modid=0 port=223/cd54 Static
+>> l2 add Port=cd54 vlan=1 mac=00:00:00:00:00:37 static=true
+Packet generate, length=316
+>> tx 55 Length=316 VlanPrio=6 dm=00:00:00:00:00:37 sm=80:80:80:80:80:76 [17380 bytes]
+ADD: mac=00:00:00:00:00:38 vlan=1 GPORT=0xe0 modid=0 port=224/cd55 Static
+>> l2 add Port=cd55 vlan=1 mac=00:00:00:00:00:38 static=true
+Packet generate, length=320
+>> tx 56 Length=320 VlanPrio=7 dm=00:00:00:00:00:38 sm=80:80:80:80:80:77 [17920 bytes]
+ADD: mac=00:00:00:00:00:39 vlan=1 GPORT=0xee modid=0 port=238/cd56 Static
+>> l2 add Port=cd56 vlan=1 mac=00:00:00:00:00:39 static=true
+Packet generate, length=324
+>> tx 57 Length=324 VlanPrio=0 dm=00:00:00:00:00:39 sm=80:80:80:80:80:78 [18468 bytes]
+ADD: mac=00:00:00:00:00:3a vlan=1 GPORT=0xef modid=0 port=239/cd57 Static
+>> l2 add Port=cd57 vlan=1 mac=00:00:00:00:00:3A static=true
+Packet generate, length=328
+>> tx 58 Length=328 VlanPrio=1 dm=00:00:00:00:00:3A sm=80:80:80:80:80:79 [19024 bytes]
+ADD: mac=00:00:00:00:00:3b vlan=1 GPORT=0xf0 modid=0 port=240/cd58 Static
+>> l2 add Port=cd58 vlan=1 mac=00:00:00:00:00:3B static=true
+Packet generate, length=332
+>> tx 59 Length=332 VlanPrio=2 dm=00:00:00:00:00:3B sm=80:80:80:80:80:7A [19588 bytes]
+ADD: mac=00:00:00:00:00:3c vlan=1 GPORT=0xf1 modid=0 port=241/cd59 Static
+>> l2 add Port=cd59 vlan=1 mac=00:00:00:00:00:3C static=true
+Packet generate, length=336
+>> tx 60 Length=336 VlanPrio=3 dm=00:00:00:00:00:3C sm=80:80:80:80:80:7B [20160 bytes]
+ADD: mac=00:00:00:00:00:3d vlan=1 GPORT=0xff modid=0 port=255/cd60 Static
+>> l2 add Port=cd60 vlan=1 mac=00:00:00:00:00:3D static=true
+Packet generate, length=340
+>> tx 61 Length=340 VlanPrio=4 dm=00:00:00:00:00:3D sm=80:80:80:80:80:7C [20740 bytes]
+ADD: mac=00:00:00:00:00:3e vlan=1 GPORT=0x100 modid=0 port=256/cd61 Static
+>> l2 add Port=cd61 vlan=1 mac=00:00:00:00:00:3E static=true
+Packet generate, length=344
+>> tx 62 Length=344 VlanPrio=5 dm=00:00:00:00:00:3E sm=80:80:80:80:80:7D [21328 bytes]
+ADD: mac=00:00:00:00:00:3f vlan=1 GPORT=0x101 modid=0 port=257/cd62 Static
+>> l2 add Port=cd62 vlan=1 mac=00:00:00:00:00:3F static=true
+Packet generate, length=348
+>> tx 63 Length=348 VlanPrio=6 dm=00:00:00:00:00:3F sm=80:80:80:80:80:7E [21924 bytes]
+ADD: mac=00:00:00:00:00:40 vlan=1 GPORT=0x102 modid=0 port=258/cd63 Static
+>> l2 add Port=cd63 vlan=1 mac=00:00:00:00:00:40 static=true
+Packet generate, length=352
+>> tx 64 Length=352 VlanPrio=7 dm=00:00:00:00:00:40 sm=80:80:80:80:80:7F [22528 bytes]
+Port:   1 (cd0)
+  UC0:   1 packets;  100 bytes; OK
+Port:   2 (cd1)
+  UC1:   2 packets;  208 bytes; OK
+Port:   3 (cd2)
+  UC2:   3 packets;  324 bytes; OK
+Port:   4 (cd3)
+  UC3:   4 packets;  448 bytes; OK
+Port:  17 (cd4)
+  UC4:   5 packets;  580 bytes; OK
+Port:  18 (cd5)
+  UC5:   6 packets;  720 bytes; OK
+Port:  19 (cd6)
+  UC6:   7 packets;  868 bytes; OK
+Port:  20 (cd7)
+  UC7:   8 packets; 1024 bytes; OK
+Port:  34 (cd8)
+  UC0:   9 packets; 1188 bytes; OK
+Port:  35 (cd9)
+  UC1:  10 packets; 1360 bytes; OK
+Port:  36 (cd10)
+  UC2:  11 packets; 1540 bytes; OK
+Port:  37 (cd11)
+  UC3:  12 packets; 1728 bytes; OK
+Port:  51 (cd12)
+  UC4:  13 packets; 1924 bytes; OK
+Port:  52 (cd13)
+  UC5:  14 packets; 2128 bytes; OK
+Port:  53 (cd14)
+  UC6:  15 packets; 2340 bytes; OK
+Port:  54 (cd15)
+  UC7:  16 packets; 2560 bytes; OK
+Port:  68 (cd16)
+  UC0:  17 packets; 2788 bytes; OK
+Port:  69 (cd17)
+  UC1:  18 packets; 3024 bytes; OK
+Port:  70 (cd18)
+  UC2:  19 packets; 3268 bytes; OK
+Port:  71 (cd19)
+  UC3:  20 packets; 3520 bytes; OK
+Port:  85 (cd20)
+  UC4:  21 packets; 3780 bytes; OK
+Port:  86 (cd21)
+  UC5:  22 packets; 4048 bytes; OK
+Port:  87 (cd22)
+  UC6:  23 packets; 4324 bytes; OK
+Port:  88 (cd23)
+  UC7:  24 packets; 4608 bytes; OK
+Port: 102 (cd24)
+  UC0:  25 packets; 4900 bytes; OK
+Port: 103 (cd25)
+  UC1:  26 packets; 5200 bytes; OK
+Port: 104 (cd26)
+  UC2:  27 packets; 5508 bytes; OK
+Port: 105 (cd27)
+  UC3:  28 packets; 5824 bytes; OK
+Port: 119 (cd28)
+  UC4:  29 packets; 6148 bytes; OK
+Port: 120 (cd29)
+  UC5:  30 packets; 6480 bytes; OK
+Port: 121 (cd30)
+  UC6:  31 packets; 6820 bytes; OK
+Port: 122 (cd31)
+  UC7:  32 packets; 7168 bytes; OK
+Port: 136 (cd32)
+  UC0:  33 packets; 7524 bytes; OK
+Port: 137 (cd33)
+  UC1:  34 packets; 7888 bytes; OK
+Port: 138 (cd34)
+  UC2:  35 packets; 8260 bytes; OK
+Port: 139 (cd35)
+  UC3:  36 packets; 8640 bytes; OK
+Port: 153 (cd36)
+  UC4:  37 packets; 9028 bytes; OK
+Port: 154 (cd37)
+  UC5:  38 packets; 9424 bytes; OK
+Port: 155 (cd38)
+  UC6:  39 packets; 9828 bytes; OK
+Port: 156 (cd39)
+  UC7:  40 packets; 10240 bytes; OK
+Port: 170 (cd40)
+  UC0:  41 packets; 10660 bytes; OK
+Port: 171 (cd41)
+  UC1:  42 packets; 11088 bytes; OK
+Port: 172 (cd42)
+  UC2:  43 packets; 11524 bytes; OK
+Port: 173 (cd43)
+  UC3:  44 packets; 11968 bytes; OK
+Port: 187 (cd44)
+  UC4:  45 packets; 12420 bytes; OK
+Port: 188 (cd45)
+  UC5:  46 packets; 12880 bytes; OK
+Port: 189 (cd46)
+  UC6:  47 packets; 13348 bytes; OK
+Port: 190 (cd47)
+  UC7:  48 packets; 13824 bytes; OK
+Port: 204 (cd48)
+  UC0:  49 packets; 14308 bytes; OK
+Port: 205 (cd49)
+  UC1:  50 packets; 14800 bytes; OK
+Port: 206 (cd50)
+  UC2:  51 packets; 15300 bytes; OK
+Port: 207 (cd51)
+  UC3:  52 packets; 15808 bytes; OK
+Port: 221 (cd52)
+  UC4:  53 packets; 16324 bytes; OK
+Port: 222 (cd53)
+  UC5:  54 packets; 16848 bytes; OK
+Port: 223 (cd54)
+  UC6:  55 packets; 17380 bytes; OK
+Port: 224 (cd55)
+  UC7:  56 packets; 17920 bytes; OK
+Port: 238 (cd56)
+  UC0:  57 packets; 18468 bytes; OK
+Port: 239 (cd57)
+  UC1:  58 packets; 19024 bytes; OK
+Port: 240 (cd58)
+  UC2:  59 packets; 19588 bytes; OK
+Port: 241 (cd59)
+  UC3:  60 packets; 20160 bytes; OK
+Port: 255 (cd60)
+  UC4:  61 packets; 20740 bytes; OK
+Port: 256 (cd61)
+  UC5:  62 packets; 21328 bytes; OK
+Port: 257 (cd62)
+  UC6:  63 packets; 21924 bytes; OK
+Port: 258 (cd63)
+  UC7:  64 packets; 22528 bytes; OK
+Per Queue Test PASSED
+BCM.0> quit
+% 
+

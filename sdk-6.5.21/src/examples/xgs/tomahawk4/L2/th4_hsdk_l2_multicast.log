@@ -1,0 +1,49 @@
+Variant drivers:
+BCM56990_A0_BAE, BCM56990_B0_BAE
+Ingress port : 122
+Egress port1: 153
+Egress port2: 19
+Egress port3: 241
+ingress_port_multi_setup port: 122 setup
+egress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 153 setup
+egress_port_multi_setup port: 241 setup
+[New Thread 0x7ffff7f9e700 (LWP 137515)]
+Completed test setup successfully.
+Verify MC pkt from port 122 forwarding to port 153 and port 19
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x13
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {010000bbbbbb} {000000000011} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:00:bb:bb:bb> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAO)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x99
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {010000bbbbbb} {000000000011} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<01:00:00:bb:bb:bb> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAO)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-------------------------------------
+    REULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PA]
+-------------------------------------
+ingress_port_multi_cleanup port: 122 cleanup
+egress_port_multi_cleanup port: 19 cleanup
+egress_port_multi_cleanup port: 153 cleanup
+egress_port_multi_cleanup port: 241 cleanup
+[Thread 0x7ffff7f9e700 (LWP 137515) exited]
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

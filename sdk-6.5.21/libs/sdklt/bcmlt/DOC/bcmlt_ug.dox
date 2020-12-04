@@ -1,0 +1,197 @@
+/*! \page lt_user_guide BCMLT User Guide
+
+\tableofcontents
+
+\section lt_intro Introduction
+
+The SDK BCMLT library contains the API to access the device Logical
+Tables (LTs), which are used to configure the underlying device.
+
+Each LT is associated with a unique name.
+
+A LT is composed of one or more columns and rows. The BCMLT API is
+used to manage the various LTs by manipulating the field values of its
+rows.
+
+At a high level, the API interacts with five classes of objects:
+
+1. Fields - these are the logical table columns. There are two types
+   of fields: data and key. A key field (if it exists) must be used
+   for every operation. A field object has several attributes such as
+   its value and name.
+
+2. Entries - these are the logical table rows. An entry is a
+   collection of fields that form a row in a logical table. An entry
+   object has few attributes such as its fields, its state (idle,
+   commited etc..) and its associated LT.
+
+3. Transactions - these are a collection of entries that can be
+   bundled together for a single operation. A transaction might
+   contain entries from multiple logical tables.
+
+4. Tables - these are the logical tables. A table object has
+   attributes such as its name, its type and its fields
+
+5. Device - these are to attach or detach from a device.
+
+In addition to the object manipulation the API also provides some
+debug tools, most notably the capture capability where a series of API
+operations might be captured into a file. At a later time the file can
+be displayed for its content or can be replay to set the same state
+that was captured.
+
+A simpler mode of LT operation involves the following steps:
+
+1. Allocate an entry.
+2. Add the fields to the entry.
+3. Commit the entry.
+
+The short example below illustrates this sequence (error checking
+skipped for clarity):
+
+\code {.c}
+void create_vlan(int unit, uint16_t vlan, uint16_t stg)
+{
+    bcmlt_entry_handle_t e_hdl;
+
+    bcmlt_entry_allocate(unit, "VLAN", &e_hdl);
+    bcmlt_entry_field_add(e_hdl, "VLAN_ID", (uint64_t)vlan);
+    bcmlt_entry_field_add(e_hdl, "VLAN_STG_ID", (uint64_t)stg);
+    bcmlt_entry_field_symbol_add(e_hdl, "FORWARDING_BEHAVIOR", "BRIDGE");
+    bcmlt_entry_commit(e_hdl, BCMLT_OPCODE_INSERT, BCMLT_PRIORITY_NORMAL);
+    bcmlt_entry_free(e_hdl);
+}
+\endcode
+
+Nothing will be changed in the state of the system until the commit
+operation is performed. The operations prior to the commit are merely
+involved in creating the entry container and filling it with
+fields. Note that in the above example there are fields with scaler
+values (VLAN_ID and VLAN_STG_ID) as well as field that have symbolic
+value (FORWARDING_BEHAVIOR). These type of fields are equivalent to
+enum values in C.
+
+The commit operation pushes the content of the entry container onto
+the LT in the context of the commit operation code (insert, delete,
+update or lookup).  Once the commit function returns successfully, the
+logical table has been updated or searched.  The last operation is
+freeing the entry container.
+
+There are two types of LTs, interactive and modeled.  Modeled LTs are
+LTs that can be modeled by software where interactive LTs are tables
+that require the s/w to consult the device first.
+
+An example of interactive tables are counters or L2 MAC learning where
+the values can not be modeled. HASH and TCAM tables can be modeled and
+therefore will be part of the modeled LT.
+
+Under the hood a committed entry for modeled table will go into two
+phases:
+
+1. Stage - where the operation will only impact the model.
+
+2. Commit - where a successfully staged entry can be pushed into h/w.
+
+\subsection lt_sync Synchronous and asynchronous commit
+
+The API allows the commit operation to be performed synchronously or
+asynchronously. Synchronous operations block until the operation has
+completed. Asynchronous operations return immediately and will invoke
+an application supplied callback function as the operation progresses.
+
+Asynchronous operations can perform better since they allow the
+application to submit multiple requests without waiting for their
+completion. With that the application can achieve a higher degree of
+parallel processing where one thread processes the transaction and
+queues the generated hardware instructions, while the other thread
+(WAL receive thread) reads the hardware instructions from its queue
+and uses them to program the h/w.
+
+\subsection lt_trans Transactions
+
+Transactions are a collection of entry operations. There are two types of
+transactions: batch and atomic.
+
+A batch transaction is simply a bundle of entries that executes
+sequentially.  A failure of one entry has no impact on the activity of
+other entries.
+
+An atomic transaction is an all or nothing type of transaction. It
+means that all of the entry operations are successful or none of them
+are applied. A failed atomic transaction cleans up and leaves the
+system state exactly as it was prior to the transaction operation.
+
+\par Note 1
+Atomic transaction will be committed into the device only after
+all the entries had been successfully staged into the modeled
+path. Therefore the device will not be impacted if an atomic
+transaction is failed. In such a case the s/w will return its state to
+the state prior to the atomic transaction staging.
+
+\par Note 2
+Batch transactions can produce the highest performance since
+internally all the transactions are staged and committed while the
+read thread writes the instructions into the device. This method
+provide complete parallel operation staging an entry into its model
+and writing the staged information into the h/w.
+
+Similar to entries, transactions can be committed synchronously or
+asynchronously.
+
+\subsection lt_tables Tables
+
+For tables, the API provides a few distinct types of operations:
+
+1. Information - that is the ability to query the structure of the
+   table, its fields, and any restrictions associated with each field.
+   The information also contains field attributes as well as the
+   physical tables that are mapped by the LT.
+
+2. Event - the application may request to be notified when a
+   particular table changes.
+
+3. Traverse - the application may traverse the entire content of a
+   table.
+
+\section lt_api BCMLT Logical Table API
+
+Defines a generic interface to access Broadcom Logical Tables and Physical
+Tables for Switch on Chip Devices.
+
+\subsection lt_api_fields Fields related functions
+
+The functions starting with \c bcmlt_entry_field provide control at
+the field level.
+
+\subsection lt_api_entry Entries related functions
+
+The functions starting with \c bcmlt_entry_ provide control at the
+entry level.  Note that field related functions also have the same
+prefix as a field is always part of an entry.
+
+\subsection lt_api_trans Transaction related functions
+
+The functions starting with \c bcmlt_transaction provide control at
+the transaction level.
+
+\subsection lt_api_table Tables related functions
+
+The functions starting with \c bcmlt_table provide control at the
+table level.
+
+\subsection lt_api_dev Device related functions
+
+The functions starting with \c bcmlt_device_ provide control at the
+device level.
+
+\subsection lt_api_capture Capture
+
+The functions starting with \c bcmlt_capture enable the capturing and
+replay of captured configuration.
+
+\section lt_ref Reference
+
+For a complete description of the BCMLT API, please refer to \ref
+bcmlt.h.
+
+*/

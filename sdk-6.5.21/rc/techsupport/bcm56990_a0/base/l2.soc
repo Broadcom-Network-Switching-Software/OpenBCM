@@ -1,0 +1,38 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport L2 RC (run commands) file
+#
+#       These are default commands that are for TechSupport L2.
+#
+
+# Show S/W state in L2.
+dump sw l2
+
+# L2 commands.
+l2 show
+l2 age
+l2 learn
+l2 station show
+
+# Show L2 related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show L2 address related LTs.
+local lt L2_HOST_LOOKUP0_DEFAULT_TABLE;                            $traverse_lt;
+local lt L2_HOST_NARROW_TABLE;                                     $traverse_lt;
+local lt L2_HOST_TABLE;                                            $traverse_lt;
+
+# Show L2 learn cache related LTs.
+local lt LEARN_CACHE_CONTROL;                                      $traverse_lt;
+local lt LEARN_CACHE_DATA;                                         $traverse_lt;
+local lt LEARN_CACHE_PROFILE;                                      $traverse_lt;
+
+# Show L2 my station related LTs.
+local lt MY_STATION_DEFAULT_TABLE;                                 $traverse_lt;
+local lt MY_STATION_TABLE;                                         $traverse_lt;
+
+# Show protocol control related LTs.
+local lt PROTOCOL_PKT_FORWARD_TABLE;                               $traverse_lt;

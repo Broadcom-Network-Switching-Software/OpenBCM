@@ -1,0 +1,216 @@
+echo "testsuite: started: sanity"
+# $Id: bcm88750sanity.soc,v 1.7 2013/05/20 10:44:55 moshikor Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Fe1600 (BCM88750) Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+#!!!!!!!!!!!!!
+#!!!!!!!!!!!!!   For each TR added in this file add a DVApi test in regress/bcm/tests/sand/cints_tests/cintsTrDvapis.tcl
+#!!!!!!!!!!!!!
+
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+local done 'echo "   Done"'
+
+# Avoid link messages while testing
+linkscan off 
+counter off
+deinit rx_los
+deinit interrupt
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+#ts -* 
+
+#Clear test statistics
+tc *
+
+#Display some useful information
+date
+
+
+
+#Start Test
+
+echo "Running tr 2 - PCI Compliance"
+tr 2
+$done
+
+echo "Running tr 9 - Broadcast Blocks"
+tr 9
+$done
+
+echo "Running tr 3 - Register read/write"
+tr 3
+$done
+
+echo "Running tr 5 - BIST Test"
+tr 5
+$done
+
+echo "Running tr 6 - Memories Test"
+tr 6
+$done
+
+echo "Running tr 7- Memories WR First Last Test"
+tr 7
+$done
+
+echo "Running tr 50 - Memory Fill/Verify"
+
+echo "RTP_MCLBTP"
+tr 50 m=RTP_MCLBTP
+
+echo "RTP_MCLBTS"
+tr 50 m=RTP_MCLBTS
+
+echo "RTP_MCT"
+tr 50 m=RTP_MCT
+
+echo "RTP_MULTI_TB"
+tr 50 m=RTP_MULTI_TB
+
+echo "RTP_RCGLBT"
+tr 50 m=RTP_RCGLBT
+
+echo "RTP_SCTINC"
+tr 50 m=RTP_SCTINC
+
+echo "RTP_SLSCT"
+tr 50 m=RTP_SLSCT
+
+echo "RTP_TOTSF"
+tr 50 m=RTP_TOTSF
+
+$done
+
+echo "Running tr 51 - Memory Random Addr/Data"
+
+echo "RTP_MCLBTP"
+tr 51 m=RTP_MCLBTP
+
+echo "RTP_MCLBTS"
+tr 51 m=RTP_MCLBTS
+
+echo "RTP_MCT"
+tr 51 m=RTP_MCT
+
+echo "RTP_MULTI_TB"
+tr 51 m=RTP_MULTI_TB
+
+echo "RTP_RCGLBT"
+tr 51 m=RTP_RCGLBT
+
+echo "RTP_SCTINC"
+tr 51 m=RTP_SCTINC
+
+echo "RTP_SLSCT"
+tr 51 m=RTP_SLSCT
+
+echo "RTP_TOTSF"
+tr 51 m=RTP_TOTSF
+
+$done
+
+echo "Running tr 52 - Rand Mem Addr, write all"
+
+echo "RTP_MCLBTP"
+tr 52 m=RTP_MCLBTP
+
+echo "RTP_MCLBTS"
+tr 52 m=RTP_MCLBTS
+
+echo "RTP_MCT"
+tr 52 m=RTP_MCT
+
+echo "RTP_MULTI_TB"
+tr 52 m=RTP_MULTI_TB
+
+echo "RTP_RCGLBT"
+tr 52 m=RTP_RCGLBT
+
+echo "RTP_SCTINC"
+tr 52 m=RTP_SCTINC
+
+echo "RTP_SLSCT"
+tr 52 m=RTP_SLSCT
+
+echo "RTP_TOTSF"
+tr 52 m=RTP_TOTSF
+
+$done
+
+
+echo "Running tr 71 - Table DMA"
+
+echo "RTP_MCLBTP"
+tr 71 m=RTP_MCLBTP
+
+echo "RTP_MCLBTS"
+tr 71 m=RTP_MCLBTS
+
+echo "RTP_MCT"
+tr 71 m=RTP_MCT
+
+echo "RTP_MULTI_TB"
+tr 71 m=RTP_MULTI_TB
+
+echo "RTP_RCGLBT"
+tr 71 m=RTP_RCGLBT
+
+echo "RTP_SCTINC"
+tr 71 m=RTP_SCTINC
+
+echo "RTP_SLSCT"
+tr 71 m=RTP_SLSCT
+
+echo "RTP_TOTSF"
+tr 71 m=RTP_TOTSF
+
+$done
+
+echo "Running tr 60 - Linkscan MDIO"
+tr 60
+$done
+
+echo "Running tr 141 - DEINT INIT (SOC BCM)"
+counter on
+init interrupt
+init rx_los
+tr 141
+deinit rx_los
+deinit interrupt
+counter off
+$done
+
+
+echo "Running tr 141 - WARMBOOT test"
+counter on
+init interrupt
+init rx_los
+tr 141 Warmboot=1
+deinit rx_los
+deinit interrupt
+counter off
+$done
+
+
+echo "Running tr 1 - Register reset defaults"
+tr 1
+$done
+
+date
+tl
+local returnCode $?
+echo "testsuite: finished: sanity: $returnCode"
+

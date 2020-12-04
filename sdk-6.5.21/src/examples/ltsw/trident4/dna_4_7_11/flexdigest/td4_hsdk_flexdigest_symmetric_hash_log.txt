@@ -1,0 +1,129 @@
+BCM.0> cd /projects/ntsw-sw7/home/bkraju/sjrepos/sdk_sj/master-Hsdk/src/examples/ltsw/trident4/flexdigest
+BCM.0> cint td4_hsdk_flexdigest_symmetric_hash.c
+config show; attach; cancun stat; version
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Unknown command: cancun
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191105 (Tue Nov  5 08:35:27 2019)
+From sdkrel@lc-sj1-4709:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_13, BCM56880_A0_DNA_4_5_0
+~~ #1) test_setup(): ** start **
+~~ #1) test_setup(): ** end **
+~~ #2) config_flexdigest_lag(): ** start **
+~~ #2) config_flexdigest_lag(): ** end **
+~~ #3) verify(): ** start **
+Verify pkts from port 143 forwarding to tid 0; Increment SIP & DIP
+tx 1 pbm=143 data=0x000000BBBBBB0000010000008100000B08004500002E0000000040FF3D960A0A0A0A14141414000102030405060708090A0B0C0D0E0F10111213141516171819B71F5B42
+Packet from data=<>, length=68
+tx 1 pbm=143 data=0x000000BBBBBB0000010000008100000B08004500002E0000000040FF3D940A0A0A0B14141415000102030405060708090A0B0C0D0E0F10111213141516171819F6C57D66
+Packet from data=<>, length=68
+Executing 'l2 show'
+Sleeping for 2 seconds
+mac=00:00:00:bb:bb:bb vlan=11 GPORT=0x0 Trunk=0 Static Hit
+mac=00:00:01:00:00:00 vlan=11 GPORT=0x0 modid=0 port=0/cpu0 Hit CPU
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                    72                 +72
+XLMIB_TBYT.cd28                       :                    72                 +72
+XLMIB_RBYT.cd28                       :                    72                 +72
+XLMIB_TPOK.cd28                       :                     1                  +1
+XLMIB_RPOK.cd28                       :                     1                  +1
+XLMIB_TVLN.cd28                       :                     1                  +1
+XLMIB_RVLN.cd28                       :                     1                  +1
+XLMIB_TUCA.cd28                       :                     1                  +1
+XLMIB_RUCA.cd28                       :                     1                  +1
+XLMIB_TPKT.cd28                       :                     1                  +1
+XLMIB_RPKT.cd28                       :                     1                  +1
+XLMIB_T127.cd28                       :                     1                  +1
+XLMIB_R127.cd28                       :                     1                  +1
+XLMIB_RPRM.cd28                       :                     1                  +1
+UC_PERQ_PKT(0).cd28                   :                     1                  +1
+UC_PERQ_BYTE(0).cd28                  :                    72                 +72
+XLMIB_TBYT.cd31                       :                   144                +144
+XLMIB_RBYT.cd31                       :                   144                +144
+XLMIB_TPOK.cd31                       :                     2                  +2
+XLMIB_RPOK.cd31                       :                     2                  +2
+XLMIB_TVLN.cd31                       :                     2                  +2
+XLMIB_RVLN.cd31                       :                     2                  +2
+XLMIB_TUCA.cd31                       :                     2                  +2
+XLMIB_RUCA.cd31                       :                     2                  +2
+XLMIB_TPKT.cd31                       :                     2                  +2
+XLMIB_RPKT.cd31                       :                     2                  +2
+XLMIB_T127.cd31                       :                     2                  +2
+XLMIB_R127.cd31                       :                     2                  +2
+XLMIB_RPRM.cd31                       :                     2                  +2
+Sleeping for 2 seconds
+Verify pkts from port 143 forwarding to tid 0; Just reverse the SIP and DIP to verify the symmetric hash scenario
+tx 1 pbm=143 data=0x000000BBBBBB0000010000008100000B08004500002E0000000040FF3D96141414140A0A0A0A000102030405060708090A0B0C0D0E0F101112131415161718198F9CDF03
+Packet from data=<>, length=68
+tx 1 pbm=143 data=0x000000BBBBBB0000010000008100000B08004500002E0000000040FF3D94141414150A0A0A0B000102030405060708090A0B0C0D0E0F10111213141516171819CE46F927
+Packet from data=<>, length=68
+Executing 'show c'
+Sleeping for 2 seconds
+XLMIB_TBYT.cd1                        :                    72                 +72
+XLMIB_RBYT.cd1                        :                    72                 +72
+XLMIB_TPOK.cd1                        :                     1                  +1
+XLMIB_RPOK.cd1                        :                     1                  +1
+XLMIB_TVLN.cd1                        :                     1                  +1
+XLMIB_RVLN.cd1                        :                     1                  +1
+XLMIB_TUCA.cd1                        :                     1                  +1
+XLMIB_RUCA.cd1                        :                     1                  +1
+XLMIB_TPKT.cd1                        :                     1                  +1
+XLMIB_RPKT.cd1                        :                     1                  +1
+XLMIB_T127.cd1                        :                     1                  +1
+XLMIB_R127.cd1                        :                     1                  +1
+XLMIB_RPRM.cd1                        :                     1                  +1
+UC_PERQ_PKT(0).cd1                    :                     1                  +1
+UC_PERQ_BYTE(0).cd1                   :                    72                 +72
+XLMIB_TBYT.cd28                       :                    72                 +72
+XLMIB_RBYT.cd28                       :                    72                 +72
+XLMIB_TPOK.cd28                       :                     1                  +1
+XLMIB_RPOK.cd28                       :                     1                  +1
+XLMIB_TVLN.cd28                       :                     1                  +1
+XLMIB_RVLN.cd28                       :                     1                  +1
+XLMIB_TUCA.cd28                       :                     1                  +1
+XLMIB_RUCA.cd28                       :                     1                  +1
+XLMIB_TPKT.cd28                       :                     1                  +1
+XLMIB_RPKT.cd28                       :                     1                  +1
+XLMIB_T127.cd28                       :                     1                  +1
+XLMIB_R127.cd28                       :                     1                  +1
+XLMIB_RPRM.cd28                       :                     1                  +1
+UC_PERQ_PKT(0).cd28                   :                     1                  +1
+UC_PERQ_BYTE(0).cd28                  :                    72                 +72
+XLMIB_TBYT.cd31                       :                   144                +144
+XLMIB_RBYT.cd31                       :                   144                +144
+XLMIB_TPOK.cd31                       :                     2                  +2
+XLMIB_RPOK.cd31                       :                     2                  +2
+XLMIB_TVLN.cd31                       :                     2                  +2
+XLMIB_RVLN.cd31                       :                     2                  +2
+XLMIB_TUCA.cd31                       :                     2                  +2
+XLMIB_RUCA.cd31                       :                     2                  +2
+XLMIB_TPKT.cd31                       :                     2                  +2
+XLMIB_RPKT.cd31                       :                     2                  +2
+XLMIB_T127.cd31                       :                     2                  +2
+XLMIB_R127.cd31                       :                     2                  +2
+XLMIB_RPRM.cd31                       :                     2                  +2
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

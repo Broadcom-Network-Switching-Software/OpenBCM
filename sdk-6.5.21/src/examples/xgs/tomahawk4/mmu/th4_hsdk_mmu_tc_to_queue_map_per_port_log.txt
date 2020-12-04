@@ -1,0 +1,226 @@
+BCM.0> cint th4_hsdk_mmu_tc_to_queue_map_per_port.c
+---
+bcm_device:
+    0:
+        global:
+            l3_alpm_template: 2
+            l3_alpm2_bnk_threshold: 100
+            failover_fixed_nh_offset_enable: 1
+...
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port : 1
+Egress port: 2
+==> Build queue GPORT list:
+cosq_gport_traverse_callback: gport for local_port: 1
+cosq_gport_traverse_callback: gport for local_port: 2
+cosq_gport_traverse_callback: gport for local_port: 3
+cosq_gport_traverse_callback: gport for local_port: 4
+cosq_gport_traverse_callback: gport for local_port: 17
+cosq_gport_traverse_callback: gport for local_port: 18
+cosq_gport_traverse_callback: gport for local_port: 19
+cosq_gport_traverse_callback: gport for local_port: 20
+cosq_gport_traverse_callback: gport for local_port: 34
+cosq_gport_traverse_callback: gport for local_port: 35
+cosq_gport_traverse_callback: gport for local_port: 36
+cosq_gport_traverse_callback: gport for local_port: 37
+cosq_gport_traverse_callback: gport for local_port: 51
+cosq_gport_traverse_callback: gport for local_port: 52
+cosq_gport_traverse_callback: gport for local_port: 53
+cosq_gport_traverse_callback: gport for local_port: 54
+cosq_gport_traverse_callback: gport for local_port: 68
+cosq_gport_traverse_callback: gport for local_port: 69
+cosq_gport_traverse_callback: gport for local_port: 70
+cosq_gport_traverse_callback: gport for local_port: 71
+cosq_gport_traverse_callback: gport for local_port: 85
+cosq_gport_traverse_callback: gport for local_port: 86
+cosq_gport_traverse_callback: gport for local_port: 87
+cosq_gport_traverse_callback: gport for local_port: 88
+cosq_gport_traverse_callback: gport for local_port: 102
+cosq_gport_traverse_callback: gport for local_port: 103
+cosq_gport_traverse_callback: gport for local_port: 104
+cosq_gport_traverse_callback: gport for local_port: 105
+cosq_gport_traverse_callback: gport for local_port: 119
+cosq_gport_traverse_callback: gport for local_port: 120
+cosq_gport_traverse_callback: gport for local_port: 121
+cosq_gport_traverse_callback: gport for local_port: 122
+cosq_gport_traverse_callback: gport for local_port: 136
+cosq_gport_traverse_callback: gport for local_port: 137
+cosq_gport_traverse_callback: gport for local_port: 138
+cosq_gport_traverse_callback: gport for local_port: 139
+cosq_gport_traverse_callback: gport for local_port: 152
+cosq_gport_traverse_callback: gport for local_port: 153
+cosq_gport_traverse_callback: gport for local_port: 154
+cosq_gport_traverse_callback: gport for local_port: 155
+cosq_gport_traverse_callback: gport for local_port: 156
+cosq_gport_traverse_callback: gport for local_port: 170
+cosq_gport_traverse_callback: gport for local_port: 171
+cosq_gport_traverse_callback: gport for local_port: 172
+cosq_gport_traverse_callback: gport for local_port: 173
+cosq_gport_traverse_callback: gport for local_port: 187
+cosq_gport_traverse_callback: gport for local_port: 188
+cosq_gport_traverse_callback: gport for local_port: 189
+cosq_gport_traverse_callback: gport for local_port: 190
+cosq_gport_traverse_callback: gport for local_port: 204
+cosq_gport_traverse_callback: gport for local_port: 205
+cosq_gport_traverse_callback: gport for local_port: 206
+cosq_gport_traverse_callback: gport for local_port: 207
+cosq_gport_traverse_callback: gport for local_port: 221
+cosq_gport_traverse_callback: gport for local_port: 222
+cosq_gport_traverse_callback: gport for local_port: 223
+cosq_gport_traverse_callback: gport for local_port: 224
+cosq_gport_traverse_callback: gport for local_port: 238
+cosq_gport_traverse_callback: gport for local_port: 239
+cosq_gport_traverse_callback: gport for local_port: 240
+cosq_gport_traverse_callback: gport for local_port: 241
+cosq_gport_traverse_callback: gport for local_port: 255
+cosq_gport_traverse_callback: gport for local_port: 256
+cosq_gport_traverse_callback: gport for local_port: 257
+cosq_gport_traverse_callback: gport for local_port: 258
+cosq_gport_traverse_callback: gport for local_port: 0
+==> Set up TC to queue mapping ...
+--> save_tc_to_q_mapping:
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 0, 7) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 1, 6) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 2, 5) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 3, 4) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 4, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 5, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 6, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 7, 0) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 8, 4) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 9, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 10, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 11, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 12, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 13, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 14, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (1, 15, 4) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 0, 3) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 1, 2) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 2, 1) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 3, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 4, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 5, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 6, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 7, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 8, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 9, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 10, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 11, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 12, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 13, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 14, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (1, 15, 0) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 0, 7) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 1, 6) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 2, 5) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 3, 4) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 4, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 5, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 6, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 7, 0) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 8, 4) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 9, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 10, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 11, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 12, 1) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 13, 2) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 14, 3) - Ok
+Unicast: Map TC to Egress queue sucessfully (P, TC, Q) = (2, 15, 4) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 0, 3) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 1, 2) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 2, 1) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 3, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 4, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 5, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 6, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 7, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 8, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 9, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 10, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 11, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 12, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 13, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 14, 0) - Ok
+Multicast: map TC to Egress queue sucessfully (P, TC, Q) = (2, 15, 0) - Ok
+==> tc_to_q_mapping_get:
+Unicast: TC 0 of port 1 was mapped to Egress queue 7
+Unicast: TC 1 of port 1 was mapped to Egress queue 6
+Unicast: TC 2 of port 1 was mapped to Egress queue 5
+Unicast: TC 3 of port 1 was mapped to Egress queue 4
+Unicast: TC 4 of port 1 was mapped to Egress queue 3
+Unicast: TC 5 of port 1 was mapped to Egress queue 2
+Unicast: TC 6 of port 1 was mapped to Egress queue 1
+Unicast: TC 7 of port 1 was mapped to Egress queue 0
+Unicast: TC 8 of port 1 was mapped to Egress queue 4
+Unicast: TC 9 of port 1 was mapped to Egress queue 3
+Unicast: TC 10 of port 1 was mapped to Egress queue 2
+Unicast: TC 11 of port 1 was mapped to Egress queue 1
+Unicast: TC 12 of port 1 was mapped to Egress queue 1
+Unicast: TC 13 of port 1 was mapped to Egress queue 2
+Unicast: TC 14 of port 1 was mapped to Egress queue 3
+Unicast: TC 15 of port 1 was mapped to Egress queue 4
+Multicast: TC 0 of port 1 was mapped to Egress queue 3
+Multicast: TC 1 of port 1 was mapped to Egress queue 2
+Multicast: TC 2 of port 1 was mapped to Egress queue 1
+Multicast: TC 3 of port 1 was mapped to Egress queue 0
+Multicast: TC 4 of port 1 was mapped to Egress queue 0
+Multicast: TC 5 of port 1 was mapped to Egress queue 0
+Multicast: TC 6 of port 1 was mapped to Egress queue 0
+Multicast: TC 7 of port 1 was mapped to Egress queue 0
+Multicast: TC 8 of port 1 was mapped to Egress queue 0
+Multicast: TC 9 of port 1 was mapped to Egress queue 0
+Multicast: TC 10 of port 1 was mapped to Egress queue 0
+Multicast: TC 11 of port 1 was mapped to Egress queue 0
+Multicast: TC 12 of port 1 was mapped to Egress queue 0
+Multicast: TC 13 of port 1 was mapped to Egress queue 0
+Multicast: TC 14 of port 1 was mapped to Egress queue 0
+Multicast: TC 15 of port 1 was mapped to Egress queue 0
+Unicast: TC 0 of port 2 was mapped to Egress queue 7
+Unicast: TC 1 of port 2 was mapped to Egress queue 6
+Unicast: TC 2 of port 2 was mapped to Egress queue 5
+Unicast: TC 3 of port 2 was mapped to Egress queue 4
+Unicast: TC 4 of port 2 was mapped to Egress queue 3
+Unicast: TC 5 of port 2 was mapped to Egress queue 2
+Unicast: TC 6 of port 2 was mapped to Egress queue 1
+Unicast: TC 7 of port 2 was mapped to Egress queue 0
+Unicast: TC 8 of port 2 was mapped to Egress queue 4
+Unicast: TC 9 of port 2 was mapped to Egress queue 3
+Unicast: TC 10 of port 2 was mapped to Egress queue 2
+Unicast: TC 11 of port 2 was mapped to Egress queue 1
+Unicast: TC 12 of port 2 was mapped to Egress queue 1
+Unicast: TC 13 of port 2 was mapped to Egress queue 2
+Unicast: TC 14 of port 2 was mapped to Egress queue 3
+Unicast: TC 15 of port 2 was mapped to Egress queue 4
+Multicast: TC 0 of port 2 was mapped to Egress queue 3
+Multicast: TC 1 of port 2 was mapped to Egress queue 2
+Multicast: TC 2 of port 2 was mapped to Egress queue 1
+Multicast: TC 3 of port 2 was mapped to Egress queue 0
+Multicast: TC 4 of port 2 was mapped to Egress queue 0
+Multicast: TC 5 of port 2 was mapped to Egress queue 0
+Multicast: TC 6 of port 2 was mapped to Egress queue 0
+Multicast: TC 7 of port 2 was mapped to Egress queue 0
+Multicast: TC 8 of port 2 was mapped to Egress queue 0
+Multicast: TC 9 of port 2 was mapped to Egress queue 0
+Multicast: TC 10 of port 2 was mapped to Egress queue 0
+Multicast: TC 11 of port 2 was mapped to Egress queue 0
+Multicast: TC 12 of port 2 was mapped to Egress queue 0
+Multicast: TC 13 of port 2 was mapped to Egress queue 0
+Multicast: TC 14 of port 2 was mapped to Egress queue 0
+Multicast: TC 15 of port 2 was mapped to Egress queue 0
+==> Verify unicast pkt from port 1 forwarding to port 2
+Packet from data=<>, length=68
+FlexCtr Get : 1 packets / 72 bytes
+Per queue packet counter check successful.
+==>Cleaning up...
+--> restore_tc_to_q_mapping:
+bcm_error_t $$ = BCM_E_NONE (0)
+

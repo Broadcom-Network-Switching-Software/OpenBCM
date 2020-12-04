@@ -1,0 +1,285 @@
+BCM.0> cint td4x9_hsdk_fp_range_checker.c
+int ARGC = 1 (0x1)
+int opt_TestRangeMuliple = 0 (0x0)
+int opt_TestRangeInvert = 0 (0x0)
+int opt_IsForSimulator = 0 (0x0)
+int opt_UsePipeUnique = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+execute(): Start
+Doing L2 entry add
+Doing port loopbacks...
+Doing range1 create...
+Doing IFP group create...
+Doing IFP entry create...
+Doing qualify SrcPort...
+Doing qual RangeCheck...
+Doing IFP action add CopyToCpu...
+Doing field hint create...
+Doing field hint add 1...
+Doing flexctr create to group 0x00000001...
+OBJ0
+>>	 stat_action_id=0x10000007
+Doing flexctr stat attach to entry 0x00000001. StatID:0x10000007:0...
+Doing IFP entry INSTALL...
+B_CM.0> a
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200816 (Sun Aug 16 22:56:03 2020)
+From sr936857@xl-sj1-30:/projects/ntsw-sw-ae/home/sr936857/git-code/td4x9/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4
+
+
+Range1: [0x1001  -  0x1003]
+Range2: [0x1005  -  0x1007]
+##########  IPv4 UDP Packet with L4 source port=0x1001  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1001 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x80d424
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	PARSER_VHLEN_0_15_0=0x8a
+	EFFECTIVE_TTL_7_0=0x40
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=0x64
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=1
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+	L2_OIF_10_0=4
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L2_HDR_OTAG
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+	INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+	INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+	INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+
+------- ActionIds=1 Statids=1 -------
+Entry 1 :  Ctr:0x10000007-0x00000000: VAL0LO:1(1)-VAL1LO:0x0000006A
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1002  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100222220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1002 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[2]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x80d424
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	PARSER_VHLEN_0_15_0=0x8a
+	EFFECTIVE_TTL_7_0=0x40
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=0x64
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=1
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+	L2_OIF_10_0=4
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L2_HDR_OTAG
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+	INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+	INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+	INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+
+------- ActionIds=1 Statids=1 -------
+Entry 1 :  Ctr:0x10000007-0x00000000: VAL0LO:1(2)-VAL1LO:0x0000006A
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1003  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100322220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[3]: data[0020]: 1011 2020 2021 1003 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[3]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x80d424
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	PARSER_VHLEN_0_15_0=0x8a
+	EFFECTIVE_TTL_7_0=0x40
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=0x64
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=1
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+	L2_OIF_10_0=4
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L2_HDR_OTAG
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+	INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+	INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+	INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+
+
+------- ActionIds=1 Statids=1 -------
+Entry 1 :  Ctr:0x10000007-0x00000000: VAL0LO:1(3)-VAL1LO:0x0000006A
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1004  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100422220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1005  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100522220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1006  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100622220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1007  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100722220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1008  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100822220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+##########  IPv4 UDP Packet with L4 source port=0x1009  ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021100922220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- ActionIds=1 Statids=1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

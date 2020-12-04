@@ -1,0 +1,504 @@
+###########################################################################
+###########################################################################
+###########################################################################
+
+No redirect: packet egresses as per route entry
+		int opt_EnableMatchPbmpRedirect = 0 (0x0)
+		int opt_EnableNhopRedirect = 0 (0x0)     
+DMAC: 0xEE
+SMAC: 0xDD
+EGR port: egr_port1
+
+int opt_EnableMatchPbmpRedirect = 0 (0x0)
+int opt_EnableNhopRedirect = 0 (0x0)     
+int ing_port1 = 1 (0x1)                  
+int ing_port2 = 2 (0x2)                  
+int egr_port1 = 3 (0x3)                  
+int egr_port2 = 4 (0x4)                  
+int egr_nhop_redirect_port = 20 (0x14)   
+int egr_match_redirect_port = 21 (0x15)  
+bcm_pbmp_t pbm = { 3 4 20 21 }           
+Doing Mpls configure
+Doing sc egress mode
+Doing gport get     
+Doing l3 intf create
+Doing l3 egress create                   
+Doing l3 route add  
+Doing Add l2 tunnel switch add           
+Doing Add l2 tunnel add                  
+Doing redirect nexthop configure         
+Doing gport get     
+bcm_l3_intf_create l3_intf - 1           
+++++ Create L3 egress                    
+++++ Created L3 egress 100003            
+Doing Group create 100                   
+Doing bcm_field_entry_create!            
+Doing bcm_field_qualify_clear!           
+Doing InPort qualifier                   
+Doing Entry create 1
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff 
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000                     
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch                
+[bcmPW.0]Packet[1]:                                     
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15    
+[bcmPW.0]     
+[bcmPW.0]Packet[2]: data[0000]: {0000000000ee} {0000000000dd} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 003a 0000 0000 26ff 5787 1414
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1e1f 2021 2223 2425 8569 a726
+[bcmPW.0]Packet[2]: data[0050]: 0000 0000              
+[bcmPW.0]Packet[2]: length 84 (84). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.         
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 224. classification-tag 0.               
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:ee> src<00:00:00:00:00:dd> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<58> id<0> frg-off<0> ttl<38> > chk-sum<0x5787>
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+BCM.0> show c
+TDBGC3_64.cpu0              :                     2                  +2
+MC_PERQ_PKT(0).cpu0         :                     2                  +2
+MC_PERQ_BYTE(0).cpu0        :                   172                +172
+RIPC4_64.cd0                :                     1                  +1
+RTUN_64.cd0                 :                     1                  +1
+RUC_64.cd0                  :                     1                  +1
+CDMIB_R127.cd0              :                     1                  +1
+CDMIB_RPRM.cd0              :                     1                  +1
+CDMIB_T127.cd0              :                     1                  +1
+CDMIB_RPKT.cd0              :                     1                  +1
+CDMIB_RUCA.cd0              :                     1                  +1
+CDMIB_RPOK.cd0              :                     1                  +1
+CDMIB_RVLN.cd0              :                     1                  +1
+CDMIB_TVLN.cd0              :                     1                  +1
+CDMIB_TBYT.cd0              :                    88                 +88
+CDMIB_RBYT.cd0              :                    88                 +88
+CDMIB_RPROG1.cd0            :                     1                  +1
+CDMIB_TPOK.cd0              :                     1                  +1
+CDMIB_TPKT.cd0              :                     1                  +1
+CDMIB_TUCA.cd0              :                     1                  +1
+UC_PERQ_PKT(0).cd0          :                     1                  +1
+UC_PERQ_BYTE(0).cd0         :                    88                 +88
+RUC_64.cd2                  :                     1                  +1
+TDBGC3_64.cd2               :                     1                  +1
+TDBGC4_64.cd2               :                     1                  +1
+CDMIB_R127.cd2              :                     1                  +1
+CDMIB_RPRM.cd2              :                     1                  +1
+CDMIB_T127.cd2              :                     1                  +1
+CDMIB_RPKT.cd2              :                     1                  +1
+CDMIB_RUCA.cd2              :                     1                  +1
+CDMIB_RPOK.cd2              :                     1                  +1
+CDMIB_RVLN.cd2              :                     1                  +1
+CDMIB_TVLN.cd2              :                     1                  +1
+CDMIB_TBYT.cd2              :                    84                 +84
+CDMIB_RBYT.cd2              :                    84                 +84
+CDMIB_RPROG1.cd2            :                     1                  +1
+CDMIB_TPOK.cd2              :                     1                  +1
+CDMIB_TPKT.cd2              :                     1                  +1
+CDMIB_TUCA.cd2              :                     1                  +1
+UC_PERQ_PKT(0).cd2          :                     1                  +1
+UC_PERQ_BYTE(0).cd2         :                    84                 +84
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+
+
+###########################################################################
+###########################################################################
+###########################################################################
+
+With Only Nhop redirect: packet egresses out of redirected NHOP
+DMAC: 0xCD
+SMAC: 0xCE
+EGR port: egr_nhop_redirect_port
+
+BCM.0> ps
+            ena/        speed/ link auto    STP                  lrn  inter   max   cut          loop
+      port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?    FEC  back
+  cd0(  1)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA    KR8  9412    No  RS-544   MAC
+  cd1(  2)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC
+  cd2(  3)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port1
+  cd3(  4)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port2
+  cd4( 20)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_nhop_redirect_port
+  cd5( 21)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_match_redirect_port
+
+BCM.0> aa 
+int opt_EnableMatchPbmpRedirect = 0 (0x0)
+int opt_EnableNhopRedirect = 1 (0x1)
+int ing_port1 = 1 (0x1)             
+int ing_port2 = 2 (0x2)             
+int egr_port1 = 3 (0x3)             
+int egr_port2 = 4 (0x4)             
+int egr_nhop_redirect_port = 20 (0x14)
+int egr_match_redirect_port = 21 (0x15)
+bcm_pbmp_t pbm = { 3 4 20 21 }      
+Doing Mpls configure                
+Doing sc egress mode                
+Doing gport get                     
+Doing l3 intf create                
+Doing l3 egress create              
+Doing l3 route add                  
+Doing Add l2 tunnel switch add      
+Doing Add l2 tunnel add             
+Doing redirect nexthop configure    
+Doing gport get                     
+bcm_l3_intf_create l3_intf - 1      
+++++ Create L3 egress               
+++++ Created L3 egress 100003       
+Doing Group create 100              
+Doing bcm_field_entry_create!       
+Doing bcm_field_qualify_clear!      
+Doing InPort qualifier              
+Doing RedirectEgrNextHop action add 100003
+Doing Entry create 1                
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff 
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000                     
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 20. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch                                    
+[bcmPW.0]Packet[1]:                   
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15    
+[bcmPW.0]                           
+[bcmPW.0]Packet[2]: data[0000]: {0000000000cd} {0000000000ce} 8100 0064   
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 003a 0000 0000 26ff 5787 1414   
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 0001 0203 0405 0607 0809   
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819   
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1e1f 2021 2223 2425 8569 a726   
+[bcmPW.0]Packet[2]: data[0050]: 0000 0000                                 
+[bcmPW.0]Packet[2]: length 84 (84). rx-port 20. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.        
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 20. src-mod 0. opcode 0.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:cd> src<00:00:00:00:00:ce> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<58> id<0> frg-off<0> ttl<38> > chk-sum<0x5787>
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+BCM.0> show c
+TDBGC3_64.cpu0              :                     2                  +2
+MC_PERQ_PKT(0).cpu0         :                     2                  +2
+MC_PERQ_BYTE(0).cpu0        :                   172                +172
+RIPC4_64.cd0                :                     1                  +1
+RTUN_64.cd0                 :                     1                  +1
+RUC_64.cd0                  :                     1                  +1
+CDMIB_R127.cd0              :                     1                  +1
+CDMIB_RPRM.cd0              :                     1                  +1
+CDMIB_T127.cd0              :                     1                  +1
+CDMIB_RPKT.cd0              :                     1                  +1
+CDMIB_RUCA.cd0              :                     1                  +1
+CDMIB_RPOK.cd0              :                     1                  +1
+CDMIB_RVLN.cd0              :                     1                  +1
+CDMIB_TVLN.cd0              :                     1                  +1
+CDMIB_TBYT.cd0              :                    88                 +88
+CDMIB_RBYT.cd0              :                    88                 +88
+CDMIB_RPROG1.cd0            :                     1                  +1
+CDMIB_TPOK.cd0              :                     1                  +1
+CDMIB_TPKT.cd0              :                     1                  +1
+CDMIB_TUCA.cd0              :                     1                  +1
+UC_PERQ_PKT(0).cd0          :                     1                  +1
+UC_PERQ_BYTE(0).cd0         :                    88                 +88
+RUC_64.cd4                  :                     1                  +1
+TDBGC3_64.cd4               :                     1                  +1
+TDBGC4_64.cd4               :                     1                  +1
+CDMIB_R127.cd4              :                     1                  +1
+CDMIB_RPRM.cd4              :                     1                  +1
+CDMIB_T127.cd4              :                     1                  +1
+CDMIB_RPKT.cd4              :                     1                  +1
+CDMIB_RUCA.cd4              :                     1                  +1
+CDMIB_RPOK.cd4              :                     1                  +1
+CDMIB_RVLN.cd4              :                     1                  +1
+CDMIB_TVLN.cd4              :                     1                  +1
+CDMIB_TBYT.cd4              :                    84                 +84
+CDMIB_RBYT.cd4              :                    84                 +84
+CDMIB_RPROG1.cd4            :                     1                  +1
+CDMIB_TPOK.cd4              :                     1                  +1
+CDMIB_TPKT.cd4              :                     1                  +1
+CDMIB_TUCA.cd4              :                     1                  +1
+UC_PERQ_PKT(0).cd4          :                     1                  +1
+UC_PERQ_BYTE(0).cd4         :                    84                 +84
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+
+
+####################################################################################
+####################################################################################
+####################################################################################
+
+With BOTH Nhop redirect "AND" Match PBMP Redirect: packet egresses out of match redirected
+DMAC: 0xCD
+SMAC: 0xCE
+EGR port: egr_match_redirect_port
+
+BCM.0> ps
+            ena/        speed/ link auto    STP                  lrn  inter   max   cut          loop
+      port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?    FEC  back
+  cd0(  1)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA    KR8  9412    No  RS-544   MAC
+  cd1(  2)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC
+  cd2(  3)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port1
+  cd3(  4)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port2
+  cd4( 20)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_nhop_redirect_port
+  cd5( 21)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_match_redirect_port
+
+BCM.0> aa       
+int opt_EnableMatchPbmpRedirect = 1 (0x1)   
+int opt_EnableNhopRedirect = 1 (0x1)        
+int ing_port1 = 1 (0x1)                     
+int ing_port2 = 2 (0x2)                     
+int egr_port1 = 3 (0x3)                     
+int egr_port2 = 4 (0x4)                     
+int egr_nhop_redirect_port = 20 (0x14)      
+int egr_match_redirect_port = 21 (0x15)     
+bcm_pbmp_t pbm = { 3 4 20 21 }              
+Doing Mpls configure                        
+Doing sc egress mode                        
+Doing gport get   
+Doing l3 intf create                        
+Doing l3 egress create                      
+Doing l3 route add
+Doing Add l2 tunnel switch add              
+Doing Add l2 tunnel add                     
+Doing redirect nexthop configure            
+Doing gport get   
+bcm_l3_intf_create l3_intf - 1              
+++++ Create L3 egress                       
+++++ Created L3 egress 100003               
+Doing Group create 100                      
+Doing bcm_field_entry_create!               
+Doing bcm_field_qualify_clear!              
+Doing InPort qualifier                      
+Doing MatchPbmpRedirect action add          
+Doing RedirectEgrNextHop action add 100003  
+Doing Entry create 1                        
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff 
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000                     
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 21. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch                      
+[bcmPW.0]Packet[1]:                 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15              
+[bcmPW.0]         
+[bcmPW.0]Packet[2]: data[0000]: {0000000000cd} {0000000000ce} 8100 0064                         
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 003a 0000 0000 26ff 5787 1414                         
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 0001 0203 0405 0607 0809                         
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819                         
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1e1f 2021 2223 2425 8569 a726                         
+[bcmPW.0]Packet[2]: data[0050]: 0000 0000   
+[bcmPW.0]Packet[2]: length 84 (84). rx-port 21. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.                  
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 21. src-mod 0. opcode 0.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:cd> src<00:00:00:00:00:ce> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<58> id<0> frg-off<0> ttl<38> > chk-sum<0x5787>
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+BCM.0> show c
+TDBGC3_64.cpu0              :                     2                  +2
+MC_PERQ_PKT(0).cpu0         :                     2                  +2
+MC_PERQ_BYTE(0).cpu0        :                   172                +172
+RIPC4_64.cd0                :                     1                  +1
+RTUN_64.cd0                 :                     1                  +1
+RUC_64.cd0                  :                     1                  +1
+CDMIB_R127.cd0              :                     1                  +1
+CDMIB_RPRM.cd0              :                     1                  +1
+CDMIB_T127.cd0              :                     1                  +1
+CDMIB_RPKT.cd0              :                     1                  +1
+CDMIB_RUCA.cd0              :                     1                  +1
+CDMIB_RPOK.cd0              :                     1                  +1
+CDMIB_RVLN.cd0              :                     1                  +1
+CDMIB_TVLN.cd0              :                     1                  +1
+CDMIB_TBYT.cd0              :                    88                 +88
+CDMIB_RBYT.cd0              :                    88                 +88
+CDMIB_RPROG1.cd0            :                     1                  +1
+CDMIB_TPOK.cd0              :                     1                  +1
+CDMIB_TPKT.cd0              :                     1                  +1
+CDMIB_TUCA.cd0              :                     1                  +1
+UC_PERQ_PKT(0).cd0          :                     1                  +1
+UC_PERQ_BYTE(0).cd0         :                    88                 +88
+RUC_64.cd5                  :                     1                  +1
+TDBGC3_64.cd5               :                     1                  +1
+TDBGC4_64.cd5               :                     1                  +1
+CDMIB_R127.cd5              :                     1                  +1
+CDMIB_RPRM.cd5              :                     1                  +1
+CDMIB_T127.cd5              :                     1                  +1
+CDMIB_RPKT.cd5              :                     1                  +1
+CDMIB_RUCA.cd5              :                     1                  +1
+CDMIB_RPOK.cd5              :                     1                  +1
+CDMIB_RVLN.cd5              :                     1                  +1
+CDMIB_TVLN.cd5              :                     1                  +1
+CDMIB_TBYT.cd5              :                    84                 +84
+CDMIB_RBYT.cd5              :                    84                 +84
+CDMIB_RPROG1.cd5            :                     1                  +1
+CDMIB_TPOK.cd5              :                     1                  +1
+CDMIB_TPKT.cd5              :                     1                  +1
+CDMIB_TUCA.cd5              :                     1                  +1
+UC_PERQ_PKT(0).cd5          :                     1                  +1
+UC_PERQ_BYTE(0).cd5         :                    84                 +84
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+
+With ONLY Match PBMP Redirect: packet egresses out of egr_match_redirect_port
+DMAC: 0xEE
+SMAC: 0xDD
+EGR port: egr_match_redirect_port
+
+BCM.0> ps
+           ena/        speed/ link auto    STP                  lrn  inter   max   cut          loop
+     port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?    FEC  back
+ cd0(  1)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA    KR8  9412    No  RS-544   MAC
+ cd1(  2)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC
+ cd2(  3)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port1
+ cd3(  4)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_port2
+ cd4( 20)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_nhop_redirect_port
+ cd5( 21)  up     8  400G  FD   SW  No   Forward  TX RX    All   FA    KR8  9412    No  RS-544   MAC	egr_match_redirect_port
+
+BCM.0> aa                                
+int opt_EnableMatchPbmpRedirect = 1 (0x1)
+int opt_EnableNhopRedirect = 0 (0x0)     
+int ing_port1 = 1 (0x1)                  
+int ing_port2 = 2 (0x2)                  
+int egr_port1 = 3 (0x3)                  
+int egr_port2 = 4 (0x4)                  
+int egr_nhop_redirect_port = 20 (0x14)   
+int egr_match_redirect_port = 21 (0x15)  
+bcm_pbmp_t pbm = { 3 4 20 21 }           
+Doing Mpls configure                     
+Doing sc egress mode                     
+Doing gport get                          
+Doing l3 intf create                     
+Doing l3 egress create                   
+Doing l3 route add                       
+Doing Add l2 tunnel switch add           
+Doing Add l2 tunnel add                  
+Doing redirect nexthop configure         
+Doing gport get                          
+bcm_l3_intf_create l3_intf - 1           
+++++ Create L3 egress                    
+++++ Created L3 egress 100003            
+Doing Group create 100                   
+Doing bcm_field_entry_create!            
+Doing bcm_field_qualify_clear!           
+Doing InPort qualifier                   
+Doing MatchPbmpRedirect action add       
+Doing Entry create 1                     
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+sleep 3                       
+Sleeping for 3 seconds        
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff 
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000                     
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 21. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:                     
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15
+[bcmPW.0]     
+[bcmPW.0]Packet[2]: data[0000]: {0000000000ee} {0000000000dd} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 003a 0000 0000 26ff 5787 1414
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1e1f 2021 2223 2425 8569 a726
+[bcmPW.0]Packet[2]: data[0050]: 0000 0000
+[bcmPW.0]Packet[2]: length 84 (84). rx-port 21. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 21. src-mod 0. opcode 0.  matched 224. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:ee> src<00:00:00:00:00:dd> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<58> id<0> frg-off<0> ttl<38> > chk-sum<0x5787>
+fp stat get si=1 t=p
+The value is: 0x000000001
+BCM.0> show c
+TDBGC3_64.cpu0              :                     2                  +2
+PERQ_PKT(0).cpu0            :                     2                  +2
+PERQ_BYTE(0).cpu0           :                   172                +172
+RIPC4_64.cd0                :                     1                  +1
+RTUN_64.cd0                 :                     1                  +1
+RUC_64.cd0                  :                     1                  +1
+CDMIB_R127.cd0              :                     1                  +1
+CDMIB_RPRM.cd0              :                     1                  +1
+CDMIB_T127.cd0              :                     1                  +1
+CDMIB_RPKT.cd0              :                     1                  +1
+CDMIB_RUCA.cd0              :                     1                  +1
+CDMIB_RPOK.cd0              :                     1                  +1
+CDMIB_RVLN.cd0              :                     1                  +1
+CDMIB_TVLN.cd0              :                     1                  +1
+CDMIB_TBYT.cd0              :                    88                 +88
+CDMIB_RBYT.cd0              :                    88                 +88
+CDMIB_RPROG1.cd0            :                     1                  +1
+CDMIB_TPOK.cd0              :                     1                  +1
+CDMIB_TPKT.cd0              :                     1                  +1
+CDMIB_TUCA.cd0              :                     1                  +1
+UC_PERQ_PKT(0).cd0          :                     1                  +1
+UC_PERQ_BYTE(0).cd0         :                    88                 +88
+RUC_64.cd5                  :                     1                  +1
+TDBGC3_64.cd5               :                     1                  +1
+TDBGC4_64.cd5               :                     1                  +1
+CDMIB_R127.cd5              :                     1                  +1
+CDMIB_RPRM.cd5              :                     1                  +1
+CDMIB_T127.cd5              :                     1                  +1
+CDMIB_RPKT.cd5              :                     1                  +1
+CDMIB_RUCA.cd5              :                     1                  +1
+CDMIB_RPOK.cd5              :                     1                  +1
+CDMIB_RVLN.cd5              :                     1                  +1
+CDMIB_TVLN.cd5              :                     1                  +1
+CDMIB_TBYT.cd5              :                    84                 +84
+CDMIB_RBYT.cd5              :                    84                 +84
+CDMIB_RPROG1.cd5            :                     1                  +1
+CDMIB_TPOK.cd5              :                     1                  +1
+CDMIB_TPKT.cd5              :                     1                  +1
+CDMIB_TUCA.cd5              :                     1                  +1
+UC_PERQ_PKT(0).cd5          :                     1                  +1
+UC_PERQ_BYTE(0).cd5         :                    84                 +84
+bcm_error_t $$ = BCM_E_NONE (0)
+
+##################################################################################
+##################################################################################
+##################################################################################

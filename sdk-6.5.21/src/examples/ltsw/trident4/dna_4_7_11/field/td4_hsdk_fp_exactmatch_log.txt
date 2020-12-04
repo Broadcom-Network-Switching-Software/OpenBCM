@@ -1,0 +1,107 @@
+/*
+BCM.0> cint fp_exactmatch.c
+int ARGC = 1 (0x1)
+int opt_TestWithPresel = 0 (0x0)
+bcm_field_stage_t opt_TestFpStage = bcmFieldStageIngressExactMatch (9)
+bcm_field_qualify_t opt_TestFpQualStage = bcmFieldQualifyStageIngressExactMatch (469)
+int opt_IsVfp = 0 (0x0)
+int opt_IsIfp = 0 (0x0)
+int opt_IsEfp = 0 (0x0)
+int opt_IsEM = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int ing_port3 = 3 (0x3)
+int egr_port1 = 4 (0x4)
+int egr_port2 = 5 (0x5)
+execute(): Start
+Doing L2 entry add
+Doing port loopbacks...
+Doing group config create...
+Doing entry create to group 0x03000001...
+Doing qualify SrcPort...
+Doing action add Drop...
+Doing action add CopyToCpu...
+Doing flexctr create to group 0x03000001...
+>>	 stat_action_id=0x10000006
+Doing flexctr stat attach to entry 0x03000001. StatID:0x10000006:0...
+Doing entry install...
+B_CM.0> a
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+B_CM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200212 (Wed Feb 12 10:53:03 2020)
+From sr936857@xl-blr-06:/projects/ntsw-sw7/home/sr936857/git-code/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_5_4, BCM56880_A0_DNA_4_5_5
+     BCM56880_A0_DNA_4_5_6, BCM56880_A0_DNA_4_5_8, BCM56880_A0_DNA_4_5_9, BCM56880_A0_UTLTM
+
+
+##########  Sending Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0000 0000 4011 1a3c 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPWN.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPWN.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPWN.0]Packet[1]: data[0060]: cccc cccc cccc 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x6a
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x406a22
+	MPB_FLEX_DATA_TYPE=5
+	EGR_ZONE_REMAP_CTRL=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	DROP_CODE_15_0=0x2121
+	PARSER_VHLEN_0_15_0=0x8a
+	SYSTEM_SOURCE_15_0=1
+	SYSTEM_DESTINATION_15_0=4
+	EFFECTIVE_TTL_7_0=0x40
+	INGRESS_PP_PORT_7_0=1
+	L2_OIF_10_0=4
+	VFI_15_0=0x64
+	SYSTEM_OPCODE_3_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	PKT_MISC_CTRL_0_3_0=1
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	EM_FT
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<80> id<0> frg-off<0> ttl<64> > chk-sum<0x1a3c>
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 1 -------
+Ctr:0x10000006-0x00000000: VAL0LO:1(1)-VAL1LO:0x0000006A
+--------------------------
+#####################################################
+
+##########  Sending Non-Matching packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DE0000000000CD810000640800450000500000000040111A3C1010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCC
+Packet from data=<>, length=102
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+------- Registered Statids = 1 -------
+>>>> No Counter Increments This Time  <<<<<<
+--------------------------
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+
+*/

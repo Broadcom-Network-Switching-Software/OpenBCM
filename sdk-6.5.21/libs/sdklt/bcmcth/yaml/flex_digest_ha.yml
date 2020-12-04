@@ -1,0 +1,38 @@
+#
+# file: flexdigest_ha.yml
+# FLEX_DIGEST YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+component:
+    bcmcth_flex_digest:
+        bcmcth_flex_digest_mux_cont_map_t:
+            type: struct
+            fields:
+                lk_fld:
+                    type: uint32_t
+                    comment: FLEX_DIGEST_LKUP ctrl_id logical field id.
+                lk_fld_mask:
+                    type: uint32_t
+                    comment: FLEX_DIGEST_LKUP ctrl_id mask logical field id.
+                cont_id:
+                    type: uint16_t
+                    comment: presel hardware mux container id.
+        bcmcth_flex_digest_mux_cont_map_info_t:
+            type: struct
+            fields:
+                array_count:
+                    type: int
+                    comment: actual used size of array mux_cont_map.
+                array_size:
+                    type: int
+                    comment: array size of mux_cont_map.
+                mux_cont_map:
+                    type: bcmcth_flex_digest_mux_cont_map_t
+                    table:
+                    size: array_size
+                    comment: logical field to mux container map array.

@@ -1,0 +1,33 @@
+# $Id:$
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# File: reload_ltsw.soc
+#
+# Reload the system during warm-boot process.
+#
+
+warmboot on
+
+init soc
+
+# Start UC messaging
+echo "start UC messaging "
+set rcnoprinterror=true
+dsh -c "mcs message init"
+dsh -c "mcs message start 0"
+set rcnoprinterror=false
+
+# Note: Un-comment the following debug verbose and dbm bcm lines to get more debug info.
+#       They are turned off by default to reduce init time.
+
+#debug +verbose
+init bcm
+#debug -verbose
+
+linkscan 250000
+
+sleep 1
+echo "reload: Warm boot successfully."
+

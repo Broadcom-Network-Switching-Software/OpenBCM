@@ -1,0 +1,42 @@
+% ./bcm.user -y bcm56990_a0-generic-192x100_16x400.config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200923 (Wed Sep 23 08:30:20 2020)
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint th4_hsdk_basic_flexport.c
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200923 (Wed Sep 23 08:30:20 2020)
+From sp933340@xl-sj1-30:/projects/ntsw-sw-ae/sparks/gerrit/hsdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56880_A0_BASE, BCM56990_A0_BASE, BCM56990_B0_BASE
+     BCM56996_A0_BASE, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Flex 100G ports 2-5 to 400G port 2
+Flex 100G ports 6-9 to 400G port 6
+Flex 100G ports 10-13 to 400G port 10
+Flex 100G ports 18-21 to 400G port 18
+Flex 400G port 2 to 100G ports 2-5
+Flex 400G port 6 to 100G ports 6-9
+Flex 400G port 10 to 100G ports 10-13
+Flex 400G port 18 to 100G ports 18-21
+Initial port counts; 100G=192; 400G=16; PASS
+After flexing 16 100G ports to 4 400G ports; 100G=176; 400G=20; PASS
+After flexing 4 400G ports to 16 100G ports; 100G=192; 400G=16; PASS
+56990 Port Flex Test 1: PASS
+TEST STATUS: Ok
+BCM.0> quit
+[root@dhcp-10-59-96-129 gts]# 

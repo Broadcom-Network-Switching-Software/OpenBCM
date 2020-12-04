@@ -1,0 +1,16 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56990_A0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+BCMDRD_DEVLIST_ENTRY(BCM56990, BCM56990_VENDOR_ID, BCM56990_DEVICE_ID, BCM56990_REV_A0, \
+                     0, 0, \
+                     bcm56990_a0, bcm56990_a0, bcm56990_a0, \
+                     "Tomahawk4", "BCM56990", \
+                     "25.6 Tbps Multilayer Switch", 0, 0)
+#endif
+
+#if BCMDRD_CONFIG_INCLUDE_BCM56990_B0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+BCMDRD_DEVLIST_ENTRY(BCM56990, BCM56990_VENDOR_ID, BCM56990_DEVICE_ID, BCM56990_REV_B0, \
+                     0, 0, \
+                     bcm56990_b0, bcm56990_b0, bcm56990_b0, \
+                     "Tomahawk4", "BCM56990", \
+                     "25.6 Tbps Multilayer Switch", 0, 0)
+#endif
+

@@ -1,0 +1,42 @@
+BCM.0> c td4_hsdk_flexctr_ifp.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191031 (Thu Oct 31 09:45:53 2019)
+From root@lc-sj1-6399:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_13, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0
+     BCM56880_A0_IDNA_4_4_9
+Choosing port 2 as ingress_port
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+Packet comes into ingress port 2
+tx 5 pbm=2 dm=0x1 vlantag=2 dmi=1;sleep 5
+Packet generate, length=64
+Sleeping for 5 seconds
+XLMIB_TBYT.cd1                        :                   340                +340
+XLMIB_RBYT.cd1                        :                   340                +340
+XLMIB_TPOK.cd1                        :                     5                  +5
+XLMIB_RPOK.cd1                        :                     5                  +5
+XLMIB_TVLN.cd1                        :                     5                  +5
+XLMIB_RVLN.cd1                        :                     5                  +5
+XLMIB_TUCA.cd1                        :                     5                  +5
+XLMIB_RUCA.cd1                        :                     5                  +5
+XLMIB_TPKT.cd1                        :                     5                  +5
+XLMIB_RPKT.cd1                        :                     5                  +5
+XLMIB_T127.cd1                        :                     5                  +5
+XLMIB_R127.cd1                        :                     5                  +5
+XLMIB_RPRM.cd1                        :                     5                  +5
+FlexCtr Get for entry fetching counter index 1 : 1 packets / 68 bytes
+FlexCtr Get for entry fetching counter index 2 : 1 packets / 68 bytes
+FlexCtr Get for entry fetching counter index 3 : 1 packets / 68 bytes
+FlexCtr Get for entry fetching counter index 4 : 1 packets / 68 bytes
+FlexCtr Get for entry fetching counter index 5 : 1 packets / 68 bytes
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

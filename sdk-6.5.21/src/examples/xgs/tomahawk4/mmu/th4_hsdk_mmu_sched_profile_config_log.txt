@@ -1,0 +1,42 @@
+BCM.0> cint th4_hsdk_mmu_sched_profile_config.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port : 1
+Egress port: 2
+==> Build and attach profile ID 1 to port 2
+The profile 1 is bcmCosqDynamicTypeConditional
+==> Set up L2 forwarding path:
+==============================================================
+--> Scheduler profile attached to port 2 is 1.
+--> Detailed info for sched mapping profile id 1
+cosq_mapping_arr_ret[0]: cosq 0, num_ucq 1, num_mcq 1, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[1]: cosq 1, num_ucq 1, num_mcq 1, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[2]: cosq 2, num_ucq 1, num_mcq 1, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[3]: cosq 3, num_ucq 1, num_mcq 1, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[4]: cosq 4, num_ucq 1, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[5]: cosq 5, num_ucq 1, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[6]: cosq 6, num_ucq 1, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[7]: cosq 7, num_ucq 1, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[8]: cosq 8, num_ucq 0, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[9]: cosq 9, num_ucq 0, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[10]: cosq 10, num_ucq 0, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+cosq_mapping_arr_ret[11]: cosq 11, num_ucq 0, num_mcq 0, strict_priority 0, fc_is_uc_only 0 
+==> Verify unicast pkt from port 1 forwarding to port 2
+--> Packet 1 - priority 0
+Packet from data=<>, length=68
+FlexCtr Get : 1 packets / 72 bytes
+--> Packet 2 - priority 3
+Packet from data=<>, length=68
+FlexCtr Get : 1 packets / 72 bytes
+Per queue packet counter check successful.
+==>Cleaning up...
+bcm_error_t $$ = BCM_E_NONE (0)
+

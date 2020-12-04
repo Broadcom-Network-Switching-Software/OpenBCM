@@ -1,0 +1,128 @@
+#
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# The file runs the packet TX tests using the BCM API support, for a variety
+# of parameters.
+#
+
+#
+# Number of packets of each size sent for measurement. 
+# 1000 packets seems to provide reliable numbers.
+#
+local count	1000
+
+#
+# Egress ports to send packets out if PBM is specified (all ethernet by
+# default).
+#
+local pbm	e
+
+#
+# Number of outstanding operations the test will allow. 
+#
+local op	10
+
+if $?drac \
+'local cacheon  "cache +vlan +port +l2mc_table"; \
+ local cacheoff "cache -vlan -port -l2mc_table"'
+
+if !$?drac \
+'local cacheon  "cache +qvlan +ptable +mcast"; \
+ local cacheoff "cache -qvlan -ptable -mcast"'
+
+if $?herc "echo Not supported on hercules; exit"
+
+$cacheoff
+
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown unicast, Tagged, Table cache disabled"
+tr 40 DestMac=UCMiss Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known unicast, Tagged, Table cache disabled"
+tr 40 DestMac=UCHit Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown Multicast, Tagged, Table cache disabled"
+tr 40 DestMac=MCMiss Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known Multicast, Tagged, Table cache disabled"
+tr 40 DestMac=MCHit Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Broadcast, Tagged, Table cache disabled"
+tr 40 DestMac=Bcast Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: PBM, Tagged, Table cache disabled"
+tr 40 DestMac=PBM Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op \
+	pbm=$pbm upbm=0x0
+echo; echo; echo;
+
+$cacheon
+
+echo "Packet TX Performance test: Unknown unicast, Tagged, Table cache enabled"
+tr 40 DestMac=UCMiss Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known unicast, Tagged, Table cache enabled"
+tr 40 DestMac=UCHIT Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown Multicast, Tagged, Table cache enabled"
+tr 40 DestMac=MCMiss Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known Multicast, Tagged, Table cache enabled"
+tr 40 DestMac=MCHit Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Broadcast, Tagged, Table cache enabled"
+tr 40 DestMac=Bcast Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: PBM, Tagged, Table cache enabled"
+tr 40 DestMac=PBM Tagged=TRUE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op \
+	pbm=$pbm upbm=0x0
+
+$cacheoff
+
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown unicast, Untagged, Table cache disabled"
+tr 40 DestMac=UCMiss Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known unicast, Untagged, Table cache disabled"
+tr 40 DestMac=UCHit Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown Multicast, Untagged, Table cache disabled"
+tr 40 DestMac=MCMiss Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known Multicast, Untagged, Table cache disabled"
+tr 40 DestMac=MCHit Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Broadcast, Untagged, Table cache disabled"
+tr 40 DestMac=Bcast Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: PBM, Untagged, Table cache disabled"
+tr 40 DestMac=PBM Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op \
+	pbm=$pbm upbm=0x0
+echo; echo; echo;
+
+$cacheon
+
+echo "Packet TX Performance test: Unknown unicast, Untagged, Table cache enabled"
+tr 40 DestMac=UCMiss Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known unicast, Untagged, Table cache enabled"
+tr 40 DestMac=UCHIT Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Unknown Multicast, Untagged, Table cache enabled"
+tr 40 DestMac=MCMiss Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Known Multicast, Untagged, Table cache enabled"
+tr 40 DestMac=MCHit Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: Broadcast, Untagged, Table cache enabled"
+tr 40 DestMac=Bcast Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op
+echo; echo; echo;
+echo "Packet TX Performance test: PBM, Untagged, Table cache enabled"
+tr 40 DestMac=PBM Tagged=FALSE vlanid=1 ls=64 le=1024 li=64 c=$count op=$op \
+	pbm=$pbm upbm=0x0
+
+$cacheoff
+
+

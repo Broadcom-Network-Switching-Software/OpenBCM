@@ -1,0 +1,125 @@
+BCM.0> c td4x9_hsdk_mirror_on_drop.c                                                                                                                                             
+execute(): Start                                                                                                                                                                 
+config show; attach; version                                                                                                                                                     
+~~ #1) test_setup(): ** start **                                                                                                                                                
+ingress_port_setup port: 1 setup                                                                                                                                                 
+egress_port_multi_setup port: 2 setup                                                                                                                                            
+egress_port_multi_setup port: 3 setup                                                                                                                                            
+~~ #1) test_setup(): ** end **                                                                                                                                                  
+~~ #2) configure_mod_mirror(): ** start **                                                                                                                                      
+        a) Configure mod cosq on the egress port 2 to drop the packet                                                                                                            
+        b) Configure mod destination on MTP 3 with mirrored packet in PSAMP format                                                                                               
+        c) Configure mod profile and enable MOD by IFP                                                                                                                           
+        d) Setup L2 flow from ingress port to egress port                                                                                                                        
+~~ #2) configure_mod_mirror(): ** end **                                                                                                                                        
+~~ #3) verify(): ** start **                                                                                                                                                    
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)                                                                                                           
+vlan 2  ports ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006)                                                                                                                 
+
+
+Sending unicast packet to ingress port 1, expected to be dropped and mirrored to port 3 in PSAMP format
+tx 1 pbm=1 data=0x000000bbbbbb002a107777008100000208004500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869; sleep quiet 1                                                                                                                                                                     
+Packet from data=<>, length=78                                                                                                                                                   
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[1]: data[0000]: {000000bbbbbb} {002a10777700} 8100 0002                                                                                                         
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 ff01 bd76 0a3a                                                                                                         
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162                                                                                                         
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172                                                                                                         
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869                                                                                                              
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0][RX metadata information]                                                                                                                                              
+        PKT_LENGTH=0x52                                                                                                                                                          
+        SRC_PORT_NUM=1                                                                                                                                                           
+        UC_SW_COPY_DROPPED=1                                                                                                                                                     
+        SWITCH=1                                                                                                                                                                 
+        MATCH_ID_LO=0x801424                                                                                                                                                     
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                                                                   
+        EGR_ZONE_REMAP_CTRL=1                                                                                                                                                    
+        COPY_TO_CPU=1                                                                                                                                                            
+[FLEX fields]                                                                                                                                                                    
+        EVENT_TRACE_VECTOR_31_16=4                                                                                                                                               
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                                                                 
+        SYSTEM_SOURCE_15_0=1                                                                                                                                                     
+        SYSTEM_DESTINATION_15_0=2                                                                                                                                                
+        INGRESS_PP_PORT_7_0=1                                                                                                                                                    
+        EFFECTIVE_TTL_7_0=0xff                                                                                                                                                   
+        VFI_15_0=2                                                                                                                                                               
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                                                                           
+        SYSTEM_OPCODE_3_0=1                                                                                                                                                      
+        PKT_MISC_CTRL_0_3_0=1                                                                                                                                                    
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                                                             
+        L2_OIF_10_0=2                                                                                                                                                            
+[RX reasons]                                                                                                                                                                     
+        IFP                                                                                                                                                                      
+[Decode match id]                                                                                                                                                                
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                                                              
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                                                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                                                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_ICMP                                                                                                                                         
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                                                                         
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:bb:bb:bb> src<00:2a:10:77:77:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.58.64.1> dst<10.58.66.115> hl<5> service-type<0> tl<60> id<26466> frg-off<0> ttl<255> > chk-sum<0xbd76> 
+Packet[1]:   ICMP: Type-0 (Echo Reply [RFC792]) Code-0                                                                               
+Packet[1]:   Generic: Code <25088> Checksum <0x6364> hun <65 66 67 68>                                                               
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0]Packet[2]: data[0000]: {001100bbbbbb} {000102030405} 8100 0001                                                             
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4502 0096 0000 4000 0211 43f6 0210                                                             
+[bcmPWN.0]Packet[2]: data[0020]: 10a0 1110 10a0 0000 0000 0082 0000 000a                                                             
+[bcmPWN.0]Packet[2]: data[0030]: 007a 0000 0000 0000 0000 0000 0064 1234                                                             
+[bcmPWN.0]Packet[2]: data[0040]: 006a 0000 0000 0000 0000 0000 0000 0002                                                             
+[bcmPWN.0]Packet[2]: data[0050]: 0001 0007 0000 00ff 004e 0000 00bb bbbb                                                             
+[bcmPWN.0]Packet[2]: data[0060]: 002a 1077 7700 8100 0002 0800 4500 003c                                                             
+[bcmPWN.0]Packet[2]: data[0070]: 6762 0000 ff01 bd76 0a3a 4001 0a3a 4273                                                             
+[bcmPWN.0]Packet[2]: data[0080]: 0000 550a 0001 0051 6162 6364 6566 6768                                                             
+[bcmPWN.0]Packet[2]: data[0090]: 696a 6b6c 6d6e 6f70 7172 7374 7576 7761                                                             
+[bcmPWN.0]Packet[2]: data[00a0]: 6263 6465 6667 6869                                                                                 
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0][RX metadata information]                                                                                                  
+        PKT_LENGTH=0xac                                                                                                              
+        SRC_PORT_NUM=3                                                                                                               
+        SWITCH=1                                                                                                                     
+        MATCH_ID_LO=0x80d424                                                                                                         
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                       
+        EGR_ZONE_REMAP_CTRL=1                                                                                                        
+        MULTICAST=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        DROP_CODE_15_0=0x1f1f
+        PARSER_VHLEN_0_15_0=0x8a
+        SYSTEM_SOURCE_15_0=3
+        INGRESS_PP_PORT_7_0=3
+        EFFECTIVE_TTL_7_0=2
+        INGRESS_QOS_REMAP_VALUE_OR_IFP_OPAQUE_OBJ_15_0=2
+        VFI_15_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=3
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:11:00:bb:bb:bb> src<00:01:02:03:04:05> Tagged Packet ProtID<0x8100> Ctrl<0x0001> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<2.16.16.160> dst<17.16.16.160> hl<5> service-type<2> tl<150> id<0> frg-off<16384> ttl<2> > chk-sum<0x43f6>
+Sleeping for 2 seconds
+
+
+========== Display Mod Stats ==========
+MOD pool full dropped packet:  0
+MOD mirrored packet:           1
+MOD pool current used count:   0
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

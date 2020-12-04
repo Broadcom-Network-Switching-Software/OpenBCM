@@ -1,0 +1,44 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[44784]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[48668]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> cint th4_hsdk_mmu_adt.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200831 (Mon Aug 31 18:00:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+ADT Group config successful
+ADT High Alpha config successful
+ADT Margins config successful
+ADT monitored service pool config successful
+-->Retrieve counter of low priority packets admitted using limit alpha value
+uint64 value = {0x00000000 0x00000000}
+uint64 value = {0x00000000 0x000000C8}
+uint64 value = {0x00000000 0x00000190}
+--> Retrieve counter of high priority accepted bytes for a given service pool
+uint64 value = {0x00000000 0x00006338}
+uint64 value = {0xFFFFFFFF 0xFFFFFFFF}
+uint64 value = {0x00000000 0x0000C670}
+bcm_error_t $$ = BCM_E_NONE (0)
+

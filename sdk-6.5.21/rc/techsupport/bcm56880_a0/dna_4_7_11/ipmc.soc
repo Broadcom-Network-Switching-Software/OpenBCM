@@ -1,0 +1,45 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport IPMC RC (run commands) file
+#
+#       These are default commands that are for TechSupport IPMC.
+#
+
+# Show S/W state in IPMC.
+dump sw ipmc
+
+# Show IPMC configurations.
+ipmc table show
+ipmc ip6table show
+
+# Show IPMC related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+
+# Show L3 IPMC host table.
+local lt L3_IPV4_MULTICAST_1_TABLE;                       $traverse_lt;
+local lt L3_IPV4_MULTICAST_2_TABLE;                       $traverse_lt;
+local lt L3_IPV4_MULTICAST_1_STRENGTH_PROFILE;            $traverse_lt;
+local lt L3_IPV4_MULTICAST_2_STRENGTH_PROFILE;            $traverse_lt;
+
+local lt L3_IPV6_MULTICAST_1_TABLE;                       $traverse_lt;
+local lt L3_IPV6_MULTICAST_2_TABLE;                       $traverse_lt;
+local lt L3_IPV6_MULTICAST_1_STRENGTH_PROFILE;            $traverse_lt;
+local lt L3_IPV6_MULTICAST_2_STRENGTH_PROFILE;            $traverse_lt;
+
+# Show L3 IPMC defip table.
+local lt L3_IPV4_MULTICAST_DEFIP_TABLE;                   $traverse_lt;
+local lt L3_IPV6_MULTICAST_DEFIP_64_TABLE;                $traverse_lt;
+local lt L3_IPV6_MULTICAST_DEFIP_128_TABLE;               $traverse_lt;
+local lt L3_IPV4_MULTICAST_DEFIP_STRENGTH_PROFILE;        $traverse_lt;
+local lt L3_IPV6_MULTICAST_DEFIP_64_STRENGTH_PROFILE;     $traverse_lt;
+local lt L3_IPV6_MULTICAST_DEFIP_128_STRENGTH_PROFILE;    $traverse_lt;
+
+# Show L2 IPMC host table.
+local lt L2_IPV4_MULTICAST_TABLE;                         $traverse_lt;
+local lt L2_IPV6_MULTICAST_TABLE;                         $traverse_lt;
+local lt L2_IPV4_MULTICAST_STRENGTH_PROFILE;              $traverse_lt;
+local lt L2_IPV6_MULTICAST_STRENGTH_PROFILE;              $traverse_lt;

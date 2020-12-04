@@ -1,0 +1,28 @@
+# -*- Kbuild -*-
+#
+# Linux kernel BDE module.
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+obj-m := linux_ngbde.o
+
+ccflags-y := $(LKM_CFLAGS) \
+             -I$(SDK)/linux/include \
+             -I$(SDK)/linux/bde \
+             -I$(SDK)/bcmdrd/include
+
+linux_ngbde-y := ngbde_main.o \
+                 ngbde_kapi.o \
+                 ngbde_ioctl.o \
+                 ngbde_procfs.o \
+                 ngbde_pio.o \
+                 ngbde_iio.o \
+                 ngbde_dma.o \
+                 ngbde_intr.o \
+                 ngbde_pgmem.o \
+                 ngbde_pci_probe.o \
+                 ngbde_iproc_probe.o \
+                 ngbde_swdev.o

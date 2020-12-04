@@ -1,0 +1,22 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Mirror on Drop RC (run commands) file
+#
+#       These are default commands that are for TechSupport Mirror on Drop.
+#
+
+# Show FP configurations
+rcload $base_drv_name/$variantname/field.soc
+
+# Show Mirror configurations
+rcload $base_drv_name/$variantname/mirror.soc
+
+# Show EP Recircultate configurations
+rcload $base_drv_name/$variantname/eprecirculate.soc
+
+# Show Flowtracker configurations
+rcload $base_drv_name/$variantname/flowtracker.soc
+

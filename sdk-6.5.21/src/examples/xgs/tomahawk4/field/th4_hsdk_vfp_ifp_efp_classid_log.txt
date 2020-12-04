@@ -1,0 +1,228 @@
+BCM.0> cint th4_hsdk_vfp_ifp_efp_classid.c
+Ingress_port_multi_setup port: 1 setup
+Egress_port_multi_setup port: 2 setup
+
+Completed test setup successfully.
+
+fp show
+PIPELINE STAGE INGRESS
+FP:           :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:           :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:           :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:           :tcam_sz=0(0), tcam_slices=0
+GID 0x00000001: gid=0x1, instance=-1 mode=Single, stage=Ingress lookup=Enabled, ActionResId={0},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={InPort },
+         aset={CopyToCpu , Drop },
+         preselectors={},
+         group_priority= 2
+         slice_primary= {slice_number=0, entries_total=256, entries_free=255 },
+         group_status=  entries_total=2815, entries_free=2814,
+                        meters_total=512, meters_free=512, counters_total=24576, counters_free=24576}
+EID 0x00000001: eid=0x1, gid=0x1,
+ prio=0, flags=0x3, hw_index=0x1, Installed
+ InPort
+  HW info:
+    Part: 0 Offset0: 0 Width0: 9
+     DATA=00000002
+     MASK=000001ff
+
+         action = {act=CopyToCpu, param0=1(0x1), param1=5(0x5), param2=0(0)
+         action = {act=Drop, param0=0(0), param1=5(0x5), param2=0(0)
+
+GID 0x00000002: gid=0x2, instance=-1 mode=Single, stage=Ingress lookup=Enabled, ActionResId={1},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={SrcIp , DstIp , SrcClassField },
+         aset={},
+         preselectors={},
+         group_priority= 0
+         slice_primary= {slice_number=1, entries_total=256, entries_free=255 },
+         group_status=  entries_total=2815, entries_free=2814,
+                        meters_total=512, meters_free=512, counters_total=24576, counters_free=24576}
+EID 0x00000002: eid=0x2, gid=0x2,
+ prio=0, flags=0x3, hw_index=0x101, Installed
+ SrcIp
+  HW info:
+    Part: 0 Offset0: 36 Width0: 16
+    Part: 0 Offset1: 52 Width1: 16
+     DATA=0a0a0a28
+     MASK=ffffffff
+ DstIp
+  HW info:
+    Part: 0 Offset0: 0 Width0: 16
+    Part: 0 Offset1: 20 Width1: 16
+     DATA=c0a80114
+     MASK=ffffffff
+ SrcClassField
+  HW info:
+    Part: 0 Offset0: 68 Width0: 10
+     DATA=00000032
+     MASK=000003ff
+
+         action = {act=NewClassId, param0=100(0x64), param1=0(0), param2=0(0)
+         action = {act=EgressClassSelect, param0=11(0xb), param1=0(0), param2=0(0)
+
+GID 0x01000001: gid=0x1, instance=-1 mode=Single, stage=Egress lookup=Enabled, ActionResId={3},
+         Mode_type={L3Single}, Packet_type={Ip4},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={L4SrcPort , L4DstPort , IngressClassField },
+         aset={},
+         preselectors={},
+         group_priority= 0
+         slice_primary= {slice_number=0, entries_total=128, entries_free=127 },
+         group_status=  entries_total=511, entries_free=510,
+                        meters_total=0, meters_free=0, counters_total=1, counters_free=0}
+EID 0x01000001: eid=0x1, gid=0x1,
+ prio=0, flags=0x20000002, hw_index=0, Installed
+ L4SrcPort
+  HW info:
+    Part: 0 Offset0: 138 Width0: 16
+     DATA=00001404
+     MASK=0000ffff
+ L4DstPort
+  HW info:
+    Part: 0 Offset0: 122 Width0: 16
+     DATA=00001ae8
+     MASK=0000ffff
+ IngressClassField
+  HW info:
+    Part: 0 Offset0: 4 Width0: 9
+     DATA=00000064
+     MASK=000001ff
+
+         action = {act=OuterVlanNew, param0=30(0x1e), param1=0(0), param2=0(0)
+         flex_counter = {flexctr_action_id=268443649(0x10002001), counter_id=0(0)}
+
+GID 0x02000001: gid=0x1, instance=-1 mode=Single, stage=Lookup lookup=Enabled, ActionResId={3},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={SrcMac , DstMac , InPort , OuterVlanId , OuterVlanPri , EtherType , IpProtocol , DSCP },
+         aset={},
+         preselectors={},
+         group_priority= 0
+         slice_primary= {slice_number=0, entries_total=256, entries_free=255 },
+         group_status=  entries_total=1023, entries_free=1022,
+                        meters_total=0, meters_free=0, counters_total=24576, counters_free=24576}
+EID 0x02000001: eid=0x1, gid=0x1,
+ prio=0, flags=0x2, hw_index=0x2, Installed
+ SrcMac
+  HW info:
+    Part: 0 Offset0: 100 Width0: 48
+     DATA=00000000 00000001
+     MASK=0000ffff ffffffff
+ DstMac
+  HW info:
+    Part: 0 Offset0: 52 Width0: 48
+     DATA=00000000 00000002
+     MASK=0000ffff ffffffff
+ InPort
+  HW info:
+    Part: 0 Offset0: 164 Width0: 9
+     DATA=00000001
+     MASK=000000ff
+ OuterVlanId
+  HW info:
+    Part: 0 Offset0: 200 Width0: 12
+     DATA=00000005
+     MASK=000000ff
+ OuterVlanPri
+  HW info:
+    Part: 0 Offset0: 213 Width0: 3
+     DATA=00000002
+     MASK=00000007
+ EtherType
+  HW info:
+    Part: 0 Offset0: 36 Width0: 16
+     DATA=00000800
+     MASK=0000ffff
+ IpProtocol
+  HW info:
+    Part: 0 Offset0: 16 Width0: 8
+     DATA=00000006
+     MASK=000000ff
+ DSCP
+  HW info:
+    Part: 0 Offset0: 24 Width0: 8
+     DATA=00000018
+     MASK=000000ff
+
+         action = {act=ClassSourceSet, param0=50(0x32), param1=0(0), param2=0(0)
+
+Sending 8 packets to ingress port 1
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[1]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[2]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[3]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[4]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[5]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[5]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[6]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[6]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[6]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[7]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[7]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[7]: data[0040]: 640d 7c14
+[bcmPWN.0]
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {000000000002} {000000000001} 8100 401e
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4518 002e 0000 0000 4006 a4c4 0a0a
+[bcmPWN.0]Packet[8]: data[0020]: 0a28 c0a8 0114 1404 1ae8 0000 0000 0000
+[bcmPWN.0]Packet[8]: data[0030]: 0000 5000 0000 a4fb 0000 0001 0203 0405
+[bcmPWN.0]Packet[8]: data[0040]: 640d 7c14
+[bcmPWN.0]
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+
+Stat: 8 packets / 576 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

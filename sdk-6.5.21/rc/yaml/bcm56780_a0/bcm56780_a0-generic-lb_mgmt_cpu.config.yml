@@ -1,0 +1,60 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56780 system port configuration.
+#
+# $Copyright:.$
+#
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+               # management port
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 161
+            ?
+                PORT_ID: 78
+            :
+                PC_PHYS_PORT_ID: 162
+            ?
+               # loopback port
+                PORT_ID: 39
+            :
+                PC_PHYS_PORT_ID: 163
+            ?
+                PORT_ID: 79
+            :
+                PC_PHYS_PORT_ID: 164
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: [0,
+                          39,     # Loopback port 0 (Pipe 1)
+                          79]     # Loopback port 1 (Pipe 3)
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          78]     # Management port 1 (Pipe 3)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 9416
+...

@@ -1,0 +1,289 @@
+
+BCM.0> init all
+BCM.0> c th4_hsdk_trunk_failover.c
+execute(): Start
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201013 (Tue Oct 13 09:08:59 2020)
+From root@lc-sj1-6721:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56990
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+
+~~~ #1) test_setup(): ** start **
+Ingress port : 68
+Trunk member ports: 137 17 190
+Trunk failport: 17
+Failover ports: 222 20
+ingress_port_multi_setup port: 68 setup
+egress_port_multi_setup port: 17 setup
+egress_port_multi_setup port: 20 setup
+egress_port_multi_setup port: 137 setup
+egress_port_multi_setup port: 190 setup
+egress_port_multi_setup port: 222 setup
+bcm_trunk_failover_get() info :
+int psc = 9 (0x9)
+unsigned int flags = 0 (0x0)
+int[4] fail_to_array = {
+    int fail_to_array[0] = 134217950 (0x80000de)
+    int fail_to_array[1] = 134217748 (0x8000014)
+    int fail_to_array[2] = 0 (0x0)
+    int fail_to_array[3] = 0 (0x0)
+}
+int array_count = 2 (0x2)
+
+stat_counter_id = 0x10002001
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+
+~~~ #2) test_verify(): ** start **
+Disabling failport 17
+Sleeping for 1 second
+int $$ = 0 (0x0)
+
+Sending known unicast pkt on ingress port 68
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 137 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0051 0001 0000 4011 6388 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0100 0a0a 0200 1388 0050 003d ce40 2820
+[bcmPWN.0]Packet[1]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[1]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[1]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[1]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.1.0> dst<10.10.2.0> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6388>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 190 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0051 0001 0000 4011 6386 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0a0a 0201 1389 0051 003d ce3c 2820
+[bcmPWN.0]Packet[2]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[2]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[2]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[2]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.1.1> dst<10.10.2.1> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6386>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 1 second
+pktioRxCallback: packet received from port 190 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0051 0001 0000 4011 6384 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0102 0a0a 0202 138a 0052 003d ce38 2820
+[bcmPWN.0]Packet[3]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[3]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[3]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[3]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.1.2> dst<10.10.2.2> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6384>
+int $$ = 0 (0x0)
+Packet from data=<>, length=99
+Sleeping for 3 seconds
+pktioRxCallback: packet received from port 20 with length 99 bytes
+pktioRxCallback: pktio_rx_count = 0x4
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {000000002222} 8100 000c
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0051 0001 0000 4011 6382 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0103 0a0a 0203 138b 0053 003d ce34 2820
+[bcmPWN.0]Packet[4]: data[0030]: db20 0020 0020 4520 0020 0020 5420 0020
+[bcmPWN.0]Packet[4]: data[0040]: 0020 4020 0020 4020 0020 5e20 a520 ca20
+[bcmPWN.0]Packet[4]: data[0050]: 0b20 2820 9e20 c020 a820 2820 b220 0820
+[bcmPWN.0]Packet[4]: data[0060]: 0020 ff
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000c> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.1.3> dst<10.10.2.3> hl<5> service-type<0> tl<81> id<1> frg-off<0> ttl<64> > chk-sum<0x6382>
+int $$ = 0 (0x0)
+              ena/        speed/ link auto    STP                  lrn             max    cut            loop
+        port  link  Lns   duplex scan neg?   state   pause  discrd ops   medium  frame   thru       FEC  back
+    cd0(  1)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd1(  2)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd2(  3)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd3(  4)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd4( 17)  down   8  400G  FD   SW  No   Forward  TX RX   None    D Backplane  9412    No  RS544-2xN
+    cd5( 18)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd6( 19)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd7( 20)  up     8  400G  FD   SW  No   Forward  TX RX   None    D Backplane  9412    No  RS544-2xN   PHY
+    cd8( 34)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+    cd9( 35)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd10( 36)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd11( 37)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd12( 51)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd13( 52)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd14( 53)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd15( 54)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd16( 68)  up     8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN   PHY
+   cd17( 69)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd18( 70)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd19( 71)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd20( 85)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd21( 86)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd22( 87)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd23( 88)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd24(102)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd25(103)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd26(104)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd27(105)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd28(119)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd29(120)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd30(121)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd31(122)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd32(136)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd33(137)  up     8  400G  FD   SW  No   Forward  TX RX   None    D Backplane  9412    No  RS544-2xN   PHY
+   cd34(138)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd35(139)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd36(153)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd37(154)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd38(155)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd39(156)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd40(170)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd41(171)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd42(172)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd43(173)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd44(187)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd45(188)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd46(189)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd47(190)  up     8  400G  FD   SW  No   Forward  TX RX   None    D Backplane  9412    No  RS544-2xN   PHY
+   cd48(204)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd49(205)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd50(206)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd51(207)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd52(221)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd53(222)  up     8  400G  FD   SW  No   Forward  TX RX   None    D Backplane  9412    No  RS544-2xN   PHY
+   cd54(223)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd55(224)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd56(238)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd57(239)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd58(240)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd59(241)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd60(255)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd61(256)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd62(257)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+   cd63(258)  down   8  400G  FD   SW  No   Forward  TX RX   None   FA Backplane  9412    No  RS544-2xN
+int $$ = 0 (0x0)
+XLMIB_TBYT.cd4                        :                   103                +103
+XLMIB_RBYT.cd4                        :                   103                +103
+XLMIB_TPOK.cd4                        :                     1                  +1
+XLMIB_RPOK.cd4                        :                     1                  +1
+XLMIB_TVLN.cd4                        :                     1                  +1
+XLMIB_RVLN.cd4                        :                     1                  +1
+XLMIB_TUCA.cd4                        :                     1                  +1
+XLMIB_RUCA.cd4                        :                     1                  +1
+XLMIB_TPKT.cd4                        :                     1                  +1
+XLMIB_RPKT.cd4                        :                     1                  +1
+XLMIB_T127.cd4                        :                     1                  +1
+XLMIB_R127.cd4                        :                     1                  +1
+XLMIB_RPRM.cd4                        :                     1                  +1
+RUC_64.cd4                            :                     1                  +1
+XLMIB_TBYT.cd7                        :                   103                +103
+XLMIB_RBYT.cd7                        :                   103                +103
+XLMIB_TPOK.cd7                        :                     1                  +1
+XLMIB_RPOK.cd7                        :                     1                  +1
+XLMIB_TVLN.cd7                        :                     1                  +1
+XLMIB_RVLN.cd7                        :                     1                  +1
+XLMIB_TUCA.cd7                        :                     1                  +1
+XLMIB_RUCA.cd7                        :                     1                  +1
+XLMIB_TPKT.cd7                        :                     1                  +1
+XLMIB_RPKT.cd7                        :                     1                  +1
+XLMIB_T127.cd7                        :                     1                  +1
+XLMIB_R127.cd7                        :                     1                  +1
+XLMIB_RPRM.cd7                        :                     1                  +1
+RUC_64.cd7                            :                     1                  +1
+XLMIB_TBYT.cd16                       :                   412                +412
+XLMIB_RBYT.cd16                       :                   412                +412
+XLMIB_TPOK.cd16                       :                     4                  +4
+XLMIB_RPOK.cd16                       :                     4                  +4
+XLMIB_TVLN.cd16                       :                     4                  +4
+XLMIB_RVLN.cd16                       :                     4                  +4
+XLMIB_TUCA.cd16                       :                     4                  +4
+XLMIB_RUCA.cd16                       :                     4                  +4
+XLMIB_TPKT.cd16                       :                     4                  +4
+XLMIB_RPKT.cd16                       :                     4                  +4
+XLMIB_T127.cd16                       :                     4                  +4
+XLMIB_R127.cd16                       :                     4                  +4
+XLMIB_RPRM.cd16                       :                     4                  +4
+RUC_64.cd16                           :                     4                  +4
+XLMIB_TBYT.cd33                       :                   103                +103
+XLMIB_RBYT.cd33                       :                   103                +103
+XLMIB_TPOK.cd33                       :                     1                  +1
+XLMIB_RPOK.cd33                       :                     1                  +1
+XLMIB_TVLN.cd33                       :                     1                  +1
+XLMIB_RVLN.cd33                       :                     1                  +1
+XLMIB_TUCA.cd33                       :                     1                  +1
+XLMIB_RUCA.cd33                       :                     1                  +1
+XLMIB_TPKT.cd33                       :                     1                  +1
+XLMIB_RPKT.cd33                       :                     1                  +1
+XLMIB_T127.cd33                       :                     1                  +1
+XLMIB_R127.cd33                       :                     1                  +1
+XLMIB_RPRM.cd33                       :                     1                  +1
+RUC_64.cd33                           :                     1                  +1
+XLMIB_TBYT.cd47                       :                   206                +206
+XLMIB_RBYT.cd47                       :                   206                +206
+XLMIB_TPOK.cd47                       :                     2                  +2
+XLMIB_RPOK.cd47                       :                     2                  +2
+XLMIB_TVLN.cd47                       :                     2                  +2
+XLMIB_RVLN.cd47                       :                     2                  +2
+XLMIB_TUCA.cd47                       :                     2                  +2
+XLMIB_RUCA.cd47                       :                     2                  +2
+XLMIB_TPKT.cd47                       :                     2                  +2
+XLMIB_RPKT.cd47                       :                     2                  +2
+XLMIB_T127.cd47                       :                     2                  +2
+XLMIB_R127.cd47                       :                     2                  +2
+XLMIB_RPRM.cd47                       :                     2                  +2
+RUC_64.cd47                           :                     2                  +2
+int $$ = 0 (0x0)
+mac=00:00:00:00:aa:aa vlan=12 GPORT=0x0 Trunk=1 Hit
+mac=00:00:00:00:22:22 vlan=12 GPORT=0x44 modid=0 port=68/cd16 Hit
+int $$ = 0 (0x0)
+
+FlexCtr Get on egress port 137 : 1 packets / 103 bytes
+
+FlexCtr Get on egress port 17 : 1 packets / 103 bytes
+Avoiding stat's collection on failport 17
+
+FlexCtr Get on egress port 190 : 2 packets / 206 bytes
+
+FlexCtr Get on egress port 222 : 0 packets / 0 bytes
+
+FlexCtr Get on egress port 20 : 1 packets / 103 bytes
+
+Total pktio_rx_count : 4
+
+-----------------------------------------------------------
+    RESULT OF TRUNK VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) test_verify(): ** end **
+
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 68 cleanup
+egress_port_multi_cleanup port: 17 cleanup
+egress_port_multi_cleanup port: 20 cleanup
+egress_port_multi_cleanup port: 137 cleanup
+egress_port_multi_cleanup port: 190 cleanup
+egress_port_multi_cleanup port: 222 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

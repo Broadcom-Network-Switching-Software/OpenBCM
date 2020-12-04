@@ -1,0 +1,31 @@
+BCM.0> cint th4_hsdk_mmu_sched_config_global.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+==> Configure scheduling policy, and weights per device
+==> Verification
+==============================================================
+sched_max_weight_get: Max weight of mode 3 is 127
+==============================================================
+sched_weight_get: schedule mode 3, retrieved weight_arr_count 12
+weights[0]: weight 0 
+weights[1]: weight 1 
+weights[2]: weight 2 
+weights[3]: weight 3 
+weights[4]: weight 4 
+weights[5]: weight 5 
+weights[6]: weight 6 
+weights[7]: weight 7 
+weights[8]: weight 8 
+weights[9]: weight 9 
+weights[10]: weight 10 
+weights[11]: weight 11 
+test_verify pass!
+bcm_error_t $$ = BCM_E_NONE (0)

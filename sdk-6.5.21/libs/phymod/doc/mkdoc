@@ -1,0 +1,58 @@
+#!/bin/sh
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+# $Id$
+
+export DOXYGENVER=1.8.2
+
+# Save start directory
+CURDIR=`pwd`
+
+# Allow overrides for PHYMOD and build directories
+if [ "$PHYMOD" == "" ]; then
+    PHYMOD=$CURDIR/..
+fi
+if [ "$BLDDIR" == "" ]; then
+    BLDDIR=$PHYMOD/doc
+fi
+
+# Create Doxygen source directory
+DOXYDIR=$BLDDIR/dox
+rm -rf $DOXYDIR
+mkdir -p $DOXYDIR
+
+# Populate Doxygen source directory
+cd $DOXYDIR
+ln -s $PHYMOD/include/phymod/phymod_doc.h .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod_doc.h .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod_cfg_seq.c .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod_sc_lkup_table.h .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod_enum_defines.c .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod_enum_defines.h .
+ln -s $PHYMOD/chip/tscf/tier1/tefmod.h .
+ln -s $PHYMOD/chip/tsce/tier1/xlm_tsc_doc.h .
+ln -s $PHYMOD/chip/tsce/tier1/temod.h .
+ln -s $PHYMOD/chip/tsce/tier1/temod_enum_defines.h .
+ln -s $PHYMOD/chip/tsce/tier1/temod_sc_lkup_table.h .
+ln -s $PHYMOD/chip/tsce/tier1/temod_sc_lkup_table.c .
+ln -s $PHYMOD/chip/tsce/tier1/temod_diagnostics.c .
+ln -s $PHYMOD/chip/tsce/tier1/temod_doc.h .
+ln -s $PHYMOD/chip/tsce/tier1/temod_enum_defines.c .
+ln -s $PHYMOD/chip/tsce/tier1/temod_cfg_seq.c .
+ln -s $PHYMOD/chip/eagle/tier1/eagle_tsc_interface.h
+ln -s $PHYMOD/chip/falcon/tier1/falcon_tsc_functions.h
+ln -s $PHYMOD/chip/falcon/tier1/falcon_tsc_interface.h
+ln -s $PHYMOD/include/phymod/phymod.h .
+ln -s $PHYMOD/include/phymod/phymod_diagnostics.h .
+ln -s $PHYMOD/include/phymod/all_doc.h .
+cd $BLDDIR
+
+# Do the magic
+doxygen
+
+# Remove Doxygen source directory
+#rm -rf $DOXYDIR
+
+# Return to start
+cd $CURDIR

@@ -1,0 +1,15 @@
+PROJECT_NAME            = "Equal-Cost Multi-Path Library (ECMP)"
+@INCLUDE                = ../doc/Doxyfile.sdk
+
+INPUT                   = DOC/bcmecmp.dox \
+                          include
+
+EXCLUDE                 = include/bcmecmp/bcmecmp_types.h \
+                          include/bcmecmp/bcmecmp_db_internal.h \
+                          include/bcmecmp/bcmecmp_dev.h \
+                          include/bcmecmp/bcmecmp_group.h \
+                          include/bcmecmp/bcmecmp_lt_utils.h \
+                          include/bcmecmp/bcmecmp_sysm.h \
+                          include/bcmecmp/bcmecmp_lth_common.h \
+                          include/bcmecmp/generated/bcmecmp_ha.h \
+                          include/bcmecmp/bcmecmp.h

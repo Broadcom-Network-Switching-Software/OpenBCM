@@ -1,0 +1,177 @@
+BCM.0> 
+BCM.0> 
+BCM.0> cint td4x9_hsdk_mod_wred.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200911 (Fri Sep 11 11:00:37 2020)
+From sr936857@xl-sj1-30:/projects/ntsw-sw-ae/home/sr936857/git-code/td4x9/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5
+~~~ #1) test_setup(): ** start **
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_mod(): ** start **
+Enabling MOD...done!
+Creating MOD prifile 0...done!
+Setting MOD profile...done!
+Enabling MOD on port 1 with MOD profile 0...done! 
+Creating mirror destination 0x3c000000...done!
+Adding source-to-destination for MOD...done!
+~~~ #2) config_mod(): ** end **
+~~~ #3) verify(): ** start **
+
+vlan 1	ports cd,ce1-ce3,ce6-ce47,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07f9c), untagged cd,ce1-ce3,ce6-ce47,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07f9c) 
+vlan 2	ports ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006) 
+vlan 3	ports ce0,ce4 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022), untagged ce0,ce4 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022) 
+vlan 4	ports ce4 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020), untagged ce4 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020) 
+
+
+Sending known unicast packet to ingress_port side: 3
+Packet from data=<>, length=98
+MC_PERQ_PKT(0).cpu0                   :                    19                 +19
+MC_PERQ_BYTE(0).cpu0                  :                 5,016              +5,016
+XLMIB_TBYT.ce0                        :           191,646,056        +191,646,056
+XLMIB_RBYT.ce0                        :           191,646,056        +191,646,056
+XLMIB_TPOK.ce0                        :             1,955,571          +1,955,571
+XLMIB_RPOK.ce0                        :             1,955,570          +1,955,570
+XLMIB_TUCA.ce0                        :             1,955,571          +1,955,571
+XLMIB_RUCA.ce0                        :             1,955,570          +1,955,570
+XLMIB_TPKT.ce0                        :             1,955,571          +1,955,571
+XLMIB_RPKT.ce0                        :             1,955,570          +1,955,570
+XLMIB_T127.ce0                        :             1,955,571          +1,955,571
+XLMIB_R127.ce0                        :             1,955,570          +1,955,570
+XLMIB_RPRM.ce0                        :             1,955,570          +1,955,570
+MC_PERQ_PKT(0).ce0                    :             2,014,189          +2,014,189
+MC_PERQ_BYTE(0).ce0                   :           197,390,522        +197,390,522
+XLMIB_TBYT.ce1                        :           191,642,332        +191,642,332
+XLMIB_RBYT.ce1                        :           191,642,332        +191,642,332
+XLMIB_TPOK.ce1                        :             1,955,533          +1,955,533
+XLMIB_RPOK.ce1                        :             1,955,532          +1,955,532
+XLMIB_TUCA.ce1                        :             1,955,533          +1,955,533
+XLMIB_RUCA.ce1                        :             1,955,532          +1,955,532
+XLMIB_TPKT.ce1                        :             1,955,533          +1,955,533
+XLMIB_RPKT.ce1                        :             1,955,532          +1,955,532
+XLMIB_T127.ce1                        :             1,955,533          +1,955,533
+XLMIB_R127.ce1                        :             1,955,532          +1,955,532
+XLMIB_RPRM.ce1                        :             1,955,532          +1,955,532
+MC_PERQ_PKT(0).ce1                    :             2,014,192          +2,014,192
+MC_PERQ_BYTE(0).ce1                   :           197,390,816        +197,390,816
+XLMIB_TBYT.ce2                        :            95,819,602         +95,819,602
+XLMIB_RBYT.ce2                        :            95,819,602         +95,819,602
+XLMIB_TPOK.ce2                        :               977,751            +977,751
+XLMIB_RPOK.ce2                        :               977,751            +977,751
+XLMIB_TVLN.ce2                        :                     1                  +1
+XLMIB_RVLN.ce2                        :                     1                  +1
+XLMIB_TUCA.ce2                        :               977,751            +977,751
+XLMIB_RUCA.ce2                        :               977,751            +977,751
+XLMIB_TPKT.ce2                        :               977,751            +977,751
+XLMIB_RPKT.ce2                        :               977,751            +977,751
+XLMIB_T127.ce2                        :               977,751            +977,751
+XLMIB_R127.ce2                        :               977,751            +977,751
+XLMIB_RPRM.ce2                        :               977,751            +977,751
+MC_PERQ_PKT(0).ce2                    :             1,007,097          +1,007,097
+MC_PERQ_BYTE(0).ce2                   :            98,695,506         +98,695,506
+XLMIB_TBYT.ce3                        :            95,818,128         +95,818,128
+XLMIB_RBYT.ce3                        :            95,818,128         +95,818,128
+XLMIB_TPOK.ce3                        :               977,736            +977,736
+XLMIB_RPOK.ce3                        :               977,735            +977,735
+XLMIB_TUCA.ce3                        :               977,736            +977,736
+XLMIB_RUCA.ce3                        :               977,735            +977,735
+XLMIB_TPKT.ce3                        :               977,736            +977,736
+XLMIB_RPKT.ce3                        :               977,735            +977,735
+XLMIB_T127.ce3                        :               977,736            +977,736
+XLMIB_R127.ce3                        :               977,735            +977,735
+XLMIB_RPRM.ce3                        :             1,485,572          +1,485,572
+MC_PERQ_PKT(0).ce3                    :             1,514,793          +1,514,793
+MC_PERQ_BYTE(0).ce3                   :           148,449,714        +148,449,714
+XLMIB_TBYT.ce4                        :             5,003,194          +5,003,194
+XLMIB_RBYT.ce4                        :             5,003,194          +5,003,194
+XLMIB_TPOK.ce4                        :                51,053             +51,053
+XLMIB_RPOK.ce4                        :                51,053             +51,053
+XLMIB_TUCA.ce4                        :                51,053             +51,053
+XLMIB_RUCA.ce4                        :                51,053             +51,053
+XLMIB_TPKT.ce4                        :                51,053             +51,053
+XLMIB_RPKT.ce4                        :                51,053             +51,053
+XLMIB_T127.ce4                        :                51,053             +51,053
+XLMIB_R127.ce4                        :                51,053             +51,053
+XLMIB_RPRM.ce4                        :                51,053             +51,053
+UC_PERQ_PKT(0).ce4                    :                51,845             +51,845
+UC_PERQ_BYTE(0).ce4                   :             5,080,810          +5,080,810
+XLMIB_TBYT.ce5                        :                 7,896              +7,896
+XLMIB_RBYT.ce5                        :                 7,896              +7,896
+XLMIB_TPOK.ce5                        :                    42                 +42
+XLMIB_RPOK.ce5                        :                    42                 +42
+XLMIB_TUCA.ce5                        :                    42                 +42
+XLMIB_RUCA.ce5                        :                    42                 +42
+XLMIB_TPKT.ce5                        :                    42                 +42
+XLMIB_RPKT.ce5                        :                    42                 +42
+XLMIB_T255.ce5                        :                    42                 +42
+XLMIB_R255.ce5                        :                    42                 +42
+XLMIB_RPRM.ce5                        :                    42                 +42
+UC_PERQ_PKT(0).ce5                    :                    42                 +42
+UC_PERQ_BYTE(0).ce5                   :                 7,896              +7,896
+bcmPWN.0: Logging(2-packets)
+
+Packet[7]: data[0000]: {000000000999} {000000000666} 8100 0001
+Packet[7]: data[0010]: 9100 00c8 0800 4500 00a6 0000 0000 1011 
+Packet[7]: data[0020]: 8c2a 0606 0606 0909 0909 1234 4321 0092 
+Packet[7]: data[0030]: 0000 000a 008a 0000 0000 0000 003c 0000 
+Packet[7]: data[0040]: 0064 1234 007a 0000 0000 0000 0000 0000 
+Packet[7]: data[0050]: 0000 0005 0001 0009 0000 00ff 005e 0000 
+Packet[7]: data[0060]: 0000 aaaa 0000 0000 bbbb 0800 4500 0050 
+Packet[7]: data[0070]: 0001 0000 4011 7497 0101 0101 0202 0202 
+Packet[7]: data[0080]: 0035 0035 003c 32f6 7465 7374 7465 7374 
+Packet[7]: data[0090]: 7465 7374 7465 7374 7465 7374 7465 7374 
+Packet[7]: data[00a0]: 7465 7374 7465 7374 7465 7374 7465 7374 
+Packet[7]: data[00b0]: 7465 7374 7465 7374 7465 7374 
+
+[RX metadata information]
+	PKT_LENGTH=0xc0
+	SRC_PORT_NUM=6
+	SWITCH=1
+	MATCH_ID_LO=0x4404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f10
+	SYSTEM_SOURCE_15_0=6
+	SYSTEM_DESTINATION_15_0=0x801
+	INGRESS_PP_PORT_7_0=6
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+	INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L3
+
+
+LT Table Dump (pkt/byte drops on egress port):
+Table CTR_TM_UC_Q_DROP:
+  lookup PORT_ID=5 BUFFER_POOL=0 TM_UC_Q_ID=0
+    OPERATIONAL_STATE=VALID
+    WRED_PKT=0
+    BYTE=0x1635c976(372623734)
+    PKT=0x3a04ab(3802283)
+    TM_UC_Q_ID=0
+    BUFFER_POOL=0
+    PORT_ID=5
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 

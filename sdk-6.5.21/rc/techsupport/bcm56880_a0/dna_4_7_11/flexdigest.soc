@@ -1,0 +1,24 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Flex Digest RC (run commands) file
+#
+#       These are default commands that are for TechSupport Flex Digest.
+#
+
+# Show available flex digest configurations.
+fd show
+
+# Show Flex Digest related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show Flex Digest related LTs.
+local lt FLEX_DIGEST_NORM_PROFILE_SEED;                            $traverse_lt;
+local lt FLEX_DIGEST_NORM_PROFILE;                                 $traverse_lt;
+local lt FLEX_DIGEST_LKUP_PRESEL;                                  $traverse_lt;
+local lt FLEX_DIGEST_LKUP;                                         $traverse_lt;
+local lt FLEX_DIGEST_LKUP_MASK_PROFILE;                            $traverse_lt;
+local lt FLEX_DIGEST_HASH_PROFILE;                                 $traverse_lt;
+local lt FLEX_DIGEST_HASH_SALT;                                    $traverse_lt;

@@ -1,0 +1,109 @@
+# $Id: rcr.soc,v 1.3 2004/08/03 03:18:05 csm Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Reload script
+#
+#	A system reload is when the software is restarted from scratch
+#	*without* the hardware being reset in any way.  The software
+#	will read the current state out of the hardware and resume as if
+#	nothing had happened.
+#
+#	This script is the reload counterpart to the rc.soc script.
+#	It calls all the steps needed during the reload process to
+#	restore each subsystem.
+#
+#	To use reload mode, the boot flag must be set to indicate reload.
+#	In this mode, the BCM command monitor will attach all devices
+#	and come to the prompt non-destructively.  Then this script is
+#	run to bring all the software modules through reload initialization.
+#	
+#	Assumes the same board configuration config variables are set
+#	that rc.soc uses.
+
+if $?1 "echo reload: arguments not supported; exit"
+
+local echo echo
+
+echo "reload: unit $unit device $devname"
+
+#reload show
+
+# Set convenience local variables
+
+if $?quickturn || $?plisim \
+	"local simulator 1"
+
+# Chip-related
+
+if $?drac || $?drac15 \
+	"local drac_any 1"
+
+# Set software's wait for S-Channel response to 3 seconds for QuickTurn
+# (Recommend at least 10 seconds if the ARL is 100% busy with inserts.)
+if $?quickturn	"stimeout 3000000"
+if $?plisim	"stimeout 60000000"
+
+# Direct phy led programming: 5464 activity led becomes link/activity
+if $?lancelot && $?drac_any \
+	"config add phy_led_ctrl=0x18"
+
+# Direct phy led programming: 5464 led4 becomes energy/link
+if $?magnum \
+	"config add phy_led4_mode_ge=0xc"
+
+#
+# The following commands each do reinitialization instead of
+# initialization when the unit is in reload mode.
+#
+
+# Reinitialize SOC
+init soc
+
+# Reinitialize miscellaneous chip registers
+init misc
+
+# Reinitialize the StrataSwitch MMU registers
+init mmu
+
+#
+# Init CLI and BCM API
+#
+# This must be done after the raw register writes to avoid having state
+# clobbered.  NOTE: Tables are cleared by "init bcm" below.  If
+# table modifications are required, put them after "init bcm".  Some
+# registers might also be affected.
+#
+
+init bcm
+$echo rc: BCM driver reinitialized
+
+# Resume mirroring of hardware ARL operations into software ARL table.
+# The ARL table will be reloaded from hardware.
+
+if $?feature_arl_sorted \
+	"arlmode intr_dma; \
+	 $echo rc: ARL DMA shadowing enabled"
+
+if $?feature_arl_hashed && !$?simulator \
+	"l2mode interval=3000000; \
+	 $echo rc: L2 Table shadowing enabled"
+
+# If running BCM library, resume linkscan task
+
+linkscan interval=250000 spbm=e,hg
+
+# At this point the reload is completed.
+
+echo "Use the command 'reload done' to exit reload mode."
+
+# Restart statistics collection (zeroed)
+
+if $?plisim "local dma false"
+if !$?plisim "local dma true"
+
+counter Interval=1000 Pbm=all Dma=$dma
+
+# Resynchronize the saved values kept by the 'show counter' command.
+if !$?simulator "counter sync"

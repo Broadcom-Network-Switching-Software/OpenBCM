@@ -1,0 +1,461 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[48376]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[43661]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+BCM.0> cint th4_hsdk_mmu_cosq_gport_attach.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200721 (Tue Jul 21 17:44:47 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port : 1
+cosq_gport_traverse_callback: local_port = 1
+cosq_gport_traverse_callback: local_port = 2
+cosq_gport_traverse_callback: local_port = 3
+cosq_gport_traverse_callback: local_port = 4
+cosq_gport_traverse_callback: local_port = 17
+cosq_gport_traverse_callback: local_port = 18
+cosq_gport_traverse_callback: local_port = 19
+cosq_gport_traverse_callback: local_port = 20
+cosq_gport_traverse_callback: local_port = 34
+cosq_gport_traverse_callback: local_port = 35
+cosq_gport_traverse_callback: local_port = 36
+cosq_gport_traverse_callback: local_port = 37
+cosq_gport_traverse_callback: local_port = 51
+cosq_gport_traverse_callback: local_port = 52
+cosq_gport_traverse_callback: local_port = 53
+cosq_gport_traverse_callback: local_port = 54
+cosq_gport_traverse_callback: local_port = 68
+cosq_gport_traverse_callback: local_port = 69
+cosq_gport_traverse_callback: local_port = 70
+cosq_gport_traverse_callback: local_port = 71
+cosq_gport_traverse_callback: local_port = 85
+cosq_gport_traverse_callback: local_port = 86
+cosq_gport_traverse_callback: local_port = 87
+cosq_gport_traverse_callback: local_port = 88
+cosq_gport_traverse_callback: local_port = 102
+cosq_gport_traverse_callback: local_port = 103
+cosq_gport_traverse_callback: local_port = 104
+cosq_gport_traverse_callback: local_port = 105
+cosq_gport_traverse_callback: local_port = 119
+cosq_gport_traverse_callback: local_port = 120
+cosq_gport_traverse_callback: local_port = 121
+cosq_gport_traverse_callback: local_port = 122
+cosq_gport_traverse_callback: local_port = 136
+cosq_gport_traverse_callback: local_port = 137
+cosq_gport_traverse_callback: local_port = 138
+cosq_gport_traverse_callback: local_port = 139
+cosq_gport_traverse_callback: local_port = 152
+cosq_gport_traverse_callback: local_port = 153
+cosq_gport_traverse_callback: local_port = 154
+cosq_gport_traverse_callback: local_port = 155
+cosq_gport_traverse_callback: local_port = 156
+cosq_gport_traverse_callback: local_port = 170
+cosq_gport_traverse_callback: local_port = 171
+cosq_gport_traverse_callback: local_port = 172
+cosq_gport_traverse_callback: local_port = 173
+cosq_gport_traverse_callback: local_port = 187
+cosq_gport_traverse_callback: local_port = 188
+cosq_gport_traverse_callback: local_port = 189
+cosq_gport_traverse_callback: local_port = 190
+cosq_gport_traverse_callback: local_port = 204
+cosq_gport_traverse_callback: local_port = 205
+cosq_gport_traverse_callback: local_port = 206
+cosq_gport_traverse_callback: local_port = 207
+cosq_gport_traverse_callback: local_port = 221
+cosq_gport_traverse_callback: local_port = 222
+cosq_gport_traverse_callback: local_port = 223
+cosq_gport_traverse_callback: local_port = 224
+cosq_gport_traverse_callback: local_port = 238
+cosq_gport_traverse_callback: local_port = 239
+cosq_gport_traverse_callback: local_port = 240
+cosq_gport_traverse_callback: local_port = 241
+cosq_gport_traverse_callback: local_port = 255
+cosq_gport_traverse_callback: local_port = 256
+cosq_gport_traverse_callback: local_port = 257
+cosq_gport_traverse_callback: local_port = 258
+cosq_gport_traverse_callback: local_port = 0
+cpu_queues[0](0x30000000) was attached to sched_nodes=0x37800000
+cpu_queues[1](0x30000001) was attached to sched_nodes=0x37800000
+cpu_queues[2](0x30000002) was attached to sched_nodes=0x37800000
+cpu_queues[3](0x30000003) was attached to sched_nodes=0x37800000
+cpu_queues[4](0x30000004) was attached to sched_nodes=0x37800000
+cpu_queues[5](0x30000005) was attached to sched_nodes=0x37800000
+cpu_queues[6](0x30000006) was attached to sched_nodes=0x37800000
+cpu_queues[7](0x30000007) was attached to sched_nodes=0x37800000
+cpu_queues[8](0x30000008) was attached to sched_nodes=0x37800000
+cpu_queues[9](0x30000009) was attached to sched_nodes=0x37800000
+cpu_queues[10](0x3000000a) was attached to sched_nodes=0x37800000
+cpu_queues[11](0x3000000b) was attached to sched_nodes=0x37800000
+cpu_queues[12](0x3000000c) was attached to sched_nodes=0x37800000
+cpu_queues[13](0x3000000d) was attached to sched_nodes=0x37800000
+cpu_queues[14](0x3000000e) was attached to sched_nodes=0x37800000
+cpu_queues[15](0x3000000f) was attached to sched_nodes=0x37800000
+cpu_queues[16](0x30000010) was attached to sched_nodes=0x37800000
+cpu_queues[17](0x30000011) was attached to sched_nodes=0x37800000
+cpu_queues[18](0x30000012) was attached to sched_nodes=0x37800000
+cpu_queues[19](0x30000013) was attached to sched_nodes=0x37800000
+cpu_queues[20](0x30000014) was attached to sched_nodes=0x37800000
+cpu_queues[21](0x30000015) was attached to sched_nodes=0x37800000
+cpu_queues[22](0x30000016) was attached to sched_nodes=0x37800000
+cpu_queues[23](0x30000017) was attached to sched_nodes=0x37800000
+cpu_queues[24](0x30000018) was attached to sched_nodes=0x37800000
+cpu_queues[25](0x30000019) was attached to sched_nodes=0x37800000
+cpu_queues[26](0x3000001a) was attached to sched_nodes=0x37800000
+cpu_queues[27](0x3000001b) was attached to sched_nodes=0x37800000
+cpu_queues[28](0x3000001c) was attached to sched_nodes=0x37800000
+cpu_queues[29](0x3000001d) was attached to sched_nodes=0x37800000
+cpu_queues[30](0x3000001e) was attached to sched_nodes=0x37800000
+cpu_queues[31](0x3000001f) was attached to sched_nodes=0x37800000
+cpu_queues[32](0x30000020) was attached to sched_nodes=0x37800000
+cpu_queues[33](0x30000021) was attached to sched_nodes=0x37800000
+cpu_queues[34](0x30000022) was attached to sched_nodes=0x37800000
+cpu_queues[35](0x30000023) was attached to sched_nodes=0x37800000
+cpu_queues[36](0x30000024) was attached to sched_nodes=0x37800000
+cpu_queues[37](0x30000025) was attached to sched_nodes=0x37800000
+cpu_queues[38](0x30000026) was attached to sched_nodes=0x37800000
+cpu_queues[39](0x30000027) was attached to sched_nodes=0x37800000
+cpu_queues[40](0x30000028) was attached to sched_nodes=0x37800000
+cpu_queues[41](0x30000029) was attached to sched_nodes=0x37800000
+cpu_queues[42](0x3000002a) was attached to sched_nodes=0x37800000
+cpu_queues[43](0x3000002b) was attached to sched_nodes=0x37800000
+cpu_queues[44](0x3000002c) was attached to sched_nodes=0x37800000
+cpu_queues[45](0x3000002d) was attached to sched_nodes=0x37800000
+cpu_queues[46](0x3000002e) was attached to sched_nodes=0x37800000
+cpu_queues[47](0x3000002f) was attached to sched_nodes=0x37800000
+cpu_queues->sched_nodes[0]=0x37800000
+cpu_queues->sched_nodes[1]=0x37810000
+cpu_queues->sched_nodes[2]=0x37820000
+cpu_queues->sched_nodes[3]=0x37830000
+cpu_queues->sched_nodes[4]=0x37840000
+cpu_queues->sched_nodes[5]=0x37850000
+cpu_queues->sched_nodes[6]=0x37860000
+cpu_queues->sched_nodes[7]=0x37870000
+cpu_queues->sched_nodes[8]=0x37880000
+cpu_queues->sched_nodes[9]=0x37890000
+cpu_queues->sched_nodes[10]=0x378a0000
+cpu_queues->sched_nodes[11]=0x378b0000
+==> cpu_queue_to_L0_node_remap
+--> Map CPU COS 0 to rx channel 0
+rx_queue_channel_set: Detach the 0th CPU queue 0x30000000 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 0th CPU queue 0x30000000 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach check: The 0th child of the 0th sch node 0x37800000 is 0x30000000
+--> Map CPU COS 1 to rx channel 1
+rx_queue_channel_set: Detach the 1th CPU queue 0x30000001 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 1th CPU queue 0x30000001 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach check: The 1th child of the 1th sch node 0x37810000 is 0x30000001
+--> Map CPU COS 2 to rx channel 2
+rx_queue_channel_set: Detach the 2th CPU queue 0x30000002 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 2th CPU queue 0x30000002 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach check: The 2th child of the 2th sch node 0x37820000 is 0x30000002
+--> Map CPU COS 3 to rx channel 3
+rx_queue_channel_set: Detach the 3th CPU queue 0x30000003 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 3th CPU queue 0x30000003 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach check: The 3th child of the 3th sch node 0x37830000 is 0x30000003
+--> Map CPU COS 4 to rx channel 4
+rx_queue_channel_set: Detach the 4th CPU queue 0x30000004 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 4th CPU queue 0x30000004 to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach check: The 4th child of the 4th sch node 0x37840000 is 0x30000004
+--> Map CPU COS 5 to rx channel 5
+rx_queue_channel_set: Detach the 5th CPU queue 0x30000005 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 5th CPU queue 0x30000005 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach check: The 5th child of the 5th sch node 0x37850000 is 0x30000005
+--> Map CPU COS 6 to rx channel 6
+rx_queue_channel_set: Detach the 6th CPU queue 0x30000006 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 6th CPU queue 0x30000006 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach check: The 6th child of the 6th sch node 0x37860000 is 0x30000006
+--> Map CPU COS 7 to rx channel 7
+rx_queue_channel_set: Detach the 7th CPU queue 0x30000007 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 7th CPU queue 0x30000007 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach check: The 7th child of the 7th sch node 0x37870000 is 0x30000007
+--> Map CPU COS 8 to rx channel 8
+rx_queue_channel_set: Detach the 8th CPU queue 0x30000008 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 8th CPU queue 0x30000008 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach check: The 8th child of the 8th sch node 0x37880000 is 0x30000008
+--> Map CPU COS 9 to rx channel 9
+rx_queue_channel_set: Detach the 9th CPU queue 0x30000009 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 9th CPU queue 0x30000009 to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach check: The 9th child of the 9th sch node 0x37890000 is 0x30000009
+--> Map CPU COS 10 to rx channel 10
+rx_queue_channel_set: Detach the 10th CPU queue 0x3000000a from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 10th CPU queue 0x3000000a to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach check: The 10th child of the 10th sch node 0x378a0000 is 0x3000000a
+--> Map CPU COS 11 to rx channel 0
+rx_queue_channel_set: Detach the 11th CPU queue 0x3000000b from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 11th CPU queue 0x3000000b to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach check: The 11th child of the 0th sch node 0x37800000 is 0x3000000b
+--> Map CPU COS 12 to rx channel 1
+rx_queue_channel_set: Detach the 12th CPU queue 0x3000000c from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 12th CPU queue 0x3000000c to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach check: The 12th child of the 1th sch node 0x37810000 is 0x3000000c
+--> Map CPU COS 13 to rx channel 2
+rx_queue_channel_set: Detach the 13th CPU queue 0x3000000d from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 13th CPU queue 0x3000000d to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach check: The 13th child of the 2th sch node 0x37820000 is 0x3000000d
+--> Map CPU COS 14 to rx channel 3
+rx_queue_channel_set: Detach the 14th CPU queue 0x3000000e from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 14th CPU queue 0x3000000e to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach check: The 14th child of the 3th sch node 0x37830000 is 0x3000000e
+--> Map CPU COS 15 to rx channel 4
+rx_queue_channel_set: Detach the 15th CPU queue 0x3000000f from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 15th CPU queue 0x3000000f to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach check: The 15th child of the 4th sch node 0x37840000 is 0x3000000f
+--> Map CPU COS 16 to rx channel 5
+rx_queue_channel_set: Detach the 16th CPU queue 0x30000010 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 16th CPU queue 0x30000010 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach check: The 16th child of the 5th sch node 0x37850000 is 0x30000010
+--> Map CPU COS 17 to rx channel 6
+rx_queue_channel_set: Detach the 17th CPU queue 0x30000011 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 17th CPU queue 0x30000011 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach check: The 17th child of the 6th sch node 0x37860000 is 0x30000011
+--> Map CPU COS 18 to rx channel 7
+rx_queue_channel_set: Detach the 18th CPU queue 0x30000012 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 18th CPU queue 0x30000012 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach check: The 18th child of the 7th sch node 0x37870000 is 0x30000012
+--> Map CPU COS 19 to rx channel 8
+rx_queue_channel_set: Detach the 19th CPU queue 0x30000013 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 19th CPU queue 0x30000013 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach check: The 19th child of the 8th sch node 0x37880000 is 0x30000013
+--> Map CPU COS 20 to rx channel 9
+rx_queue_channel_set: Detach the 20th CPU queue 0x30000014 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 20th CPU queue 0x30000014 to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach check: The 20th child of the 9th sch node 0x37890000 is 0x30000014
+--> Map CPU COS 21 to rx channel 10
+rx_queue_channel_set: Detach the 21th CPU queue 0x30000015 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 21th CPU queue 0x30000015 to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach check: The 21th child of the 10th sch node 0x378a0000 is 0x30000015
+--> Map CPU COS 22 to rx channel 0
+rx_queue_channel_set: Detach the 22th CPU queue 0x30000016 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 22th CPU queue 0x30000016 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach check: The 22th child of the 0th sch node 0x37800000 is 0x30000016
+--> Map CPU COS 23 to rx channel 1
+rx_queue_channel_set: Detach the 23th CPU queue 0x30000017 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 23th CPU queue 0x30000017 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach check: The 23th child of the 1th sch node 0x37810000 is 0x30000017
+--> Map CPU COS 24 to rx channel 2
+rx_queue_channel_set: Detach the 24th CPU queue 0x30000018 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 24th CPU queue 0x30000018 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach check: The 24th child of the 2th sch node 0x37820000 is 0x30000018
+--> Map CPU COS 25 to rx channel 3
+rx_queue_channel_set: Detach the 25th CPU queue 0x30000019 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 25th CPU queue 0x30000019 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach check: The 25th child of the 3th sch node 0x37830000 is 0x30000019
+--> Map CPU COS 26 to rx channel 4
+rx_queue_channel_set: Detach the 26th CPU queue 0x3000001a from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 26th CPU queue 0x3000001a to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach check: The 26th child of the 4th sch node 0x37840000 is 0x3000001a
+--> Map CPU COS 27 to rx channel 5
+rx_queue_channel_set: Detach the 27th CPU queue 0x3000001b from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 27th CPU queue 0x3000001b to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach check: The 27th child of the 5th sch node 0x37850000 is 0x3000001b
+--> Map CPU COS 28 to rx channel 6
+rx_queue_channel_set: Detach the 28th CPU queue 0x3000001c from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 28th CPU queue 0x3000001c to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach check: The 28th child of the 6th sch node 0x37860000 is 0x3000001c
+--> Map CPU COS 29 to rx channel 7
+rx_queue_channel_set: Detach the 29th CPU queue 0x3000001d from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 29th CPU queue 0x3000001d to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach check: The 29th child of the 7th sch node 0x37870000 is 0x3000001d
+--> Map CPU COS 30 to rx channel 8
+rx_queue_channel_set: Detach the 30th CPU queue 0x3000001e from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 30th CPU queue 0x3000001e to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach check: The 30th child of the 8th sch node 0x37880000 is 0x3000001e
+--> Map CPU COS 31 to rx channel 9
+rx_queue_channel_set: Detach the 31th CPU queue 0x3000001f from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 31th CPU queue 0x3000001f to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach check: The 31th child of the 9th sch node 0x37890000 is 0x3000001f
+--> Map CPU COS 32 to rx channel 10
+rx_queue_channel_set: Detach the 32th CPU queue 0x30000020 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 32th CPU queue 0x30000020 to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach check: The 32th child of the 10th sch node 0x378a0000 is 0x30000020
+--> Map CPU COS 33 to rx channel 0
+rx_queue_channel_set: Detach the 33th CPU queue 0x30000021 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 33th CPU queue 0x30000021 to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach check: The 33th child of the 0th sch node 0x37800000 is 0x30000021
+--> Map CPU COS 34 to rx channel 1
+rx_queue_channel_set: Detach the 34th CPU queue 0x30000022 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 34th CPU queue 0x30000022 to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach check: The 34th child of the 1th sch node 0x37810000 is 0x30000022
+--> Map CPU COS 35 to rx channel 2
+rx_queue_channel_set: Detach the 35th CPU queue 0x30000023 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 35th CPU queue 0x30000023 to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach check: The 35th child of the 2th sch node 0x37820000 is 0x30000023
+--> Map CPU COS 36 to rx channel 3
+rx_queue_channel_set: Detach the 36th CPU queue 0x30000024 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 36th CPU queue 0x30000024 to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach check: The 36th child of the 3th sch node 0x37830000 is 0x30000024
+--> Map CPU COS 37 to rx channel 4
+rx_queue_channel_set: Detach the 37th CPU queue 0x30000025 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 37th CPU queue 0x30000025 to the 4th node of L0(0x37840000)
+rx_queue_channel_set: Attach check: The 37th child of the 4th sch node 0x37840000 is 0x30000025
+--> Map CPU COS 38 to rx channel 5
+rx_queue_channel_set: Detach the 38th CPU queue 0x30000026 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 38th CPU queue 0x30000026 to the 5th node of L0(0x37850000)
+rx_queue_channel_set: Attach check: The 38th child of the 5th sch node 0x37850000 is 0x30000026
+--> Map CPU COS 39 to rx channel 6
+rx_queue_channel_set: Detach the 39th CPU queue 0x30000027 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 39th CPU queue 0x30000027 to the 6th node of L0(0x37860000)
+rx_queue_channel_set: Attach check: The 39th child of the 6th sch node 0x37860000 is 0x30000027
+--> Map CPU COS 40 to rx channel 7
+rx_queue_channel_set: Detach the 40th CPU queue 0x30000028 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 40th CPU queue 0x30000028 to the 7th node of L0(0x37870000)
+rx_queue_channel_set: Attach check: The 40th child of the 7th sch node 0x37870000 is 0x30000028
+--> Map CPU COS 41 to rx channel 8
+rx_queue_channel_set: Detach the 41th CPU queue 0x30000029 from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 41th CPU queue 0x30000029 to the 8th node of L0(0x37880000)
+rx_queue_channel_set: Attach check: The 41th child of the 8th sch node 0x37880000 is 0x30000029
+--> Map CPU COS 42 to rx channel 9
+rx_queue_channel_set: Detach the 42th CPU queue 0x3000002a from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 42th CPU queue 0x3000002a to the 9th node of L0(0x37890000)
+rx_queue_channel_set: Attach check: The 42th child of the 9th sch node 0x37890000 is 0x3000002a
+--> Map CPU COS 43 to rx channel 10
+rx_queue_channel_set: Detach the 43th CPU queue 0x3000002b from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 43th CPU queue 0x3000002b to the 10th node of L0(0x378a0000)
+rx_queue_channel_set: Attach check: The 43th child of the 10th sch node 0x378a0000 is 0x3000002b
+--> Map CPU COS 44 to rx channel 0
+rx_queue_channel_set: Detach the 44th CPU queue 0x3000002c from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 44th CPU queue 0x3000002c to the 0th node of L0(0x37800000)
+rx_queue_channel_set: Attach check: The 44th child of the 0th sch node 0x37800000 is 0x3000002c
+--> Map CPU COS 45 to rx channel 1
+rx_queue_channel_set: Detach the 45th CPU queue 0x3000002d from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 45th CPU queue 0x3000002d to the 1th node of L0(0x37810000)
+rx_queue_channel_set: Attach check: The 45th child of the 1th sch node 0x37810000 is 0x3000002d
+--> Map CPU COS 46 to rx channel 2
+rx_queue_channel_set: Detach the 46th CPU queue 0x3000002e from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 46th CPU queue 0x3000002e to the 2th node of L0(0x37820000)
+rx_queue_channel_set: Attach check: The 46th child of the 2th sch node 0x37820000 is 0x3000002e
+--> Map CPU COS 47 to rx channel 3
+rx_queue_channel_set: Detach the 47th CPU queue 0x3000002f from the 0th L0 node(0x37800000)
+rx_queue_channel_set: Attaching the 47th CPU queue 0x3000002f to the 3th node of L0(0x37830000)
+rx_queue_channel_set: Attach check: The 47th child of the 3th sch node 0x37830000 is 0x3000002f
+test_setup() DONE.
+
+======================================
+==> Verify unicast pkt from port 1 forwarding to CPU port
+======================================
+
+Packet from data=<>, length=68
+pktioRxCallback: received from port 1
+pktioRxCallback: PASS
+FlexCtr Get : 1 packets / 72 bytes
+Per queue packet counter check successful.
+==>Cleaning up...
+==> cpu_queue_to_L0_node_restore
+Detach 0th CPU queue 0x30000000 from 0th L0 node(0x37800000)
+Attach 0th CPU queue 0x30000000 to the 0th node of L0(0x37800000)
+Detach 1th CPU queue 0x30000001 from 1th L0 node(0x37810000)
+Attach 1th CPU queue 0x30000001 to the 0th node of L0(0x37800000)
+Detach 2th CPU queue 0x30000002 from 2th L0 node(0x37820000)
+Attach 2th CPU queue 0x30000002 to the 0th node of L0(0x37800000)
+Detach 3th CPU queue 0x30000003 from 3th L0 node(0x37830000)
+Attach 3th CPU queue 0x30000003 to the 0th node of L0(0x37800000)
+Detach 4th CPU queue 0x30000004 from 4th L0 node(0x37840000)
+Attach 4th CPU queue 0x30000004 to the 0th node of L0(0x37800000)
+Detach 5th CPU queue 0x30000005 from 5th L0 node(0x37850000)
+Attach 5th CPU queue 0x30000005 to the 0th node of L0(0x37800000)
+Detach 6th CPU queue 0x30000006 from 6th L0 node(0x37860000)
+Attach 6th CPU queue 0x30000006 to the 0th node of L0(0x37800000)
+Detach 7th CPU queue 0x30000007 from 7th L0 node(0x37870000)
+Attach 7th CPU queue 0x30000007 to the 0th node of L0(0x37800000)
+Detach 8th CPU queue 0x30000008 from 8th L0 node(0x37880000)
+Attach 8th CPU queue 0x30000008 to the 0th node of L0(0x37800000)
+Detach 9th CPU queue 0x30000009 from 9th L0 node(0x37890000)
+Attach 9th CPU queue 0x30000009 to the 0th node of L0(0x37800000)
+Detach 10th CPU queue 0x3000000a from 10th L0 node(0x378a0000)
+Attach 10th CPU queue 0x3000000a to the 0th node of L0(0x37800000)
+Detach 11th CPU queue 0x3000000b from 0th L0 node(0x37800000)
+Attach 11th CPU queue 0x3000000b to the 0th node of L0(0x37800000)
+Detach 12th CPU queue 0x3000000c from 1th L0 node(0x37810000)
+Attach 12th CPU queue 0x3000000c to the 0th node of L0(0x37800000)
+Detach 13th CPU queue 0x3000000d from 2th L0 node(0x37820000)
+Attach 13th CPU queue 0x3000000d to the 0th node of L0(0x37800000)
+Detach 14th CPU queue 0x3000000e from 3th L0 node(0x37830000)
+Attach 14th CPU queue 0x3000000e to the 0th node of L0(0x37800000)
+Detach 15th CPU queue 0x3000000f from 4th L0 node(0x37840000)
+Attach 15th CPU queue 0x3000000f to the 0th node of L0(0x37800000)
+Detach 16th CPU queue 0x30000010 from 5th L0 node(0x37850000)
+Attach 16th CPU queue 0x30000010 to the 0th node of L0(0x37800000)
+Detach 17th CPU queue 0x30000011 from 6th L0 node(0x37860000)
+Attach 17th CPU queue 0x30000011 to the 0th node of L0(0x37800000)
+Detach 18th CPU queue 0x30000012 from 7th L0 node(0x37870000)
+Attach 18th CPU queue 0x30000012 to the 0th node of L0(0x37800000)
+Detach 19th CPU queue 0x30000013 from 8th L0 node(0x37880000)
+Attach 19th CPU queue 0x30000013 to the 0th node of L0(0x37800000)
+Detach 20th CPU queue 0x30000014 from 9th L0 node(0x37890000)
+Attach 20th CPU queue 0x30000014 to the 0th node of L0(0x37800000)
+Detach 21th CPU queue 0x30000015 from 10th L0 node(0x378a0000)
+Attach 21th CPU queue 0x30000015 to the 0th node of L0(0x37800000)
+Detach 22th CPU queue 0x30000016 from 0th L0 node(0x37800000)
+Attach 22th CPU queue 0x30000016 to the 0th node of L0(0x37800000)
+Detach 23th CPU queue 0x30000017 from 1th L0 node(0x37810000)
+Attach 23th CPU queue 0x30000017 to the 0th node of L0(0x37800000)
+Detach 24th CPU queue 0x30000018 from 2th L0 node(0x37820000)
+Attach 24th CPU queue 0x30000018 to the 0th node of L0(0x37800000)
+Detach 25th CPU queue 0x30000019 from 3th L0 node(0x37830000)
+Attach 25th CPU queue 0x30000019 to the 0th node of L0(0x37800000)
+Detach 26th CPU queue 0x3000001a from 4th L0 node(0x37840000)
+Attach 26th CPU queue 0x3000001a to the 0th node of L0(0x37800000)
+Detach 27th CPU queue 0x3000001b from 5th L0 node(0x37850000)
+Attach 27th CPU queue 0x3000001b to the 0th node of L0(0x37800000)
+Detach 28th CPU queue 0x3000001c from 6th L0 node(0x37860000)
+Attach 28th CPU queue 0x3000001c to the 0th node of L0(0x37800000)
+Detach 29th CPU queue 0x3000001d from 7th L0 node(0x37870000)
+Attach 29th CPU queue 0x3000001d to the 0th node of L0(0x37800000)
+Detach 30th CPU queue 0x3000001e from 8th L0 node(0x37880000)
+Attach 30th CPU queue 0x3000001e to the 0th node of L0(0x37800000)
+Detach 31th CPU queue 0x3000001f from 9th L0 node(0x37890000)
+Attach 31th CPU queue 0x3000001f to the 0th node of L0(0x37800000)
+Detach 32th CPU queue 0x30000020 from 10th L0 node(0x378a0000)
+Attach 32th CPU queue 0x30000020 to the 0th node of L0(0x37800000)
+Detach 33th CPU queue 0x30000021 from 0th L0 node(0x37800000)
+Attach 33th CPU queue 0x30000021 to the 0th node of L0(0x37800000)
+Detach 34th CPU queue 0x30000022 from 1th L0 node(0x37810000)
+Attach 34th CPU queue 0x30000022 to the 0th node of L0(0x37800000)
+Detach 35th CPU queue 0x30000023 from 2th L0 node(0x37820000)
+Attach 35th CPU queue 0x30000023 to the 0th node of L0(0x37800000)
+Detach 36th CPU queue 0x30000024 from 3th L0 node(0x37830000)
+Attach 36th CPU queue 0x30000024 to the 0th node of L0(0x37800000)
+Detach 37th CPU queue 0x30000025 from 4th L0 node(0x37840000)
+Attach 37th CPU queue 0x30000025 to the 0th node of L0(0x37800000)
+Detach 38th CPU queue 0x30000026 from 5th L0 node(0x37850000)
+Attach 38th CPU queue 0x30000026 to the 0th node of L0(0x37800000)
+Detach 39th CPU queue 0x30000027 from 6th L0 node(0x37860000)
+Attach 39th CPU queue 0x30000027 to the 0th node of L0(0x37800000)
+Detach 40th CPU queue 0x30000028 from 7th L0 node(0x37870000)
+Attach 40th CPU queue 0x30000028 to the 0th node of L0(0x37800000)
+Detach 41th CPU queue 0x30000029 from 8th L0 node(0x37880000)
+Attach 41th CPU queue 0x30000029 to the 0th node of L0(0x37800000)
+Detach 42th CPU queue 0x3000002a from 9th L0 node(0x37890000)
+Attach 42th CPU queue 0x3000002a to the 0th node of L0(0x37800000)
+Detach 43th CPU queue 0x3000002b from 10th L0 node(0x378a0000)
+Attach 43th CPU queue 0x3000002b to the 0th node of L0(0x37800000)
+Detach 44th CPU queue 0x3000002c from 0th L0 node(0x37800000)
+Attach 44th CPU queue 0x3000002c to the 0th node of L0(0x37800000)
+Detach 45th CPU queue 0x3000002d from 1th L0 node(0x37810000)
+Attach 45th CPU queue 0x3000002d to the 0th node of L0(0x37800000)
+Detach 46th CPU queue 0x3000002e from 2th L0 node(0x37820000)
+Attach 46th CPU queue 0x3000002e to the 0th node of L0(0x37800000)
+Detach 47th CPU queue 0x3000002f from 3th L0 node(0x37830000)
+Attach 47th CPU queue 0x3000002f to the 0th node of L0(0x37800000)
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

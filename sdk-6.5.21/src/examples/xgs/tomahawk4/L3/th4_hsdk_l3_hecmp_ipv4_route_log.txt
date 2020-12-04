@@ -1,0 +1,147 @@
+BCM.0> cint th4_hsdk_l3_hecmp_ipv4_route.c
+Ingress_port_multi_setup port: 1 setup
+Egress_port_multi_setup port: 2 setup
+Egress_port_multi_setup port: 36 setup
+Egress_port_multi_setup port: 70 setup
+Egress_port_multi_setup port: 85 setup
+Egress_port_multi_setup port: 170 setup
+
+Completed test setup successfully.
+
+l3 ecmp show
+ECMP group 204096(OverLay):
+        Dynamic mode 5, Flags 0x8, Max path 128
+        Interfaces: (member count 2)
+        {0 200001} {0 200002}
+ECMP group 200001(UnderLay):
+        Dynamic mode 5, Flags 0x0, Max path 512
+        Interfaces: (member count 3)
+        {100001} {100002} {100003}
+ECMP group 200002(UnderLay):
+        Dynamic mode 5, Flags 0x0, Max path 512
+        Interfaces: (member count 2)
+        {100004} {100005}
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      192.168.1.0/24      204096 0    0
+
+l3 intf show
+INTF  VID   MAC Address
+----------------------------------------------
+1     30    00:00:00:00:00:11  UnderLay
+
+2     40    00:00:00:00:11:11  UnderLay
+
+3     50    00:00:00:11:11:11  UnderLay
+
+4     60    00:00:00:00:00:33  UnderLay
+
+5     70    00:00:00:00:33:33  UnderLay
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:22      1     2            0     0   underlay   no
+
+100002  00:00:00:00:22:22      2    85            0     0   underlay   no
+
+100003  00:00:00:22:22:22      3    70            0     0   underlay   no
+
+100004  00:00:00:00:00:44      4   170            0     0   underlay   no
+
+100005  00:00:00:00:44:44      5    36            0     0   underlay   no
+
+Sending 8 unicast packets to ingress port 1
+Packet from data=<>, length=64
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000004444} {000000003333} 8100 0046
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[1]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:44:44> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0046> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000004444} {000000003333} 8100 0046
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[2]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:44:44> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0046> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000002222} {000000001111} 8100 0028
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[3]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0028> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000002222} {000000001111} 8100 0028
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[4]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0028> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[5]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[5]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000222222} {000000111111} 8100 0032
+[bcmPWN.0]Packet[6]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[6]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[6]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:22:22:22> src<00:00:00:11:11:11> Tagged Packet ProtID<0x8100> Ctrl<0x0032> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[7]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[7]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[7]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[8]: data[0010]: 0800 4500 002a 0000 0000 3fff a4e5 0a0a
+[bcmPWN.0]Packet[8]: data[0020]: 0a2a c0a8 0114 0001 0203 0000 0000 0000
+[bcmPWN.0]Packet[8]: data[0030]: 0000 0000 0000 0000 0000 0000 024d 7bd6
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.42> dst<192.168.1.20> hl<5> service-type<0> tl<42> id<0> frg-off<0> ttl<63> > chk-sum<0xa4e5>
+
+-------------------------------------
+    RESULT OF PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+
+Routed : 8 packets / 544 bytes
+
+--------------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+--------------------------------------------
+Test = [PASS]
+--------------------------------------------
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

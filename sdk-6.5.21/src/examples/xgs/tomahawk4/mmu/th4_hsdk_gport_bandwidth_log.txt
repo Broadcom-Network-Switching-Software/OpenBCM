@@ -1,0 +1,43 @@
+# ./bcm.user -y case/bcm56990_a0-lossy-64x400.config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:14:09 2020)
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint th4_hsdk_gport_bandwidth.c
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:14:09 2020)
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56880_A0_BASE, BCM56990_A0_BASE, BCM56990_B0_BASE
+     BCM56996_A0_BASE, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2
+     BCM56880_A0_DNA_4_7_8, BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Test port/vlan configuration:
+   Name Port VLAN
+  cd0    1 1000
+  cd1    2 1001
+  cd2    3 1002
+  cd3    4 1003
+  cd4   17 1004
+  cd5   18 1005
+Start traffic on storm ports
+Check shapers:
+Port cd2; Measured rate: 500716 kbps; Expected rate: 500000 kbps; Error:  716 kbps (14/50); PASS
+Port cd3; Measured rate: 250500 kbps; Expected rate: 250016 kbps; Error:  484 kbps (19/50); PASS
+Port cd4; Measured rate: 125313 kbps; Expected rate: 125024 kbps; Error:  289 kbps (23/50); PASS
+Port cd5; Measured rate:  62698 kbps; Expected rate:  62528 kbps; Error:  170 kbps (27/50); PASS
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+

@@ -1,0 +1,85 @@
+BCM.0> c VXLAN_INGRESS_MEMBERSHIP_CHECK.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191010 (Thu Oct 10 08:40:53 2019)
+From sdkrel@lc-sj1-4870:/projects/ntsw_sw18_scratch/sdkrel/regress/sdk-6.5.18-EA6/src/sdk.hsdk.release.build
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_DNA_4_4_11
+Access port: 2
+Network port: 61
+vpn: 0x8064
+acc_flow_port: 0xb0000001
+net_flow_port: 0xb0000002
+network egr L3 intf: 0x4001
+network egr object: 0x206a1
+Completed test setup successfully.
+
+******************************
+******Traffic test start******
+UC Packet comes into network port 61, expect to foward to access port 2
+tx 1 pbm=61 data=0xE8A2D93A7E952CEBD792C76A81002092080045E800A0000000002211B886495FB3DB76C66ADE000012B5008CAAE0080000000339D1008A77BAB322C618BFA3C4124408004500006E00000000B5064D59C2F433C69B412635006F00DEEDAC9872229431E4500000001D1300004B75E96BE516F4E596D17C37310FA37001B0622F8355815A174E471EC33F2443C869F9809CDBADDE241B8E0E69080A425988F62608F150F3EAA952356A35D3C71BB4E751000135F29D6D;sleep 5
+Packet from data=<>, length=182
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {8a77bab322c6} {18bfa3c41244} 8100 2776
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 006e 0000 0000 b506 4d59 c2f4 
+[bcmPWN.0]Packet[1]: data[0020]: 33c6 9b41 2635 006f 00de edac 9872 2294 
+[bcmPWN.0]Packet[1]: data[0030]: 31e4 5000 0000 1d13 0000 4b75 e96b e516 
+[bcmPWN.0]Packet[1]: data[0040]: f4e5 96d1 7c37 310f a370 01b0 622f 8355 
+[bcmPWN.0]Packet[1]: data[0050]: 815a 174e 471e c33f 2443 c869 f980 9cdb 
+[bcmPWN.0]Packet[1]: data[0060]: adde 241b 8e0e 6908 0a42 5988 f626 08f1 
+[bcmPWN.0]Packet[1]: data[0070]: 50f3 eaa9 5235 6a35 d3c7 1bb4 e751 0001 
+[bcmPWN.0]Packet[1]: data[0080]: 35f2 9d6d 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH                      :0x88(136)
+	SRC_PORT_NUM                    :0x2(2)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x103222(1061410)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+[FLEX fields]
+	PARSER_VHLEN_0_15_0             :0x8a
+	VFI_15_0                        :0x776
+	L2_IIF_10_0                     :0x2
+	SYSTEM_SOURCE_15_0              :0x2
+	L2_OIF_10_0                     :0xa0
+	INGRESS_PP_PORT_7_0             :0x2
+	SYSTEM_DESTINATION_15_0         :0xa0
+	EFFECTIVE_TTL_7_0               :0x7b5
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+	INT_PRI_3_0                     :0x1
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+[RX reasons]
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<8a:77:ba:b3:22:c6> src<18:bf:a3:c4:12:44> Tagged Packet ProtID<0x8100> Ctrl<0x2776> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<194.244.51.198> dst<155.65.38.53> hl<5> service-type<0> tl<110> id<0> frg-off<0> ttl<181> > chk-sum<0x4d59>
+Packet[1]:   TCP: sPort<111> dPort<222> Seq<3987511410> Ack<580137444> Off<5> Flags<0x00=> Csum<0x1d13> Urp<0x0000>
+Sleeping for 5 seconds
+
+******Port stats check******
+--------Network port (61) stats--------
+Rx : 1 packets / 186 bytes
+--------Access port (2) stats--------
+Tx : 1 packets / 136 bytes
+
+Clear counter and enable ingress membership checking
+UC Packet comes into network port 61, expect to foward to access port 2
+tx 1 pbm=61 data=0xE8A2D93A7E952CEBD792C76A81002092080045E800A0000000002211B886495FB3DB76C66ADE000012B5008CAAE0080000000339D1008A77BAB322C618BFA3C4124408004500006E00000000B5064D59C2F433C69B412635006F00DEEDAC9872229431E4500000001D1300004B75E96BE516F4E596D17C37310FA37001B0622F8355815A174E471EC33F2443C869F9809CDBADDE241B8E0E69080A425988F62608F150F3EAA952356A35D3C71BB4E751000135F29D6D;sleep 5
+Packet from data=<>, length=182
+Sleeping for 5 seconds
+bcmPWN.0: WARNING: Not running
+
+******Port stats check******
+--------Network port (61) stats--------
+Rx : 1 packets / 186 bytes
+--------Access port (2) stats--------
+Tx : 0 packets / 0 bytes
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

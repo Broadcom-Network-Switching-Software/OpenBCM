@@ -1,0 +1,31 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section intro Overview
+
+The Linux Driver library contains drivers to allow the SDK to iteract
+with the Linux kernel.
+
+The code is provided as example code, but is generally of production
+quality and may be reused in customer applications.
+
+\section linux_build Build
+
+The kernel modules will be built using the make files that are part of
+the Linux kernel sources. This will ensure that the kernel modules are
+built with the correct compiler flags for the target kernel.
+
+The makefile for the user mode interface is built upon the make
+include files in the <tt>$SDK/make</tt> directory.
+
+\section linux_comp Linux Driver Components
+
+The following pages contain detailed information about each of the
+Linux driver components.
+
+- \subpage ngbde
+
+- \subpage bcmlu
+
+*/

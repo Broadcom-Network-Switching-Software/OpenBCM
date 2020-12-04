@@ -1,0 +1,106 @@
+#
+# file: bcmptm_rm_alpm_ha.yml
+# YAML file describing the HA data structures.
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    ALPM_PKMS: 20
+
+component:
+    bcmptm_rm_alpm_ha:
+        bcmptm_rm_alpm_trans_state_t:
+            type: enum
+            comment: RM ALPM transaction state.
+            fields:
+                RM_ALPM_IDLE: 0
+                RM_ALPM_CHANGED:
+
+        bcmptm_rm_alpm_ha_t:
+            type: struct
+            comment: RM ALPM ha structure.
+            fields:
+                trans_id:
+                    type: uint32_t
+                    comment: Transaction ID.
+
+                trans_state:
+                    type: bcmptm_rm_alpm_trans_state_t
+                    comment: Transaction state.
+
+        bcmptm_rm_alpm_l1_ha_t:
+            type: struct
+            comment: RM ALPM level 1 ha structure.
+            fields:
+                range1_first_db0:
+                    type: int
+                    comment: Level 1 DB0 range1 first.
+                    length: ALPM_PKMS
+
+                range1_first_db1:
+                    type: int
+                    comment: Level 1 DB1 range1 first.
+                    length: ALPM_PKMS
+
+                range1_first_db2:
+                    type: int
+                    comment: Level 1 DB2 range1 first.
+                    length: ALPM_PKMS
+
+                range1_first_db3:
+                    type: int
+                    comment: Level 1 DB3 range1 first.
+                    length: ALPM_PKMS
+        bcmptm_rm_alpm_ln_stat_t:
+            type: struct
+            comment: RM ALPM Level n stats
+            fields:
+                c_insert:
+                    type: uint32_t
+                    comment: Number of entries inserted.
+                c_update_dt:
+                    type: uint32_t
+                    comment: Number of entries updated with data type change.
+                c_update:
+                    type: uint32_t
+                    comment: Number of entries updated.
+                c_delete:
+                    type: uint32_t
+                    comment: Number of entries deleted.
+                c_peak:
+                    type: uint32_t
+                    comment: Peak of all number of entries.
+                c_last_peak:
+                    type: uint32_t
+                    comment: The last peak of number of entries.
+                c_last_full:
+                    type: uint32_t
+                    comment: Number of entries when last full occurs.
+                c_curr:
+                    type: uint32_t
+                    comment: Number of entries at present.
+                c_traverse_merge:
+                    type: uint32_t
+                    comment: Number of traverse merge.
+
+        bcmptm_rm_alpm_ln_ha_t:
+            type: struct
+            comment: RM ALPM level n ha structure.
+            fields:
+                db0_stats:
+                    type: bcmptm_rm_alpm_ln_stat_t
+                    comment: Level n stats of database 0.
+                db1_stats:
+                    type: bcmptm_rm_alpm_ln_stat_t
+                    comment: Level n stats of database 1.
+                db2_stats:
+                    type: bcmptm_rm_alpm_ln_stat_t
+                    comment: Level n stats of database 2.
+                db3_stats:
+                    type: bcmptm_rm_alpm_ln_stat_t
+                    comment: Level n stats of database 3.

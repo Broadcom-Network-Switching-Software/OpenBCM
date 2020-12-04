@@ -1,0 +1,18 @@
+BCM.0> c /projects/ntsw-sw7/home/daithal/master/src/examples/ltsw/trident4/qos/td4_hsdk_qos_pfc_deadlock.c
+    os=unix
+Attach: Unit 0 (BCM56880_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.18 built 20191028 (Mon Oct 28 09:07:24 2019)
+From sdkrel@lc-sj1-4513:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56880
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+
+Variant drivers:
+     (null), BCM56880_A0_BASE, BCM56880_A0_BASE_APP, BCM56880_A0_DNA_4_4_11
+     BCM56880_A0_DNA_4_4_12, BCM56880_A0_DNA_4_4_9, BCM56880_A0_DNA_4_5_0, BCM56880_A0_IDNA_4_4_9
+int $$ = 0 (0x0)
+Show c to indicate packets are not drained from queue due to PFC XOFF received on cd1
+Sleeping for 5 seconds
+Show c to indicate packets drained of PFC queues due to deadlock recovery
+bcm_error_t $$ = BCM_E_NONE (0)
+

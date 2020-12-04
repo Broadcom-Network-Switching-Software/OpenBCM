@@ -1,0 +1,40 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport FLOWTRACKER RC (run commands) file
+#
+#       These are default commands that are for TechSupport FLOWTRACKER.
+#
+
+
+#Flow learn, export and age statistics
+flowtracker sw show
+
+local learnstat    'dsh -c "ft stats learn"'
+$learnstat;
+
+local exportstat   'dsh -c "ft stats export"'
+$exportstat;
+
+local agestat      'dsh -c "ft stats age"'
+$agestat;
+
+# Show FLOWTRACKER related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Flowtracker configuration LTs
+local lt MON_FLOWTRACKER_CONTROL;                                $traverse_lt;
+local lt MON_FLOWTRACKER_GROUP;                                  $traverse_lt;
+local lt MON_FLOWTRACKER_FLOW_STATIC;                            $traverse_lt;
+local lt MON_FLOWTRACKER_GROUP_COLLECTOR_MAP;                    $traverse_lt;
+local lt MON_FLOWTRACKER_GROUP_STATUS;                           $traverse_lt;
+local lt MON_FLOWTRACKER_HW_LEARN_FLOW_ACTION_CONTROL;           $traverse_lt;
+local lt MON_FLOWTRACKER_HW_LEARN_FLOW_ACTION_STATE;             $traverse_lt;
+local lt MON_FLOWTRACKER_LEARN_EVENT_CONTROL;                    $traverse_lt;
+local lt MON_FLOWTRACKER_LEARN_EVENT_LOG_STATUS;                 $traverse_lt;
+local lt MON_FLOWTRACKER_LEARN_EVENT_LOG;                        $traverse_lt;
+local lt MON_FLOWTRACKER_LEARN_FLOW_ENTRY;                       $traverse_lt;
+local lt MON_FLOWTRACKER_STATS;                                  $traverse_lt;
+local lt MON_FLOWTRACKER_ELEPHANT_PROFILE;                       $traverse_lt;

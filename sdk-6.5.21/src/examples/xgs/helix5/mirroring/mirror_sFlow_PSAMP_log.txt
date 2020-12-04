@@ -1,0 +1,523 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+------------    No Tunnelling  -------------------
+BCM.0> cint mirror_sFlow_PSAMP.c YES 0 0 1 0
+int opt_SelectIpv6 = 0 (0x0)
+int opt_DoSflowTunnel = 0 (0x0)
+int opt_DoPsampTunnel = 0 (0x0)
+int opt_DoErspanTunnel = 0 (0x0)
+int opt_AddSeqToTunnelPkt = 1 (0x1)
+int opt_DoPayloadWiping = 0 (0x0)
+int ing_port1 = 37 (0x25)
+int ing_port2 = 38 (0x26)
+int ing_port3 = 39 (0x27)
+int mtp_port = 40 (0x28)
+Doing L2 entry add
+Doing init of mirror module
+Doing switch control enable for DirectedMirroring
+Doing port control set for port 37
+Doing sample rate set for port 37
+Doing mirror dest create
+Doing MTP Add
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[1]: data[0060]: 2c39 2cfc 
+[bcmPW.0]Packet[1]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[2]: data[0060]: 2c39 2cfc 
+[bcmPW.0]Packet[2]: length 100 (100). rx-port 40. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021333344440036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[3]: data[0020]: 1011 2020 2021 3333 4444 0036 c6b0 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[3]: data[0060]: 53dd d4ee 
+[bcmPW.0]Packet[3]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[4]: data[0020]: 1011 2020 2021 3333 4444 0036 c6b0 0001 
+[bcmPW.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[4]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[4]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[4]: data[0060]: 53dd d4ee 
+[bcmPW.0]Packet[4]: length 100 (100). rx-port 40. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021555566660036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[5]: data[0020]: 1011 2020 2021 5555 6666 0036 c6b0 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[5]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[5]: data[0060]: f8fc caef 
+[bcmPW.0]Packet[5]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[6]: data[0020]: 1011 2020 2021 5555 6666 0036 c6b0 0001 
+[bcmPW.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[6]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[6]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[6]: data[0060]: f8fc caef 
+[bcmPW.0]Packet[6]: length 100 (100). rx-port 40. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+
+
+	 Expected Result: You will see that Tunnelled packets..
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+------------    ERSPAN Tunnelling  -------------------
+BCM.0> cint mirror_sFlow_PSAMP.c YES 0 1 1 0
+int opt_SelectIpv6 = 0 (0x0)
+int opt_DoSflowTunnel = 0 (0x0)
+int opt_DoPsampTunnel = 0 (0x0)
+int opt_DoErspanTunnel = 1 (0x1)
+int opt_AddSeqToTunnelPkt = 1 (0x1)
+int opt_DoPayloadWiping = 0 (0x0)
+int ing_port1 = 37 (0x25)
+int ing_port2 = 38 (0x26)
+int ing_port3 = 39 (0x27)
+int mtp_port = 40 (0x28)
+Doing L2 entry add
+Doing init of mirror module
+Doing switch control enable for DirectedMirroring
+Doing port control set for port 37
+Doing sample rate set for port 37
+Doing mirror dest create
+Doing MTP Add
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[1]: data[0060]: 2c39 2cfc 
+[bcmPW.0]Packet[1]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 007c 0000 0000 402f 4e26 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 0a0b 0c0c 0c0d 0000 88be 5e02 2000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[2]: data[0040]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[2]: data[0050]: 2020 2021 1111 2222 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[2]: data[0060]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[2]: data[0070]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[2]: data[0080]: 2425 2627 2829 2a2b 2c2d 2919 7737 24a3 
+[bcmPW.0]Packet[2]: data[0090]: 92a2 
+[bcmPW.0]Packet[2]: length 146 (146). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021333344440036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[3]: data[0020]: 1011 2020 2021 3333 4444 0036 c6b0 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[3]: data[0060]: 53dd d4ee 
+[bcmPW.0]Packet[3]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 007c 0000 0000 402f 4e26 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0a0b 0c0c 0c0d 0000 88be 5e02 2000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[4]: data[0040]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[4]: data[0050]: 2020 2021 3333 4444 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[4]: data[0060]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[4]: data[0070]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[4]: data[0080]: 2425 2627 2829 2a2b 2c2d 2919 7737 5b47 
+[bcmPW.0]Packet[4]: data[0090]: 6ab0 
+[bcmPW.0]Packet[4]: length 146 (146). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021555566660036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[5]: data[0020]: 1011 2020 2021 5555 6666 0036 c6b0 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[5]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[5]: data[0060]: f8fc caef 
+[bcmPW.0]Packet[5]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 007c 0000 0000 402f 4e26 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a0b 0c0c 0c0d 0000 88be 5e02 2000 0000 
+[bcmPW.0]Packet[6]: data[0030]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[6]: data[0040]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[6]: data[0050]: 2020 2021 5555 6666 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[6]: data[0060]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[6]: data[0070]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[6]: data[0080]: 2425 2627 2829 2a2b 2c2d 2919 7737 f066 
+[bcmPW.0]Packet[6]: data[0090]: 74b1 
+[bcmPW.0]Packet[6]: length 146 (146). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+
+
+	 Expected Result: You will see that Tunnelled packets..
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+---------   sFlow Tunelling   --------------------
+BCM.0> cint mirror_sFlow_PSAMP.c YES 0 2 1 0
+int opt_SelectIpv6 = 0 (0x0)
+int opt_DoSflowTunnel = 1 (0x1)
+int opt_DoPsampTunnel = 0 (0x0)
+int opt_DoErspanTunnel = 0 (0x0)
+int opt_AddSeqToTunnelPkt = 1 (0x1)
+int opt_DoPayloadWiping = 0 (0x0)
+int ing_port1 = 37 (0x25)
+int ing_port2 = 38 (0x26)
+int ing_port3 = 39 (0x27)
+int mtp_port = 40 (0x28)
+Doing L2 entry add
+Doing init of mirror module
+Doing switch control enable for DirectedMirroring
+Doing port control set for port 37
+Doing sample rate set for port 37
+Doing mirror dest create
+Doing MTP Add
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[1]: data[0060]: 2c39 2cfc 
+[bcmPW.0]Packet[1]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 008c 0000 0000 4011 4e34 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0078 0000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0001 2500 2600 8080 0000 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0040]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[2]: data[0050]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[2]: data[0060]: 2020 2021 1111 2222 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[2]: data[0070]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[2]: data[0080]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[2]: data[0090]: 2425 2627 2829 2a2b 2c2d 2919 7737 e797 
+[bcmPW.0]Packet[2]: data[00a0]: 8b7a 
+[bcmPW.0]Packet[2]: length 162 (162). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021333344440036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[3]: data[0020]: 1011 2020 2021 3333 4444 0036 c6b0 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[3]: data[0060]: 53dd d4ee 
+[bcmPW.0]Packet[3]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 008c 0000 0000 4011 4e34 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0078 0000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0001 2500 2600 8080 0000 0000 0001 0000 
+[bcmPW.0]Packet[4]: data[0040]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[4]: data[0050]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[4]: data[0060]: 2020 2021 3333 4444 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[4]: data[0070]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[4]: data[0080]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[4]: data[0090]: 2425 2627 2829 2a2b 2c2d 2919 7737 89d6 
+[bcmPW.0]Packet[4]: data[00a0]: c61d 
+[bcmPW.0]Packet[4]: length 162 (162). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021555566660036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[5]: data[0020]: 1011 2020 2021 5555 6666 0036 c6b0 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[5]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[5]: data[0060]: f8fc caef 
+[bcmPW.0]Packet[5]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 008c 0000 0000 4011 4e34 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0078 0000 0000 
+[bcmPW.0]Packet[6]: data[0030]: 0001 2500 2600 0080 0000 0000 0002 0000 
+[bcmPW.0]Packet[6]: data[0040]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[6]: data[0050]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[6]: data[0060]: 2020 2021 5555 6666 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[6]: data[0070]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[6]: data[0080]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[6]: data[0090]: 2425 2627 2829 2a2b 2c2d 2919 7737 d471 
+[bcmPW.0]Packet[6]: data[00a0]: d36b 
+[bcmPW.0]Packet[6]: length 162 (162). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+
+
+	 Expected Result: You will see that Tunnelled packets..
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+---------    PSAMP Tunnelling with timestamp  ----------------
+BCM.0> cint mirror_sFlow_PSAMP.c YES 0 3 1 0
+int opt_SelectIpv6 = 0 (0x0)
+int opt_DoSflowTunnel = 0 (0x0)
+int opt_DoPsampTunnel = 1 (0x1)
+int opt_DoErspanTunnel = 0 (0x0)
+int opt_AddSeqToTunnelPkt = 1 (0x1)
+int opt_DoPayloadWiping = 0 (0x0)
+int ing_port1 = 37 (0x25)
+int ing_port2 = 38 (0x26)
+int ing_port3 = 39 (0x27)
+int mtp_port = 40 (0x28)
+int $$ = 0 (0x0)
+int rv = 0 (0x0)
+bcm_time_ts_counter_t counter = {
+    bcm_time_format_t time_format = bcmTimeFormatNTP (1)
+    int enable = 0 (0x0)
+    int ts_counter = 0 (0x0)
+    uint64 ts_counter_ns = {0x00000000 0x001FDAB0}
+}
+bcm_time_ts_counter_t counter = {
+    bcm_time_format_t time_format = bcmTimeFormatNTP (1)
+    int enable = 0 (0x0)
+    int ts_counter = 0 (0x0)
+    uint64 ts_counter_ns = {0x00000000 0x001FDAB0}
+}
+bcm_time_tod_t tod = {
+    bcm_time_format_t time_format = bcmTimeFormatNTP (1)
+    bcm_time_spec_t ts = {
+        unsigned char isnegative = 0 (0x00)
+        uint64 seconds = {0x00000000 0x00000000}
+        unsigned int nanoseconds = 2087600 (0x1fdab0)
+    }
+    uint64 ts_adjustment_counter_ns = {0x00000000 0x001FDAB0}
+}
+Doing L2 entry add
+Doing init of mirror module
+Doing switch control enable for DirectedMirroring
+Doing port control set for port 37
+Doing sample rate set for port 37
+Doing mirror dest create
+Doing MTP Add
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d1,TIMESTAMP_TOD_NSEC=0xbb9,TIMESTAMP_TA_NSEC=0x000001702d40,TIMESTAMP_FORMAT=1>
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[1]: data[0060]: 2c39 2cfc 
+[bcmPW.0]Packet[1]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 009c 0000 0000 4011 4e24 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0088 0000 000a 
+[bcmPW.0]Packet[2]: data[0030]: 0080 0000 07d1 0000 106f 0000 0064 1234 
+[bcmPW.0]Packet[2]: data[0040]: 0070 0000 07d1 012d 1591 00ff 0060 0000 
+[bcmPW.0]Packet[2]: data[0050]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[2]: data[0060]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[2]: data[0070]: 2020 2021 1111 2222 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[2]: data[0080]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[2]: data[0090]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[2]: data[00a0]: 2425 2627 2829 2a2b 2c2d 2919 7737 3c12 
+[bcmPW.0]Packet[2]: data[00b0]: 5efa 
+[bcmPW.0]Packet[2]: length 178 (178). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+#####################################################
+
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d2,TIMESTAMP_TOD_NSEC=0xbba,TIMESTAMP_TA_NSEC=0x00003d7b0440,TIMESTAMP_FORMAT=1>
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021333344440036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[3]: data[0020]: 1011 2020 2021 3333 4444 0036 c6b0 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[3]: data[0060]: 53dd d4ee 
+[bcmPW.0]Packet[3]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 009c 0000 0000 4011 4e24 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0088 0000 000a 
+[bcmPW.0]Packet[4]: data[0030]: 0080 0000 07d2 0000 106f 0000 0064 1234 
+[bcmPW.0]Packet[4]: data[0040]: 0070 0000 07d2 0126 2b22 00ff 0060 0000 
+[bcmPW.0]Packet[4]: data[0050]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[4]: data[0060]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[4]: data[0070]: 2020 2021 3333 4444 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[4]: data[0080]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[4]: data[0090]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[4]: data[00a0]: 2425 2627 2829 2a2b 2c2d 2919 7737 1a71 
+[bcmPW.0]Packet[4]: data[00b0]: 6c94 
+[bcmPW.0]Packet[4]: length 178 (178). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d3,TIMESTAMP_TOD_NSEC=0xbbb,TIMESTAMP_TA_NSEC=0x0000798403a0,TIMESTAMP_FORMAT=1>
+##########   Sending L3 packet ########
+B_CM.0> tx 1 pbm=37 data=0000000000DD0000000000CC8100006408004500004A0000000040113E661010101120202021555566660036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 004a 0000 0000 4011 3e66 1010 
+[bcmPW.0]Packet[5]: data[0020]: 1011 2020 2021 5555 6666 0036 c6b0 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[5]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[5]: data[0060]: f8fc caef 
+[bcmPW.0]Packet[5]: length 100 (100). rx-port 37. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 38. dest-mod 0. src-port 37. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {000000445566} {000000112233} 8100 006f
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 009c 0000 0000 4011 4e24 0a0a 
+[bcmPW.0]Packet[6]: data[0020]: 0a0b 0c0c 0c0d aaaa bbbb 0088 0000 000a 
+[bcmPW.0]Packet[6]: data[0030]: 0080 0000 07d3 0000 106f 0000 0064 1234 
+[bcmPW.0]Packet[6]: data[0040]: 0070 0000 07d3 0122 c533 00ff 0060 0000 
+[bcmPW.0]Packet[6]: data[0050]: 0000 00dd 0000 0000 00cc 8100 0064 0800 
+[bcmPW.0]Packet[6]: data[0060]: 4500 004a 0000 0000 4011 3e66 1010 1011 
+[bcmPW.0]Packet[6]: data[0070]: 2020 2021 5555 6666 0036 c6b0 0001 0203 
+[bcmPW.0]Packet[6]: data[0080]: 0405 0607 0809 0a0b 0c0d 0e0f 1011 1213 
+[bcmPW.0]Packet[6]: data[0090]: 1415 1617 1819 1a1b 1c1d 1e1f 2021 2223 
+[bcmPW.0]Packet[6]: data[00a0]: 2425 2627 2829 2a2b 2c2d 2919 7737 ae54 
+[bcmPW.0]Packet[6]: data[00b0]: 419f 
+[bcmPW.0]Packet[6]: length 178 (178). rx-port 40. cos 0. prio_int 0. vlan 111. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 40. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+#####################################################
+
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d4,TIMESTAMP_TOD_NSEC=0xbbc,TIMESTAMP_TA_NSEC=0x0000b58c4a7c,TIMESTAMP_FORMAT=1>
+
+
+	 Expected Result: You will see that Tunnelled packets..
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+

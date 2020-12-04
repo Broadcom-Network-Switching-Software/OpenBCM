@@ -1,0 +1,118 @@
+#
+# $Id: arad.soc,v 1.90 2013/08/14 08:32:00 ninash Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# Load DRAM tuning properties from local File. RcLoad will not fail if file not found, and will not show errors of missing file.
+set RCError=off
+debug appl shell warn
+rcload /home/negev/bcm88650_dram_tune.soc
+debug appl shell =
+set RCError=on
+
+debug info
+debug appl rcload warn
+debug appl symtab warn
+debug bcm rx,tx,link,attach warn
+debug soc tests warn
+debug soc rx,phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,ddr warn
+debug soc common err
+debug sys verinet warn
+
+rcload arad_dram.soc
+
+# Set modid:
+# If diag_chassis is enabled (two line cards), and 'slot' is defined (slot is defined only when
+# working without a management card) - set modid to be 0 for slot 0, and 2 for slot 2
+# Otherwise (single line card, or management card), set modid to be 0 for unit 0, and 2 for unit 2
+# If module_id is set, then set modid to have module_id value
+if $?diag_chassis && $?slot "\
+  local modid $slot" \
+else "\
+  local modid $unit"
+expr $modid==1; if $? "local modid 2"
+
+if $?module_id " \
+  local modid $module_id"
+
+echo "$unit: modid=$modid"
+
+# Set base_modid:
+# Id base_module_id is set, then set base_modid to have base_module_id value.
+# Otherwise, set base_modid to be 0.
+if $?base_module_id " \
+  local base_modid $base_module_id" \
+else " \
+  local base_modid 0"
+
+expr $base_modid > 0
+if $? " \
+  echo '$unit: base_modid=$base_modid'"
+
+# Set nof_devices:
+# If diag_chassis is enabled (mgmt card) - set nof_devices to be 2.
+# Otherwise, set nof_devices to be 1.
+# If n_devices is set, then set nof_devices to have n_devices value.
+if $?diag_chassis " \
+  local nof_devices 2" \
+else "\
+  local nof_devices 1"
+
+if $?n_devices " \
+  local nof_devices $n_devices"
+
+expr $nof_devices > 1
+if $? " \
+  echo '$unit: nof_devices=$nof_devices'"
+
+if $?mng_cpu " \
+  echo '$unit:management card - polling is set on'; \
+  config add polled_irq_mode.BCM88650=1; \
+  config add schan_intr_enable.BCM88650=0; \
+  config add tdma_intr_enable.BCM88650=0; \
+  config add tslam_intr_enable.BCM88650=0; \
+  config add miim_intr_enable.BCM88650=0; \
+  config add polled_irq_mode.BCM88750=1; \
+  config add schan_intr_enable.BCM88750=0; \
+  config add tdma_intr_enable.BCM88750=0; \
+  config add tslam_intr_enable.BCM88750=0; \
+  config add miim_intr_enable.BCM88750=0; "
+
+#default values in a case which these parameters are not exist
+if !$?diag_cosq_disable "\
+  local diag_cosq_disable 0"
+if !$?warmboot "\
+  local warmboot 0"
+if !$?diag_disable "\
+  local diag_disable 0"
+if !$?diag_no_appl_stk "\
+  local diag_no_appl_stk 0"
+if !$?diag_no_itmh_prog_mode "\
+  local diag_no_itmh_prog_mode 0"
+if !$?l2_mode "\
+  local l2_mode 0"
+
+INIT_DNX ModID=$modid BaseModID=$base_modid NofDevices=$nof_devices CosqDisable=$diag_cosq_disable NoAppl=$diag_disable Warmboot=$warmboot NoApplStk=$diag_no_appl_stk NoItmhProgMode=$diag_no_itmh_prog_mode L2Mode=$l2_mode
+
+#LED support section start
+local ledcode '02 0D 67 31 67 1C 02 0E 67 31 67 1C 02 0F 67 31\
+ 67 1C 02 10 67 31 67 1C 86 E0 3A 08 67 37 75 3E\
+ 28 32 00 32 01 B7 97 75 3E 16 E0 CA 05 70 42 77\
+ 3E 67 37 75 3E 77 42 12 A0 F8 15 1A 00 57 32 0E\
+ 87 57 32 0F 87 57' #sdk88650.hex
+
+# Download LED code into LED processor and enable (if applicable).
+if $?feature_led_proc && $?ledcode && !$?simulator \
+    "led prog $ledcode; \
+     led auto on; led start"
+
+# If loading multiple rc.soc, upon loading the last unit, restart
+# all LED processors so any common blinking is in sync.
+# if !"expr $?feature_led_proc && !$?simulator && $unit == $units - 1" \
+#    "*:led stop; *:led start"
+#LED support section end
+
+echo "arad.soc: Done."

@@ -1,0 +1,41 @@
+# $Id: Makefile.bcmsim-linux,v 1.2 2005/01/17 19:52:43 csm Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+# 
+
+OMNETPP_INCL_DIR=${OMNETPP_ROOT}/include
+OMNETPP_LIB_DIR=${OMNETPP_ROOT}/lib
+CMDENV_LIBS=-lenvir -lcmdenv
+TK_LIBS= -ltk -ltcl -L/usr/X11R6/lib -lX11
+TKENV_LIBS=-lenvir -ltkenv $(TK_LIBS)
+PVM_LIBS=
+SYS_LIBS=-lstdc++ -ldl -lm 
+# Simulation kernel
+STD_KERNEL_LIBS=-lsim_std
+PVM_KERNEL_LIBS=-lsim_pvm $(PVM_LIBS)
+
+# User interface (uncomment one)
+USERIF_LIBS=$(CMDENV_LIBS)
+#USERIF_LIBS=$(TKENV_LIBS)
+
+# Uncomment the second line for parallel execution (PVM3) support
+KERNEL_LIBS=$(STD_KERNEL_LIBS)
+# KERNEL_LIBS=$(PVM_KERNEL_LIBS)
+
+# Simulation kernel and user interface libraries
+OMNETPP_LIBS=-L$(OMNETPP_LIB_DIR) $(KERNEL_LIBS) $(USERIF_LIBS) $(SYS_LIBS)
+
+NEDC=nedc
+CC=gcc
+CXX = c++
+
+
+#
+# DEPEND is used as a command to generate the list of dependencies.
+# The format of the output must be 
+#	"file.o : file.c a/b/c.h d/e/f.h ...", 
+# if it is on multiple lines, each line must end in a backslash. 
+# The output MUST be on standard out.
+#
+DEPEND = ${CC} -M $(CFLAGS) $< 

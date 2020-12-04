@@ -1,0 +1,112 @@
+#
+# file: policer_ha.yml
+# POLICER YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+component:
+    bcmint_policer:
+        bcmint_policer_cfg_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: BCM_POLICER_* flags.
+                mode:
+                    type: uint8_t
+                    comment: Policer mode.
+                ckbits_sec:
+                    type: uint32_t
+                    comment: Committed rate (kbits per sec).
+                cbits_sec_lower:
+                    type: uint32_t
+                    comment: Committed rate (lower digits).
+                ckbits_burst:
+                    type: uint32_t
+                    comment: Committed burst (kbits).
+                cbits_burst_lower:
+                    type: uint32_t
+                    comment: Committed burst (lower digits).
+                pkbits_sec:
+                    type: uint32_t
+                    comment: Peak rate (kbits per sec).
+                pbits_sec_lower:
+                    type: uint32_t
+                    comment: Peak rate (lower digits).
+                pkbits_burst:
+                    type: uint32_t
+                    comment: Peak burst (kbits).
+                pbits_burst_lower:
+                    type: uint32_t
+                    comment: Peak burst (lower digits).
+                actual_ckbits_sec:
+                    type: uint32_t
+                    comment: Granularity adjusted committed rate.
+                actual_cbits_sec_lower:
+                    type: uint32_t
+                    comment: Granularity adjusted committed rate (lower digits).
+                actual_ckbits_burst:
+                    type: uint32_t
+                    comment: Granularity adjusted committed burst size.
+                actual_cbits_burst_lower:
+                    type: uint32_t
+                    comment: Granularity adjusted committed burst size (lower digits).
+                actual_pkbits_sec:
+                    type: uint32_t
+                    comment: Granularity adjusted peak rate.
+                actual_pbits_sec_lower:
+                    type: uint32_t
+                    comment: Granularity adjusted peak rate (lower digits).
+                actual_pkbits_burst:
+                    type: uint32_t
+                    comment: Granularity adjusted peak burst size.
+                actual_pbits_burst_lower:
+                    type: uint32_t
+                    comment: Granularity adjusted peak burst size (lower digits).
+        bcmint_policer_entry_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                policer_id:
+                    type: int
+                    comment: Policer id.
+                enabled:
+                    type: bool
+                    comment: Policer status.
+                pipe:
+                    type: int
+                    comment: Pipe instance.
+                pool_id:
+                    type: int
+                    comment: Meter Pool Id of the current policer.
+                ref_count:
+                    type: uint32_t
+                    comment: Number of FP entries referencing this policer.
+                pol_cfg:
+                    type: bcmint_policer_cfg_t
+                    comment: Policer configuration.
+        bcmint_policer_pool_state_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                priority:
+                    type: int
+                    comment: Poool priority.
+                ref_count:
+                    type: uint32_t
+                    comment: Number of policer and action entries in this pool.
+                mode:
+                    type: uint8_t
+                    comment: Policer mode corresponding to this pool.
+                pool_in_use:
+                    type: uint8_t
+                    comment: FP stage using this pool.

@@ -1,0 +1,192 @@
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200902 (Wed Sep  2 09:52:24 2020)
+From sdkrel@lc-sj1-4865:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_3
+     BCM56880_A0_DNA_4_6_5, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2, BCM56880_A0_DNA_4_7_4
+     BCM56880_A0_UTLTM
+port 105 is selected
+port 119 is selected
+port_lb_setup port: 105 setup
+port_lb_setup port: 119 setup
+[New Thread 0x7ffff7f9e700 (LWP 37851)]
+Unsupported qualifier:bcm_field_qualify_t $$ = bcmFieldQualifyInnerVlanId (22)
+old_p2v_slice_mapping: [-1 -1 -1 -1]
+new_p2v_slice_mapping: [3 -1 -1 -1]
+stat_counter_id == 268443649 
+Completed test setup successfully.
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:	      :tcam_sz=0(0), tcam_slices=0
+GID 0x01000001: gid=0x1, instance=-1 mode=Double, stage=Egress lookup=Enabled, ActionResId={0}, 
+         Mode_type={L3Double}, Packet_type={Ip6},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f}, 
+         qset={SrcIp6High , DstIp6High , IpProtocol , DSCP , TcpControl , IpType , IpFrag , OutPort , L4Ports },
+         aset={OuterVlanNew },
+         preselectors={},
+         group_priority= 1
+         slice_primary= {slice_number=0, entries_total=128, entries_free=127 },
+         slice_secondary= {slice_number=1, entries_total=128, entries_free=127 },
+         group_status=  entries_total=255, entries_free=254,
+                        meters_total=0, meters_free=0, counters_total=2, counters_free=0}
+EID 0x01000001: eid=0x1, gid=0x1,
+ prio=0, flags=0x20000002, hw_index=0x2, Installed
+ SrcIp6High
+  HW info: 
+    Part: 1 Offset0: 59 Width0: 64
+     DATA=3ffe0000 00000000 
+     MASK=ffffffff ffffffff 
+ DstIp6High
+  HW info: 
+    Part: 1 Offset0: 123 Width0: 64
+     DATA=3ffe0000 00000000 
+     MASK=ffffffff ffffffff 
+ IpProtocol
+  HW info: 
+    Part: 1 Offset0: 195 Width0: 8
+     DATA=00000006 
+     MASK=000000ff 
+ DSCP
+  HW info: 
+    Part: 1 Offset0: 222 Width0: 8
+     DATA=00000033 
+     MASK=000000ff 
+ TcpControl
+  HW info: 
+    Part: 0 Offset0: 213 Width0: 8
+     DATA=00000000 
+     MASK=00000000 
+ IpType
+  HW info: 
+    Part: 1 Offset0: 188 Width0: 5
+     DATA=ANY_IP6 
+ IpFrag
+  HW info: 
+    Part: 0 Offset0: 172 Width0: 2
+     DATA=NON_OR_ANY 
+ OutPort
+  HW info: 
+    Part: 1 Offset0: 4 Width0: 9
+     DATA=00000077 
+     MASK=000000ff 
+ L4Ports
+  HW info: 
+    Part: 1 Offset0: 193 Width0: 1
+     DATA=00000001 
+     MASK=00000001 
+         action = {act=OuterVlanNew, param0=10(0xa), param1=0(0), param2=0(0)
+         flex_counter = {flexctr_action_id=268443649(0x10002001), counter_id=1(0x1)}
+
+
+Sending 2 tagged test packets to ingress port:105
+Packet from data=<>, length=96
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {001111111111} {000000012222} 8100 000a
+[bcmPWN.0]Packet[1]: data[0010]: 86dd 6335 5555 0026 06ff 3ffe 0000 0000 
+[bcmPWN.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000 
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000 
+[bcmPWN.0]Packet[1]: data[0040]: 3232 0000 3333 5010 7788 57db 0000 1111 
+[bcmPWN.0]Packet[1]: data[0050]: 1111 1111 1111 1111 1111 1111 1111 1111 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x64
+	SRC_PORT_NUM=0x77
+	OUTER_VID=0xa
+	SPECIAL_PACKET_TYPE=4
+	DSCP=0xc
+	ECN=3
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_SFLOW
+	CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:11:11:11:11:11> src<00:00:00:01:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000a> IP version 6
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {001111111111} {000000012222} 8100 000a
+[bcmPWN.0]Packet[2]: data[0010]: 86dd 6335 5555 0026 06ff 3ffe 0000 0000 
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0000 0000 0000 0001 3ffe 0000 0000 
+[bcmPWN.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0002 3030 3131 0000 
+[bcmPWN.0]Packet[2]: data[0040]: 3232 0000 3333 5010 7788 57db 0000 1111 
+[bcmPWN.0]Packet[2]: data[0050]: 1111 1111 1111 1111 1111 1111 1111 1111 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x64
+	SRC_PORT_NUM=0x77
+	OUTER_VID=0xa
+	SPECIAL_PACKET_TYPE=4
+	DSCP=0xc
+	ECN=3
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_SFLOW
+	CPU_SFLOW_CPU_SFLOW_SRC
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:11:11:11:11:11> src<00:00:00:01:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x000a> IP version 6
+XLMIB_TBYT.cd27                       :                   200                +200
+XLMIB_RBYT.cd27                       :                   200                +200
+XLMIB_TPOK.cd27                       :                     2                  +2
+XLMIB_RPOK.cd27                       :                     2                  +2
+XLMIB_TVLN.cd27                       :                     2                  +2
+XLMIB_RVLN.cd27                       :                     2                  +2
+XLMIB_TUCA.cd27                       :                     2                  +2
+XLMIB_RUCA.cd27                       :                     2                  +2
+XLMIB_TPKT.cd27                       :                     2                  +2
+XLMIB_RPKT.cd27                       :                     2                  +2
+XLMIB_T127.cd27                       :                     2                  +2
+XLMIB_R127.cd27                       :                     2                  +2
+XLMIB_RPRM.cd27                       :                     2                  +2
+RUC_64.cd27                           :                     2                  +2
+XLMIB_TBYT.cd28                       :                   200                +200
+XLMIB_RBYT.cd28                       :                   200                +200
+XLMIB_TPOK.cd28                       :                     2                  +2
+XLMIB_RPOK.cd28                       :                     2                  +2
+XLMIB_TVLN.cd28                       :                     2                  +2
+XLMIB_RVLN.cd28                       :                     2                  +2
+XLMIB_TUCA.cd28                       :                     2                  +2
+XLMIB_RUCA.cd28                       :                     2                  +2
+XLMIB_TPKT.cd28                       :                     2                  +2
+XLMIB_RPKT.cd28                       :                     2                  +2
+XLMIB_T127.cd28                       :                     2                  +2
+XLMIB_R127.cd28                       :                     2                  +2
+XLMIB_RPRM.cd28                       :                     2                  +2
+RUC_64.cd28                           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd28           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd28           :                     2                  +2
+SFLOW_ING_DATA_SOURCEm.cd28           :                     2                  +2
+
+------------------------------------- 
+    RESULT OF RX PACKET VERIFICATION  
+------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+FlexCtr Get : 2 packets / 200 bytes
+
+------------------------------------- 
+    RESULT OF FLEX COUNTER VERIFICATION  
+------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+Completed test verify successfully.
+old_p2v_slice_mapping: [3 -1 -1 -1]
+new_p2v_slice_mapping: [-1 -1 -1 -1]
+bcm_error_t $$ = BCM_E_NONE (0)
+testExecute(): End
+BCM.0>

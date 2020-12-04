@@ -1,0 +1,47 @@
+#
+# file: mon_telemetry_ha.yml
+# MON TELEMETRY YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+   MAX_TELEMETRY_PORTS: 256
+   MAX_TELEMETRY_BTE_CORES: 4
+
+component:
+    bcmcth_mon_telemetry:
+        bcmcth_mon_telemetry_ha_t:
+            type: struct
+            fields:
+                st_initialized:
+                    type: bool
+                    length: MAX_TELEMETRY_BTE_CORES
+                    comment: If set, Telemetry system has been initialized.
+                st_uc_num:
+                    type: uint8_t
+                    length: MAX_TELEMETRY_BTE_CORES
+                    comment: Microcontroller number running Telemetry APP.
+                num_ports:
+                    type: uint16_t
+                    comment: Number of valid ports at any point of time.
+                lports:
+                    type: uint16_t
+                    length: MAX_TELEMETRY_PORTS
+                    comment: List of ports that are being used for statistics
+                             monitoring.
+                uc_loaded_count:
+                    type: uint8_t
+                    comment: Number of uCs loaded with Telemetry firmware.
+                missing_obj_bmp:
+                    type: uint32_t
+                    length: MAX_TELEMETRY_PORTS
+                    comment: List of telemetry objects not configured in object LT.
+                collector_valid:
+                    type: bool
+                    comment: If set, Collector has been configured in Telemetry system.
+

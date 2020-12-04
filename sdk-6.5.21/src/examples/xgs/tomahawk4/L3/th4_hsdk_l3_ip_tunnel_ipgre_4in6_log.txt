@@ -1,0 +1,47 @@
+BCM.0> c th4_hsdk_l3_ip_tunnel_ipgre_4in6.c
+int port_access = 1 (0x1)
+int port_network = 2 (0x2)
+Ingress_port_multi_setup port: 1 setup
+Egress_port_multi_setup port: 2 setup
+int $$ = 0 (0x0)
+uint32 stat_counter_id_initiator = 268443649 (0x10002001)
+uint32 stat_counter_id_terminator = 268435457 (0x10000001)
+
+Completed test setup successfully.
+
+l3 route show
+        VRF      Net Addr           INTF UL_INTF  HIT
+--------------------------------------------
+1       100      1.1.1.1/32          100001 0    0   
+2       100      2.2.2.2/32          100002 0    0   
+
+l3 intf show
+INTF  VID   MAC Address       
+----------------------------------------------
+1     21    00:00:00:00:11:11  UnderLay 
+
+2     22    00:00:00:00:22:22  UnderLay 
+
+l3 egress show
+EgrID        MAC Address   Intf      Port Module   MTU       Type Drop
+---------------------------------------------------------------
+100001  00:00:00:00:00:02      2     2            0     0   underlay   no
+
+100002  00:00:00:00:00:01      1     1            0     0   underlay   no
+
+Sending 1 unicast packets to ingress port 1
+Packet from data=<>, length=68
+Sending 1 unicast packets to ingress port 2
+Packet from data=<>, length=86
+Tunnel initiated Stats: 1 packets / 116 bytes
+Tunnel terminated Stats: 1 packets / 90 bytes
+
+-------------------------------------------- 
+    RESULT OF L3 ROUTE to IPGRE 4in6 TUNNEL VERIFICATION  
+-------------------------------------------- 
+Test = [PASS]
+-------------------------------------------- 
+
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

@@ -1,0 +1,39 @@
+BCM.0> cint th4_hsdk_flexctr_group_action.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:34:50 2020)
+From root@lc-lvn-1598:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_10, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_DNA_2_5_8, BCM56780_A0_INA_2_5_10, BCM56780_A0_INA_2_5_5, BCM56780_A0_INA_2_5_8
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2, BCM56880_A0_DNA_4_7_8
+     BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+Choosing port 19 as ingress port and 51 as egress port
+ingress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 51 setup
+stat_counter_id == 268435457
+stat_counter_id == 268435458
+stat_group_counter_id == 536870912
+
+Completed test setup successfully
+
+Sending 4 packets to 19 ingress port
+Packet from data=<>, length=124
+
+Sending 5 packets to 19 ingress port
+Packet from data=<>, length=68
+
+Sending 7 packets to 19 ingress port
+Packet from data=<>, length=66
+
+Stat action 268435457 : 16 packets and 1362 bytes
+Stat action 268435458 : 128 bytes max pkt length and 70 bytes last pkt length
+
+Completed test verify successfully
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

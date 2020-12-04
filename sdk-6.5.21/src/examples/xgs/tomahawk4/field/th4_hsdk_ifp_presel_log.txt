@@ -1,0 +1,144 @@
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200824 (Mon Aug 24 11:11:31 2020)
+From sdkrel@lc-sj1-4846:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[47738]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[45538]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> c th4_hsdk_ifp_presel.c
+testExecute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56990_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200824 (Mon Aug 24 11:11:31 2020)
+From sdkrel@lc-sj1-4846:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4, BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_3
+     BCM56880_A0_DNA_4_6_5, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2, BCM56880_A0_UTLTM
+port 204 is selected
+port 205 is selected
+port_lb_setup port: 204 setup
+port_lb_setup port: 205 setup
+stat_counter_id == 268435457
+Completed test setup successfully.
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=3072(0xc00), tcam_slices=9
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=512(0x200), tcam_slices=4
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4
+PIPELINE STAGE EXACT MATCH
+FP:	      :tcam_sz=0(0), tcam_slices=0
+GID 0x00000001: gid=0x1, instance=-1 mode=Single, stage=Ingress lookup=Enabled, ActionResId={0},
+         Pbmp={0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f},
+         qset={, GroupClass },
+         aset={CopyToCpu },
+         preselectors={1},
+         group_priority= 0
+         slice_primary= {slice_number=0, entries_total=256, entries_free=255 },
+         group_status=  entries_total=3071, entries_free=3070,
+                        meters_total=512, meters_free=512, counters_total=2, counters_free=0}
+EID 0x00000001: eid=0x1, gid=0x1,
+ prio=0, flags=0x20000002, hw_index=0x2, Installed
+ GroupClass
+  HW info:
+  LT field info:
+    Field: 0 Offset0: 0 Width0: 0
+     DATA=00000003
+     MASK=00000003
+         action = {act=CopyToCpu, param0=0(0), param1=0(0), param2=0(0)
+         flex_counter = {flexctr_action_id=268435457(0x10000001), counter_id=0(0)}
+
+PRESEL ID:  1, eid=0x40000001, priority=0
+	Stage:Ingress	Hw index:0
+         qset={Drop, IpType, ForwardingVlanValid, IngressStpState, },
+Qualifiers =
+ Drop
+  HW info:
+    Offset0: 47 Width0: 1
+     DATA=00000001
+     MASK=00000001
+ IpType
+  HW info:
+    Offset0: 85 Width0: 5
+     DATA=IP
+ ForwardingVlanValid
+  HW info:
+    Offset0: 61 Width0: 1
+     DATA=00000000
+     MASK=00000001
+ IngressStpState
+  HW info:
+    Offset0: 58 Width0: 2
+     DATA=ANY
+         {act=GroupClassSet, param0=3(0x3), param1=0(0), param2=0(0)
+
+Sending 1 tagged test packets to ingress port:204
+Packet from data=<>, length=68
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {01005e010101} {000006000300} 8100 0005
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 91cd 0201
+[bcmPWN.0]Packet[1]: data[0020]: 0101 e401 0101 0001 0203 0405 0607 0809
+[bcmPWN.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPWN.0]Packet[1]: data[0040]: bf2e 44c3
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x48
+	SRC_PORT_NUM=0xcc
+	OUTER_VID=5
+	TIMESTAMP_TYPE=3
+	SWITCH=1
+	ING_TAG_TYPE=1
+[RX reasons]
+	CPU_FFP
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:06:00:03:00> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<2.1.1.1> dst<228.1.1.1> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x91cd>
+XLMIB_TBYT.cd48                       :                    72                 +72
+XLMIB_RBYT.cd48                       :                    72                 +72
+XLMIB_TPOK.cd48                       :                     1                  +1
+XLMIB_RPOK.cd48                       :                     1                  +1
+XLMIB_TVLN.cd48                       :                     1                  +1
+XLMIB_RVLN.cd48                       :                     1                  +1
+XLMIB_TMCA.cd48                       :                     1                  +1
+XLMIB_RMCA.cd48                       :                     1                  +1
+XLMIB_TPKT.cd48                       :                     1                  +1
+XLMIB_RPKT.cd48                       :                     1                  +1
+XLMIB_T127.cd48                       :                     1                  +1
+XLMIB_R127.cd48                       :                     1                  +1
+XLMIB_RPRM.cd48                       :                     1                  +1
+
+-------------------------------------
+    RESULT OF RX PACKET VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+FlexCtr Get : 1 packets / 72 bytes
+
+-------------------------------------
+    RESULT OF FLEX COUNTER VERIFICATION
+-------------------------------------
+Test = [PASS]
+-------------------------------------
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+testExecute(): End
+BCM.0>

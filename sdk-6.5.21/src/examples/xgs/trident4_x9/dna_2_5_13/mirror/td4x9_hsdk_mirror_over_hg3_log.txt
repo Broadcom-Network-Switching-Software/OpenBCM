@@ -1,0 +1,254 @@
+BCM.0> c td4x9_hsdk_mirror_over_hg3.c                                                                                                                                            
+execute(): Start                                                                                                                                                                 
+config show; attach; version                                                                                                                                                     
+~~ #1) test_setup(): ** start **                                                                                                                                                
+ingress_port_setup port: 1 setup                                                                                                                                                 
+egress_port_multi_setup port: 2 setup                                                                                                                                            
+egress_port_multi_setup port: 3 setup                                                                                                                                            
+~~ #1) test_setup(): ** end **                                                                                                                                                  
+~~ #2) configure_port_mirror(): ** start **                                                                                                                                     
+Add L2 Address for egress port 2.                                                                                                                                                
+Configure HG3 on port 3. Packet going to remote mod 4/port 7 will be through this hg3 port                                                                                       
+Configure remote mtp to be mod 4/port 7                                                                                                                                          
+~~ #2) configure_port_mirror(): ** end **                                                                                                                                       
+~~ #3) verify(): ** start **                                                                                                                                                    
+vlan 1  ports cpu,cd,ce,xe,hg (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe,hg (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)                                                                                                     
+vlan 21 ports ce0-ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)                                                                                                                    
+bcmPWN.0: WARNING: Already running                                                                                                                                               
+
+
+Sending packet to ingress_port:1 forwarded to egress port 2
+
+Expect ingress and egress mirrored to remote mod 4/port 7 through local hg3 port 3
+
+tx 1 pbm=1 data=0x00000000AAAA00000000BBBB810000150800450000500001000040117497010101010202020200350035003C32F674657374746573747465737474657374746573747465737474657374746573747465737474657374746573747465737474657374; sleep quiet 1                                                                                                                             
+Packet from data=<>, length=98                                                                                                                                                   
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0]Packet[1]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                                                                         
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101                                                                                                         
+[bcmPWN.0]Packet[1]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                                                                         
+[bcmPWN.0]Packet[1]: data[0060]: 7374                                                                                                                                            
+[bcmPWN.0]                                                                                                                                                                       
+[bcmPWN.0][RX metadata information]                                                                                                                                              
+        PKT_LENGTH=0x66                                                                                                                                                          
+        SRC_PORT_NUM=1                                                                                                                                                           
+        SWITCH=1                                                                                                                                                                 
+        MATCH_ID_LO=0x80d424                                                                                                                                                     
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                                                                   
+        EGR_ZONE_REMAP_CTRL=1                                                                                                                                                    
+        COPY_TO_CPU=1                                                                                                                                                            
+[FLEX fields]                                                                                                                                                                    
+        EVENT_TRACE_VECTOR_31_16=4                                                                                                                                               
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                                                                 
+        SYSTEM_SOURCE_15_0=1                                                                                                                                                     
+        SYSTEM_DESTINATION_15_0=2                                                                                                                                                
+        INGRESS_PP_PORT_7_0=1                                                                                                                                                    
+        EFFECTIVE_TTL_7_0=0x40                                                                                                                                                   
+        VFI_15_0=0x15                                                                                                                                                            
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                                                                           
+        SYSTEM_OPCODE_3_0=1                                                                                                                                                      
+        PKT_MISC_CTRL_0_3_0=1                                                                                                                                                    
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                                                             
+        L2_OIF_10_0=2                                                                                                                                                            
+[RX reasons]                                                                                                                                                                     
+        IFP                                                                                                                                                                      
+[Decode match id]                                                                                                                                                                
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                                                              
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                                                            
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                                                                    
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                                                                         
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                                                                                                                          
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                                                                                                                                   
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>              
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0]Packet[2]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                             
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101                                                             
+[bcmPWN.0]Packet[2]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                             
+[bcmPWN.0]Packet[2]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[2]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[2]: data[0060]: 7374                                                                                                
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0][RX metadata information]                                                                                                  
+        PKT_LENGTH=0x66                                                                                                              
+        SRC_PORT_NUM=2                                                                                                               
+        SWITCH=1                                                                                                                     
+        MATCH_ID_LO=0x80d424                                                                                                         
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                       
+        EGR_ZONE_REMAP_CTRL=1                                                                                                        
+        COPY_TO_CPU=1                                                                                                                
+[FLEX fields]                                                                                                                        
+        EVENT_TRACE_VECTOR_31_16=4                                                                                                   
+        DROP_CODE_15_0=0x1f1f                                                                                                        
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                     
+        SYSTEM_SOURCE_15_0=2                                                                                                         
+        SYSTEM_DESTINATION_15_0=2                                                                                                    
+        INGRESS_PP_PORT_7_0=2                                                                                                        
+        EFFECTIVE_TTL_7_0=0x40                                                                                                       
+        VFI_15_0=0x15                                                                                                                
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                               
+        SYSTEM_OPCODE_3_0=1                                                                                                          
+        PKT_MISC_CTRL_0_3_0=1                                                                                                        
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                 
+        L2_OIF_10_0=2                                                                                                                
+[RX reasons]                                                                                                                         
+        IFP                                                                                                                          
+[Decode match id]                                                                                                                    
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                  
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                        
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                             
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                                                                              
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                                                                                       
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>              
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0]Packet[3]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                             
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101                                                             
+[bcmPWN.0]Packet[3]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                             
+[bcmPWN.0]Packet[3]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[3]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[3]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[3]: data[0060]: 7374                                                                                                
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0][RX metadata information]                                                                                                  
+        PKT_LENGTH=0x66                                                                                                              
+        SRC_PORT_NUM=3                                                                                                               
+        SWITCH=1                                                                                                                     
+        MATCH_ID_LO=0x80d42c                                                                                                         
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                       
+        EGR_ZONE_REMAP_CTRL=1                                                                                                        
+        COPY_TO_CPU=1                                                                                                                
+[FLEX fields]                                                                                                                        
+        EVENT_TRACE_VECTOR_31_16=5                                                                                                   
+        DROP_CODE_15_0=0x6b6b                                                                                                        
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                     
+        SYSTEM_SOURCE_15_0=1                                                                                                         
+        SYSTEM_DESTINATION_15_0=0x407                                                                                                
+        INGRESS_PP_PORT_7_0=1                                                                                                        
+        EFFECTIVE_TTL_7_0=0x40                                                                                                       
+        VFI_15_0=0x15                                                                                                                
+        IFP_TS_CONTROL_ACTION_3_0=4                                                                                                  
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                               
+        SYSTEM_OPCODE_3_0=1                                                                                                          
+        PKT_MISC_CTRL_0_3_0=9                                                                                                        
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                 
+        L2_OIF_10_0=0x51                                                                                                             
+[RX reasons]                                                                                                                         
+        LEARN_CACHE_FULL                                                                                                             
+        IFP                                                                                                                          
+[Decode match id]                                                                                                                    
+        INGRESS_PKT_OUTER_L2_HDR_HG3_BASE                                                                                            
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                  
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                        
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                             
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                                                                              
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                                                                                       
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>              
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0]Packet[4]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015                                                             
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0050 0001 0000 4011 7497 0101                                                             
+[bcmPWN.0]Packet[4]: data[0020]: 0101 0202 0202 0035 0035 003c 32f6 7465                                                             
+[bcmPWN.0]Packet[4]: data[0030]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[4]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[4]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465                                                             
+[bcmPWN.0]Packet[4]: data[0060]: 7374                                                                                                
+[bcmPWN.0]                                                                                                                           
+[bcmPWN.0][RX metadata information]                                                                                                  
+        PKT_LENGTH=0x66                                                                                                              
+        SRC_PORT_NUM=3                                                                                                               
+        SWITCH=1                                                                                                                     
+        MATCH_ID_LO=0x80d42c                                                                                                         
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                       
+        EGR_ZONE_REMAP_CTRL=1                                                                                                        
+        COPY_TO_CPU=1                                                                                                                
+[FLEX fields]                                                                                                                        
+        EVENT_TRACE_VECTOR_31_16=5                                                                                                   
+        DROP_CODE_15_0=0x6b6b                                                                                                        
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                     
+        SYSTEM_SOURCE_15_0=1                                                                                                         
+        SYSTEM_DESTINATION_15_0=0x407                                                                                                
+        INGRESS_PP_PORT_7_0=1                                                                                                        
+        EFFECTIVE_TTL_7_0=0x40                                                                                                       
+        VFI_15_0=0x15                                                                                                                
+        IFP_TS_CONTROL_ACTION_3_0=4                                                                                                  
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                               
+        SYSTEM_OPCODE_3_0=1                                                                                                          
+        PKT_MISC_CTRL_0_3_0=9                                                                                                        
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                 
+        L2_OIF_10_0=0x51                                                                                                             
+[RX reasons]                                                                                                                         
+        LEARN_CACHE_FULL                                                                                                             
+        IFP                                                                                                                          
+[Decode match id]                                                                                                                    
+        INGRESS_PKT_OUTER_L2_HDR_HG3_BASE                                                                                            
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                  
+        INGRESS_PKT_OUTER_L2_HDR_OTAG                                                                                                
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                        
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                             
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP                                                                                              
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5                                                                                       
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:aa:aa> src<00:00:00:00:bb:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<1.1.1.1> dst<2.2.2.2> hl<5> service-type<0> tl<80> id<1> frg-off<0> ttl<64> > chk-sum<0x7497>              
+MC_PERQ_PKT(0).cpu0                   :                     4                  +4                                                    
+MC_PERQ_BYTE(0).cpu0                  :                   696                +696                                                    
+XLMIB_TBYT.ce0                        :                   102                +102                                                    
+XLMIB_RBYT.ce0                        :                   102                +102                                                    
+XLMIB_TPOK.ce0                        :                     1                  +1                                                    
+XLMIB_RPOK.ce0                        :                     1                  +1                                                    
+XLMIB_TVLN.ce0                        :                     1                  +1                                                    
+XLMIB_RVLN.ce0                        :                     1                  +1                                                    
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T127.ce0                        :                     1                  +1
+XLMIB_R127.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                   102                +102
+XLMIB_RBYT.ce1                        :                   102                +102
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                   102                +102
+XLMIB_TBYT.hg0                        :                   220                +220
+XLMIB_RBYT.hg0                        :                   220                +220
+XLMIB_TPOK.hg0                        :                     2                  +2
+XLMIB_RPOK.hg0                        :                     2                  +2
+XLMIB_TUCA.hg0                        :                     2                  +2
+XLMIB_RUCA.hg0                        :                     2                  +2
+XLMIB_TPKT.hg0                        :                     2                  +2
+XLMIB_RPKT.hg0                        :                     2                  +2
+XLMIB_T127.hg0                        :                     2                  +2
+XLMIB_R127.hg0                        :                     2                  +2
+XLMIB_RPRM.hg0                        :                     2                  +2
+MC_PERQ_PKT(0).hg0                    :                     2                  +2
+MC_PERQ_BYTE(0).hg0                   :                   220                +220
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

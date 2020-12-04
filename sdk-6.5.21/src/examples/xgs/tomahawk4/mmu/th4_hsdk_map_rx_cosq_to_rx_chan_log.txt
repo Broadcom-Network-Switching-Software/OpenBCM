@@ -1,0 +1,194 @@
+lroot@dhcp-10-59-96-129 gts]# ./bcm.user -y bcm56990_a0-generic-64x400.config.yml
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201014 (Wed Oct 14 11:37:24 2020)
+From sp933340@lvnvdc0757:/projects/ntsw-sw-ae/sparks/gerrit/hsdk
+Platform: X86
+OS: Unix (Posix)
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x01, Chip BCM56990_A0, Driver LTSW
+linux-user-bde: no devices
+DMA pool size: 33554432
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_A0
+rc: BCM driver initialized
+rc: Port modes initialized
+LED: Loading 256 bytes into LED program memory
+BCM.0> cint case/th4_hsdk_map_rx_cosq_to_rx_chan.c
+Rx COSQ Mapping:
+  Map internal priority  0 to CPU COS 10 (priority=10)
+  Map internal priority  1 to CPU COS 11 (priority=10)
+  Map internal priority  2 to CPU COS 12 (priority=10)
+  Map internal priority  3 to CPU COS 13 (priority=10)
+  Map internal priority  4 to CPU COS 14 (priority=10)
+  Map internal priority  5 to CPU COS 15 (priority=10)
+  Map internal priority  6 to CPU COS 16 (priority=10)
+  Map internal priority  7 to CPU COS 17 (priority=10)
+  Map internal priority  8 to CPU COS 18 (priority=10)
+  Map internal priority  9 to CPU COS 19 (priority=10)
+  Map internal priority 10 to CPU COS 20 (priority=10)
+  Map internal priority 11 to CPU COS 21 (priority=10)
+  Map internal priority 12 to CPU COS 22 (priority=10)
+  Map internal priority 13 to CPU COS 23 (priority=10)
+  Map internal priority 14 to CPU COS 24 (priority=10)
+  Map internal priority 15 to CPU COS 25 (priority=10)
+
+Configure packet priority to CPU queue mapping:
+Mapped COSQ  0 (GPORT 0x30000000) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  1 (GPORT 0x30000001) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  2 (GPORT 0x30000002) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  3 (GPORT 0x30000003) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  4 (GPORT 0x30000004) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  5 (GPORT 0x30000005) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  6 (GPORT 0x30000006) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  7 (GPORT 0x30000007) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  8 (GPORT 0x30000008) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ  9 (GPORT 0x30000009) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ 10 (GPORT 0x3000000A) to RX Channel 6 (GPORT 0x37860000)
+Mapped COSQ 11 (GPORT 0x3000000B) to RX Channel 5 (GPORT 0x37850000)
+Mapped COSQ 12 (GPORT 0x3000000C) to RX Channel 4 (GPORT 0x37840000)
+Mapped COSQ 13 (GPORT 0x3000000D) to RX Channel 3 (GPORT 0x37830000)
+Mapped COSQ 14 (GPORT 0x3000000E) to RX Channel 2 (GPORT 0x37820000)
+Mapped COSQ 15 (GPORT 0x3000000F) to RX Channel 1 (GPORT 0x37810000)
+Mapped COSQ 16 (GPORT 0x30000010) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 17 (GPORT 0x30000011) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 18 (GPORT 0x30000012) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 19 (GPORT 0x30000013) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 20 (GPORT 0x30000014) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 21 (GPORT 0x30000015) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 22 (GPORT 0x30000016) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 23 (GPORT 0x30000017) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 24 (GPORT 0x30000018) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 25 (GPORT 0x30000019) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 26 (GPORT 0x3000001A) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 27 (GPORT 0x3000001B) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 28 (GPORT 0x3000001C) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 29 (GPORT 0x3000001D) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 30 (GPORT 0x3000001E) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 31 (GPORT 0x3000001F) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 32 (GPORT 0x30000020) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 33 (GPORT 0x30000021) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 34 (GPORT 0x30000022) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 35 (GPORT 0x30000023) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 36 (GPORT 0x30000024) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 37 (GPORT 0x30000025) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 38 (GPORT 0x30000026) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 39 (GPORT 0x30000027) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 40 (GPORT 0x30000028) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 41 (GPORT 0x30000029) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 42 (GPORT 0x3000002A) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 43 (GPORT 0x3000002B) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 44 (GPORT 0x3000002C) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 45 (GPORT 0x3000002D) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 46 (GPORT 0x3000002E) to RX Channel 0 (GPORT 0x37800000)
+Mapped COSQ 47 (GPORT 0x3000002F) to RX Channel 0 (GPORT 0x37800000)
+
+Dump RX channel map:
+  CPU COSQ  0 is mapped to RX DMA channel 6
+  CPU COSQ  1 is mapped to RX DMA channel 6
+  CPU COSQ  2 is mapped to RX DMA channel 6
+  CPU COSQ  3 is mapped to RX DMA channel 6
+  CPU COSQ  4 is mapped to RX DMA channel 6
+  CPU COSQ  5 is mapped to RX DMA channel 6
+  CPU COSQ  6 is mapped to RX DMA channel 6
+  CPU COSQ  7 is mapped to RX DMA channel 6
+  CPU COSQ  8 is mapped to RX DMA channel 6
+  CPU COSQ  9 is mapped to RX DMA channel 6
+  CPU COSQ 10 is mapped to RX DMA channel 6
+  CPU COSQ 11 is mapped to RX DMA channel 5
+  CPU COSQ 12 is mapped to RX DMA channel 4
+  CPU COSQ 13 is mapped to RX DMA channel 3
+  CPU COSQ 14 is mapped to RX DMA channel 2
+  CPU COSQ 15 is mapped to RX DMA channel 1
+  CPU COSQ 16 is mapped to RX DMA channel 0
+  CPU COSQ 17 is mapped to RX DMA channel 0
+  CPU COSQ 18 is mapped to RX DMA channel 0
+  CPU COSQ 19 is mapped to RX DMA channel 0
+  CPU COSQ 20 is mapped to RX DMA channel 0
+  CPU COSQ 21 is mapped to RX DMA channel 0
+  CPU COSQ 22 is mapped to RX DMA channel 0
+  CPU COSQ 23 is mapped to RX DMA channel 0
+  CPU COSQ 24 is mapped to RX DMA channel 0
+  CPU COSQ 25 is mapped to RX DMA channel 0
+  CPU COSQ 26 is mapped to RX DMA channel 0
+  CPU COSQ 27 is mapped to RX DMA channel 0
+  CPU COSQ 28 is mapped to RX DMA channel 0
+  CPU COSQ 29 is mapped to RX DMA channel 0
+  CPU COSQ 30 is mapped to RX DMA channel 0
+  CPU COSQ 31 is mapped to RX DMA channel 0
+  CPU COSQ 32 is mapped to RX DMA channel 0
+  CPU COSQ 33 is mapped to RX DMA channel 0
+  CPU COSQ 34 is mapped to RX DMA channel 0
+  CPU COSQ 35 is mapped to RX DMA channel 0
+  CPU COSQ 36 is mapped to RX DMA channel 0
+  CPU COSQ 37 is mapped to RX DMA channel 0
+  CPU COSQ 38 is mapped to RX DMA channel 0
+  CPU COSQ 39 is mapped to RX DMA channel 0
+  CPU COSQ 40 is mapped to RX DMA channel 0
+  CPU COSQ 41 is mapped to RX DMA channel 0
+  CPU COSQ 42 is mapped to RX DMA channel 0
+  CPU COSQ 43 is mapped to RX DMA channel 0
+  CPU COSQ 44 is mapped to RX DMA channel 0
+  CPU COSQ 45 is mapped to RX DMA channel 0
+  CPU COSQ 46 is mapped to RX DMA channel 0
+  CPU COSQ 47 is mapped to RX DMA channel 0
+
+Transmit test packets on cd0
+Packet generate, length=64
+RX packet  1: src_port:  1; len:   68; vid:    2; pri: 0; cos: 10
+Packet generate, length=64
+RX packet  2: src_port:  1; len:   68; vid:    2; pri: 1; cos: 11
+RX packet  3: src_port:  1; len:   68; vid:    2; pri: 1; cos: 11
+Packet generate, length=64
+RX packet  4: src_port:  1; len:   68; vid:    2; pri: 2; cos: 12
+RX packet  5: src_port:  1; len:   68; vid:    2; pri: 2; cos: 12
+RX packet  6: src_port:  1; len:   68; vid:    2; pri: 2; cos: 12
+Packet generate, length=64
+RX packet  7: src_port:  1; len:   68; vid:    2; pri: 3; cos: 13
+RX packet  8: src_port:  1; len:   68; vid:    2; pri: 3; cos: 13
+RX packet  9: src_port:  1; len:   68; vid:    2; pri: 3; cos: 13
+RX packet 10: src_port:  1; len:   68; vid:    2; pri: 3; cos: 13
+Packet generate, length=64
+RX packet 11: src_port:  1; len:   68; vid:    2; pri: 4; cos: 14
+RX packet 12: src_port:  1; len:   68; vid:    2; pri: 4; cos: 14
+RX packet 13: src_port:  1; len:   68; vid:    2; pri: 4; cos: 14
+RX packet 14: src_port:  1; len:   68; vid:    2; pri: 4; cos: 14
+RX packet 15: src_port:  1; len:   68; vid:    2; pri: 4; cos: 14
+Packet generate, length=64
+RX packet 16: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+RX packet 17: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+RX packet 18: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+RX packet 19: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+RX packet 20: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+RX packet 21: src_port:  1; len:   68; vid:    2; pri: 5; cos: 15
+Packet generate, length=64
+RX packet 22: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 23: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 24: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 25: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 26: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 27: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+RX packet 28: src_port:  1; len:   68; vid:    2; pri: 6; cos: 16
+Transmitted 28 packets on port cd0, VLAN 2
+
+Dump CMC/Channel RX packet counts:
+  For this test, expected counts are 7, 6, 5, 4, 3, 2, 1
+CMIC_CMC0_PKTDMA_CH1_PKT_COUNT_RXPKTr.cmic [0x000021bc] = 0x7
+	COUNT=7
+CMIC_CMC0_PKTDMA_CH2_PKT_COUNT_RXPKTr.cmic [0x0000223c] = 0x6
+	COUNT=6
+CMIC_CMC0_PKTDMA_CH3_PKT_COUNT_RXPKTr.cmic [0x000022bc] = 0x5
+	COUNT=5
+CMIC_CMC0_PKTDMA_CH4_PKT_COUNT_RXPKTr.cmic [0x0000233c] = 0x4
+	COUNT=4
+CMIC_CMC0_PKTDMA_CH5_PKT_COUNT_RXPKTr.cmic [0x000023bc] = 0x3
+	COUNT=3
+CMIC_CMC0_PKTDMA_CH6_PKT_COUNT_RXPKTr.cmic [0x0000243c] = 0x2
+	COUNT=2
+CMIC_CMC0_PKTDMA_CH7_PKT_COUNT_RXPKTr.cmic [0x000024bc] = 0x1
+	COUNT=1
+
+Verifcation: Passed
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+

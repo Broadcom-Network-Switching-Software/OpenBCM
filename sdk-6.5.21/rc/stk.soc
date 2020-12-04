@@ -1,0 +1,875 @@
+#
+# $Id: stk.soc,v 1.71 2012/08/29 16:02:00 dkelley Exp $
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# stk: start stacking on various reference designs
+# first arg is hex mac address (default taken from station_mac_address)
+#
+# config values used:
+#	station_mac_address
+#	slot			(defaults to 0)
+#	stkcos			(defaults to no override, usually 0)
+#	stkvlan			(defaults to no override, usually 1)
+#	stktrunk 	        (defaults to 1)
+#	slstacking		(defaults to 0)
+#	stkrsvmod		(defaults to 1)
+#	stkloadbal		(defaults to 1)
+#	stknhmod		(defaults to 31)
+#       stkhwlinkscan           (defaults to 1)
+#       stktopodelay            (defaults to 0)
+#       stktopomasterdelay      (defaults to 500000)
+#       stksim                  (defaults to 0)
+
+
+# Platform values used:
+# This list is not complete.
+# sdk_xgs3_48g   <- Dual Firebolt platform.
+# sdk_xgs3_48f   <- Dual Felix platform.
+# sdk_xgs3_16j   <- Goldwing platform.
+# sdk_xgs3_48g5g <- Raptor platform.
+# sdk_xgs3_24g4g <- Raven platform.
+# sdk_xgs3_48g4x <- Triumph platform.
+# sdk_xgs3_4g24x <- Scorpion platform.
+# sdk_xgs3_48g4x <- Valkyrie platform.
+# sdk_xgs3_48g4x2 <- Triumph2 platform.
+# sdk_xgs3_48g2  <- Dual Raven EB platform.
+# sdk_xgs3_24g2  <- BCM5652x BCM56143/144/146
+# sdk_xgs3_24g3  <- BCM56142
+# sdk_xgs3_16h   <- HUMV
+# sdk_xgs3_16h2  <- HUMV+
+# sdk_xgs3_12h   <- Conqueror, BCM56721
+# sdk_xgs3_24g8x <- BCM956639K25S
+# sdk_xgs3_28g6x <- BCM956526K29
+# sdk_xgs3_25g6x <- BCM956636K25S
+# sdk_xgs3_24f2x <- BCM956132K
+# sdk_xgs3_16m   <- BCM956840 16x40g
+# sdk_xgs3_32k   <- BCM956840 32x20g
+# sdk_xgs3_48x   <- BCM956840 48x10g
+# sdk_xgs3_64x   <- BCM956840 64x10g
+# sdk_xgs5_24g   <- BCM956440
+# sdk_xgs5_24x   <- BCM956640
+# sdk_xgs5_48g8x <- BCM956643, BCM956547+bcm56547_2x42
+# sdk_xgs5_48g3m <- BCM956547
+# sdk_xgs5_8g4h  <- BCM956270
+# bcm56547_3x42  <- BCM956547+bcm56547_3x42
+# bcm56340_4x10  <- BCM956340 + bcm56340_4x10
+# sdk_xgs5_24g2  <- BCM956340
+# bcm53415r      <- BCM953415R
+# bcm956160k     <- BCM956160K
+# bcm956870s     <- BCM956870S
+# bcm953570k     <- BCM953570K
+# bcm956470k     <- BCM956470K
+
+# final character definition
+# x = 10G
+# g = 1G
+# f = 100M
+# h = higig
+# j = 2.5G < We could have used o but o looks like 0.
+# k = 20G
+# m = 40G
+
+local mac $station_mac_address
+
+# default discovery timers
+local disc_timeout 10000000
+local disc_config   1000000
+local disc_poll      200000
+
+# chassis discovery timers
+local chassis_disc_config   1000000
+local chassis_disc_poll      200000
+
+#
+# "large device" discovery timers
+#
+# As devices get larger, it takes longer to complete board
+# programming. The "disc_config" time needs to be longer than the
+# board programming time for a stack to properly converge. The
+# "disc_poll" time is made longer in proportion to disc_config so
+# roughly the same number of probe packets is issued by discovery.
+#
+local large_disc_config   4000000
+local large_disc_poll      800000
+
+# atp timeout
+local cts_timeout 300000
+
+if $?stksim \
+  "local disc_timeout 150000000; \
+   local disc_config   75000000; \
+   local disc_poll      4000000; \
+   local cts_timeout    5000000; \
+   st Timeout state=TOPO    timeout=720000000; \
+   st Timeout state=ATTACH  timeout=120000000"
+
+
+if $?1 "local mac 0x$1"
+
+if !$?slot "local slot 0"
+
+if !$?stkcos "local stkcos -1"
+if !$?stkvlan "local stkvlan -1"
+if !$?stktrunk "local stktrunk 1"
+if !$?stkrsvmod "local stkrsvmod 1"
+if !$?stkports 'local stkports "(0,25)"'
+if !$?stk_rsvd_modids "local stk_rsvd_modids 0"
+if !$?stkloadbal "local stkloadbal 1"
+if !$?stknhmod "local stknhmod 31"
+if !$?stkhwlinkscan "local stkhwlinkscan 1"
+if !$?stktopodelay "local stktopodelay 0"
+if !$?stktopomasterdelay "local stktopomasterdelay 500000"
+
+
+cpudb create
+cpudb current 0
+if $?lancelot \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=1 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard lancelot; \
+	local stackable 1"
+if $?white_knight || $?merlin \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=1 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stackable 1"
+if $?white_knight "local stkboard white_knight"
+if $?merlin "local stkboard merlin"
+if $?draco_b2b || $?galahad \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=13; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stackable 1"
+if $?draco_b2b "local stkboard draco_b2b"
+if $?galahad "local stkboard galahad"
+if $?tucana && !$?magnum && !$?slstacking \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=56; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=2; \
+	dbparse object=local_key key=$mac; \
+	local stackable 1"
+if $?tucana || $?magnum && $?slstacking  \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=2; \
+	dbparse object=local_key key=$mac; \
+	stackmode unit=0 sl=t; \
+	local stackable 1"
+if $?tucana "local stkboard tucana"
+if $?magnum "local stkboard magnum"
+if $?guenevere \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=1 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard guenevere; \
+	local stackable 1"
+if $?lynxalot \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=2; \
+	dbparse object=cpudb_stk_port unit=2 port=5; \
+	dbparse object=cpudb_stk_port unit=2 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard lynxalot; \
+	local stackable 1"
+if $?herc || $?cfm  || $?cfm_xgs1 || $?cfm_xgs2 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=1 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard cfm_xgs2; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+	local stackable 1"
+if $?cfm_xgs3 || $?cfm_xgs3_8x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=1 slot_id=$slot dest_unit=0 base_dest_port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+	local stackable 1"
+if $?cfm_xgs1 "local stkboard cfm_xgs1"
+if $?cfm_xgs2 "local stkboard cfm_xgs2"
+if $?cfm_xgs3  || $?cfm_xgs3_8x "local stkboard cfm_xgs3"
+if $?lm_xgs2_48g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=1 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+        local stkboard lm_xgs2_48g; \
+	local stackable 1"
+if $?lm24g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=1 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard lm24g; \
+	local stackable 1"
+if $?lm2x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=1 base_dest_port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard lm2x; \
+	local stackable 1"
+if $?lm6x || $?lm_xgs1_6x || $?lm_xgs2_6x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=1 base_dest_port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+	local stackable 1"
+if $?lm6x "local stkboard lm6x"
+if $?lm_xgs1_6x "local stkboard lm_xgs1_6x"
+if $?lm_xgs2_6x "local stkboard lm_xgs2_6x"
+if $?sl24f2g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=27; \
+	dbparse object=cpudb_stk_port_str sp_string=$stkports; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	stackmode unit=0 sl=t; \
+        local stkboard sl24f2g; \
+	local stackable 1"
+if $?sdk_xgs3_24g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?lm_xgs3_48g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_stk_port unit=1 port=24; \
+	dbparse object=cpudb_stk_port unit=1 port=25; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+        local stkboard lm_xgs3_48g; \
+	local stackable 1"
+if $?sdk_xgs3_12g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_2hg \
+        "dbparse object=cpudb_entry key=$mac mac=$mac \
+                master_pri=0 slot_id=0 dest_unit=0 base_dest_port=13; \
+        dbparse object=cpudb_stk_port unit=0 port=12; \
+        dbparse object=cpudb_stk_port unit=0 port=0; \
+        dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+        dbparse object=local_key key=$mac; \
+        local stackable 1"
+if $?lm_xgs3_12x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=1 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=0; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+        local stkboard lm_xgs3_12x; \
+	local stackable 1"
+if $?lm_56800_12x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local disc_config   $chassis_disc_config; \
+        local disc_poll     $chassis_disc_poll; \
+        local stkboard lm_56800_12x; \
+	local stackable 1"
+if $?sdk_xgs2_12g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=1 slot_id=0 dest_unit=0 base_dest_port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs2_12g; \
+	local stackable 1"
+if $?sdk_xgs3_48f \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=1 port=27; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_48f; \
+	local stackable 1"
+if $?sdk_xgs3_48g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=0 dest_unit=0 base_dest_port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_stk_port unit=1 port=24; \
+	dbparse object=cpudb_stk_port unit=1 port=25; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_48g; \
+	local stackable 1"
+if $?sdk_xgs3_20x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_stk_port unit=0 port=18; \
+	dbparse object=cpudb_stk_port unit=0 port=19; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+	local stackable 1"
+if $?sdk_xgs3_16j \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_stk_port unit=0 port=18; \
+	dbparse object=cpudb_stk_port unit=0 port=19; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+	local stackable 1"
+if $?sdk_xgs3_16h \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+ 	local stackable 1"
+if $?sdk_xgs3_48g5g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_48g5g; \
+        local stknhmod 15; \
+        local stk_rsvd_modids 4294901760; \
+        local stkrsvmod 0; \
+ 	local stackable 1"
+if $?sdk_xgs3_24g4g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+        local stknhmod 15; \
+        local stk_rsvd_modids 4294901760; \
+        local stkrsvmod 0; \
+ 	local stackable 1"
+if $?sdk_xgs3_48g4x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_stk_port unit=0 port=30; \
+	dbparse object=cpudb_stk_port unit=0 port=31; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_48g4x && $?stksim \
+        "local disc_timeout 600000000"
+if $?sdk_xgs3_48g4x2 || $?sdk_xgs3_24g2 || $?bcm956160k \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?bcm953570k \
+    "dbparse object=cpudb_entry key=$mac mac=$mac \
+        master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+    dbparse object=cpudb_stk_port unit=0 port=58; \
+    dbparse object=cpudb_stk_port unit=0 port=59; \
+    dbparse object=cpudb_stk_port unit=0 port=60; \
+    dbparse object=cpudb_stk_port unit=0 port=61; \
+    dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+    dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+    local stackable 1"
+if $?sdk_xgs3_24g3 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_4g24x || $?sdk_xgs3_64x || $?sdk_xgs3_48x || $?sdk_xgs3_32k \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_stk_port unit=0 port=18; \
+	dbparse object=cpudb_stk_port unit=0 port=19; \
+	dbparse object=cpudb_stk_port unit=0 port=20; \
+	dbparse object=cpudb_stk_port unit=0 port=21; \
+	dbparse object=cpudb_stk_port unit=0 port=22; \
+	dbparse object=cpudb_stk_port unit=0 port=23; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+        local disc_config   $large_disc_config; \
+        local disc_poll     $large_disc_poll; \
+	local stackable 1"
+if $?sdk_xgs3_48g2 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=1 port=2; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_48g2; \
+        local stknhmod 15; \
+        local stk_rsvd_modids 4294901760; \
+        local stkrsvmod 0; \
+ 	local stackable 1"
+if $?sdk_xgs3_16h2 || $?bcm56725_16x16 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_stk_port unit=0 port=18; \
+	dbparse object=cpudb_stk_port unit=0 port=19; \
+	dbparse object=cpudb_stk_port unit=0 port=20; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+	local stackable 1"
+if $?sdk_xgs3_12h && !$?bcm56725_16x16\
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=17; \
+	dbparse object=cpudb_stk_port unit=0 port=18; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_20x; \
+	local stackable 1"
+if $?sdk_xgs3_24g8x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_stk_port unit=0 port=30; \
+	dbparse object=cpudb_stk_port unit=0 port=38; \
+	dbparse object=cpudb_stk_port unit=0 port=42; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_28g6x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_stk_port unit=0 port=46; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_25g6x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_stk_port unit=0 port=42; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_24f2x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?sdk_xgs3_16m \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=1; \
+	dbparse object=cpudb_stk_port unit=0 port=2; \
+	dbparse object=cpudb_stk_port unit=0 port=3; \
+	dbparse object=cpudb_stk_port unit=0 port=4; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+        local disc_config   $large_disc_config; \
+        local disc_poll     $large_disc_poll; \
+	local stackable 1"
+if $?sdk_xgs5_8g4h \
+    "dbparse object=cpudb_entry key=$mac mac=$mac \
+        master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+    dbparse object=cpudb_stk_port unit=0 port=9; \
+    dbparse object=cpudb_stk_port unit=0 port=10; \
+    dbparse object=cpudb_stk_port unit=0 port=11; \
+    dbparse object=cpudb_stk_port unit=0 port=12; \
+    dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+    dbparse object=local_key key=$mac; \
+    local stkboard sdk_xgs3_24g; \
+    local stackable 1"
+if $?sdk_xgs5_24g \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?bcm956870s || $?bcm956470k \
+    "dbparse object=cpudb_entry key=$mac mac=$mac \
+        master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+    dbparse object=cpudb_stk_port unit=0 port=37; \
+    dbparse object=cpudb_stk_port unit=0 port=38; \
+    dbparse object=cpudb_stk_port unit=0 port=39; \
+    dbparse object=cpudb_stk_port unit=0 port=40; \
+    dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+    dbparse object=local_key key=$mac; \
+    local stkboard sdk_xgs3_24g; \
+    local disc_config   $large_disc_config; \
+    local disc_poll     $large_disc_poll; \
+    local stackable 1"
+if $?sdk_xgs5_24x \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=5; \
+	dbparse object=cpudb_stk_port unit=0 port=6; \
+	dbparse object=cpudb_stk_port unit=0 port=7; \
+	dbparse object=cpudb_stk_port unit=0 port=8; \
+	dbparse object=cpudb_stk_port unit=0 port=9; \
+	dbparse object=cpudb_stk_port unit=0 port=10; \
+	dbparse object=cpudb_stk_port unit=0 port=11; \
+	dbparse object=cpudb_stk_port unit=0 port=12; \
+	dbparse object=cpudb_stk_port unit=0 port=13; \
+	dbparse object=cpudb_stk_port unit=0 port=14; \
+	dbparse object=cpudb_stk_port unit=0 port=15; \
+	dbparse object=cpudb_stk_port unit=0 port=16; \
+	dbparse object=cpudb_stk_port unit=0 port=21; \
+	dbparse object=cpudb_stk_port unit=0 port=22; \
+	dbparse object=cpudb_stk_port unit=0 port=23; \
+	dbparse object=cpudb_stk_port unit=0 port=24; \
+	dbparse object=cpudb_stk_port unit=0 port=25; \
+	dbparse object=cpudb_stk_port unit=0 port=26; \
+	dbparse object=cpudb_stk_port unit=0 port=27; \
+	dbparse object=cpudb_stk_port unit=0 port=28; \
+	dbparse object=cpudb_stk_port unit=0 port=29; \
+	dbparse object=cpudb_stk_port unit=0 port=30; \
+	dbparse object=cpudb_stk_port unit=0 port=31; \
+	dbparse object=cpudb_stk_port unit=0 port=32; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+        local disc_config   $large_disc_config; \
+        local disc_poll     $large_disc_poll; \
+	local stackable 1"
+if $?sdk_xgs5_48g8x || $?bcm56547_2x42\
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_stk_port unit=0 port=51; \
+	dbparse object=cpudb_stk_port unit=0 port=52; \
+	dbparse object=cpudb_stk_port unit=0 port=53; \
+	dbparse object=cpudb_stk_port unit=0 port=54; \
+	dbparse object=cpudb_stk_port unit=0 port=55; \
+	dbparse object=cpudb_stk_port unit=0 port=56; \
+	dbparse object=cpudb_stk_port unit=0 port=57; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+        local disc_config   $large_disc_config; \
+        local disc_poll     $large_disc_poll; \
+	local stackable 1"
+if $?sdk_xgs5_24g2 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=54; \
+	dbparse object=cpudb_stk_port unit=0 port=55; \
+	dbparse object=cpudb_stk_port unit=0 port=56; \
+	dbparse object=cpudb_stk_port unit=0 port=57; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?bcm56340_4x10 || $?sdk_xgs5_48g3m \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_stk_port unit=0 port=51; \
+	dbparse object=cpudb_stk_port unit=0 port=52; \
+	dbparse object=cpudb_stk_port unit=0 port=53; \
+	dbparse object=cpudb_stk_port unit=0 port=54; \
+	dbparse object=cpudb_stk_port unit=0 port=55; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?bcm56547_3x42 || $?sdk_xgs5_48g3m2 \
+	"dbparse object=cpudb_entry key=$mac mac=$mac \
+		master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+	dbparse object=cpudb_stk_port unit=0 port=42; \
+	dbparse object=cpudb_stk_port unit=0 port=43; \
+	dbparse object=cpudb_stk_port unit=0 port=44; \
+	dbparse object=cpudb_stk_port unit=0 port=45; \
+	dbparse object=cpudb_stk_port unit=0 port=46; \
+	dbparse object=cpudb_stk_port unit=0 port=47; \
+	dbparse object=cpudb_stk_port unit=0 port=48; \
+	dbparse object=cpudb_stk_port unit=0 port=49; \
+	dbparse object=cpudb_stk_port unit=0 port=50; \
+	dbparse object=cpudb_stk_port unit=0 port=51; \
+	dbparse object=cpudb_stk_port unit=0 port=52; \
+	dbparse object=cpudb_stk_port unit=0 port=53; \
+	dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+	dbparse object=local_key key=$mac; \
+	local stkboard sdk_xgs3_24g; \
+	local stackable 1"
+if $?bcm53415r \
+        "dbparse object=cpudb_entry key=$mac mac=$mac \
+                master_pri=0 slot_id=$slot dest_unit=0 base_dest_port=0; \
+        dbparse object=cpudb_stk_port unit=0 port=14; \
+        dbparse object=cpudb_stk_port unit=0 port=15; \
+        dbparse object=cpudb_stk_port unit=0 port=16; \
+        dbparse object=cpudb_stk_port unit=0 port=17; \
+        dbparse object=cpudb_unit_mod_ids pref_mod_id=-1 mod_ids_req=1; \
+        dbparse object=local_key key=$mac; \
+        local stkboard sdk_xgs3_24g; \
+        local stackable 1"
+
+
+if $?stackable \
+	"cts nexthop db=0 vlan=$stkvlan cos=$stkcos srcmod=$stknhmod; \
+	 cts atp cos=$stkcos vlan=$stkvlan; \
+         cts timeout RetryTO=$cts_timeout retries=10;\
+	 rpc start; \
+	 st start cos=$stkcos vlan=$stkvlan autotrunk=$stktrunk \
+            reservedmodid=$stkrsvmod rsvdmodidbmp=$stk_rsvd_modids \
+            loadbalance=$stkloadbal \
+            board=$stkboard \
+            timeout=$disc_timeout \
+            cfgtimeout=$disc_config \
+            retrx=$disc_poll \
+            hwlinkscan=$stkhwlinkscan \
+            topodelay=$stktopodelay \
+            topomasterdelay=$stktopomasterdelay"
+
+if !$?stackable 'echo "This platform is not recognized as stackable"'

@@ -1,0 +1,45 @@
+BCM.0> c th4_hsdk_l3mpls_init_ecn2exp_trust_tunnel.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int egress_port = 2 (0x2)
+setting ingress port:1 MAC loopback
+setting egress port:2 MAC loopback
+int ifp_group = 1 (0x1)
+int ifp_entry = 1 (0x1)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l3_mpls_init(): ** start **
+int $$ = 32768 (0x8000)
+int $$ = 0 (0x0)
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+l3 egr obj = 100001
+uint32 tunnel_label_init = 22136 (0x5678)
+unsigned char exp = 1 (0x01)
+unsigned char ttl = 255 (0xff)
+Created flexctr stat_counter_id = 0x10002001.
+Flexctr stat_counter_id:0x10002001 attached to l3 egress obj 100001
+~~~ #2) config_l3_mpls_init(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+pktioRxCallback: packet received #1 from port 2, length 86
+pktioRxCallback: packet received from correct expected port 2
+pktioRxCallback: packet received data comparision pass
+Flexctr Get : 1 packets / 90 bytes
+
+----------------------------------------------------------------------------- 
+    RESULT OF L3MPLS TUNNEL INITIATION ECN2EXP MAPPING TRUST TUNNEL VERIFICATION  
+----------------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

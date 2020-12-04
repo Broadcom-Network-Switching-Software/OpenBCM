@@ -1,0 +1,23 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Etrap RC (run commands) file
+#
+#       These are default commands that are for TechSupport Etrap.
+#
+
+# Show Cosq related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+local lt MON_ETRAP_CANDIDATE_FILTER;                     $traverse_lt;
+local lt MON_ETRAP_COLOR_ASSIGNMENT;                     $traverse_lt;
+local lt MON_ETRAP_CONTROL;                              $traverse_lt;
+local lt MON_ETRAP_FLOW;                                 $traverse_lt;
+local lt MON_ETRAP_INT_PRI_REMAP;                        $traverse_lt;
+local lt MON_ETRAP_QUEUE_ASSIGNMENT;                     $traverse_lt;
+local lt MON_ETRAP_THRESHOLD;                            $traverse_lt;
+local lt CTR_ETRAP;                                      $traverse_lt;
+
+

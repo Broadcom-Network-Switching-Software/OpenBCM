@@ -1,0 +1,45 @@
+#
+# file: flow_ha.yml
+# Flow YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+consts:
+    IPV6_BYTES: 16
+component:
+    bcmint_flow:
+        bcmint_flow_vp_match_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                valid:
+                    type: int
+                    comment: Valid match indicator.
+                criteria:
+                    type: int
+                    comment: Flow match criteria.
+                sip:
+                    type: uint32_t
+                    comment: Source IPv4 address.
+                sip6:
+                    type: uint8_t
+                    length: IPV6_BYTES
+                    comment: Source IPv6 address.
+                valid_elements:
+                    type: uint32_t
+                    comment: Bitmap of valid fields for the match action.
+                port:
+                    type: int
+                    comment: Flow match port/trunk.
+                vlan:
+                    type: uint16_t
+                    comment: Outer VLAN ID to match.
+                inner_vlan:
+                    type: uint16_t
+                    comment: Inner VLAN ID to match.

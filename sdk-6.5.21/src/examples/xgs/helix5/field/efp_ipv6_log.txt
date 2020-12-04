@@ -1,0 +1,139 @@
+int ing_port1 = 1 (0x1)       
+int ing_port2 = 2 (0x2)       
+int egr_port = 3 (0x3)        
+B_CM.0> fp show               
+FP:     unit 0:               
+PIPELINE STAGE FLOWTRACKER    
+FP:           :tcam_sz=2044(0x7fc), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE EXACTMATCH              
+FP:           :tcam_sz=16384(0x4000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS    
+FP:           :tcam_sz=9216(0x2400), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS     
+FP:           :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,  
+PIPELINE STAGE LOOKUP     
+FP:           :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,  
+GID          1: gid=0x1, instance=0 mode=Double, stage=Egress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={SrcIp6High, DstIp6High, IpProtocol, DSCP, TcpControl, IpType, StageEgress, IpFrag, OutPort, L4Ports},          
+         selcodes[0]=                  
+{          
+         FPF3=KEY3                     
+         Intraslice=Primary slice.     
+ {StageEgress->TcpControl->IpFrag},    
+         selcodes[1]=                  
+{          
+         FPF3=KEY2                     
+         Intraslice=Primary slice.     
+ {SrcIp6High->DstIp6High->DSCP->IpProtocol->IpType->L4Ports->OutPort},      
+
+         group_priority= 0
+         slice_primary =  {slice_number=0, Entry count=256(0x100), Entry free=255(0xff)},
+         slice_secondary = {slice_number=1}   
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=512, entries_free=511,
+                       counters_total=1024, counters_free=1023, meters_total=768, meters_free=768}    
+EID 0x00000001: gid=0x1,             
+         slice=0, slice_idx=0, part =0 prio=0, flags=0x210602, Installed, Enabled                     
+              tcam: color_indep=1,   
+ StageEgress                         
+         slice=1, slice_idx=0, part =1 prio=0, flags=0x10604, Installed, Enabled                      
+              tcam: color_indep=1,   
+ SrcIp6High                          
+    Offset0: 9 Width0: 64            
+    DATA=0x3ffe0000 00000000         
+    MASK=0xffffffff ffffffff         
+ DstIp6High                          
+    Offset0: 73 Width0: 64           
+    DATA=0x3ffe0000 00000000         
+    MASK=0xffffffff ffffffff         
+ DSCP    
+    Offset0: 137 Width0: 8           
+    DATA=0x00000033                  
+    MASK=0x000000ff                  
+ IpProtocol                          
+    Offset0: 1 Width0: 8             
+    DATA=0x00000006                  
+    MASK=0x000000ff                  
+ IpType  
+    Offset0: 224 Width0: 5           
+    DATA=0x00000004                  
+    MASK=0x0000000c                  
+ L4Ports 
+    Offset0: 0 Width0: 1             
+    DATA=0x00000001                  
+    MASK=0x00000001                  
+ OutPort 
+    Offset0: 196 Width0: 8           
+    DATA=0x00000003                  
+    MASK=0x000000ff                  
+         action={act=Drop, param0=0(0), param1=0(0), param2=0(0), param3=0(0)}                        
+         policer=                    
+         statistics={stat id 1  slice = 0 idx=0 entries=1}{Packets}       
+         Extended statistics=NULL    
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={InPort, Stage},             
+         aset={CopyToCpu, PolicerGroup, StatGroup},              
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=9216, entries_free=9215,
+                       counters_total=14336, counters_free=14335, meters_total=6144, meters_free=6144}  
+EID 0x0001868d: gid=0x270e,            
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=        
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL              
+
+############  Sending Matching IP   #######
+B_CM.0> tx 1 pbm=1 data=0011111111110022222222228100006486DD63355555002606FF3FFE00000000000000000000000000023FFE0000000000000000000000000001CCCCDDDD0000000000000000500000003CD80000000102030405060708090A0B0C0D0E0F10119327CA34
+Packet from data=<>, length=104                    
+B_CM.0> sleep 2              
+Sleeping for 2 seconds       
+[bcmPW.0]                    
+[bcmPW.0]Packet[1]: data[0000]: {001111111111} {002222222222} 8100 0064                       
+[bcmPW.0]Packet[1]: data[0010]: 86dd 6335 5555 0026 06ff 3ffe 0000 0000                       
+[bcmPW.0]Packet[1]: data[0020]: 0000 0000 0000 0000 0002 3ffe 0000 0000                       
+[bcmPW.0]Packet[1]: data[0030]: 0000 0000 0000 0000 0001 cccc dddd 0000                       
+[bcmPW.0]Packet[1]: data[0040]: 0000 0000 0000 5000 0000 3cd8 0000 0001                       
+[bcmPW.0]Packet[1]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                       
+[bcmPW.0]Packet[1]: data[0060]: 9327 ca34 1cdf 4421
+[bcmPW.0]Packet[1]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.             
+[bcmPW.0]Packet[1]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.   
+[bcmPW.0]Packet[1]: reasons: FilterMatch           
+[bcmPW.0]Packet[1]:          
+Packet[1]:   Ethernet: dst<00:11:11:11:11:11> src<00:22:22:22:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6        
+B_CM.0> fp stat get si=1 t=p 
+The value is: 0x000000001    
+
+############  Sending UN-Matching IP   #######
+B_CM.0> tx 1 pbm=1 data=0011111111110022222222228100006486DD63355555002606FF40FE00000000000000000000000000023FFE0000000000000000000000000001CCCCDDDD0000000000000000500000003CD80000000102030405060708090A0B0C0D0E0F10119327CA34
+Packet from data=<>, length=104                    
+[bcmPW.0]                    
+[bcmPW.0]Packet[2]: data[0000]: {001111111111} {002222222222} 8100 0064                       
+[bcmPW.0]Packet[2]: data[0010]: 86dd 6335 5555 0026 06ff 40fe 0000 0000                       
+[bcmPW.0]Packet[2]: data[0020]: 0000 0000 0000 0000 0002 3ffe 0000 0000                       
+[bcmPW.0]Packet[2]: data[0030]: 0000 0000 0000 0000 0001 cccc dddd 0000                       
+[bcmPW.0]Packet[2]: data[0040]: 0000 0000 0000 5000 0000 3cd8 0000 0001                       
+[bcmPW.0]Packet[2]: data[0050]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011                       
+[bcmPW.0]Packet[2]: data[0060]: 9327 ca34 289a 2355
+[bcmPW.0]Packet[2]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.             
+[bcmPW.0]Packet[2]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.   
+[bcmPW.0]Packet[2]: reasons: FilterMatch           
+[bcmPW.0]Packet[2]:          
+Packet[2]:   Ethernet: dst<00:11:11:11:11:11> src<00:22:22:22:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0064> IP version 6        
+B_CM.0> sleep 2              
+Sleeping for 2 seconds       
+B_CM.0> fp stat get si=1 t=p 
+The value is: 0x000000001    
+
+
+Final count of stat should be 1
+B_CM.0> fp stat get si=1 t=p   
+The value is: 0x000000001      
+bcm_error_t $$ = BCM_E_NONE (0)

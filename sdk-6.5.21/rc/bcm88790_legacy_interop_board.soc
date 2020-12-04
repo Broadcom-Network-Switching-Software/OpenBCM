@@ -1,0 +1,115 @@
+# $Id: bcm88790_legacy_interop_board.soc
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+# The purpose of the file is to load links 0-95 of a DNXF device with speed of 25G.
+# This will be done only for specific boards
+# where the DNXF device is connected to legacy DPP device (for reference see rc/dnxf.soc)
+#
+# NOTE! 
+# The file expects that all DPP devices are connected to whichever links in the range 0 ro 95!
+#
+
+#Board Properties
+config add port_init_speed_0.BCM8879X=25000 
+config add port_init_speed_1.BCM8879X=25000 
+config add port_init_speed_2.BCM8879X=25000 
+config add port_init_speed_3.BCM8879X=25000 
+config add port_init_speed_4.BCM8879X=25000 
+config add port_init_speed_5.BCM8879X=25000 
+config add port_init_speed_6.BCM8879X=25000 
+config add port_init_speed_7.BCM8879X=25000 
+config add port_init_speed_8.BCM8879X=25000 
+config add port_init_speed_9.BCM8879X=25000 
+config add port_init_speed_10.BCM8879X=25000 
+config add port_init_speed_11.BCM8879X=25000 
+config add port_init_speed_12.BCM8879X=25000 
+config add port_init_speed_13.BCM8879X=25000 
+config add port_init_speed_14.BCM8879X=25000 
+config add port_init_speed_15.BCM8879X=25000 
+config add port_init_speed_16.BCM8879X=25000 
+config add port_init_speed_17.BCM8879X=25000 
+config add port_init_speed_18.BCM8879X=25000 
+config add port_init_speed_19.BCM8879X=25000 
+config add port_init_speed_20.BCM8879X=25000 
+config add port_init_speed_21.BCM8879X=25000 
+config add port_init_speed_22.BCM8879X=25000 
+config add port_init_speed_23.BCM8879X=25000 
+config add port_init_speed_24.BCM8879X=25000 
+config add port_init_speed_25.BCM8879X=25000 
+config add port_init_speed_26.BCM8879X=25000 
+config add port_init_speed_27.BCM8879X=25000 
+config add port_init_speed_28.BCM8879X=25000 
+config add port_init_speed_29.BCM8879X=25000 
+config add port_init_speed_30.BCM8879X=25000 
+config add port_init_speed_31.BCM8879X=25000 
+config add port_init_speed_32.BCM8879X=25000 
+config add port_init_speed_33.BCM8879X=25000 
+config add port_init_speed_34.BCM8879X=25000 
+config add port_init_speed_35.BCM8879X=25000 
+config add port_init_speed_36.BCM8879X=25000 
+config add port_init_speed_37.BCM8879X=25000 
+config add port_init_speed_38.BCM8879X=25000 
+config add port_init_speed_39.BCM8879X=25000 
+config add port_init_speed_40.BCM8879X=25000 
+config add port_init_speed_41.BCM8879X=25000 
+config add port_init_speed_42.BCM8879X=25000 
+config add port_init_speed_43.BCM8879X=25000 
+config add port_init_speed_44.BCM8879X=25000 
+config add port_init_speed_45.BCM8879X=25000 
+config add port_init_speed_46.BCM8879X=25000 
+config add port_init_speed_47.BCM8879X=25000 
+config add port_init_speed_48.BCM8879X=25000 
+config add port_init_speed_49.BCM8879X=25000 
+config add port_init_speed_50.BCM8879X=25000 
+config add port_init_speed_51.BCM8879X=25000 
+config add port_init_speed_52.BCM8879X=25000 
+config add port_init_speed_53.BCM8879X=25000 
+config add port_init_speed_54.BCM8879X=25000 
+config add port_init_speed_55.BCM8879X=25000 
+config add port_init_speed_56.BCM8879X=25000 
+config add port_init_speed_57.BCM8879X=25000 
+config add port_init_speed_58.BCM8879X=25000 
+config add port_init_speed_59.BCM8879X=25000 
+config add port_init_speed_60.BCM8879X=25000 
+config add port_init_speed_61.BCM8879X=25000 
+config add port_init_speed_62.BCM8879X=25000 
+config add port_init_speed_63.BCM8879X=25000 
+config add port_init_speed_64.BCM8879X=25000 
+config add port_init_speed_65.BCM8879X=25000 
+config add port_init_speed_66.BCM8879X=25000 
+config add port_init_speed_67.BCM8879X=25000 
+config add port_init_speed_68.BCM8879X=25000 
+config add port_init_speed_69.BCM8879X=25000 
+config add port_init_speed_70.BCM8879X=25000 
+config add port_init_speed_71.BCM8879X=25000 
+config add port_init_speed_72.BCM8879X=25000 
+config add port_init_speed_73.BCM8879X=25000 
+config add port_init_speed_74.BCM8879X=25000 
+config add port_init_speed_75.BCM8879X=25000 
+config add port_init_speed_76.BCM8879X=25000 
+config add port_init_speed_77.BCM8879X=25000 
+config add port_init_speed_78.BCM8879X=25000 
+config add port_init_speed_79.BCM8879X=25000 
+config add port_init_speed_80.BCM8879X=25000 
+config add port_init_speed_81.BCM8879X=25000 
+config add port_init_speed_82.BCM8879X=25000 
+config add port_init_speed_83.BCM8879X=25000 
+config add port_init_speed_84.BCM8879X=25000 
+config add port_init_speed_85.BCM8879X=25000 
+config add port_init_speed_86.BCM8879X=25000 
+config add port_init_speed_87.BCM8879X=25000 
+config add port_init_speed_88.BCM8879X=25000 
+config add port_init_speed_89.BCM8879X=25000 
+config add port_init_speed_90.BCM8879X=25000 
+config add port_init_speed_91.BCM8879X=25000 
+config add port_init_speed_92.BCM8879X=25000 
+config add port_init_speed_93.BCM8879X=25000 
+config add port_init_speed_94.BCM8879X=25000 
+config add port_init_speed_95.BCM8879X=25000 
+
+
+
+

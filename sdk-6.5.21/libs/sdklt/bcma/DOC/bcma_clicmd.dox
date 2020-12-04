@@ -1,0 +1,229 @@
+/*! \page bcma_clicmd Basic CLI Commands
+
+\tableofcontents
+
+\section bcma_clicmd_intro Introduction
+
+After a CLI object has been created and assigned terminal I/O handlers,
+the user must add the actual CLI commands using the \ref bcma_cli_add_command
+API. The SDK includes a number of basic CLI commands for navigation and
+scripting, and the following sections will introduce these commands and
+describe how the are added to the CLI.
+
+\section bcma_clicmd_default Default Commands
+
+The default commands can be added to the CLI by calling
+\ref bcma_clicmd_add_basic_cmds.
+
+\subsection exit
+
+Command to exit from the CLI shell.
+
+\subsection quit
+
+Command to exit from the CLI shell.
+
+\subsection help
+
+List all the supported CLI commands with a brief description.
+If a CLI command is supplied as a parameter, then a detailed
+description of the specified CLI command will be displayed.
+
+\subsection subsection_qm ?
+
+List all supported CLI commands with no description.
+
+\section bcma_clicmd_env Environment Commands
+
+Environment commands are used to manipulate environment variables in
+the CLI shell.
+
+The environment commands can be added to the CLI by calling
+\ref bcma_envcmd_add_cmds after CLI environment variables support is
+properly configured by \ref bcma_cli_var_cb_set.
+
+\subsection setenv
+
+Command to display, clear or set global environment variables.
+
+\b Example:
+\verbatim
+# Display global variables
+> setenv
+
+# Set global variable a to 1
+> setenv a 1
+
+# Clear global variable a
+> setenv a
+\endverbatim
+
+\subsection local
+
+Command to display, clear or set local environment variables.
+
+\b Example:
+\verbatim
+# Display local variables
+> local
+
+# Set local variable a to 1
+> local a 1
+
+# Clear local variable a
+> local a
+\endverbatim
+
+\subsection printenv
+
+Command to list all global and local environment variables.
+
+\section bcma_clicmd_script Script Commands
+
+Several commands are available to control CLI command flow.
+These commands are categorized as CLI script commands.
+
+The script commands can be added to the CLI by calling
+\ref bcma_clicmd_add_script_cmds.
+
+\subsection echo
+
+Command to display user specified output in the CLI shell.
+Often used to add comments to scripts or display environmental variables.
+
+\subsection if
+
+Command to execute CLI commands conditionally.
+
+\subsection case
+
+Command to execute CLI commands conditionally.
+
+\subsection loop
+
+Command to execute a series of commands in a loop.
+
+\subsection for
+
+Command to execute a series of commands in a for loop.
+
+The difference between \c for and \c loop commands is that
+the commands executed in \c for can reference the environment variable
+changed in each iteration of the for loop.
+
+\b Example:
+\verbatim
+# List i from 10 to 13 in integer format
+> for i=10,13 'echo $i'
+
+# List i from 10 to 13 in hex format
+> for i=10,13,1,0x%x 'echo $i'
+\endverbatim
+
+\subsection expr
+
+Command to evaluate an infix expression in the CLI shell and output
+the result to a specific local environment variable \$?.
+
+\b Example:
+\verbatim
+# Calculate 1+2 then display the result
+> expr 1+2
+> echo $?
+\endverbatim
+
+\subsection sleep
+
+Command to suspend CLI task for some amount of time.
+
+\subsection delay
+
+Commands to put CLI task in a busy-wait loop for some amount of time.
+
+\section bcma_clicmd_rc Run Commands (RC)
+
+A user can collect multiple CLI commands and utilize the script commands
+to design an RC file which contains a series of CLI command operations.
+The run commands are used to execute the commands specified in the RC file.
+
+The run commands can be added to the CLI by calling
+\ref bcma_clicmd_add_rc_cmds.
+
+\subsection rcload
+
+Command to load the RC file and run the CLI commands
+specified in the RC file.
+
+\subsection rccache
+
+In order to reduce the file I/O in the \c rcload command, \c rccache
+is an auxiliary command to cache the contents of an RC file to memory.
+The \c rcload command will then execute the commands in the RC file
+from memory instead of loading commands in the RC file through file I/O.
+
+\section bcma_clicmd_dir Directory Commands
+
+If the target platform has file system support, the CLI directory
+commands can be used to navigate, list, create and delete directories.
+
+The directory commands can be added to the CLI by calling
+\ref bcma_clicmd_add_dir_cmds.
+
+\subsection cd
+
+Change current directory.
+
+\subsection pwd
+
+Display current working directory.
+
+\subsection ls
+
+List contents of specified directory.
+
+\subsection mkdir
+
+Create a new directory.
+
+\subsection rmdir
+
+Remove an empty directory.
+
+\section bcma_clicmd_sys System Commands
+
+The system commands can be added to the CLI by calling
+\ref bcma_clicmd_add_system_cmds.
+
+\subsection shell
+
+The \c shell command can be used to launch the system shell from
+the CLI shell. The previous running CLI shell will return after
+exiting from the launched system shell.
+
+\subsection grep
+
+The \c grep command can be used to filter the output from another
+CLI command. The CLI \c grep command implementation relies on a
+system-provided grep command for its core functionality, i.e. if
+the system does not have a grep command, then the CLI \c grep command
+will not work.
+
+\subsection sort
+
+The \c sort command can be used to sort the output from another
+CLI command. The CLI \c sort command implementation relies on a
+system-provided sort command for its core functionality, i.e. if
+the system does not have a sort command, then the CLI \c sort command
+will not work.
+
+\section bcma_clicmd_bsl System Log Command
+
+The system log command can be added to the CLI by calling
+\c bcma_bslcmd_add_cmds.
+
+\subsection debug
+
+The \c debug command is used to configure the log message ouput
+accross all the SDK components.
+
+*/

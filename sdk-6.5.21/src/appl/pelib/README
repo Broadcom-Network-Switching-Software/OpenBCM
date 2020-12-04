@@ -1,0 +1,79 @@
+#################################################
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#################################################
+
+#################################################
+The pelib application has been build and tested in the vxworks/gto build.
+#################################################
+
+#################################################
+Build the pelib application
+#################################################
+
+-------------------------------------------------
+1. copy the sdk/make/local/esw/Make.pkg.pe-sdk to sdk/make/Make.local
+-------------------------------------------------
+
+cd make
+cp make/local/esw/Make.pkg.pe-sdk make/Make.local
+
+-------------------------------------------------
+2. build vxworks gto
+-------------------------------------------------
+
+cd systems/vxworks/gto
+make clean
+make
+
+#################################################
+Run the application
+#################################################
+
+-------------------------------------------------
+1. Modify the config.bcm file to not initialize the
+   xe ports by doing something similiar below:
+-------------------------------------------------
+
+port_phy_addr_xe=0xff
+#port_phy_addr_1=0x0
+#port_phy_addr_2=0x1
+#port_phy_addr_3=0x2
+#port_phy_addr_4=0x3
+#port_phy_addr_5=0x4
+#port_phy_addr_6=0x5
+#port_phy_addr_7=0x6
+#port_phy_addr_8=0x7
+
+-------------------------------------------------
+2. Load the vxworks image and get to the BCM prompt
+-------------------------------------------------
+CFE	> @
+...
+BCM.0>
+
+-------------------------------------------------
+3. Go to the application shell
+-------------------------------------------------
+BCM.0> sh
+->
+
+-------------------------------------------------
+4. Run the pe_app() application:
+-------------------------------------------------
+-> pe_app(0)
+pe_app() testnum: 0 arg0 0, arg1 0, arg2 0
+bcm_initialize()
+Usage: pe_app <test>
+  1 - FW download test
+  2 - PE Init
+  3 - PE Port Status Get
+  4 - PE Port Statistics Get
+  5 - PE FW Ver Get
+  6 - PE Device Rev ID
+  7 - PE Die Temp
+  8 - XMOD Debug Test Cmd
+  9 - XMOD Debug Loopback Cmd(port, lb, enable)
+value = 0 = 0x0
+

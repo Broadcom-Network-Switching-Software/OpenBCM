@@ -1,0 +1,22 @@
+# $Id: Makefile.linux-x86-common,v 1.6 2011/07/12 01:46:03 reldeeb Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# Default tools
+ifeq (,$(CROSS_COMPILE))
+CROSS_COMPILE := i686-linux-
+override PATH := $(PATH):/projects/ntsw-tools/toolchains/gnu/host/i686-linux/bin
+endif
+
+CFGFLAGS += -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0
+ENDIAN = LE_HOST=1
+CFGFLAGS += -D$(ENDIAN)
+
+ifeq (,$(KFLAGS))
+KFLAGS := -D__KERNEL__ -O2 
+endif
+
+ifneq ($(targetplat),user)
+include ${SDK}/make/Makefile.linux-kernel
+endif

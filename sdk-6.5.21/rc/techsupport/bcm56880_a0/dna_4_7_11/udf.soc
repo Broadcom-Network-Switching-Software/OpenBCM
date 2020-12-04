@@ -1,0 +1,21 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport UDF RC (run commands) file
+#
+#       These are default commands that are for TechSupport UDF.
+#
+
+# Show S/W state in UDF.
+
+# Show UDF related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+#UDF system config
+local lt UDF_FIELD_MUX_SELECT;                                      $traverse_lt;
+
+#UDF LT traverse
+local lt UDF_POLICY;                                                $traverse_lt;
+local lt UDF_POLICY_INFO;                                           $traverse_lt;

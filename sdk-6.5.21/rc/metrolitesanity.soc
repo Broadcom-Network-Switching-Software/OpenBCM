@@ -1,0 +1,327 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Metrolite Sanity
+#
+# Script to run all available tests.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+local beagle 0;
+if $?BCM53460_A0 || $?BCM53461_A0 \
+'local beagle 1;'
+
+# Avoid link messages while testing
+linkscan off
+
+init soc
+local done 'echo "Test Completed"'
+
+#Display some useful information
+date
+ver
+soc
+config show
+show portmap
+show params
+phy info
+
+
+#Start Test
+date
+echo "Running PCI Compliance Test ..."
+tr 2
+$done
+
+date
+echo "Running PCI S-Channel Buffer Test ..."
+tr 4
+$done
+
+date
+echo "Running Register Reset Defaults Test..."
+tr 1
+$done
+
+date
+echo "Running Register Read/Write Test..."
+tr 3 mask64
+$done
+date
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+date
+echo "Running CPU Benchmarks Test..."
+tr 21
+$done
+
+if !$beagle \
+'date ;\
+echo "Running XGS L2 Delete by Port Test..." ;\
+tr 35 Reset=False;'
+
+if !$beagle \
+'date;\
+echo "Running XGS L2 Delete by VLAN Test...";\
+tr 36 Reset=False Count=50;'
+
+date
+echo "Running BCM Packet Send Test..."
+tr 40
+
+date
+echo "Running BCM Packet Receive Test..."
+tr 41
+
+date
+echo "Running Memory Tests..."
+rcload trall_bcm56270_a0.soc
+$done
+date
+
+# Re-initialize to clean up of various read/writes to MMU memories
+set rct=true
+counter off
+l2mode off
+linkscan off
+memscan off
+
+date
+echo "Running Counter Width Verification Test..."
+tr 30
+$done
+
+date
+echo "Running Counter Read/Write Test..."
+tr 31
+$done
+
+date
+echo "Running XGS L2 Ins/Lookup/Del Test..."
+tr 32
+$done
+
+if !$beagle \
+'date; \
+echo "Running XGS L2 Overflow Ins Test...";\
+tr 33;\
+$done;'
+
+if !$beagle \
+'date;\
+echo "Running XGS L2 Hashing Test...";\
+tr 34;\
+$done ;'
+
+date
+set rct=true
+
+echo "Running MDIO Linkscan Test..."
+tr 60
+$done
+
+date
+echo "Running CPU DMA Loopback Test..."
+tr 17
+$done
+
+date
+echo "Running CPU DMA, Scatter/Gather Reload Test..."
+tr 22
+$done
+
+date
+echo "Running CPU DMA, Scatter/Gather Simple Test..."
+tr 23 PacketsPerChainEnd=1
+$done
+
+date
+echo "Running CPU DMA, Scatter/Gather Random Test..."
+tr 24 PacketsPerChainEnd=1
+$done
+
+#MAC Loopback
+date
+echo "Running MAC Loopback Test - all ports..."
+tr 18 PortBitMap=ge,xe Speed=max
+$done
+
+#PHY Loopback
+date
+echo "Running PHY Loopback Test - all ports..."
+tr 19 PortBitMap=ge,xe Speed=max
+$done
+
+
+echo "Running MAC Loopback V2 Test - all ports..."
+tr 48 PortBitMap=ge,xe
+$done
+
+echo "Running PHY Loopback V2 Test - all ports..."
+tr 49 PortBitMap=ge,xe
+$done
+
+#Internal snake Loopback
+date
+echo "Running Internal Snake Test - all ports, MAC Loopback..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=ge,xe Count=1
+$done
+
+echo "Running Internal Snake Test - all ports, PHY Loopback..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=ge,xe Count=1
+$done
+
+
+#Traffic Test
+date
+echo "Running Traffic Test in MAC mode on ports..."
+tr 72 RunMode=MAC PortBitMap=ge,xe TimeInSeconds=3
+$done
+
+echo "Running Traffic Test in PHY mode on ports..."
+tr 72 RunMode=PHY PortBitMap=ge,xe TimeInSeconds=3
+$done
+
+#enable when external connections are present
+#echo "Running Traffic Test in EXTERNAL mode on XE ports with AutoNeg disabled..."
+#tr 72 RunMode=EXTERNAL AutoNeg=False PortBitMap=xe
+#$done
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xe2-xe6, xe3-xe7
+# For BCM56272 following pairing should be present
+#    ge0-ge4, ge1-ge5, ge2-ge6, ge3-ge7
+#if $?BCM56272_A0 \
+#    'tr 72 rm=external pbm=ge0,ge4 an=f sp=1000; \
+#     tr 72 rm=external pbm=ge1,ge5 an=f sp=1000; \
+#     tr 72 rm=external pbm=ge2,ge6 an=f sp=1000; \
+#     tr 72 rm=external pbm=ge3,ge7 an=f sp=1000;' \
+#else \
+#    'tr 72 rm=external pbm=xe0,xe4 an=f sp=10g; \
+#     tr 72 rm=external pbm=xe1,xe5 an=f sp=10g; \
+#     tr 72 rm=external pbm=xe2,xe6 an=f sp=10g; \
+#     tr 72 rm=external pbm=xe3,xe7 an=f sp=10g;'
+
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xe2-xe6, xe3-xe7
+# For BCM56272 following pairing should be present
+#    ge0-ge4, ge1-ge5, ge2-ge6, ge3-ge7
+#echo "Running external loopback ..."
+#if $?BCM56272_A0 \
+#'tr 20 tpbm=ge0-ge3 di=4 an=f s=1000' \
+#else \
+#'tr 20 tpbm=xe0-xe3 di=4 an=f s=10g'
+#$done
+
+
+date
+echo "Running SNMP MIB Object Test..."
+tr 73
+$done
+
+date
+echo "Running TX Reload Test..."
+tr 90
+$done
+
+date
+echo "Running RX Reload Test..."
+tr 91
+$done
+date
+
+set rct=false
+init soc
+init misc
+
+if !$beagle \
+'date; \
+echo "Running VLAN Xlate Overflow Insert Test...";\
+tr 100;\
+$done;'
+
+if !$beagle \
+'date;\
+echo "Running VLAN Xlate Hashing Test...";\
+tr 101 DualHash=0 Count=1024;\
+tr 101 DualHash=1 Count=1024;\
+tr 101 DualHash=2 Count=1024;\
+tr 101 DualHash=3 Count=1024;\
+tr 101 DualHash=4 Count=1024;\
+tr 101 DualHash=5 Count=1024;\
+$done;'
+
+if !$beagle \
+'date;\
+echo "Running Egress VLAN Xlate Overfloew Insert Test...";\
+tr 102;\
+$done;'
+
+if !$beagle \
+'date;\
+echo "Running Egress VLAN Xlate Hashing Test...";\
+tr 103 DualEnable=1 DualHash=0 Count=1024;\
+tr 103 DualEnable=1 DualHash=1 Count=1024;\
+tr 103 DualEnable=1 DualHash=2 Count=1024;\
+tr 103 DualEnable=1 DualHash=3 Count=1024;\
+tr 103 DualEnable=1 DualHash=4 Count=1024;\
+tr 103 DualEnable=1 DualHash=5 Count=1024;\
+$done;'
+
+if !$beagle \
+'date;\
+echo "Running MPLS Overflow Insert Test...";\
+tr 104;\
+$done ;'
+
+if !$beagle \
+'date;\
+echo "Running MPLS Hashing Test...";\
+tr 105 DualEnable=1 DualHash=0 Count=1024;\
+tr 105 DualEnable=1 DualHash=1 Count=1024;\
+tr 105 DualEnable=1 DualHash=2 Count=1024;\
+tr 105 DualEnable=1 DualHash=3 Count=1024;\
+tr 105 DualEnable=1 DualHash=4 Count=1024;\
+tr 105 DualEnable=1 DualHash=5 Count=1024;\
+$done;'
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo "Tests Complete.  Reinitializing ..."
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

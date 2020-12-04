@@ -1,0 +1,15 @@
+# -*- Makefile -*-
+# $Id: Makefile,v 1.2 2011/04/14 03:03:39 lintaot Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+LOCALDIR = src/appl/diag/aps
+
+include ${SDK}/make/Make.config
+
+lib = libdiag_aps
+
+include ${SDK}/make/Make.lib
+
+include ${SDK}/make/Make.depend

@@ -1,0 +1,124 @@
+BCM.0> cint th4_hsdk_mirror_max_copies_per_packet.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 1
+Egress port1: 2
+MTP port1: 3
+MTP port2: 4
+MTP port3: 17
+MTP port4: 18
+MTP port5: 19
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+egress_port_multi_setup port: 4 setup
+egress_port_multi_setup port: 17 setup
+egress_port_multi_setup port: 18 setup
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+RSPAN mirror destination create
+Mirror port destination add - 1006632960
+ERSPAN mirror destination create
+Mirror port destination add - 1006632961
+SFLOW mirror destination create
+Mirror port destination add - 1006632962
+PSAMP mirror destination create
+Mirror port destination add - 1006632963
+Mirror destination create
+Validate MAX mirror port destination
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known unicast pkt from port 1 forwarding to the egress port 2
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x2
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0x3
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 000a
+[bcmPWN.0]Packet[2]: data[0010]: 8100 0014 0806 0001 0800 0604 0001 0000
+[bcmPWN.0]Packet[2]: data[0020]: 0000 0002 0a0a 0a02 0000 0000 0000 0a0a
+[bcmPWN.0]Packet[2]: data[0030]: 0a03 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[2]: data[0040]: bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Wellfleet Communications
+pktioRxCallback: received from port 0x4
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[3]: data[0010]: 0800 4500 0058 0000 0000 052f af72 0202
+[bcmPWN.0]Packet[3]: data[0020]: 0202 0101 0101 0000 88be 0000 0000 0022
+[bcmPWN.0]Packet[3]: data[0030]: 0000 0000 0011 8100 0014 0806 0001 0800
+[bcmPWN.0]Packet[3]: data[0040]: 0604 0001 0000 0000 0002 0a0a 0a02 0000
+[bcmPWN.0]Packet[3]: data[0050]: 0000 0000 0a0a 0a03 0001 0203 0405 0607
+[bcmPWN.0]Packet[3]: data[0060]: 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<88> id<0> frg-off<0> ttl<5> > chk-sum<0xaf72>
+pktioRxCallback: received from port 0x11
+pktioRxCallback: rx_count = 0x4
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[4]: data[0010]: 0800 4500 0068 0000 0000 0511 af80 0202
+[bcmPWN.0]Packet[4]: data[0020]: 0202 0101 0101 1234 4321 0054 0000 0000
+[bcmPWN.0]Packet[4]: data[0030]: 0000 0100 0200 8080 0000 0000 0000 0022
+[bcmPWN.0]Packet[4]: data[0040]: 0000 0000 0011 8100 0014 0806 0001 0800
+[bcmPWN.0]Packet[4]: data[0050]: 0604 0001 0000 0000 0002 0a0a 0a02 0000
+[bcmPWN.0]Packet[4]: data[0060]: 0000 0000 0a0a 0a03 0001 0203 0405 0607
+[bcmPWN.0]Packet[4]: data[0070]: 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<104> id<0> frg-off<0> ttl<5> > chk-sum<0xaf80>
+pktioRxCallback: received from port 0x12
+pktioRxCallback: rx_count = 0x5
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000010233} {000000010244} 8100 000a
+[bcmPWN.0]Packet[5]: data[0010]: 0800 4500 007c 0000 0000 0511 af6c 0202
+[bcmPWN.0]Packet[5]: data[0020]: 0202 0101 0101 1234 4321 0068 0000 000a
+[bcmPWN.0]Packet[5]: data[0030]: 0060 0000 0000 0000 00ff 0000 0078 0028
+[bcmPWN.0]Packet[5]: data[0040]: 0050 0000 0000 0000 0000 00ff 0040 0000
+[bcmPWN.0]Packet[5]: data[0050]: 0000 0022 0000 0000 0011 8100 0014 0806
+[bcmPWN.0]Packet[5]: data[0060]: 0001 0800 0604 0001 0000 0000 0002 0a0a
+[bcmPWN.0]Packet[5]: data[0070]: 0a02 0000 0000 0000 0a0a 0a03 0001 0203
+[bcmPWN.0]Packet[5]: data[0080]: 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:01:02:33> src<00:00:00:01:02:44> Tagged Packet ProtID<0x8100> Ctrl<0x000a> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<2.2.2.2> dst<1.1.1.1> hl<5> service-type<0> tl<124> id<0> frg-off<0> ttl<5> > chk-sum<0xaf6c>
+FlexCtr Get on port_egress1 : 1 packets / 68 bytes
+FlexCtr Get on port_mtp_port1 : 1 packets / 72 bytes
+FlexCtr Get on port_mtp_port2 : 1 packets / 110 bytes
+FlexCtr Get on port_mtp_port3 : 1 packets / 126 bytes
+FlexCtr Get on port_mtp_port4 : 1 packets / 146 bytes
+
+-----------------------------------------------------------
+    RESULT OF INGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 1 cleanup
+egress_port_multi_cleanup port: 2 cleanup
+egress_port_multi_cleanup port: 3 cleanup
+egress_port_multi_cleanup port: 4 cleanup
+egress_port_multi_cleanup port: 17 cleanup
+egress_port_multi_cleanup port: 18 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

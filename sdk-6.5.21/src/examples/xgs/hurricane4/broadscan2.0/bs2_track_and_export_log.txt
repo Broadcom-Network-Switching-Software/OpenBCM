@@ -1,0 +1,308 @@
+BCM.0> c bs2_track_and_export.c
+execute(): Start
+config show; attach; version
+    phy_port_primary_and_offset_4=0x0103
+    portmap_29.0=29:2.5
+    portmap_4.0=4:1
+    phy_port_primary_and_offset_5=0x0500
+    portmap_10.0=10:1
+    portmap_38.0=38:2.5
+    phy_port_primary_and_offset_6=0x0501
+    portmap_47.0=51:1
+    phy_port_primary_and_offset_7=0x0502
+    portmap_5.0=5:1
+    phy_port_primary_and_offset_8=0x0503
+    cache_coherency_check=0
+    flowtracker_ipdt_delay_offset=15
+    portmap_11.0=11:1
+    portmap_65.0=65:20
+    portmap_39.0=39:2.5
+    phy_port_primary_and_offset_9=0x0900
+    portmap_20.0=20:1
+    portmap_48.0=52:1
+    flowtracker_ipfix_observation_domain_id=1
+    portmap_6.0=6:1
+    portmap_12.0=12:1
+    portmap_66.0=66:20
+    portmap_21.0=21:1
+    flowtracker_alu16_mem_banks=5:1:2
+    portmap_49.0=57:25
+    portmap_30.0=30:2.5
+    flowtracker_timestamp_mem_engines=2:1:1
+    portmap_7.0=7:1
+    portmap_13.0=13:1
+    flowtracker_ipdt_delay_granularity=8
+    portmap_67.0=67:20
+    flowtracker_e2e_delay_granularity=6
+    portmap_22.0=22:1
+    portmap_31.0=31:2.5
+    portmap_8.0=8:1
+    flowtracker_e2e_delay_offset=3
+    portmap_40.0=40:2.5
+    portmap_14.0=14:1
+    portmap_68.0=68:20
+    portmap_23.0=23:1
+    flowtracker_ipat_delay_granularity=0
+    flowtracker_load16_mem_banks=8:4:4
+    pbmp_xport_xe=0x01FFFFFFFFFFFFE
+    flowtracker_load8_mem_banks=4:2:2
+    os=unix
+    portmap_32.0=32:2.5
+    portmap_9.0=9:1
+    portmap_41.0=41:1
+    portmap_15.0=15:1
+    core_clock_to_pm_clock_factor=1
+    flowtracker_chip_delay_offset=768
+    phy_chain_rx_polarity_flip_physical{29.0}=1
+    portmap_50.0=58:25
+    portmap_24.0=24:1
+    port_gmii_mode{41}=1
+    port_flex_enable=1
+    portmap_33.0=33:2.5
+    flowtracker_num_unique_user_entry_keys=10
+    phy_port_primary_and_offset_10=0x0901
+    portmap_42.0=42:1
+    portmap_16.0=16:1
+    port_gmii_mode{25}=2
+    l2delete_chunks=4096
+    phy_port_primary_and_offset_11=0x0902
+    flowtracker_alu32_mem_banks=8:2:2
+    portmap_51.0=59:25
+    portmap_25.0=25:2.5
+    phy_port_primary_and_offset_20=0x1103
+    phy_port_primary_and_offset_12=0x0903
+    portmap_34.0=34:2.5
+    core_clock_frequency=495
+    flowtracker_chip_delay_granularity=8
+    phy_port_primary_and_offset_21=0x1500
+    phy_port_primary_and_offset_13=0x0d00
+    portmap_43.0=43:1
+    portmap_17.0=17:1
+    flowtracker_ipat_delay_offset=7
+    l2xmsg_mode=1
+    flowtracker_session_data_mem_banks=2:1:1
+    phy_port_primary_and_offset_22=0x1501
+    phy_port_primary_and_offset_14=0x0d01
+    portmap_52.0=60:25
+    portmap_26.0=26:2.5
+    portmap_1.0=1:1
+    phy_port_primary_and_offset_23=0x1502
+    phy_port_primary_and_offset_15=0x0d02
+    portmap_35.0=35:2.5
+    ifp_inports_support_enable=1
+    phy_port_primary_and_offset_24=0x1503
+    phy_port_primary_and_offset_16=0x0d03
+    portmap_44.0=44:1
+    portmap_18.0=18:1
+    flow_init_mode=1
+    portmap_53.0=61:20
+    phy_port_primary_and_offset_17=0x1100
+    portmap_27.0=27:2.5
+    portmap_2.0=2:1
+    portmap_36.0=36:2.5
+    phy_port_primary_and_offset_18=0x1101
+    portmap_45.0=49:1
+    portmap_19.0=19:1
+    phy_port_primary_and_offset_19=0x1102
+    phy_port_primary_and_offset_1=0x0100
+    portmap_54.0=63:20
+    portmap_28.0=28:2.5
+    phy_port_primary_and_offset_2=0x0101
+    portmap_3.0=3:1
+    portmap_37.0=37:2.5
+    phy_port_primary_and_offset_3=0x0102
+    portmap_46.0=50:1
+Attach: Unit 0 (BCM56275_A1): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200510 (Sun May 10 22:05:37 2020)
+From mj030910@lc-sj1-3888:/projects/ntsw-sw2/home/nmou/sdk-xgs-6.5.19
+Platform: IPROC_CMICD
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+       BCM56725_A0, BCM53314_A0, BCM53324_A0, BCM56634_A0,
+       BCM56634_B0, BCM56524_A0, BCM56524_B0, BCM56685_A0,
+       BCM56685_B0, BCM56334_A0, BCM56334_B0, BCM56840_A0,
+       BCM56840_B0,
+
+       BCM88732_A0, BCM56440_A0, BCM56440_B0,
+       BCM56640_A0,
+       BCM56850_A0, BCM56450_A0,
+       BCM56450_B0, BCM56450_B1, BCM56340_A0, BCM56142_A0,
+       BCM56150_A0, BCM53400_A0, BCM56960_A0, BCM56860_A0,
+       BCM56560_A0, BCM56560_B0, BCM56260_A0, BCM56260_B0,
+
+
+
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM53570_A0,
+       BCM53570_B0, BCM56980_A0, BCM56980_B0, BCM53540_A0,
+       BCM56670_A0, BCM56670_B0, BCM56670_C0, BCM56370_A0,
+       BCM56275_A0, BCM56770_A0, BCM56470_A0, BCM56070_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM56275-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM54640E, BCM54880E, BCM54680E,
+    BCM52681E, BCM8703, BCM8704, BCM8705/24/25,
+    BCM8706/8726, BCM8727, BCM8728/8747, BCM8072,
+    BCM8073, BCM8074, BCM8040, BCM8481X,
+    BCM84812, BCM84821, BCM84822, BCM84823,
+    BCM84833, BCM84834, BCM84835, BCM84836,
+    BCM84844, BCM84846, BCM84848, BCM84858,
+    BCM84856, BCM84860, BCM84861, BCM84864,
+    BCM84868, BCM84888, BCM84884, BCM84888E,
+    BCM84884E, BCM84881, BCM84880, BCM84888S,
+    BCM84887, BCM84886, BCM84885, BCM8750,
+    BCM8752, BCM8754, BCM84740, BCM84164,
+    BCM84758, BCM84780, BCM84784, BCM84318,
+    BCM84328, BCM84793, BCM82328, Furia
+    Huracan, Sesto, Madura, BCM82780,
+    copper sfp
+
+~~~ #1) test_setup(): ** start **
+    flowtracker_ipdt_delay_offset=15
+    flowtracker_ipfix_observation_domain_id=1
+    flowtracker_alu16_mem_banks=5:1:2
+    flowtracker_timestamp_mem_engines=2:1:1
+    flowtracker_ipdt_delay_granularity=8
+    flowtracker_e2e_delay_granularity=6
+    flowtracker_e2e_delay_offset=3
+    flowtracker_ipat_delay_granularity=0
+    flowtracker_load16_mem_banks=8:4:4
+    flowtracker_load8_mem_banks=4:2:2
+    flowtracker_chip_delay_offset=768
+    flowtracker_num_unique_user_entry_keys=10
+    flowtracker_alu32_mem_banks=8:2:2
+    flowtracker_chip_delay_granularity=8
+    flowtracker_ipat_delay_offset=7
+    flowtracker_session_data_mem_banks=2:1:1
+    flow_init_mode=1
+[CINT] Monitoring: Started ftrmon task for monitoring !
+[CINT] Env: enable_cmic_counter 0, bcmsim_run 0, skip_cleanup 1
+[CINT] Traffic: Created packet path vlan 30: ingr port 1 - egr port 2
+~~~ #1) test_setup(): ** end **
+~~~ #2) bs2_track_export_setup(): ** start **
+[CINT] Setup: BS Config Step1 - Created presel entries presel_eid1 0x40000000.
+[CINT] Setup: BS Config Step2 - Created FTFP group 0x1.
+[CINT] Setup: BS Config Step3 - Created Collector id 0x0, export_profile id 0x0 on port 0, vlan 1536
+[CINT] Setup: BS Config Step4 - Created flowtracker group 0x0.
+[CINT] Setup: BS Config Step5 - Setup flow limit 2 on flowtracker group.
+[CINT] Setup: BS Config Step13 - Primary Check 0x04000000 created.
+[CINT] Setup: BS Config Step13 - attached action info to checker.
+[CINT] Setup: BS Config Step13 - attached export info to checker.
+[CINT] Setup: BS Config Step13 - added checker 0x04000000 in flowtracker group 0x0
+[CINT] Setup: BS Config Step14 - Setup tracking params on flowtracker group 0x0
+*************************************************************************************************
+[CINT] Input information elements (total 10):
+        input info element ( 0): elem =   0(                            SrcIPv4) and size =   4
+        input info element ( 1): elem =   1(                            DstIPv4) and size =   4
+        input info element ( 2): elem =   4(                          L4SrcPort) and size =   2
+        input info element ( 3): elem =   5(                          L4DstPort) and size =   2
+        input info element ( 4): elem =   6(                         IPProtocol) and size =   1
+        input info element ( 5): elem =   7(                           PktCount) and size =   4
+        input info element ( 6): elem =   4(                          L4SrcPort) and size =   2
+        input info element ( 7): elem =  43(             Timestamp Check Event1) and size =   6
+        input info element ( 8): elem =  47(                   FlowtrackerCheck) and size =   4
+        input info element ( 9): elem =  14(                   FlowtrackerGroup) and size =   2
+*************************************************************************************************
+*************************************************************************************************
+[CINT] Output information elements (total 14):
+        output info element ( 0): elem =  15(                           Reserved) and size =   2
+        output info element ( 1): elem =  14(                   FlowtrackerGroup) and size =   2
+        output info element ( 2): elem =  15(                           Reserved) and size =  42
+        output info element ( 3): elem =   5(                          L4DstPort) and size =   2
+        output info element ( 4): elem =   4(                          L4SrcPort) and size =   2
+        output info element ( 5): elem =   1(                            DstIPv4) and size =   4
+        output info element ( 6): elem =   0(                            SrcIPv4) and size =   4
+        output info element ( 7): elem =   6(                         IPProtocol) and size =   1
+        output info element ( 8): elem =  15(                           Reserved) and size =   1
+        output info element ( 9): elem =  43(             Timestamp Check Event1) and size =   8
+        output info element (10): elem =  47(                   FlowtrackerCheck) and size =   4
+        output info element (11): elem =   7(                           PktCount) and size =   4
+        output info element (12): elem =   4(                          L4SrcPort) and size =   2
+        output info element (13): elem =  15(                           Reserved) and size =  46
+*************************************************************************************************
+[CINT] Setup: BS Config Step15 - Created export template, validate and attached to flowtracker group 0x0
+[CINT] Setup: BS Config Step17 - Installed FTFP entry for group.
+[CINT] - System SVK time <Legacy> format <PTP> set: sec 0x00000000-01020304, nanosec 0x11223344, adjust_nanosec 0x00000000-00000000
+[CINT] Setup: BS Config Step18 - System Time has been setup.
+[CINT] Configure fp rule
+~~~ #2) bs2_track_export_setup(): ** end **
+~~~ #3) verify(): ** start **
+[CINT] Test Traffic sent, num_packets 1 ......
+[CINT] Sleeping for 3 seconds for ftRmon to validate.. The time can vary
+[bcmFtRMon.0]
+[bcmFtRMon.0]*************************************************
+[bcmFtRMon.0]00000000   00 00 00 00 00 c0 00 00
+[bcmFtRMon.0]00000008   00 00 00 f0 81 00 06 00
+[bcmFtRMon.0]00000010   08 00 45 84 00 ac 00 00
+[bcmFtRMon.0]00000018   00 00 09 11 95 85 0a 82
+[bcmFtRMon.0]00000020   56 2a 0a 82 b0 0a 1f 91
+[bcmFtRMon.0]00000028   08 07 00 98 90 f3 00 0a
+[bcmFtRMon.0]00000030   00 90 01 02 03 04 00 00
+[bcmFtRMon.0]00000038   00 02 00 00 00 01 80 01
+[bcmFtRMon.0]00000040   00 80 01 30 00 00 00 20
+[bcmFtRMon.0]00000048   82 03 04 11 22 33 44 00
+[bcmFtRMon.0]00000050   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]00000058   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]00000060   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]00000068   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]00000070   55 66 33 44 0a 0a 02 03
+[bcmFtRMon.0]00000078   0a 0a 02 02 06 01 00 0b
+[bcmFtRMon.0]00000080   00 3c 6d cf 70 1c 00 00
+[bcmFtRMon.0]00000088   00 01 00 00 00 01 33 44
+[bcmFtRMon.0]00000090   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]00000098   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]000000a0   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]000000a8   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]000000b0   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]000000b8   00 00 00 00 00 00 00 00
+[bcmFtRMon.0]000000c0   00 00 ee ee ee ee ee ee
+[bcmFtRMon.0]*************************************************
+[bcmFtRMon.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:c0> src<00:00:00:00:00:f0> Tagged Packet ProtID<0x8100> Ctrl<0x0600> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.130.86.42> dst<10.130.176.10> hl<5> service-type<132> tl<172> id<0> frg-off<0> ttl<9> > chk-sum<0x9585>
+[bcmFtRMon.0]*************************************************
+[bcmFtRMon.0]IPFIX version = 10 (0x0a)
+[bcmFtRMon.0]IPFIX message length = 144 (0x90)
+[bcmFtRMon.0]IPFIX export timestamp = 16909060 (0x1020304)
+[bcmFtRMon.0]IPFIX sequence number = 02 (0x02)
+[bcmFtRMon.0]IPFIX observation domain id = 01 (0x01)
+[bcmFtRMon.0]*************************************************
+[bcmFtRMon.0]*************************************************
+[bcmFtRMon.0]IPFIX data set # 01, set_id = 32769 (0x8001) record length = 128
+[bcmFtRMon.0]Info Element:: 15 (            Reserved) | Size: 02 | Value: (????)
+[bcmFtRMon.0]Info Element:: 14 (    FlowtrackerGroup) | Size: 02 | Value: 0x0000(0000)
+[bcmFtRMon.0]Info Element:: 15 (            Reserved) | Size: 42 | Value: (????)
+[bcmFtRMon.0]Info Element:: 05 (           L4DstPort) | Size: 02 | Value: 0x5566(21862)
+[bcmFtRMon.0]Info Element:: 04 (           L4SrcPort) | Size: 02 | Value: 0x3344(13124)
+[bcmFtRMon.0]Info Element:: 01 (             DstIPv4) | Size: 04 | Value: (10.10.2.3)
+[bcmFtRMon.0]Info Element:: 00 (             SrcIPv4) | Size: 04 | Value: (10.10.2.2)
+[bcmFtRMon.0]Info Element:: 06 (          IPProtocol) | Size: 01 | Value: 0x06(06)
+[bcmFtRMon.0]Info Element:: 15 (            Reserved) | Size: 01 | Value: (????)
+[bcmFtRMon.0]Info Element:: 43 (TimestampCheckEvent1) | Size: 08 | Value: (000b003c6dcf701c)
+[bcmFtRMon.0]Info Element:: 47 (    FlowtrackerCheck) | Size: 04 | Value: 0x00000001(00000001)
+[bcmFtRMon.0]Info Element:: 07 (            PktCount) | Size: 04 | Value: 0x00000001(00000001)
+[bcmFtRMon.0]Info Element:: 04 (           L4SrcPort) | Size: 02 | Value: 0x3344(13124)
+[bcmFtRMon.0]Info Element:: 15 (            Reserved) | Size: 46 | Value: (????)
+[bcmFtRMon.0]*************************************************
+~~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

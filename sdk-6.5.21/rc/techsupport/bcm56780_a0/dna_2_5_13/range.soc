@@ -1,0 +1,18 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Range RC (run commands) file
+#
+#       These are default commands that are for TechSupport Range.
+#
+
+# Show S/W state in Range.
+
+# Show Range related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+#Range LT traverse
+local lt  FP_COMPRESSION_RANGE_CHECK;                               $traverse_lt;
+local lt  FP_COMPRESSION_RANGE_CHECK_GROUP;                         $traverse_lt;

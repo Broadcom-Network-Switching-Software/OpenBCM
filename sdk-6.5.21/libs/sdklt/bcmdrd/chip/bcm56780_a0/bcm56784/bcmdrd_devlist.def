@@ -1,0 +1,10 @@
+#if BCMDRD_CONFIG_INCLUDE_BCM56784_A0 == 1 || defined(BCMDRD_DEVLIST_OVERRIDE)
+#ifdef BCMDRD_DEVLIST_INCLUDE_ALL
+BCMDRD_DEVLIST_ENTRY(BCM56784, BCM56784_VENDOR_ID, BCM56784_DEVICE_ID, BCM56784_REV_A0, \
+                     0, 0, \
+                     bcm56780_a0, bcm56784_a0, bcm56784_a0, \
+                     "Trident4-X9", "BCM56780", \
+                     "5.6 Tb/s 96x50G-PAM4/32x35G-NRZ Programmable Switch", 0, 0)
+#endif
+#endif
+

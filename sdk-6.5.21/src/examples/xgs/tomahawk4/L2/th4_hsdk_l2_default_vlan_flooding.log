@@ -1,0 +1,106 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port : 19
+Egress port1: 88
+Egress port2: 139
+ingress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 88 setup
+egress_port_multi_setup port: 139 setup
+[New Thread 0x7ffff7f9e700 (LWP 102347)]
+Completed test setup successfully.
+Verify unknown unicast pkt from port 19 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x58
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x8b
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-----------------------------------------------------------
+    RESULT OF UNKNOWN UNICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+Verify multicast pkt from port 19 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x58
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x8b
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {010000000022} {000000000011} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-----------------------------------------------------------
+    RESULT OF MULTICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+Verify broadcast pkt from port 19 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x58
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[5]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[5]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[5]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+pktioRxCallback: received from port 0x8b
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {ffffffffffff} {000000000011} 8100 0002
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<ff:ff:ff:ff:ff:ff> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0002> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+
+-----------------------------------------------------------
+    RESULT OF BROADCAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+ingress_port_multi_cleanup port: 19 cleanup
+egress_port_multi_cleanup port: 88 cleanup
+egress_port_multi_cleanup port: 139 cleanup
+[Thread 0x7ffff7f9e700 (LWP 102347) exited]
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)

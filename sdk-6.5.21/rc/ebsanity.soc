@@ -1,0 +1,1733 @@
+# $Id: ebsanity.soc,v 1.8 2008/02/29 23:23:00 sanjayg Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+echo "testsuite: started: sanity"
+
+                                                                                
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?raptor '\
+local lbpbm "ge1,ge4,ge5-ge52";   \
+'
+if $?raven '\
+local lbpbm "ge1,ge4,ge5-ge28";   \
+'
+
+if $?BCM56212_A0 || $?BCM56213_A0 'local lbpbm "ge1,ge4,ge5-ge12"'
+if $?BCM56216_A0 || $?BCM56217_A0 'local lbpbm "ge1,ge4,ge5-ge20"'
+if $?BCM56214_A0 || $?BCM56215_A0 'local lbpbm "ge1,ge4,ge5-ge28"'
+if $?BCM56212_A1 || $?BCM56213_A1 'local lbpbm "ge1,ge4,ge5-ge12"'
+if $?BCM56216_A1 || $?BCM56217_A1 'local lbpbm "ge1,ge4,ge5-ge20"'
+if $?BCM56214_A1 || $?BCM56215_A1 'local lbpbm "ge1,ge4,ge5-ge28"'
+if $?BCM56212_A2 || $?BCM56213_A2 'local lbpbm "ge1,ge4,ge5-ge12"'
+if $?BCM56216_A2 || $?BCM56217_A2 'local lbpbm "ge1,ge4,ge5-ge20"'
+if $?BCM56214_A2 || $?BCM56215_A2 'local lbpbm "ge1,ge4,ge5-ge28"'
+if $?BCM56224_A0 || $?BCM56225_A0 'local lbpbm "ge1,ge4,ge5,ge5-ge28"'
+if $?BCM56226_A0 || $?BCM56227_A0 'local lbpbm "ge1,ge4,ge5,ge5-ge20"'
+if $?BCM56228_A1 || $?BCM56229_A1 'local lbpbm "ge1,ge4,ge5,ge5-ge12"'
+
+set rcerror=false
+
+console off
+pbmp $lbpbm
+if $? && $?BCM56215_A0 'local lbpbm "ge1,ge4,ge2-ge27"'
+if $? && $?BCM56215_A1 'local lbpbm "ge1,ge4,ge2-ge27"'
+if $? && $?BCM56215_A2 'local lbpbm "ge1,ge4,ge2-ge27"'
+console on
+set rcerror=true
+
+if  $?BCM56018_A0  || $?BCM56014_A0 ' \
+    local lbpbm "none"                   ;\
+    ' 
+if  $?BCM56018_A1  || $?BCM56014_A1 ' \
+    local lbpbm "none"                   ;\
+    ' 
+if  $?BCM56018_A2  || $?BCM56014_A2 ' \
+    local lbpbm "ge1,ge4,fe"                   ;\
+    ' 
+
+if  $?BCM56024_A0 || $?BCM56024_B0 || $?BCM56025_A0 ' \
+    local lbpbm "ge1,ge4,fe"                   ;\
+    '
+
+#Display config property settings
+config
+
+init
+init misc
+
+local done 'echo "   Done"'
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Deselect all
+ts -*
+
+#Display some useful information
+date
+ver
+soc
+
+echo "Running S-Channel Buf ..."
+tr 4
+$done
+
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+init soc;
+#Clean up after register read/write test.
+
+echo "Running CPU Benchmarks ..."
+tr 21
+$done
+
+echo "Running Switching Memory tests ..."
+echo "Skip BSAFE_CMD_DATA_IN/BSAFE_CMD_DATA_OUT table (NOT TESTABLE)"
+#echo "tr 50 M=BSAFE_CMD_DATA_IN"
+#tr 50 M=BSAFE_CMD_DATA_IN IS=min IE=max
+#echo " Done"
+#echo "tr 50 M=BSAFE_CMD_DATA_OUT"
+#tr 50 M=BSAFE_CMD_DATA_OUT IS=min IE=max
+#echo " Done"
+echo "tr 50 M=DSCP_TABLE"
+tr 50 M=DSCP_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_DSCP_ECN_MAP"
+tr 50 M=EGR_DSCP_ECN_MAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_DSCP_TABLE"
+tr 50 M=EGR_DSCP_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_EM_MTP_INDEX"
+tr 50 M=EGR_EM_MTP_INDEX IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_IM_MTP_INDEX"
+tr 50 M=EGR_IM_MTP_INDEX IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_IP_TUNNEL"
+tr 50 M=EGR_IP_TUNNEL IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_L3_INTF"
+tr 50 M=EGR_L3_INTF IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_L3_NEXT_HOP"
+tr 50 M=EGR_L3_NEXT_HOP IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGRESS_MASK"
+tr 50 M=EGRESS_MASK IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_VLAN"
+tr 50 M=EGR_VLAN IS=min IE=max
+echo " Done"
+echo "tr 50 M=EGR_VLAN_STG"
+tr 50 M=EGR_VLAN_STG IS=min IE=max
+echo " Done"
+echo "tr 50 M=EM_MTP_INDEX"
+tr 50 M=EM_MTP_INDEX IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_COUNTER_TABLE"
+tr 50 M=FP_COUNTER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_METER_TABLE"
+tr 50 M=FP_METER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_POLICY_TABLE"
+tr 50 M=FP_POLICY_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_PORT_FIELD_SEL"
+tr 50 M=FP_PORT_FIELD_SEL IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_RANGE_CHECK"
+tr 50 M=FP_RANGE_CHECK IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_SC_BCAST_METER_TABLE"
+tr 50 M=FP_SC_BCAST_METER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_SC_DLF_METER_TABLE"
+tr 50 M=FP_SC_DLF_METER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_SC_MCAST_METER_TABLE"
+tr 50 M=FP_SC_MCAST_METER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_SC_METER_TABLE"
+tr 50 M=FP_SC_METER_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_SLICE_MAP"
+tr 50 M=FP_SLICE_MAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=FP_TCAM"
+tr 50 M=FP_TCAM IS=min IE=max
+echo " Done"
+echo "tr 50 M=UDF_OFFSET"
+tr 50 M=UDF_OFFSET IS=min IE=max
+echo " Done"
+echo "tr 50 M=IM_MTP_INDEX"
+tr 50 M=IM_MTP_INDEX IS=min IE=max
+echo " Done"
+echo "tr 50 M=ING_L3_NEXT_HOP"
+tr 50 M=ING_L3_NEXT_HOP IS=min IE=max
+echo " Done"
+echo "tr 50 M=IPORT_TABLE"
+tr 50 M=IPORT_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2MC"
+tr 50 M=L2MC IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_ENTRY"
+tr 50 M=L2_ENTRY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_ENTRY_ONLY"
+tr 50 M=L2_ENTRY_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_HITDA_ONLY"
+tr 50 M=L2_HITDA_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_HITSA_ONLY"
+tr 50 M=L2_HITSA_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_MOD_FIFO"
+tr 50 M=L2_MOD_FIFO IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_USER_ENTRY"
+tr 50 M=L2_USER_ENTRY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_USER_ENTRY_DATA_ONLY"
+tr 50 M=L2_USER_ENTRY_DATA_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L2_USER_ENTRY_ONLY"
+tr 50 M=L2_USER_ENTRY_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=L3_TUNNEL"
+tr 50 M=L3_TUNNEL IS=min IE=max
+echo " Done"
+echo "tr 50 M=PORT_MAC_BLOCK"
+tr 50 M=PORT_MAC_BLOCK IS=min IE=max
+echo " Done"
+echo "tr 50 M=MAC_LIMIT_PORT_MAP_TABLE"
+tr 50 M=MAC_LIMIT_PORT_MAP_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=MAC_LIMIT_TRUNK_MAP_TABLE"
+tr 50 M=MAC_LIMIT_TRUNK_MAP_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=AGING_CTR"
+tr 50 M=AGING_CTR IS=min IE=max
+echo " Done"
+echo "tr 50 M=AGING_EXP"
+tr 50 M=AGING_EXP IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPCELLHEADER"
+tr 50 M=CBPCELLHEADER IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA0"
+tr 50 M=CBPDATA0 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA1"
+tr 50 M=CBPDATA1 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA2"
+tr 50 M=CBPDATA2 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA3"
+tr 50 M=CBPDATA3 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA4"
+tr 50 M=CBPDATA4 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA5"
+tr 50 M=CBPDATA5 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA6"
+tr 50 M=CBPDATA6 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPDATA7"
+tr 50 M=CBPDATA7 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPPKTHEADER0"
+tr 50 M=CBPPKTHEADER0 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CBPPKTHEADER1"
+tr 50 M=CBPPKTHEADER1 IS=min IE=max
+echo " Done"
+echo "tr 50 M=CCP"
+tr 50 M=CCP IS=min IE=max
+echo " Done"
+echo "tr 50 M=CFAP"
+tr 50 M=CFAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ0"
+tr 50 M=XQ0 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ1"
+tr 50 M=XQ1 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ2"
+tr 50 M=XQ2 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ3"
+tr 50 M=XQ3 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ4"
+tr 50 M=XQ4 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ5"
+tr 50 M=XQ5 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ6"
+tr 50 M=XQ6 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ7"
+tr 50 M=XQ7 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ8"
+tr 50 M=XQ8 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ9"
+tr 50 M=XQ9 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ10"
+tr 50 M=XQ10 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ11"
+tr 50 M=XQ11 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ12"
+tr 50 M=XQ12 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ13"
+tr 50 M=XQ13 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ14"
+tr 50 M=XQ14 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ15"
+tr 50 M=XQ15 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ16"
+tr 50 M=XQ16 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ17"
+tr 50 M=XQ17 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ18"
+tr 50 M=XQ18 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ19"
+tr 50 M=XQ19 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ20"
+tr 50 M=XQ20 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ21"
+tr 50 M=XQ21 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ22"
+tr 50 M=XQ22 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ23"
+tr 50 M=XQ23 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ24"
+tr 50 M=XQ24 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ25"
+tr 50 M=XQ25 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ26"
+tr 50 M=XQ26 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ27"
+tr 50 M=XQ27 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ28"
+tr 50 M=XQ28 IS=min IE=max
+echo " Done"
+echo "tr 50 M=XQ29"
+tr 50 M=XQ29 IS=min IE=max
+echo " Done"
+if $?raptor '\
+echo "tr 50 M=XQ30"; \
+tr 50 M=XQ30 IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=XQ31"; \
+tr 50 M=XQ31 IS=min IE=max;  \
+echo " Done"; \
+echo "tr 50 M=XQ32";         \
+tr 50 M=XQ32 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ33";         \
+tr 50 M=XQ33 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ34";         \
+tr 50 M=XQ34 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ35";         \
+tr 50 M=XQ35 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ36";         \
+tr 50 M=XQ36 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ37";         \
+tr 50 M=XQ37 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ38";         \
+tr 50 M=XQ38 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ39";         \
+tr 50 M=XQ39 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ40";         \
+tr 50 M=XQ40 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ41";         \
+tr 50 M=XQ41 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ42";         \
+tr 50 M=XQ42 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ43";         \
+tr 50 M=XQ43 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ44";         \
+tr 50 M=XQ44 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ45";         \
+tr 50 M=XQ45 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ46";         \
+tr 50 M=XQ46 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ47";         \
+tr 50 M=XQ47 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ48";         \
+tr 50 M=XQ48 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ49";         \
+tr 50 M=XQ49 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ50";         \
+tr 50 M=XQ50 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ51";         \
+tr 50 M=XQ51 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ52";         \
+tr 50 M=XQ52 IS=min IE=max;  \
+echo " Done";                \
+echo "tr 50 M=XQ53";         \
+tr 50 M=XQ53 IS=min IE=max;  \
+echo " Done";                \
+'
+echo "tr 50 M=MODPORT_MAP"
+tr 50 M=MODPORT_MAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=MODPORT_MAP_EM"
+tr 50 M=MODPORT_MAP_EM IS=min IE=max
+echo " Done"
+echo "tr 50 M=MODPORT_MAP_IM"
+tr 50 M=MODPORT_MAP_IM IS=min IE=max
+echo " Done"
+echo "tr 50 M=MODPORT_MAP_SW"
+tr 50 M=MODPORT_MAP_SW IS=min IE=max
+echo " Done"
+echo "tr 50 M=NONUCAST_TRUNK_BLOCK_MASK"
+tr 50 M=NONUCAST_TRUNK_BLOCK_MASK IS=min IE=max
+echo " Done"
+echo "tr 50 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2"
+tr 50 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2 IS=min IE=max
+echo " Done"
+echo "tr 50 M=MAC_LIMIT_COUNT_TABLE"
+tr 50 M=MAC_LIMIT_COUNT_TABLE IS=min IE=max
+echo " Done"
+echo "tr 50 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1"
+tr 50 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1 IS=min IE=max
+echo " Done"
+echo "tr 50 M=PORT"
+tr 50 M=PORT IS=min IE=max
+echo " Done"
+echo "tr 50 M=SOURCE_TRUNK_MAP"
+tr 50 M=SOURCE_TRUNK_MAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=SRC_MODID_BLOCK"
+tr 50 M=SRC_MODID_BLOCK IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_STG"
+tr 50 M=VLAN_STG IS=min IE=max
+echo " Done"
+echo "tr 50 M=TRUNK_BITMAP"
+tr 50 M=TRUNK_BITMAP IS=min IE=max
+echo " Done"
+echo "tr 50 M=TRUNK_GROUP"
+tr 50 M=TRUNK_GROUP IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_MAC"
+tr 50 M=VLAN_MAC IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_PROTOCOL"
+tr 50 M=VLAN_PROTOCOL IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_PROTOCOL_DATA"
+tr 50 M=VLAN_PROTOCOL_DATA IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_SUBNET"
+tr 50 M=VLAN_SUBNET IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_SUBNET_DATA_ONLY"
+tr 50 M=VLAN_SUBNET_DATA_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN_SUBNET_ONLY"
+tr 50 M=VLAN_SUBNET_ONLY IS=min IE=max
+echo " Done"
+echo "tr 50 M=VLAN"
+tr 50 M=VLAN IS=min IE=max
+echo " Done"
+
+if $?raven '\
+echo "tr 50 M=EGR_PRI_CNG_MAP"; \
+tr 50 M=EGR_PRI_CNG_MAP IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=EGR_VLAN_XLATE"; \
+tr 50 M=EGR_VLAN_XLATE IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=EGR_VLAN_XLATE_DATA_ONLY"; \
+tr 50 M=EGR_VLAN_XLATE_DATA_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=EGR_VLAN_XLATE_ONLY"; \
+tr 50 M=EGR_VLAN_XLATE_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=IFP_PORT_FIELD_SEL"; \
+tr 50 M=IFP_PORT_FIELD_SEL IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=ING_PRI_CNG_MAP"; \
+tr 50 M=ING_PRI_CNG_MAP IS=min IE=max; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 50 M=INITIAL_ING_L3_NEXT_HOP"; \
+tr 50 M=INITIAL_ING_L3_NEXT_HOP IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=INITIAL_L3_ECMP"; \
+tr 50 M=INITIAL_L3_ECMP IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_DEFIP"; \
+tr 50 M=L3_DEFIP IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_DEFIP_DATA_ONLY"; \
+tr 50 M=L3_DEFIP_DATA_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_DEFIP_HIT_ONLY"; \
+tr 50 M=L3_DEFIP_HIT_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_DEFIP_ONLY"; \
+tr 50 M=L3_DEFIP_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ECMP"; \
+tr 50 M=L3_ECMP IS=min IE=max; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 50 M=L3_ENTRY_HIT_ONLY"; \
+tr 50 M=L3_ENTRY_HIT_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_IPV4_MULTICAST"; \
+tr 50 M=L3_ENTRY_IPV4_MULTICAST IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_IPV4_UNICAST"; \
+tr 50 M=L3_ENTRY_IPV4_UNICAST IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_IPV6_MULTICAST"; \
+tr 50 M=L3_ENTRY_IPV6_MULTICAST IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_IPV6_UNICAST"; \
+tr 50 M=L3_ENTRY_IPV6_UNICAST IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_ONLY"; \
+tr 50 M=L3_ENTRY_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=L3_ENTRY_VALID_ONLY"; \
+tr 50 M=L3_ENTRY_VALID_ONLY IS=min IE=max; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 50 M=L3_IPMC"; \
+tr 50 M=L3_IPMC IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_IPMC_GROUP_TBL0"; \
+tr 50 M=MMU_IPMC_GROUP_TBL0 IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_IPMC_GROUP_TBL1"; \
+tr 50 M=MMU_IPMC_GROUP_TBL1 IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_IPMC_GROUP_TBL2"; \
+tr 50 M=MMU_IPMC_GROUP_TBL2 IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_IPMC_VLAN_TBL"; \
+tr 50 M=MMU_IPMC_VLAN_TBL IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_MAX_BUCKET_GPORT"; \
+tr 50 M=MMU_MAX_BUCKET_GPORT IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=MMU_MIN_BUCKET_GPORT"; \
+tr 50 M=MMU_MIN_BUCKET_GPORT IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=VLAN_PROFILE_TAB"; \
+tr 50 M=VLAN_PROFILE_TAB IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=VLAN_XLATE"; \
+tr 50 M=VLAN_XLATE IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=VLAN_XLATE_DATA_ONLY"; \
+tr 50 M=VLAN_XLATE_DATA_ONLY IS=min IE=max; \
+echo " Done"; \
+echo "tr 50 M=VLAN_XLATE_ONLY"; \
+tr 50 M=VLAN_XLATE_ONLY IS=min IE=max; \
+echo " Done"; \
+'
+
+if $?raptor '\
+echo "Skip BSAFE_CMD_DATA_IN/BSAFE_CMD_DATA_OUT table (NOT TESTABLE)"
+'
+#echo "tr 51 M=BSAFE_CMD_DATA_IN"
+#tr 51 M=BSAFE_CMD_DATA_IN IS=min IE=max ITER=1
+#echo " Done"
+#echo "tr 51 M=BSAFE_CMD_DATA_OUT"
+#tr 51 M=BSAFE_CMD_DATA_OUT IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 51 M=DSCP_TABLE"
+tr 51 M=DSCP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_DSCP_ECN_MAP"
+tr 51 M=EGR_DSCP_ECN_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_DSCP_TABLE"
+tr 51 M=EGR_DSCP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_EM_MTP_INDEX"
+tr 51 M=EGR_EM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_IM_MTP_INDEX"
+tr 51 M=EGR_IM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_IP_TUNNEL"
+tr 51 M=EGR_IP_TUNNEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_L3_INTF"
+tr 51 M=EGR_L3_INTF IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_L3_NEXT_HOP"
+tr 51 M=EGR_L3_NEXT_HOP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGRESS_MASK"
+tr 51 M=EGRESS_MASK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_VLAN"
+tr 51 M=EGR_VLAN IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EGR_VLAN_STG"
+tr 51 M=EGR_VLAN_STG IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=EM_MTP_INDEX"
+tr 51 M=EM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_COUNTER_TABLE"
+tr 51 M=FP_COUNTER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_METER_TABLE"
+tr 51 M=FP_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_POLICY_TABLE"
+tr 51 M=FP_POLICY_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_PORT_FIELD_SEL"
+tr 51 M=FP_PORT_FIELD_SEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_RANGE_CHECK"
+tr 51 M=FP_RANGE_CHECK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_SC_BCAST_METER_TABLE"
+tr 51 M=FP_SC_BCAST_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_SC_DLF_METER_TABLE"
+tr 51 M=FP_SC_DLF_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_SC_MCAST_METER_TABLE"
+tr 51 M=FP_SC_MCAST_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=FP_SC_METER_TABLE"
+tr 51 M=FP_SC_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "Skip FP_SLICE_MAP table (NOT TESTABLE)"
+#echo "tr 51 M=FP_SLICE_MAP"
+#tr 51 M=FP_SLICE_MAP IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 51 M=FP_TCAM"
+tr 51 M=FP_TCAM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=UDF_OFFSET"
+tr 51 M=UDF_OFFSET IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=IM_MTP_INDEX"
+tr 51 M=IM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=ING_L3_NEXT_HOP"
+tr 51 M=ING_L3_NEXT_HOP IS=min IE=max ITER=1
+echo " Done"
+echo "Skip IPORT_TABLE table (NOT TESTABLE)"
+#echo "tr 51 M=IPORT_TABLE"
+#tr 51 M=IPORT_TABLE IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 51 M=L2MC"
+tr 51 M=L2MC IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_ENTRY"
+tr 51 M=L2_ENTRY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_ENTRY_ONLY"
+tr 51 M=L2_ENTRY_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_HITDA_ONLY"
+tr 51 M=L2_HITDA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_HITSA_ONLY"
+tr 51 M=L2_HITSA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_MOD_FIFO"
+tr 51 M=L2_MOD_FIFO IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_USER_ENTRY"
+tr 51 M=L2_USER_ENTRY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_USER_ENTRY_DATA_ONLY"
+tr 51 M=L2_USER_ENTRY_DATA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L2_USER_ENTRY_ONLY"
+tr 51 M=L2_USER_ENTRY_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=L3_TUNNEL"
+tr 51 M=L3_TUNNEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=PORT_MAC_BLOCK"
+tr 51 M=PORT_MAC_BLOCK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MAC_LIMIT_PORT_MAP_TABLE"
+tr 51 M=MAC_LIMIT_PORT_MAP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MAC_LIMIT_TRUNK_MAP_TABLE"
+tr 51 M=MAC_LIMIT_TRUNK_MAP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=AGING_CTR"
+tr 51 M=AGING_CTR IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=AGING_EXP"
+tr 51 M=AGING_EXP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPCELLHEADER"
+tr 51 M=CBPCELLHEADER IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA0"
+tr 51 M=CBPDATA0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA1"
+tr 51 M=CBPDATA1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA2"
+tr 51 M=CBPDATA2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA3"
+tr 51 M=CBPDATA3 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA4"
+tr 51 M=CBPDATA4 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA5"
+tr 51 M=CBPDATA5 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA6"
+tr 51 M=CBPDATA6 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPDATA7"
+tr 51 M=CBPDATA7 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPPKTHEADER0"
+tr 51 M=CBPPKTHEADER0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CBPPKTHEADER1"
+tr 51 M=CBPPKTHEADER1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CCP"
+tr 51 M=CCP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=CFAP"
+tr 51 M=CFAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ0"
+tr 51 M=XQ0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ1"
+tr 51 M=XQ1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ2"
+tr 51 M=XQ2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ3"
+tr 51 M=XQ3 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ4"
+tr 51 M=XQ4 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ5"
+tr 51 M=XQ5 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ6"
+tr 51 M=XQ6 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ7"
+tr 51 M=XQ7 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ8"
+tr 51 M=XQ8 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ9"
+tr 51 M=XQ9 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ10"
+tr 51 M=XQ10 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ11"
+tr 51 M=XQ11 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ12"
+tr 51 M=XQ12 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ13"
+tr 51 M=XQ13 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ14"
+tr 51 M=XQ14 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ15"
+tr 51 M=XQ15 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ16"
+tr 51 M=XQ16 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ17"
+tr 51 M=XQ17 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ18"
+tr 51 M=XQ18 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ19"
+tr 51 M=XQ19 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ20"
+tr 51 M=XQ20 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ21"
+tr 51 M=XQ21 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ22"
+tr 51 M=XQ22 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ23"
+tr 51 M=XQ23 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ24"
+tr 51 M=XQ24 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ25"
+tr 51 M=XQ25 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ26"
+tr 51 M=XQ26 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ27"
+tr 51 M=XQ27 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ28"
+tr 51 M=XQ28 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=XQ29"
+tr 51 M=XQ29 IS=min IE=max ITER=1
+echo " Done"
+if $?raptor ' \
+echo "tr 51 M=XQ30";               \
+tr 51 M=XQ30 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ31";               \
+tr 51 M=XQ31 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ32";               \
+tr 51 M=XQ32 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ33";               \
+tr 51 M=XQ33 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ34";               \
+tr 51 M=XQ34 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ35";               \
+tr 51 M=XQ35 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ36";               \
+tr 51 M=XQ36 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ37";               \
+tr 51 M=XQ37 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ38";               \
+tr 51 M=XQ38 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ39";               \
+tr 51 M=XQ39 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ40";               \
+tr 51 M=XQ40 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ41";               \
+tr 51 M=XQ41 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ42";               \
+tr 51 M=XQ42 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ43";               \
+tr 51 M=XQ43 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ44";               \
+tr 51 M=XQ44 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ45";               \
+tr 51 M=XQ45 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ46";               \
+tr 51 M=XQ46 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ47";               \
+tr 51 M=XQ47 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ48";               \
+tr 51 M=XQ48 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ49";               \
+tr 51 M=XQ49 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ50";               \
+tr 51 M=XQ50 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ51";               \
+tr 51 M=XQ51 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ52";               \
+tr 51 M=XQ52 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 51 M=XQ53";               \
+tr 51 M=XQ53 IS=min IE=max ITER=1; \
+echo " Done";                      \
+'
+
+echo "tr 51 M=MODPORT_MAP"
+tr 51 M=MODPORT_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MODPORT_MAP_EM"
+tr 51 M=MODPORT_MAP_EM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MODPORT_MAP_IM"
+tr 51 M=MODPORT_MAP_IM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MODPORT_MAP_SW"
+tr 51 M=MODPORT_MAP_SW IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=NONUCAST_TRUNK_BLOCK_MASK"
+tr 51 M=NONUCAST_TRUNK_BLOCK_MASK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2"
+tr 51 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=MAC_LIMIT_COUNT_TABLE"
+tr 51 M=MAC_LIMIT_COUNT_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1"
+tr 51 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=PORT"
+tr 51 M=PORT IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=SOURCE_TRUNK_MAP"
+tr 51 M=SOURCE_TRUNK_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=SRC_MODID_BLOCK"
+tr 51 M=SRC_MODID_BLOCK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_STG"
+tr 51 M=VLAN_STG IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=TRUNK_BITMAP"
+tr 51 M=TRUNK_BITMAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=TRUNK_GROUP"
+tr 51 M=TRUNK_GROUP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_MAC"
+tr 51 M=VLAN_MAC IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_PROTOCOL"
+tr 51 M=VLAN_PROTOCOL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_PROTOCOL_DATA"
+tr 51 M=VLAN_PROTOCOL_DATA IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_SUBNET"
+tr 51 M=VLAN_SUBNET IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_SUBNET_DATA_ONLY"
+tr 51 M=VLAN_SUBNET_DATA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN_SUBNET_ONLY"
+tr 51 M=VLAN_SUBNET_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 51 M=VLAN"
+tr 51 M=VLAN IS=min IE=max ITER=1
+echo " Done"
+$done
+
+if $?raven '\
+echo "tr 51 M=EGR_PRI_CNG_MAP"; \
+tr 51 M=EGR_PRI_CNG_MAP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=EGR_VLAN_XLATE"; \
+tr 51 M=EGR_VLAN_XLATE IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=EGR_VLAN_XLATE_DATA_ONLY"; \
+tr 51 M=EGR_VLAN_XLATE_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=EGR_VLAN_XLATE_ONLY"; \
+tr 51 M=EGR_VLAN_XLATE_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=IFP_PORT_FIELD_SEL"; \
+tr 51 M=IFP_PORT_FIELD_SEL IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=ING_PRI_CNG_MAP"; \
+tr 51 M=ING_PRI_CNG_MAP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=INITIAL_ING_L3_NEXT_HOP"; \
+tr 51 M=INITIAL_ING_L3_NEXT_HOP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=INITIAL_L3_ECMP"; \
+tr 51 M=INITIAL_L3_ECMP IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 51 M=L3_DEFIP"; \
+tr 51 M=L3_DEFIP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_DEFIP_DATA_ONLY"; \
+tr 51 M=L3_DEFIP_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_DEFIP_HIT_ONLY"; \
+tr 51 M=L3_DEFIP_HIT_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_DEFIP_ONLY"; \
+tr 51 M=L3_DEFIP_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ECMP"; \
+tr 51 M=L3_ECMP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_HIT_ONLY"; \
+tr 51 M=L3_ENTRY_HIT_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_IPV4_MULTICAST"; \
+tr 51 M=L3_ENTRY_IPV4_MULTICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 51 M=L3_ENTRY_IPV4_UNICAST"; \
+tr 51 M=L3_ENTRY_IPV4_UNICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_IPV6_MULTICAST"; \
+tr 51 M=L3_ENTRY_IPV6_MULTICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_IPV6_UNICAST"; \
+tr 51 M=L3_ENTRY_IPV6_UNICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_ONLY"; \
+tr 51 M=L3_ENTRY_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_ENTRY_VALID_ONLY"; \
+tr 51 M=L3_ENTRY_VALID_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=L3_IPMC"; \
+tr 51 M=L3_IPMC IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=MMU_IPMC_GROUP_TBL0"; \
+tr 51 M=MMU_IPMC_GROUP_TBL0 IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=MMU_IPMC_GROUP_TBL1"; \
+tr 51 M=MMU_IPMC_GROUP_TBL1 IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 51 M=MMU_IPMC_GROUP_TBL2"; \
+tr 51 M=MMU_IPMC_GROUP_TBL2 IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=MMU_IPMC_VLAN_TBL"; \
+tr 51 M=MMU_IPMC_VLAN_TBL IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=MMU_MAX_BUCKET_GPORT"; \
+tr 51 M=MMU_MAX_BUCKET_GPORT IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=MMU_MIN_BUCKET_GPORT"; \
+tr 51 M=MMU_MIN_BUCKET_GPORT IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=VLAN_PROFILE_TAB"; \
+tr 51 M=VLAN_PROFILE_TAB IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=VLAN_XLATE"; \
+tr 51 M=VLAN_XLATE IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=VLAN_XLATE_DATA_ONLY"; \
+tr 51 M=VLAN_XLATE_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 51 M=VLAN_XLATE_ONLY"; \
+tr 51 M=VLAN_XLATE_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+
+if $?raptor '\
+echo "Skip BSAFE_CMD_DATA_IN/BSAFE_CMD_DATA_OUT table (NOT TESTABLE)"; \
+'
+
+#echo "tr 52 M=BSAFE_CMD_DATA_IN"
+#tr 52 M=BSAFE_CMD_DATA_IN IS=min IE=max ITER=1
+#echo " Done"
+#echo "tr 52 M=BSAFE_CMD_DATA_OUT"
+#tr 52 M=BSAFE_CMD_DATA_OUT IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 52 M=DSCP_TABLE"
+tr 52 M=DSCP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_DSCP_ECN_MAP"
+tr 52 M=EGR_DSCP_ECN_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_DSCP_TABLE"
+tr 52 M=EGR_DSCP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_EM_MTP_INDEX"
+tr 52 M=EGR_EM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_IM_MTP_INDEX"
+tr 52 M=EGR_IM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_IP_TUNNEL"
+tr 52 M=EGR_IP_TUNNEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_L3_INTF"
+tr 52 M=EGR_L3_INTF IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_L3_NEXT_HOP"
+tr 52 M=EGR_L3_NEXT_HOP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGRESS_MASK"
+tr 52 M=EGRESS_MASK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_VLAN"
+tr 52 M=EGR_VLAN IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EGR_VLAN_STG"
+tr 52 M=EGR_VLAN_STG IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=EM_MTP_INDEX"
+tr 52 M=EM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_COUNTER_TABLE"
+tr 52 M=FP_COUNTER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_METER_TABLE"
+tr 52 M=FP_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_POLICY_TABLE"
+tr 52 M=FP_POLICY_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_PORT_FIELD_SEL"
+tr 52 M=FP_PORT_FIELD_SEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_RANGE_CHECK"
+tr 52 M=FP_RANGE_CHECK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_SC_BCAST_METER_TABLE"
+tr 52 M=FP_SC_BCAST_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_SC_DLF_METER_TABLE"
+tr 52 M=FP_SC_DLF_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_SC_MCAST_METER_TABLE"
+tr 52 M=FP_SC_MCAST_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=FP_SC_METER_TABLE"
+tr 52 M=FP_SC_METER_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "Skip FP_SLICE_MAP table (NOT TESTABLE)"
+#echo "tr 52 M=FP_SLICE_MAP"
+#tr 52 M=FP_SLICE_MAP IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 52 M=FP_TCAM"
+tr 52 M=FP_TCAM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=UDF_OFFSET"
+tr 52 M=UDF_OFFSET IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=IM_MTP_INDEX"
+tr 52 M=IM_MTP_INDEX IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=ING_L3_NEXT_HOP"
+tr 52 M=ING_L3_NEXT_HOP IS=min IE=max ITER=1
+echo " Done"
+echo "Skip IPORT_TABLE table (NOT TESTABLE)"
+#echo "tr 52 M=IPORT_TABLE"
+#tr 52 M=IPORT_TABLE IS=min IE=max ITER=1
+#echo " Done"
+echo "tr 52 M=L2MC"
+tr 52 M=L2MC IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_ENTRY"
+tr 52 M=L2_ENTRY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_ENTRY_ONLY"
+tr 52 M=L2_ENTRY_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_HITDA_ONLY"
+tr 52 M=L2_HITDA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_HITSA_ONLY"
+tr 52 M=L2_HITSA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_MOD_FIFO"
+tr 52 M=L2_MOD_FIFO IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_USER_ENTRY"
+tr 52 M=L2_USER_ENTRY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_USER_ENTRY_DATA_ONLY"
+tr 52 M=L2_USER_ENTRY_DATA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L2_USER_ENTRY_ONLY"
+tr 52 M=L2_USER_ENTRY_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=L3_TUNNEL"
+tr 52 M=L3_TUNNEL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=PORT_MAC_BLOCK"
+tr 52 M=PORT_MAC_BLOCK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MAC_LIMIT_PORT_MAP_TABLE"
+tr 52 M=MAC_LIMIT_PORT_MAP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MAC_LIMIT_TRUNK_MAP_TABLE"
+tr 52 M=MAC_LIMIT_TRUNK_MAP_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=AGING_CTR"
+tr 52 M=AGING_CTR IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=AGING_EXP"
+tr 52 M=AGING_EXP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPCELLHEADER"
+tr 52 M=CBPCELLHEADER IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA0"
+tr 52 M=CBPDATA0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA1"
+tr 52 M=CBPDATA1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA2"
+tr 52 M=CBPDATA2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA3"
+tr 52 M=CBPDATA3 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA4"
+tr 52 M=CBPDATA4 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA5"
+tr 52 M=CBPDATA5 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA6"
+tr 52 M=CBPDATA6 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPDATA7"
+tr 52 M=CBPDATA7 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPPKTHEADER0"
+tr 52 M=CBPPKTHEADER0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CBPPKTHEADER1"
+tr 52 M=CBPPKTHEADER1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CCP"
+tr 52 M=CCP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=CFAP"
+tr 52 M=CFAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ0"
+tr 52 M=XQ0 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ1"
+tr 52 M=XQ1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ2"
+tr 52 M=XQ2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ3"
+tr 52 M=XQ3 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ4"
+tr 52 M=XQ4 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ5"
+tr 52 M=XQ5 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ6"
+tr 52 M=XQ6 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ7"
+tr 52 M=XQ7 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ8"
+tr 52 M=XQ8 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ9"
+tr 52 M=XQ9 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ10"
+tr 52 M=XQ10 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ11"
+tr 52 M=XQ11 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ12"
+tr 52 M=XQ12 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ13"
+tr 52 M=XQ13 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ14"
+tr 52 M=XQ14 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ15"
+tr 52 M=XQ15 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ16"
+tr 52 M=XQ16 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ17"
+tr 52 M=XQ17 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ18"
+tr 52 M=XQ18 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ19"
+tr 52 M=XQ19 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ20"
+tr 52 M=XQ20 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ21"
+tr 52 M=XQ21 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ22"
+tr 52 M=XQ22 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ23"
+tr 52 M=XQ23 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ24"
+tr 52 M=XQ24 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ25"
+tr 52 M=XQ25 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ26"
+tr 52 M=XQ26 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ27"
+tr 52 M=XQ27 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ28"
+tr 52 M=XQ28 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=XQ29"
+tr 52 M=XQ29 IS=min IE=max ITER=1
+echo " Done"
+if $?raptor '\
+echo "tr 52 M=XQ30";               \
+tr 52 M=XQ30 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ31";               \
+tr 52 M=XQ31 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ32";               \
+tr 52 M=XQ32 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ33";               \
+tr 52 M=XQ33 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ34";               \
+tr 52 M=XQ34 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ35";               \
+tr 52 M=XQ35 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ36";               \
+tr 52 M=XQ36 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ37";               \
+tr 52 M=XQ37 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ38";               \
+tr 52 M=XQ38 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ39";               \
+tr 52 M=XQ39 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ40";               \
+tr 52 M=XQ40 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ41";               \
+tr 52 M=XQ41 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ42";               \
+tr 52 M=XQ42 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ43";               \
+tr 52 M=XQ43 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ44";               \
+tr 52 M=XQ44 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ45";               \
+tr 52 M=XQ45 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ46";               \
+tr 52 M=XQ46 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ47";               \
+tr 52 M=XQ47 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ48";               \
+tr 52 M=XQ48 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ49";               \
+tr 52 M=XQ49 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ50";               \
+tr 52 M=XQ50 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ52";               \
+tr 52 M=XQ52 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ52";               \
+tr 52 M=XQ52 IS=min IE=max ITER=1; \
+echo " Done";                      \
+echo "tr 52 M=XQ53";               \
+tr 52 M=XQ53 IS=min IE=max ITER=1; \
+echo " Done";                      \
+'
+echo "tr 52 M=MODPORT_MAP"
+tr 52 M=MODPORT_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MODPORT_MAP_EM"
+tr 52 M=MODPORT_MAP_EM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MODPORT_MAP_IM"
+tr 52 M=MODPORT_MAP_IM IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MODPORT_MAP_SW"
+tr 52 M=MODPORT_MAP_SW IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=NONUCAST_TRUNK_BLOCK_MASK"
+tr 52 M=NONUCAST_TRUNK_BLOCK_MASK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2"
+tr 52 M=PORT_TRUNK_MAC_LIMIT_CONTROL_2 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=MAC_LIMIT_COUNT_TABLE"
+tr 52 M=MAC_LIMIT_COUNT_TABLE IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1"
+tr 52 M=PORT_TRUNK_MAC_LIMIT_CONTROL_1 IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=PORT"
+tr 52 M=PORT IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=SOURCE_TRUNK_MAP"
+tr 52 M=SOURCE_TRUNK_MAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=SRC_MODID_BLOCK"
+tr 52 M=SRC_MODID_BLOCK IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_STG"
+tr 52 M=VLAN_STG IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=TRUNK_BITMAP"
+tr 52 M=TRUNK_BITMAP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=TRUNK_GROUP"
+tr 52 M=TRUNK_GROUP IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_MAC"
+tr 52 M=VLAN_MAC IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_PROTOCOL"
+tr 52 M=VLAN_PROTOCOL IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_PROTOCOL_DATA"
+tr 52 M=VLAN_PROTOCOL_DATA IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_SUBNET"
+tr 52 M=VLAN_SUBNET IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_SUBNET_DATA_ONLY"
+tr 52 M=VLAN_SUBNET_DATA_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN_SUBNET_ONLY"
+tr 52 M=VLAN_SUBNET_ONLY IS=min IE=max ITER=1
+echo " Done"
+echo "tr 52 M=VLAN"
+tr 52 M=VLAN IS=min IE=max ITER=1
+echo " Done"
+
+if $?raven '\
+echo "tr 52 M=EGR_PRI_CNG_MAP"; \
+tr 52 M=EGR_PRI_CNG_MAP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=EGR_VLAN_XLATE"; \
+tr 52 M=EGR_VLAN_XLATE IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=EGR_VLAN_XLATE_DATA_ONLY"; \
+tr 52 M=EGR_VLAN_XLATE_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=EGR_VLAN_XLATE_ONLY"; \
+tr 52 M=EGR_VLAN_XLATE_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=IFP_PORT_FIELD_SEL"; \
+tr 52 M=IFP_PORT_FIELD_SEL IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=ING_PRI_CNG_MAP"; \
+tr 52 M=ING_PRI_CNG_MAP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=INITIAL_ING_L3_NEXT_HOP"; \
+tr 52 M=INITIAL_ING_L3_NEXT_HOP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=INITIAL_L3_ECMP"; \
+tr 52 M=INITIAL_L3_ECMP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_DEFIP"; \
+tr 52 M=L3_DEFIP IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 52 M=L3_DEFIP_DATA_ONLY"; \
+tr 52 M=L3_DEFIP_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_DEFIP_HIT_ONLY"; \
+tr 52 M=L3_DEFIP_HIT_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_DEFIP_ONLY"; \
+tr 52 M=L3_DEFIP_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ECMP"; \
+tr 52 M=L3_ECMP IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_HIT_ONLY"; \
+tr 52 M=L3_ENTRY_HIT_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_IPV4_MULTICAST"; \
+tr 52 M=L3_ENTRY_IPV4_MULTICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_IPV4_UNICAST"; \
+tr 52 M=L3_ENTRY_IPV4_UNICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_IPV6_MULTICAST"; \
+tr 52 M=L3_ENTRY_IPV6_MULTICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_IPV6_UNICAST"; \
+tr 52 M=L3_ENTRY_IPV6_UNICAST IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_ENTRY_ONLY"; \
+tr 52 M=L3_ENTRY_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+if $?BCM56224_A0 || $?BCM56226_A0 || $?BCM56228_A0 || $?BCM56024_A0 || \
+$?BCM56224_B0 || $?BCM56226_B0 || $?BCM56228_B0 || $?BCM56024_B0'\
+echo "tr 52 M=L3_ENTRY_VALID_ONLY"; \
+tr 52 M=L3_ENTRY_VALID_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=L3_IPMC"; \
+tr 52 M=L3_IPMC IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_IPMC_GROUP_TBL0"; \
+tr 52 M=MMU_IPMC_GROUP_TBL0 IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_IPMC_GROUP_TBL1"; \
+tr 52 M=MMU_IPMC_GROUP_TBL1 IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_IPMC_GROUP_TBL2"; \
+tr 52 M=MMU_IPMC_GROUP_TBL2 IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_IPMC_VLAN_TBL"; \
+tr 52 M=MMU_IPMC_VLAN_TBL IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_MAX_BUCKET_GPORT"; \
+tr 52 M=MMU_MAX_BUCKET_GPORT IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=MMU_MIN_BUCKET_GPORT"; \
+tr 52 M=MMU_MIN_BUCKET_GPORT IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=VLAN_PROFILE_TAB"; \
+tr 52 M=VLAN_PROFILE_TAB IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=VLAN_XLATE"; \
+tr 52 M=VLAN_XLATE IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=VLAN_XLATE_DATA_ONLY"; \
+tr 52 M=VLAN_XLATE_DATA_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+echo "tr 52 M=VLAN_XLATE_ONLY"; \
+tr 52 M=VLAN_XLATE_ONLY IS=min IE=max ITER=1; \
+echo " Done"; \
+'
+echo "tr 50/51/52/71 M=FP_SLICE_ENTRY_PORT_SEL"
+if !$?BCM537XX ' \
+    echo "tr 50"; tr 50 M=FP_SLICE_ENTRY_PORT_SEL IS=min IE=max          ; \
+    echo "tr 51"; tr 51 M=FP_SLICE_ENTRY_PORT_SEL IS=min IE=max ITER=1   ; \
+    echo "tr 52"; tr 52 M=FP_SLICE_ENTRY_PORT_SEL IS=min IE=max ITER=1   ; \
+    echo "tr 71"; tr 71 M=FP_SLICE_ENTRY_PORT_SEL S=-1 C=-1 VC=1 TSE=True; \
+    local ix_incr 432                                                    ; \
+'
+if $?BCM537XX ' \
+    tr 50 M=FP_SLICE_ENTRY_PORT_SEL IS=0 IE=max II=8 ; \
+    tr 50 M=FP_SLICE_ENTRY_PORT_SEL IS=1 IE=max II=8 ; \
+    tr 50 M=FP_SLICE_ENTRY_PORT_SEL IS=2 IE=max II=8 ; \
+    tr 50 M=FP_SLICE_ENTRY_PORT_SEL IS=3 IE=max II=8 ; \
+    local ix_incr 8                                  ; \
+'
+
+if $?raptor 'local max_idx 431'
+if $?raven 'local max_idx 479'
+
+for ix_min=0,431,$ix_incr '                                           \
+    expr $ix_min + 3;local ix_max $?                                ; \
+    tr 51 M=FP_SLICE_ENTRY_PORT_SEL IS=$ix_min IE=$ix_max ITER=1    ; \
+    tr 52 M=FP_SLICE_ENTRY_PORT_SEL IS=$ix_min IE=$ix_max ITER=1    ; \
+'
+echo " Done"
+
+echo "Skip BSAFE Self test"
+#echo "Running BSAFE Self test"
+#tr 65
+#$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#L2/L3 hashing tests
+echo "Running L2 insert/delete/lookup test ..."
+tr 32
+$done
+
+echo "Running L2 overflow insert test ..."
+tr 33
+$done
+
+echo "Running L2 hash test ..."
+tr 34
+$done
+
+echo "Running L2 delete by port test ..."
+tr 35
+$done
+
+echo "Running L2 delete by vlan test ..."
+tr 36
+$done
+
+if $?raven '\
+echo "Running IPV4 overflow insert test ..."; \
+tr 87 IPMCEnable=False; \
+tr 87 IPMCEnable=True; \
+$done; \
+echo "Running IPV4 hash test ..."; \
+tr 88 IPMCEnable=False; \
+tr 88 IPMCEnable=True; \
+$done; \
+echo "Running IPV6 overflow insert test ..."; \
+tr 85 IPMCEnable=False; \
+tr 85 IPMCEnable=True; \
+$done; \
+echo "Running IPV6 hash test ..."; \
+tr 86 IPMCEnable=False; \
+tr 86 IPMCEnable=True; \
+$done; \
+'
+
+echo "Running MDIO Linkscan test"
+tr 60 readcount=10000
+$done
+
+# Loopback Tests
+# Each test loads rc.soc in case a previous test failed
+rcload rc.soc
+
+echo "Running MAC loopback V2 on ports ...";
+tr 48 smi=103 dmi=42 vlan=5 pi=0x11335577 sendm=single pbm=$lbpbm;
+$done;
+echo "Running PHY loopback V2 on ports ...";
+tr 49 smi=52 dmi=83 vlan=23 pi=0x01204007 sendm=single pbm=$lbpbm;
+$done;
+
+date
+tl 
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this 
+# value
+echo "testsuite: finished: sanity: $returnCode"
+

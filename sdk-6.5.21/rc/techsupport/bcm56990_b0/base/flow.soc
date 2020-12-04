@@ -1,0 +1,74 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport FLOW RC (run commands) file
+#
+#       These are default commands that are for TechSupport FLOW.
+#
+
+# Show S/W state in FLOW.
+dump sw flow
+
+# Show available flow handles.
+flowdb flow show
+
+# Show available flow options.
+flowdb flow_option show
+
+# Show FLOW related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show FLOW related Ingress LTs.
+local lt VFI_ING_ADAPT_OVID_PORT_GRP;                                   $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID;                   $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID_KEY_MASK;          $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID_SRC_IPV4;          $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID_SRC_IPV4_KEY_MASK; $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID_SRC_IPV6;          $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_VFI_ASSIGNMENT_OVID_VNID_SRC_IPV6_KEY_MASK; $traverse_lt;
+local lt PORT_SVP;                                                      $traverse_lt;
+local lt PORT_SVP_ING_MIRROR;                                           $traverse_lt;
+local lt PORT_SVP_ING_EFLEX_ACTION;                                     $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_SVP_ASSIGNMENT_OVID_SRC_IPV4;               $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_SVP_ASSIGNMENT_OVID_SRC_IPV4_KEY_MASK;      $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_SVP_ASSIGNMENT_OVID_SRC_IPV6;               $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_SVP_ASSIGNMENT_OVID_SRC_IPV6_KEY_MASK;      $traverse_lt;
+local lt TNL_IPV4_ENCAP;                                                $traverse_lt;
+local lt TNL_IPV6_ENCAP;                                                $traverse_lt;
+local lt TNL_L2_VXLAN_CONTROL;                                          $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV4;                              $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV4;                                  $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV6;                              $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV6;                                  $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV4_EM;                           $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV4_EM_KEY_MASK;                  $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV6_EM;                           $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_DST_IPV6_EM_KEY_MASK;                  $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV4_EM;                               $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV4_EM_KEY_MASK;                      $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV6_EM;                               $traverse_lt;
+local lt TNL_L2_VXLAN_DECAP_OVID_IPV6_EM_KEY_MASK;                      $traverse_lt;
+local lt VLAN_PAYLOAD_OUTER_TPID;                                       $traverse_lt;
+local lt L2_PAYLOAD_OPAQUE_TAG;                                         $traverse_lt;
+
+# Show FLOW related TM LTs.
+local lt L2_MC_GROUP;                                 $traverse_lt;
+local lt L3_MC_CONTROL;                               $traverse_lt;
+local lt TM_MC_AGG_LIST_MEMBER_REMAP;                 $traverse_lt;
+local lt TM_MC_GROUP;                                 $traverse_lt;
+local lt TM_MC_PORT_AGG_LIST;                         $traverse_lt;
+local lt TM_MC_PORT_AGG_MAP;                          $traverse_lt;
+
+# Show FLOW related Egress LTs.
+local lt PORT_DVP;                                                $traverse_lt;
+local lt PORT_DVP_MTU_PROFILE;                                    $traverse_lt;
+local lt TNL_L2_VXLAN_ADAPT_VFI;                                  $traverse_lt;
+local lt TNL_L2_VXLAN_ADAPT_VFI_KEY_MASK;                         $traverse_lt;
+local lt TNL_L2_VXLAN_ADAPT_VFI_DVP_GRP;                          $traverse_lt;
+local lt TNL_L2_VXLAN_ADAPT_VFI_DVP_GRP;                          $traverse_lt;
+local lt VFI_EGR_ADAPT_PORT_GRP;                                  $traverse_lt;
+local lt VFI_EGR_ADAPT_PORT_GRP_KEY_MASK;                         $traverse_lt;
+local lt PORT_SVP_ES_FILTERING;                                   $traverse_lt;
+local lt PORT_SVP_ES_FILTERING_KEY_MASK;                          $traverse_lt;

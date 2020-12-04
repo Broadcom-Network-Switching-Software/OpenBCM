@@ -1,0 +1,137 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+~~~ #1) test_setup(): ** start **
+Ingress port : 205
+Egress port1: 34
+Egress port2: 238
+Egress port3: 206
+Egress port4: 88
+ingress_port_multi_setup port: 205 setup
+egress_port_multi_setup port: 34 setup
+egress_port_multi_setup port: 88 setup
+egress_port_multi_setup port: 206 setup
+egress_port_multi_setup port: 238 setup
+[New Thread 0x7ffff56c3700 (LWP 99843)]
+int stg1 = 2 (0x2)
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify unknown unicast pkt from port 205 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x22
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xee
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress1 : 1 packets / 68 bytes
+FlexCtr Get on port_egress2 : 1 packets / 68 bytes
+
+-----------------------------------------------------------
+    RESULT OF STG VERIFICATION
+-----------------------------------------------------------
+Test1 = [PASS]
+-------------------------------------
+Verify unknown unicast pkt from port 205 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x58
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+
+FlexCtr Get on port_egress3 : 1 packets / 68 bytes
+FlexCtr Get on port_egress4 : 1 packets / 68 bytes
+
+-----------------------------------------------------------
+    RESULT OF STG VERIFICATION
+-----------------------------------------------------------
+Test2 = [PASS]
+-------------------------------------
+Verify unknown unicast pkt from port 205 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x22
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {000000000022} {000000000011} 8100 0014
+[bcmPWN.0]Packet[5]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[5]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x0014> ARP (IP and CHAOS)
+Packet[5]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress1 : 1 packets / 68 bytes
+FlexCtr Get on port_egress2 : 0 packets / 0 bytes
+
+-----------------------------------------------------------
+    RESULT OF STG VERIFICATION
+-----------------------------------------------------------
+Test3 = [PASS]
+-------------------------------------
+Verify unknown unicast pkt from port 205 forwarding to the other 2 ports
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0xce
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {000000000022} {000000000011} 8100 001e
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 0a0a 0a03 0001
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:00:22> src<00:00:00:00:00:11> Tagged Packet ProtID<0x8100> Ctrl<0x001e> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<10:10:10:3>
+FlexCtr Get on port_egress3 : 1 packets / 68 bytes
+FlexCtr Get on port_egress4 : 0 packets / 0 bytes
+
+-----------------------------------------------------------
+    RESULT OF STG VERIFICATION
+-----------------------------------------------------------
+Test4 = [PASS]
+-------------------------------------
+testVerify() [PASS]
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 205 cleanup
+egress_port_multi_cleanup port: 34 cleanup
+egress_port_multi_cleanup port: 88 cleanup
+egress_port_multi_cleanup port: 206 cleanup
+egress_port_multi_cleanup port: 238 cleanup
+[Thread 0x7ffff56c3700 (LWP 99843) exited]
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End

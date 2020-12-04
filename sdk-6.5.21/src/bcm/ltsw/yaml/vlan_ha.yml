@@ -1,0 +1,55 @@
+#
+# file: vlan_ha.yml
+# VLAN YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMINT_VLAN_PRE_CFG_ARRAY_SIZE: 128
+
+component:
+    bcmint_vlan:
+        bcmint_vlan_config_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                def_vlan:
+                    type: uint16_t
+                    comment: Default VLAN.
+                vlan_entry_inited:
+                    type: uint8_t
+                    comment: Init all VLAN entries during init stage.
+                pre_cfg_vlan_bmp:
+                    type: uint32_t
+                    length: BCMINT_VLAN_PRE_CFG_ARRAY_SIZE
+                    comment: Bitmap of pre-configuratioin VLANs.
+                flood_mode:
+                    type: uint8_t
+                    comment: Default flood mode.
+        bcmint_vlan_xlate_key_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                outer_vlan:
+                    type: uint16_t
+                    comment: Outer vlan id.
+                inner_vlan:
+                    type: uint16_t
+                    comment: Inner vlan id.
+                pg_id:
+                    type: uint16_t
+                    comment: Port group id.
+        bcmint_vlan_membership_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                port_info:
+                    type: uint8_t
+                    comment: Member port information.

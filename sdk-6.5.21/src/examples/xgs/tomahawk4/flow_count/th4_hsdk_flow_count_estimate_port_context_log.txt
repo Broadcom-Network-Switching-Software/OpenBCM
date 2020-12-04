@@ -1,0 +1,1811 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Ingress port: 121
+Egress port1: 240
+Egress port2: 190
+flex_counter_id = 0x10000018
+Completed test setup successfully.
+Verify UC pkt from 121 forwarding to port 240
+Packet from data=<>, length=103
+Packet from data=<>, length=103
+
+...............................
+
+Packet from data=<>, length=103
+Packet from data=<>, length=103
+Sleeping for 1 second
+index 0x0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0x2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0x9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xa -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0xc -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xd -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xe -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0xf -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x10 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x11 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x12 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x13 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x14 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x15 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x16 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x17 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x18 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x19 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x1a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x1b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x1c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x1d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x1e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x1f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x20 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x21 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x22 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x23 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x24 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x25 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x26 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x27 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x28 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x29 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x2a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x2b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x0000000A}
+    }
+}
+index 0x2c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x2d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x2e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x2f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000008}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x30 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x31 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x32 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x33 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x34 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x35 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x36 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x37 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x38 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x39 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x3a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x3b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x3c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x3d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x3e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x3f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x40 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x41 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x42 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x43 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x44 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x45 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x46 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x47 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x48 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x49 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x4a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x4b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x0000000A}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x4c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x4d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x4e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x4f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x50 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x51 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0x52 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x53 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x54 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x55 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x56 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x57 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x58 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x59 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x5a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x5b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x5c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x5d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x5e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x5f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x60 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x61 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x62 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x63 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x64 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x65 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x66 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x67 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x68 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x69 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x6a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x6b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x6c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x6d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x6e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x6f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x70 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x71 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x72 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x73 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0x74 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0x75 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x76 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x77 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x78 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x79 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x7a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x7b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x7c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0x7d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x7e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x7f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x80 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0x81 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x82 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x83 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x84 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x85 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x86 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x87 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x88 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x89 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x8a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x8b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x8c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x8d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x8e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x8f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x90 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x91 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0x92 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000008}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x93 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x94 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x95 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x96 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x97 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0x98 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0x99 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x9a -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x9b -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0x9c -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0x9d -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0x9e -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0x9f -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000009}
+    }
+}
+index 0xa0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xa1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xa2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xa3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0xa4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xa5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xa6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xa7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xa8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xa9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+index 0xaa -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xab -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xac -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xad -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xae -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xaf -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xb0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xb1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0xb2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000008}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xb3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xb4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xb5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xb6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xb7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xb8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xb9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xba -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xbb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xbc -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xbd -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0xbe -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xbf -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xc0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xc1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xc2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xc3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xc4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xc5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xc6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xc7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xc8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xc9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xca -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xcb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xcc -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000009}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xcd -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xce -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xcf -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xd0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xd1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000008}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xd2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xd3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x0000000A}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xd4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xd5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xd6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xd7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xd8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xd9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xda -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0xdb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xdc -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xdd -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0xde -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xdf -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xe0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xe1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xe2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000008}
+    }
+}
+index 0xe3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xe4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xe5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xe6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0xe7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xe8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xe9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xea -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xeb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xec -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xed -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xee -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xef -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000003}
+    }
+}
+index 0xf0 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xf1 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xf2 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000005}
+    }
+}
+index 0xf3 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000007}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xf4 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0xf5 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000005}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xf6 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000003}
+        uint64 value[1] = {0x00000000 0x00000009}
+    }
+}
+index 0xf7 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xf8 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xf9 -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000004}
+        uint64 value[1] = {0x00000000 0x00000006}
+    }
+}
+index 0xfa -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000007}
+    }
+}
+index 0xfb -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xfc -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000002}
+    }
+}
+index 0xfd -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000001}
+    }
+}
+index 0xfe -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000006}
+        uint64 value[1] = {0x00000000 0x00000004}
+    }
+}
+index 0xff -- Flow count estimate + packet count:
+bcm_flexctr_counter_value_t $$ = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000000}
+        uint64 value[1] = {0x00000000 0x00000000}
+    }
+}
+total count in counters = (0,1000)
+testVerify(): [SUCCESS]
+bcm_error_t $$ = BCM_E_NONE (0)

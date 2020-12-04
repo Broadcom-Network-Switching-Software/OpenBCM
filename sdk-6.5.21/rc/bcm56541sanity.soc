@@ -1,0 +1,256 @@
+# $Id: bcm56541sanity.soc,v 1.2 2013/01/03 21:42:19 tusharty Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Triumph3 BCM56541, BCM56546 Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+local pbmge 0x201ffffffe
+if "expr $bcm56540_4x10_2x42 + 0" \
+    'local pbmhg 0x3c000000000000; local testhg20 1; local pbmhg20 0x30000000000000; \
+     local pbmhg42 0xc000000000000; local pbmport 0x3c00201ffffffe'
+if !"expr $bcm56540_4x10_2x42 + 0" \
+    'local testxe 1; local pbmxe 0x3c000000000000; local pbmhg 0xc0000000000000; \
+     local pbmhg42 0xc0000000000000; local pbmport 0xfc00201ffffffe'
+
+# Turn off Mem cache and Parity checks for mem tests
+config add mem_cache_enable=0
+config add parity_enable=0
+
+echo "testsuite: started: sanity"
+rcload rc.soc
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+ibodsync off
+init
+init misc
+
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+init soc
+debug -warn
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+debug +warn
+
+rcload rc.soc
+counter off
+l2mode off
+echo "Running CPU Benchmarks (No Mem Cache) ..."
+tr 21
+$done
+
+fb4_mem.soc
+
+# Re-initialize to clean up of various read/writes to MMU memories
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#Hashing tests
+tr 55
+
+echo "Running MDIO Linkscan test"
+tr 60
+$done
+
+#echo "Testing CPU DMA loopback ..."
+#tr 17
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Reload ..."
+#tr 22
+#$done
+
+#echo "Testing CPU DMA, Scatter/Gather Simple ..."
+#tr 23
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Random ..."
+#tr 24
+$done
+
+#MAC Loopback
+echo "Testing MAC Loopback - 1 Gb/s all GE ports"
+tr 18 PortBitMap=$pbmge Speed=1000
+$done
+
+if !"expr $testxe + 0" \
+        'echo "Testing MAC Loopback - 10 Gb/s all XE ports"; \
+         tr 18 PortBitMap=$pbmxe Speed=10G; $done'
+
+echo "Testing MAC Loopback - 21 Gb/s all HG ports"
+tr 18 PortBitMap=$pbmhg Speed=21G
+$done
+
+echo "Testing MAC Loopback - 42 Gb/s all HG ports"
+tr 18 PortBitMap=$pbmhg42 Speed=42G
+$done
+
+#PHY Loopback
+echo "Testing PHY Loopback - 1 Gb/s all GE ports"
+tr 19 PortBitMap=$pbmge Speed=1000
+$done
+
+if !"expr $testxe + 0" \
+        'echo "Testing PHY Loopback - 10 Gb/s all XE ports"; \
+         tr 19 PortBitMap=$pbmxe Speed=10G; $done'
+
+if !"expr $testhg20 + 0" \
+        'echo "Testing PHY Loopback - 21 Gb/s all HG21 ports"; \
+         tr 19 PortBitMap=$pbmhg20 speed=21G; $done'
+
+echo "Testing PHY Loopback - 42 Gb/s all HG42 ports"
+tr 19 PortBitMap=$pbmhg42 Speed=42G
+$done
+
+echo "Running MAC loopback V2 on all ports ..."
+tr 48 pbm=$pbmport
+$done
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49 pbm=$pbmport
+$done
+
+#Internal snake Loopback
+echo "Running internal snake on GE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmge
+$done
+
+echo "Running internal snake on GE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmge
+$done
+
+if !"expr $testxe + 0" \
+        'echo "Running internal snake on XE ports, MAC loopback ..."; \
+         tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=$pbmxe; $done'
+
+if !"expr $testxe + 0" \
+        'echo "Running internal snake on XE ports, PHY loopback ..."; \
+         tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=$pbmxe; $done'
+
+#Traffic Test
+echo "Running Traffic Test on GE ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmge c=10 sp=1000
+$done
+
+echo "Running Traffic Test on GE ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmge c=10 sp=1000
+$done
+
+if !"expr $testxe + 0" \
+        'echo "Running Traffic Test on XE ports in MAC mode ..."; \
+         tr 72 RunMode=MAC PortBitMap=$pbmxe c=10 sp=10G; $done'
+
+if !"expr $testxe + 0" \
+        'echo "Running Traffic Test on XE ports in PHY mode ..."; \
+         tr 72 RunMode=PHY PortBitMap=$pbmxe c=10 sp=10G; $done'
+
+echo "Running Traffic Test on HG ports in MAC mode ..."
+tr 72 RunMode=MAC PortBitMap=$pbmhg c=10 sp=max
+$done
+
+echo "Running Traffic Test on HG ports in PHY mode ..."
+tr 72 RunMode=PHY PortBitMap=$pbmhg c=10 sp=max
+$done
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xe2-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+#
+# tr 72 rm=external pbm=xe0,xe4 an=f sp=10g
+# tr 72 rm=external pbm=xe1,xe5 an=f sp=10g
+# tr 72 rm=external pbm=xe2,xe6 an=f sp=10g
+# tr 72 rm=external pbm=xe3,xe7 an=f sp=10g
+# tr 72 rm=external pbm=xe8,xe12 an=f sp=10g
+# tr 72 rm=external pbm=xe9,xe13 an=f sp=10g
+# tr 72 rm=external pbm=xe10,xe14 an=f sp=10g
+# tr 72 rm=external pbm=xe11,xe15 an=f sp=10g
+# ...
+# tr 72 rm=external pbm=xe56,xe60 an=f sp=10g
+# tr 72 rm=external pbm=xe57,xe61 an=f sp=10g
+# tr 72 rm=external pbm=xe58,xe62 an=f sp=10g
+# tr 72 rm=external pbm=xe59,xe63 an=f sp=10g
+
+# if you have cable with following paring
+#    xe0-xe4, xe1-xe5, xem-xe6, xe3-xe7
+#    xe8-xe12, xe9-xe13, xe10-xe14, xe11-xe15
+#    ...
+#    xe56-xe60, xe57-xe61, xe58-xe62, xe59-xe63
+# echo "Running external loopback ..."
+# tr 20 tpbm=xe0-xe3 di=4 an=f s=10g
+# tr 20 tpbm=xe8-xe11 di=4 an=f s=10g
+# tr 20 tpbm=xe16-xe19 di=4 an=f s=10g
+# tr 20 tpbm=xe24-xe27 di=4 an=f s=10g
+# tr 20 tpbm=xe32-xe35 di=4 an=f s=10g
+# tr 20 tpbm=xe40-xe43 di=4 an=f s=10g
+# tr 20 tpbm=xe48-xe51 di=4 an=f s=10g
+# tr 20 tpbm=xe56-xe59 di=4 an=f s=10g
+# $done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

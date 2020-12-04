@@ -1,0 +1,68 @@
+# $Id: cmd_td3_tr514_os.soc 10/30/2017 Ming Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Trident3 Flex Port Sanity for OverSubscription Mode
+# By default use config: $SDK/rc/config_td3_tr514_os.bcm
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: FlexPortSanityOversubScriptionMode"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+##################################################################
+#debug appl tests;
+#config add port_flex_enable=1;
+#
+#tr 514 Tsc0=1x106G Tsc2=2x53G  Tsc3=2x50G  Tsc22=4x27G  Tsc23=4x25G  PktSize=300;
+#tr 514 Tsc0=2x53G  Tsc2=4x27G  Tsc3=4x25G  Tsc22=2x53G  Tsc23=2x50G  PktSize=300;
+#tr 514 Tsc0=1x100G Tsc2=1x106G Tsc3=1x100G Tsc22=1x106G Tsc23=1x100G PktSize=300;
+#
+#tr 514 Tsc2=2x42G  Tsc3=2x40G  Tsc4=4x11G  Tsc5=4x10G  Tsc22=2x21G  Tsc23=2x20G  PktSize=300;
+#tr 514 Tsc2=1x42G  Tsc3=1x40G  Tsc4=1x42G  Tsc5=1x40G  Tsc22=4x11G  Tsc23=4x10G  PktSize=300;
+#tr 514 Tsc2=2x42G  Tsc3=2x40G  Tsc4=4x11G  Tsc5=4x10G  Tsc22=2x21G  Tsc23=2x10G  PktSize=300;
+#tr 514 Tsc2=1x106G Tsc3=1x100G Tsc4=1x106G Tsc5=1x100G Tsc22=1x106G Tsc23=1x100G PktSize=300;
+
+echo "Running FlexPort test for oversub mode..."
+
+echo "tr 514 PktSize=300"
+tr 514 PktSize=300
+$done
+ps
+
+
+##################################################################
+#End Test
+
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: FlexPortSanityOverSubscriptionMode: $returnCode"

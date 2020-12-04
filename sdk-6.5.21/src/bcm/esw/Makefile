@@ -1,0 +1,917 @@
+# $Id: Makefile,v 1.113 2013/02/07 06:57:24 chsindhu Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Makefile for BCM driver Library
+#
+
+LOCALDIR = src/bcm/esw
+
+export BCM_HIDE_DISPATCHABLE=1
+
+include ${SDK}/make/Make.config
+
+ifdef BCM_5675_A0
+SUBDIR_HERC = hercules
+endif
+
+ifdef BCM_56504_A0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56504_B0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56102_A0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56304_B0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56112_A0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56314_A0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56580_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+endif
+
+ifdef BCM_56700_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+endif
+
+ifdef BCM_56800_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+endif
+
+ifdef BCM_56218_A0
+SUBDIR_RAPTOR = raptor
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56514_A0
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56624_A0
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56680_A0
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56624_B0
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56680_B0
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56224_A0
+SUBDIR_RAPTOR = raptor
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56224_B0
+SUBDIR_RAPTOR = raptor
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_53314_A0
+SUBDIR_RAPTOR = raptor
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_53324_A0
+SUBDIR_RAPTOR = raptor
+SUBDIR_FIREBOLT = firebolt
+endif
+
+ifdef BCM_56820_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_SCORPION = scorpion
+endif
+
+ifdef BCM_56725_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_SCORPION = scorpion
+SUBDIR_CONQUEROR = conqueror
+endif
+
+ifdef BCM_56634_A0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56634_B0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56524_A0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56524_B0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56685_A0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56685_B0
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56334_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56334_B0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56840_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56840_B0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_ENDURO  = enduro
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56142_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56150_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_53400_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_GREYHOUND = greyhound
+SUBDIR_XGS4 = xgs4
+endif
+
+ifdef BCM_56160_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_GREYHOUND = greyhound
+SUBDIR_HURRICANE3 = hurricane3
+SUBDIR_XGS4 = xgs4
+SUBDIR_FLOWCNT = flowcnt
+endif
+
+ifdef BCM_53540_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_GREYHOUND = greyhound
+SUBDIR_HURRICANE3 = hurricane3
+SUBDIR_XGS4 = xgs4
+SUBDIR_FLOWCNT = flowcnt
+endif
+
+ifdef BCM_53570_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_GREYHOUND = greyhound
+SUBDIR_HURRICANE3 = hurricane3
+SUBDIR_GREYHOUND2 = greyhound2
+SUBDIR_XGS4 = xgs4
+SUBDIR_FLOWCNT = flowcnt
+endif
+
+ifdef BCM_56070_A0
+SUBDIR_ENDURO = enduro
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_HURRICANE = hurricane
+SUBDIR_HURRICANE2 = hurricane2
+SUBDIR_GREYHOUND = greyhound
+SUBDIR_HURRICANE3 = hurricane3
+SUBDIR_GREYHOUND2 = greyhound2
+SUBDIR_XGS4 = xgs4
+SUBDIR_FLOWCNT = flowcnt
+endif
+
+ifdef BCM_88732_A0
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_BRADLEY = bradley
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_SCORPION = scorpion
+SUBDIR_CONQUEROR = conqueror
+endif
+
+ifdef BCM_56640_A0
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_REGEX = regex
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56850_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56860_A0
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TITAN2 = titan2
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56440_A0
+SUBDIR_HERC = hercules
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56440_B0
+SUBDIR_HERC = hercules
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56450_A0
+SUBDIR_HERC = hercules
+SUBDIR_KATANA2 = katana2
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56450_B0
+SUBDIR_HERC = hercules
+SUBDIR_KATANA2 = katana2
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56260_A0
+SUBDIR_SABER2 = saber2
+SUBDIR_HERC = hercules
+SUBDIR_KATANA2 = katana2
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+
+ifdef BCM_56270_A0
+SUBDIR_METROLITE = metrolite
+SUBDIR_SABER2 = saber2
+SUBDIR_HERC = hercules
+SUBDIR_KATANA2 = katana2
+SUBDIR_KATANA = katana
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_HUMV = humv
+SUBDIR_ENDURO = enduro
+SUBDIR_REGEX = regex
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56340_A0
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_HERC = hercules
+SUBDIR_HUMV = humv
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_REGEX = regex
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TITAN2 = titan2
+endif
+
+ifdef BCM_56960_A0
+ifneq (,$(findstring BCM_56960_A0,$(ESW_CHIP_NAMES)))
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_ALPM2 = alpm2
+SUBDIR_TITAN2 = titan2
+SUBDIR_FLEXCTR = flexctr
+endif
+endif
+
+ifdef BCM_56965_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_ALPM2 = alpm2
+SUBDIR_TITAN2 = titan2
+SUBDIR_FLEXCTR = flexctr
+endif
+
+ifdef BCM_56980_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TOMAHAWK3 = tomahawk3
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_TITAN2 = titan2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_ALPM2 = alpm2
+# TH2 dependencies in TH3
+SUBDIR_TOMAHAWK2 = tomahawk2
+endif
+
+ifdef BCM_56560_A0
+SUBDIR_APACHE = apache
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_KATANA = katana
+SUBDIR_KATANA2 = katana2
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56670_A0
+SUBDIR_MONTEREY = monterey
+SUBDIR_APACHE = apache
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_KATANA = katana
+SUBDIR_KATANA2 = katana2
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+endif
+
+ifdef BCM_56870_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_TRIDENT3 = trident3
+SUBDIR_FLEXFLOW = flexflow
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_ALPM2 = alpm2
+endif
+
+ifdef BCM_56370_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_TRIDENT3 = trident3
+SUBDIR_HELIX5 = helix5
+SUBDIR_FLEXFLOW = flexflow
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_FLOWTRACKER = flowtracker
+SUBDIR_ALPM2 = alpm2
+endif
+
+ifdef BCM_56770_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_TRIDENT3 = trident3
+SUBDIR_MAVERICK2 = maverick2
+SUBDIR_FLEXFLOW = flexflow
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_ALPM2 = alpm2
+endif
+
+ifdef BCM_56275_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_TRIDENT3 = trident3
+SUBDIR_HELIX5 = helix5
+SUBDIR_HURRICANE4 = hurricane4
+SUBDIR_FLEXFLOW = flexflow
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_FLOWTRACKER = flowtracker
+endif
+
+ifdef BCM_56470_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TRIDENT2PLUS = trident2plus
+SUBDIR_TITAN2PLUS = titan2plus
+SUBDIR_TITAN2 = titan2
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_FLEXCTR = flexctr
+SUBDIR_TRIDENT3 = trident3
+SUBDIR_HELIX5 = helix5
+SUBDIR_HURRICANE4 = hurricane4
+SUBDIR_FIREBOLT6 = firebolt6
+SUBDIR_FLEXFLOW = flexflow
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_FLOWTRACKER = flowtracker
+SUBDIR_ALPM2 = alpm2
+SUBDIR_FIELDCOMP = field_compression
+endif
+
+ifdef BCM_56970_A0
+SUBDIR_HERC = hercules
+SUBDIR_TRIDENT = trident
+SUBDIR_TITAN = titan
+SUBDIR_TRIUMPH2 = triumph2
+SUBDIR_TRX = trx
+SUBDIR_TRIUMPH = triumph
+SUBDIR_BRADLEY = bradley
+SUBDIR_HUMV = humv
+SUBDIR_SCORPION = scorpion
+SUBDIR_FIREBOLT = firebolt
+SUBDIR_TRIDENT2 = trident2
+SUBDIR_TOMAHAWK = tomahawk
+SUBDIR_TOMAHAWK2 = tomahawk2
+SUBDIR_TRIUMPH3 = triumph3
+SUBDIR_XGS4 = xgs4
+SUBDIR_XGS5 = xgs5
+SUBDIR_ALPM2 = alpm2
+SUBDIR_TITAN2 = titan2
+SUBDIR_FLEXCTR = flexctr
+endif
+
+ifneq (,$(findstring -DINCLUDE_PTP,$(CFGFLAGS)))
+SUBDIR_PTP = ptp
+endif
+
+
+ifneq (,$(findstring -DINCLUDE_PTP,$(CFGFLAGS)))
+SUBDIR_PTP = ptp
+endif
+
+ifneq (,$(findstring -DINCLUDE_PKTIO,$(CFGFLAGS)))
+SUBDIR_PKTIO = pktio
+endif
+
+subdirs := \
+	$(SUBDIR_METROLITE) \
+	$(SUBDIR_FLOWCNT) \
+	$(SUBDIR_FLEXCTR) \
+	$(SUBDIR_HERC) \
+	$(SUBDIR_FIREBOLT) \
+	$(SUBDIR_BRADLEY) \
+	$(SUBDIR_HUMV) \
+	$(SUBDIR_RAPTOR) \
+	$(SUBDIR_TRX) \
+	$(SUBDIR_TRIUMPH) \
+	$(SUBDIR_SCORPION) \
+	$(SUBDIR_CONQUEROR) \
+	$(SUBDIR_TRIUMPH2) \
+	$(SUBDIR_ENDURO) \
+	$(SUBDIR_TRIDENT) \
+	$(SUBDIR_TITAN) \
+	$(SUBDIR_HURRICANE) \
+	$(SUBDIR_HURRICANE2) \
+	$(SUBDIR_GREYHOUND) \
+    $(SUBDIR_HURRICANE3) \
+	$(SUBDIR_GREYHOUND2) \
+	$(SUBDIR_KATANA) \
+	$(SUBDIR_KATANA2) \
+	$(SUBDIR_SABER2) \
+	$(SUBDIR_TRIUMPH3) \
+	$(SUBDIR_TRIDENT2) \
+	$(SUBDIR_TITAN2) \
+	$(SUBDIR_TOMAHAWK) \
+	$(SUBDIR_TOMAHAWK2) \
+	$(SUBDIR_TOMAHAWK3) \
+	$(SUBDIR_REGEX) \
+	$(SUBDIR_PTP) \
+	$(SUBDIR_XGS4) \
+	$(SUBDIR_XGS5) \
+	$(SUBDIR_TRIDENT2PLUS) \
+	$(SUBDIR_TITAN2PLUS) \
+	$(SUBDIR_APACHE) \
+	$(SUBDIR_MONTEREY) \
+	$(SUBDIR_TRIDENT3) \
+	$(SUBDIR_HELIX5) \
+	$(SUBDIR_HURRICANE4) \
+	$(SUBDIR_FIREBOLT6) \
+	$(SUBDIR_MAVERICK2) \
+	$(SUBDIR_FLEXFLOW) \
+	$(SUBDIR_FLOWTRACKER) \
+	$(SUBDIR_FIELDCOMP) \
+	$(SUBDIR_ALPM2) \
+	$(SUBDIR_PKTIO) \
+	$(SUBDIR_CHIP) \
+	$(SUBDIR_NONE)
+
+include ${SDK}/make/Make.subdirs
+
+lib = libbcm_esw
+include ${SDK}/make/Make.lib
+
+include ${SDK}/make/Make.depend

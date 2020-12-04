@@ -1,0 +1,18 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport Latency Distribution Histogram RC (run commands) file
+#
+#       These are default commands that are for TechSupport Latency Distribution Histogram.
+#
+
+
+
+# Show LDH related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+local lt MON_LDH_CONTROL;                                          $traverse_lt;
+local lt MON_ING_LDH_PORT;                                         $traverse_lt;
+local lt MON_EGR_LDH_PORT;                                         $traverse_lt;

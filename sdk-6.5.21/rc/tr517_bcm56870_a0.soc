@@ -1,0 +1,147 @@
+# $Id: tr517_bcm56870_a0.soc 10/30/2017 Ge Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Trident3 Power test Sanity 
+# By default use config: $SDK/rc/config_td3_128x25G_pwr.bcm
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: PowerSanity"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+##################################################################
+
+echo "Running Power test..."
+
+echo "tr 517"
+tr 517;
+$done
+ps
+
+echo "tr 517 PktSize=145"
+tr 517 PktSize=145;
+$done
+ps
+
+echo "tr 517 FloodCnt=50"
+tr 517 FloodCnt=50;
+$done
+ps
+
+echo "tr 517 RateCalcInt=9"
+tr 517 RateCalcInt=9;
+$done
+ps
+
+echo "tr 517 TolLr=5"
+tr 517 TolLr=5;
+$done
+ps
+
+echo "tr 517 TolOv=5"
+tr 517 TolOv=5;
+$done
+ps
+
+echo "tr 517 LoopbackMode=2"
+tr 517 LoopbackMode=2;
+$done
+ps
+
+echo "tr 517 LoopbackMode=3"
+tr 517 LoopbackMode=3;
+$done
+ps
+
+echo "tr 517 TrafficLoad=40"
+tr 517 TrafficLoad=40;
+$done
+ps
+
+echo "tr 517 VfpEnable=0"
+tr 517 VfpEnable=0;
+$done
+ps
+
+echo "tr 517 EfpEnable=0"
+tr 517 EfpEnable=0;
+$done
+ps
+
+echo "tr 517 VfpEnable=0 EfpEnable=0"
+tr 517 VfpEnable=0 EfpEnable=0;
+$done
+ps
+
+echo "tr 517 VfpMatch=0 EfpMatch=0"
+tr 517 VfpMatch=0 EfpMatch=0;
+$done
+ps
+
+echo "tr 517 L3EcmpEnable=0"
+tr 517 L3EcmpEnable=0;
+$done
+ps
+
+echo "tr 517 DefipEnable=1"
+tr 517 DefipEnable=1;
+$done
+ps
+
+echo "tr 517 L3TunnelEnable=1"
+tr 517 L3TunnelEnable=1;
+$done
+ps
+
+echo "tr 517 VlanXlate1Enable=1"
+tr 517 VlanXlate1Enable=1;
+$done
+ps
+
+echo "tr 517 ScalingFactor=10"
+tr 517 ScalingFactor=10;
+echo "set rct=f"
+set rct=f;
+echo "tr 517 ScalingFactor=20"
+tr 517 ScalingFactor=20;
+
+$done
+ps
+
+##################################################################
+#End Test
+
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: PowerSanity: $returnCode"
+

@@ -1,0 +1,50 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# TechSupport ECN RC (run commands) file
+#
+#       These are default commands that are for TechSupport ECN.
+#
+
+# Show ECN related LTs.
+local traverse_lt 'bsh -c "lt \$lt traverse -l"'
+
+# Show responsive indicator assignment LT.
+local lt ECN_PROTOCOL;                                    $traverse_lt;
+
+# Show IP ECN assignment LTs.
+local lt ECN_MPLS_EXP_TO_IP_ECN;                          $traverse_lt;
+local lt ECN_TNL_DECAP_IP_PAYLOAD;                        $traverse_lt;
+
+# Show IP INT_CN assignment LTs.
+local lt ECN_INT_PRI_TO_CNG_PRE;                          $traverse_lt;
+local lt ECN_IP_TO_CNG_PRE;                               $traverse_lt;
+local lt ECN_INT_PRI_TO_CNG_POST;                         $traverse_lt;
+local lt ECN_IP_TO_CNG_POST;                              $traverse_lt;
+
+# Show MMU control LT.
+local lt ECN_CNG_TO_WRED;                                 $traverse_lt;
+
+# Show EP INT_CN assignment LT.
+local lt ECN_WRED_UPDATE;                                 $traverse_lt;
+
+# Show EP PKT ECN assignment LTs.
+local lt ECN_CNG_TO_IP_ECN;                               $traverse_lt;
+local lt ECN_TNL_ENCAP_IP_PAYLOAD;                        $traverse_lt;
+local lt ECN_TNL_ENCAP_NON_IP_PAYLOAD;                    $traverse_lt;
+
+# Show MPLS EXP assignment LTs.
+local lt ECN_CNG_TO_MPLS_EXP;                             $traverse_lt;
+local lt ECN_IP_TO_MPLS_EXP_NON_RESPONSIVE;               $traverse_lt;
+local lt ECN_IP_TO_MPLS_EXP_RESPONSIVE;                   $traverse_lt;
+
+# Show INT_CN re-assignment LT.
+local lt ECN_TNL_ENCAP_IP_TO_CNG;                         $traverse_lt;
+
+# Show misc control LTs.
+local lt ECN_CONTROL;                                     $traverse_lt;
+local lt CTR_ECN;                                         $traverse_lt;
+local lt PORT_ECN;                                        $traverse_lt;
+local lt ECN_LATENCY_PROFILE;                             $traverse_lt;

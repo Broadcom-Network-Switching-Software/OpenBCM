@@ -1,0 +1,73 @@
+/*! \page mgmt_init SDK initialization
+
+\section mgmt_start Starting the SDK
+
+The SDK Management component supports two basic modes of operation:
+
+1. Default mode - this is the simplest way to start the SDK with
+all the available features.
+
+2. Custom mode - this mode allows the application to specify the
+components it wants to be included in the SDK.
+
+To use the default mode the application should simply call \ref
+bcmmgmt_init() after it has created the devices in the DRD (Device
+Resource Database). This will start all the available SDK
+components and devices.
+
+Example (error checking skipped for clarity):
+\code{.c}
+#include <bcmmgmt/bcmmgmt.h>
+
+void start_sdk(bool warmboot)
+{
+    bcmmgmt_init(warmboot, "config.yml");
+}
+\endcode
+
+To specify the list of components being used in the SDK the
+application should use the \ref bcmmgmt_core_start() function. The
+caller of this function must supply a list of components which are
+required by the application. Any excluded components will then be
+skipped by the linker.
+
+Example (error checking skipped for clarity):
+\code{.c}
+#include <bcmmgmt/bcmmgmt.h>
+
+static bcmmgmt_comp_start_f comp_start[] = {
+    bcmlrd_start,
+    bcmcfg_start,
+    bcmbd_start,
+    bcmlt_start,
+    bcmptm_start,
+    bcmltm_start,
+    bcmtrm_start,
+    bcmltp_start,
+    bcmlm_start,
+    bcmimm_start,
+};
+
+static const bcmmgmt_comp_list_t comp_list = {
+    comp_start,
+    sizeof(comp_start)/sizeof(comp_start[0])
+};
+void start_sdk(bool warmboot)
+{
+    bcmmgmt_core_init();
+    bcmmgmt_core_config_load("config.yml");
+    bcmmgmt_core_start(warmboot, &comp_list);
+    bcmmgmt_dev_attach_all(warmboot);
+}
+\endcode
+
+In either mode of operation the application is still required to
+initialize the SDK CLI, High Availability I/O and other application
+controlled features if desired.
+
+\section mgmt_stop Stopping the SDK
+
+The application should call \ref bcmmgmt_shutdown() when it wants
+to shutdown the SDK.
+
+*/

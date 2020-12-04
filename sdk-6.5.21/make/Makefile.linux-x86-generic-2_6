@@ -1,0 +1,12 @@
+# $Id: Makefile.linux-x86-generic-2_6,v 1.7 2011/07/12 02:58:46 reldeeb Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+include ${SDK}/make/Makefile.linux-x86-generic-common-2_6
+
+ifeq (,$(KFLAGS))
+KFLAGS := -nostdinc -isystem $(SYSINC) -I$(KERNDIR)/include -I$(KERNDIR)/arch/x86/include -I$(KERNDIR)/include/asm-i386/mach-default -I$(KERNDIR)/include/asm-x86/mach-default -include $(AUTOCONF) -m32 -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Os -pipe -msoft-float -mregparm=3 -freg-struct-return -mpreferred-stack-boundary=2  -march=i686 -ffreestanding -maccumulate-outgoing-args -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign
+endif
+
+include ${SDK}/make/Makefile.linux-x86-common-2_6

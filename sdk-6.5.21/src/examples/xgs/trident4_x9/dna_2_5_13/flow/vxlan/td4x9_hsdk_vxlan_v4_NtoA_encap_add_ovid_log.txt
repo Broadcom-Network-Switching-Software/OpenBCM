@@ -1,0 +1,383 @@
+BCM.0> init all;cint td4x9_hsdk_vxlan_v4_NtoA_encap_add_ovid.c
+0:bcm_ltsw_bfd_init_common: BFD(unit 0) Warning: BFD app not initialized.
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200819 (Wed Aug 19 09:59:43 2020)
+From sdkrel@lc-sj1-6659:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_DNA_2_5_4
+     BCM56780_A0_INA_2_5_3, BCM56780_A0_INA_2_5_4
+dump sw config
+
+SW Information CONFIG - Dunit 0
+Config Property: hash   96, uft_mode = 3
+Config Property: hash  216, l3_alpm_template = 2
+Config Property: hash  284, l2_hitbit_enable = 1
+Config Property: hash  421, bcm_tunnel_term_compatible_mode = 1
+Config Property: hash  430, encap_mode_port_* = IEEE
+Config Property: hash  458, encap_mode_port_14 = HIGIG3
+Config Property: hash  555, encap_mode_port_33 = HIGIG3
+Config Property: hash  652, encap_mode_port_52 = HIGIG3
+Config Property: hash  716, encap_mode_port_70 = HIGIG3
+Config Property: hash  749, encap_mode_port_71 = HIGIG3
+Config Property: hash  763, l3_alpm2_bnk_threshold = 100
+Config Property: hash  793, encap_mode_port_5 = HIGIG3
+Config Property: hash  815, encap_mode_port_73 = HIGIG3
+Config Property: hash  826, encap_mode_port_6 = HIGIG3
+Config Property: hash  859, encap_mode_port_7 = HIGIG3
+Config Property: hash  892, encap_mode_port_8 = HIGIG3
+Config Property: hash  903, flexctr_action_reserved_ipmc_hitbit = 1
+Config Property: hash  915, encap_mode_port_68 = HIGIG3
+Config Property: hash  929, vlan_flooding_l2mc_num_reserved = 0
+Config Property: hash  947, l3_enable = 1
+Config Property: hash  948, encap_mode_port_69 = HIGIG3
+bsh -c config
+---
+# Software component configuration
+component:
+    feature_ctl:
+        enable_atomic_trans: 0
+    ltm_resources:
+        max_tables_transaction: 8
+    trm_resources:
+        max_entries: 32768
+        max_transactions: 128
+    cfg_error_control:
+        stop_playback_on_error: 0
+...
+---
+# BCM56780
+device:
+    0:
+        CTR_EFLEX_CONFIG:
+            CTR_EGR_EFLEX_OPERMODE_PIPEUNIQUE: 0
+            CTR_ING_EFLEX_OPERMODE_PIPEUNIQUE: 0
+        DEVICE_CONFIG:
+            POLLED_IRQ_THREAD_PRIORITY: 0
+            POLLED_IRQ_DELAY: 0
+            POLLED_IRQ_ENABLE: 0
+            PIO_BULK_COPY: 0
+            PIO_BULK_WRITE: 0
+            PIO_BULK_READ: 0
+            CHIP_DEBUG: 0
+            BS_PLL_1_CLK_SEL: CLK_INT_50MHZ
+            BS_PLL_0_CLK_SEL: CLK_INT_50MHZ
+            TS_PLL_CLK_SEL: CLK_INT_50MHZ
+            PP_CLK_FREQ: CLK_1350MHZ
+            CORE_CLK_FREQ: CLK_1350MHZ
+            VARIANT: DNA_2_5_3
+        DEVICE_WAL_CONFIG:
+            BYPASS: 1
+            WAL_READER_USE_FIFO_CHANNEL_OP_THRESHOLD: 4
+            DMA_WRITE_OP_THRESHOLD: 5
+            DMA_READ_OP_THRESHOLD: 2
+            FIFO_CHANNELS_DMA: 1
+            FIFO_CHANNELS_MAX_POLLS: 10000
+            FIFO_CHANNELS_MAX_POLLS_OVERRIDE: 0
+            FIFO_CHANNELS_POLL: 1
+            FIFO_CHANNELS_MODE: DOUBLE
+            WAL_DEPTH_MULTIPLIER: 1000
+        FP_CONFIG:
+            FP_ING_COMP_DST_IP6_ONLY: 0
+            FP_ING_COMP_SRC_IP6_ONLY: 0
+            FP_ING_COMP_DST_IP4_ONLY: 0
+            FP_ING_COMP_SRC_IP4_ONLY: 0
+            FP_ING_MANUAL_COMP: 0
+            FP_ING_RANGE_CHECK_OPERMODE_PIPEUNIQUE: 0
+            FP_COMPRESSION_OPERMODE_PIPEUNIQUE: 0
+            FP_EGR_OPERMODE_PIPEUNIQUE: 0
+            FP_VLAN_OPERMODE_PIPEUNIQUE: 0
+            FP_ING_OPERMODE: GLOBAL_PIPE_AWARE
+        METER_FP_CONFIG:
+            METER_EGR_OPERMODE_PIPEUNIQUE: 0
+            METER_ING_OPERMODE_PIPEUNIQUE: 0
+        PC_SERDES_CONFIG:
+            FW_CRC_VERIFY: 0
+            FW_LOAD_VERIFY: 0
+            FW_LOAD_METHOD: PC_SERDES_FW_FAST_LOAD
+        SER_CONFIG:
+            SER_LOG_DEPTH: 10
+            MESSAGE_Q_DEPTH: 8
+            SER_ENABLE: 1
+        TM_PM_FLEX_CONFIG:
+            MAX_SUB_PORT: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+        TM_SCHEDULER_CONFIG:
+            NUM_MC_Q: NUM_MC_Q_4
+        TM_SHAPER_CONFIG:
+            ITU_MODE: 0
+        TM_THD_CONFIG:
+            THRESHOLD_MODE: LOSSY
+        DT_EFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        DT_IFP_METER_ACTION_ACTION_TEMPLATE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        EGR_VLAN_TRANSLATION_DW_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        EGR_VLAN_TRANSLATION_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_1_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_2_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        ING_VLAN_XLATE_3_TABLE_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_15_0_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_31_16_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+        IN_ING_OBJ_BUS_IPBM_47_32_PIPE_CONFIG:
+            PIPEUNIQUE: 0
+...
+lt traverse -l DEVICE_CONFIG
+Traverse table [DEVICE_CONFIG]:
+    POLLED_IRQ_THREAD_PRIORITY=0
+    POLLED_IRQ_DELAY=0
+    POLLED_IRQ_ENABLE=0
+    PIO_BULK_COPY=0
+    PIO_BULK_WRITE=0
+    PIO_BULK_READ=0
+    CHIP_DEBUG=0
+    BS_PLL_1_CLK_SEL=CLK_INT_50MHZ
+    BS_PLL_0_CLK_SEL=CLK_INT_50MHZ
+    TS_PLL_CLK_SEL=CLK_INT_50MHZ
+    PP_CLK_FREQ=CLK_1350MHZ
+    CORE_CLK_FREQ=CLK_1350MHZ
+    VARIANT=DNA_2_5_3
+  1 entry traversed.
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+~~ #1) test_setup(): ** end **
+~~ #2) config_vxlan_ipv4_vtep(): ** start **
+Get flow-handler for Classic_Vxlan
+Create Multicast group for UUC/MC/BC.
+Create Flow VPN.
+
+Setup Access port 2
+Configure Vxlan Access Port Configuration.
+We are using loopback. To avoid learned network VP being overwritten, disable learning on access port. It's for test purpose
+Create Access Flow Port (VP).
+Create Flow VP.
+Access: Add flow match (match: port criteria).
+Access: Egress Vlan Translation to add OVID 25 PRIORITY 1.
+Configure Vxlan Network Port Configuration.
+Create network L3 interface
+Create network L3 Egress object.
+Create Network Flow Port.
+Create Flow VP.
+Network: Set Encapsulation. VP=>egress-obj{Device,Port}.
+Network: Add flow match (match: SIP => network SVP)
+Network: encap add, VFI-->VNID
+Network: Configure match condition to derive VPN (Match: {VN_ID}, Derive: VFI (VPN))
+Tunnel_init: Create Flow Tunnel Initiator.
+Tunnel_term: Create Flow Tunnel Terminator.
+Network-to-Access: Add payload-dest-mac Address => Access-flow-port (VP).
+int $$ = 0 (0x0)
+~~ #2) config_vxlan_ipv4_vtep(): ** end **
+~~ #3) verify(): ** start **
+vlan 1  ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe)
+vlan 21 ports ce1 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+vlan 22 ports ce0 (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+mac=00:00:00:00:bb:bb vlan=32868 GPORT=0x2 modid=0 port=2/ce1 Static
+
+Sending known unicast packet to ingress_port network side:1
+Packet from data=<>, length=152
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000002222} {000000000022} 8100 0016
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 0024 0001 0000 4011 a514 c0a8
+[bcmPWN.0]Packet[1]: data[0020]: 0101 0a0a 0a01 c000 12b5 0010 0941 0800
+[bcmPWN.0]Packet[1]: data[0030]: 0000 0123 4500 0000 0000 bbbb 0000 0000
+[bcmPWN.0]Packet[1]: data[0040]: aaaa 8100 0015 0800 4500 0050 0001 0000
+[bcmPWN.0]Packet[1]: data[0050]: 4011 7497 0202 0202 0101 0101 0035 0035
+[bcmPWN.0]Packet[1]: data[0060]: 003c 32f6 7465 7374 7465 7374 7465 7374
+[bcmPWN.0]Packet[1]: data[0070]: 7465 7374 7465 7374 7465 7374 7465 7374
+[bcmPWN.0]Packet[1]: data[0080]: 7465 7374 7465 7374 7465 7374 7465 7374
+[bcmPWN.0]Packet[1]: data[0090]: 7465 7374 7465 7374
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x9c
+        SRC_PORT_NUM=1
+        SWITCH=1
+        MATCH_ID_LO=0x920d424
+        MATCH_ID_HI=0x2035
+        MPB_FLEX_DATA_TYPE=0xd
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        PARSER_VHLEN_0_15_0=0x8a8a
+        SVP_15_0=2
+        EFFECTIVE_TTL_7_0=0x40
+        SYSTEM_SOURCE_15_0=1
+        SYSTEM_DESTINATION_15_0=2
+        INGRESS_PP_PORT_7_0=1
+        VFI_15_0=0x1064
+        TUNNEL_PROCESSING_RESULTS_1_3_0=5
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=3
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        L2_OIF_10_0=2
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_INNER_L2_HDR_L2
+        INGRESS_PKT_INNER_L2_HDR_OTAG
+        INGRESS_PKT_INNER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_INNER_L3_L4_HDR_IPV4
+        INGRESS_PKT_INNER_L3_L4_HDR_UDP
+        INGRESS_PKT_INNER_L3_L4_HDR_UNKNOWN_L5
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_VXLAN
+        INGRESS_PKT_SYS_HDR_LOOPBACK
+
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:22:22> src<00:00:00:00:00:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<192.168.1.1> dst<10.10.10.1> hl<5> service-type<0> tl<36> id<1> frg-off<0> ttl<64> > chk-sum<0xa514>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {00000000bbbb} {00000000aaaa} 8100 2019
+[bcmPWN.0]Packet[2]: data[0010]: 8100 0015 0800 4500 0050 0001 0000 4011
+[bcmPWN.0]Packet[2]: data[0020]: 7497 0202 0202 0101 0101 0035 0035 003c
+[bcmPWN.0]Packet[2]: data[0030]: 32f6 7465 7374 7465 7374 7465 7374 7465
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7465 7374 7465 7374 7465 7374 7465
+[bcmPWN.0]Packet[2]: data[0050]: 7374 7465 7374 7465 7374 7465 7374 7465
+[bcmPWN.0]Packet[2]: data[0060]: 7374 7465 7374
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+        PKT_LENGTH=0x6a
+        SRC_PORT_NUM=2
+        SWITCH=1
+        MATCH_ID_LO=0x80d464
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        COPY_TO_CPU=1
+[FLEX fields]
+        EVENT_TRACE_VECTOR_31_16=4
+        DROP_CODE_15_0=0x1f10
+        PARSER_VHLEN_0_15_0=0x8a
+        EFFECTIVE_TTL_7_0=0x40
+        SYSTEM_SOURCE_15_0=2
+        INGRESS_PP_PORT_7_0=2
+        INGRESS_QOS_REMAP_VALUE_OR_IFP_OPAQUE_OBJ_15_0=0x200
+        VFI_15_0=0x19
+        INT_PRI_3_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=1
+        PKT_MISC_CTRL_0_3_0=1
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+        IFP
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_ITAG
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L2_HDR_OTAG
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4
+        INGRESS_PKT_OUTER_L3_L4_HDR_UDP
+        INGRESS_PKT_OUTER_L3_L4_HDR_UNKNOWN_L5
+
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:bb:bb> src<00:00:00:00:aa:aa> Tagged Packet ProtID<0x8100> Ctrl<0x2019> Wellfleet Communications
+Sleeping for 2 seconds
+MC_PERQ_PKT(0).cpu0                   :                     2                  +2
+MC_PERQ_BYTE(0).cpu0                  :                   406                +406
+XLMIB_TBYT.ce0                        :                   156                +156
+XLMIB_RBYT.ce0                        :                   156                +156
+XLMIB_TPOK.ce0                        :                     1                  +1
+XLMIB_RPOK.ce0                        :                     1                  +1
+XLMIB_TVLN.ce0                        :                     1                  +1
+XLMIB_RVLN.ce0                        :                     1                  +1
+XLMIB_TUCA.ce0                        :                     1                  +1
+XLMIB_RUCA.ce0                        :                     1                  +1
+XLMIB_TPKT.ce0                        :                     1                  +1
+XLMIB_RPKT.ce0                        :                     1                  +1
+XLMIB_T255.ce0                        :                     1                  +1
+XLMIB_R255.ce0                        :                     1                  +1
+XLMIB_RPRM.ce0                        :                     1                  +1
+XLMIB_TBYT.ce1                        :                   106                +106
+XLMIB_RBYT.ce1                        :                   106                +106
+XLMIB_TPOK.ce1                        :                     1                  +1
+XLMIB_RPOK.ce1                        :                     1                  +1
+XLMIB_TDVLN.ce1                       :                     1                  +1
+XLMIB_RDVLN.ce1                       :                     1                  +1
+XLMIB_TVLN.ce1                        :                     1                  +1
+XLMIB_RVLN.ce1                        :                     1                  +1
+XLMIB_TUCA.ce1                        :                     1                  +1
+XLMIB_RUCA.ce1                        :                     1                  +1
+XLMIB_TPKT.ce1                        :                     1                  +1
+XLMIB_RPKT.ce1                        :                     1                  +1
+XLMIB_T127.ce1                        :                     1                  +1
+XLMIB_R127.ce1                        :                     1                  +1
+XLMIB_RPRM.ce1                        :                     1                  +1
+UC_PERQ_PKT(0).ce1                    :                     1                  +1
+UC_PERQ_BYTE(0).ce1                   :                   106                +106
+mac=00:00:00:00:aa:aa vlan=32868 GPORT=0xb0000002 port=0xb0000002(flow) Hit
+mac=00:00:00:00:bb:bb vlan=32868 GPORT=0x2 modid=0 port=2/ce1 Static Hit
+
+ Vpn :32868
+
+ VpnInfo :
+bcm_flow_vpn_config_t $$ = {
+    unsigned int flags = 2 (0x2)
+    int broadcast_group = 251658241 (0xf000001)
+    int unknown_unicast_group = 251658241 (0xf000001)
+    int unknown_multicast_group = 251658241 (0xf000001)
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt = {
+        int mmrp_action = 0 (0x0)
+        int srp_action = 0 (0x0)
+        int arp_reply_action = 0 (0x0)
+        int arp_request_action = 0 (0x0)
+        int nd_action = 0 (0x0)
+        int dhcp_action = 0 (0x0)
+        int igmp_report_leave_action = 0 (0x0)
+        int igmp_query_action = 0 (0x0)
+        int igmp_unknown_msg_action = 0 (0x0)
+        int mld_report_done_action = 0 (0x0)
+        int mld_query_action = 0 (0x0)
+        int ip4_rsvd_mc_action = 0 (0x0)
+        int ip6_rsvd_mc_action = 0 (0x0)
+        int ip4_mc_router_adv_action = 0 (0x0)
+        int ip6_mc_router_adv_action = 0 (0x0)
+        int flood_action_according_to_pfm = 0 (0x0)
+    }
+    int match_port_class = 0 (0x0)
+}
+
+ Flow Ports 2
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177279 (0xb0000001)
+    unsigned int flags = 0 (0x0)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+bcm_flow_port_t $$ = {
+    int flow_port_id = -1342177278 (0xb0000002)
+    unsigned int flags = 2 (0x2)
+    unsigned int if_class = 0 (0x0)
+    int network_group_id = 0 (0x0)
+    unsigned short egress_service_tpid = 0 (0x0000)
+    int dscp_map_id = 0 (0x0)
+    int vlan_pri_map_id = 0 (0x0)
+    bcm_flow_port_split_horizon_drop_t drop_mode = bcmFlowPortSplitHorizonDropAll (0)
+    int ingress_opaque_ctrl_id = 0 (0x0)
+}
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>
+

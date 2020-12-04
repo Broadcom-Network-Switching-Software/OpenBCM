@@ -1,0 +1,137 @@
+pbmp_xport_xe.0=0x8000f8000fc000f8000f8000f8000fc000f8001e
+ccm_dma_enable=0
+ccmdma_intr_enable=0
+ctr_evict_enable=1
+mem_cache_enable=1
+parity_correction=1
+parity_enable=1
+phy_enable=0
+phy_null=1
+
+init_all_modules=0
+
+portmap_1=1:400
+portmap_2=9:400
+portmap_3=17:400
+portmap_4=25:400
+
+#loopback port
+portmap_19=259:10
+
+portmap_20=33:400
+portmap_21=41:400
+portmap_22=49:400
+portmap_23=57:400
+
+#management port
+portmap_38=257:10
+
+#loopback port
+portmap_39=260:10
+
+portmap_40=65:400
+portmap_41=73:400
+portmap_42=81:400
+portmap_43=89:400
+
+#loopback port
+portmap_59=261:10
+
+portmap_60=97:400
+portmap_61=105:400
+portmap_62=113:400
+portmap_63=121:400
+
+#loopback port
+portmap_79=262:10
+
+portmap_80=129:400
+portmap_81=137:400
+portmap_82=145:400
+portmap_83=153:400
+
+#loopback port
+portmap_99=263:10
+
+portmap_100=161:400
+portmap_101=169:400
+portmap_102=177:400
+portmap_103=185:400
+
+#management port
+portmap_118=258:10
+
+#loopback port
+portmap_119=264:10
+
+portmap_120=193:400
+portmap_121=201:400
+portmap_122=209:400
+portmap_123=217:400
+
+#loopback port
+portmap_139=265:10
+
+portmap_140=225:400
+portmap_141=233:400
+portmap_142=241:400
+portmap_143=249:400
+
+#loopback port
+portmap_159=266:10
+
+#lane map and polarity
+phy_chain_rx_lane_map_physical{57.0}=0x04152736
+serdes_core_rx_polarity_flip_physical{57}=0x63
+phy_chain_tx_lane_map_physical{57.0}=0x43516270
+serdes_core_tx_polarity_flip_physical{57}=0x59
+#phy_chain_tx_lane_map_physical{57.0}=0x43516270
+#serdes_core_tx_polarity_flip_physical{57}=0x59
+phy_chain_rx_lane_map_physical{73.0}=0x45230617
+serdes_core_rx_polarity_flip_physical{73}=0x96
+phy_chain_tx_lane_map_physical{73.0}=0x64753210
+serdes_core_tx_polarity_flip_physical{73}=0xcb
+phy_chain_rx_lane_map_physical{89.0}=0x02134657
+serdes_core_rx_polarity_flip_physical{89}=0x3c
+phy_chain_tx_lane_map_physical{89.0}=0x35147260
+serdes_core_tx_polarity_flip_physical{89}=0xa1
+phy_chain_rx_lane_map_physical{105.0}=0x16073425
+serdes_core_rx_polarity_flip_physical{105}=0x98
+phy_chain_tx_lane_map_physical{105.0}=0x57463210
+serdes_core_tx_polarity_flip_physical{105}=0x30
+phy_chain_rx_lane_map_physical{145.0}=0x71604352
+serdes_core_rx_polarity_flip_physical{145}=0x96
+phy_chain_tx_lane_map_physical{145.0}=0x57463012
+serdes_core_tx_polarity_flip_physical{145}=0x6f
+phy_chain_rx_lane_map_physical{161.0}=0x02475316
+serdes_core_rx_polarity_flip_physical{161}=0x14
+phy_chain_tx_lane_map_physical{161.0}=0x34567210
+serdes_core_tx_polarity_flip_physical{161}=0xc2
+phy_chain_rx_lane_map_physical{177.0}=0x50142376
+serdes_core_rx_polarity_flip_physical{177}=0x46
+phy_chain_tx_lane_map_physical{177.0}=0x74615230
+serdes_core_tx_polarity_flip_physical{177}=0x86
+phy_chain_rx_lane_map_physical{193.0}=0x25713064
+serdes_core_rx_polarity_flip_physical{193}=0x2c
+phy_chain_tx_lane_map_physical{193.0}=0x71435260
+serdes_core_tx_polarity_flip_physical{193}=0xdc
+
+#firmware load, use fast load
+load_firmware=0x2
+
+core_clock_frequency=1325
+dpr_clock_frequency=1000
+device_clock_frequency=1325
+
+port_flex_enable=1
+fpem_mem_entries=0
+
+# appended /projects/ntsw-sw/sdkconfig/l3/alpm.tcam.64/bcm56980_A0_l3.config
+#fpem_mem_entries=0
+l3_alpm_enable=3
+l3_alpm2_level=3
+#parity_enable=1
+ipv6_lpm_128b_enable=0
+
+# appended /projects/ntsw-sw/sdkconfig/l3/alpm_hit_skip_th3.config
+l3_alpm_hit_skip=1

@@ -1,0 +1,133 @@
+BCM.0> c td4x9_hsdk_flexctr_snmp_counter.c                                                        
+    os=unix                                                                                       
+Attach: Unit 0 (BCM56780_A0): attached (current unit)                                             
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom                                        
+Release: sdk-6.5.21 built 20200906 (Sun Sep  6 09:23:21 2020)                                     
+From sdkrel@lc-sj1-4832:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780  
+Platform: SLK_BCM957812                                                                           
+OS: Unix (Posix)                                                                                  
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_4, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_INA_2_5_4, BCM56780_A0_INA_2_5_5             
+Choosing port 78 as ingress_port                              
+Completed test setup successfully.                            
+Completed test configure successfully.                        
+
+******************************
+******Traffic test start******
+V4 Packet comes into ingress port 78 
+tx 1 pbm=78 data=0x000000000001002a1077770008004500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869; sleep 5
+Packet from data=<>, length=74                                                                                                                                                  
+Warning:  Untagged packet read from file for tx.                                                                                                                                
+Sleeping for 5 seconds                                                                                                                                                          
+[bcmPWN.0]                                                                                                                                                                      
+[bcmPWN.0]Packet[1]: data[0000]: {000000000001} {002a10777700} 8100 0001                                                                                                        
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 003c 6762 0000 ff01 bd76 0a3a                                                                                                        
+[bcmPWN.0]Packet[1]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162                                                                                                        
+[bcmPWN.0]Packet[1]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172                                                                                                        
+[bcmPWN.0]Packet[1]: data[0040]: 7374 7576 7761 6263 6465 6667 6869                                                                                                             
+[bcmPWN.0]                                                                                                                                                                      
+[bcmPWN.0][RX metadata information]                                                                                                                                             
+        PKT_LENGTH=0x52                                                                                                                                                         
+        SRC_PORT_NUM=0x4e                                                                                                                                                       
+        SWITCH=1                                                                                                                                                                
+        MATCH_ID_LO=0x801404                                                                                                                                                    
+        MPB_FLEX_DATA_TYPE=0xd                                                                                                                                                  
+        EGR_ZONE_REMAP_CTRL=1                                                                                                                                                   
+        MULTICAST=1                                                                                                                                                             
+[FLEX fields]                                                                                                                                                                   
+        PARSER_VHLEN_0_15_0=0x8a                                                                                                                                                
+        SYSTEM_SOURCE_15_0=0x4e                                                                                                                                                 
+        INGRESS_PP_PORT_7_0=0x4e                                                                                                                                                
+        EFFECTIVE_TTL_7_0=0xff                                                                                                                                                  
+        VFI_15_0=1                                                                                                                                                              
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2                                                                                                                          
+        SYSTEM_OPCODE_3_0=3                                                                                                                                                     
+        PKT_MISC_CTRL_0_3_0=1                                                                                                                                                   
+        MPLS_LABEL_DECAP_COUNT_3_0=8                                                                                                                                            
+        ING_TIMESTAMP_15_0=0x4dc8                                                                                                                                               
+        ING_TIMESTAMP_31_16=0x5d1d                                                                                                                                              
+[RX reasons]                                                                                                                                                                    
+[Decode match id]                                                                                                                                                               
+        INGRESS_PKT_OUTER_L2_HDR_L2                                                                                                                                             
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE                                                                                                                                   
+        INGRESS_PKT_OUTER_L3_L4_HDR_ICMP                                                                                                                                        
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV4                                                                                                                                        
+
+MC_PERQ_PKT(0).cpu0                   :                     1                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   154                +154
+XLMIB_TBYT.xe1                        :                    78                 +78
+XLMIB_RBYT.xe1                        :                    78                 +78
+XLMIB_TPOK.xe1                        :                     1                  +1
+XLMIB_RPOK.xe1                        :                     1                  +1
+XLMIB_TUCA.xe1                        :                     1                  +1
+XLMIB_RUCA.xe1                        :                     1                  +1
+XLMIB_TPKT.xe1                        :                     1                  +1
+XLMIB_RPKT.xe1                        :                     1                  +1
+XLMIB_T127.xe1                        :                     1                  +1
+XLMIB_R127.xe1                        :                     1                  +1
+XLMIB_RPRM.xe1                        :                     1                  +1
+tx 1 pbm=78 data=0x000000000001002a1077770008004500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869; sleep 5
+ !!!! Checking flex counter increment for SNMPV4 !!!!!                                                                                                                          
+SNMPV4 FlexCtr Get for port 78 : 1 packets / 78 bytes                                                                                                                           
+
+******************************
+******Traffic test start******
+ V6 Packet comes into ingress port 78 
+tx 1 pbm=78 data=0x000000000001002a1077770086DD4500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869; sleep 5
+Packet from data=<>, length=74                                                                                                                                                  
+Warning:  Untagged packet read from file for tx.                                                                                                                                
+Sleeping for 5 seconds                                                                                                                                                          
+[bcmPWN.0]                                                                                                                                                                      
+[bcmPWN.0]Packet[2]: data[0000]: {000000000001} {002a10777700} 8100 0001                                                                                                        
+[bcmPWN.0]Packet[2]: data[0010]: 86dd 4500 003c 6762 0000 ff01 bd76 0a3a                                                                                                        
+[bcmPWN.0]Packet[2]: data[0020]: 4001 0a3a 4273 0000 550a 0001 0051 6162                                                                                                        
+[bcmPWN.0]Packet[2]: data[0030]: 6364 6566 6768 696a 6b6c 6d6e 6f70 7172                                                                                                        
+[bcmPWN.0]Packet[2]: data[0040]: 7374 7576 7761 6263 6465 6667 6869                                                                                                             
+[bcmPWN.0]                                                                                                                                                                      
+[bcmPWN.0][RX metadata information]                                                                                                                                             
+        PKT_LENGTH=0x52                                                                                                                                                         
+        SRC_PORT_NUM=0x4e                                                                                                                                                       
+        SWITCH=1                                                                                                                                                                
+        MATCH_ID_LO=0x2404                                                                                                                                                      
+        MPB_FLEX_DATA_TYPE=0xd
+        EGR_ZONE_REMAP_CTRL=1
+        MULTICAST=1
+[FLEX fields]
+        PARSER_VHLEN_0_15_0=0xb8
+        SYSTEM_SOURCE_15_0=0x4e
+        INGRESS_PP_PORT_7_0=0x4e
+        VFI_15_0=1
+        VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+        SYSTEM_OPCODE_3_0=3
+        MPLS_LABEL_DECAP_COUNT_3_0=8
+        ING_TIMESTAMP_15_0=0x6ece
+        ING_TIMESTAMP_31_16=0x89e7
+[RX reasons]
+[Decode match id]
+        INGRESS_PKT_OUTER_L2_HDR_L2
+        INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+        INGRESS_PKT_OUTER_L3_L4_HDR_IPV6
+
+MC_PERQ_PKT(0).cpu0                   :                     2                  +1
+MC_PERQ_BYTE(0).cpu0                  :                   308                +154
+XLMIB_TBYT.xe1                        :                   156                 +78
+XLMIB_RBYT.xe1                        :                   156                 +78
+XLMIB_TPOK.xe1                        :                     2                  +1
+XLMIB_RPOK.xe1                        :                     2                  +1
+XLMIB_TUCA.xe1                        :                     2                  +1
+XLMIB_RUCA.xe1                        :                     2                  +1
+XLMIB_TPKT.xe1                        :                     2                  +1
+XLMIB_RPKT.xe1                        :                     2                  +1
+XLMIB_T127.xe1                        :                     2                  +1
+XLMIB_R127.xe1                        :                     2                  +1
+XLMIB_RPRM.xe1                        :                     2                  +1
+tx 1 pbm=78 data=0x000000000001002a1077770086DD4500003c67620000ff01bd760a3a40010a3a42730000550a000100516162636465666768696a6b6c6d6e6f7071727374757677616263646566676869; sleep 5
+ !!!! Checking flex counter increment for SNMPV6 !!!!!
+SNMPV6 FlexCtr Get for port 78 : 1 packets / 78 bytes
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+

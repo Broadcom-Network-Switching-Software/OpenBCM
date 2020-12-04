@@ -1,0 +1,800 @@
+BCM.0>c td4x9_hsdk_l2_mc_trunk_flexdigest.c
+execute(): Start
+config show; attach; version
+    os=unix
+Attach: Unit 0 (BCM56780_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20200811 (Tue Aug 11 11:22:23 2020)
+From da953591@xl-sj1-30:/projects/ntsw-sw-ae/home/daithal/sdk
+Platform: X86
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_3, BCM56780_A0_INA_2_5_3
+~~ #1) test_setup(): ** start **
+ingress_port_multi_setup port: 1 setup
+egress_port_multi_setup port: 2 setup
+egress_port_multi_setup port: 3 setup
+~~ #1) test_setup(): ** end **
+~~ #2) setup_l2_forwarding(): ** start **
+create vlan 20
+Trunk ports configuration
+Trunk Create, tid=1, rv=0x0 
+Trunk Set 0x0 
+~~ #2) setup_l2_forwarding(): ** end **
+~~ #3) verify(): ** start **
+vlan show
+vlan 1	ports cpu,cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07fff), untagged cd,ce,xe (0x000000000000000000000000000000000000000000000000000000000000000000000000000043fff03fff43fff07ffe) 
+vlan 20	ports ce0-ce2 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e), untagged none (0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000) 
+l2 show
+mac=01:00:5e:00:00:11 vlan=20 GPORT=0x0 modid=0 port=0/cpu0 Static CPU MCast=20
+trunk show
+Device supports 1088 trunk groups:
+  1024 front panel trunks (0..1023), 128 ports/trunk
+  64 fabric trunks (1024..1087), 128 ports/trunk
+trunk 1: (front panel, 2 ports)=ce1,ce2 dlf=any mc=any ipmc=any psc=portflow (0x9)
+multicast show
+Group 0x1000014 (L2)
+	port ce1, encap id -1
+	port ce2, encap id -1
+
+Sending 10 multicast packets with increment source mac on ingress port:1
+Packet from data=<>, length=60
+Warning:  Untagged packet read from file for tx.
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {000000000011} {000000000002} 8100 0001
+[bcmPWN.0]Packet[1]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[1]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[1]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {000000000011} {000000000002} 8100 0001
+[bcmPWN.0]Packet[2]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[2]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:02> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[2]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: Total 3
+[bcmPWN.0]Packet[3]: data[0000]: {000000000011} {000000000003} 8100 0001
+[bcmPWN.0]Packet[3]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[3]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[3]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: Total 4
+[bcmPWN.0]Packet[4]: data[0000]: {000000000011} {000000000004} 8100 0001
+[bcmPWN.0]Packet[4]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[4]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:04> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[4]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: Total 5
+[bcmPWN.0]Packet[5]: data[0000]: {000000000011} {000000000003} 8100 0001
+[bcmPWN.0]Packet[5]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[5]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0x1643
+	SYSTEM_SOURCE_15_0=2
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[5]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: Total 6
+[bcmPWN.0]Packet[6]: data[0000]: {000000000011} {000000000005} 8100 0001
+[bcmPWN.0]Packet[6]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[6]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[6]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:05> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[6]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: Total 7
+[bcmPWN.0]Packet[7]: data[0000]: {000000000011} {000000000004} 8100 0001
+[bcmPWN.0]Packet[7]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[7]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[7]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0xae8f
+	SYSTEM_SOURCE_15_0=2
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:04> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[7]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: Total 8
+[bcmPWN.0]Packet[8]: data[0000]: {000000000011} {000000000006} 8100 0001
+[bcmPWN.0]Packet[8]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[8]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[8]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:06> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[8]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: Total 9
+[bcmPWN.0]Packet[9]: data[0000]: {000000000011} {000000000005} 8100 0001
+[bcmPWN.0]Packet[9]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[9]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[9]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:05> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[9]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: Total 10
+[bcmPWN.0]Packet[10]: data[0000]: {000000000011} {000000000007} 8100 0001
+[bcmPWN.0]Packet[10]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[10]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[10]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:07> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[10]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: Total 11
+[bcmPWN.0]Packet[11]: data[0000]: {000000000011} {000000000006} 8100 0001
+[bcmPWN.0]Packet[11]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[11]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[11]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0x1fbc
+	SYSTEM_SOURCE_15_0=2
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[11]: 
+Packet[11]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:06> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[11]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: Total 12
+[bcmPWN.0]Packet[12]: data[0000]: {000000000011} {000000000008} 8100 0001
+[bcmPWN.0]Packet[12]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[12]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[12]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	ENTROPY_LABEL_LOW_15_0=0xe2bd
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[12]: 
+Packet[12]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:08> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[12]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: Total 13
+[bcmPWN.0]Packet[13]: data[0000]: {000000000011} {000000000007} 8100 0001
+[bcmPWN.0]Packet[13]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[13]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[13]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[13]: 
+Packet[13]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:07> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[13]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[14]: Total 14
+[bcmPWN.0]Packet[14]: data[0000]: {000000000011} {000000000009} 8100 0001
+[bcmPWN.0]Packet[14]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[14]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[14]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	ENTROPY_LABEL_LOW_15_0=0xdb56
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[14]: 
+Packet[14]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:09> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[14]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[15]: Total 15
+[bcmPWN.0]Packet[15]: data[0000]: {000000000011} {000000000008} 8100 0001
+[bcmPWN.0]Packet[15]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[15]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[15]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0xb200
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[15]: 
+Packet[15]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:08> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[15]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[16]: Total 16
+[bcmPWN.0]Packet[16]: data[0000]: {000000000011} {00000000000a} 8100 0001
+[bcmPWN.0]Packet[16]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[16]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[16]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	ENTROPY_LABEL_LOW_15_0=0xe444
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[16]: 
+Packet[16]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:0a> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[16]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[17]: Total 17
+[bcmPWN.0]Packet[17]: data[0000]: {000000000011} {000000000009} 8100 0001
+[bcmPWN.0]Packet[17]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[17]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[17]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=2
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[17]: 
+Packet[17]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:09> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[17]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[18]: Total 18
+[bcmPWN.0]Packet[18]: data[0000]: {000000000011} {00000000000b} 8100 0001
+[bcmPWN.0]Packet[18]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[18]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[18]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=1
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	ENTROPY_LABEL_LOW_15_0=0x39c3
+	SYSTEM_SOURCE_15_0=1
+	INGRESS_PP_PORT_7_0=1
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[18]: 
+Packet[18]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:0b> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[18]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[19]: Total 19
+[bcmPWN.0]Packet[19]: data[0000]: {000000000011} {00000000000a} 8100 0001
+[bcmPWN.0]Packet[19]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[19]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[19]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=3
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	ENTROPY_LABEL_LOW_15_0=0xe400
+	SYSTEM_SOURCE_15_0=3
+	INGRESS_PP_PORT_7_0=3
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+[bcmPWN.0]Packet[19]: 
+Packet[19]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:0a> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[19]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+[bcmPWN.0]
+[bcmPWN.0]Packet[20]: Total 20
+[bcmPWN.0]Packet[20]: data[0000]: {000000000011} {00000000000b} 8100 0001
+[bcmPWN.0]Packet[20]: data[0010]: 0806 0001 0800 0604 0001 0000 0000 0002 
+[bcmPWN.0]Packet[20]: data[0020]: 0a0a 0a02 0000 0000 0000 1414 1402 0001 
+[bcmPWN.0]Packet[20]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d bc94 977f 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH=0x44
+	SRC_PORT_NUM=2
+	SWITCH=1
+	MATCH_ID_LO=0x600404
+	MPB_FLEX_DATA_TYPE=0xd
+	EGR_ZONE_REMAP_CTRL=1
+	MULTICAST=1
+	COPY_TO_CPU=1
+[FLEX fields]
+	EVENT_TRACE_VECTOR_31_16=4
+	DROP_CODE_15_0=0x1f1f
+	SYSTEM_SOURCE_15_0=2
+	INGRESS_PP_PORT_7_0=2
+	VFI_15_0=1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0=2
+	SYSTEM_OPCODE_3_0=3
+	MPLS_LABEL_DECAP_COUNT_3_0=8
+[RX reasons]
+	IFP
+[Decode match id]
+	INGRESS_PKT_OUTER_L2_HDR_L2
+	INGRESS_PKT_OUTER_L3_L4_HDR_ARP
+	INGRESS_PKT_OUTER_L3_L4_HDR_ETHERTYPE
+
+show c
+[bcmPWN.0]Packet[20]: 
+Packet[20]:   Ethernet: dst<00:00:00:00:00:11> src<00:00:00:00:00:0b> Tagged Packet ProtID<0x8100> Ctrl<0x0001> ARP (IP and CHAOS)
+Packet[20]:   ARP: Invalid (0) fmt<1> src-ha<00:00:00:00:00:02> src_pa<10:10:10:2> tar_ha<00:00:00:00:00:00> tar_pa<20:20:20:2>
+MC_PERQ_PKT(0).cpu0                   :                    20                 +20
+MC_PERQ_BYTE(0).cpu0                  :                 2,800              +2,800
+XLMIB_TBYT.ce0                        :                   640                +640
+XLMIB_RBYT.ce0                        :                   640                +640
+XLMIB_TPOK.ce0                        :                    10                 +10
+XLMIB_RPOK.ce0                        :                    10                 +10
+XLMIB_TUCA.ce0                        :                    10                 +10
+XLMIB_RUCA.ce0                        :                    10                 +10
+XLMIB_TPKT.ce0                        :                    10                 +10
+XLMIB_RPKT.ce0                        :                    10                 +10
+XLMIB_T64.ce0                         :                    10                 +10
+XLMIB_R64.ce0                         :                    10                 +10
+XLMIB_RPRM.ce0                        :                    10                 +10
+XLMIB_TBYT.ce1                        :                   320                +320
+XLMIB_RBYT.ce1                        :                   320                +320
+XLMIB_TPOK.ce1                        :                     5                  +5
+XLMIB_RPOK.ce1                        :                     5                  +5
+XLMIB_TUCA.ce1                        :                     5                  +5
+XLMIB_RUCA.ce1                        :                     5                  +5
+XLMIB_TPKT.ce1                        :                     5                  +5
+XLMIB_RPKT.ce1                        :                     5                  +5
+XLMIB_T64.ce1                         :                     5                  +5
+XLMIB_R64.ce1                         :                     5                  +5
+XLMIB_RPRM.ce1                        :                     5                  +5
+MC_PERQ_PKT(0).ce1                    :                     5                  +5
+MC_PERQ_BYTE(0).ce1                   :                   320                +320
+XLMIB_TBYT.ce2                        :                   320                +320
+XLMIB_RBYT.ce2                        :                   320                +320
+XLMIB_TPOK.ce2                        :                     5                  +5
+XLMIB_RPOK.ce2                        :                     5                  +5
+XLMIB_TUCA.ce2                        :                     5                  +5
+XLMIB_RUCA.ce2                        :                     5                  +5
+XLMIB_TPKT.ce2                        :                     5                  +5
+XLMIB_RPKT.ce2                        :                     5                  +5
+XLMIB_T64.ce2                         :                     5                  +5
+XLMIB_R64.ce2                         :                     5                  +5
+XLMIB_RPRM.ce2                        :                     5                  +5
+MC_PERQ_PKT(0).ce2                    :                     5                  +5
+MC_PERQ_BYTE(0).ce2                   :                   320                +320
+
+verify l2 learning:
+l2 show
+mac=00:00:00:00:00:06 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:02 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=01:00:5e:00:00:11 vlan=20 GPORT=0x0 modid=0 port=0/cpu0 Static CPU MCast=20
+mac=00:00:00:00:00:08 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:04 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:05 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:07 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:0b vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:09 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:0a vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+mac=00:00:00:00:00:03 vlan=1 GPORT=0x1 modid=0 port=1/ce0 Hit
+~~ #3) verify(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 

@@ -1,0 +1,86 @@
+# $Id: th_sanity.soc,v 1.4 2017/02/16 22:10:08 Shiming Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Tomahawk2 Flex Port Sanity for Line Rate Mode
+# By default use config: $SDK/rc/tomahawk2/flex_port_sanity/config_th2_TR_514_LR.bcm
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: FlexPortSanityLineRateMode"
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+#Display some useful information
+date
+ver
+soc
+
+#Start Test
+echo "Running FlexPort test for line rate mode..."
+
+echo "Running tr 514 tsc0=1x100G tsc15=1x100G tsc16=4x25G tsc31=4x25G tsc32=1x25G tsc47=1x25G tsc48=2x25G tsc63=2x25G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=1x100G tsc15=1x100G tsc16=4x25G tsc31=4x25G tsc32=1x25G tsc47=1x25G tsc48=2x25G tsc63=2x25G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=2x53G tsc15=2x53G tsc16=1x53G tsc31=1x53G tsc32=4x11G tsc47=4x11G tsc48=2x53G tsc63=2x53G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=2x53G tsc15=2x53G tsc16=1x53G tsc31=1x53G tsc32=4x11G tsc47=4x11G tsc48=2x53G tsc63=2x53G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=50G+2x25G tsc15=50G+2x25G tsc16=2x25G+50G tsc31=2x25G+50G tsc32=2x25G+50G tsc47=2x25G+50G tsc48=50G+2x25G tsc63=50G+2x25G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=50G+2x25G tsc15=50G+2x25G tsc16=2x25G+50G tsc31=2x25G+50G tsc32=2x25G+50G tsc47=2x25G+50G tsc48=50G+2x25G tsc63=50G+2x25G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=1x106G tsc15=1x106G tsc16=4x11G tsc31=4x11G tsc32=4x11G tsc47=4x11G tsc48=2x21G tsc63=2x21G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=1x106G tsc15=1x106G tsc16=4x11G tsc31=4x11G tsc32=4x11G tsc47=4x11G tsc48=2x21G tsc63=2x21G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=2x40G tsc15=2x40G tsc16=1x40G tsc31=1x40G tsc32=2x20G tsc47=2x20G tsc48=2x40G tsc63=2x40G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=2x40G tsc15=2x40G tsc16=1x40G tsc31=1x40G tsc32=2x20G tsc47=2x20G tsc48=2x40G tsc63=2x40G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=20G+2x10G tsc15=20G+2x10G tsc16=2x10G+20G tsc31=2x10G+20G tsc32=2x10G+20G tsc47=2x10G+20G tsc48=20G+2x10G tsc63=20G+2x10G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=20G+2x10G tsc15=20G+2x10G tsc16=2x10G+20G tsc31=2x10G+20G tsc32=2x10G+20G tsc47=2x10G+20G tsc48=20G+2x10G tsc63=20G+2x10G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=2x10G+40G tsc15=2x10G+40G tsc16=40G+2x10G tsc31=40G+2x10G tsc32=40G+2x10G tsc47=40G+2x10G tsc48=2x10G+40G tsc63=2x10G+40G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=2x10G+40G tsc15=2x10G+40G tsc16=40G+2x10G tsc31=40G+2x10G tsc32=40G+2x10G tsc47=40G+2x10G tsc48=2x10G+40G tsc63=2x10G+40G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+echo "Running tr 514 tsc0=40G+20G tsc15=40G+20G tsc16=20G+40G tsc31=20G+40G tsc32=20G+40G tsc47=20G+40G tsc48=40G+20G tsc63=40G+20G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2"
+tr 514 tsc0=40G+20G tsc15=40G+20G tsc16=20G+40G tsc31=20G+40G tsc32=20G+40G tsc47=20G+40G tsc48=40G+20G tsc63=40G+20G PktSize=256 ChkPktInteg=1 ClrNewPortCounts=1 TolOv=10 TolLr=10 LoopbackMode=2
+$done
+ps
+
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: FlexPortSanityLineRateMode: $returnCode"

@@ -1,0 +1,136 @@
+~~~~~~~~~~~~~ UDF for IFP ~~~~~~~~~~~~~~~~
+BCM.0> cint td4/field/udf.c YES
+
+int ARGC = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 3 (0x3)
+Doing port loopbacks...
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Doing multi chunk create 1 for L4Tcp...
+Doing multi chunk create 2 for L4Udp...
+Doing qset multi set...
+Doing group config create...
+Doing entry create...
+Doing qualify InPort...
+Doing qualify udf 0...
+Doing qualify udf 1...
+Doing action add CopyToCpu...
+Doing flexctr create to group 0x00000001. StatID: 1..
+Doing flexctr stat attach to entry 0x00000001...
+Doing entry install...
+##########  Sending IPv4 UDP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002BAB494000FF1170161010101120202021111122220012722868656C6C6F68656C6C6F112233445566778899
+Packet from data=<>, length=65
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: Total 1
+[bcmPWN.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4500 002b ab49 4000 ff11 7016 1010 
+[bcmPWN.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0012 7228 6865 
+[bcmPWN.0]Packet[1]: data[0030]: 6c6c 6f68 656c 6c6f 1122 3344 5566 7788 
+[bcmPWN.0]Packet[1]: data[0040]: 99
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH                      :0x45(69)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x405222(4215330)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0xff
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xcc
+	DROP_CODE_15_0                  :0x5f5f
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_6
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<43> id<43849> frg-off<16384> ttl<255> > chk-sum<0x7016>
+
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000001}
+        uint64 value[1] = {0x00000000 0x00000045}
+    }
+}
+--------------------------
+#####################################################
+
+##########  Sending IPv4 TCP packet ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002808B84000FF0612B61010101120202021111122227214F1140000000060022238A92C0000020405B4
+Packet from data=<>, length=62
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: Total 2
+[bcmPWN.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4500 0028 08b8 4000 ff06 12b6 1010 
+[bcmPWN.0]Packet[2]: data[0020]: 1011 2020 2021 1111 2222 7214 f114 0000 
+[bcmPWN.0]Packet[2]: data[0030]: 0000 6002 2238 a92c 0000 0204 05b4 0000 
+[bcmPWN.0]
+[bcmPWN.0][RX metadata information]
+	PKT_LENGTH                      :0x44(68)
+	SRC_PORT_NUM                    :0x1(1)
+	SWITCH                          :0x1(1)
+	MATCH_ID_LO                     :0x103222(1061410)
+	MPB_FLEX_DATA_TYPE              :0x3(3)
+	EGR_ZONE_REMAP_CTRL             :0x1(1)
+	COPY_TO_CPU                     :0x1(1)
+[FLEX fields]
+	L2_IIF_10_0                     :0x1
+	VFI_15_0                        :0x64
+	INGRESS_PP_PORT_7_0             :0x1
+	EFFECTIVE_TTL_7_0               :0xff
+	SYSTEM_OPCODE_3_0               :0x1
+	PKT_MISC_CTRL_0_3_0             :0x1
+	EVENT_TRACE_VECTOR_31_16        :0x4
+	EVENT_TRACE_VECTOR_47_32        :0xcc
+	DROP_CODE_15_0                  :0x5f5f
+	PARSER_VHLEN_0_15_0             :0x8a
+	SYSTEM_SOURCE_15_0              :0x1
+	VLAN_TAG_PRESERVE_CTRL_SVP_MIRROR_ENABLE_1_0:0x2
+[RX reasons]
+	IFP
+	MATCHED_RULE_BIT_2
+	MATCHED_RULE_BIT_3
+	MATCHED_RULE_BIT_6
+	MATCHED_RULE_BIT_7
+
+[bcmPWN.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<16.16.16.17> dst<32.32.32.33> hl<5> service-type<0> tl<40> id<2232> frg-off<16384> ttl<255> > chk-sum<0x12b6>
+Packet[2]:   TCP: sPort<4369> dPort<8738> Seq<1913975060> Ack<0> Off<6> Flags<0x02=SYN> Csum<0xa92c> Urp<0x0000>
+
+
+------- Statid count=1 -------
+bcm_flexctr_counter_value_t counter_value = {
+    uint64[2] value = {
+        uint64 value[0] = {0x00000000 0x00000002}
+        uint64 value[1] = {0x00000000 0x00000089}
+    }
+}
+--------------------------
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 

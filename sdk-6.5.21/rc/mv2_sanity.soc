@@ -1,0 +1,455 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Maverick2 Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+init soc
+local done 'echo "   Done"'
+
+#Display some useful information
+date
+ver
+soc
+
+#bb voltage core 0.92
+
+#Start Test
+
+echo "tr 1: Running Register reset defaults ..."
+tr 1
+$done
+date
+
+echo "tr 2: Running PCI Compliance ..."
+tr 2
+$done
+date
+
+# tr 3 needs init-soc/misc to be run, hence it start below with the rest.
+
+echo "tr 4: Running PCI S-Channel Buf ..."
+tr 4
+$done
+date
+
+init soc
+cancun load cmh
+cancun load cch
+init misc
+echo "tr 3: Running Register read/write ..."
+tr 3 mask64
+$done
+date
+
+# TR 50/51/52/71 are being run upfront so as to catch any basic access/traffic issues
+counter off
+l2mode off
+linkscan off
+init soc
+cancun load cmh
+cancun load cch
+init misc
+set rct=false
+echo "Running memory tests ..."
+if !"expr $1+0 == 50" || !"expr $2+0 == 50" || !"expr $3+0 == 50" || !"expr $4+0 == 50" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr50_bcm56770_a0.soc'
+if !"expr $1+0 == 51" || !"expr $2+0 == 51" || !"expr $3+0 == 51" || !"expr $4+0 == 51" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr51_bcm56770_a0.soc'
+if !"expr $1+0 == 52" || !"expr $2+0 == 52" || !"expr $3+0 == 52" || !"expr $4+0 == 52" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr52_bcm56770_a0.soc'
+if !"expr $1+0 == 71" || !"expr $2+0 == 71" || !"expr $3+0 == 71" || !"expr $4+0 == 71" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr71_bcm56770_a0.soc'
+if !"expr $1+0 == 0" && !"expr $2+0 == 0" && !"expr $3+0 == 0" && !"expr $4+0 == 0" \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr50_bcm56770_a0.soc' \
+     'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr51_bcm56770_a0.soc' \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr52_bcm56770_a0.soc' \
+    'init soc;cancun load cmh;cancun load cch;init misc;memscan off; sramscan off;' \
+    'rcload tr71_bcm56770_a0.soc'
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+date
+
+echo "tr 17: Testing CPU DMA loopback ..."
+tr 17
+$done
+date
+
+#MAC Loopback
+echo "tr 18: Testing MAC Loopback - 10 Gb/s all XE ports"
+tr 18 PortBitMap=xe Speed=10G
+$done
+date
+
+echo "Testing MAC Loopback - 100 Gb/s all CE ports"
+tr 18 PortBitMap=ce Speed=100G
+$done
+
+echo "Testing MAC Loopback - 106 Gb/s all HG ports"
+tr 18 PortBitMap=hg Speed=106G
+$done
+
+#PHY Loopback
+echo "tr 19: Testing PHY Loopback - 100 Gb/s all CE ports"
+tr 19 PortBitMap=ce Speed=100G
+$done
+date
+
+echo "Testing PHY Loopback - 100 Gb/s all CE ports"
+tr 19 PortBitMap=ce Speed=100G
+$done
+
+echo "Testing PHY Loopback - 106 Gb/s all HG ports"
+tr 19 PortBitMap=hg Speed=106G
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "tr 21: Running CPU Benchmarks ..."
+tr 21
+$done
+date
+
+#echo "tr 22: Testing CPU DMA, Scatter/Gather Reload ..."
+#tr 22 (Replaced by 500 series of tests)
+#$done
+date
+
+#echo "tr 23: Testing CPU DMA, Scatter/Gather Simple ..."
+#tr 23 (Replaced by 500 series of tests)
+#$done
+date
+
+#echo "tr 24: Testing CPU DMA, Scatter/Gather Random ..."
+#tr 24 (Replaced by 500 series of tests)
+#$done
+date
+
+echo "tr 30: Running counter width verification test ..."
+tr 30
+$done
+date
+
+echo "tr 31: Running Counter/MIB test ..."
+tr 31
+$done
+date
+
+echo "tr 32: Running XGS L2 Ins/Lookup/Del test ..."
+tr 32
+$done
+date
+
+echo "tr 33: Running XGS L2 Overflow Ins test ..."
+tr 33
+$done
+date
+
+echo "tr 34: Running XGS L2 Hashing test ..."
+tr 34
+$done
+date
+
+echo "tr 35: Running XGS L2 Delete by Port test ..."
+tr 35
+$done
+date
+
+echo "tr 36: Running XGS L2 Delete by VLAN test ..."
+tr 36
+$done
+date
+
+
+#Internal snake Loopback
+echo "tr 39: Running internal snake on all XE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=xe Count=1
+$done
+date
+
+echo "tr 39: Running internal snake on all CE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=ce Count=1
+$done
+date
+
+echo "Running internal snake on all CE ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=ce
+$done
+
+echo "Running internal snake on all CE ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=ce
+$done
+
+echo "tr 40: Running BCM Packet Send test ..."
+tr 40
+$done
+date
+
+echo "tr 41: Running BCM Packet Receive test ..."
+tr 41
+$done
+date
+
+echo "tr 48: Running MAC loopback V2 on all ports ..."
+tr 48 PortBitMap=ce,xe
+tr 48 PortBitMap=xe
+#$done
+
+echo "Running PHY loopback V2 on all ports ..."
+tr 49 PortBitMap=ce,xe
+tr 49 PortBitMap=xe
+$done
+
+echo "tr 60: Running MDIO Linkscan test ..."
+tr 60
+$done
+date
+
+#Traffic Test
+echo "tr 72: Running Traffic Test in MAC mode on XE ports..."
+tr 72 RunMode=MAC PortBitMap=xe tis=5
+$done
+date
+
+#echo "tr 72: Running Traffic Test in EXTERNAL mode on CE ports with AutoNeg disabled..."
+#tr 72 RunMode=EXTERNAL AutoNeg=False PortBitMap=ce tis=5
+#$done
+#date
+
+echo "tr 72: Running Traffic Test in PHY mode on CE ports..."
+tr 72 RunMode=PHY PortBitMap=ce tis=5
+$done
+date
+
+echo "tr 72: Running Traffic Test in MAC mode on CE ports..."
+tr 72 RunMode=MAC PortBitMap=ce tis=5
+$done
+date
+
+echo "Running Traffic Test in PHY mode on XE ports..."
+tr 72 RunMode=PHY PortBitMap=xe
+
+echo "tr 73: Running SNMP MIB Object Test test ..."
+tr 73
+$done
+date
+
+echo "tr 85: Running L3 IPV6 Overflow Ins test ..."
+tr 85
+$done
+date
+
+echo "tr 86: Running L3 IPV6 Hashing test ..."
+tr 86
+$done
+date
+
+echo "tr 87: L3 IPV4 Overflow Ins test ..."
+tr 87
+$done
+date
+
+echo "tr 88: L3 IPV4 Hashing test ..."
+tr 88
+$done
+date
+
+echo "tr 90: TX Reload Test ..."
+#tr 90
+#$done
+#date
+
+#echo "tr 91: RX Reload Test ..."
+#tr 91
+#$done
+#date
+
+#echo "tr 100: VLAN xlate Overflow Ins Test ..."
+#tr 100
+#$done
+#date
+
+echo "tr 101: VLAN xlate Hashing Test ..."
+tr 101
+$done
+date
+
+#echo "tr 102: Egr VLAN xlate Ovrflw Ins Test ..."
+#tr 102
+#$done
+#date
+
+echo "tr 103: Egr VLAN xlate Hashing Test ..."
+tr 103
+$done
+date
+
+#echo "tr 104: MPLS Overflow Ins Test ..."
+#tr 104
+#$done
+#date
+
+echo "tr 105: MPLS Hashing Test ..."
+tr 105
+$done
+date
+
+#echo "tr 201: Simple CMICx Sim Test Test ..."
+#tr 201
+#$done
+#date
+
+#echo "tr 501: Streaming test ..."
+#tr 501
+#$done
+#date
+
+#echo "tr 500: Running Traffic Test in PHY mode on XE ports test ..."
+#tr 500
+#$done
+#date
+#
+#echo "tr 502: Running SBUS DMA Performance test ..."
+#tr 502
+#$done
+#date
+#
+#echo "tr 503: Running CCM DMA functionality test ..."
+#tr 503
+#$done
+#date
+#
+#echo "tr 504: Running FIFO DMA functionality test ..."
+#tr 504
+#$done
+#date
+#
+#echo "tr 505: Running SCHAN DMA functionality test ..."
+#tr 505
+#$done
+#date
+#
+#echo "tr 506: SBUS DMA stress test ..."
+#tr 506
+#$done
+#date
+
+#echo "tr 507: Latency test ..."
+#tr 507
+#$done
+#date
+
+#echo "tr 510: L2UC test ..."
+#tr 510
+#$done
+#date
+
+#echo "tr 511: L2MC test ..."
+#tr 511
+#$done
+#date
+
+#echo "tr 512: L3UC test ..."
+#tr 512
+#$done
+#date
+
+#echo "tr 513: IPMC test ..."
+#tr 513
+#$done
+#date
+
+#echo "tr 514: Flexport test ..."
+#tr 514
+#$done
+#date
+
+# Not supported on Maverick2 
+#echo "tr 515: MBIST test ..."
+#tr 515
+#$done
+#date
+
+echo "tr 516: CAMBIST test ..."
+tr 516
+$done
+date
+
+#echo "tr 517: TD3 Power test ..."
+#tr 517
+#$done
+#date
+
+#echo "tr 901: SER In-House Test ..."
+#tr 901
+#$done
+#date
+
+#echo "tr 903: ECC Parity test ..."
+#tr 903
+#$done
+#date
+
+link off
+config add parity_enable=1
+tr 144
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

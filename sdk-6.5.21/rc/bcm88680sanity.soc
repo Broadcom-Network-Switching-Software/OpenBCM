@@ -1,0 +1,165 @@
+echo "testsuite: started: sanity"
+# $Id: bcm88650sanity.soc,v 1.30 2013/08/25 08:50:05 assaf Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Jericho (BCM88670) Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+#
+local done 'echo "   Done";date'
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+#ts -*
+
+#Clear test statistics
+tc *
+
+#Display some useful information
+date
+
+#######################################################################
+
+#Start Test
+echo "Running tr 141"
+tr 141 r=1
+$done
+
+echo 'Running tr 141 NoAttach=1';
+tr 141 NoAttach=1;
+echo '   Done';date
+
+
+echo 'Running tr 141 ErrorOnLeak=1';
+tr 141 ErrorOnLeak=1;
+echo '   Done';date
+
+echo 'Running: tr 141 NoInit=1 , than: tr 141 NoDenit=1';
+tr 141 NoInit=1 NoAttach=1;
+tr 141 NoDeinit=1 NoAttach=1;
+echo '   Done';date
+
+echo "Running tr 141 (warmboot)"
+tr 141 repeat=1 Warmboot=1
+$done
+
+### CPU Packet (tr 40)
+# Dont use fabric
+tr 141; \
+s IPT_FORCE_LOCAL_OR_FABRIC FORCE_LOCAL=1
+
+# Port 0 -> static forwarding to port 0exit
+mod IHP_PINFO_LLR 0 1 DEFAULT_CPU_TRAP_CODE=200 DEFAULT_ACTION_PROFILE_FWD=7; \
+mod IHB_FWD_ACT_PROFILE 200 1 FWD_ACT_DESTINATION=0x40063 FWD_ACT_DESTINATION_OVERWRITE=1; \
+s CMIC_CMC0_CH1_COS_CTRL_RX_0 0xffffffff; \
+s CMIC_CMC0_CH1_COS_CTRL_RX_1 0xffffffff
+
+echo 'Send packet (tr 40)...'; \
+tr 40 Tagged=true LengthStart=128 LengthEnd=164 Chains=1 PktsPerChain=1 LengthInc=100 MacDest=00:0c:00:01:00:00 MacSrc=00:00:00:e3:00:00 UseFile=false; \
+echo '   Done';date;
+
+echo 'Running PCI Compliance (tr 2)...'; \
+tr 2; \
+echo '   Done';date;
+
+echo 'Running PCI S-Channel Buf (tr 4)...'; \
+tr 4; \
+echo '   Done';date;
+
+
+echo 'Running Register read/write (tr 3)...'; \
+tr 3 ; \
+echo '   Done';date;
+
+echo 'TR 30 ...'; \
+tr 30; \
+echo '   Done';date;
+
+echo 'TR 31 ...'; \
+tr 31; \
+echo '   Done';date;
+
+
+echo 'tr 60 ...'; \
+tr 60; \
+echo '   Done';date;
+
+echo 'tr 50 m=IDR_CONTEXT_MRU, EGQ_DSP_PTR_MAP ...'; \
+tr 50 m=IDR_CONTEXT_MRU; \
+tr 50 m=EGQ_DSP_PTR_MAP; \
+echo '   Done';date;
+
+echo 'tr 51 m=IDR_CONTEXT_MRU, IHB_FWD_ACT_PROFILE, EGQ_PCT...'; \
+tr 51 m=IDR_CONTEXT_MRU; \
+tr 51 m=IHB_FWD_ACT_PROFILE; \
+tr 51 m=EGQ_PCT; \
+echo '   Done';date;
+
+echo 'tr 52 m=IDR_CONTEXT_MRU, IPS_QTYPE...'; \
+tr 52 m=IDR_CONTEXT_MRU; \
+tr 52 m=IPS_QTYPE; \
+echo '   Done';date;
+
+echo 'tr 71 m=IDR_CONTEXT_MRU, EGQ_PPCT...'; \
+tr 71 m=IDR_CONTEXT_MRU; \
+tr 71 m=EGQ_PPCT; \
+echo '   Done';date;
+
+echo 'Memory R/W first & last test (tr 7)...'; \
+tr 7; \
+echo '   Done';date;
+
+echo 'Memory flip flop test (tr 8)...'; \
+tr 8; \
+echo '   Done';date;
+
+echo 'Running Register reset defaults (tr 1) ...'; \
+tr 1; \
+echo '   Done';date;
+
+tr 141 NoPktRx=1; \
+echo 'TX reload test(tr 90)...'; \
+tr 90; \
+echo '   Done';date;
+
+echo 'RX reload test(tr 91)...'; \
+tr 91; \
+echo '   Done';date;
+
+echo 'Packet receive test(tr 41)...'; \
+tr 41; \
+echo '   Done';date;
+
+echo 'Dram bist test (tr 140)...';
+tr 140 DramNdx=0xff AllAdress=1;
+echo '   Done';date
+
+#Start Cache Mem Test
+echo "Running Cache Mem Tests "
+tr 152 test_type=1 write_type=0 pattern=3 part=0 mem_id=0
+tr 152 test_type=1 write_type=1 pattern=3 part=0 mem_id=0
+
+#Test ac-mp lif and tunnel termination lif learning information encoding
+echo 'ac-mp lif and tunnel termination lif learning info encoding (tr 155)...'; \
+tr 155; \
+echo '   Done';date;
+
+#ser test for all memories
+echo 'ser test for all memories (tr 153)...'; \
+tr 153 RunAll=1; \
+echo '   Done';date;
+
+#######################################################################
+
+date
+tl
+local returnCode $?
+echo "testsuite: finished: sanity: $returnCode"

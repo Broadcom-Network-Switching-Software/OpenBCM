@@ -1,0 +1,66 @@
+# $Id: Make.lib,v 1.14 2010/11/18 00:27:38 yshtil Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Make rules/targets for handling libraries
+
+.SECONDARY:: ${BOBJS}
+
+BOBJS_FAST = ${BOBJS}
+BOBJS_MAKE_CMD =
+
+ifeq ($(FAST),1)
+  ifneq ($(strip $(BOBJS)),)
+    BOBJS_FAST =
+    BOBJS_ARGS = -j9
+    BOBJS_MAKE_CMD = pwd && make LSRUN=$(SDK)/tools/lsrun.pl $(BOBJS_ARGS) ${BOBJS}
+  endif
+endif
+
+ifeq ($(TOOLS),Borland)
+
+LIBSUFFIX=lib
+
+${LIBDIR}/%.lib: ${BORLAND_BOBJS}
+	$(RM) $@
+	$(FOREACH) -subdir "$(LIBDIR)" \
+		"tlib $@ $(foreach obj, $(BORLAND_LOBJS), +-$(obj))"
+
+else	# !Borland
+
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+LIBSUFFIX=so.${SHAREDLIBVER}
+else
+LIBSUFFIX=a
+endif
+
+targetlib = ${LIBDIR}/${lib}.${LIBSUFFIX}
+
+all:: ${BLDDIR}/.tree ${targetlib}
+
+${LIBDIR}/%.${LIBSUFFIX}: ${BOBJS_FAST}
+	$(BOBJS_MAKE_CMD)
+ifdef QUIET
+	@$(ECHO) Building library $(notdir $@)
+endif
+	$Q$(RM) $@
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+	$(CC) -shared -Wl,-soname,${lib}.${LIBSUFFIX}${EXTRA_LIB_LDFLAGS} -o ${targetlib} ${BOBJS} -lc
+else
+	$(AR) ${ARFLAGS} $@ $(sort ${BOBJS})
+endif
+
+endif	# !Borland
+
+
+install:: all
+
+clean::
+ifdef QUIET
+	@$(ECHO) Cleaning objects for ${LOCALDIR} and ${lib}
+endif
+	$Q$(RM) ${BOBJS}
+	$Q$(RM) ${targetlib}
+
+distclean:: clean

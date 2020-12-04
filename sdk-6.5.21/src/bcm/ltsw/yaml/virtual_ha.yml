@@ -1,0 +1,31 @@
+#
+# file: virtual_ha.yml
+# Virtual YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+
+component:
+    bcmint_virtual:
+        bcmint_virtual_vp_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                flags:
+                    type: uint32_t
+                    comment: VP control indicator.
+                vpn:
+                    type: uint32_t
+                    comment: VPN associated with this VP.
+                l2_oif:
+                    type: uint32_t
+                    comment: L2_oif associated with this VP.
+                dvp_pg:
+                    type: uint32_t
+                    comment: Dvp port group id associated with this VP.

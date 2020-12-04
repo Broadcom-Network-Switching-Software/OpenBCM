@@ -1,0 +1,199 @@
+/*! \mainpage User Guide
+
+\tableofcontents
+
+\section intro Overview
+
+The SDK Shared library contains generic software utility functions and
+other shared definitions.
+
+\section shr_build Build
+
+The makefile for the Shared library is built upon the make include
+files in the <tt>$SDK/make</tt> directory.
+
+\section avl_trees AVL Trees
+
+Defines a generic AVL tree data structure.
+
+On creating a tree, the user specifies the size of the datum and the
+\a FIXED maximum number of entries.  On insert/delete/lookup, the user
+supplies the datum compare function.
+
+\b NOTE These routines are NOT thread-safe.  If multiple threads could
+access an AVL tree, external locks must be used to mutually exclude
+each call to the shr_avl routines, including shr_avl_traverse().
+
+For a complete description, please refer to \ref shr_avl.h.
+
+\section bit_arrays Bit Arrays
+
+The macros provided by this library allows the user to declare and
+operate on bit arrays of arbitrary size.
+
+In addition to macros for setting, clearing and testing individual
+bits, there are macros for performing various operations on ranges of
+bits within one or between two bit arrays.
+
+For a complete description, please refer to \ref shr_bitop.h.
+
+\section debug_macros Debug Macros
+
+The debug macros are a set of generic macros for tracing function call
+trees.
+
+The main principle is to establish a single point of exit for each
+function, and then combine this with a standard method of logging
+error conditions.
+
+For a complete description, please refer to \ref shr_debug.h.
+
+\section print_buffer Dynamic Print Buffer
+
+The dynamic print buffer support is mainly intended for use with the
+BSL framework.
+
+The basic idea is to have a sprintf-like function, which always
+allocates a buffer sufficiently large to hold the resulting string.
+
+Furthermore, subsequent writes to the same buffer will be appended to
+the existing string instead of overwriting it. This is useful
+e.g. when a driver wants to build a log message from multiple pieces
+before sending it to the system log.
+
+Example demonstrating how entire lines are sent to cli_out:
+
+\code{.c}
+{
+    shr_pb_t *pb;
+    int idx;
+
+    pb = shr_pb_create();
+    for (idx = 0; idx < 23; idx++) {
+        if (idx > 0 && (idx & 0x7) == 0) {
+            shr_pb_printf(pb, "\n");
+            cli_out("%s", shr_pb_str(pb));
+            shr_pb_reset(pb);
+        }
+        shr_pb_printf(pb, "0x%02x ", idx);
+    }
+    shr_pb_printf(pb, "\n");
+    cli_out("%s", shr_pb_str(pb));
+    shr_pb_destroy(pb);
+}
+\endcode
+
+It is also possible to use the dynamic print buffer API to log the
+same information from different software components, but with a
+different logging severity.
+
+For example, in the CLI we may want to dump a particular data
+structure using the normal CLI output function, but an error handler
+in a low-level driver may want to show the same data structure in an
+error message.
+
+Low-level driver code:
+
+\code{.c}
+/* Dump function */
+void
+mydrv_pkthdr_dump(shr_pb_t *pb, uint8_t *pkthdr, size_t len)
+{
+    size_t idx;
+
+    for (idx = 0; idx < len; idx++) {
+        shr_pb_printf(pb, "0x%02x ", pkthdr[idx]);
+    }
+}
+
+/* Error handler */
+void
+bad_pkthdr(int unit, uint8_t *pkthdr)
+{
+    shr_pb_t *pb;
+
+    pb = shr_pb_create();
+
+    shr_pb_printf(pb, "Bad packet header encountered:\n");
+    mydrv_pkthdr_dump(pb, pkthdr, MYDRV_PKTHDR_MAX);
+    LOG_WARN(BSL_LS_BCMPC_TX,
+             (BSL_META_U(unit,
+                         "%s\n"),
+              shr_pb_str(pb)));
+
+    shr_pb_destroy(pb);
+}
+\endcode
+
+CLI code building on the same low-level function, but using a
+different log source/severity in the BSL meta data:
+
+\code{.c}
+/* CLI dump function */
+void
+cli_show_pkthdr(int unit, uint8_t *pkthdr, size_t len)
+{
+    shr_pb_t *pb;
+
+    pb = shr_pb_create();
+
+    shr_pb_printf(pb, "Current packet header:\n");
+    mydrv_pkthdr_dump(pb, pkthdr, len);
+    cli_out("%s\n", shr_pb_str(pb));
+
+    shr_pb_destroy(pb);
+}
+\endcode
+
+
+For a complete description of the API, please refer to \ref shr_pb.h.
+
+\section timeout Polling Timer
+
+Defines a generic API to check for timeout on various software operations.
+
+These routines implement a polling timer that, in the normal case, has
+low overhead, but provides reasonably accurate timeouts for intervals
+longer than a millisecond.
+
+If an operation completes within the specified minimum number of
+polls, then there is very little overhead. Otherwise, the checker
+function starts making O/S calls to check the real-time clock and uses
+an exponential timeout to avoid hogging the CPU.
+
+Example:
+
+\code{.c}
+void my_func(int unit)
+{
+    shr_timeout_t to;
+    sal_usecs_t timeout_usec = 100000;
+    int min_polls = 100;
+
+    shr_timeout_init(&to, timeout_usec, min_polls);
+    while (TRUE) {
+        if (check_XX_status(unit) == DONE) {
+            break;
+        }
+        if (shr_timeout_check(&to)) {
+            printf("Operation timed out\n");
+            return ERROR;
+        }
+    }
+    ...
+}
+\endcode
+
+For a complete description of the API, please refer to \ref shr_timeout.h.
+
+\section shr_dq Double-ended queue
+
+The macros provided by this library allows the user to declare and
+operate on Double-ended queue (doubly linked list), and singly linked list.
+
+In addition to macros for inserting and deleting individual list
+nodes, there are macros for performing find/traverse operations.
+
+For a complete description, please refer to \ref shr_dq.h.
+
+*/

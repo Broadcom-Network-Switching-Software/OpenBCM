@@ -1,0 +1,218 @@
+BCM.0> c td4x9_hsdk_flexctr_per_ing_port_per_vlan_pri.c                                                      
+    os=unix                                                                                                  
+Attach: Unit 0 (BCM56780_A0): attached (current unit)                                                        
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom                                                   
+Release: sdk-6.5.21 built 20200923 (Wed Sep 23 10:10:13 2020)                                                
+From sdkrel@lc-sj1-5694:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk.56780             
+Platform: SLK_BCM957812                                                                                      
+OS: Unix (Posix)                                                                                             
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56780_A0_DNA_2_5_5, BCM56780_A0_DNA_2_5_8
+     BCM56780_A0_INA_2_5_5, BCM56780_A0_INA_2_5_8             
+Completed test setup successfully.                            
+ADD: mac=00:00:00:00:00:01 vlan=100 GPORT=0x0 modid=0 port=0/cpu0 CPU
+stat_counter_id 268435463                                            
+******************************                                       
+******Traffic test start******                                       
+Packet with pri=0 comes into ingress port 78                         
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=0; sleep 5                  
+Packet generate, length=64                                           
+Sleeping for 5 seconds                                               
+MC_PERQ_PKT(0).cpu0                   :                    10                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 1,400              +1,400
+XLMIB_TBYT.xe1                        :                   680                +680
+XLMIB_RBYT.xe1                        :                   680                +680
+XLMIB_TPOK.xe1                        :                    10                 +10
+XLMIB_RPOK.xe1                        :                    10                 +10
+XLMIB_TVLN.xe1                        :                    10                 +10
+XLMIB_RVLN.xe1                        :                    10                 +10
+XLMIB_TUCA.xe1                        :                    10                 +10
+XLMIB_RUCA.xe1                        :                    10                 +10
+XLMIB_TPKT.xe1                        :                    10                 +10
+XLMIB_RPKT.xe1                        :                    10                 +10
+XLMIB_T127.xe1                        :                    10                 +10
+XLMIB_R127.xe1                        :                    10                 +10
+XLMIB_RPRM.xe1                        :                    10                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=0; sleep 5                              
+ !!!! Checking flex counter increment for pri= 0 packets !!!!!                   
+FlexCtr Get for port 78 priority 0: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=1 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=1; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    20                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 2,800              +1,400
+XLMIB_TBYT.xe1                        :                 1,360                +680
+XLMIB_RBYT.xe1                        :                 1,360                +680
+XLMIB_TPOK.xe1                        :                    20                 +10
+XLMIB_RPOK.xe1                        :                    20                 +10
+XLMIB_TVLN.xe1                        :                    20                 +10
+XLMIB_RVLN.xe1                        :                    20                 +10
+XLMIB_TUCA.xe1                        :                    20                 +10
+XLMIB_RUCA.xe1                        :                    20                 +10
+XLMIB_TPKT.xe1                        :                    20                 +10
+XLMIB_RPKT.xe1                        :                    20                 +10
+XLMIB_T127.xe1                        :                    20                 +10
+XLMIB_R127.xe1                        :                    20                 +10
+XLMIB_RPRM.xe1                        :                    20                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=1; sleep 5                              
+ !!!! Checking flex counter increment for pri= 1 packets !!!!!                   
+FlexCtr Get for port 78 priority 1: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=2 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=2; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    30                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 4,200              +1,400
+XLMIB_TBYT.xe1                        :                 2,040                +680
+XLMIB_RBYT.xe1                        :                 2,040                +680
+XLMIB_TPOK.xe1                        :                    30                 +10
+XLMIB_RPOK.xe1                        :                    30                 +10
+XLMIB_TVLN.xe1                        :                    30                 +10
+XLMIB_RVLN.xe1                        :                    30                 +10
+XLMIB_TUCA.xe1                        :                    30                 +10
+XLMIB_RUCA.xe1                        :                    30                 +10
+XLMIB_TPKT.xe1                        :                    30                 +10
+XLMIB_RPKT.xe1                        :                    30                 +10
+XLMIB_T127.xe1                        :                    30                 +10
+XLMIB_R127.xe1                        :                    30                 +10
+XLMIB_RPRM.xe1                        :                    30                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=2; sleep 5                              
+ !!!! Checking flex counter increment for pri= 2 packets !!!!!                   
+FlexCtr Get for port 78 priority 2: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=3 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=3; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    40                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 5,600              +1,400
+XLMIB_TBYT.xe1                        :                 2,720                +680
+XLMIB_RBYT.xe1                        :                 2,720                +680
+XLMIB_TPOK.xe1                        :                    40                 +10
+XLMIB_RPOK.xe1                        :                    40                 +10
+XLMIB_TVLN.xe1                        :                    40                 +10
+XLMIB_RVLN.xe1                        :                    40                 +10
+XLMIB_TUCA.xe1                        :                    40                 +10
+XLMIB_RUCA.xe1                        :                    40                 +10
+XLMIB_TPKT.xe1                        :                    40                 +10
+XLMIB_RPKT.xe1                        :                    40                 +10
+XLMIB_T127.xe1                        :                    40                 +10
+XLMIB_R127.xe1                        :                    40                 +10
+XLMIB_RPRM.xe1                        :                    40                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=3; sleep 5                              
+ !!!! Checking flex counter increment for pri= 3 packets !!!!!                   
+FlexCtr Get for port 78 priority 3: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=4 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=4; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    50                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 7,000              +1,400
+XLMIB_TBYT.xe1                        :                 3,400                +680
+XLMIB_RBYT.xe1                        :                 3,400                +680
+XLMIB_TPOK.xe1                        :                    50                 +10
+XLMIB_RPOK.xe1                        :                    50                 +10
+XLMIB_TVLN.xe1                        :                    50                 +10
+XLMIB_RVLN.xe1                        :                    50                 +10
+XLMIB_TUCA.xe1                        :                    50                 +10
+XLMIB_RUCA.xe1                        :                    50                 +10
+XLMIB_TPKT.xe1                        :                    50                 +10
+XLMIB_RPKT.xe1                        :                    50                 +10
+XLMIB_T127.xe1                        :                    50                 +10
+XLMIB_R127.xe1                        :                    50                 +10
+XLMIB_RPRM.xe1                        :                    50                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=4; sleep 5                              
+ !!!! Checking flex counter increment for pri= 4 packets !!!!!                   
+FlexCtr Get for port 78 priority 4: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=5 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=5; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    60                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 8,400              +1,400
+XLMIB_TBYT.xe1                        :                 4,080                +680
+XLMIB_RBYT.xe1                        :                 4,080                +680
+XLMIB_TPOK.xe1                        :                    60                 +10
+XLMIB_RPOK.xe1                        :                    60                 +10
+XLMIB_TVLN.xe1                        :                    60                 +10
+XLMIB_RVLN.xe1                        :                    60                 +10
+XLMIB_TUCA.xe1                        :                    60                 +10
+XLMIB_RUCA.xe1                        :                    60                 +10
+XLMIB_TPKT.xe1                        :                    60                 +10
+XLMIB_RPKT.xe1                        :                    60                 +10
+XLMIB_T127.xe1                        :                    60                 +10
+XLMIB_R127.xe1                        :                    60                 +10
+XLMIB_RPRM.xe1                        :                    60                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=5; sleep 5                              
+ !!!! Checking flex counter increment for pri= 5 packets !!!!!                   
+FlexCtr Get for port 78 priority 5: 10 packets / 680 bytes                       
+
+******************************
+******Traffic test start******
+Packet with pri=6 comes into ingress port 78 
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=6; sleep 5
+Packet generate, length=64                         
+Sleeping for 5 seconds                             
+MC_PERQ_PKT(0).cpu0                   :                    70                 +10
+MC_PERQ_BYTE(0).cpu0                  :                 9,800              +1,400
+XLMIB_TBYT.xe1                        :                 4,760                +680
+XLMIB_RBYT.xe1                        :                 4,760                +680
+XLMIB_TPOK.xe1                        :                    70                 +10
+XLMIB_RPOK.xe1                        :                    70                 +10
+XLMIB_TVLN.xe1                        :                    70                 +10
+XLMIB_RVLN.xe1                        :                    70                 +10
+XLMIB_TUCA.xe1                        :                    70                 +10
+XLMIB_RUCA.xe1                        :                    70                 +10
+XLMIB_TPKT.xe1                        :                    70                 +10
+XLMIB_RPKT.xe1                        :                    70                 +10
+XLMIB_T127.xe1                        :                    70                 +10
+XLMIB_R127.xe1                        :                    70                 +10
+XLMIB_RPRM.xe1                        :                    70                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=6; sleep 5
+ !!!! Checking flex counter increment for pri= 6 packets !!!!!
+FlexCtr Get for port 78 priority 6: 10 packets / 680 bytes
+
+******************************
+******Traffic test start******
+Packet with pri=7 comes into ingress port 78
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=7; sleep 5
+Packet generate, length=64
+Sleeping for 5 seconds
+MC_PERQ_PKT(0).cpu0                   :                    80                 +10
+MC_PERQ_BYTE(0).cpu0                  :                11,200              +1,400
+XLMIB_TBYT.xe1                        :                 5,440                +680
+XLMIB_RBYT.xe1                        :                 5,440                +680
+XLMIB_TPOK.xe1                        :                    80                 +10
+XLMIB_RPOK.xe1                        :                    80                 +10
+XLMIB_TVLN.xe1                        :                    80                 +10
+XLMIB_RVLN.xe1                        :                    80                 +10
+XLMIB_TUCA.xe1                        :                    80                 +10
+XLMIB_RUCA.xe1                        :                    80                 +10
+XLMIB_TPKT.xe1                        :                    80                 +10
+XLMIB_RPKT.xe1                        :                    80                 +10
+XLMIB_T127.xe1                        :                    80                 +10
+XLMIB_R127.xe1                        :                    80                 +10
+XLMIB_RPRM.xe1                        :                    80                 +10
+tx 10 pbm=78 dm=0x1 vlantag=100 VlanPrio=7; sleep 5
+ !!!! Checking flex counter increment for pri= 7 packets !!!!!
+FlexCtr Get for port 78 priority 7: 10 packets / 680 bytes
+Completed test verify successfully.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

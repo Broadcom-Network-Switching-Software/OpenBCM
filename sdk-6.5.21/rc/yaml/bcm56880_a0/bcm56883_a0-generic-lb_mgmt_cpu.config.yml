@@ -1,0 +1,73 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56883 system port configuration.
+#
+#
+---
+device:
+    0:
+        PC_PORT_PHYS_MAP:
+            ?
+                # CPU port
+                PORT_ID: 0
+            :
+                PC_PHYS_PORT_ID: 0
+            ?
+                # Management port 0 (Pipe 1)
+                PORT_ID: 38
+            :
+                PC_PHYS_PORT_ID: 257
+            ?
+                # Loopback port 0 (Pipe 1)
+                PORT_ID: 39
+            :
+                PC_PHYS_PORT_ID: 261
+            ?
+                # Loopback port 1 (Pipe 3)
+                PORT_ID: 79
+            :
+                PC_PHYS_PORT_ID: 262
+            ?
+                # Loopback port 2 (Pipe 5)
+                PORT_ID: 119
+            :
+                PC_PHYS_PORT_ID: 263
+            ?
+                # Management port 3 (Pipe 7)
+                PORT_ID: 158
+            :
+                PC_PHYS_PORT_ID: 260
+            ?
+                # Loopback port 3 (Pipe 7)
+                PORT_ID: 159
+            :
+                PC_PHYS_PORT_ID: 264
+...
+---
+device:
+    0:
+        PC_PORT:
+            ?
+                PORT_ID: [0,
+                          39,     # Loopback port 0 (Pipe 1)
+                          79,     # Loopback port 1 (Pipe 3)
+                          119,    # Loopback port 2 (Pipe 5)
+                          159]    # Loopback port 3 (Pipe 7)
+            :
+                &port_mode_10g
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+            ?
+                PORT_ID: [38,     # Management port 0 (Pipe 1)
+                          158]    # Management port 3 (Pipe 7)
+            :
+                &port_mode_10g_xfi
+                ENABLE: 1
+                SPEED: 10000
+                NUM_LANES: 1
+                MAX_FRAME_SIZE: 9416
+...

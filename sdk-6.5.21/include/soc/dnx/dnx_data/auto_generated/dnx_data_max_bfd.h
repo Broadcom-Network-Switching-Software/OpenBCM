@@ -1,0 +1,63 @@
+
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_MAX_BFD_H_
+
+#define _DNX_DATA_MAX_BFD_H_
+
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX (JR2) family only!"
+#endif
+
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_BITS_BFD_ENDPOINTS (16)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_ENDPOINTS (65536)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_DIPS_FOR_BFD_MULTIHOP (16)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_BITS_DIPS_FOR_BFD_MULTIHOP (4)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_BFD_SERVER_TRAP_CODES (3)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_PROFILES_FOR_TX_RATE (8)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_BITS_BFD_SERVER_TRAP_CODES (2)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_RMEP_INDEX_DB_IPV4_CONST (0)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_RMEP_INDEX_DB_MPLS_CONST (1)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_RMEP_INDEX_DB_PWE_CONST (2)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_REQ_INT_PROFILES (8)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_NOF_BITS_YOUR_DISCR_TO_LIF (18)
+
+
+#define DNX_DATA_MAX_BFD_GENERAL_OAMP_BFD_CW_VALID_DIS_SUPP (1)
+
+
+
+
+#endif 
+

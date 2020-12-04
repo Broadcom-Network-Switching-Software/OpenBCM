@@ -1,0 +1,135 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# BCM56880 BCM device configuration.
+#
+# configuration yaml file
+#
+# bcm_device:
+#     <unit>:
+#         global:
+#             <property_1>: <value>
+#             <property_2>: <value>
+#         port:
+#             <key>:
+#                 <property_1>: <value>
+#                 <property_2>: <value>
+#
+# The purpose of this file is to provide the usage examples on all supported
+# emulator properties. Actually the specific default value will be used by SDK
+# if a configuration property is not specified in YAML file. It is strongly
+# recommended to only configure the properties which values are different to
+# default ones, and it is not necessary to explicitly set configuration
+# properties which have the same values to default ones, otherwise it will bring
+# an extra performance overhead.
+#
+# $Copyright:.$
+#
+
+---
+bcm_device:
+    0:
+        global:
+            bcm_tunnel_term_compatible_mode: 0
+            bfd_control_plane_independence: 1
+            bfd_max_pkt_size: 0
+            bfd_num_sessions: 256
+            bfd_remote_discriminator: 0
+            bfd_session_down_event_on_create: 0
+            bfd_sha1_keys: 0
+            bfd_simple_password_keys: 0
+            bfd_tx_raw_ingress_enable: 0
+            bfd_use_endpoint_id_as_discriminator: 0
+            cb_abort_on_err: 0
+            ctr_evict_enable: 1
+            dest_sysport_to_ul_nh: 0
+            dlb_flow_monitor_en: 0
+            dport_map_direct: 0
+            dport_map_enable: 1
+            dport_map_indexed: 1
+            egress_uat_mode: 0
+            failover_fixed_nh_offset_enable: 0
+            flexctr_action_reserved_ipmc_hitbit: 0
+            flowtracker_elephant_enable: 0
+            flowtracker_elephant_expected_queue_drain_time_usecs: 100
+            flowtracker_enable: 0
+            flowtracker_enterprise_number: 0
+            flowtracker_flexctr_alloc_enable: 0
+            flowtracker_flow_start_timestamp_ie_enable: 0
+            flowtracker_hardware_learn_enable: 0
+            flowtracker_max_export_pkt_length: 1500
+            flowtracker_max_flow_groups: 255
+            flowtracker_scan_interval_usecs: 500000
+            global_flexctr_egr_action_num_reserved: 0
+            global_flexctr_egr_group_num_reserved: 0
+            global_flexctr_egr_op_profile_num_reserved: 0
+            global_flexctr_egr_pool_num_reserved: 0
+            global_flexctr_egr_quant_num_reserved: 0
+            global_flexctr_ing_action_num_reserved: 0
+            global_flexctr_ing_group_num_reserved: 0
+            global_flexctr_ing_op_profile_num_reserved: 0
+            global_flexctr_ing_pool_num_reserved: 0
+            global_flexctr_ing_quant_num_reserved: 0
+            ifa_max_export_pkt_length: 1500
+            ifa_rx_pkt_max_length: 1500
+            ipv6_lpm_128b_enable: 1
+            l2_hitbit_enable: 1
+            l2_learn_enable: 1
+            l2age_thread_pri: 50
+            l3_alpm2_bnk_threshold: 95
+            l3_alpm2_default_route_data_mode: 1
+            l3_alpm_template: 1
+            l3_disable_add_to_arl: 0
+            l3_enable: 1
+            l3_reduced_route_max_ecmp_group_index: 0
+            lb_ecn_flexstate_action_reserve_mode: 0
+            max_vp_lags: 0
+            multi_hash_recurse_depth_egress_vlan_1: -1
+            multi_hash_recurse_depth_egress_vlan_2: -1
+            multi_hash_recurse_depth_exact_match: -1
+            multi_hash_recurse_depth_flow_tracker: -1
+            multi_hash_recurse_depth_ipmc_group: -1
+            multi_hash_recurse_depth_ipmc_source_group: -1
+            multi_hash_recurse_depth_l2: -1
+            multi_hash_recurse_depth_l2_tunnel: -1
+            multi_hash_recurse_depth_l2_tunnel_vnid: -1
+            multi_hash_recurse_depth_l2mc: -1
+            multi_hash_recurse_depth_l3: -1
+            multi_hash_recurse_depth_l3_tunnel: -1
+            multi_hash_recurse_depth_vlan_1: -1
+            multi_hash_recurse_depth_vlan_2: -1
+            multi_hash_recurse_depth_vlan_3: -1
+            num_queues_pci: 48
+            num_queues_uc0: 0
+            pktio_mode: 0
+            qos_l2_size: 4096
+            qos_l3_size: 10240
+            qos_mpls_size: 2048
+            shared_block_mask_section: umc_bc
+            skip_port_hw_init: 0
+            skip_protocol_default_entries: 0
+            sram_scan_chunk_size: 256
+            sram_scan_enable: 1
+            sram_scan_interval: 100000
+            sram_scan_rate: 4096
+            telemetry_export_max_packet_size: 1500
+            telemetry_max_ports_monitor: 0
+            tunnel_mode: 0
+            uat_mode: 0
+            uft_mode: 3
+            vfp_mode: 0
+            vlan_auto_stack: 0
+            vlan_default_port: 0
+            vlan_flooding_l2mc_num_reserved: 2048
+            vlan_flooding_mode: 0
+...
+---
+bcm_device:
+    0:
+        port:
+            "*":
+                encap_mode: IEEE
+                dport_map_port: -1
+...

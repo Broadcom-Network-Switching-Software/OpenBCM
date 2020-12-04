@@ -1,0 +1,249 @@
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+ingress_port_multi_setup port: 221 setup
+egress_port_multi_setup port: 102 setup
+egress_port_multi_setup port: 119 setup
+egress_port_multi_setup port: 188 setup
+[New Thread 0x7ffff7f9e700 (LWP 67595)]
+stat_counter_id = 0x10002001
+bcmPWN.0: WARNING: Already running
+Completed test setup successfully.
+/*******************************/
+Test of PFM MODE 0
+/*******************************/
+Transmiting known multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+pktioRxCallback: received from port 102
+pktioRxCallback: rx_count = 0x1
+pktioRxCallback: received from port 119
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[1]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[1]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[1]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[1]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[1]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[2]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[2]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[2]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[2]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[2]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 188
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[3]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[3]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[3]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[3]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[3]:
+Packet[3]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[3]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+FlexCtr Get on port 102 : 1 packets / 72 bytes
+FlexCtr Get on port 119 : 1 packets / 72 bytes
+FlexCtr Get on port 188 : 1 packets / 72 bytes
+
+-----------------------------------------------------------------
+    MODE 0: RESULT OF KNOWN MULTICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+Transmiting unknown multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+pktioRxCallback: received from port 102
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[4]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[4]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[4]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[4]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[4]:
+Packet[4]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[4]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 119
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[5]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[5]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[5]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[5]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[5]:
+Packet[5]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[5]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 188
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[6]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[6]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[6]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[6]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[6]:
+Packet[6]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[6]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+FlexCtr Get on port 102 : 1 packets / 72 bytes
+FlexCtr Get on port 119 : 1 packets / 72 bytes
+FlexCtr Get on port 188 : 1 packets / 72 bytes
+
+-----------------------------------------------------------------
+    MODE 0: RESULT OF UNKNOWN UNICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+/*******************************/
+Test of PFM MODE 1
+/*******************************/
+Transmiting known multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+pktioRxCallback: received from port 102
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[7]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[7]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[7]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[7]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[7]:
+Packet[7]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[7]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 119
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[8]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[8]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[8]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[8]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[8]:
+Packet[8]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[8]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+FlexCtr Get on port 102 : 1 packets / 72 bytes
+FlexCtr Get on port 119 : 1 packets / 72 bytes
+
+-----------------------------------------------------------------
+    MODE 1: RESULT OF KNOWN MULTICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+Transmiting unknown multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+pktioRxCallback: received from port 102
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[9]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[9]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[9]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[9]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[9]:
+Packet[9]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[9]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 119
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[10]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[10]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[10]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[10]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[10]:
+Packet[10]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[10]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 188
+pktioRxCallback: rx_count = 0x3
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]: data[0000]: {010003000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[11]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[11]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[11]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[11]: data[0040]: 5ca6 4d2a
+[bcmPWN.0]
+[bcmPWN.0]Packet[11]:
+Packet[11]:   Ethernet: dst<01:00:03:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[11]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+FlexCtr Get on port 102 : 1 packets / 72 bytes
+FlexCtr Get on port 119 : 1 packets / 72 bytes
+FlexCtr Get on port 188 : 1 packets / 72 bytes
+
+-----------------------------------------------------------------
+    MODE 1: RESULT OF UNKNOWN UNICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+/*******************************/
+Test of PFM MODE 2
+/*******************************/
+Transmiting known multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+pktioRxCallback: received from port 102
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[12]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[12]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[12]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[12]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[12]:
+Packet[12]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[12]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+pktioRxCallback: received from port 119
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]: data[0000]: {010004000100} {000004000000} 8100 0002
+[bcmPWN.0]Packet[13]: data[0010]: 0800 0001 0203 0405 0607 0809 0a0b 0c0d
+[bcmPWN.0]Packet[13]: data[0020]: 0e0f 1011 1213 1415 1617 1819 1a1b 1c1d
+[bcmPWN.0]Packet[13]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPWN.0]Packet[13]: data[0040]: 8e0b ec9e
+[bcmPWN.0]
+[bcmPWN.0]Packet[13]:
+Packet[13]:   Ethernet: dst<01:00:04:00:01:00> src<00:00:04:00:00:00> Tagged Packet ProtID<0x8100> Ctrl<0x0002> Internet Protocol (IP)
+Packet[13]:   IP: V(0) src<12.13.14.15> dst<16.17.18.19> hl<0> service-type<1> tl<515> id<1029> frg-off<1543> ttl<8> > chk-sum<0x0a0b>
+FlexCtr Get on port 102 : 1 packets / 72 bytes
+FlexCtr Get on port 119 : 1 packets / 72 bytes
+
+-----------------------------------------------------------------
+    MODE 2: RESULT OF KNOWN MULTICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+Transmiting unknown multicast packet on ingress_port:221
+Packet from data=<>, length=68
+Sleeping for 1 second
+
+-----------------------------------------------------------------
+    MODE 2: RESULT OF UNKNOWN UNICAST PACKET FLOODING VERIFICATION
+-----------------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+test_verify() [PASS]
+ingress_port_multi_cleanup port: 221 cleanup
+egress_port_multi_cleanup port: 102 cleanup
+egress_port_multi_cleanup port: 119 cleanup
+egress_port_multi_cleanup port: 188 cleanup
+[Thread 0x7ffff7f9e700 (LWP 67595) exited]
+bcm_error_t $$ = BCM_E_NONE (0)

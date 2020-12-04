@@ -1,0 +1,73 @@
+#$Id: ktsanity_ecc_off.soc,v 1.3 2012/09/03 12:33:16 rajadura Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# Katana (BCM56440) ECC config
+#
+# Script to disable ECC specific to Katana.
+#
+
+if $?BCM56440_A0 || $?BCM56441_A0 || $?BCM56443_A0 || $?BCM56249_A0 || $?BCM56449_A0 || $?BCM56240_A0 || \
+   $?BCM55440_A0 || $?BCM55441_A0 \
+    'local BCM56440 1'
+if $?BCM56445_A0 || $?BCM56444_A0 || $?BCM56448_A0 || $?BCM56241_A0 \
+    'local BCM56445 1'
+
+if $?BCM56440_B0 || $?BCM56441_B0 || $?BCM56443_B0 || $?BCM56249_B0 || $?BCM56449_B0 || $?BCM56240_B0 || \
+   $?BCM55440_B0 || $?BCM55441_B0 || $?BCM56242_B0 || $?BCM56243_B0 || \
+   $?BCM56245_B0 || $?BCM56246_B0 \
+    'local BCM56440 1'
+if $?BCM56445_B0 || $?BCM56444_B0 || $?BCM56448_B0 || $?BCM56241_B0 \
+    'local BCM56445 1'
+
+m ING_BYPASS_CTRL ING_SW_ENC_DEC_TCAM=1
+m EGR_BYPASS_CTRL EFP_SW_ENC_DEC_TCAM=1
+
+s lls_soft_reset 0
+s ctr_ecc_debug 0
+s aging_ctr_ecc_control_ext 0
+s aging_ctr_ecc_control_int 0
+s aging_exp_ecc_control_ext 0
+s aging_exp_ecc_control_int 0
+s aging_lmt_ecc_control_ext 0
+s aging_lmt_ecc_control_int 0
+s ccpe_memdebug 0
+s ccpi_memdebug 0
+s cfape_ecc_debug 0
+s cfapi_ecc_debug 0
+s intfi_ecc_debug 0
+s rqe_global_config 0
+s thdo_miscconfig 0
+s lls_l0_ecc_debug 0
+s lls_l0_ecc_debug1 0
+s lls_l1_ecc_debug1 0
+s lls_l2_ecc_debug1 0
+s lls_l2_ecc_debug2 0
+s lls_l2_ecc_debug3 0
+s lls_error_ecc_debug 0
+s lls_config0 0
+m lls_fc_config fc_cfg_disable_l2_normal_xoff_47_0=0 fc_cfg_disable_l2_cosmask_xoff=1
+s DEQ_ECC_DEBUG 0
+
+if $?BCM56440 \
+ 's EMC_ECC_DEBUG 0; \
+s CELLLINKEMEMDEBUG 0;'
+$done
+
+s CELLLINKIMEMDEBUG 0
+s MMU_ENQ_CFG_ECC_DEBUG_0 0
+s MMU_ENQ_FAP_ECC_DEBUG_0 0
+s TOQ_ECC_DEBUG 0
+s MMU_ITE_CFG_ECC_DEBUG_0 0                  
+s QSTRUCT_QENTRY_LOWER_ECC_DEBUG 0
+s QSTRUCT_QENTRY_UPPER_ECC_DEBUG 0
+s QSTRUCT_QBLOCK_NEXT_ECC_DEBUG 0
+s QSTRUCT_FAP_STACK_ECC_DEBUG 0
+s QSTRUCT_FAP_BITMAP_ECC_DEBUG 0
+s wred_miscconfig 0
+s miscconfig 0
+m l3_entry_parity_control PARITY_EN=0
+m l3_defip_data_parity_control PARITY_EN=0
+m  MODPORT_MAP_MIRROR_PARITY_CONTROL PARITY_EN=0
+m MY_STATION_DATA_PARITY_CONTROL PARITY_EN=0

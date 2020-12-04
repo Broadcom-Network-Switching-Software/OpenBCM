@@ -1,0 +1,84 @@
+#
+# file: collector_ha.yml
+# COLLECTOR YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMINT_COLLECTOR_EXPORT_PROFILE_ID_MAX: 32
+   BCMINT_COLLECTOR_BITWID: 32
+   BCMINT_COLLECTOR_ID_MAX_PER_TYPE: 32
+   BCMINT_COLLECTOR_ID_MAX: 64
+   BCMINT_COLLECTOR_HA_EXPORT_PROFILE_ID_BMP_SIZE: (((BCMINT_COLLECTOR_EXPORT_PROFILE_ID_MAX) + BCMINT_COLLECTOR_BITWID - 1) / BCMINT_COLLECTOR_BITWID)
+   BCMINT_COLLECTOR_HA_COLLECTOR_ID_BMP_SIZE: (((BCMINT_COLLECTOR_ID_MAX_PER_TYPE) + BCMINT_COLLECTOR_BITWID - 1) / BCMINT_COLLECTOR_BITWID)
+   BCMINT_COLLECTOR_HA_COLLECTOR_EXT_ID_BMP_SIZE: (((BCMINT_COLLECTOR_ID_MAX) + BCMINT_COLLECTOR_BITWID - 1) / BCMINT_COLLECTOR_BITWID)
+
+component:
+    bcmint_collector:
+        bcmint_export_profile_id_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMINT_COLLECTOR_HA_EXPORT_PROFILE_ID_BMP_SIZE
+                    comment: Export Profile ID bitmap array.
+        bcmint_collector_id_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMINT_COLLECTOR_HA_COLLECTOR_ID_BMP_SIZE
+                    comment: Collector ID bitmap array.
+        bcmint_collector_ext_id_bmp_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                w:
+                    type: uint32_t
+                    length: BCMINT_COLLECTOR_HA_COLLECTOR_EXT_ID_BMP_SIZE
+                    comment: Collector external ID bitmap array.
+
+        bcmint_collector_export_ref_count_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                export_ref_count:
+                    type: int
+                    comment: Export profile Reference count.
+
+        bcmint_collector_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                transport_type:
+                    type: int
+                    comment: Collector transport type.
+                lt_id:
+                    type: int
+                    comment: LT id.
+                ref_count:
+                    type: int
+                    comment: Reference count.
+                user:
+                    type: int
+                    comment: User information.
+
+        bcmint_collector_mirror_dest_id_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                mirror_dest_id:
+                    type: int
+                    comment: Mirror dest id.

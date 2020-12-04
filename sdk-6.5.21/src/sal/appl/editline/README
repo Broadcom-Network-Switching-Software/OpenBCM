@@ -1,0 +1,99 @@
+/*
+ * 
+ *
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2020 Broadcom Inc. All rights reserved.
+ */
+
+This package was obtained from the following location, and was modified
+for purposes of inclusion into the SOC diagnostics shell.
+
+Removed files:
+	MANIFEST Make.os9 Makefile os9.h sysos9.c testit.c unix.h
+
+Added files:
+	Makefile
+
+Changed functionality:
+	Merged unix.h into editline.h
+	M-P and M-N now behave like tcsh.
+	list_history(count) routine displays history
+	Commented out completion
+	Changed rl_complete and rl_list_possib into caller-settable
+		global functions
+	Don't ring bell on TAB if word is already complete
+
+Curt McDowell, 06/02/99
+
+------------------------------------------------------------------------------
+
+Index of /afs/athena.mit.edu/contrib/sipb/src/editline
+
+[     ] Name                   Last modified     Size  Description
+  ------------------------------------------------------------------------
+
+ [DIR]  Parent Directory       11-May-99 03:40      -
+ [   ]  MANIFEST               07-Jul-97 11:20     1k
+ [   ]  Make.os9               07-Jul-97 11:20     1k
+ [   ]  Makefile               01-Sep-97 00:34     2k
+ [   ]  complete.c             07-Jul-97 11:20     4k
+ [   ]  editline.3             07-Jul-97 11:20     5k
+ [   ]  editline.c             07-Jul-97 11:20    25k
+ [   ]  editline.h             07-Jul-97 11:20     2k
+ [   ]  os9.h                  07-Jul-97 11:20     1k
+ [   ]  sysos9.c               07-Jul-97 11:20     1k
+ [   ]  sysunix.c              07-Jul-97 11:20     3k
+ [   ]  testit.c               07-Jul-97 11:20     1k
+ [   ]  unix.h                 07-Jul-97 11:20     1k
+
+  ------------------------------------------------------------------------
+
+$Revision: 1.1 $
+
+This is a line-editing library.  It can be linked into almost any
+program to provide command-line editing and recall.
+
+It is call-compatible with the FSF readline library, but it is a
+fraction of the size (and offers fewer features).  It does not use
+standard I/O.  It is distributed under a "C News-like" copyright.
+
+Configuration is done in the Makefile.  Type "make testit" to get
+a small slow shell for testing.
+
+This contains some changes since the posting to comp.sources.misc:
+    -   Bugfix for completion on absolute pathnames.
+    -   Better handling of M-n versus showing raw 8bit chars.
+    -   Better signal handling.
+    -   Now supports termios/termio/sgttyb ioctl's.
+    -   Add M-m command to toggle how 8bit data is displayed.
+The following changes, made since the last public release, come from
+J.G. Vons <vons@cesar.crbca1.sinet.slb.com>:
+    -   History-searching no longer redraws the line wrong
+    -   Added ESC-ESC as synonym for ESC-?
+    -   SIGQUIT (normally ^\) now sends a signal, not indicating EOF.
+    -   Fixed some typo's and unclear wording in the manpage.
+    -   Fixed completion when all entries shared a common prefix.
+    -   Fixed some meta-char line-redrawing bugs.
+
+Enjoy,
+        Rich $alz
+        <rsalz@osf.org>
+
+ Copyright 1992,1993 Simmule Turner and Rich Salz.  All rights reserved.
+
+ This software is not subject to any license of the American Telephone
+ and Telegraph Company or of the Regents of the University of California.
+
+ Permission is granted to anyone to use this software for any purpose on
+ any computer system, and to alter it and redistribute it freely, subject
+ to the following restrictions:
+ 1. The authors are not responsible for the consequences of use of this
+    software, no matter how awful, even if they arise from flaws in it.
+ 2. The origin of this software must not be misrepresented, either by
+    explicit claim or by omission.  Since few users ever read sources,
+    credits must appear in the documentation.
+ 3. Altered versions must be plainly marked as such, and must not be
+    misrepresented as being the original software.  Since few users
+    ever read sources, credits must appear in the documentation.
+ 4. This notice may not be removed or altered.

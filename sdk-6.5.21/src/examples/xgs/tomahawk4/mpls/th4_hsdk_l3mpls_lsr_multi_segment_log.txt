@@ -1,0 +1,36 @@
+BCM.0> c th4_hsdk_l3mpls_lsr_multi_segment.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int egress_port = 2 (0x2)
+setting ingress port:1 MAC loopback
+setting egress port:2 MAC loopback
+int ifp_group = 1 (0x1)
+int ifp_entry = 1 (0x1)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_lsr_multi_segment(): ** start **
+l3 egr intf = 1
+l3 egr obj = 100001
+Created flexctr stat_counter_id = 0x10002001.
+Flexctr stat_counter_id:0x10002001 attached to l3 egress obj 100001
+~~~ #2) config_lsr_multi_segment(): ** end **
+~~~ #3) test_verify(): ** start **
+
+a) Sending MPLS packet with two labels to ingress_port:1
+Packet from data=<>, length=86
+pktioRxCallback: packet received #1 from port 2, length 86
+pktioRxCallback: packet received from correct expected port 2
+pktioRxCallback: packet received data comparision pass
+Flexctr Get : 1 packets / 90 bytes
+
+----------------------------------------------------------- 
+    RESULT OF L3MPLS LSR MULTI SEGMENT VERIFICATION  
+----------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

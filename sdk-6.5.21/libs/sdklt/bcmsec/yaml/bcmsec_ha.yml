@@ -1,0 +1,75 @@
+#
+# file: bcmsec_ha.yml
+# SEC YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+    NUM_CPU_PORTS: 1
+    NUM_PORT_MACRO: 20
+    MAX_NUM_PPORT: 576
+    MAX_NUM_LPORT: 128
+    MAX_NUM_SEC_BLOCKS: 6
+
+component:
+    bcmsec:
+        bcmsec_pport_info_t:
+            type: struct
+            comment: Physical map details.
+            fields:
+                port_p2l_mapping:
+                    type: int
+                    comment: Physical to logical port map.
+        bcmsec_lport_info_t:
+            type: struct
+            comment: Logical map details.
+            fields:
+                port_speed_cur:
+                    type: int
+                    comment: Current port speed.
+                port_num_lanes:
+                    type: int
+                    comment: Number of lanes per logical port.
+                port_l2p_mapping:
+                    type: int
+                    comment: Logical to physical port map.
+        bcmsec_pm_info_t:
+            type: struct
+            comment: Port Macro info.
+            fields:
+                enable:
+                    type: int
+                    comment: PM is SEC enabled.
+                pm_pair:
+                    type: int
+                    comment: PM pair connected to the same SEC block.
+                sec_blk:
+                    type: int
+                    comment: SEC block number connected to the PM.
+
+        bcmsec_dev_info_t:
+            type: struct
+            comment: SEC device info.
+            fields:
+                num_pport:
+                    type: int
+                    comment: Number of physical ports.
+                num_lport:
+                    type: int
+                    comment: Number of logical ports.
+                pm_map_info:
+                    type: bcmsec_pm_info_t
+                    length: NUM_PORT_MACRO
+                    comment: PM to SEC block map.
+                num_sa_per_sc_encrypt:
+                    type: int
+                    length: MAX_NUM_SEC_BLOCKS
+                    comment: Number of SA per SC in the encrypt direction.
+                num_sa_per_sc_decrypt:
+                    type: int
+                    length: MAX_NUM_SEC_BLOCKS
+                    comment: Number of SA per SC in the decrypt direction.

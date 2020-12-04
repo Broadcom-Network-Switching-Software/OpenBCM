@@ -1,0 +1,69 @@
+BCM.0> c th4_hsdk_l3_rtag7_ecmp_trunk.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+int ingress_port = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+int $$ = 17 (0x11)
+setting ingress port:1 MAC loopback
+setting egress ports:2,3,4,17 MAC loopback
+int ifp_group = 1 (0x1)
+int $$ = 1 (0x1)
+int $$ = 2 (0x2)
+int $$ = 3 (0x3)
+int $$ = 4 (0x4)
+~~~ #1) test_setup(): ** end **
+~~~ #2) config_l3_route_rtag7_ecmp_trunk(): ** start **
+bcm_trunk_create trunk_id = 1.
+
+Create trunk id:1 with member ports 2 and 3
+int trunk_gp_id = 201326593 (0xc000001)
+bcm_trunk_create trunk_id = 2.
+
+Create trunk id:2 with member ports 4 and 17
+int trunk_gp2_id = 201326594 (0xc000002)
+int ingress_if = 434 (0x1b2)
+int $$ = 0 (0x0)
+l3 egr intf = 1
+l3 egr intf2 = 2
+l3 egr obj = 100001
+l3 egr obj2 = 100002
+int ecmp_group_id = 200001 (0x30d41)
+Created flexctr stat_counter_id = 0x10002001.
+Flexctr stat_counter_id:0x10002001 attached to egress port 2
+Flexctr stat_counter_id:0x10002001 attached to egress port 3
+Flexctr stat_counter_id:0x10002001 attached to egress port 4
+Flexctr stat_counter_id:0x10002001 attached to egress port 17
+~~~ #2) config_l3_route_rtag7_ecmp_trunk(): ** end **
+~~~ #3) test_verify(): ** start **
+Transmiting l3 packet into ingress_port:1
+Packet from data=<>, length=78
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+Packet from data=<>, length=78
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+Packet from data=<>, length=78
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+Packet from data=<>, length=78
+pktioRxCallback: packet received from correct expected ports
+pktioRxCallback: packet received data comparision pass
+Flexctr Get : 1 packets / 82 bytes from egress port 2
+Flexctr Get : 1 packets / 82 bytes from egress port 3
+Flexctr Get : 1 packets / 82 bytes from egress port 4
+Flexctr Get : 1 packets / 82 bytes from egress port 17
+
+-------------------------------------------------------------------- 
+    RESULT OF L3MPLS TUNNEL MPLS LABEL INITIATION to ECMP TRUNK VERIFICATION  
+-------------------------------------------------------------------- 
+Test = [PASS]
+------------------------------------- 
+~~~ #3) test_verify(): ** end **
+~~~ #4) test_cleanup(): ** start **
+int $$ = 434 (0x1b2)
+~~~ #4) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

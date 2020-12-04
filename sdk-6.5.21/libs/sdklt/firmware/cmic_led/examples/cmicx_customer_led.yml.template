@@ -1,0 +1,27 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+
+#
+# Firmware description yaml file example
+#
+
+---
+
+# Firmware type
+firmware-type:          LED
+
+# Firmware version
+firmware-version:       0.9
+
+# Supported chips
+supported-chips:
+                        - <devid>
+
+# Default processor to load into
+default-processor:      LEDUP.0
+
+# Default processor address for loading (if not specified in the image)
+default-address:        0x3800

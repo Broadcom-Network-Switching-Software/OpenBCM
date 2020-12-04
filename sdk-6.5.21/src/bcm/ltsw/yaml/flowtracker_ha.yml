@@ -1,0 +1,190 @@
+#
+# file: flowtracker_ha.yml
+# Flowtracker YAML file describing the HA data structures
+#
+
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+consts:
+   BCMI_FT_MAX_PIPES: 8
+   BCMI_FT_MAX_FLOW_GROUPS: 256
+   BCMI_FT_MAX_EXPORT_TEMPLATES: 5
+   BCMI_FT_MAX_ELEPHANT_PROFILES: 5
+   BCMI_FT_BITWID: 32
+   BCMI_FT_MAX_FG_BMP_SIZE:  (((BCMI_FT_MAX_FLOW_GROUPS) + BCMI_FT_BITWID - 1) / BCMI_FT_BITWID)
+   BCMI_FT_MAX_ET_BMP_SIZE:  (((BCMI_FT_MAX_EXPORT_TEMPLATES) + BCMI_FT_BITWID - 1) / BCMI_FT_BITWID)
+   BCMI_FT_MAX_EP_BMP_SIZE:  (((BCMI_FT_MAX_ELEPHANT_PROFILES) + BCMI_FT_BITWID - 1) / BCMI_FT_BITWID)
+   BCMI_FT_EM_KEY_MAX_NUM_BASE_ENTRIES: 4
+   BCMI_FT_EM_MAX_NUM_QUALS: 32
+   BCMI_FT_EM_QUAL_MAX_NUM_PARTS: 32
+
+component:
+    bcmi_flowtracker:
+        bcm_int_ft_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                enable:
+                    type: uint32_t
+                    comment: Flowtracker enable/disable.
+                init:
+                    type: bool
+                    comment: Is flowtracker initialized or not.
+                host_mem:
+                    type: bool
+                    comment: Is flowtracker app using host mem or not.
+                elph_mode:
+                    type: bool
+                    comment: Is elephant trap mode enabled.
+                num_pipes:
+                    type: int
+                    comment: Num pipes in the devices.
+                observation_domain_id:
+                    type: uint32_t
+                    comment: IPFIX observation domain ID.
+                max_flows:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_PIPES
+                    comment: Max flows per pipe.
+                max_flows_total:
+                    type: uint32_t
+                    comment: Total max flows.
+                scan_interval_usecs:
+                    type: uint32_t
+                    comment: Scan interval in microseconds
+                flow_start_ts:
+                    type: bool
+                    comment: Is flow start timestamp feature enabled or not.
+                max_flow_groups:
+                    type: uint32_t
+                    comment: Max number of flowtracker groups.
+                max_export_pkt_length:
+                    type: uint16_t
+                    comment: The maximum MTU size that is possible for export packets
+                flex_counter_id:
+                    type: uint32_t
+                    comment: The main packet byte flex counter action LT ID.
+                db_wide_flex_counter_id:
+                    type:  uint32_t
+                    comment: 2x hitbit flex counter action LT ID.
+                qd_wide_flex_counter_id:
+                    type: uint32_t
+                    comment: 4x hitbit flex counter action LT ID.
+                db_wide_flex_counter_grp_act_hw_idx:
+                    type: uint32_t
+                    comment: 2x hitbit flex counter group action hw idx.
+                qd_wide_flex_counter_grp_act_hw_idx:
+                    type: uint32_t
+                    comment: 4x hitbit flex counter group action hw idx.
+                flex_ctr_stat_id:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_PIPES
+                    comment: The main packet byte flex counter stat id for various pipes.
+                db_wide_hitbit_flex_ctr_stat_id:
+                    type: uint32_t
+                    comment: 2x Hit bit flex counter stat id.
+                qd_wide_hitbit_flex_ctr_stat_id:
+                    type: uint32_t
+                    comment: 4x Hit bit flex counter stat id.
+                db_wide_hitbit_flex_ctr_grp_act_stat_id:
+                    type: uint32_t
+                    comment: 2x Hit bit flex counter grp action stat id.
+                qd_wide_hitbit_flex_ctr_grp_act_stat_id:
+                    type: uint32_t
+                    comment: 4x Hit bit flex counter grp action stat id.
+                hw_learn_en:
+                    type: uint8_t
+                    comment: HW learning enable mode.
+                uft_mode:
+                    type: uint8_t
+                    comment: UFT mode.
+                grp_action_flags:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_FLOW_GROUPS
+                    comment: Flowtracker group actions flags.
+                ft_grp_to_em_grp_map:
+                    type: int
+                    length: BCMI_FT_MAX_FLOW_GROUPS
+                    comment: Flowtracker group to Exact match group mapping.
+                flex_ctr_alloc_enable:
+                    type: uint8_t
+                    comment: Enable flex counter allocation by flowtracker.
+                fail_threshold_configured:
+                    type: bool
+                    length: BCMI_FT_MAX_PIPES
+                    comment: Flow learn failure notification threshold configured or not.
+                flow_group_pool:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_FG_BMP_SIZE
+                    comment: Pool of flowtracker group IDs.
+                export_template_pool:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_ET_BMP_SIZE
+                    comment: Pool of export template IDs.
+                elph_profile_pool:
+                    type: uint32_t
+                    length: BCMI_FT_MAX_EP_BMP_SIZE
+                    comment: Pool of elephant profile IDs.
+                pools_info_in_glb_info:
+                    type: bool
+                    comment: Are the various pools information present in the global info or not.
+        bcm_int_flowtracker_em_group_qual_part_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                offset:
+                    type: uint16_t
+                    comment: Offset of the qualifier part.
+                width:
+                    type: uint16_t
+                    comment: Width occupied by the qualifier part.
+        bcm_int_flowtracker_em_group_qual_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                qual:
+                    type: int
+                    comment: Qualifier type.
+                num_qual_parts:
+                    type: int
+                    comment: Number of parts qualifier is broken into.
+                part_info:
+                    type: bcm_int_flowtracker_em_group_qual_part_info_t
+                    length: BCMI_FT_EM_QUAL_MAX_NUM_PARTS
+                    comment: List of qualifier parts information.
+        bcm_int_flowtracker_em_group_info_t:
+            type: struct
+            attrib:
+                version: 1
+            fields:
+                em_group_info_valid:
+                    type: bool
+                    comment: Is the EM group information filled up or not.
+                num_base_entries:
+                    type: uint8_t
+                    comment: Number of base entries occupied by one EM entry.
+                key_start_offset:
+                    type: uint16_t
+                    length: BCMI_FT_EM_KEY_MAX_NUM_BASE_ENTRIES
+                    comment: List of key start offsets for each base entry.
+                key_end_offset:
+                    type: uint16_t
+                    length: BCMI_FT_EM_KEY_MAX_NUM_BASE_ENTRIES
+                    comment: List of key end offsets for each base entry.
+                key_width:
+                    type: uint16_t
+                    length: BCMI_FT_EM_KEY_MAX_NUM_BASE_ENTRIES
+                    comment: List of key width for each base entry.
+                num_quals:
+                    type: uint8_t
+                    comment: Number of qualifiers associated with the EM group.
+                qual_info:
+                    type: bcm_int_flowtracker_em_group_qual_info_t
+                    length: BCMI_FT_EM_MAX_NUM_QUALS
+                    comment: List of qualifiers information.

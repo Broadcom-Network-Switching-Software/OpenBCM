@@ -1,0 +1,68 @@
+BCM.0> cint th4_hsdk_mod_ipipe_event.c
+execute(): Start
+~~~ #1) test_setup(): ** start **
+Ingress port : 19
+Egress port1: 51
+MTP port: 257
+ingress_port_multi_setup port: 19 setup
+egress_port_multi_setup port: 51 setup
+egress_port_multi_setup port: 257 setup
+Mirror destination create
+stat_counter_id = 0x10002001
+~~~ #1) test_setup(): ** end **
+~~~ #2) verify(): ** start **
+Verify known unicast pkt from port 19 with invalid vlan
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x101
+pktioRxCallback: rx_count = 0x1
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]: data[0000]: {001112131415} {000102030405} 8100 0005
+[bcmPWN.0]Packet[1]: data[0010]: 0800 4502 0088 0000 4000 0211 4404 0210
+[bcmPWN.0]Packet[1]: data[0020]: 10a0 1110 10a0 0000 0000 0074 0000 000a
+[bcmPWN.0]Packet[1]: data[0030]: 006c 0000 0000 0000 0001 0000 0064 1234
+[bcmPWN.0]Packet[1]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[1]: data[0050]: 0013 0c00 00ae 00ff 0040 0000 0000 0022
+[bcmPWN.0]Packet[1]: data[0060]: 0000 0000 0011 8100 001a 0806 0001 0800
+[bcmPWN.0]Packet[1]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000
+[bcmPWN.0]Packet[1]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607
+[bcmPWN.0]Packet[1]: data[0090]: 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:11:12:13:14:15> src<00:01:02:03:04:05> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<2.16.16.160> dst<17.16.16.160> hl<5> service-type<2> tl<136> id<0> frg-off<16384> ttl<2> > chk-sum<0x4404>
+Verify known unicast pkt from port 19 matching acl rule drop
+Packet from data=<>, length=64
+pktioRxCallback: received from port 0x101
+pktioRxCallback: rx_count = 0x2
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]: data[0000]: {001112131415} {000102030405} 8100 0005
+[bcmPWN.0]Packet[2]: data[0010]: 0800 4502 0088 0000 4000 0211 4404 0210
+[bcmPWN.0]Packet[2]: data[0020]: 10a0 1110 10a0 0000 0000 0074 0000 000a
+[bcmPWN.0]Packet[2]: data[0030]: 006c 0000 0000 0000 0002 0000 0064 1234
+[bcmPWN.0]Packet[2]: data[0040]: 005c 0000 0000 0000 0000 0000 0000 0000
+[bcmPWN.0]Packet[2]: data[0050]: 0013 0c00 00ae 00ff 0040 0000 0000 0022
+[bcmPWN.0]Packet[2]: data[0060]: 0000 0000 000b 8100 001a 0806 0001 0800
+[bcmPWN.0]Packet[2]: data[0070]: 0604 0001 0000 0000 0002 0a0a 0a02 0000
+[bcmPWN.0]Packet[2]: data[0080]: 0000 0000 0a0a 0a03 0001 0203 0405 0607
+[bcmPWN.0]Packet[2]: data[0090]: 0809 0a0b 0c0d bc94 977f
+[bcmPWN.0]
+[bcmPWN.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:11:12:13:14:15> src<00:01:02:03:04:05> Tagged Packet ProtID<0x8100> Ctrl<0x0005> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<2.16.16.160> dst<17.16.16.160> hl<5> service-type<2> tl<136> id<0> frg-off<16384> ttl<2> > chk-sum<0x4404>
+FlexCtr Get on port_egress1 : 0 packets / 0 bytes
+FlexCtr Get on port_mtp_port : 2 packets / 316 bytes
+
+-----------------------------------------------------------
+    RESULT OF INGRESS MIRROR VERIFICATION
+-----------------------------------------------------------
+Test = [PASS]
+-------------------------------------
+~~~ #2) verify(): ** end **
+~~~ #3) test_cleanup(): ** start **
+ingress_port_multi_cleanup port: 19 cleanup
+egress_port_multi_cleanup port: 51 cleanup
+egress_port_multi_cleanup port: 257 cleanup
+~~~ #3) test_cleanup(): ** end **
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

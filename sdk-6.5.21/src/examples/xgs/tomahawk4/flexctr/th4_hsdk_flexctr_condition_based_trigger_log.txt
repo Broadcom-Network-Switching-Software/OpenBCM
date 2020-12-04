@@ -1,0 +1,55 @@
+BCM.0> cint th4_hsdk_flexctr_condition_based_trigger.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201006 (Tue Oct  6 10:34:50 2020)
+From root@lc-lvn-1598:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56780_A0_BASE, BCM56880_A0_BASE, BCM56990_A0_BASE
+     BCM56990_B0_BASE, BCM56996_A0_BASE, BCM56780_A0_DNA_2_5_10, BCM56780_A0_DNA_2_5_5
+     BCM56780_A0_DNA_2_5_8, BCM56780_A0_INA_2_5_10, BCM56780_A0_INA_2_5_5, BCM56780_A0_INA_2_5_8
+     BCM56880_A0_CNA_1_2_0, BCM56880_A0_DNA_4_6_6, BCM56880_A0_DNA_4_7_2, BCM56880_A0_DNA_4_7_8
+     BCM56880_A0_NFA_0_0_0, BCM56880_A0_UTLTM
+ingress_port_multi_setup port: 2 setup
+ingress_port_multi_setup port: 3 setup
+ingress_port_multi_setup port: 4 setup
+egress_port_multi_setup port: 17 setup
+stat_counter_id == 268435457
+
+Completed test setup successfully
+vlan show
+vlan 1  ports cpu,cd (0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001f), untagged cd (0x000000000000000000000000000000078003c001e000f00078003c001e000f00078003c001e000f00078003c001e001e) MCAST_FLOOD_UNKNOWN
+vlan 30 ports cd1-cd4 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002001c), untagged cd1-cd4 (0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002001c) MCAST_FLOOD_UNKNOWN
+
+Sending 2 packets to 1 ingress port
+Packet generate, length=64
+
+Sending 3 packets to 2 ingress port
+Packet generate, length=64
+
+Sending 2 packets to 1 ingress port
+Packet generate, length=64
+
+Sending 2 packets to 3 ingress port
+Packet generate, length=64
+
+Sending 1 packets to 18 ingress port
+Packet generate, length=64
+
+Sending 1 packets to 3 ingress port
+Packet generate, length=64
+
+Sending 4 packets to 4 ingress port
+Packet generate, length=64
+
+Sending 3 packets to 3 ingress port
+Packet generate, length=64
+
+Stat - 9 packets / 612 bytes
+
+Completed test verify successfully
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

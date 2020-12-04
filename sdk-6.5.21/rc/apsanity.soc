@@ -1,0 +1,272 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Apache Sanity
+#
+# Script to run all available tests.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+local done 'echo "Test Completed"'
+
+#Display some useful information
+date
+ver
+soc
+config show
+show portmap
+show params
+phy info
+
+dump pcic
+dump pcim
+
+#Start Test
+echo "Running PCI Compliance Test ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buffer Test ..."
+tr 4
+$done
+
+echo "Running Register Reset Defaults Test..."
+tr 1
+$done
+
+echo "Running Register Read/Write Test..."
+tr 3 mask64
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running CPU Benchmarks Test..."
+tr 21
+$done
+
+echo "Running XGS L2 Delete by Port Test..."
+tr 35 Reset=False
+
+echo "Running XGS L2 Delete by VLAN Test..."
+tr 36 Reset=False Count=50
+
+echo "Running BCM Packet Send Test..."
+tr 40
+
+echo "Running BCM Packet Receive Test..."
+tr 41
+
+set rct=false
+echo "Running Memory Tests..."
+rcload trall_bcm56560_a0.soc
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+set rct=true
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running Counter Width Verification Test..."
+tr 30
+$done
+
+echo "Running Counter Read/Write Test..."
+tr 31
+$done
+
+set rct=false
+echo "Running Memory Hashing Tests..."
+tr 55 Mem=L2_ENTRY
+tr 55 Mem=L3_ENTRY_IPV4_UNICAST
+tr 55 Mem=L3_ENTRY_IPV6_UNICAST
+tr 55 Mem=L3_ENTRY_IPV4_MULTICAST
+tr 55 Mem=L3_ENTRY_IPV6_MULTICAST
+tr 55 Mem=VLAN_XLATE
+tr 55 Mem=EGR_VLAN_XLATE
+tr 55 Mem=MPLS_ENTRY
+tr 55 Mem=ING_VP_VLAN_MEMBERSHIP
+tr 55 Mem=EGR_VP_VLAN_MEMBERSHIP
+tr 55 Mem=ING_DNAT_ADDRESS_TYPE
+tr 55 Mem=L2_ENDPOINT_ID
+tr 55 Mem=ENDPOINT_QUEUE_MAP
+$done
+
+#L2Xm and L3_ENTRY_xxm need init soc only.
+echo "init soc"
+init soc
+
+echo "Running Memory Hashing Overflow Insert Test..."
+#tr 56 Mem=L2_ENTRY
+#tr 56 Mem=L3_ENTRY_IPV4_UNICAST
+#tr 56 Mem=L3_ENTRY_IPV6_UNICAST
+#tr 56 Mem=L3_ENTRY_IPV4_MULTICAST
+#tr 56 Mem=L3_ENTRY_IPV6_MULTICAST
+
+tr 56 Mem=VLAN_XLATE
+tr 56 Mem=EGR_VLAN_XLATE
+tr 56 Mem=MPLS_ENTRY
+tr 56 Mem=ING_VP_VLAN_MEMBERSHIP
+tr 56 Mem=EGR_VP_VLAN_MEMBERSHIP
+tr 56 Mem=ING_DNAT_ADDRESS_TYPE
+tr 56 Mem=L2_ENDPOINT_ID
+tr 56 Mem=ENDPOINT_QUEUE_MAP
+$done
+set rct=true
+
+echo "Running MDIO Linkscan Test..."
+tr 60
+$done
+
+echo "Running CPU DMA Loopback Test..."
+tr 17
+$done
+
+echo "Running CPU DMA, Scatter/Gather Reload Test..."
+tr 22
+$done
+
+echo "Running CPU DMA, Scatter/Gather Simple Test..."
+tr 23 PacketsPerChainEnd=1
+$done
+
+echo "Running CPU DMA, Scatter/Gather Random Test..."
+tr 24 PacketsPerChainEnd=1
+$done
+
+#MAC Loopback
+echo "Running MAC Loopback Test - all E ports..."
+tr 18 PortBitMap=e Speed=max
+$done
+
+#PHY Loopback
+echo "Running PHY Loopback Test - all E ports..."
+tr 19 PortBitMap=e Speed=max
+$done
+
+echo "Running MAC Loopback V2 Test - all E ports..."
+tr 48 PortBitMap=e
+$done
+
+echo "Running PHY Loopback V2 Test - all E ports..."
+tr 49 PortBitMap=e
+$done
+
+#Internal snake Loopback
+echo "Running Internal Snake Test - all E ports, MAC Loopback..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=e Count=1
+$done
+
+echo "Running Internal Snake Test - all E ports, PHY Loopback..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=e Count=1
+$done
+
+#Traffic Test
+echo "Running Traffic Test in MAC mode on E ports..."
+tr 72 RunMode=MAC PortBitMap=e TimeInSeconds=3
+$done
+
+echo "Running Traffic Test in PHY mode on E ports..."
+tr 72 RunMode=PHY PortBitMap=e TimeInSeconds=3
+$done
+
+echo "Running TX Reload Test..."
+tr 90
+$done
+
+echo "Running RX Reload Test..."
+tr 91
+$done
+
+set rct=false
+init soc
+init misc
+
+echo "Running VLAN Xlate Overflow Insert Test..."
+tr 100
+$done
+
+echo "Running VLAN Xlate Hashing Test..."
+tr 101 DualEnable=1 DualHash=0 Count=1024
+tr 101 DualEnable=1 DualHash=1 Count=1024
+tr 101 DualEnable=1 DualHash=2 Count=1024
+tr 101 DualEnable=1 DualHash=3 Count=1024
+tr 101 DualEnable=1 DualHash=4 Count=1024
+tr 101 DualEnable=1 DualHash=5 Count=1024
+$done
+
+echo "Running Egress VLAN Xlate Overfloew Insert Test..."
+tr 102
+$done
+
+echo "Running Egress VLAN Xlate Hashing Test..."
+tr 103 DualEnable=1 DualHash=0 Count=1024
+tr 103 DualEnable=1 DualHash=1 Count=1024
+tr 103 DualEnable=1 DualHash=2 Count=1024
+tr 103 DualEnable=1 DualHash=3 Count=1024
+tr 103 DualEnable=1 DualHash=4 Count=1024
+tr 103 DualEnable=1 DualHash=5 Count=1024
+$done
+
+echo "Running MPLS Overflow Insert Test..."
+tr 104
+$done
+
+echo "Running MPLS Hashing Test..."
+tr 105 DualEnable=1 DualHash=0 Count=1024
+tr 105 DualEnable=1 DualHash=1 Count=1024
+tr 105 DualEnable=1 DualHash=2 Count=1024
+tr 105 DualEnable=1 DualHash=3 Count=1024
+tr 105 DualEnable=1 DualHash=4 Count=1024
+tr 105 DualEnable=1 DualHash=5 Count=1024
+$done
+
+echo "Running Software Error Recovery Test ..."
+linkscan off
+tr 144
+$done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo "Tests Complete.  Reinitializing ..."
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"

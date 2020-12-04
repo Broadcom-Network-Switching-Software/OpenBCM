@@ -1,0 +1,56 @@
+#/*----------------------------------------------------------------------
+#* 
+#* This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+#* 
+#* Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#*
+#* Broadcom Corporation
+#* Proprietary and Confidential information
+#* All rights reserved
+#* This source file is the property of Broadcom Corporation, and
+#* may not be copied or distributed in any isomorphic form without the
+#* prior written consent of Broadcom Corporation.
+#*---------------------------------------------------------------------
+#* File       : an_10g.soc
+#* Description: an_10g
+#*---------------------------------------------------------------------*/
+
+link off
+phy xe0 0x2c050 0x001c
+phy xe1 0x2c050 0x001c
+
+port xe0,xe1 adv=1000full an=t
+
+phy xe0 0x2c180 0x0000
+phy xe1 0x2c180 0x0000
+phy xe0 0x2c186 0x08
+phy xe1 0x2c186 0x08
+phy xe0 0x2c185 0xa01
+phy xe1 0x2c185 0xa01
+
+phy xe 0x9258 0x1200 
+
+
+#phy xe0 0x802d080 0x8008
+#phy xe1 0x802d080 0x8008
+
+#phy xe0 0x9000 0x6600
+#phy xe1 0x9000 0x6600
+phy xe0 0x9000 0x6208
+phy xe1 0x9000 0x6208
+
+phy xe0 0x2c180 0x0000
+phy xe1 0x2c180 0x0000
+phy xe0 0x2c180 0x0100
+phy xe1 0x2c180 0x0100
+
+phy xe0 0x2c180 0x0101
+phy xe1 0x2c180 0x0101
+phy xe0 0x2c180 0x0100
+phy xe1 0x2c180 0x0100
+#phy xe0 0x2c054
+#phy xe0 0x2c1ad
+#phy xe1 0x2c054
+#phy xe1 0x2c1ad
+
+

@@ -1,0 +1,64 @@
+lvnvdb3786:58> ./bcm.sim -y th4_hsdk_mmu_config.yml
+sal_config_refresh: cannot read file: config.bcm, variables not loaded
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201013 (Tue Oct 13 01:01:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+Starting DMA service...
+[DMA-listener]DMA Controller listening on port[54302]
+Starting Interrupt service...
+[Interrupt-listener]ISR dispatcher listening on port[39479]
+Found 1 device.
+Unit 0: BCM56990
+NGBDE unit 0 (PCI), Dev 0xb990, Rev 0x11, Chip BCM56990_B0, Driver LTSW
+Boot flags: Cold boot
+rc: unit 0 device BCM56990_B0
+rc: BCM driver initialized
+rc: Port modes initialized
+variant: base
+BCM.0> c th4_hsdk_mmu_fc_pfc_dd_recovery.c
+    os=unix
+Attach: Unit 0 (BCM56990_B0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.21 built 20201013 (Tue Oct 13 01:01:29 2020)
+From jz903074@lvnvdb3786:/projects/ntsw-sw-ae/jzhao/sdk_dev/hsdk
+Platform: unix-linux-64
+OS: Unix (Posix)
+
+Variant drivers:
+BCM56990_A0_BASE, BCM56990_B0_BASE
+Build the UC queue GPORT list
+The profile 1 is bcmCosqDynamicTypeConditional
+Set PAUSE frame smac
+Disable regular PAUSE
+Eenabling PFC PAUSE
+User callback for port: 2, PFC_pri:0
+Change mode to use PfcDdRecoveryModePFCState
+Change mode to use PfcDdRecoveryModeTimer
+Packet from data=<>, length=512
+Sleeping for 1 second
+Show c with traffic on all queues
+XLMIB_TBYT.cd0                        :                 5,160              +5,160
+XLMIB_RBYT.cd0                        :                 5,160              +5,160
+XLMIB_TPOK.cd0                        :                    10                 +10
+XLMIB_RPOK.cd0                        :                    10                 +10
+XLMIB_TVLN.cd0                        :                    10                 +10
+XLMIB_RVLN.cd0                        :                    10                 +10
+XLMIB_TUCA.cd0                        :                    10                 +10
+XLMIB_RUCA.cd0                        :                    10                 +10
+XLMIB_TPKT.cd0                        :                    10                 +10
+XLMIB_RPKT.cd0                        :                    10                 +10
+XLMIB_T1023.cd0                       :                    10                 +10
+XLMIB_R1023.cd0                       :                    10                 +10
+XLMIB_RPRM.cd0                        :                    10                 +10
+RUC_64.cd0                            :                    10                 +10
+bcm_cosq_pfc_deadlock_info_t pfc_deadlock_info = {
+    bcm_pbmp_t enabled_pbmp = { 2 }
+    bcm_pbmp_t deadlock_pbmp = { }
+}
+deadlock_status=0
+==>Cleaning up...
+User callback for port: 2, PFC_pri:0
+bcm_error_t $$ = BCM_E_NONE (0)
+

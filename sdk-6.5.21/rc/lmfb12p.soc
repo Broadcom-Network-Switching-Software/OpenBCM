@@ -1,0 +1,51 @@
+# $Id: Exp $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+
+# This script runs the tr 19 test for all the 12 10GE ports and 4 HiGig
+# ports of the Firebolt 12 port CX4 platform. There are 4 firebolt 
+# devices and 1 hercules device on the platform.
+
+#Set the duration argument as a variable
+if !$?1 'local count 10'
+if $?1 'local count $1'
+
+if !$?lmfb12p "echo rc: config variable lmfb12p not set; exit"
+
+testmode run
+
+echo "Starting TR 19 test on device 0"
+1:modreg mac_ctrl.hg0 RMTLOOP=1
+2:modreg mac_ctrl.hg0 RMTLOOP=1
+3:modreg mac_ctrl.hg0 RMTLOOP=1
+4:modreg mac_ctrl.hg0 RMTLOOP=1
+0: tr 19 ExtselfloopPBM=hg count=$count
+
+1:modreg mac_ctrl.hg0 RMTLOOP=0
+2:modreg mac_ctrl.hg0 RMTLOOP=0
+3:modreg mac_ctrl.hg0 RMTLOOP=0
+4:modreg mac_ctrl.hg0 RMTLOOP=0
+
+echo "Starting TR 19 test on device 1"
+0:modreg mac_ctrl.hg6 RMTLOOP=1
+1: tr 19 ExtselfloopPBM=xe,hg0 count=$count
+0:modreg mac_ctrl.hg6 RMTLOOP=0
+
+echo "Starting TR 19 test on device 2"
+0:modreg mac_ctrl.hg7 RMTLOOP=1
+2: tr 19 ExtselfloopPBM=xe,hg0 count=$count
+0:modreg mac_ctrl.hg7 RMTLOOP=0
+
+echo "Starting TR 19 test on device 3"
+0:modreg mac_ctrl.hg0 RMTLOOP=1
+3: tr 19 ExtselfloopPBM=xe,hg0 count=$count
+0:modreg mac_ctrl.hg0 RMTLOOP=0
+
+echo "Starting TR 19 test on device 4"
+0:modreg mac_ctrl.hg1 RMTLOOP=1
+4: tr 19 ExtselfloopPBM=xe,hg0 count=$count
+0:modreg mac_ctrl.hg1 RMTLOOP=0
+
+
+

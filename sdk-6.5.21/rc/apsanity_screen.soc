@@ -1,0 +1,199 @@
+# $Id: $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Apache Sanity
+#
+# Script to run all available tests as quickly as possible.
+# For testing basic sanity of new drivers, simulators, chips, etc.
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: sanity"
+time 'rcload rc.soc'
+
+counter off
+l2mode off
+
+# We need to print out port status since any cabling effects results.
+*:ps
+
+if $?1 'local full_test 1'
+
+# Avoid link messages while testing
+linkscan off
+
+local done 'echo "   Done";date'
+
+#Display some useful information
+date
+ver
+soc
+config show
+show portmap
+show params
+phy info
+
+dump pcic
+dump pcim
+$done
+
+#Start Test
+echo "Running PCI Compliance ..."
+tr 2
+$done
+
+echo "Running PCI S-Channel Buf ..."
+tr 4
+$done
+
+echo "Running Register reset defaults ..."
+tr 1
+$done
+
+init soc
+init misc
+echo "Running Register read/write ..."
+tr 3 mask64
+$done
+
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running CPU Benchmarks ..."
+tr 21
+$done
+
+set rct=false
+# Usage: BCM.0>apsanity_screen w x y z
+# (w,x,y,z can be 50,51,52,71) and in any combination
+# By default ie. if no arguments provided, only TR 52,71 are run
+echo "Running memory tests ..."
+if !"expr $1+0 == 50" || !"expr $2+0 == 50" || !"expr $3+0 == 50" || !"expr $4+0 == 50" \
+    'rcload tr50_bcm56560_a0.soc'
+if !"expr $1+0 == 51" || !"expr $2+0 == 51" || !"expr $3+0 == 51" || !"expr $4+0 == 51" \
+    'rcload tr51_bcm56560_a0.soc'
+if !"expr $1+0 == 52" || !"expr $2+0 == 52" || !"expr $3+0 == 52" || !"expr $4+0 == 52" \
+    'rcload tr52_bcm56560_a0.soc'
+if !"expr $1+0 == 71" || !"expr $2+0 == 71" || !"expr $3+0 == 71" || !"expr $4+0 == 71" \
+    'rcload tr71_bcm56560_a0.soc'
+if !"expr $1+0 == 0" && !"expr $2+0 == 0" && !"expr $3+0 == 0" && !"expr $4+0 == 0" \
+    'rcload tr52_bcm56560_a0.soc' \
+    'rcload tr71_bcm56560_a0.soc'
+$done
+
+# Re-initialize to clean up of various read/writes to MMU memories
+set rct=true
+rcload rc.soc
+counter off
+l2mode off
+linkscan off
+memscan off
+
+echo "Running counter width verification test ..."
+tr 30
+$done
+
+echo "Running counter read/write test ..."
+tr 31
+$done
+
+#Hashing tests
+#tr 55
+
+echo "Running MDIO Linkscan test"
+tr 60
+$done
+
+echo "Testing CPU DMA loopback ..."
+tr 17
+$done
+
+#echo "Testing CPU DMA, Scatter/Gather Reload ..."
+#tr 22
+#$done
+
+#echo "Testing CPU DMA, Scatter/Gather Simple ..."
+#tr 23
+#$done
+
+#echo "Testing CPU DMA, Scatter/Gather Random ..."
+#tr 24
+#$done
+
+#MAC Loopback
+echo "Testing MAC Loopback - all E ports"
+tr 18 PortBitMap=e Speed=max
+$done
+
+#echo "Testing MAC Loopback - 106 Gb/s all HG ports"
+#tr 18 PortBitMap=hg Speed=106G
+#$done
+
+#PHY Loopback
+echo "Testing PHY Loopback - all E ports"
+tr 19 PortBitMap=e Speed=max
+$done
+
+#echo "Testing PHY Loopback - 106 Gb/s all HG ports"
+#tr 19 PortBitMap=hg Speed=106G
+#$done
+
+#echo "Running MAC loopback V2 on all ports ..."
+#tr 48 PortBitMap=ce,xe
+#tr 48 PortBitMap=xe
+#$done
+
+#echo "Running PHY loopback V2 on all ports ..."
+#tr 49 PortBitMap=ce,xe
+#tr 49 PortBitMap=xe
+#$done
+
+#Internal snake Loopback
+echo "Running internal snake on all E ports, MAC loopback ..."
+tr 39 LoopbackMode=MAC snakepath=TWOways PortBitMap=e Count=1
+$done
+
+echo "Running internal snake on all E ports, PHY loopback ..."
+tr 39 LoopbackMode=PHY snakepath=TWOways PortBitMap=e Count=1
+$done
+
+#Traffic Test
+echo "Running Traffic Test in MAC mode on E ports..."
+tr 72 RunMode=MAC PortBitMap=e tis=5
+$done
+
+echo "Running Traffic Test in EXTERNAL mode on E ports with AutoNeg disabled..."
+tr 72 RunMode=EXTERNAL AutoNeg=False PortBitMap=e tis=5
+$done
+
+echo "Running Traffic Test in PHY mode on E ports..."
+tr 72 RunMode=PHY PortBitMap=e tis=5
+$done
+
+# Show status
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+rcload rc.soc
+counter off
+l2mode off
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: sanity: $returnCode"
