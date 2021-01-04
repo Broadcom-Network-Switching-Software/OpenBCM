@@ -1,0 +1,96 @@
+Release Notes for PCIe Gen3 Firmware for Broadcom Network Switch devices
+
+=====================================
+Release 2.5.3.0-DNX - for DNX devices
+=====================================
+
+Release Date: Dec, 2020
+
+For J2CP:
+PCIe FW loader version: 2.50030
+PCIe controller FW version: D000_05
+
+For other device:
+PCIe FW loader version: 2.50030
+PCIe controller FW version: D102_0B
+
+
+Devices supported in this release:
+BCM8879x (Ramon)
+BCM8869x (Jericho2)
+BCM8880x (J2C)
+BCM8882x (J2C/Q2C)
+BCM8848x (Q2A)
+BCM8828x (Q2U)
+BCM8885x (J2CP)
+
+
+Major release notes for the release
+===================================
+
+1. This is a PRE quality release.
+
+2. This PCIe firmware release requires SDK release 6.5.20 or later.
+
+
+Known Issues:
+============
+
+1. Does not support hot swapping of the PCIe Root Complex
+2. For some types of used QSPI flash memory chips, SDK releases before
+   6.5.21 may need a patch to access the flash memory.
+
+
+Release contents:
+================
+
+PCIe_Gen3_Firmware-RELNOTES      These release notes
+pcie_gen3_fw_install.txt         Installation instructions
+bins/pciefw-r5-m7.bin            PCIe Fimware binary for J2CP
+bins/pciefw-r5.bin               PCIe Fimware binary for other devices
+tools/custom/custom.txt          Sample custom settings text file
+tools/custom/custom_ascii2bin.pl Script converting custom settings from text to binary
+tools/flashwrite/ARM_DS-5        Directory with Arm R5 flash writing tool
+
+
+Enhancements and fixes per release:
+==================================
+
+Bug Fix in 2.5.3.0-DNX compared to 2.5.2.0-DNX:
+  Prevented failures to run e-apps in some scenarios.
+
+Enhancement in 2.5.2.0-DNX compared to 2.5.1-DNX:
+  Added initial support for BCM8885x (Jericho2C Plus), uses a separate binary.
+  Moved to the latest PCIe controller firmware for other devices
+
+Enhancement in 2.5.1-DNX compared to 2.5-DNX:
+  Added support for BCM8848X (Qumran 2A).
+  Added support for BCM8828X (Qumran 2U).
+
+Bug Fixes in 2.5-DNX compared to 2.5:
+  Make the DNX devices supported in this release, able to check the firmware
+  version and load a different firmware version to QSPI flash memory from the
+  SDK.
+  Fix custom settings handling (if provided by the customer) to not report
+  incorrect failures of their application.
+
+Bug Fixes in 2.5:
+  Fix for device enumeration fail sporadically when set to Gen3 mode.
+  Fix for Gen3 linkup failure upon sys_rst_l and/or PERST.
+
+
+Output to provide when requesting support for this PCIe firmware release:
+========================================================================
+  From the linux shell, the output of these commands:
+    lspci -n
+    lspci -vt
+    lspci -vvd 14e4:
+  From the BCM shell of the SDK, the output of these commands:
+    g QSPI_BSPI_REGISTERS_SCRATCH
+    g PAXB_0_GEN3_UC_LOADER_STATUS
+    g MHOST_0_MHOST_STRAP_STATUS
+    g RTS0_MHOST_0_MHOST_STRAP_STATUS
+    pciephy fw version
+    pciephy getreg 0xd230
+    mcsstat
+    iprocread 0x1327e00 64
