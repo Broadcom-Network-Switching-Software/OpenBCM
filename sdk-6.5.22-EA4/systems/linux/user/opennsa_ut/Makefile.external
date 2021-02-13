@@ -1,0 +1,39 @@
+#
+# This software is governed by the Broadcom Switch APIs license.
+# This license is set out in $SDK/Legal/LICENSE file.
+#
+# Copyright 2007-2020 Broadcom Inc. All rights reserved.
+#
+# Note: The version GNU BINUTILS shown below is the minimum
+# needed in order to avoid a known bug in GCC that otherwise
+# results in an internal linker error
+#"BFD (GNU Binutils) 2.22 internal error, aborting at reloc.c line 1509 in _bfd_relocate_contents"
+export BINUTILSVER = 2.27
+
+ifeq ($(SDK),)
+$(error Environment variable "$SDK" must be set)
+endif
+
+DRV_LIBS = -Wl,--start-group -lopennsa -Wl,--end-group
+
+DRV_LIBS_SHELL = -Wl,--start-group -static -Wl,--end-group
+DRV_LIBS_DYN = -lopennsa
+
+all: demo_opennsa_init Makefile
+dpp: demo_opennsa_init_dpp demo_opennsa_init_dpp_dyn
+dnx: demo_opennsa_init_dnx demo_opennsa_init_dnx_dyn
+
+demo_opennsa_init: demo_opennsa_init.c version.c config_init_defaults.c $(SDK)/lib/x86-64/libopennsa.a
+	gcc -I$(SDK)/include -I$(SDK)/src/gpl-modules/systems/bde/linux/include -I$(SDK)/src/gpl-modules/include -DBCM_ESW_SUPPORT -DBCM_WARM_BOOT_SUPPORT -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0 -DLE_HOST=1 -o $@ $^ -L$(SDK)/lib/x86-64 $(DRV_LIBS_SHELL) -lrt -pthread -lm
+
+demo_opennsa_init_dpp: demo_opennsa_init_dpp.c version.c config_init_dpp_defaults.c $(SDK)/lib/mips-BCM9XLP2_XMC_A1/libopennsa.a
+	$(CC) -mabi=32 -I$(SDK)/include -I$(SDK)/src/gpl-modules/systems/bde/linux/include -I$(SDK)/src/gpl-modules/include -DBCM_DNX_SUPPORT -DBCM_WARM_BOOT_SUPPORT -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=1 -DLE_HOST=1 -o $@ $^ -L$(SDK)/lib/mips-BCM9XLP2_XMC_A1 $(DRV_LIBS_SHELL) -lrt -pthread -lm
+
+demo_opennsa_init_dpp_dyn: demo_opennsa_init_dpp.c version.c config_init_dpp_defaults.c $(SDK)/lib/mips-BCM9XLP2_XMC_A1/libopennsa.so
+	$(CC) -mabi=32 -I$(SDK)/include -I$(SDK)/src/gpl-modules/systems/bde/linux/include -I$(SDK)/src/gpl-modules/include -DBCM_DNX_SUPPORT -DBCM_WARM_BOOT_SUPPORT -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=1 -DLE_HOST=1 -o $@ $^ -L$(SDK)/lib/mips-BCM9XLP2_XMC_A1 $(DRV_LIBS_DYN) -lrt -pthread -lm
+
+demo_opennsa_init_dnx: demo_opennsa_init.c version.c config_init_dnx_defaults.c $(SDK)/lib/x86-64-fc28/libopennsa.a
+	$(CC) -I$(SDK)/include -I$(SDK)/src/gpl-modules/systems/bde/linux/include -I$(SDK)/src/gpl-modules/include -DBCM_DNX_SUPPORT -DBCM_WARM_BOOT_SUPPORT -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0 -DLE_HOST=1 -o $@ $^ -L$(SDK)/lib/x86-64-fc28 $(DRV_LIBS_SHELL) -lrt -pthread -lm -ldl
+
+demo_opennsa_init_dnx_dyn: demo_opennsa_init.c version.c config_init_dnx_defaults.c $(SDK)/lib/x86-64-fc28/libopennsa.so
+	$(CC) -I$(SDK)/include -I$(SDK)/src/gpl-modules/systems/bde/linux/include -I$(SDK)/src/gpl-modules/include -DBCM_DNX_SUPPORT -DBCM_WARM_BOOT_SUPPORT -DSYS_BE_PIO=0 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=0 -DLE_HOST=1 -o $@ $^ -L$(SDK)/lib/x86-64-fc28 $(DRV_LIBS_DYN) -lrt -pthread -lm -ldl

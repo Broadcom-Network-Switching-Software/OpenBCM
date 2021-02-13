@@ -1,0 +1,40 @@
+# Custom settings Header, DO NOT alter
+0x50434945
+0x41524753
+0x00000000
+0x00000000
+# End of Custom settings Header
+
+# User Settings
+# Optional Pre FW load settings, to be loaded before SerDes FW loadin
+# Preload ID 0x5052454c, followed by {register type: 0 - MAC, 1 - PHY, 32bit register address and 32bit data in hexadecimal format} sets
+0x5052454c
+# Disable parity matching for Gen3 TS1s, symbols 6 through 9, required for systems with PLX switches.
+# Type
+0x00000000
+# Address
+0x00001838
+# Data
+0x82084000
+
+# Optional Post FW load settings, to be loaded after SerDes FW loading
+# Post load ID 0x504f5354, followed by {register type: 0 - MAC, 1 - PHY, 32bit register address and 32bit data in hexadecimal format} sets
+0x504f5354
+# Type
+0x00000001
+# Address
+0x0000d0b0
+# Data
+0x00002480
+# Type
+0x00000001
+#Address
+0x0000d0b1
+# Data
+0x00000007
+#End of User Settings
+
+# Custom settings footer, DO NOT alter
+0x00454E44
+0x41524753
+# End of Custom settings footer

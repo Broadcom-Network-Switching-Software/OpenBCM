@@ -1,0 +1,15 @@
+# Make.chip.88660
+FEATURE_LIST=INTR CINT BSAFE ATPTRANS_SOCKET L3 I2C MEM_SCAN EDITLINE TELNET DRIVERS CHASSIS TEST BCM_SAL_PROFILE RCPU DUNE_UI
+
+BCM_PTL_SPT=1
+
+BCM_88660_A0 = 1
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+
+# Target: 00 systems/linux/user/gto-2_6 
+# Target: 00 systems/linux/user/gto-2_6.wrl3
+
+# workspace:system=88660 
+# linux26wrs-user:system=88660 buildDir=systems/linux/user/gto-2_6 cpu=gto

@@ -1,0 +1,39 @@
+###############################################################################################
+# Note: 1v2 Initial
+# 1v3: changed name for write/read latency, abref changed to 1msec, removed ddr type and reset
+# note: changed refi_ab to be 1msec per spec (should be supported from SDK 6.5.18)
+# 1v4 - change ext_ram_t_refi_ab_in_ns to ext_ram_t_abref_in_ns
+###############################################################################################
+if $?dram_type_GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT_1V4 "\
+  config add ext_ram_t_rfc.BCM8848X=133333;\
+  config add ext_ram_t_rc.BCM8848X=56666;\
+  config add ext_ram_t_rcd_wr.BCM8848X=12222;\
+  config add ext_ram_t_rcd_rd.BCM8848X=18888;\
+  config add ext_ram_t_rcdltr.BCM8848X=6666;\
+  config add ext_ram_t_rcdrtr.BCM8848X=6666;\
+  config add ext_ram_t_reftr.BCM8848X=14444;\
+  config add ext_ram_t_ltltr.BCM8848X=4c;\
+  config add ext_ram_t_ltrtr.BCM8848X=4c;\
+  config add ext_ram_t_rdtlt.BCM8848X=25c;\
+  config add ext_ram_t_rcdwtr.BCM8848X=11111;\
+  config add ext_ram_t_wtrtr.BCM8848X=12c;\
+  config add ext_ram_t_wrwtr.BCM8848X=2c;\
+  config add ext_ram_t_rrd_l.BCM8848X=6666;\
+  config add ext_ram_t_rrd_s.BCM8848X=6666;\
+  config add ext_ram_t_ras.BCM8848X=37777;\
+  config add ext_ram_t_rp.BCM8848X=18888;\
+  config add ext_ram_t_wr.BCM8848X=21111;\
+  config add ext_ram_t_faw.BCM8848X=26666;\
+  config add ext_ram_t_rtp_s.BCM8848X=2c;\
+  config add ext_ram_t_rtp_l.BCM8848X=5c;\
+  config add ext_ram_t_wtr_s.BCM8848X=6666;\
+  config add ext_ram_t_wtr_l.BCM8848X=8888;\
+  config add ext_ram_t_rtw.BCM8848X=6c;\
+  config add ext_ram_t_ccd_l.BCM8848X=4c;\
+  config add ext_ram_t_ccd_s.BCM8848X=2c;\
+  config add ext_ram_t_refi_sb_in_ns.BCM8848X=90;\
+  config add ext_ram_t_abref_in_ns.BCM8848X=1000000;\
+  config add ext_ram_write_latency.BCM8848X=8c;\
+  config add ext_ram_read_latency.BCM8848X=18c;\
+  config add ext_ram_t_crc_rd_latency.BCM8848X=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM8848X=13c;"

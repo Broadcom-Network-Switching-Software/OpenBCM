@@ -1,0 +1,14 @@
+###############################################################################################
+# Load specific Dram configurations in regard to timing parameters, according to dram type.
+###############################################################################################
+if $?dram_type_GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT \
+    'config add dram_type_GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT_1V4=1'
+
+if $?dram_type_GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT_1V4 \
+    'rcload dnx_dram/GDDR6_SAMSUNG_K4Z80325BC_HC14_8GBIT.soc'
+
+if $?dram_type_GDDR6_MICRON_MT61M256M32_12N_8GBIT \
+    'config add dram_type_GDDR6_MICRON_MT61M256M32_12N_8GBIT_1V3=1'
+
+if $?dram_type_GDDR6_MICRON_MT61M256M32_12N_8GBIT_1V3 \
+    'rcload dnx_dram/GDDR6_MICRON_MT61M256M32_12N_8GBIT.soc'

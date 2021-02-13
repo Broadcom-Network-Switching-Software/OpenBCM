@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+            
+            <defines>
+            </defines > 
+        
+            <numerics>
+                <numeric name="device_id" value="0x8797"></numeric> 
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="fabric">
+        <sub_module name="general">
+            <features>
+                <feature name="is_multi_stage_supported" value="0"></feature>
+            </features>
+            
+            <numerics>
+                <numeric name="device_mode" value="soc_dnxf_fabric_device_mode_single_stage_fe2">
+                    <property name="fabric_device_mode" method="direct_map">
+                        <map name="SINGLE_STAGE_FE2" value="soc_dnxf_fabric_device_mode_single_stage_fe2"></map>
+                        <!-- <map name="MULTI_STAGE_FE2" value="soc_dnxf_fabric_device_mode_multi_stage_fe2"></map>-->
+                        <!--  <map name="MULTI_STAGE_FE13" value="soc_dnxf_fabric_device_mode_multi_stage_fe13"></map>-->
+                        <doc>
+                            Sets the operationl mode of the device
+                        </doc>
+                    </property>
+                </numeric>
+            </numerics>    
+        </sub_module>
+    </module>
+
+    <module name="port">
+        <sub_module name="general">
+            <tables>
+                <table name="supported_phys">
+                    <value name="pbmp" default="0xffffffff, 0x0000ffff, 0xffffff00, 0xff000000, 0xffffffff, 0xffffffff"></value>
+                </table>
+            </tables>
+        </sub_module>
+
+        <sub_module name="retimer">
+            <features>
+                <feature name="is_supported" value="0"></feature>
+            </features>
+        </sub_module>
+    </module>
+</device_data>
