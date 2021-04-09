@@ -1,0 +1,154 @@
+BCM.0> c udf_hints_hw_sharing.c
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+F: 0x0000000F
+UDF created Successfully: 1
+UDF created Successfully: 2
+0:_field_th_group_add_initialize: FP(unit 0) Error: group=1 already exists.
+[OK] IGNORE THIS ERROR...
+UDF created Successfully: 3
+0:_field_th_group_add_initialize: FP(unit 0) Error: group=1 already exists.
+[OK] IGNORE THIS ERROR...
+UDF created Successfully: 4
+0:_field_th_group_add_initialize: FP(unit 0) Error: group=1 already exists.
+[OK] IGNORE THIS ERROR...
+UDF created Successfully: 5
+0:_field_th_group_add_initialize: FP(unit 0) Error: group=1 already exists.
+[OK] IGNORE THIS ERROR...
+
+
+###########   Sending ONE LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000648847022221404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=76
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 0222 2140 4500 002e 0000 0000 4006 
+[bcmPW.0]Packet[1]: data[0020]: 3e8f a0a0 a0aa a1a1 a1a2 0040 0041 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 0000 0000 5000 0000 6d19 0000 0001 
+[bcmPW.0]Packet[1]: data[0040]: 0203 0405 aea6 e999 0276 7f41 
+[bcmPW.0]Packet[1]: length 76 (76). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 02 22 21 40 45 00 00 2e 00 00 00 00 40 06 3e 8f a0 a0 a0 aa a1 a1 a1 a2 00 40 00 41 00 00 00 00 00 00 00 00 50 00 00 00 6d 19 00 00 00 01
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+###########   Sending ONE LABEL MPLS Packet - MISMATCH IP    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000648847022221404500002E0000000040063E8FA1A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=76
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+###########   Sending TWO LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC81000064884702222040033331404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=80
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 8847 0222 2040 0333 3140 4500 002e 0000 
+[bcmPW.0]Packet[2]: data[0020]: 0000 4006 3e8f a0a0 a0aa a1a1 a1a2 0040 
+[bcmPW.0]Packet[2]: data[0030]: 0041 0000 0000 0000 0000 5000 0000 6d19 
+[bcmPW.0]Packet[2]: data[0040]: 0000 0001 0203 0405 aea6 e999 3978 f6af 
+[bcmPW.0]Packet[2]: length 80 (80). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 02 22 20 40 03 33 31 40 45 00 00 2e 00 00 00 00 40 06 3e 8f a0 a0 a0 aa a1 a1 a1 a2 00 40 00 41 00 00 00 00 00 00 00 00 50 00 00 00 6d 19
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000002
+
+
+###########   Sending THREE LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006488470222204003333040044441404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=84
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 8847 0222 2040 0333 3040 0444 4140 4500 
+[bcmPW.0]Packet[3]: data[0020]: 002e 0000 0000 4006 3e8f a0a0 a0aa a1a1 
+[bcmPW.0]Packet[3]: data[0030]: a1a2 0040 0041 0000 0000 0000 0000 5000 
+[bcmPW.0]Packet[3]: data[0040]: 0000 6d19 0000 0001 0203 0405 aea6 e999 
+[bcmPW.0]Packet[3]: data[0050]: 6fcc d868 
+[bcmPW.0]Packet[3]: length 84 (84). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 02 22 20 40 03 33 30 40 04 44 41 40 45 00 00 2e 00 00 00 00 40 06 3e 8f a0 a0 a0 aa a1 a1 a1 a2 00 40 00 41 00 00 00 00 00 00 00 00 50 00
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000003
+
+
+###########   Sending FOUR LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000648847022220400333304004444040055551404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=88
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 8847 0222 2040 0333 3040 0444 4040 0555 
+[bcmPW.0]Packet[4]: data[0020]: 5140 4500 002e 0000 0000 4006 3e8f a0a0 
+[bcmPW.0]Packet[4]: data[0030]: a0aa a1a1 a1a2 0040 0041 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0040]: 0000 5000 0000 6d19 0000 0001 0203 0405 
+[bcmPW.0]Packet[4]: data[0050]: aea6 e999 944f a69f 
+[bcmPW.0]Packet[4]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 02 22 20 40 03 33 30 40 04 44 40 40 05 55 51 40 45 00 00 2e 00 00 00 00 40 06 3e 8f a0 a0 a0 aa a1 a1 a1 a2 00 40 00 41 00 00 00 00 00 00
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000004
+
+
+###########   Sending FIVE LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC81000064884702222040033330400444404005555040066661404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=92
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 8847 0222 2040 0333 3040 0444 4040 0555 
+[bcmPW.0]Packet[5]: data[0020]: 5040 0666 6140 4500 002e 0000 0000 4006 
+[bcmPW.0]Packet[5]: data[0030]: 3e8f a0a0 a0aa a1a1 a1a2 0040 0041 0000 
+[bcmPW.0]Packet[5]: data[0040]: 0000 0000 0000 5000 0000 6d19 0000 0001 
+[bcmPW.0]Packet[5]: data[0050]: 0203 0405 aea6 e999 f723 7f1b 
+[bcmPW.0]Packet[5]: length 92 (92). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 02 22 20 40 03 33 30 40 04 44 40 40 05 55 50 40 06 66 61 40 45 00 00 2e 00 00 00 00 40 06 3e 8f a0 a0 a0 aa a1 a1 a1 a2 00 40 00 41 00 00
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+
+
+###########   Sending SIX LABEL MPLS Packet    #############
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC8100006488470222204003333040044440400555504006666040077771404500002E0000000040063E8FA0A0A0AAA1A1A1A2004000410000000000000000500000006D190000000102030405AEA6E999
+Packet from data=<>, length=96
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+
+
+###########    bcm_udf_abstract_pkt_format_info_get() API Demo       ###########
+int $$ = 0 (0x0)
+bcm_udf_abstract_pkt_format_info_t pkt_format_info = {
+    bcm_udf_pkt_base_offset_t base_offset = bcmUdfPktBaseOffsetStartOfTunnel (2)
+    unsigned int num_chunks_max = 8 (0x8)
+    unsigned int chunk_bmap_used = 15 (0xf)
+    unsigned int unavail_chunk_bmap = 32 (0x20)
+}
+int $$ = 0 (0x0)
+bcm_udf_abstract_pkt_format_info_t pkt_format_info = {
+    bcm_udf_pkt_base_offset_t base_offset = bcmUdfPktBaseOffsetStartOfTunnel (2)
+    unsigned int num_chunks_max = 8 (0x8)
+    unsigned int chunk_bmap_used = 15 (0xf)
+    unsigned int unavail_chunk_bmap = 32 (0x20)
+}
+int $$ = 0 (0x0)
+bcm_udf_abstract_pkt_format_info_t pkt_format_info = {
+    bcm_udf_pkt_base_offset_t base_offset = bcmUdfPktBaseOffsetStartOfTunnel (2)
+    unsigned int num_chunks_max = 8 (0x8)
+    unsigned int chunk_bmap_used = 15 (0xf)
+    unsigned int unavail_chunk_bmap = 32 (0x20)
+}
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+

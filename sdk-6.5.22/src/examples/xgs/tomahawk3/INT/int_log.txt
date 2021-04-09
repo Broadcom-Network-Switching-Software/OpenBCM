@@ -1,0 +1,204 @@
+BCM.0> cint int.c
+vlan show
+vlan 1	ports cpu,cd,xe (0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f), untagged cd,xe (0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001e) MCAST_FLOOD_UNKNOWN
+vlan 21	ports cd22 (0x0000000000000000000000000000000000000040000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 22	ports cd23 (0x0000000000000000000000000000000000000080000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+
+l2 show
+mac=00:00:00:00:bb:bb vlan=21 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+mac=00:00:00:00:22:22 vlan=22 GPORT=0x0 modid=0 port=0/cpu0 Static CPU
+
+l3 intf show
+Free L3INTF entries: 8189
+Unit  Intf  VRF Group VLAN    Source Mac     MTU TTL Tunnel InnerVlan  NATRealm
+------------------------------------------------------------------
+0     21    10    0     21   00:00:00:00:bb:bb  16383 0    0     0     0
+0     22    10    0     22   00:00:00:00:22:22  16383 0    0     0     0
+
+l3 egress show
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount L3MC
+100002  00:00:00:00:00:02   22   22   103    0        -1   no   no    1   no
+
+l3 l3table show
+Unit 0, free L3 table entries: 16383
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT    H/W Index
+1     10   10.10.2.0        00:00:00:00:00:00  100002    0    0         0 n      1448
+
+fp show
+FP:	unit 0:
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=3072(0xc00), tcam_slices=9, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0,
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={SrcIp, L4DstPort, Stage, StageIngress},
+
+         group_priority= 1
+         slice_primary =  {slice_number=0, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=3072, entries_free=3071,
+                       counters_total=38912, counters_free=38912, meters_total=512, meters_free=512}
+EID 0x00000001: gid=0x1,
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ SrcIp
+    Part:0 Offset0:  0 Width0:  16
+    Part:0 Offset1: 20 Width1:  16
+    DATA=0x0a0a010a
+    MASK=0xffffffff
+ L4DstPort
+    Part:0 Offset0: 36 Width0:  16
+    DATA=0x00001a6f
+    MASK=0x0000ffff
+         action={act=IntEncapDisable, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics=NULL
+
+Sending probe packet on port_acc:0x66 and observe packet on port_network:0x67
+Packet from data=<>, length=136
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {00000000bbbb} {00000000aaaa} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 0800 453a 006e 0000 0000 3f11 6431 0a0a
+[bcmPW.0]Packet[1]: data[0020]: 0101 0a0a 0200 003e 1a6f 005a 0000 aaaa
+[bcmPW.0]Packet[1]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff00
+[bcmPW.0]Packet[1]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405
+[bcmPW.0]Packet[1]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[1]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[1]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001
+[bcmPW.0]Packet[1]: data[0080]: 259f fb7a 0000 0000
+[bcmPW.0]Packet[1]: length 136 (136). rx-port 102. cos 0. prio_int 0. vlan 21. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 102. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:bb:bb> src<00:00:00:00:aa:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.1.1> dst<10.10.2.0> hl<5> service-type<58> tl<110> id<0> frg-off<0> ttl<63> > chk-sum<0x6431>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 0800 453a 008e 0000 0000 3e11 6511 0a0a
+[bcmPW.0]Packet[2]: data[0020]: 0101 0a0a 0200 003e 1a6f 007a 0000 aaaa
+[bcmPW.0]Packet[2]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff01
+[bcmPW.0]Packet[2]: data[0040]: 0000 1fe0 0020 0000 0001 900d deed ffff
+[bcmPW.0]Packet[2]: data[0050]: ffff ffff 3b9a ca00 0000 1259 779a 0066
+[bcmPW.0]Packet[2]: data[0060]: 0067 0000 0000 0000 0000 0001 0203 0405
+[bcmPW.0]Packet[2]: data[0070]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[2]: data[0080]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[2]: data[0090]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001
+[bcmPW.0]Packet[2]: data[00a0]: 259f fb7a 0000 0000
+[bcmPW.0]Packet[2]: length 168 (168). rx-port 103. cos 0. prio_int 0. vlan 22. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 103. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.1.1> dst<10.10.2.0> hl<5> service-type<58> tl<142> id<0> frg-off<0> ttl<62> > chk-sum<0x6511>
+
+show c
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			304		   +304 	    282/s
+RIPC4_64.cd22		    :			  1		     +1 	      1/s
+RUC_64.cd22		    :			  1		     +1 	      1/s
+CDMIB_R255.cd22 	    :			  1		     +1 	      1/s
+CDMIB_RPRM.cd22 	    :			  1		     +1 	      1/s
+CDMIB_T255.cd22 	    :			  1		     +1 	      1/s
+CDMIB_RPKT.cd22 	    :			  1		     +1 	      1/s
+CDMIB_RUCA.cd22 	    :			  1		     +1 	      1/s
+CDMIB_RPOK.cd22 	    :			  1		     +1 	      1/s
+CDMIB_RVLN.cd22 	    :			  1		     +1 	      1/s
+CDMIB_TVLN.cd22 	    :			  1		     +1 	      1/s
+CDMIB_TBYT.cd22 	    :			136		   +136 	    126/s
+CDMIB_RBYT.cd22 	    :			136		   +136 	    126/s
+CDMIB_TPOK.cd22 	    :			  1		     +1 	      1/s
+CDMIB_TPKT.cd22 	    :			  1		     +1 	      1/s
+CDMIB_TUCA.cd22 	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).cd22	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).cd22	    :			136		   +136 	    126/s
+RUC_64.cd23		    :			  1		     +1 	      1/s
+RDBGC0_64.cd23		    :			  1		     +1 	      1/s
+TDBGC4_64.cd23		    :			  1		     +1 	      1/s
+CDMIB_R255.cd23 	    :			  1		     +1 	      1/s
+CDMIB_RPRM.cd23 	    :			  1		     +1 	      1/s
+CDMIB_T255.cd23 	    :			  1		     +1 	      1/s
+CDMIB_RPKT.cd23 	    :			  1		     +1 	      1/s
+CDMIB_RUCA.cd23 	    :			  1		     +1 	      1/s
+CDMIB_RPOK.cd23 	    :			  1		     +1 	      1/s
+CDMIB_RVLN.cd23 	    :			  1		     +1 	      1/s
+CDMIB_TVLN.cd23 	    :			  1		     +1 	      1/s
+CDMIB_TBYT.cd23 	    :			168		   +168 	    156/s
+CDMIB_RBYT.cd23 	    :			168		   +168 	    156/s
+CDMIB_TPOK.cd23 	    :			  1		     +1 	      1/s
+CDMIB_TPKT.cd23 	    :			  1		     +1 	      1/s
+CDMIB_TUCA.cd23 	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).cd23	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).cd23	    :			168		   +168 	    156/s
+
+Sending probe packet on port_acc:0x66 and observe packet on port_network:0x67 carrying no INT header disabled by IFP
+Packet from data=<>, length=140
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {00000000bbbb} {00000000aaaa} 8100 0015
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 0072 0000 0000 4011 635e 0a0a
+[bcmPW.0]Packet[3]: data[0020]: 010a 0a0a 0200 003e 1a6f 005e 0000 aaaa
+[bcmPW.0]Packet[3]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff00
+[bcmPW.0]Packet[3]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405
+[bcmPW.0]Packet[3]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[3]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[3]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001
+[bcmPW.0]Packet[3]: data[0080]: 0000 0000 b8ca e43b 0000 0000
+[bcmPW.0]Packet[3]: length 140 (140). rx-port 102. cos 0. prio_int 0. vlan 21. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 102. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:bb:bb> src<00:00:00:00:aa:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.1.10> dst<10.10.2.0> hl<5> service-type<0> tl<114> id<0> frg-off<0> ttl<64> > chk-sum<0x635e>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 0072 0000 0000 3f11 645e 0a0a
+[bcmPW.0]Packet[4]: data[0020]: 010a 0a0a 0200 003e 1a6f 005e 0000 aaaa
+[bcmPW.0]Packet[4]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff00
+[bcmPW.0]Packet[4]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405
+[bcmPW.0]Packet[4]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[4]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[4]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001
+[bcmPW.0]Packet[4]: data[0080]: 0000 0000 b8ca e43b 0000 0000
+[bcmPW.0]Packet[4]: length 140 (140). rx-port 103. cos 0. prio_int 0. vlan 22. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 103. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:02> src<00:00:00:00:22:22> Tagged Packet ProtID<0x8100> Ctrl<0x0016> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.1.10> dst<10.10.2.0> hl<5> service-type<0> tl<114> id<0> frg-off<0> ttl<63> > chk-sum<0x645e>
+
+show c
+MC_PERQ_PKT(0).cpu0	    :			  4		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			584		   +280 	    267/s
+RIPC4_64.cd22		    :			  2		     +1 	      1/s
+RUC_64.cd22		    :			  2		     +1 	      1/s
+CDMIB_R255.cd22 	    :			  2		     +1 	      1/s
+CDMIB_RPRM.cd22 	    :			  2		     +1 	      1/s
+CDMIB_T255.cd22 	    :			  2		     +1 	      1/s
+CDMIB_RPKT.cd22 	    :			  2		     +1 	      1/s
+CDMIB_RUCA.cd22 	    :			  2		     +1 	      1/s
+CDMIB_RPOK.cd22 	    :			  2		     +1 	      1/s
+CDMIB_RVLN.cd22 	    :			  2		     +1 	      1/s
+CDMIB_TVLN.cd22 	    :			  2		     +1 	      1/s
+CDMIB_TBYT.cd22 	    :			276		   +140 	    133/s
+CDMIB_RBYT.cd22 	    :			276		   +140 	    133/s
+CDMIB_TPOK.cd22 	    :			  2		     +1 	      1/s
+CDMIB_TPKT.cd22 	    :			  2		     +1 	      1/s
+CDMIB_TUCA.cd22 	    :			  2		     +1 	      1/s
+UC_PERQ_PKT(0).cd22	    :			  2		     +1 	      1/s
+UC_PERQ_BYTE(0).cd22	    :			276		   +140 	    133/s
+RUC_64.cd23		    :			  2		     +1 	      1/s
+RDBGC0_64.cd23		    :			  2		     +1 	      1/s
+TDBGC4_64.cd23		    :			  2		     +1 	      1/s
+CDMIB_R255.cd23 	    :			  2		     +1 	      1/s
+CDMIB_RPRM.cd23 	    :			  2		     +1 	      1/s
+CDMIB_T255.cd23 	    :			  2		     +1 	      1/s
+CDMIB_RPKT.cd23 	    :			  2		     +1 	      1/s
+CDMIB_RUCA.cd23 	    :			  2		     +1 	      1/s
+CDMIB_RPOK.cd23 	    :			  2		     +1 	      1/s
+CDMIB_RVLN.cd23 	    :			  2		     +1 	      1/s
+CDMIB_TVLN.cd23 	    :			  2		     +1 	      1/s
+CDMIB_TBYT.cd23 	    :			308		   +140 	    133/s
+CDMIB_RBYT.cd23 	    :			308		   +140 	    133/s
+CDMIB_TPOK.cd23 	    :			  2		     +1 	      1/s
+CDMIB_TPKT.cd23 	    :			  2		     +1 	      1/s
+CDMIB_TUCA.cd23 	    :			  2		     +1 	      1/s
+UC_PERQ_PKT(0).cd23	    :			  2		     +1 	      1/s
+UC_PERQ_BYTE(0).cd23	    :			308		   +140 	    133/s
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>

@@ -1,0 +1,2145 @@
+File,Summary,Description - Test Setup,Description - Configuration,Description - Verification,Expected Result
+$SDK/src/examples/xgs/TD3/mpls/vpls_sdtag.c," This Cint example to show configuration of VPLS with SD-TAG functional
+ scenario using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPLS with SD-TAG functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with single TAG (0x8100600B) on access port.
+ Also send a MPLS Tunnel packet with inner payload's TAG as 0x91006001)
+ on network port. The contents of the packet are printed on screen.
+ "," We can see that VPLS tunnel initiation with inner payload's TAG as
+ 0x91006001 (Translated/Replaced) flows out of network_port for
+ incoming TAG 0x8100600B packet on access port and we are sending MPLS
+ Tunnel packet with inner payload's TAG as 0x91006001 on network port
+ and we can see that VPLS tunnel terminates on network/provider port
+ and inner payload's TAG is translted back to 0x8100600B & goes out
+ of access port. Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_ac2ac.c," This Cint example to show configuration of (L2 MPLS) VPWS tunnel access_port
+ to access_port scenario flows using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port1 and the other as
+ access_port2.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS access port to access port flow scenario and
+ does the necessary configurations of vlan and VP interface.
+ "," a) Transmit the untaged/single tagged L2 packet to access_port (both 
+ directions) and observe the local L2 switching based on VPWS VPN 
+ "," We can see that Local L2 switching is done using VPWS VPN id between 
+ access ports and observe that no change in L2 header for both untagged
+ and tagged packets in any direction i.e from access_port1 to access_port2
+ and vice-versa. 
+ Note that, switching is done using VP flow based (no mac learning).
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_frr.c," This Cint example to show configuration of VPWS with failover/protection
+ switching mechanism using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_ports (primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS Tunnel initiation/termination flow with failover
+ functional scenario and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with single VLAN on access port, then set
+ the failoverId and resend the same customer packet on access port.
+ The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_primary_port
+ (primary-path) for the first packet and after setting failoverId,
+ egress traffic switchovers to network_backup_port (backup-path).
+ The contents of the packet are printed on screen.
+ Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/l3_mpls_init_frr.c," This Cint example to show configuration of the L3 MPLS VPN initiation with
+ failover scenario using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, one port is used as ingress_port and the other as
+ egress_ports (primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Initiation functional scenario with
+ failover and does the necessary configurations of vlan, interface,
+ next hop and Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also Tunnel + VC labels are PUSHed
+ as part of tunnel initiation on egress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters. And also, we can see failover
+ _failover_set or
+ _failover_egress_status_set and observe that packet is routed to
+ backup path/tunnel.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_match_range.c," This Cint example to show configuration of VPWS with match range of
+ VLANs at customer/access port using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS with match range of VLANs functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with match range VLANs from 11 to 20
+ on customer/access port. The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_port for
+ any incoming VLAN range from 11 to 20. Example, we are sending with
+ VLAN 11, 12 & 20 on customer/access port. Also we can see that VPWS
+ tunnel terminates on network/provider port and goes out of access port.
+ Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_cw.c," This Cint example to show configuration of (L2 MPLS) VPWS tunnel initiation
+ and termination flows with control-word using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS Tunnel initiation/termination with control-word
+ scenario and does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet on access_port and Transmit the provider
+ /tunneled packet with control-word on network_port. The contents of
+ the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation with control-word flows out of
+ network_port and also VPWS tunnel terminates, and customer packet
+ flows out of access_port. The contents of the packet are printed on
+ screen. Also run the 'show c' to check the Tx/Rx packet stats/counters.
+ "
+$SDK/src/examples/xgs/TD3/mpls/lsr_trunk.c," This Cint example to show configuration of L3 MPLS tunnel LSR with trunk
+ using BCM APIs.
+ "," a) Selects five ports and configure them in Loopback mode. Out of these
+ five ports, one port is used as ingress_port and the other as
+ egress_ports(trunk egress members).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Swap with Trunk functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that each time, the outgoing
+ packet use a different trunk member port. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpls_hierarchy_qw.c," This Cint example to show configuration of H-VPLS tunnel with MPLS/ spoke
+ and hub with PW scenario using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port/spoke and the other as
+ network_port/hub.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic H-VPLS Tunnel with MPLS scenario/ spoke PW & Hub
+ Backbone scenario and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet with on access_port/spoke and also on
+ network_port. The contents of the packet are printed on screen.
+ "," We can see that MPLS/VPLS tunneled packet flows out of hub port and also
+ in reverse direction from hub to spoke port. The contents of the packet
+ are printed on screen. Also run the 'show c' to check the Tx/Rx packet
+ stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/l3_mpls_init.c," This Cint example to show configuration of L3 MPLS tunnel initiation using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel Initiation functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the known IPv4 unicast packet. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also Tunnel + VC labels are pushed
+ as part of tunnel initiation on egress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/l3_mpls_vpn_pop_qos.c," This Cint example to show configuration of L3 MPLS tunnel termination
+ with QoS using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel termination functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels with POP action.
+ b) COnfigure a QoS remapping from incoming packet EXP to internal priority.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the MPLS packet with TWO labels & EXP as 3. The contents
+ of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel + VC labels are POPed
+ as part of tunnel termination on ingress port. We can observe that
+ exp is mapped to CoS 3 and int_proi as 6 on egress side. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_swap_frr.c," This Cint example to show configuration of the L3 MPLS LSR swap with
+ failover scenario using BCM APIs.
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, one port is used as ingress_port and the other as
+ egress_ports (primary & backup).
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap functional scenario with
+ failover and does the necessary configurations of vlan, interface,
+ next hop and swap labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS Label packet. The contents of the packet
+ are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and also MPLS Labels are swapped
+ as part of tunnel switching on egress port. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+ _failover_set or
+ _failover_egress_status_set and observe that packet is switched/routed
+ to backup path/tunnel.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpls_hierarchy_qiq.c," This Cint example to show configuration of H-VPLS tunnel initiation
+ and termination flows/spoke & hub model with double tagged scenario
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic H-VPLS Tunnel initiation/termination scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with Double Tagged on access_port/spoke and
+ Transmit the provider/tunneled packet with Double tagged inner payload
+ on network_port. The contents of the packet are printed on screen.
+ "," We can see that VPLS tunnel initiation flows out of network_port and also
+ VPLS tunnel terminates, and customer packet flows out of access_port.
+ The contents of the packet are printed on screen. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_push.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap &
+ Push label using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel LSR with push+swap functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed on
+ screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that one Label is pushed and other
+ label is swapped.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws.c," This Cint example to show configuration of (L2 MPLS) VPWS tunnel initiation
+ and termination flows using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS Tunnel initiation/termination scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet on access_port and Transmit the provider
+ /tunneled packet on network_port. The contents of the packet are
+ printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_port and also
+ VPWS tunnel terminates, and customer packet flows out of access_port.
+ The contents of the packet are printed on screen. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpls_flex_counter.c," This Cint example to show configuration of (L2 MPLS) VPLS tunnel initiation
+ and termination flows with flex counters using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPLS Tunnel initiation/termination scenario and
+ attach the flex counters for ingress, egress and label objects for VPLS
+ setup and does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet on access_port and Transmit the provider
+ /tunneled packet on network_port. The contents of the packet are
+ printed on screen.
+ "," We can see that VPLS tunnel initiation flows out of network_port and also
+ VPLS tunnel terminates, and customer packet flows out of access_port.
+ Also, we can see the flex counters for ingress, egress and label objects
+ for tranmitted packets per direction.
+ The contents of the packet are printed on screen. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_sdtag.c," This Cint example to show configuration of VPWS with SD-TAG functional
+ scenario using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS with SD-TAG functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with single TAG (0x8100600B) on access port.
+ Also send a MPLS Tunnel packet with inner payload's TAG as 0x91006001)
+ on network port. The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation with inner payload's TAG as
+ 0x91006001 (Translated/Replaced) flows out of network_port for
+ incoming TAG 0x8100600B packet on access port and we are sending MPLS
+ Tunnel packet with inner payload's TAG as 0x91006001 on network port
+ and we can see that VPWS tunnel terminates on network/provider port
+ and inner payload's TAG is translted back to 0x8100600B & goes out
+ of access port. Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/l3_mpls_term.c," This Cint example to show configuration of L3 MPLS tunnel termination using
+ BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel termination functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel + VC labels with POP action.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'l3 defip show'
+  b) Transmit the MPLS packet with IP unicast payload. The contents of the packet
+ are printed on screen. The packet used matches the route configured
+ through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel + VC labels are POPed
+ as part of tunnel termination on ingress port. Also run the
+ 'l3 defip show' to check the HIT bit status (y i.e Yes) and 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_qos_2.c," This Cint example to show configuration of VPWS QoS mapping to access-side
+ from network-side using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS from network-side, EXP is mapped to
+ internal priority. On egress to access port, internal priority is
+ remarked to .1Q PRI field functional scenario and does the necessary
+ configurations of vlan, interface and next hop.
+ b) Customer port -----  XGS ----- Provider port
+ .1Q priority <--- Internal priority <--- Remark EXP field
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with single VLAN on access port and
+ also send tunneled packet with EXP as 3 on network port.
+ The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_port for
+ incoming VLAN packet on access port and we are sending MPLS Tunnel
+ with EXP as 3 on network port and we can see that VPWS
+ tunnel terminates on network/provider port and remarked .1Q PRI as 3
+ goes out of access port. Also run the 'show c' to check the
+ Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_qos.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap with QoS
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS LSR with QoS functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'
+  b) Transmit the MPLS packet. The contents of the packet are printed
+ on screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that EXP is marked for
+ MPLS Label. Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_fp.c," This Cint Example shows how to use VFP to assign VPWS virtual port and
+ and use EFP to change packet priority using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS with VFP & EFP functional scenario and
+ use VFP to assign VPWS virtual port and use EFP to change packet
+ priority and does the necessary configurations of vlan, interface
+ and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'fp show'.
+  b) Transmit a customer packet with .1p priority 5 to access_port and
+ Sending a MPLS packet with TWO Labels to network_port.
+ The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_port and
+ Outer header's VLAN priority should be changed to 3 for incoming
+ customer packet with VLAN's priority 5. Also VPWS terminates on network
+ port for MPLS Tunnel packet. Also run the 'show c' to check the
+ Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpls.c," This Cint example to show configuration of (L2 MPLS) VPLS tunnel initiation
+ and termination flows using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPLS Tunnel initiation/termination scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet on access_port and Transmit the provider
+ /tunneled packet on network_port. The contents of the packet are
+ printed on screen.
+ "," We can see that VPLS tunnel initiation flows out of network_port and also
+ VPLS tunnel terminates, and customer packet flows out of access_port.
+ The contents of the packet are printed on screen. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpls_trunk.c," This Cint example to show configuration of VPLS with Trunk, the customer
+ port is a trunk, the trunk port slection is done via RTAG7 configuration
+ using BCM APIs.
+ "," a) Selects four ports and configure them in Loopback mode. Out of these
+ four ports, three ports are used as access_ports and the other port as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPLS with Trunk functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',
+ 'l3 egress show' and 'trunk show'.
+  b) Transmit the customer packet on one of the trunk member port/access_port
+ and also send different customer payload by changing VID and SA Mac of
+ MPLS Tunnel packet on network_port. The contents of the packet are
+ printed on screen.
+ "," We can see that the customer port is a trunk, the trunk port slection
+ is done via RTAG7 configuration. By changing the VID and SA MAC of
+ inner payload makes to select the different access_port/member_port
+ of trunk group. Example, tested with different customer packets by
+ changing said fields and it chooses the different member ports.
+ Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_multi_segment.c," This Cint example to show configuration of L3 MPLS tunnel switching for
+ MS-PW scenario using BCM APIs.
+ A multi-segment pseudowire (MS-PW) is a set of two or more PW segments that
+ function as a single PW, as shown in the figure below. It is also known as
+ switched PW. MS-PWs span multiple cores or autonomous systems of the same or
+ different carrier networks.
+  Segmenting the pseudowires is also referred to as pseudowire switching.
+ The following occurs in a pseudowire-switching at S-PE:
+  - The service receives vc-encapsulated traffic from one pseudowire segment.
+ - The service performs a de-encapsulation, followed by another vc-encapsulation.
+ - The service sends the traffic out over another pseudowire segment.
+  In this scenario, the vc-label has been swapped, and traffic is switched from
+ one pseudowire segment to another.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel switching/swapping functional
+ scenario and does the necessary configurations of vlan, interface,
+ next hop and Tunnel + VC labels.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show',and
+ 'l3 egress show'
+  b) Transmit the MPLS packet with TWO labes. The contents of the packet
+ are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the L3 egress object/port and also the vc-label has
+ been swapped, and traffic is switched from one pseudowire segment to
+ another.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_php.c," This Cint example to show configuration of L3 MPLS tunnel LSR with PHP
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS LSR with PHP functional scenario and
+ does the necessary configurations of vlan, interface, next hop and
+ Tunnel Label with PHP action.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS packet. The contents of the packet are printed
+ on screen. The packet used matches the route configured through script.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port after Tunnel label POPed(PHP)
+ as part of tunnel termination on ingress port and observe that
+ no change in Bos(VC) label if TWO label packet is ingressed.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_double_tag.c," This Cint example to show configuration of (L2 MPLS) VPWS tunnel initiation
+ and termination flows with double tagged using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS Tunnel initiation/termination with double
+ tagged scenario and does the necessary configurations of vlan,
+ interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with Double Tag on access_port and
+ Transmit the provider/tunneled packet with Double tagged inner payload
+ on network_port. The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation flows out of network_port and also
+ VPWS tunnel terminates, and customer packet with double tagged flows
+ out of access_port. The contents of the packet are printed on screen.
+ Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_swap_1.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap/switching functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS with One / Two Label with different TTL packet.
+ The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that MPLS Label is swapped
+ for different trails and covered with TTL checks as well. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/lsr_swap.c," This Cint example to show configuration of L3 MPLS tunnel LSR label Swap
+ using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic L3 MPLS Tunnel swap/switching functional scenario and
+ does the necessary configurations of vlan, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the MPLS with One / Two Label with different TTL packet.
+ The contents of the packet are printed on screen.
+ "," We can see that dmac, smac and vlan are all changed as the packet is
+ routed through the egress port and observe that MPLS Label is swapped
+ for different trails and covered with TTL checks as well. Also run the 'show c'
+ to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/mpls/vpws_qos_1.c," This Cint example to show configuration of VPWS QoS mapping from access-side
+ to network-side using BCM APIs.
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as access_port and the other as
+ network_port.
+  b) Install an IFP rule to copy incoming packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a testing purpose only (Internal) and it is
+ nothing to do with an actual functional test.
+ "," a) Configure a basic VPWS from access-side, packet .1Q PRI is mapped to
+ internal priority. On egress to provider port, internal priority is
+ remarked to EXP field functional scenario and does the necessary
+ configurations of vlan, interface and next hop.
+ b) Customer port -----  XGS ----- Provider port
+ .1Q priority ---> Internal priority ---> Remark EXP field
+ "," a) Check the configurations by 'vlan show', 'l3 intf show' and
+ 'l3 egress show'.
+  b) Transmit the customer packet with .1Q priority on access port and
+ also send tunneled packet on network port.
+ The contents of the packet are printed on screen.
+ "," We can see that VPWS tunnel initiation with remarked EXP as 3 and flows
+ out of network_port for incoming .1Q pri and . Example, we are sending
+ with .1Q PRI as 3 on customer/access port. Also we can see that VPWS
+ tunnel terminates on network/provider port and goes out of access port.
+ Also run the 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoA_route_uc.c," Cint example to demonstrate VxLAN Riot configuration for access to access unicast flow
+ - L3 routing based on defip lookup table(L3_DEFIP)
+ "," a) Selects 2 ports for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup two access ports for routing.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access ports settings, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the routed packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoN_uc_tunnel.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination and
+ initiation in a single pass.
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_uc.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_dscp_mapping.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_mc_decap_leaf.c," Cint example to demonstrate VxLAN Riot configuration for multicast
+ leaf mode operation
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the
+ feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings,
+ vlan, access and network port setting, tunnel setup, interface
+ and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn
+ and vp's
+  b) Transmit the multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packets and ipmc routed packets on the
+ egress ports respectively
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_arp_protocol.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow) to lift arp packets to cpu
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_vp_sharing.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv6_riot_NtoA_uc.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access (decap flow)
+  "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the routerd packet on egress access port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_DscpPacket.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac 00:00:00:22:22:22 is tunneled through network port
+ - copied ingress packet DSCP(63) to outer VxLAN IP header
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, DSCP setting, tunnel setup, interface
+ and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_uc_alpm.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac 00:00:00:22:22:22 is tunneled through network port
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_mc_decap_multi_leaf.c," Cint example to demonstrate VxLAN Riot configuration for multicast
+ L2 & L3 leaf mode operation
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the
+ feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings,
+ vlan, access and network port setting, tunnel setup, interface
+ and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn
+ and vp's
+  b) Transmit the multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packets and ipmc routed packets on the
+ egress ports respectively
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_igmp_protocol.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow) to lift igmp packets to cpu
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the vxlan packet with igmp payload get copied to cpu with protocol as a reason code.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoA_host_uc.c," Cint example to demonstrate VxLAN Riot configuration for access to access unicast flow
+ - L3 routing based on host lookup table(L3_ENTRY_ONLY_SINGLE)
+ "," a) Selects 2 ports for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup two access ports for routing.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access ports settings, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the routed packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_DscpAssign.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac 00:00:00:22:22:22 is tunneled through network port
+ - DSCP 0x10 assigned to VXLAN tunneled packet
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, DSCP setting, tunnel setup, interface
+ and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_router_dip.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow) where overlay IP is destined to Host CPU
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_mc_bud.c," Cint example to demonstrate VxLAN Riot configuration for multicast bud mode operation-
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packets and ipmc routed packets on the
+ egress ports respectively
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv6_riot_AtoN_uc.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+  "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv6 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_DscpMap.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac 00:00:00:22:22:22 is tunneled through network port
+ - packet DSCP to internal priority and internal priority
+ to egress VxLAN IP header DSCP
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, ingress DSCP mapping, egress DSCP mapping,
+ tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_uc_ECMP_OL.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - Overlay IP route lookup results in ECMP group (Overlay ECMP)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 intf show',l3 egress show',
+ 'l3 multipath show', traversing the vpn and vp's
+  b) Transmit 2 known unicast packets. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_bridge.c," Cint example to demonstrate VxLAN configuration for tunnel termination -
+ - network to access(decap flow) bridging to access side
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for switching into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the decapsulated payload
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_uc_alpm.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_NtoA_uc_ECMP_OL.c," Cint example to demonstrate VxLAN Riot configuration for tunnel termination -
+ - network to access(decap flow)
+ - Overlay IP route lookup results in ECMP group (Overlay ECMP)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 intf show',l3 egress show',
+ 'l3 multipath show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_uc_ECMP_UL.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - Tunnel has a destination ECMP group (Underlay ECMP)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 intf show',l3 egress show',
+ 'l3 multipath show', traversing the vpn and vp's
+  b) Transmit 3 known unicast packets. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoA_mc.c," Cint example to demonstrate VxLAN Riot configuration for access to access multicast flow
+ - L3 multicast routing
+ - L2 multicast bridging
+ "," a) Selects 3 ports for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup two access ports for routing and one for bridging.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access ports settings, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the routed packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_uc_ECMP_OL_UL.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - Overlay IP route lookup results in ECMP group (Overlay ECMP)
+ - Tunnel has a destination ECMP group (Underlay ECMP)
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 intf show',l3 egress show',
+ 'l3 multipath show', traversing the vpn and vp's
+  b) Transmit 6 known unicast packets. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/Riot/FlexFlow/ipv4_riot_AtoN_uc.c," Cint example to demonstrate VxLAN Riot configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac 00:00:00:22:22:22 is tunneled through network port
+ "," a) Selects ports for network side and for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Riot configuration with SDTAG operations.
+ Setup network port for routing into vxlan tunnel.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_net_to_acc_trunk_inner_l3.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Termination -
+ - network to access with access port being a trunk(decap flow)
+ - Distribution on trunk based on inner packet (payload) fields: Inner L3 SrcIP & DstIP
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the others as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'trunk show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation 
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among trunk member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_Egress_VFI_DGLP_Membership.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_vplag_net_to_acc_uc.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with multiple access ports being a LAG (VP LAG)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among VP LAG member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_net_to_net_ecmp_using_entropy.c," Cint example to demonstrate VxLAN Bridging configuration for Transit packets
+ - network to network, with second network port being an ECMP group(Transit flow)
+ - Distribution on ECMP group based on outer packet (tunnel) field: L4 Src Port
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the others as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ network port's setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 egress show', 'l3 multipath show' and traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the routed packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_SDtag_Add.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ -  network to access (decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_acc_encap_ovid.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ - egr_vlan_xlate is used with key OVID+DVP
+"," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_net_default_SVP.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_flex_stat.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - flex stats at the access vp and network vp
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_net_vp_sharing.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network with network vp sharing between two VFI's
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ three ports, two ports are used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ with different vnid based on the VFI,
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_acc_to_net_ecmp_entropy_gen.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with network port being an ECMP group(encap flow)
+ - And, the encapsulated network packets carry Entropy (hash value) as UDP Src Port
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the other as
+ egress_port's.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 egress show', 'l3 multipath show' and traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_SDtag_Delete.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MatchPortVlan.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv6_MC_BUD_NODE.c," Cint example to demonstrate VxLAN Bridging configuration for Multicast ingressing on Bud Node
+ Network to network -> IPMC-transit mode (Pass 1)
+ Network to Acess    -> Termination (Pass 2)
+  "," a) Selects 3 ports and configure them in Loopback mode. Out of these
+ 3 ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known multicast packet. The contents of the packet
+ are printed on screen.
+  "," We can see the 2 packets : ipmc routed packet on network and decapped packet on the egress access port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_vplag_net_to_acc_learning.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with multiple network ports being a LAG (VP LAG)
+ - L2 learning of a packet ingressing network ports' VPLAG
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'l2 show' to check if the packets are learnt on the VPLAG
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_split_horizon_group.c," Cint example to demonstrate VxLAN tunnel multicast with multiple split horizon groups
+ for ingress and egress vp pruning for uuc/bc
+ "," a) Selects five ports and configure them in Loopback mode. Out of these
+ five ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with four network ports.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+  b) Configure mapping between VXLAN VPs and network groups as below.
+ Virtual port ""vxlan_acc""  is mapped to ""network_group_2.""
+ Virtual ports ""vxlan_net"" is mapped to ""network_group_3"".
+ Virtual ports ""vxlan_net_1"" is mapped to ""network_group_3"".
+ Virtual ports ""vxlan_net_2"" is mapped to ""network_group_4"".
+ Virtual ports ""vxlan_net_3"" is mapped to ""network_group_5"".
+"," a) Transmit unknown-unicast packet on net_port1.
+ b) Now configure such that traffic from network_group_3 to network_group_4 is dropped
+ using bcm_switch_network_group_config_set() API.
+ c) Transmit same unknown-unicast packet on net_port1.
+"," After Step 3.a, the packet egresses out of acc_port,
+ net_port_1, net_port_2, net_port_3 and net_port_4.
+ After Step 3.c, the packet egresses out of acc_port,
+ not* egress out of
+ net_port_3 as virtual port ""vxlan_port_dlf_3"" is mapped to ""network_group_4"".
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_SDtag_Delete.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access (decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_MTU_check.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access (decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_net_vp_sharing.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access with network vp sharing between two VFI's
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv6_AtoN_UC_MatchPortVlan.c," Cint example to demonstrate VxLAN Bridging configuration for V6 tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv6 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_acc_to_net_trunk.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with network port being a trunk (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'trunk show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among trunk member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv6_AtoN_MC_MatchPortVlan.c," Cint example to demonstrate VxLAN Bridging configuration for Multicast with  V6 tunnel Network port
+ - access to network/access (multicast flow)
+ "," a) Selects 3 ports and configure them in Loopback mode. Out of these
+ 3 ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known multicast packet. The contents of the packet
+ are printed on screen.
+  c) Transmit the unknown multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress network port with the IPv6 encapsulation and another access port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_net_from_VFP.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_Ingress_Mirror_to_Vxlan_Tunnel.c," Cint example to demonstrate ingress mirror packet to vxlan tunnel
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure MTP port to add vxlan tunnel header to ingress mirrored packet on source port
+ "," a) Check the configurations by 'dmirror show'
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the vxlan tunnel packet on the egress port(MTP port)
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_SDtag_Replace.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_acc_acc_mc.c," Cint example to demonstrate VxLAN Bridging configuration for access to access multicast -
+ - access to access bridging
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_net_to_acc_trunk_outer.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Termination -
+ - network to access with access port being a trunk(decap flow)
+ - Distribution on trunk based on outer packet (tunnel) field: L4 Src Port
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the others as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'trunk show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among trunk member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv6_NtoA_MC.c," Cint example to demonstrate VxLAN Bridging configuration for Multicast ingressing on V6 tunnel Network port
+ - network to access (multicast flow)
+ "," a) Selects 3 ports and configure them in Loopback mode. Out of these
+ 3 ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known multicast packet. The contents of the packet
+ are printed on screen.
+  c) Transmit the unknown multicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the decapped packet on the egress access port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_net_match_SIP_VNID.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects four ports and configure them in Loopback mode. Out of these
+ four ports, two port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_acc_encap_ovid_ivid.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ - egr_vlan_xlate is used with key OVID+DVP
+"," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_acc_to_net_ecmp.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with network virtual port pointing to an ECMP group(encap flow)
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the other as
+ egress_port's.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'l3 egress show', 'l3 multipath show' and traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among ECMP members.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MatchPortInnerVlan.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MatchPortOuterInnerVlan.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MatchPortVlanPriCfi.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MTU_check.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_net_acc_mc.c," Cint example to demonstrate VxLAN tunnel termination for uuc/bc and known multicast traffic -
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with two network ports.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packet on the access port and
+ 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_SDtag_Replace.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access (decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_Ingress_VFI_SGLP_Membership.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_vplag_acc_to_net_uc.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with multiple network ports being a LAG (VP LAG)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among VP LAG member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_net_to_acc_trunk_inner_l2.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Termination -
+ - network to access with access port being a trunk(decap flow)
+ - Distribution on trunk based on inner packet (payload) fields: Inner L2 SMAC
+ "," a) Selects six ports and configure them in Loopback mode. Out of these
+ six ports, one port is used as ingress_port and the others as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', 'trunk show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'show c s' shows the packet distribution among trunk member ports.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_acc_net_mc.c," Cint example to demonstrate VxLAN tunnel initiation for uuc/bc and known multicast traffic -
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with two network ports.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packet on the access port and
+ 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_Ingress_VFI_VP_Membership.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_vxlan_net_acc_bud_mc.c," Cint example to demonstrate VxLAN known multicast BUD mode configuration -
+ "," a) Selects three ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with two network ports.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel terminated packet on the access port and
+ ipmc routed packet on the second network port.
+ 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_net_encap_VFI.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac-1 00:00:00:00:aa:aa is tunneled through network port 1
+ - dst-mac-2 00:00:00:00:cc:cc is tunneled through network port 2
+ "," a) Selects two ports for network side and one port for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ Setup two network ports for encapsulation.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_MatchPort.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_Egress_VFI_VP_Membership.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv6_NtoA_UC_MatchSipv6.c," Cint example to demonstrate VxLAN Bridging configuration for V6 tunnel Termination -
+ - network to access (decap flow)
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration .
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ V6 is FlexFlow feature and hence requires FLow Options to be used
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the access packet on the egress port with the tunnel header removed
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_NtoA_net_match_VN_ID.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel termination -
+ - network to access(decap flow)
+ "," a) Selects four ports and configure them in Loopback mode. Out of these
+ four ports, two ports are used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the packet on the egress port
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/ipv4_AtoN_net_encap_VFI_DVP.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network (encap flow)
+ - dst-mac-1 00:00:00:00:aa:aa is tunneled through network port 1
+ - dst-mac-2 00:00:00:00:cc:cc is tunneled through network port 2
+ "," a) Selects two ports for network side and one port for access side
+ and configure them in Loopback mode.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ Setup two network ports for encapsulation.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show',traversing the vpn and vp's
+  b) Transmit the known unicast packet. The contents of the packet
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+"
+$SDK/src/examples/xgs/TD3/Vxlan/FlexFlow/vxlan_v4_vplag_acc_to_net_learning.c," Cint example to demonstrate VxLAN Bridging configuration for tunnel Initiation -
+ - access to network, with multiple acess ports being a LAG (VP LAG)
+ - L2 learning of a packet ingressing access ports' VPLAG
+ "," a) Selects two ports and configure them in Loopback mode. Out of these
+ two ports, one port is used as ingress_port and the other as
+ egress_port.
+  b) Install an IFP rule to copy ingress & egress packets to CPU and start
+ packet watcher.
+  Note: IFP rule is meant for a verification purpose and is not part of the feature configuration.
+ "," a) Configure a VxLAN Bridging configuration with SDTAG operations.
+ This does the necessary configurations of vxlan global settings, vlan,
+ access and network port setting, tunnel setup, interface and next hop.
+ "," a) Check the configurations by 'vlan show', 'l2 show', traversing the vpn and vp's
+  b) Transmit 5 known unicast packets. The contents of the packets
+ are printed on screen.
+ "," We can see the tunnel packet on the egress port with the IPv4 encapsulation
+ and 'show c' to check the Tx/Rx packet stats/counters.
+ Also, 'l2 show' to check if the packets are learnt on the VPLAG
+"
+$SDK/src/examples/xgs/TD3/INT/int_over_udp.c," This CINT script demonstrates how to configure INT over UDP.
+ "," a) Select one ingress and one egress port
+"," a) Configures INT on switch and sets up required l3 data path
+"," a) Send wirespeed traffic into xe0
+ 00000200000100000400000008004500
+ 0047000100004011659b0a0000010a00
+ 010a2b671a6f00330de3aaaaaaaabbbb
+ bbbb01010000ffffffffff0000001fe0
+ 000000000001494e5420554450207061
+ 636b65742e
+ Probe-Header:
+ =============
+ #    0                   1                   2                   3
+ #    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                         Probe Marker (1)                      |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                         Probe Marker (2)                      |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |   Version     | Message Type  |             Flags             |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                     Telemetry Request Vector                  |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |   Hop Limit   |   Hop Count   |         Must Be Zero          |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |         Maximum Length        |        Current Length         |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |        Sender's Handle        |        Sequence Number        |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #
+  Metadata Format:
+ =================
+ #    0                   1                   2                   3
+ #    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                     Device_ID (32bits)                        |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |Temp |Cong     |   Reserved    | IP_TTL(8bits) | Queue(8bits)  |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                  Receive_Seconds(47-16)                       |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |  Receive_seconds(15-0)        |  Receive_nano-seconds(31-16)  |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |  Receive_nano-seconds(15-00)  | Transmit_nano-Seconds(31-16)  |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |  Transmit_nano-seconds(15-00) |          Reserved             |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |         Ingress Port          |        Egress Port            |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ #   |                           Reserved                            |
+ #   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ Temp:     Template-Id (3-bits)
+ Cong:     Congestion  (5-bits)
+  CASE-1:
+ Ingress: UDP INT-Probe packet
+ Egress : UDP INT-Probe + Metadata packet
+ Ingress-packet:
+  Ingress packet with probe-header on port-1:
+ ================
+ ###[ Ethernet ]###
+ dst       = 00:00:02:00:00:01
+ src       = 00:00:04:00:00:00
+ type      = IPv4
+ ###[ IP ]###
+ version   = 4
+ ihl       = None
+ tos       = 0x0
+ len       = None
+ id        = 1
+ ttl       = 64
+ proto     = udp
+ src       = 10.0.0.1
+ dst       = 10.0.1.10
+ ###[ UDP ]###
+ sport     = 11111
+ dport     = 6767
+ ###[ INT_PROBE ]###
+ Probe_Marker_1= 0xaaaaaaaa
+ Probe_Marker_2= 0xbbbbbbbb
+ Version   = 0x1
+ Msg_Type  = 0x1
+ Flags     = 0x0
+ Req_Vector= 0xffffffff
+ Hop_limit = 0xff
+ Hop_count = 0x0
+ Reserved0 = 0x0
+ Max_length= 0x1fe0
+ Curr_length= 0x0
+ Sender_handle= 0x0
+ Sequence_num= 0x1
+ ###[ Raw ]###
+ load      = 'INT UDP packet.'
+ "," Captured packet on xe1:
+ 00000200000100000400000008004500
+ 0067000100004011657B0A0000010A00
+ 010A2B671A6F00530000AAAAAAAABBBB
+ BBBB01010000FFFFFFFFFF0100001FE0
+ 002000000001FEEDF00D01EE40000000
+ 00000000000000020000000000EE0001
+ 0005CCCCCCCC494E5420554450207061
+ 636B65742E6B9E5523
+ ====================
+ ###[ Ethernet ]###
+ dst       = 00:00:02:00:00:01
+ src       = 00:00:04:00:00:00
+ type      = n_802_1Q
+ ###[ 802.1Q ]###
+ prio      = 0L
+ id        = 0L
+ vlan      = 1L
+ type      = IPv4
+ ###[ IP ]###
+ version   = 4L
+ ihl       = 5L
+ tos       = 0x0
+ len       = 103
+ frag      = 0L
+ ttl       = 64
+ proto     = udp
+ chksum    = 0x657b
+ src       = 10.0.0.1
+ dst       = 10.0.1.10
+ ###[ UDP ]###
+ sport     = 11111
+ dport     = 6767
+ len       = 83
+ ###[ INT_PROBE ]###
+ Probe_Marker_1= 0xaaaaaaaa
+ Probe_Marker_2= 0xbbbbbbbb
+ Version   = 0x1
+ Msg_Type  = 0x1
+ Flags     = 0x0
+ Req_Vector= 0xffffffff
+ Hop_limit = 0xff
+ Hop_count = 0x1
+ Reserved0 = 0x0
+ Max_length= 0x1fe0
+ Curr_length= 0x20
+ Sender_handle= 0x0
+ Sequence_num= 0x1
+ ###[ INT_METADATA ]###
+ DeviceId  = 0xfeedf00d
+ Temp_congestion= 0x1
+ RSVD field (OPAQUE_MD1)= 0xee
+ IP_TTL    = 0x40
+ QUEUE_ID  = 0x0
+ RX_TIMESTAMP_SECs= 0x0
+ Recv_Secs_1500= 0x2
+ Recv_Nsec_3116= 0x80f0
+ Recv_Nsec_1500= 0xc10e
+ Tx_Nsec_3116= 0x80f0
+ Tx_Nsec_1500= 0xc3e4
+ RSVD field (OPAQUE_MD1)= 0xee
+ Ingess_Port= 0x1
+ Egress_Port= 0x5
+ RSVD field (OPAQUE_MD2)= 0xcccccccc
+ ###[ Raw ]###
+ load      = 'INT UDP packet.'
+ "

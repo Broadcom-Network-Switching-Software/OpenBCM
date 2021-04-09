@@ -1,0 +1,1382 @@
+#ifdef BSL_LOG_MODULE
+#error "BSL_LOG_MODULE redefined"
+#endif
+#define BSL_LOG_MODULE BSL_LS_BCMDNX_FLOW
+
+#include <shared/shrextend/shrextend_debug.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_port.h>
+#include <bcm_int/dnx/lif/lif_table_mngr_lib.h>
+#include <bcm_int/dnx/vlan/vlan.h>
+#include "flow_def.h"
+
+/** Supported LL Terminator common fields */
+#define VALID_VLAN_PORT_LL_TERMINATOR_COMMON_FIELDS \
+            BCM_FLOW_TERMINATOR_ELEMENT_VSI_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_STAT_ID_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_L2_INGRESS_INFO_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_STAT_PP_PROFILE_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_QOS_MAP_ID_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_QOS_INGRESS_MODEL_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_FLOW_SERVICE_TYPE_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_FLOW_DEST_INFO_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_ACTION_GPORT_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_ID_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_STATE_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_CLASS_ID_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID | \
+            BCM_FLOW_TERMINATOR_ELEMENT_LEARN_ENABLE_VALID
+
+/** Supported LL Terminator speciel fields */
+#define VALID_VLAN_PORT_LL_TERMINATOR_SPECIAL_FIELDS { \
+            DBAL_FIELD_VLAN_EDIT_PROFILE, \
+            DBAL_FIELD_VLAN_EDIT_PCP_DEI_PROFILE, \
+            DBAL_FIELD_VLAN_EDIT_VID_1, \
+            DBAL_FIELD_VLAN_EDIT_VID_2, \
+            DBAL_FIELD_FODO_ASSIGNMENT_MODE }
+
+/** Supported LL Initiator common fields */
+#define VALID_VLAN_PORT_LL_INITIATOR_COMMON_FIELDS \
+            BCM_FLOW_INITIATOR_ELEMENT_STAT_ID_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_STAT_PP_PROFILE_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_QOS_MAP_ID_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_L3_INTF_ID_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_QOS_EGRESS_MODEL_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_ACTION_GPORT_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_PKT_PRI_CFI_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_L2_EGRESS_INFO_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_FAILOVER_ID_VALID | \
+            BCM_FLOW_INITIATOR_ELEMENT_FAILOVER_STATE_VALID
+
+/** Supported LL Initiator speciel fields */
+#define VALID_VLAN_PORT_LL_INITIATOR_SPECIAL_FIELDS { \
+            DBAL_FIELD_VLAN_EDIT_PROFILE, \
+            DBAL_FIELD_VLAN_EDIT_VID_1, \
+            DBAL_FIELD_VLAN_EDIT_VID_2 }
+
+/** Supported LL Match speciel fields for all matches */
+#define VALID_VLAN_PORT_LL_MATCH_IN_PP_PORT_SPECIAL_FIELDS { \
+            DBAL_FIELD_PP_PORT }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_S_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_S_VID, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_S_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_S_VID, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_C_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_C_VID, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_S_C_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_C_VID, \
+            DBAL_FIELD_S_VID, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_C_C_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_C_VID_1, \
+            DBAL_FIELD_C_VID_2, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_S_S_VLAN_SPECIAL_FIELDS { \
+            DBAL_FIELD_S_VID_1, \
+            DBAL_FIELD_S_VID_2, \
+            DBAL_FIELD_VLAN_DOMAIN }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_UNTAGGED_SPECIAL_FIELDS { \
+            DBAL_FIELD_MAPPED_PP_PORT }
+
+#define VALID_VLAN_PORT_LL_MATCH_IN_AC_TCAM_SPECIAL_FIELDS { \
+            DBAL_FIELD_VLAN_DOMAIN, \
+            DBAL_FIELD_VID_OUTER_VLAN, \
+            DBAL_FIELD_VID_INNER_VLAN, \
+            DBAL_FIELD_PCP_DEI_OUTER_VLAN, \
+            DBAL_FIELD_LAYER_TYPE }
+
+/** VLAN-Port LL Terminator indications */
+#define VLAN_PORT_LL_TERMINATOR_INDICATIONS SAL_BIT(FLOW_APP_TERM_IND_IGNORE_L2_LEARN_INFO_SET)
+
+/* 
+ * enums and functions for L2 Learn info calculation and result-type selection as consequence
+ */
+typedef enum
+{
+    LIF_LEARN_INFO_REQ_TYPE_INVALID = -1,
+    LIF_LEARN_INFO_REQ_TYPE_FIRST,
+    LIF_LEARN_INFO_REQ_TYPE_NO_REQUIREMENT = LIF_LEARN_INFO_REQ_TYPE_FIRST,
+    LIF_LEARN_INFO_REQ_TYPE_EXTENDED_LIF,
+    LIF_LEARN_INFO_REQ_TYPE_BASIC_LIF,
+    LIF_LEARN_INFO_REQ_TYPE_OPTIMIZED_LIF,
+    LIF_LEARN_INFO_REQ_TYPE_LAST = LIF_LEARN_INFO_REQ_TYPE_OPTIMIZED_LIF,
+    LIF_LEARN_INFO_REQ_TYPE_COUNT
+} lif_learn_info_type_e;
+
+/* 
+ * Part of the VLAN-Port LL L2 Learn info set that is performed via the app specific cb
+ * Calculate the expected learn info type based on other fields.
+ */
+static shr_error_e
+dnx_flow_vlan_port_ll_l2_learn_info_type_set(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    bcm_flow_terminator_info_t * terminator_info,
+    lif_learn_info_type_e * learn_info_type,
+    uint8 is_replace)
+{
+    uint8 is_failover_id_preserved = 0, is_flush_group_preserved = 0, is_additional_data_preserved = 0,
+        is_stat_id_preserved = 0, is_stat_pp_profile_preserved = 0,
+        is_exist, is_failover_id_valid, is_flush_group_valid, is_additional_data_valid, is_stats_valid;
+    SHR_FUNC_INIT_VARS(unit);
+    DBAL_FUNC_INIT_VARS(unit);
+
+    /*
+     * In case of Replace, check if the affecting fields were LIF-Table-Mngr valid in the previous configuration and
+     * aren't removed by this Replace operation.
+     */
+    if (is_replace)
+    {
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_PROTECTION_POINTER,
+                                &is_exist));
+        is_failover_id_preserved = is_exist &&
+            (!_SHR_IS_FLAG_SET(terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_ID_VALID));
+
+        /*
+         * flush_group is a field in a struct, so it has no valid flag which makes it more complicated
+         */
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE,
+                                DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT, &is_exist));
+        if (is_exist)
+        {
+            uint32 dbal_struct_data, cur_flush_group, is_flush_group_unset;
+            uint32 get_entry_handle_id = 0;
+            lif_table_mngr_inlif_info_t inlif_info;
+            const dnx_flow_app_config_t *flow_app_info = dnx_flow_app_info_get(unit, flow_handle_info->flow_handle);
+
+            SHR_IF_ERR_EXIT(DBAL_HANDLE_ALLOC(unit, flow_app_info->flow_table, &get_entry_handle_id));
+            SHR_IF_ERR_EXIT(dnx_lif_table_mngr_get_inlif_info
+                            (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif, get_entry_handle_id, &inlif_info));
+
+            SHR_IF_ERR_EXIT(dnx_flow_field_value32_get
+                            (unit, get_entry_handle_id, DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT,
+                             &dbal_struct_data));
+            SHR_IF_ERR_EXIT(dbal_fields_struct_field_decode
+                            (unit, DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT, DBAL_FIELD_FLUSH_GROUP,
+                             &cur_flush_group, &dbal_struct_data));
+            is_flush_group_unset =
+                _SHR_IS_FLAG_SET(terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID)
+                ||
+                (_SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID)
+                 && (terminator_info->l2_learn_info.flush_group == 0));
+            is_flush_group_preserved = (cur_flush_group) && (!is_flush_group_unset);
+        }
+
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_GENERAL_DATA_0, &is_exist));
+        is_additional_data_preserved = is_exist
+            &&
+            (!_SHR_IS_FLAG_SET
+             (terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_ADDITIONAL_DATA_VALID));
+
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_STAT_OBJECT_ID, &is_exist));
+        is_stat_id_preserved = is_exist
+            && (!_SHR_IS_FLAG_SET(terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_STAT_ID_VALID));
+
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_STAT_OBJECT_CMD, &is_exist));
+        is_stat_pp_profile_preserved = is_exist
+            &&
+            (!_SHR_IS_FLAG_SET
+             (terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_STAT_PP_PROFILE_VALID));
+    }
+
+    /*
+     * The affecting fields are valid in case they are set or preserved (in case of a Replace)
+     */
+    is_failover_id_valid =
+        _SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_ID_VALID)
+        || is_failover_id_preserved;
+    is_flush_group_valid =
+        (_SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID)
+         && (terminator_info->l2_learn_info.flush_group)) || is_flush_group_preserved;
+    is_additional_data_valid =
+        _SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_ADDITIONAL_DATA_VALID)
+        || is_additional_data_preserved;
+    is_stats_valid = _SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_STAT_ID_VALID)
+        || is_stat_id_preserved
+        || _SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_STAT_PP_PROFILE_VALID)
+        || is_stat_pp_profile_preserved;
+
+    /*
+     * In case a failover_id or a flush_group are valid, the result-type has to be 
+     * one that has an Extended learning info
+     */
+    *learn_info_type = LIF_LEARN_INFO_REQ_TYPE_NO_REQUIREMENT;
+    if (is_failover_id_valid || is_flush_group_valid)
+
+    {
+        *learn_info_type = LIF_LEARN_INFO_REQ_TYPE_EXTENDED_LIF;
+    }
+
+    /*
+     * If there are fields that require a result-type that can't support an empty LIF-Info 
+     * (as in the Optimized result-type, make sure this requirerement is selected. 
+     * The Exteneded info requirement remains the strongest.  
+     */
+    if (is_additional_data_valid || is_stats_valid)
+    {
+        /*
+         * For wide-data expect a large result type with no empty LIF-Info struct 
+         */
+        if (*learn_info_type != LIF_LEARN_INFO_REQ_TYPE_EXTENDED_LIF)
+        {
+            *learn_info_type = LIF_LEARN_INFO_REQ_TYPE_BASIC_LIF;
+        }
+    }
+
+exit:
+    DBAL_FUNC_FREE_VARS;
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Part of the VLAN-Port LL L2 Learn info set that is performed via the app specific cb
+ * Store the forwarding information in the SW DB
+ */
+static shr_error_e
+dnx_flow_vlan_port_ll_l2_learn_info_forward_information_set(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    bcm_flow_terminator_info_t * terminator_info,
+    uint32 lif_gport,
+    int is_replace,
+    dnx_algo_gpm_forward_info_t * forward_info)
+{
+    SHR_FUNC_INIT_VARS(unit);
+
+    sal_memset(forward_info, 0, sizeof(dnx_algo_gpm_forward_info_t));
+
+    /*
+     * Retrieve the destination from a gport
+     */
+    SHR_IF_ERR_EXIT(algo_gpm_encode_destination_field_from_gport
+                    (unit, ALGO_GPM_ENCODE_DESTINATION_FLAGS_NONE, terminator_info->l2_learn_info.dest_port,
+                     &(forward_info->destination)));
+
+    /*
+     * Select Forwarding type: Destination-Only or Destination+Out-LIF
+     * Destination-Only is selected when the destination isn't a physical port or when 
+     * there's no Out-LIF due to a Virtual LIF flag.
+     */
+    if ((_SHR_GPORT_IS_FORWARD_PORT(terminator_info->l2_learn_info.dest_port)) ||
+        (_SHR_GPORT_IS_MCAST(terminator_info->l2_learn_info.dest_port)) ||
+        (_SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_VIRTUAL)))
+    {
+        forward_info->fwd_info_result_type = DBAL_RESULT_TYPE_L2_GPORT_TO_FORWARDING_SW_INFO_DEST_ONLY;
+    }
+    else
+    {
+        forward_info->fwd_info_result_type = DBAL_RESULT_TYPE_L2_GPORT_TO_FORWARDING_SW_INFO_DEST_OUTLIF;
+    }
+
+    /*
+     * Fill destination (from Gport) info Forward Info table (SW state)
+     */
+    SHR_IF_ERR_EXIT(algo_gpm_gport_l2_forward_info_add(unit, is_replace, TRUE, lif_gport, forward_info));
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Part of the VLAN-Port LL L2 Learn info set that is performed via the app specific cb
+ * Calculate the learn context and update learn info type accordingly.
+ */
+static void
+dnx_flow_vlan_port_ll_l2_learn_info_context_get(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    bcm_flow_terminator_info_t * terminator_info,
+    dnx_algo_gpm_forward_info_t * forward_info,
+    dbal_enum_value_field_learn_payload_context_e * learn_context,
+    lif_learn_info_type_e * learn_info_type)
+{
+    int is_optimized_allowed = TRUE;
+
+    /*
+     * Don't use an Optimized context according to a dedicated flag  
+     */
+    if (_SHR_IS_FLAG_SET(terminator_info->l2_learn_info.l2_learn_info_flags, BCM_FLOW_L2_LEARN_INFO_NOT_OPTIMIZED))
+    {
+        is_optimized_allowed = FALSE;
+    }
+
+    /*
+     * Set according to the Learn-Info content: Destination value and MACT group 
+     */
+    if (terminator_info->l2_learn_info.flush_group)
+    {
+        *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_EXTENDED_SVL;
+    }
+    else if (!is_optimized_allowed)
+    {
+        *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_BASIC_SVL;
+    }
+    else
+    {
+        *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_OPTIMIZED_SVL;
+    }
+
+    /*
+     * Adjust the learn-payload-context to cases where there's no LIF to learn: Dest-Only forward info
+     */
+    if (forward_info->fwd_info_result_type == DBAL_RESULT_TYPE_L2_GPORT_TO_FORWARDING_SW_INFO_DEST_ONLY)
+    {
+        if (*learn_context == DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_EXTENDED_SVL)
+        {
+            *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_NO_LIF_EXTENDED;
+        }
+        else if (*learn_context == DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_BASIC_SVL)
+        {
+            *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_NO_LIF_BASIC;
+        }
+        else if (*learn_context == DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_OPTIMIZED_SVL)
+        {
+            *learn_context = DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_NO_LIF_OPTIMIZED;
+        }
+    }
+
+    /*
+     * If there were no requirements regarding the learn-info content 
+     * or the applicable result-type, the learn-info can be accustomed 
+     * according to whether the learn-payload-context is Optimized 
+     */
+    if (*learn_info_type == LIF_LEARN_INFO_REQ_TYPE_NO_REQUIREMENT)
+    {
+        if ((*learn_context == DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_SYMMETRIC_LIF_OPTIMIZED_SVL) ||
+            (*learn_context == DBAL_ENUM_FVAL_LEARN_PAYLOAD_CONTEXT_NO_LIF_OPTIMIZED))
+        {
+            *learn_info_type = LIF_LEARN_INFO_REQ_TYPE_OPTIMIZED_LIF;
+        }
+        else
+        {
+            *learn_info_type = LIF_LEARN_INFO_REQ_TYPE_BASIC_LIF;
+        }
+    }
+}
+
+/* 
+ * Part of the VLAN-Port LL L2 Learn info set that is performed via the app specific cb
+ * Set the learn info according to the selected type and update the selected result types.
+ */
+static shr_error_e
+dnx_flow_vlan_port_ll_l2_learn_info_set_to_hw(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_l2_learn_info_t * l2_learn_info,
+    lif_learn_info_type_e learn_info_type,
+    uint32 *selectable_result_types)
+{
+    uint32 full_dbal_struct_data = 0;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /*
+     * Select the learn info struct and fill it according to the learn info type 
+     * Also, set the applicable result types 
+     */
+    switch (learn_info_type)
+    {
+        case LIF_LEARN_INFO_REQ_TYPE_EXTENDED_LIF:
+            SHR_IF_ERR_EXIT(dbal_fields_struct_field_encode
+                            (unit, DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT, DBAL_FIELD_DESTINATION,
+                             (uint32 *) &(l2_learn_info->dest_port), &full_dbal_struct_data));
+            SHR_IF_ERR_EXIT(dbal_fields_struct_field_encode
+                            (unit, DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT, DBAL_FIELD_FLUSH_GROUP,
+                             &(l2_learn_info->flush_group), &full_dbal_struct_data));
+            dbal_entry_value_field32_set(unit, entry_handle_id,
+                                         DBAL_FIELD_LEARN_INFO_NO_LIF_EXT_SYM_LIF_EXT, INST_SINGLE,
+                                         full_dbal_struct_data);
+
+            SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_MP_LARGE);
+            break;
+        case LIF_LEARN_INFO_REQ_TYPE_BASIC_LIF:
+
+            SHR_IF_ERR_EXIT(dbal_fields_struct_field_encode
+                            (unit, DBAL_FIELD_LEARN_INFO_NO_LIF_BASIC_SYM_LIF_BASIC, DBAL_FIELD_DESTINATION,
+                             (uint32 *) &(l2_learn_info->dest_port), &full_dbal_struct_data));
+            dbal_entry_value_field32_set(unit, entry_handle_id,
+                                         DBAL_FIELD_LEARN_INFO_NO_LIF_BASIC_SYM_LIF_BASIC, INST_SINGLE,
+                                         full_dbal_struct_data);
+
+            SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_MP);
+            SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_MP_LARGE_GENERIC_DATA);
+            break;
+        case LIF_LEARN_INFO_REQ_TYPE_OPTIMIZED_LIF:
+            dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_LEARN_INFO_NO_INFO, INST_SINGLE, 0);
+
+            SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_MP_OPTIMIZED_LEARN_PAYLOAD);
+            break;
+        default:
+            SHR_ERR_EXIT(_SHR_E_INTERNAL, "Unsupported learn_info_type - %d\n", learn_info_type);
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Perform VLAN-Port LL set for the L2 Learn info. This is called from the app specific cb and replaces the field set
+ *  - Calculate the expected learn info type based on other fields
+ *  - Store the forwarding information in the SW DB
+ *  - Calculate the learn context and update learn info type accordingly
+ *  - Set the learn info according to the selected type and update the selected result types
+ */
+static shr_error_e
+dnx_flow_vlan_port_ll_l2_learn_info_set(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    bcm_flow_terminator_info_t * terminator_info,
+    uint32 *selectable_result_types)
+{
+    bcm_flow_l2_learn_info_t *l2_learn_info = &(terminator_info->l2_learn_info);
+    lif_learn_info_type_e learn_info_type = LIF_LEARN_INFO_REQ_TYPE_INVALID;
+    dnx_algo_gpm_forward_info_t forward_info;
+    dbal_enum_value_field_learn_payload_context_e learn_context;
+    uint8 is_replace;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /*
+     * Calculate the learn info type
+     */
+    is_replace = _SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_REPLACE);
+    SHR_IF_ERR_EXIT(dnx_flow_vlan_port_ll_l2_learn_info_type_set
+                    (unit, flow_handle_info, gport_hw_resources, terminator_info, &learn_info_type, is_replace));
+    sal_printf("learn_info_type = %d\n", learn_info_type);
+
+    /*
+     * Store the forwarding information for the gport in the dedicated SW DB
+     * and use it for filling the learn info
+     */
+    SHR_IF_ERR_EXIT(dnx_flow_vlan_port_ll_l2_learn_info_forward_information_set
+                    (unit, flow_handle_info, terminator_info, gport_hw_resources->global_out_lif, FALSE,
+                     &forward_info));
+
+    /*
+     * Decide on the learn-payload-context and set it to HW 
+     * The selected learn-payload-context can also affect the learn info type in case optimization is available.
+     */
+    dnx_flow_vlan_port_ll_l2_learn_info_context_get(unit, flow_handle_info, terminator_info, &forward_info,
+                                                    &learn_context, &learn_info_type);
+    dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_LEARN_PAYLOAD_CONTEXT, INST_SINGLE, learn_context);
+    sal_printf("learn_info_type = %d, learn_context = %d\n", learn_info_type, learn_context);
+
+    /*
+     * Select the learn info struct and fill it according to the learn info type 
+     * and select the appropriate result type
+     */
+    SHR_IF_ERR_EXIT(dnx_flow_vlan_port_ll_l2_learn_info_set_to_hw
+                    (unit, entry_handle_id, l2_learn_info, learn_info_type, selectable_result_types));
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Perform LL VLAN-Port Terminator specific operations: 
+ *  - Reset the value of GLOB_IN_LIF for Non-Symmetric LIFs
+ *  - Reconfigure the learn-info in case of Replace
+ */
+int
+flow_vlan_port_ll_terminator_app_specific_operations_cb(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_flow_cmd_control_info_t * flow_cmd_control,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    void *app_entry_data,
+    bcm_flow_special_fields_t * special_fields,
+    void *lif_info,
+    uint32 *selectable_result_types)
+{
+    bcm_flow_terminator_info_t *terminator_info = (bcm_flow_terminator_info_t *) app_entry_data;
+    uint8 is_exist, is_l2_learn_info_set = FALSE;
+    SHR_FUNC_INIT_VARS(unit);
+
+    if (!(flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_SET))
+    {
+        SHR_EXIT();
+    }
+
+    /*
+     * Reset the value of GLOB_IN_LIF for Non-Symmetric LIFs
+     */
+    if (!(_SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_SYMMETRIC_ALLOC)))
+    {
+        dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_GLOB_IN_LIF, INST_SINGLE, 0);
+    }
+
+    /*
+     * Reconfigure the Learn info in case of Replace as other fields may impact the learn context 
+     * and the selected learn info structure. 
+     * In case the learn was set during Replace, there's no need for an additional calculation.
+     */
+    if (_SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID))
+    {
+        is_l2_learn_info_set = TRUE;
+    }
+    else if (_SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_REPLACE))
+    {
+        SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                               (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_LEARN_PAYLOAD_CONTEXT,
+                                &is_exist));
+        if (is_exist &&
+            (!_SHR_IS_FLAG_SET(terminator_info->valid_elements_clear, BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID)))
+        {
+            is_l2_learn_info_set = TRUE;
+        }
+    }
+
+    if (is_l2_learn_info_set)
+    {
+        SHR_IF_ERR_EXIT(dnx_flow_vlan_port_ll_l2_learn_info_set
+                        (unit, entry_handle_id, flow_handle_info, gport_hw_resources, terminator_info,
+                         selectable_result_types));
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Perform LL VLAN-Port Terminator result type selection: 
+ *  - A P2P result type when service-type or destination fields are supplied.
+ *  - A MP result type is later set by flow_vlan_port_ll_terminator_app_specific_operations_cb
+ */
+int
+flow_vlan_port_ll_terminator_result_type_select_cb(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    void *app_entry_data,
+    bcm_flow_special_fields_t * special_fields,
+    void *lif_info,
+    uint32 *selectable_result_types)
+{
+    bcm_flow_terminator_info_t *terminator_info = (bcm_flow_terminator_info_t *) app_entry_data;
+    uint8 is_p2p = FALSE;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /*
+     * Result types are P2P if they include either a service-type field or a destination field                                                                 .
+     */
+    if ((_SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_FLOW_SERVICE_TYPE_VALID)) ||
+        (_SHR_IS_FLAG_SET(terminator_info->valid_elements_set, BCM_FLOW_TERMINATOR_ELEMENT_FLOW_DEST_INFO_VALID)))
+    {
+        is_p2p = TRUE;
+    }
+    /*
+     * In case of Replace, and the P2P identifying fields above weren't changed,                                                                                                                                                .
+     * check whether those fields were previously set and weren't cleared this time                                                                 .
+     */
+    else if (_SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_REPLACE))
+    {
+        if (!_SHR_IS_FLAG_SET(terminator_info->valid_elements_clear,
+                              BCM_FLOW_TERMINATOR_ELEMENT_FLOW_SERVICE_TYPE_VALID))
+        {
+            SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                                   (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                    gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_SERVICE_TYPE, &is_p2p));
+        }
+        if ((!is_p2p) &&
+            (!_SHR_IS_FLAG_SET(terminator_info->valid_elements_clear,
+                               BCM_FLOW_TERMINATOR_ELEMENT_FLOW_DEST_INFO_VALID)))
+        {
+            SHR_IF_ERR_EXIT_NO_MSG(dnx_lif_table_mngr_is_valid_field
+                                   (unit, _SHR_CORE_ALL, gport_hw_resources->local_in_lif,
+                                    gport_hw_resources->inlif_dbal_table_id, TRUE, DBAL_FIELD_DESTINATION, &is_p2p));
+        }
+    }
+
+    /*
+     * In case of P2P, select all the P2P supported result types                                      .
+     */
+    if (is_p2p)
+    {
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC2EEI);
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC2EEI_LARGE_GENERIC_DATA);
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC2EEI_WITH_PROTECTION);
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_P2P);
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_P2P_LARGE);
+        SHR_BITSET(selectable_result_types, DBAL_RESULT_TYPE_IN_AC_INFO_DB_IN_LIF_AC_P2P_LARGE_GENERIC_DATA);
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/** VLAN-Port Link-Layer applications */
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_terminator = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_TERMINATOR",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_INFO_DB,
+
+    /*
+     * Flow app type 
+     */
+    FLOW_APP_TYPE_TERM,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    VALID_VLAN_PORT_LL_TERMINATOR_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_TERMINATOR_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE | BCM_FLOW_HANDLE_INFO_SYMMETRIC_ALLOC,
+
+    /*
+     * Indications
+     */
+    VLAN_PORT_LL_TERMINATOR_INDICATIONS,
+
+    /*
+     * verify cb 
+     */
+    NULL,
+
+    /*
+     * app_specific_operations_cb
+     */
+    flow_vlan_port_ll_terminator_app_specific_operations_cb,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    flow_vlan_port_ll_terminator_result_type_select_cb
+};
+
+/* 
+ * Perform LL VLAN-Port Initiator specific operations: 
+ *  - Set the Out-LIF phase
+ *  - Mark the entry as a last layer
+ */
+int
+flow_vlan_port_ll_initiator_app_specific_operations_cb(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_flow_cmd_control_info_t * flow_cmd_control,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    void *app_entry_data,
+    bcm_flow_special_fields_t * special_fields,
+    void *lif_info,
+    uint32 *selectable_result_types)
+{
+    lif_table_mngr_outlif_info_t *lif_table_mngr_outlif_info = (lif_table_mngr_outlif_info_t *) lif_info;
+    SHR_FUNC_INIT_VARS(unit);
+
+    if (!(flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_SET))
+    {
+        SHR_EXIT();
+    }
+
+    /*
+     * Set the Out-LIF phase to 
+     */
+    lif_table_mngr_outlif_info->logical_phase = DNX_ALGO_LOCAL_OUTLIF_LOGICAL_PHASE_8;
+
+    /*
+     * Mark the entry as a last layer 
+     */
+    dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_EGRESS_LAST_LAYER, INST_SINGLE, TRUE);
+
+    SHR_EXIT();
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_initiator = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_INITIATOR",
+    /** related DBAL table */
+    DBAL_TABLE_EEDB_OUT_AC,
+
+    /*
+     * Flow app type 
+     */
+    FLOW_APP_TYPE_INIT,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    VALID_VLAN_PORT_LL_INITIATOR_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_INITIATOR_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE | BCM_FLOW_HANDLE_INFO_SYMMETRIC_ALLOC,
+
+    /*
+     * Indications
+     */
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb 
+     */
+    NULL,
+
+    /*
+     * app_specific_operations_cb
+     */
+    flow_vlan_port_ll_initiator_app_specific_operations_cb,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+shr_error_e
+flow_vlan_port_ll_match_in_pp_port_verify_cb(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    void *flow_info,
+    bcm_flow_special_fields_t * special_fields)
+{
+    int idx;
+    SHR_FUNC_INIT_VARS(unit);
+
+    for (idx = 0; idx < special_fields->actual_nof_special_fields; idx++)
+    {
+        if (special_fields->special_fields[idx].field_id == DBAL_FIELD_PP_PORT)
+        {
+            break;
+        }
+    }
+
+    if (idx >= special_fields->actual_nof_special_fields)
+    {
+        SHR_ERR_EXIT(_SHR_E_PARAM, "For LL VLAN-Port Port match, The Port field must be provided");
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Perform LL VLAN-Port Match PP-Port specific operations: 
+ *  - Convert the local port to a list of PP-Port + Core-ID.
+ *    For a set/delete cb, perform DBAL commit for each of the PP-Ports.
+ *    For a get cb, perform DBAL get.
+ */
+int
+flow_vlan_port_ll_match_in_pp_port_app_specific_operations_cb(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_flow_cmd_control_info_t * flow_cmd_control,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    void *app_entry_data,
+    bcm_flow_special_fields_t * special_fields,
+    void *lif_info,
+    uint32 *selectable_result_types)
+{
+    uint32 idx;
+    uint32 default_in_lif;
+    SHR_FUNC_INIT_VARS(unit);
+    DBAL_FUNC_INIT_VARS(unit);
+
+    for (idx = 0; idx < special_fields->actual_nof_special_fields; idx++)
+    {
+        if (special_fields->special_fields[idx].field_id == DBAL_FIELD_PP_PORT)
+        {
+            dnx_algo_gpm_gport_phy_info_t gport_info;
+            uint32 local_port, pp_port_index;
+
+            /*
+             * Convert the local port to a list of PP-Port + Core-ID
+             */
+            local_port = special_fields->special_fields[idx].shr_var_uint32;
+            SHR_IF_ERR_EXIT(dnx_algo_gpm_gport_phy_info_get
+                            (unit, local_port, DNX_ALGO_GPM_GPORT_TO_PHY_OP_PP_PORT_IS_MANDATORY, &gport_info));
+
+            /*
+             * For a set/delete cb, for each PP-Port, use the PP-Port and the Core-ID,
+             * perform DBAL commit and skip the rest of the FLOW sequence.
+             */
+            if ((flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_SET)
+                || (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_DELETE))
+            {
+                /*
+                 * Determine the default_in_lif (local in-lif) to set for a set/delete cb 
+                 * In case of a delete cb, set to the initial default In-LIF 
+                 */
+                if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_DELETE)
+                {
+                    SHR_IF_ERR_EXIT(dnx_vlan_port_ingress_initial_default_lif_get(unit, (int *) &default_in_lif));
+                }
+                else if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_SET)
+                {
+                    default_in_lif = gport_hw_resources->local_in_lif;
+                }
+
+                /*
+                 * Set the default In-LIF to each of the PP-Ports
+                 */
+                for (pp_port_index = 0; pp_port_index < gport_info.internal_port_pp_info.nof_pp_ports; pp_port_index++)
+                {
+                    dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_PP_PORT,
+                                               gport_info.internal_port_pp_info.pp_port[pp_port_index]);
+                    dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_CORE_ID,
+                                               gport_info.internal_port_pp_info.core_id[pp_port_index]);
+                    dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_DEFAULT_LIF, INST_SINGLE,
+                                                 default_in_lif);
+                    SHR_IF_ERR_EXIT(dbal_entry_commit(unit, entry_handle_id, DBAL_COMMIT));
+                }
+            }
+            /*
+             * For a get cb, use the first PP-Port as all PP-Ports are expected the same content. 
+             * perform DBAL get and skip the rest of the FLOW sequence, as the DBAL field name differs 
+             * from the standard naming. 
+             */
+            else if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_GET)
+            {
+                uint32 initial_bridge_in_lif, initial_drop_in_lif;
+
+                /*
+                 * Retrieve the first PP-Port's default In-LIF
+                 */
+                dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_PP_PORT,
+                                           gport_info.internal_port_pp_info.pp_port[0]);
+                dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_CORE_ID,
+                                           gport_info.internal_port_pp_info.core_id[0]);
+                dbal_value_field_arr32_request(unit, entry_handle_id, DBAL_FIELD_DEFAULT_LIF, INST_SINGLE,
+                                               &default_in_lif);
+                SHR_IF_ERR_EXIT(dbal_entry_get(unit, entry_handle_id, DBAL_COMMIT));
+
+                /*
+                 * In case the default_lif is one of the initial SDK default LIFs (drop-lif or simple-bridge-lif) - return a not-found error
+                 */
+                initial_drop_in_lif = dnx_data_lif.in_lif.drop_in_lif_get(unit);
+                SHR_IF_ERR_EXIT(dnx_vlan_port_ingress_initial_bridge_lif_get(unit, (int *) &initial_bridge_in_lif));
+                if ((default_in_lif == initial_drop_in_lif) || (default_in_lif == initial_bridge_in_lif))
+                {
+                    SHR_ERR_EXIT(_SHR_E_NOT_FOUND, "Error! Port = %d, No In-LIF assigned\n", local_port);
+                }
+
+                /*
+                 * Convert the local In-LIF to a FLOW gport
+                 */
+                SHR_IF_ERR_EXIT(dnx_algo_gpm_gport_from_lif
+                                (unit, DNX_ALGO_GPM_GPORT_HW_RESOURCES_SBC_LOCAL_LIF_INGRESS, _SHR_CORE_ALL,
+                                 default_in_lif, &flow_handle_info->flow_id));
+                flow_handle_info->flow_id = dnx_flow_gport_to_flow_id(unit, flow_handle_info->flow_id);
+            }
+            flow_cmd_control->flow_command = FLOW_COMMAND_SKIP_TO_END;
+        }
+    }
+
+exit:
+    DBAL_FUNC_FREE_VARS;
+    SHR_FUNC_EXIT;
+}
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_pp_port = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_PP_PORT_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_INGRESS_PP_PORT,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_PP_PORT_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    flow_vlan_port_ll_match_in_pp_port_verify_cb,
+
+    /*
+     * app_specific_operations_cb
+     */
+    flow_vlan_port_ll_match_in_pp_port_app_specific_operations_cb,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_s_vlan = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_S_VLAN_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_S_VLAN_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_S_VLAN_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_c_vlan = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_C_VLAN_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_C_VLAN_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_C_VLAN_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_s_c_vlan = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_S_C_VLAN_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_S_C_VLAN_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_S_C_VLAN_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_c_c_vlan = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_C_C_VLAN_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_C_C_VLAN_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_C_C_VLAN_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_s_s_vlan = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_S_S_VLAN_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_S_S_VLAN_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_S_S_VLAN_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+shr_error_e
+flow_vlan_port_ll_match_in_ac_untagged_verify_cb(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    void *flow_info,
+    bcm_flow_special_fields_t * special_fields)
+{
+    int idx;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    for (idx = 0; idx < special_fields->actual_nof_special_fields; idx++)
+    {
+        if (special_fields->special_fields[idx].field_id == DBAL_FIELD_MAPPED_PP_PORT)
+        {
+            break;
+        }
+    }
+
+    if (idx >= special_fields->actual_nof_special_fields)
+    {
+        SHR_ERR_EXIT(_SHR_E_PARAM, "For LL VLAN-Port Untagged match, The Port field must be provided");
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/* 
+ * Perform LL VLAN-Port Match Untagged specific operations: 
+ *  - Convert the local port to a list of PP-Port + Core-ID and encode the Mapped PP-Port.
+ *    For a set/delete cb, perform DBAL commit for each of the PP-Ports.
+ */
+int
+flow_vlan_port_ll_match_in_ac_untagged_app_specific_operations_cb(
+    int unit,
+    uint32 entry_handle_id,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_flow_cmd_control_info_t * flow_cmd_control,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    void *app_entry_data,
+    bcm_flow_special_fields_t * special_fields,
+    void *lif_info,
+    uint32 *selectable_result_types)
+{
+    uint32 idx;
+    SHR_FUNC_INIT_VARS(unit);
+    DBAL_FUNC_INIT_VARS(unit);
+
+    for (idx = 0; idx < special_fields->actual_nof_special_fields; idx++)
+    {
+        if (special_fields->special_fields[idx].field_id == DBAL_FIELD_MAPPED_PP_PORT)
+        {
+            dnx_algo_gpm_gport_phy_info_t gport_info;
+            uint32 pp_port_index;
+
+            /*
+             * Convert the local port to a list of PP-Port + Core-ID
+             */
+            SHR_IF_ERR_EXIT(dnx_algo_gpm_gport_phy_info_get
+                            (unit, special_fields->special_fields[idx].shr_var_uint32,
+                             DNX_ALGO_GPM_GPORT_TO_PHY_OP_PP_PORT_IS_MANDATORY, &gport_info));
+
+            /*
+             * For a set/delete cb, for each PP-Port, encode the PP-Port and the Core-ID,
+             * perform DBAL commit/clear and skip the rest of the FLOW sequence.
+             */
+            if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_SET)
+            {
+                dbal_entry_action_flags_e dbal_flags =
+                    (_SHR_IS_FLAG_SET(flow_handle_info->flags, BCM_FLOW_HANDLE_INFO_REPLACE)) ? DBAL_COMMIT_UPDATE :
+                    DBAL_COMMIT;
+
+                for (pp_port_index = 0; pp_port_index < gport_info.internal_port_pp_info.nof_pp_ports; pp_port_index++)
+                {
+                    uint32 pp_port = gport_info.internal_port_pp_info.pp_port[pp_port_index];
+                    uint32 core_id = gport_info.internal_port_pp_info.core_id[pp_port_index];
+                    uint32 mapped_pp_port = pp_port | (core_id << dnx_data_port.general.pp_port_bits_size_get(unit));
+                    dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_MAPPED_PP_PORT, mapped_pp_port);
+                    dbal_entry_value_field32_set(unit, entry_handle_id, DBAL_FIELD_IN_LIF, INST_SINGLE,
+                                                 gport_hw_resources->local_in_lif);
+                    SHR_IF_ERR_EXIT(dbal_entry_commit(unit, entry_handle_id, dbal_flags));
+                }
+                flow_cmd_control->flow_command = FLOW_COMMAND_SKIP_TO_END;
+            }
+            if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_DELETE)
+            {
+                for (pp_port_index = 0; pp_port_index < gport_info.internal_port_pp_info.nof_pp_ports; pp_port_index++)
+                {
+                    uint32 pp_port = gport_info.internal_port_pp_info.pp_port[pp_port_index];
+                    uint32 core_id = gport_info.internal_port_pp_info.core_id[pp_port_index];
+                    uint32 mapped_pp_port = pp_port | (core_id << dnx_data_port.general.pp_port_bits_size_get(unit));
+                    dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_MAPPED_PP_PORT, mapped_pp_port);
+                    SHR_IF_ERR_EXIT(dbal_entry_clear(unit, entry_handle_id, DBAL_COMMIT));
+                }
+                flow_cmd_control->flow_command = FLOW_COMMAND_SKIP_TO_END;
+            }
+
+            /*
+             * For a get cb, use the first PP-Port as all PP-Ports are expected the same content. 
+             * Encode the PP-Port and the Core-ID, befoe continuing with the FLOW sequence.
+             */
+            else if (flow_cmd_control->flow_cb_type == FLOW_CB_TYPE_GET)
+            {
+                uint32 pp_port = gport_info.internal_port_pp_info.pp_port[0];
+                uint32 core_id = gport_info.internal_port_pp_info.core_id[0];
+                uint32 mapped_pp_port = pp_port | (core_id << dnx_data_port.general.pp_port_bits_size_get(unit));
+                dbal_entry_key_field32_set(unit, entry_handle_id, DBAL_FIELD_MAPPED_PP_PORT, mapped_pp_port);
+            }
+        }
+    }
+
+exit:
+    DBAL_FUNC_FREE_VARS;
+    SHR_FUNC_EXIT;
+}
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_untagged = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_UNTAGGED_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_UNTAGGED_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_UNTAGGED_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    flow_vlan_port_ll_match_in_ac_untagged_verify_cb,
+    /*
+     * app_specific_operations_cb
+     */
+    flow_vlan_port_ll_match_in_ac_untagged_app_specific_operations_cb,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};
+
+const dnx_flow_app_config_t dnx_flow_app_vlan_port_ll_match_in_ac_tcam = {
+    /*
+     * Application name
+     */
+    "VLAN_PORT_LL_IN_AC_TCAM_MATCH",
+    /** related DBAL table */
+    DBAL_TABLE_IN_AC_TCAM_DB,
+
+    /*
+     * Flow app type
+     */
+    FLOW_APP_TYPE_MATCH,
+
+    /*
+     * Bitwise for supported common fields
+     */
+    FLOW_NO_COMMON_FIELDS,
+
+    /*
+     * specific table special fields
+     */
+    VALID_VLAN_PORT_LL_MATCH_IN_AC_TCAM_SPECIAL_FIELDS,
+
+    /*
+     * Bitmap for supported flow handler flags
+     */
+    BCM_FLOW_HANDLE_INFO_WITH_ID | BCM_FLOW_HANDLE_INFO_REPLACE,
+
+    FLOW_APP_INDICATIONS_NONE,
+    /*
+     * verify cb
+     */
+    NULL,
+    /*
+     * app_specific_operations_cb
+     */
+    NULL,
+
+    /*
+     * Generic callback for marking selectable result types - result_type_select_cb
+     */
+    NULL
+};

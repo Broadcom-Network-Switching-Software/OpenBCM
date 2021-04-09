@@ -1,0 +1,457 @@
+
+BCM.0> 
+BCM.0> 
+BCM.0> cint aacl.c YES
+int ARGC = 0 (0x0)
+int opt_TestWithOption1 = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 5 (0x5)
+int ing_port3 = 9 (0x9)
+int egr_port1 = 13 (0xd)
+execute(): Start
+Doing L2 entry add
+Doing port loopbacks...
+Doing group create. Prio 999...
+Doing entry create...0
+Doing qual InPort...
+Doing qual SrcIp...
+Doing qual DstIp...
+Doing action add CopyToCpu...
+Doing prio set 100...
+Doing stat create...
+Doing stat attach...
+Doing entry install...
+Doing entry create...1
+Doing qual InPort...
+Doing qual SrcIp...
+Doing qual DstIp...
+Doing action add CopyToCpu...
+Doing prio set 100...
+Doing stat attach...
+Doing entry install...
+Doing entry create...2
+Doing qual InPort...
+Doing qual SrcIp...
+Doing qual DstIp...
+Doing action add CopyToCpu...
+Doing prio set 100...
+Doing stat attach...
+Doing entry install...
+Doing entry create...3
+Doing qual InPort...
+Doing qual SrcIp...
+Doing qual DstIp...
+Doing action add CopyToCpu...
+Doing prio set 100...
+Doing stat attach...
+Doing entry install...
+Doing entry create...4
+Doing qual InPort...
+Doing qual SrcIp...
+Doing qual DstIp...
+Doing action add CopyToCpu...
+Doing prio set 100...
+Doing stat attach...
+Doing entry install...
+##########   Sending L3 packet 0 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E51010101120202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 00a7 0000 0000 4011 19e5 1010 
+[bcmPW.0]Packet[1]: data[0020]: 1011 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[1]: data[0060]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[1]: data[0070]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[1]: data[0080]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[1]: data[0090]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[1]: data[00a0]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[1]: data[00b0]: cccc c222 2222 2222 2222 2222 220a f093 
+[bcmPW.0]Packet[1]: data[00c0]: 68
+[bcmPW.0]Packet[1]: length 193 (193). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 5. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000001
+#####################################################
+
+##########   Sending L3 packet 1 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E41010101220202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 00a7 0000 0000 4011 19e4 1010 
+[bcmPW.0]Packet[2]: data[0020]: 1012 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[2]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[2]: data[0060]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[2]: data[0070]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[2]: data[0080]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[2]: data[0090]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[2]: data[00a0]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[2]: data[00b0]: cccc c222 2222 2222 2222 2222 2226 9921 
+[bcmPW.0]Packet[2]: data[00c0]: ac
+[bcmPW.0]Packet[2]: length 193 (193). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 5. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000002
+#####################################################
+
+##########   Sending L3 packet 2 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E31010101320202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 00a7 0000 0000 4011 19e3 1010 
+[bcmPW.0]Packet[3]: data[0020]: 1013 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[3]: data[0060]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[3]: data[0070]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[3]: data[0080]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[3]: data[0090]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[3]: data[00a0]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[3]: data[00b0]: cccc c222 2222 2222 2222 2222 2201 fe43 
+[bcmPW.0]Packet[3]: data[00c0]: 74
+[bcmPW.0]Packet[3]: length 193 (193). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 5. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000003
+#####################################################
+
+##########   Sending L3 packet 3 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E21010101420202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 00a7 0000 0000 4011 19e2 1010 
+[bcmPW.0]Packet[4]: data[0020]: 1014 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[4]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[4]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[4]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[4]: data[0060]: cccc cccc cccc cccc cccc cccc cccc cccc 
+B_CM.0> sleep 1
+[bcmPW.0]Packet[4]: data[0070]: cccc cccc cccc cccc cccc cccc cccc cccc 
+Sleeping for 1 second
+[bcmPW.0]Packet[4]: data[0080]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[4]: data[0090]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[4]: data[00a0]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[4]: data[00b0]: cccc c222 2222 2222 2222 2222 223d ae86 
+[bcmPW.0]Packet[4]: data[00c0]: c5
+[bcmPW.0]Packet[4]: length 193 (193). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 5. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000004
+#####################################################
+
+##########   Sending L3 packet 4 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E11010101520202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 00a7 0000 0000 4011 19e1 1010 
+[bcmPW.0]Packet[5]: data[0020]: 1015 2020 2021 1111 2222 0036 c6b0 0001 
+[bcmPW.0]Packet[5]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011 
+[bcmPW.0]Packet[5]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021 
+[bcmPW.0]Packet[5]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737 
+[bcmPW.0]Packet[5]: data[0060]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[5]: data[0070]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[5]: data[0080]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[5]: data[0090]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[5]: data[00a0]: cccc cccc cccc cccc cccc cccc cccc cccc 
+[bcmPW.0]Packet[5]: data[00b0]: cccc c222 2222 2222 2222 2222 2218 2a56 
+[bcmPW.0]Packet[5]: data[00c0]: 26
+[bcmPW.0]Packet[5]: length 193 (193). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 5. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+##########   Sending L3 packet 5 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119E01010101620202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+##########   Sending L3 packet 6 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119DF1010101720202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+##########   Sending L3 packet 7 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119DE1010101820202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+##########   Sending L3 packet 8 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119DD1010101920202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+##########   Sending L3 packet 9 ########
+B_CM.0> tx 1 pbm=1 data=0000000000DD0000000000CC810000640800450000A700000000401119DC1010101A20202021111122220036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222
+Packet from data=<>, length=193
+B_CM.0> sleep 1
+Sleeping for 1 second
+For group 0:
+B_CM.0> fp stat get si=1 t=p
+The value is: 0x000000005
+#####################################################
+
+
+
+	 Expected Result: You will see that Tunnelled packets..
+
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0> 
+BCM.0> 
+BCM.0> fp show
+FP:	unit 0:
+PIPELINE STAGE AGGREGATE_EGRESS_FLOWTRACKER
+FP:	      :tcam_sz=1023(0x3ff), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE AGGREGATE_MMU_FLOWTRACKER
+FP:	      :tcam_sz=1023(0x3ff), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE FLOWTRACKER
+FP:	      :tcam_sz=3064(0xbf8), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE EXACTMATCH
+FP:	      :tcam_sz=32768(0x8000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=36864(0x9000), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=12288(0x3000), tcam_slices=4, tcam_ext_numb=0,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000001e2222222222222223}
+         qset={InPort, Stage, StageIngress, (null), (null)},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 999
+         slice_primary =  {slice_number=0, Entry count=2048(0x800), Entry free=2051(0x803)},
+         group_status={prio_min=100, prio_max=2147483647, entries_total=36864, entries_free=36867,
+                       counters_total=57344, counters_free=57343, meters_total=6144, meters_free=6144}
+EID 0x00000001: gid=0x1,
+         slice=0, slice_idx=0, part =0, prio=0x64, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+ (null) 
+    Part:0 Offset0:  0 Width0:  16 
+    DATA=0x0000c000 
+    MASK=0x0000c000 
+ (null) 
+    Part:0 Offset0: 20 Width0:  16 
+    DATA=0x0000c000 
+    MASK=0x0000c000 
+         action={act=CopyToCpu, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+EID 0x00000002: gid=0x1,
+         slice=0, slice_idx=0x1, part =0, prio=0x64, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+EID 0x00000003: gid=0x1,
+         slice=0, slice_idx=0x1, part =0, prio=0x64, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+EID 0x00000004: gid=0x1,
+         slice=0, slice_idx=0x1, part =0, prio=0x64, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+EID 0x00000005: gid=0x1,
+         slice=0, slice_idx=0x1, part =0, prio=0x64, flags=0x10602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=1(0x1), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 8 idx=3 entries=1}{Packets}
+         Extended statistics=NULL
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> d chg IFP_TCAM
+IFP_TCAM.ipipe0[0]: <VALID=1,TCAM_PARITY_MASK=1,TCAM_PARITY_KEY=3,MASK=0x0000000000fc000fc000,KEY=0x00000000000c0001c000>
+IFP_TCAM.ipipe0[1]: <VALID=1,TCAM_PARITY_KEY=1,>
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> list ALPM
+ Flags  C Name                         Entry/Copy Description
+ ------   L3_DEFIP_ALPM_ECC           131072      ECC table for L3_DEFIP_ALPM.
+ ----bC * L3_DEFIP_ALPM_HIT_ONLY       49152      L3_DEFIP Hit bit table..
+ ----bC * L3_DEFIP_ALPM_IPV4          196608      (ALPM) SRAM Data for IPv4 ...
+ ----bC   L3_DEFIP_ALPM_IPV4_1        131072      (ALPM) SRAM Data for IPv4 ...
+ ----bC * L3_DEFIP_ALPM_IPV6_64       131072      (ALPM) SRAM Data for IPv6(...
+ ----bC * L3_DEFIP_ALPM_IPV6_128       65536      (ALPM) SRAM Data for IPv6(...
+ ----bC   L3_DEFIP_ALPM_IPV6_64_1      98304      (ALPM) SRAM Data for IPv6(...
+ ----bC * L3_DEFIP_ALPM_RAW            32768      L3_DEFIP_ALPM raw view to ...
+Flags: (r)eadonly, (d)ebug, (s)orted, (h)ashed
+       C(A)M, (c)bp, (b)ist-able, (C)achable
+    C: Cache state, * means cache is on
+BCM.0> d chg L3_DEFIP_ALPM_IPV4
+L3_DEFIP_ALPM_IPV4.ipipe0[18]: <VALID=1,LENGTH=0x20,KEY=0x10101011,ENTRY_ONLY=0x000300030020202023,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+L3_DEFIP_ALPM_IPV4.ipipe0[26]: <VALID=1,LENGTH=0x20,KEY=0x20202021,ENTRY_ONLY=0x000300030040404043,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+L3_DEFIP_ALPM_IPV4.ipipe0[32786]: <VALID=1,LENGTH=0x20,KEY=0x10101012,ENTRY_ONLY=0x000300030020202025,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+L3_DEFIP_ALPM_IPV4.ipipe0[65554]: <VALID=1,LENGTH=0x20,KEY=0x10101013,ENTRY_ONLY=0x000300030020202027,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+L3_DEFIP_ALPM_IPV4.ipipe0[98322]: <VALID=1,LENGTH=0x20,KEY=0x10101014,ENTRY_ONLY=0x000300030020202029,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+L3_DEFIP_ALPM_IPV4.ipipe0[131090]: <VALID=1,LENGTH=0x20,KEY=0x10101015,ENTRY_ONLY=0x00030003002020202b,DESTINATION=0x18001,DATA=0x18001,ACL_CLASS_ID_VALID=1,ACL_CLASS_ID=0xc000>
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> a
+Attach: Unit 0 (BCM56470_A0): attached (current unit)
+BCM.0> 
+BCM.0> 
+BCM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.19 built 20200427 (Mon Apr 27 04:20:53 2020)
+From sr936857@xl-sj1-31:/projects/ntsw-sw7/home/sr936857/gitcode/SDK_6519
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+...
+...
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> ps
+                 ena/        speed/ link auto    STP                  lrn  inter   max   cut   loop
+           port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?  back
+       ce0(  1)  up     4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284         MAC
+       ce1(  5)  up     4  100G  FD   SW  No   Forward  TX RX    All   FA  CAUI4 12284         MAC
+       ce2(  9)  up     4  100G  FD   SW  No   Forward  TX RX    All   FA  CAUI4 12284         MAC
+       ce3( 13)  up     4  100G  FD   SW  No   Forward  TX RX    All   FA  CAUI4 12284         MAC
+       ce4( 17)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       ce5( 21)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       ce6( 25)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       ce7( 29)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       ce8( 33)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       ce9( 37)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce10( 41)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce11( 45)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce12( 49)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce13( 53)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce14( 57)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+      ce15( 61)  down   4  100G  FD   SW  No   Forward  TX RX   None   FA  CAUI4 12284            
+       xe0( 65)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe1( 66)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe2( 67)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe3( 68)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> show c
+MC_PERQ_PKT(0).cpu0	    :			  5		     +5
+MC_PERQ_BYTE(0).cpu0	    :			965		   +965
+RUC_64.ce0		    :			 10		    +10
+ING_NIV_RX_FRAMES_VL.ce0    :			 10		    +10
+R255.ce0		    :			 10		    +10
+RPKT.ce0		    :			 10		    +10
+RUCA.ce0		    :			 10		    +10
+RPRM.ce0		    :			 10		    +10
+RVLN.ce0		    :			 10		    +10
+RPOK.ce0		    :			 10		    +10
+RBYT.ce0		    :		      1,930		 +1,930
+T255.ce0		    :			 10		    +10
+TPOK.ce0		    :			 10		    +10
+TPKT.ce0		    :			 10		    +10
+TUCA.ce0		    :			 10		    +10
+TVLN.ce0		    :			 10		    +10
+TBYT.ce0		    :		      1,930		 +1,930
+UC_PERQ_PKT(0).ce0	    :			 10		    +10
+UC_PERQ_BYTE(0).ce0	    :		      1,930		 +1,930
+RUC_64.ce1		    :			 10		    +10
+RDBGC0_64.ce1		    :			 10		    +10
+ING_NIV_RX_FRAMES_VL.ce1    :			 10		    +10
+R255.ce1		    :			 10		    +10
+RPKT.ce1		    :			 10		    +10
+RUCA.ce1		    :			 10		    +10
+RPRM.ce1		    :			 10		    +10
+RVLN.ce1		    :			 10		    +10
+RPOK.ce1		    :			 10		    +10
+RBYT.ce1		    :		      1,930		 +1,930
+T255.ce1		    :			 10		    +10
+TPOK.ce1		    :			 10		    +10
+TPKT.ce1		    :			 10		    +10
+TUCA.ce1		    :			 10		    +10
+TVLN.ce1		    :			 10		    +10
+TBYT.ce1		    :		      1,930		 +1,930
+UC_PERQ_PKT(0).ce1	    :			 10		    +10
+UC_PERQ_BYTE(0).ce1	    :		      1,930		 +1,930
+BCM.0> 
+

@@ -1,0 +1,34 @@
+
+------------------------------------------------ README - End -------------------------------------------
+
+
+Backplane/Cascaded ports are normal Ethernet interface on the XGS device (X4) used to connect to a Port fan-out switch device that hosts multiple Sub-ports.
+
+Only backplane ports can be used to create the subports.
+
+A port can be made as a backplace port by adding it into pbmp_subport.
+e.g in the below example, logical port 7 is made as backplane port.
+
+pbmp_subport=0x0000000080
+
+
+The number of subports on each backplane ports may vary. User needs to be specify how many ports are needed on that backplane port. it is given by num_subports config property on that logical port. Maximum of 48 subports are supported on each backplane port.
+
+num_subports_7=<number of subports>
+
+
+--------- Adding subport number in packet going out of channelized port. ----------
+
+The subport number is added to a packet going out of channelized port from a flex encoding. It also tells whether macsec encryption will be done in the packet or not.
+
+bcm_flow_encap_config_t has class_id parameter which is used to pass the subport number.
+
+BCM_FLOW_PORT_ENCAP_FLAG_MACSEC_ENCRYPT flag can be added in the same configuration to enable macsec encryption.
+
+
+-------- Removing subport number from the packet coming from channelized port. ---------
+
+bcm_subport_config_t passed in bcm_subport_port_add() has pkt_vlan which is used to match subport_num for the incoming packets from channelized port. A packet coming from channelized port will always have svtag in it.
+------------------------------------------------ README - End -------------------------------------------
+
+

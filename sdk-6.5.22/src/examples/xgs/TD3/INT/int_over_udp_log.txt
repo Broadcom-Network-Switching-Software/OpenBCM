@@ -1,0 +1,76 @@
+BCM.0> c /projects/ntsw-sw7/home/daithal/master/src/examples/xgs/TD3/INT/int_over_udp.c
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+
+
+
+############ 0 ###########
+
+
+tx 1 pbm=1 data=00000000bbbb00000000aaaa810000150800453a006e000000003f1164310a0a01010a0a0200003e1a6f005a0000aaaaaaaabbbbbbbb01010000ffffffffff0000001fe0000000000001000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132330001259ffb7a
+
+Packet from data=<>, length=136
+[bcmPW.0]Packet[1]: data[0010]: 0800 453a 006e 0000 0000 3f11 6431 0a0a 
+[bcmPW.0]Packet[1]: data[0020]: 0101 0a0a 0200 003e 1a6f 005a 0000 aaaa 
+[bcmPW.0]Packet[1]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff00 
+[bcmPW.0]Packet[1]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[1]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001 
+[bcmPW.0]Packet[1]: data[0080]: 259f fb7a f83b f450 
+[bcmPW.0]Packet[1]: length 136 (136). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 0800 453a 006e 0000 0000 3e11 6531 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 0101 0a0a 0200 003e 1a6f 005a 0000 aaaa 
+[bcmPW.0]Packet[2]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ff00 
+[bcmPW.0]Packet[2]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405 
+[bcmPW.0]Packet[2]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[2]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[2]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001 
+[bcmPW.0]Packet[2]: data[0080]: 259f fb7a f2b3 d455 
+[bcmPW.0]Packet[2]: length 136 (136). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x20. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 22. dest-mod 0. src-port 2. src-mod 0. opcode 2.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: L2Move
+
+
+
+############ 0 ###########
+
+
+tx 1 pbm=1 data=00000000bbbb00000000aaaa810000150800453a006e000000003f1164310a0a01010a0a0200003e1a6f005a0000aaaaaaaabbbbbbbb01010000ffffffffffff00001fe0000000000001000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132330001259ffb7a
+
+Packet from data=<>, length=136
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {00000000bbbb} {00000000aaaa} 8100 0015
+[bcmPW.0]Packet[3]: data[0010]: 0800 453a 006e 0000 0000 3f11 6431 0a0a 
+[bcmPW.0]Packet[3]: data[0020]: 0101 0a0a 0200 003e 1a6f 005a 0000 aaaa 
+[bcmPW.0]Packet[3]: data[0030]: aaaa bbbb bbbb 0101 0000 ffff ffff ffff 
+[bcmPW.0]Packet[3]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405 
+[bcmPW.0]Packet[3]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[3]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[3]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001 
+[bcmPW.0]Packet[3]: data[0080]: 259f fb7a 0d9a cc89 
+[bcmPW.0]Packet[3]: length 136 (136). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 65. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 1. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {00000000aaaa} {00000000bbbb} 8100 0015
+[bcmPW.0]Packet[4]: data[0010]: 0800 453a 006e 0000 0000 fe11 a530 0a0a 
+[bcmPW.0]Packet[4]: data[0020]: 0200 0a0a 0101 003e 1a6f 005a 0000 aaaa 
+[bcmPW.0]Packet[4]: data[0030]: aaaa bbbb bbbb 0102 0000 ffff ffff 00ff 
+[bcmPW.0]Packet[4]: data[0040]: 0000 1fe0 0000 0000 0001 0001 0203 0405 
+[bcmPW.0]Packet[4]: data[0050]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[4]: data[0060]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425 
+[bcmPW.0]Packet[4]: data[0070]: 2627 2829 2a2b 2c2d 2e2f 3031 3233 0001 
+[bcmPW.0]Packet[4]: data[0080]: 259f fb7a 0432 94ab 
+[bcmPW.0]Packet[4]: length 136 (136). rx-port 1. cos 0. prio_int 0. vlan 21. reason 0x20. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: L2Move
+bcm_error_t $$ = BCM_E_NONE (0)
+

@@ -1,0 +1,415 @@
+BCM.0> aa              
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3) 
+
+Doing Group Config in EXACTMATCH
+Doing Entry create              
+Doing Entry qualifier clear     
+Doing qualify IpTunnelTtl TTL Value = 64
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 65
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 66
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 67
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 68
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 69
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 70
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 71
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 72
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+Doing Entry create                      
+Doing Entry qualifier clear             
+Doing qualify IpTunnelTtl TTL Value = 73
+Doing Action class add                  
+Doing Entry Install in EXACTMATCH       
+
+Doing Group Config in IFP
+Doing Entry Create       
+Doing qualify TTL Class  
+Doing qualify port..     
+Doing action Copy2Cpu    
+Doing Entry Install in IFP
+
+
+fp show
+
+FP:     unit 0:
+PIPELINE STAGE INGRESS
+FP:           :tcam_sz=3072(0xc00), tcam_slices=9, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS     
+FP:           :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0, 
+PIPELINE STAGE LOOKUP     
+FP:           :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0, 
+GID          2: gid=0x2, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={InPort, Stage, IpTunnelTtlClassZero},
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37887, meters_total=512, meters_free=512}    
+EID 0x0000000b: gid=0x2,  
+         slice=2, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 88 Width0:   4 
+    Part:0 Offset1: 92 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+ IpTunnelTtlClassZero              
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000005                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=200(0xc8), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 1  slice = 10 idx=3 entries=1}{Packets}{Bytes}               
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={InPort, Stage},                         
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37887, meters_total=512, meters_free=512}    
+EID 0x0001868d: gid=0x270e,                                      
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={InPort, Stage},                         
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37887, meters_total=512, meters_free=512}    
+EID 0x00018697: gid=0x270f,                                      
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000003                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}             
+
+############   TTL = 64   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 1414 
+[bcmPW.0]Packet[1]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[1]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch                                
+[bcmPW.0]Packet[1]:            
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>      
+Packet[1]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+sleep 2   
+Sleeping for 2 seconds                             
+fp stat get si=1 t=p                               
+The value is: 0x000000001                          
+
+############   TTL = 65   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000041063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+Sleeping for 2 seconds        
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 4106 3e8c 1414 
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[2]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[2]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch                                
+[bcmPW.0]Packet[2]:            
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<65> > chk-sum<0x3e8c>      
+Packet[2]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000002                          
+
+############   TTL = 66   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000042063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+Sleeping for 2 seconds        
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4206 3e8c 1414 
+[bcmPW.0]Packet[3]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[3]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[3]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch                                
+[bcmPW.0]Packet[3]:            
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<66> > chk-sum<0x3e8c>      
+Packet[3]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000003                          
+
+############   TTL = 67   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000043063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+Sleeping for 2 seconds        
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 4306 3e8c 1414 
+[bcmPW.0]Packet[4]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[4]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[4]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch                                
+[bcmPW.0]Packet[4]:            
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<67> > chk-sum<0x3e8c>      
+Packet[4]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000004                          
+
+############   TTL = 68   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000044063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+[bcmPW.0]                     
+sleep 2                       
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 4406 3e8c 1414 
+[bcmPW.0]Packet[5]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+Sleeping for 2 seconds         
+[bcmPW.0]Packet[5]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[5]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch                                
+[bcmPW.0]Packet[5]:            
+Packet[5]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<68> > chk-sum<0x3e8c>      
+Packet[5]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000005                          
+
+############   TTL = 69   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000045063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[6]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 4506 3e8c 1414 
+Sleeping for 2 seconds         
+[bcmPW.0]Packet[6]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[6]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[6]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[6]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch                                
+[bcmPW.0]Packet[6]:            
+Packet[6]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<69> > chk-sum<0x3e8c>      
+Packet[6]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000006                          
+
+############   TTL = 70   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000046063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[7]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+Sleeping for 2 seconds        
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4606 3e8c 1414 
+[bcmPW.0]Packet[7]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[7]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[7]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[7]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch                                
+[bcmPW.0]Packet[7]:            
+Packet[7]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<70> > chk-sum<0x3e8c>      
+Packet[7]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000007                          
+
+############   TTL = 71   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000047063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+[bcmPW.0]                     
+[bcmPW.0]Packet[8]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 4706 3e8c 1414 
+Sleeping for 2 seconds         
+[bcmPW.0]Packet[8]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[8]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[8]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[8]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch                                
+[bcmPW.0]Packet[8]:            
+Packet[8]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<71> > chk-sum<0x3e8c>      
+Packet[8]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000008                          
+
+############   TTL = 72   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000048063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+[bcmPW.0]                     
+[bcmPW.0]Packet[9]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4806 3e8c 1414 
+[bcmPW.0]Packet[9]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000 
+[bcmPW.0]Packet[9]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405 
+[bcmPW.0]Packet[9]: data[0040]: b0f9 eb4f 0000 0000                     
+[bcmPW.0]Packet[9]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[9]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch                                
+[bcmPW.0]Packet[9]:            
+Packet[9]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<72> > chk-sum<0x3e8c>      
+Packet[9]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>                                   
+fp stat get si=1 t=p                               
+The value is: 0x000000009                          
+
+############   TTL = 73   #######
+Sending packet with Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000049063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2[bcmPW.0]
+
+[bcmPW.0]Packet[10]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 4906 3e8c 1414
+[bcmPW.0]Packet[10]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000
+Sleeping for 2 seconds
+[bcmPW.0]Packet[10]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405
+[bcmPW.0]Packet[10]: data[0040]: b0f9 eb4f 0000 0000
+[bcmPW.0]Packet[10]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[10]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<73> > chk-sum<0x3e8c>
+Packet[10]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+fp stat get si=1 t=p
+The value is: 0x00000000a
+
+############   TTL = 74   #######
+Sending packet with Non_Matching TTL value
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E000000004A063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[11]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[11]: data[0010]: 0800 4500 002e 0000 0000 4a06 3e8c 1414
+[bcmPW.0]Packet[11]: data[0020]: 1416 0a0a 0a0b 227d 0050 0000 0000 0000
+[bcmPW.0]Packet[11]: data[0030]: 0000 5000 0000 4aca 0000 0001 0203 0405
+[bcmPW.0]Packet[11]: data[0040]: b0f9 eb4f 0000 0000
+[bcmPW.0]Packet[11]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[11]: dest-port 2. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[11]: reasons: FilterMatch
+[bcmPW.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<74> > chk-sum<0x3e8c>
+Packet[11]:   TCP: sPort<8829> dPort<80> Seq<0> Ack<0> Off<5> Flags<0x00=> Csum<0x4aca> Urp<0x0000>
+sleep 2
+Sleeping for 2 seconds
+fp stat get si=1 t=p
+The value is: 0x00000000a
+
+
+         Final stat count should be 0x0000000A
+
+
+bcm_error_t $$ = BCM_E_NONE (0)
+############################

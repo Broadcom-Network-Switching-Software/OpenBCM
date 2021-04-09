@@ -1,0 +1,92 @@
+[root@ slk 06:56:09]$ ./bcm.user
+Broadcom Command Monitor: Copyright (c) 1998-2018 Broadcom
+Release: sdk-6.5.14 built 20180808 (Wed Aug  8 12:56:24 2018)
+From sz958021@bld-bei-018:/projects/ntsw-ae/home/labguy/boot/shixianz/sdk-xgs-robo-6.5.14-EA3
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+linux-user-bde:new probed device unit 0 dev_no 0 _ndevices 1
+DMA pool size: 33554432
+PCI unit 0: Dev 0xb770, Rev 0x01, Chip BCM56770_A0, Driver BCM56770_A0
+SOC unit 0 attached to PCI device BCM56770_A0
+WARNING: bcm common command ClearScreen not alphabetized
+rc: unit 0 device BCM56770_A0
+0:soc_maverick2_chip_reset: TS_PLL locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL0 locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL1 locked on unit 0 using internal reference clock
+Loading M0 Firmware located at linkscan_led_fw.bin
+Loading M0 Firmware located at custom_led.bin
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 02.10.04
+
+        CMH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+        CCH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+        CEH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+rc: MMU initialized
+MCSLoad: Error: Unable to open file: BCM56770_0_bfd.srec
+MCSLoad: Error: Unable to open file: BCM56770_1_ptpfull.srec
+*** unit 0: ports capable of limited speed range cut-thru
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0>  config add mmu_lossless=1
+BCM.0>  rc
+rc: unit 0 device BCM56770_A0
+0:soc_maverick2_chip_reset: TS_PLL locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL0 locked on unit 0 using internal reference clock
+0:soc_maverick2_chip_reset: BS_PLL1 locked on unit 0 using internal reference clock
+Loading M0 Firmware located at linkscan_led_fw.bin
+Loading M0 Firmware located at custom_led.bin
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 02.10.04
+
+        CMH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+        CCH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+        CEH: LOADED
+        Ver: 02.10.04
+        SDK Ver: 06.05.14
+
+MCSLoad: Error: Unable to open file: BCM56770_0_bfd.srec
+MCSLoad: Error: Unable to open file: BCM56770_1_ptpfull.srec
+*** unit 0: ports capable of limited speed range cut-thru
+BCM.0>  port xe0-xe2 rxpau=off txpau=off
+BCM.0>  l2 add pbm=xe2 mac=0x0042434DFFFF vlanid=1 rp=false
+ADD: mac=00:42:43:4d:ff:ff vlan=1 GPORT=0x3 modid=0 port=3/xe2
+BCM.0> c tcb_ing.c
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+TCB buffer info
+Ing gport 0x4000001
+Egr gport 0x4000003
+queue 0x2400c000
+queue size 0x1615c00
+Packet data
+042434dffff042434d07981001b400000000000000000000000000000000000000000000008d86a4c5000000000000
+
+Event buffer info
+TCB event 571814601 on buffer 0
+Ing gport 0x4000001
+Egr gport 0x4000003
+Drop reason 1
+queue 0x2400c000
+queue size 0x166a700
+
