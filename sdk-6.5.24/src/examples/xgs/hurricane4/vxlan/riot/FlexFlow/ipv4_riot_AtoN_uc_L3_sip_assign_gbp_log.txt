@@ -1,0 +1,325 @@
+ser/slk# ./bcm.userojects/ntsw-sw-ae/home/sr936857/git-code/sdk6/systems/linux/us
+sal_config_refresh: ignoring duplicate entry "riot_enable"
+                    BCM56275_A1-BRIDGE-FLEXFLOW.bcm line 6 (first defined on line 3)
+sal_config_refresh: unknown entry "cache_coherency_check" on BCM56275_A1-BRIDGE-FLEXFLOW.bcm line 22
+Broadcom Command Monitor: Copyright (c) 1998-2021 Broadcom
+Release: sdk-6.5.22 built 20210503 (Mon May  3 03:13:47 2021)
+From sr936857@xl-sj1-30:/projects/ntsw-sw-ae/home/sr936857/git-code/sdk6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+DMA pool size: 33554432
+BDE dev 0 (PCI), Dev 0xb275, Rev 0x02, Chip BCM56275_A1, Driver BCM56275_A0
+SOC unit 0 attached to PCI device BCM56275_A1
+rc: unit 0 device BCM56275_A1
+Loading M0 Firmware located at ../../../../rc/cmicfw/linkscan_led_fw.bin
+Firmware download successed (0x9689889).
+Loading M0 Firmware located at ../../../../rc/cmicfw/custom_led.bin
+Firmware download successed (0x4bc6bdc6).
+UNIT0 CANCUN:
+        CIH: LOADED
+        Ver: 03.01.00
+
+        CMH: LOADED
+        Ver: 03.01.00
+        SDK Ver: 06.05.22
+
+        CCH: LOADED
+        Ver: 03.01.00
+        SDK Ver: 06.05.22
+
+        CEH: LOADED
+        Ver: 03.01.00
+        SDK Ver: 06.05.22
+
+        CFH: LOADED
+        Ver: 03.01.00
+
+rc: MMU initialized
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> cd cint
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> aa
+Doing L2 entry add
+Get the flow Handle and flow options...
+Enable the Vxlan Global Configuration...
+Enable the Access and Network port controls...
+Enable the Riot Global Configuration...
+Create the Multicast group...
+Create the Flow VPN...
+bcm_vlan_t vpn = 28673 (0x7001)
+Create the Access Flow Port...
+int access_flow_port = -1342177279 (0xb0000001)
+Create the Network Flow Port...
+int network_flow_port = -1342177278 (0xb0000002)
+Create the L3 Interface...
+Create the L3 Egress Interface...
+Create the L3 interface for the overlay local mac...
+Create the L3 Egress object for Overlay remote mac...
+Allow L3 IPv4 on the Access flow port...
+Add the flow match...
+Add the flow match...
+Set the SGPP controls...
+Assign GBP..
+Create the ingress interface...
+int ing_if_id = 2 (0x2)
+Set the Flow Encap...
+Add the Encapsulation...
+0:bcmi_esw_flow_dvp_vlan_xlate_key_set: DVP 2 is for flex flow, TBD
+Create the Flow Tunnel...
+int sid = 33554433 (0x2000001)
+Add the L3 Host Add...
+B_CM.0> a
+Attach: Unit 0 (BCM56275_A1): attached (current unit)
+
+
+##########   Sending IPv4 packet ########
+BEFORE: tx 1 pbm=1 data=0000000033000000000044008100001508004500LLLL000000004011SSSSC0A801010A0A0A01C1C1D1D10036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+B_CM.0> tx 1 pbm=1 data=0000000033000000000044008100001508004500004A000000004011A4EFC0A801010A0A0A01C1C1D1D10036C6B0000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D29197737
+Packet from data=<>, length=100
+B_CM.0> sleep 1
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000003300} {000000004400} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 004a 0000 0000 4011 a4ef c0a8
+[bcmPW.0]Packet[1]: data[0020]: 0101 0a0a 0a01 c1c1 d1d1 0036 c6b0 0001
+[bcmPW.0]Packet[1]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[1]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021
+[bcmPW.0]Packet[1]: data[0050]: 2223 2425 2627 2829 2a2b 2c2d 2919 7737
+[bcmPW.0]Packet[1]: data[0060]: f2d0 2882
+[bcmPW.0]Packet[1]: length 100 (100). rx-port 1. cos 0. prio_int 0. vlan 28673. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-gport -1342177278. src-gport -1342177279. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000002} {000000002222} 8100 0016
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 0084 0000 0000 3f11 a5b4 0a0a
+[bcmPW.0]Packet[2]: data[0020]: 0a02 c0a8 0101 ffff 12b5 0070 0000 8800
+[bcmPW.0]Packet[2]: data[0030]: 2222 0123 4500 0000 0000 aaaa 0000 0000
+[bcmPW.0]Packet[2]: data[0040]: bbbb 8100 001e 0800 4500 004a 0000 0000
+[bcmPW.0]Packet[2]: data[0050]: 3f11 a5ef c0a8 0101 0a0a 0a01 c1c1 d1d1
+[bcmPW.0]Packet[2]: data[0060]: 0036 c6b0 0001 0203 0405 0607 0809 0a0b
+[bcmPW.0]Packet[2]: data[0070]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b
+[bcmPW.0]Packet[2]: data[0080]: 1c1d 1e1f 2021 2223 2425 2627 2829 2a2b
+[bcmPW.0]Packet[2]: data[0090]: 2c2d 2919 7737 a236 11f3
+[bcmPW.0]Packet[2]: length 154 (154). rx-port 2. cos 0. prio_int 0. vlan 22. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+#####################################################
+
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> config
+    phy_port_primary_and_offset_4=0x0103
+    portmap_29.0=29:2.5
+    portmap_4.0=4:1
+    phy_port_primary_and_offset_5=0x0500
+    portmap_10.0=10:1
+    riot_overlay_ecmp_resilient_hash_size=16384
+    portmap_38.0=38:2.5
+    phy_port_primary_and_offset_6=0x0501
+    portmap_47.0=51:1
+    phy_port_primary_and_offset_7=0x0502
+    portmap_5.0=5:1
+    phy_port_primary_and_offset_8=0x0503
+    cache_coherency_check=0
+    portmap_11.0=11:1
+    portmap_65.0=65:20
+    portmap_39.0=39:2.5
+    phy_port_primary_and_offset_9=0x0900
+    portmap_20.0=20:1
+    portmap_48.0=52:1
+    flowtracker_ipfix_observation_domain_id=1
+    portmap_6.0=6:1
+    portmap_12.0=12:1
+    portmap_66.0=66:20
+    portmap_21.0=21:1
+    portmap_49.0=57:25
+    portmap_30.0=30:2.5
+    portmap_7.0=7:1
+    portmap_13.0=13:1
+    portmap_67.0=67:20
+    riot_overlay_l3_egress_mem_size=8192
+    portmap_22.0=22:1
+    portmap_31.0=31:2.5
+    portmap_8.0=8:1
+    portmap_40.0=40:2.5
+    portmap_14.0=14:1
+    portmap_68.0=68:20
+    portmap_23.0=23:1
+    pbmp_xport_xe=0x01FFFFFFFFFFFFE
+    os=unix
+    portmap_32.0=32:2.5
+    portmap_9.0=9:1
+    portmap_41.0=41:1
+    portmap_15.0=15:1
+    core_clock_to_pm_clock_factor=1
+    phy_chain_rx_polarity_flip_physical{29.0}=1
+    portmap_50.0=58:25
+    portmap_24.0=24:1
+    port_gmii_mode{41}=1
+    port_flex_enable=1
+    portmap_33.0=33:2.5
+    flowtracker_num_unique_user_entry_keys=10
+    phy_port_primary_and_offset_10=0x0901
+    riot_enable=1
+    portmap_42.0=42:1
+    portmap_16.0=16:1
+    port_gmii_mode{25}=2
+    l2delete_chunks=4096
+    phy_port_primary_and_offset_11=0x0902
+    portmap_51.0=59:25
+    portmap_25.0=25:2.5
+    riot_overlay_l3_intf_mem_size=1024
+    phy_port_primary_and_offset_20=0x1103
+    phy_port_primary_and_offset_12=0x0903
+    portmap_34.0=34:2.5
+    core_clock_frequency=495
+    phy_port_primary_and_offset_21=0x1500
+    phy_port_primary_and_offset_13=0x0d00
+    portmap_43.0=43:1
+    portmap_17.0=17:1
+    l2xmsg_mode=1
+    phy_port_primary_and_offset_22=0x1501
+    phy_port_primary_and_offset_14=0x0d01
+    portmap_52.0=60:25
+    portmap_26.0=26:2.5
+    portmap_1.0=1:1
+    phy_port_primary_and_offset_23=0x1502
+    phy_port_primary_and_offset_15=0x0d02
+    portmap_35.0=35:2.5
+    ifp_inports_support_enable=1
+    phy_port_primary_and_offset_24=0x1503
+    phy_port_primary_and_offset_16=0x0d03
+    portmap_44.0=44:1
+    portmap_18.0=18:1
+    flow_init_mode=1
+    portmap_53.0=61:20
+    phy_port_primary_and_offset_17=0x1100
+    portmap_27.0=27:2.5
+    portmap_2.0=2:1
+    portmap_36.0=36:2.5
+    phy_port_primary_and_offset_18=0x1101
+    portmap_45.0=49:1
+    portmap_19.0=19:1
+    phy_port_primary_and_offset_19=0x1102
+    phy_port_primary_and_offset_1=0x0100
+    portmap_54.0=63:20
+    portmap_28.0=28:2.5
+    phy_port_primary_and_offset_2=0x0101
+    portmap_3.0=3:1
+    portmap_37.0=37:2.5
+    phy_port_primary_and_offset_3=0x0102
+    portmap_46.0=50:1
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> ps
+                 ena/        speed/ link auto    STP                  lrn  inter   max   cut   loop
+           port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?  back   encap
+       ge0(  1)  up     1    1G  HD   SW  Yes  Forward  TX RX   None   FA   GMII 12284         MAC    IEEE
+       ge1(  2)  up     1    1G  HD   SW  Yes  Forward  TX RX    All   FA   GMII 12284         MAC    IEEE
+       ge2(  3)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge3(  4)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge4(  5)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge5(  6)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge6(  7)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge7(  8)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge8(  9)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+       ge9( 10)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge10( 11)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge11( 12)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge12( 13)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge13( 14)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge14( 15)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge15( 16)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge16( 17)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge17( 18)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge18( 19)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge19( 20)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge20( 21)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge21( 22)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge22( 23)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge23( 24)  down   1     -       SW  Yes  Forward  TX RX   None   FA   GMII 12284                IEEE
+      ge24( 25)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge25( 26)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge26( 27)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge27( 28)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge28( 29)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge29( 30)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge30( 31)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge31( 32)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge32( 33)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge33( 34)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge34( 35)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge35( 36)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge36( 37)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge37( 38)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge38( 39)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge39( 40)  down   1  2.5G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge40( 41)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge41( 42)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge42( 43)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge43( 44)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge44( 45)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge45( 46)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge46( 47)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+      ge47( 48)  down   1    1G  FD   SW  Yes  Forward  TX RX   None   FA  SGMII 12284                IEEE
+       xe0( 49)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284                IEEE
+       xe1( 50)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284                IEEE
+       xe2( 51)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284                IEEE
+       xe3( 52)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284                IEEE
+       hg0( 53)  down   2   20G  FD   SW  No   Forward          None   FA    CR2 12288              HIGIG2
+       hg1( 54)  down   2   20G  FD   SW  No   Forward          None   FA    CR2 12288              HIGIG2
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> ver
+Broadcom Command Monitor: Copyright (c) 1998-2021 Broadcom
+Release: sdk-6.5.22 built 20210503 (Mon May  3 03:13:47 2021)
+From sr936857@xl-sj1-30:/projects/ntsw-sw-ae/home/sr936857/git-code/sdk6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Chips: BCM56504_A0, BCM56504_B0, BCM56314_A0, BCM56800_A0,
+       BCM56514_A0, BCM56624_A0, BCM56624_B0, BCM56680_A0,
+       BCM56680_B0, BCM56224_A0, BCM56224_B0, BCM56820_A0,
+...
+       BCM56560_B0, BCM56260_A0, BCM56260_B0,
+
+       BCM56160_A0, BCM56270_A0,
+       BCM56965_A0, BCM56970_A0, BCM56870_A0, BCM56870_B0,
+       BCM53570_A0, BCM53570_B0, BCM56980_A0, BCM56980_B0,
+       BCM53540_A0, BCM56670_A0, BCM56670_B0, BCM56670_C0,
+       BCM56370_A0, BCM56275_A0, BCM56770_A0, BCM56470_A0,
+       BCM56070_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+...
+    copper sfp
+
+
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0>
+BCM.0> a
+Attach: Unit 0 (BCM56275_A1): attached (current unit)
+BCM.0>
+BCM.0>

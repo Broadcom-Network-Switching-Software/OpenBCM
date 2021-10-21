@@ -1,0 +1,227 @@
+flow_init_mode=1  
+
+l2_mem_entries=16384
+l3_mem_entries=16384
+# EXACT_MATCH_2 double wide entries. single bank of 8k buckets
+fpem_mem_entries=16384
+
+oversubscribe_mode=2
+pp_clock_frequency=833
+bcm_tdm_frequency=1254
+pbmp_xport_xe=0x2223FFFFFFFFFFFFE
+management_port_mode=0
+pbmp_oversubscribe=0x2223FFFFFFFFFFFE0
+
+#Disable oversubscription for mgmt ports.
+port_oversubscribe{1}=0
+port_oversubscribe{2}=0
+port_oversubscribe{3}=0
+port_oversubscribe{4}=0
+
+# Unit 0
+#logicalport.unit=physicalport:speed
+#portmap_<log_port>[.<unit>]=<phy_port>:<speed>
+portmap_1.0=1:25:m
+portmap_2.0=2:25:m
+portmap_3.0=3:25:m
+portmap_4.0=4:25:m
+portmap_5=5:25
+portmap_6=6:25
+portmap_7=7:25
+portmap_8=8:25
+portmap_9=9:25
+portmap_10=10:25
+portmap_11=11:25
+portmap_12=12:25
+portmap_13=13:25
+portmap_14=14:25
+portmap_15=15:25
+portmap_16=16:25
+portmap_17=17:25
+portmap_18=18:25
+portmap_19=19:25
+portmap_20=20:25
+portmap_21=21:25
+portmap_22=22:25
+portmap_23=23:25
+portmap_24=24:25
+portmap_25=25:25
+portmap_26=26:25
+portmap_27=27:25
+portmap_28=28:25
+portmap_29=29:25
+portmap_30=30:25
+portmap_31=31:25
+portmap_32=32:25
+portmap_33=33:25
+portmap_34=34:25
+portmap_35=35:25
+portmap_36=36:25
+portmap_37=37:25
+portmap_38=38:25
+portmap_39=39:25
+portmap_40=40:25
+portmap_41=41:25
+portmap_42=42:25
+portmap_43=43:25
+portmap_44=44:25
+portmap_45=45:25
+portmap_46=46:25
+portmap_47=47:25
+portmap_48=48:25
+portmap_49=49:25
+portmap_50=50:25
+portmap_51=51:25
+portmap_52=52:25
+portmap_53=53:100
+portmap_57=57:100
+portmap_61=61:100
+portmap_65=65:100
+
+# TSC0
+phy_chain_rx_lane_map_physical{1.0} = 0x3021
+phy_chain_tx_lane_map_physical{1.0} = 0x0213
+
+phy_chain_rx_polarity_flip_physical{2.0} = 0
+phy_chain_rx_polarity_flip_physical{3.0} = 1
+
+# TSC1
+phy_chain_rx_lane_map_physical{5.0} = 0x1302
+phy_chain_tx_lane_map_physical{5.0} = 0x3210
+
+phy_chain_rx_polarity_flip_physical{7.0} = 1
+phy_chain_rx_polarity_flip_physical{8.0} = 1
+phy_chain_tx_polarity_flip_physical{8.0} = 1
+# TSC2
+phy_chain_rx_lane_map_physical{9.0} = 0x3021
+phy_chain_tx_lane_map_physical{9.0} = 0x0213
+
+phy_chain_rx_polarity_flip_physical{11.0} = 1
+phy_chain_tx_polarity_flip_physical{10.0} = 0
+phy_chain_tx_polarity_flip_physical{11.0} = 0
+phy_chain_tx_polarity_flip_physical{12.0} = 0
+
+# TSC3
+phy_chain_rx_lane_map_physical{13.0} = 0x1302
+phy_chain_tx_lane_map_physical{13.0} = 0x3210
+
+phy_chain_rx_polarity_flip_physical{15.0} = 1
+phy_chain_rx_polarity_flip_physical{16.0} = 1
+phy_chain_tx_polarity_flip_physical{16.0} = 1
+
+# TSC4
+phy_chain_rx_lane_map_physical{17.0} = 0x3021
+phy_chain_tx_lane_map_physical{17.0} = 0x0213
+
+phy_chain_rx_polarity_flip_physical{18.0} = 0
+phy_chain_rx_polarity_flip_physical{19.0} = 1
+
+# TSC5
+phy_chain_rx_lane_map_physical{21.0} = 0x1302
+phy_chain_tx_lane_map_physical{21.0} = 0x3210
+
+phy_chain_rx_polarity_flip_physical{23.0} = 1
+phy_chain_rx_polarity_flip_physical{24.0} = 1
+phy_chain_tx_polarity_flip_physical{24.0} = 1
+# TSC6
+phy_chain_rx_lane_map_physical{25.0} = 0x3021
+phy_chain_tx_lane_map_physical{25.0} = 0x0312
+
+phy_chain_rx_polarity_flip_physical{27.0} = 1
+phy_chain_tx_polarity_flip_physical{25.0} = 1
+phy_chain_tx_polarity_flip_physical{27.0} = 1
+
+# TSC7
+phy_chain_rx_lane_map_physical{29.0} = 0x1302
+phy_chain_tx_lane_map_physical{29.0} = 0x3210
+
+phy_chain_rx_polarity_flip_physical{31.0} = 1
+phy_chain_rx_polarity_flip_physical{32.0} = 1
+phy_chain_tx_polarity_flip_physical{32.0} = 1
+
+# TSC8
+phy_chain_rx_lane_map_physical{33.0} = 0x3102
+phy_chain_tx_lane_map_physical{33.0} = 0x0312
+
+phy_chain_rx_polarity_flip_physical{33.0} = 1
+phy_chain_rx_polarity_flip_physical{36.0} = 1
+phy_chain_rx_polarity_flip_physical{34.0} = 1
+phy_chain_tx_polarity_flip_physical{33.0} = 1
+phy_chain_tx_polarity_flip_physical{35.0} = 1
+
+# TSC9
+phy_chain_rx_lane_map_physical{37.0} = 0x3102
+phy_chain_tx_lane_map_physical{37.0} = 0x1032
+
+phy_chain_rx_polarity_flip_physical{37.0} = 1
+phy_chain_tx_polarity_flip_physical{37.0} = 1
+phy_chain_tx_polarity_flip_physical{38.0} = 1
+phy_chain_rx_polarity_flip_physical{38.0} = 1
+phy_chain_tx_polarity_flip_physical{39.0} = 1
+
+# TSC10
+phy_chain_rx_lane_map_physical{41.0} = 0x1203
+phy_chain_tx_lane_map_physical{41.0} = 0x2130
+
+phy_chain_rx_polarity_flip_physical{41.0} = 1
+phy_chain_rx_polarity_flip_physical{42.0} = 1
+phy_chain_rx_polarity_flip_physical{44.0} = 1
+phy_chain_tx_polarity_flip_physical{42.0} = 1
+phy_chain_tx_polarity_flip_physical{44.0} = 1
+
+# TSC11
+phy_chain_rx_lane_map_physical{45.0} = 0x2031
+phy_chain_tx_lane_map_physical{45.0} = 0x1032
+
+phy_chain_rx_polarity_flip_physical{47.0} = 1
+phy_chain_rx_polarity_flip_physical{48.0} = 1
+phy_chain_tx_polarity_flip_physical{45.0} = 1
+phy_chain_tx_polarity_flip_physical{46.0} = 1
+phy_chain_tx_polarity_flip_physical{47.0} = 1
+
+# TSC12
+phy_chain_rx_lane_map_physical{49.0} = 0x0312
+phy_chain_tx_lane_map_physical{49.0} = 0x2130
+
+phy_chain_rx_polarity_flip_physical{51.0} = 1
+phy_chain_tx_polarity_flip_physical{50.0} = 1
+phy_chain_tx_polarity_flip_physical{52.0} = 1
+
+
+# TSC13
+phy_chain_rx_lane_map_physical{53.0} = 0x2031
+phy_chain_tx_lane_map_physical{53.0} = 0x1032
+
+phy_chain_rx_polarity_flip_physical{55.0} = 1
+phy_chain_rx_polarity_flip_physical{56.0} = 1
+phy_chain_tx_polarity_flip_physical{53.0} = 1
+phy_chain_tx_polarity_flip_physical{54.0} = 1
+phy_chain_tx_polarity_flip_physical{55.0} = 1
+
+
+# TSC14
+phy_chain_rx_lane_map_physical{57.0} = 0x0312
+phy_chain_tx_lane_map_physical{57.0} = 0x2130
+
+phy_chain_rx_polarity_flip_physical{59.0} = 1
+phy_chain_tx_polarity_flip_physical{58.0} = 1
+phy_chain_tx_polarity_flip_physical{60.0} = 1
+
+# TSC15
+phy_chain_rx_lane_map_physical{61.0} = 0x2031
+phy_chain_tx_lane_map_physical{61.0} = 0x1032
+
+phy_chain_rx_polarity_flip_physical{63.0} = 1
+phy_chain_rx_polarity_flip_physical{64.0} = 1
+phy_chain_tx_polarity_flip_physical{61.0} = 1
+phy_chain_tx_polarity_flip_physical{62.0} = 1
+phy_chain_tx_polarity_flip_physical{63.0} = 1
+
+# TSC16
+phy_chain_rx_lane_map_physical{65.0} = 0x0213
+phy_chain_tx_lane_map_physical{65.0} = 0x2130
+
+phy_chain_rx_polarity_flip_physical{68.0} = 1
+phy_chain_tx_polarity_flip_physical{65.0} = 1
+phy_chain_tx_polarity_flip_physical{66.0} = 1
+ 

@@ -1,0 +1,140 @@
+#This is for a 64x100G configuration NRZ mode (4 lanes per 100G)
+
+pbmp_xport_xe.0=0x800ff800ffc00ff800ff800ff800ffc00ff801fe
+ccm_dma_enable=0
+ccmdma_intr_enable=0
+ctr_evict_enable=0
+mem_cache_enable=0
+parity_correction=0
+parity_enable=0
+phy_enable=0
+phy_null=1
+fpem_mem_entries=65536
+
+#pipe 0
+portmap_1=1:100:4
+portmap_2=5:100:4
+portmap_3=9:100:4
+portmap_4=13:100:4
+
+portmap_5=17:100:4
+portmap_6=21:100:4
+portmap_7=25:100:4
+portmap_8=29:100:4
+
+#loopback port
+portmap_19=259:10
+
+#pipe 1
+portmap_20=33:100:4
+portmap_21=37:100:4
+portmap_22=41:100:4
+portmap_23=45:100:4
+
+portmap_24=49:100:4
+portmap_25=53:100:4
+portmap_26=57:100:4
+portmap_27=61:100:4
+
+#management port
+portmap_38=257:10
+
+#loopback port
+portmap_39=260:10
+
+#pipe 2
+portmap_40=65:100:4
+portmap_41=69:100:4
+portmap_42=73:100:4
+portmap_43=77:100:4
+
+portmap_44=81:100:4
+portmap_45=85:100:4
+portmap_46=89:100:4
+portmap_47=93:100:4
+
+#loopback port
+portmap_59=261:10
+
+#pipe 3
+portmap_60=97:100:4
+portmap_61=101:100:4
+portmap_62=105:100:4
+portmap_63=109:100:4
+
+portmap_64=113:100:4
+portmap_65=117:100:4
+portmap_66=121:100:4
+portmap_67=125:100:4
+
+#loopback port
+portmap_79=262:10
+
+#pipe 4
+portmap_80=129:100:4
+portmap_81=133:100:4
+portmap_82=137:100:4
+portmap_83=141:100:4
+
+portmap_84=145:100:4
+portmap_85=149:100:4
+portmap_86=153:100:4
+portmap_87=157:100:4
+#loopback port
+portmap_99=263:10
+
+#pipe 5
+portmap_100=161:100:4
+portmap_101=165:100:4
+portmap_102=169:100:4
+portmap_103=173:100:4
+
+portmap_104=177:100:4
+portmap_105=181:100:4
+portmap_106=185:100:4
+portmap_107=189:100:4
+#management port
+portmap_118=258:10
+
+#loopback port
+portmap_119=264:10
+
+#pipe 6
+portmap_120=193:100:4
+portmap_121=197:100:4
+portmap_122=201:100:4
+portmap_123=205:100:4
+
+portmap_124=209:100:4
+portmap_125=213:100:4
+portmap_126=217:100:4
+portmap_127=221:100:4
+#loopback port
+portmap_139=265:10
+
+#pipe 7
+portmap_140=225:100:4
+portmap_141=229:100:4
+portmap_142=233:100:4
+portmap_143=237:100:4
+
+portmap_144=241:100:4
+portmap_145=245:100:4
+portmap_146=249:100:4
+portmap_147=253:100:4
+#loopback port
+portmap_159=266:10
+
+core_clock_frequency=1325
+dpr_clock_frequency=1000
+device_clock_frequency=1325
+
+load_firmware=0x2
+port_flex_enable=1
+
+#L3 ECMP related
+l3_ecmp_levels=2
+
+#Failover/Protection Switching related
+failover_fixed_nh_offset_enable=1
+

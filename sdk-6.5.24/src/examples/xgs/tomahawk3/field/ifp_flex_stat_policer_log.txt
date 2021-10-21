@@ -1,0 +1,479 @@
+BCM.0>                  
+BCM.0>                  
+BCM.0> cint ifp_flex_stat_policer.c
+int ing_port1 = 1 (0x1) 
+int ing_port2 = 2 (0x2) 
+int egr_port = 3 (0x3)  
+
+
+fp show
+
+FP:     unit 0:
+PIPELINE STAGE INGRESS
+FP:           :tcam_sz=3072(0xc00), tcam_slices=9, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS                                              
+FP:           :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0, 
+PIPELINE STAGE LOOKUP                                              
+FP:           :tcam_sz=512(0x200), tcam_slices=4, tcam_ext_numb=0, 
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={DstMac, InPort, Stage, StageIngress},
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37885, meters_total=512, meters_free=510}    
+EID 0x00000001: gid=0x1,                                                                                
+         slice=2, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ DstMac 
+    Part:0 Offset0:  0 Width0:  16 
+    Part:0 Offset1: 20 Width1:  16 
+    Part:0 Offset2: 36 Width2:  16 
+    DATA=0x00000000 000000dd       
+    MASK=0x0000ffff ffffffff       
+ InPort                            
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         policer={pid=0x1, level=0, peak_kbits_sec=0x190, peak_kbits_burst=0, commit_kbits_sec=0xa0, commit_kbits_burst=0, PacketBased=0, mode=0x3, entries=2, Clean}
+         statistics={stat id 1  slice = 10 idx=4 entries=3}{GreenPackets}{YellowPackets}{RedPackets}{GreenBytes}{YellowBytes}{RedBytes}{NotGreenPackets}{NotYellowPackets}{NotRedPackets}{NotGreenBytes}{NotYellowBytes}{NotRedBytes}{Packets}{Bytes} 
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}                                                     
+         qset={InPort, Stage}, 
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37887, meters_total=512, meters_free=256}    
+EID 0x0001868d: gid=0x270e,                                                                             
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x0000000000000000000000000000f0000f4000f0000f0000f0000f4000f0001f}
+         qset={InPort, Stage},               
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=256(0x100), Entry free=255(0xff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=2560, entries_free=2559,
+                       counters_total=38912, counters_free=37887, meters_total=512, meters_free=256}    
+EID 0x00018697: gid=0x270f,                                                                             
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 84 Width1:   4 
+    DATA=0x00000003                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}             
+############                                                                              
+Sending 1 packets so that GREEN only hits                                                 
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+The value is 0x01 green packets
+The value is 0x048 green bytes 
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes  
+The value is 0x00 red packets   
+The value is 0x00 red bytes     
+int $$ = 0 (0x0)                
+############                    
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+The value is 0x01 green packets
+The value is 0x048 green bytes 
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes  
+The value is 0x00 red packets   
+The value is 0x00 red bytes     
+
+
+
+############
+Sending 500 packets so that GREEN+YELLOW+RED hits
+
+
+tx 500 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+The value is 0x0f green packets
+The value is 0x0438 green bytes
+The value is 0x01b yellow packets
+The value is 0x0798 yellow bytes 
+The value is 0x01cb red packets  
+The value is 0x08118 red bytes   
+
+
+
+############
+Sending 100000 packets so that more of RED hits
+
+
+tx 100000 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+The value is 0x0a47 green packets
+The value is 0x02e3f8 green bytes
+The value is 0x01481 yellow packets
+The value is 0x05c448 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+
+
+For more accurate and controlled packet tx from CPU, you have to modify the SDK code.
+Code with which to modify is placed at the bottom of this CINT.                      
+Steps:                                                                               
+         1. Modify the SDK code and compile and then load the new bcm.user.          
+         2. Then execute this CINT which will run automated coarse tests.            
+         3. Then you can run the hacked dmemwatcht command as described in the CINT code snippet.
+bcm_error_t $$ = BCM_E_NONE (0) 
+############################    
+BCM.0>                    
+BCM.0>                    
+BCM.0> memwatch 1 5000    
+Setting port number 1     
+Sleep duration 5000       
+Starting the thread...    
+Sending packet to port 1  
+BCM.0> show c             
+PERQ_DROP_PKT(0).cpu0       :                91,811             +91,811                          
+PERQ_DROP_BYTE(0).cpu0      :             6,620,350          +6,620,350                          
+RUC_64.cd0                  :               100,880            +100,880             195/s        
+CDMIB_R127.cd0              :               100,880            +100,880             195/s        
+CDMIB_RPRM.cd0              :               100,880            +100,880             195/s        
+CDMIB_T127.cd0              :               100,880            +100,880             195/s        
+CDMIB_RPKT.cd0              :               100,880            +100,880             195/s        
+CDMIB_RUCA.cd0              :               100,880            +100,880             195/s        
+CDMIB_RPOK.cd0              :               100,880            +100,880             195/s        
+CDMIB_RVLN.cd0              :               100,880            +100,880             195/s        
+CDMIB_TVLN.cd0              :               100,880            +100,880             195/s        
+CDMIB_TBYT.cd0              :             7,273,188          +7,273,188          19,068/s        
+CDMIB_RBYT.cd0              :             7,273,188          +7,273,188          19,068/s        
+CDMIB_RPROG0.cd0            :               100,502            +100,502                          
+CDMIB_RPROG2.cd0            :                   378                +378             195/s        
+CDMIB_TPOK.cd0              :               100,880            +100,880             195/s        
+CDMIB_TPKT.cd0              :               100,880            +100,880             195/s        
+CDMIB_TUCA.cd0              :               100,880            +100,880             195/s        
+UC_PERQ_PKT(0).cd0          :               100,884            +100,884             194/s        
+UC_PERQ_BYTE(0).cd0         :             7,273,580          +7,273,580          18,977/s        
+RUC_64.cd1                  :               100,502            +100,502                          
+RDBGC0_64.cd1               :               100,502            +100,502                          
+TDBGC3_64.cd1               :               100,502            +100,502                          
+CDMIB_R127.cd1              :               100,502            +100,502                          
+CDMIB_RPRM.cd1              :               100,502            +100,502                          
+CDMIB_T127.cd1              :               100,502            +100,502                          
+CDMIB_RPKT.cd1              :               100,502            +100,502                          
+CDMIB_RUCA.cd1              :               100,502            +100,502                          
+CDMIB_RPOK.cd1              :               100,502            +100,502                          
+CDMIB_RVLN.cd1              :               100,502            +100,502                          
+CDMIB_TVLN.cd1              :               100,502            +100,502                          
+CDMIB_TBYT.cd1              :             7,236,144          +7,236,144                          
+CDMIB_RBYT.cd1              :             7,236,144          +7,236,144                          
+CDMIB_RPROG0.cd1            :               100,502            +100,502                          
+CDMIB_TPOK.cd1              :               100,502            +100,502                          
+CDMIB_TPKT.cd1              :               100,502            +100,502                          
+CDMIB_TUCA.cd1              :               100,502            +100,502                          
+UC_PERQ_PKT(0).cd1          :               100,502            +100,502                          
+UC_PERQ_BYTE(0).cd1         :             7,236,144          +7,236,144                          
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :                93,085              +1,274                          
+PERQ_DROP_BYTE(0).cpu0      :             6,745,202            +124,852                          
+RUC_64.cd0                  :               102,153              +1,273             195/s        
+CDMIB_R127.cd0              :               102,154              +1,274             196/s        
+CDMIB_RPRM.cd0              :               102,154              +1,274             196/s        
+CDMIB_T127.cd0              :               102,154              +1,274             196/s        
+CDMIB_RPKT.cd0              :               102,154              +1,274             196/s        
+CDMIB_RUCA.cd0              :               102,154              +1,274             196/s        
+CDMIB_RPOK.cd0              :               102,154              +1,274             196/s        
+CDMIB_RVLN.cd0              :               102,154              +1,274             196/s        
+CDMIB_TVLN.cd0              :               102,154              +1,274             196/s        
+CDMIB_TBYT.cd0              :             7,398,040            +124,852          19,162/s        
+CDMIB_RBYT.cd0              :             7,398,040            +124,852          19,162/s        
+CDMIB_RPROG2.cd0            :                 1,652              +1,274             196/s        
+CDMIB_TPOK.cd0              :               102,154              +1,274             196/s        
+CDMIB_TPKT.cd0              :               102,154              +1,274             196/s        
+CDMIB_TUCA.cd0              :               102,154              +1,274             196/s        
+UC_PERQ_PKT(0).cd0          :               102,158              +1,274             195/s        
+UC_PERQ_BYTE(0).cd0         :             7,398,432            +124,852          19,072/s        
+BCM.0>                                                                                           
+BCM.0>                                                                                           
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :                93,933                +848                          
+PERQ_DROP_BYTE(0).cpu0      :             6,828,306             +83,104                          
+RUC_64.cd0                  :               103,002                +849             195/s        
+CDMIB_R127.cd0              :               103,002                +848             195/s        
+CDMIB_RPRM.cd0              :               103,002                +848             195/s        
+CDMIB_T127.cd0              :               103,002                +848             195/s        
+CDMIB_RPKT.cd0              :               103,002                +848             195/s        
+CDMIB_RUCA.cd0              :               103,002                +848             195/s        
+CDMIB_RPOK.cd0              :               103,002                +848             195/s        
+CDMIB_RVLN.cd0              :               103,002                +848             195/s        
+CDMIB_TVLN.cd0              :               103,002                +848             195/s        
+CDMIB_TBYT.cd0              :             7,481,144             +83,104          19,108/s        
+CDMIB_RBYT.cd0              :             7,481,144             +83,104          19,108/s        
+CDMIB_RPROG2.cd0            :                 2,500                +848             195/s        
+CDMIB_TPOK.cd0              :               103,002                +848             195/s        
+CDMIB_TPKT.cd0              :               103,002                +848             195/s        
+CDMIB_TUCA.cd0              :               103,002                +848             195/s        
+UC_PERQ_PKT(0).cd0          :               103,007                +849             195/s        
+UC_PERQ_BYTE(0).cd0         :             7,481,634             +83,202          19,108/s        
+BCM.0>                                                                                           
+BCM.0>                                                                                           
+BCM.0> cint fpStatGet.c                                                                                        
+The value is 0x01c76 green packets                                                               
+The value is 0x09d9f6 green bytes                                                                
+The value is 0x01481 yellow packets                                                              
+The value is 0x05c448 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                             
+BCM.0>                             
+BCM.0> cint fpStatGet.c      
+The value is 0x01ee4 green packets 
+The value is 0x0ac874 green bytes  
+The value is 0x01481 yellow packets
+The value is 0x05c448 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                             
+BCM.0> cint fpStatGet.c    
+The value is 0x02489 green packets 
+The value is 0x0cf13c green bytes  
+The value is 0x01481 yellow packets
+The value is 0x05c448 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                             
+BCM.0>                             
+BCM.0> memwatch 1 2000             
+Setting port number 1              
+Sleep duration 2000                
+Thread already started.            
+BCM.0>                             
+BCM.0>                             
+BCM.0> cint fpStatGet.c  
+The value is 0x02be1 green packets 
+The value is 0x0fc0ec green bytes  
+The value is 0x017e5 yellow packets
+The value is 0x0710f2 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>  
+BCM.0>  
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :               103,363              +8,158                          
+PERQ_DROP_BYTE(0).cpu0      :             7,752,446            +799,484                          
+RUC_64.cd0                  :               112,424              +8,150             468/s        
+CDMIB_R127.cd0              :               112,425              +8,151             469/s        
+CDMIB_RPRM.cd0              :               112,425              +8,151             469/s        
+CDMIB_T127.cd0              :               112,425              +8,151             469/s        
+CDMIB_RPKT.cd0              :               112,425              +8,151             469/s        
+CDMIB_RUCA.cd0              :               112,425              +8,151             469/s        
+CDMIB_RPOK.cd0              :               112,425              +8,151             469/s        
+CDMIB_RVLN.cd0              :               112,425              +8,151             469/s        
+CDMIB_TVLN.cd0              :               112,425              +8,151             469/s        
+CDMIB_TBYT.cd0              :             8,404,598            +798,798          45,996/s        
+CDMIB_RBYT.cd0              :             8,404,598            +798,798          45,996/s        
+CDMIB_RPROG2.cd0            :                11,923              +8,151             469/s        
+CDMIB_TPOK.cd0              :               112,425              +8,151             469/s        
+CDMIB_TPKT.cd0              :               112,425              +8,151             469/s        
+CDMIB_TUCA.cd0              :               112,425              +8,151             469/s        
+UC_PERQ_PKT(0).cd0          :               112,435              +8,156             468/s        
+UC_PERQ_BYTE(0).cd0         :             8,405,578            +799,288          45,906/s        
+BCM.0>                                                                                           
+BCM.0>                                                                                           
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :               105,913              +2,550                          
+PERQ_DROP_BYTE(0).cpu0      :             8,002,346            +249,900                          
+RUC_64.cd0                  :               114,974              +2,550             471/s        
+CDMIB_R127.cd0              :               114,974              +2,549             471/s        
+CDMIB_RPRM.cd0              :               114,974              +2,549             471/s        
+CDMIB_T127.cd0              :               114,974              +2,549             471/s        
+CDMIB_RPKT.cd0              :               114,974              +2,549             471/s        
+CDMIB_RUCA.cd0              :               114,974              +2,549             471/s        
+CDMIB_RPOK.cd0              :               114,974              +2,549             471/s        
+CDMIB_RVLN.cd0              :               114,974              +2,549             471/s        
+CDMIB_TVLN.cd0              :               114,974              +2,549             471/s        
+CDMIB_TBYT.cd0              :             8,654,400            +249,802          46,151/s        
+CDMIB_RBYT.cd0              :             8,654,400            +249,802          46,151/s        
+CDMIB_RPROG2.cd0            :                14,472              +2,549             471/s        
+CDMIB_TPOK.cd0              :               114,974              +2,549             471/s        
+CDMIB_TPKT.cd0              :               114,974              +2,549             471/s        
+CDMIB_TUCA.cd0              :               114,974              +2,549             471/s        
+UC_PERQ_PKT(0).cd0          :               114,985              +2,550             472/s        
+UC_PERQ_BYTE(0).cd0         :             8,655,478            +249,900          46,242/s        
+BCM.0>                             
+BCM.0>                             
+BCM.0> cint fpStatGet.c                          
+The value is 0x0347e green packets 
+The value is 0x0130d68 green bytes 
+The value is 0x0290d yellow packets
+The value is 0x0da242 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                             
+BCM.0>                             
+BCM.0> cint fpStatGet.c                          
+The value is 0x03632 green packets 
+The value is 0x013b3ee green bytes 
+The value is 0x02c70 yellow packets
+The value is 0x0eee28 yellow bytes 
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                             
+BCM.0>                             
+BCM.0> cint fpStatGet.c                          
+The value is 0x03c38 green packets 
+The value is 0x016023a green bytes 
+The value is 0x0386d yellow packets
+The value is 0x0138564 yellow bytes
+The value is 0x0169cd red packets  
+The value is 0x065c1a8 red bytes   
+bcm_error_t $$ = BCM_E_NONE (0)    
+BCM.0>                 
+BCM.0>                 
+BCM.0> memwatch 1 500  
+Setting port number 1  
+Sleep duration 500     
+Thread already started.
+BCM.0>                 
+BCM.0>                 
+BCM.0> show c          
+PERQ_DROP_PKT(0).cpu0       :               122,043             +16,130                          
+PERQ_DROP_BYTE(0).cpu0      :             9,583,086          +1,580,740                          
+RUC_64.cd0                  :               131,072             +16,098           1,586/s        
+CDMIB_R127.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_RPRM.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_T127.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_RPKT.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_RUCA.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_RPOK.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_RVLN.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_TVLN.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_TBYT.cd0              :            10,232,004          +1,577,604         155,409/s        
+CDMIB_RBYT.cd0              :            10,232,004          +1,577,604         155,409/s        
+CDMIB_RPROG2.cd0            :                30,570             +16,098           1,586/s        
+CDMIB_TPOK.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_TPKT.cd0              :               131,072             +16,098           1,586/s        
+CDMIB_TUCA.cd0              :               131,072             +16,098           1,586/s        
+UC_PERQ_PKT(0).cd0          :               131,111             +16,126           1,581/s        
+UC_PERQ_BYTE(0).cd0         :            10,235,826          +1,580,348         154,959/s        
+BCM.0>                                                                                           
+BCM.0>                                                                                           
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :               127,367              +5,324                          
+PERQ_DROP_BYTE(0).cpu0      :            10,104,838            +521,752                          
+RUC_64.cd0                  :               136,393              +5,321           1,597/s        
+CDMIB_R127.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_RPRM.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_T127.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_RPKT.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_RUCA.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_RPOK.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_RVLN.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_TVLN.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_TBYT.cd0              :            10,753,560            +521,556         156,558/s        
+CDMIB_RBYT.cd0              :            10,753,560            +521,556         156,558/s        
+CDMIB_RPROG2.cd0            :                35,892              +5,322           1,598/s        
+CDMIB_TPOK.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_TPKT.cd0              :               136,394              +5,322           1,598/s        
+CDMIB_TUCA.cd0              :               136,394              +5,322           1,598/s        
+UC_PERQ_PKT(0).cd0          :               136,439              +5,328           1,599/s        
+UC_PERQ_BYTE(0).cd0         :            10,757,970            +522,144         156,737/s        
+BCM.0>                                                                                           
+BCM.0>                                                                                           
+BCM.0> show c                                                                                    
+PERQ_DROP_PKT(0).cpu0       :               132,563              +3,475                          
+PERQ_DROP_BYTE(0).cpu0      :            10,614,046            +340,550                          
+RUC_64.cd0                  :               141,599              +3,475           1,614/s        
+CDMIB_R127.cd0              :               141,599              +3,475           1,614/s        
+CDMIB_RPRM.cd0              :               141,599              +3,475           1,614/s        
+CDMIB_T127.cd0              :               141,599              +3,475           1,614/s        
+CDMIB_RPKT.cd0              :               141,599              +3,475           1,614/s        
+CDMIB_RUCA.cd0              :               141,599              +3,475           1,614/s        
+CDMIB_RPOK.cd0              :               141,599              +3,475           1,614/s
+CDMIB_RVLN.cd0              :               141,599              +3,475           1,614/s
+CDMIB_TVLN.cd0              :               141,599              +3,475           1,614/s
+CDMIB_TBYT.cd0              :            11,263,650            +340,550         158,167/s
+CDMIB_RBYT.cd0              :            11,263,650            +340,550         158,167/s
+CDMIB_RPROG2.cd0            :                41,097              +3,475           1,614/s
+CDMIB_TPOK.cd0              :               141,599              +3,475           1,614/s
+CDMIB_TPKT.cd0              :               141,599              +3,475           1,614/s
+CDMIB_TUCA.cd0              :               141,599              +3,475           1,614/s
+UC_PERQ_PKT(0).cd0          :               141,632              +3,474           1,614/s
+UC_PERQ_BYTE(0).cd0         :            11,266,884            +340,452         158,167/s
+BCM.0>
+BCM.0>
+BCM.0> cint fpStatGet.c
+The value is 0x04c35 green packets
+The value is 0x01c2114 green bytes
+The value is 0x04f63 yellow packets
+The value is 0x01c4f2e yellow bytes
+The value is 0x01a03e red packets
+The value is 0x07a9ad4 red bytes
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0> cint fpStatGet.c
+The value is 0x04df4 green packets
+The value is 0x01ccc94 green bytes
+The value is 0x0512a yellow packets
+The value is 0x01cfd5c yellow bytes
+The value is 0x01aaca red packets
+The value is 0x07ea4ce red bytes
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0> cint fpStatGet.c
+The value is 0x04f9d green packets
+The value is 0x01d6f46 green bytes
+The value is 0x052d8 yellow packets
+The value is 0x01da1f8 yellow bytes
+The value is 0x01b4c7 red packets
+The value is 0x08277a8 red bytes
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0> cint fpStatGet.c
+The value is 0x05145 green packets
+The value is 0x01e1134 green bytes
+The value is 0x05487 yellow packets
+The value is 0x01e46f6 yellow bytes
+The value is 0x01bebf red packets
+The value is 0x0864836 red bytes
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>
+BCM.0>

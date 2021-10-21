@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<device_data>
+    <module name="device">
+        <sub_module name="general">
+            <features>
+            </features>
+
+            <defines>
+            </defines >
+
+            <numerics>
+                <numeric name="device_id" value="0x8483"></numeric>
+            </numerics>
+
+            <tables>
+            </tables>
+        </sub_module>
+    </module>
+
+    <module name="nif">
+
+        <sub_module name="flexe">
+            <features>
+                <feature name="disable_l1" value="0"></feature>
+                <feature name="disable_oam_over_flexe" value="0"></feature>
+            </features>
+            <numerics>
+                <numeric name="nof_pms_per_feu" value="2"></numeric>
+            </numerics>
+        </sub_module>
+
+    </module>
+
+</device_data>

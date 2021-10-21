@@ -1,0 +1,437 @@
+BCM.0> c packet_timestamping_per_port.c
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3)
+Doing create vlan and port add...
+Doing L2 address add...
+0:_bcm_esw_linkscan_update_port: Port ge0: Link Up with Speed 0M!
+0:_bcm_esw_linkscan_update_port: Port ge2: Link Up with Speed 0M!
+Doing port loopback for 2...
+0:_bcm_esw_linkscan_update_port: Port ge1: Link Up with Speed 0M!
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Doing port control PacketTimeStampInsertRx...
+Doing port control PacketTimeStampRxId...
+Doing port control PacketTimeStampInsertTx...
+Doing port control TimeStampTxId...
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d1,TIMESTAMP_TOD_NSEC=0xbb9,TIMESTAMP_TA_NSEC=0x00000086a0c8,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 0 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[1]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[1]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[1]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d1 01dd b719
+[bcmPW.0]Packet[1]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[1]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[1]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[2]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[2]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d1 01dd b719
+[bcmPW.0]Packet[2]: data[0060]: 0000 0154 0000 0000 07d1 01dd e4a9 0000
+[bcmPW.0]Packet[2]: data[0070]: 0177 48d9 fdc0
+[bcmPW.0]Packet[2]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[2]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d2,TIMESTAMP_TOD_NSEC=0xbba,TIMESTAMP_TA_NSEC=0x000078d51dd0,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 1 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[3]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[3]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[3]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[3]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d2 012d f7da
+[bcmPW.0]Packet[3]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[3]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[3]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[4]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[4]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[4]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d2 012d f7da
+[bcmPW.0]Packet[4]: data[0060]: 0000 0154 0000 0000 07d2 012e 258a 0000
+[bcmPW.0]Packet[4]: data[0070]: 0177 9091 1fdd
+[bcmPW.0]Packet[4]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[4]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d3,TIMESTAMP_TOD_NSEC=0xbbb,TIMESTAMP_TA_NSEC=0x0000f09dfd68,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 2 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[5]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[5]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[5]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[5]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[5]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d3 0113 53db
+[bcmPW.0]Packet[5]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[5]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]:
+Packet[5]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[5]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[5]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[6]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[6]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[6]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[6]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[6]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d3 0113 53db
+[bcmPW.0]Packet[6]: data[0060]: 0000 0154 0000 0000 07d3 0113 819b 0000
+[bcmPW.0]Packet[6]: data[0070]: 0177 fd06 4fa0
+[bcmPW.0]Packet[6]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]:
+Packet[6]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[6]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[6]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d4,TIMESTAMP_TOD_NSEC=0xbbc,TIMESTAMP_TA_NSEC=0x0001686c3ce4,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 3 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[7]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[7]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[7]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[7]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[7]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d4 011c 6ecc
+[bcmPW.0]Packet[7]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[7]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]:
+Packet[7]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[7]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[7]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[8]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[8]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[8]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[8]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[8]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d4 011c 6ecc
+[bcmPW.0]Packet[8]: data[0060]: 0000 0154 0000 0000 07d4 011c 9c6c 0000
+[bcmPW.0]Packet[8]: data[0070]: 0177 97dc 8158
+[bcmPW.0]Packet[8]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]:
+Packet[8]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[8]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[8]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d5,TIMESTAMP_TOD_NSEC=0xbbd,TIMESTAMP_TA_NSEC=0x0001e03a6e80,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 4 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[9]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[9]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[9]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[9]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[9]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[9]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d5 011b 0edd
+[bcmPW.0]Packet[9]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[9]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[9]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch
+[bcmPW.0]Packet[9]:
+Packet[9]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[9]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[9]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[10]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[10]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[10]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[10]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[10]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[10]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d5 011b 0edd
+[bcmPW.0]Packet[10]: data[0060]: 0000 0154 0000 0000 07d5 011b 3c6d 0000
+[bcmPW.0]Packet[10]: data[0070]: 0177 c7e9 11b7
+[bcmPW.0]Packet[10]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[10]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]:
+Packet[10]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[10]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[10]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d6,TIMESTAMP_TOD_NSEC=0xbbe,TIMESTAMP_TA_NSEC=0x000258088438,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 5 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[11]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[11]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[11]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[11]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[11]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[11]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d6 0113 16fe
+[bcmPW.0]Packet[11]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[11]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[11]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[11]: reasons: FilterMatch
+[bcmPW.0]Packet[11]:
+Packet[11]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[11]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[11]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[12]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[12]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[12]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[12]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[12]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[12]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d6 0113 16fe
+[bcmPW.0]Packet[12]: data[0060]: 0000 0154 0000 0000 07d6 0113 44ce 0000
+[bcmPW.0]Packet[12]: data[0070]: 0177 ee4c 5dc6
+[bcmPW.0]Packet[12]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[12]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[12]: reasons: FilterMatch
+[bcmPW.0]Packet[12]:
+Packet[12]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[12]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[12]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d7,TIMESTAMP_TOD_NSEC=0xbbf,TIMESTAMP_TA_NSEC=0x0002cfd6da68,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 6 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[13]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[13]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[13]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[13]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[13]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[13]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d7 0117 56df
+[bcmPW.0]Packet[13]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[13]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[13]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[13]: reasons: FilterMatch
+[bcmPW.0]Packet[13]:
+Packet[13]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[13]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[13]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[14]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[14]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[14]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[14]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[14]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[14]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d7 0117 56df
+[bcmPW.0]Packet[14]: data[0060]: 0000 0154 0000 0000 07d7 0117 84af 0000
+[bcmPW.0]Packet[14]: data[0070]: 0177 c284 c7dd
+[bcmPW.0]Packet[14]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[14]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[14]: reasons: FilterMatch
+[bcmPW.0]Packet[14]:
+Packet[14]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[14]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[14]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d8,TIMESTAMP_TOD_NSEC=0xbc0,TIMESTAMP_TA_NSEC=0x000347a612d0,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 7 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[15]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[15]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[15]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[15]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[15]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[15]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d8 0119 02a0
+[bcmPW.0]Packet[15]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[15]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[15]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[15]: reasons: FilterMatch
+[bcmPW.0]Packet[15]:
+Packet[15]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[15]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[15]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[16]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[16]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[16]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[16]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[16]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[16]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d8 0119 02a0
+[bcmPW.0]Packet[16]: data[0060]: 0000 0154 0000 0000 07d8 0119 3050 0000
+[bcmPW.0]Packet[16]: data[0070]: 0177 0ba6 331c
+[bcmPW.0]Packet[16]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[16]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[16]: reasons: FilterMatch
+[bcmPW.0]Packet[16]:
+Packet[16]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[16]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[16]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007d9,TIMESTAMP_TOD_NSEC=0xbc1,TIMESTAMP_TA_NSEC=0x0003bf736618,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 8 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[17]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[17]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[17]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[17]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[17]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[17]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d9 011c e5a1
+[bcmPW.0]Packet[17]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[17]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[17]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[17]: reasons: FilterMatch
+[bcmPW.0]Packet[17]:
+Packet[17]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[17]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[17]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[18]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[18]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[18]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[18]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[18]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[18]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07d9 011c e5a1
+[bcmPW.0]Packet[18]: data[0060]: 0000 0154 0000 0000 07d9 011d 1351 0000
+[bcmPW.0]Packet[18]: data[0070]: 0177 7833 5c27
+[bcmPW.0]Packet[18]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[18]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[18]: reasons: FilterMatch
+[bcmPW.0]Packet[18]:
+Packet[18]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[18]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[18]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+EGR_TS_UTC_CONVERSION.epipe0[0]: <TIMESTAMP_TOD_SEC=0x0000000007da,TIMESTAMP_TOD_NSEC=0xbc2,TIMESTAMP_TA_NSEC=0x00043741a3e0,TIMESTAMP_FORMAT=1>
+Unknown option or memory to dump (use 'help dump' for more info)
+
+
+
+############ 9 ###########
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C0A0A0AAA0B0B0BBB000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1f202122232425262728292a2b2c2d2e2f30; sleep quiet 2
+
+Packet from data=<>, length=90
+[bcmPW.0]
+[bcmPW.0]Packet[19]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[19]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[19]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[19]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[19]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[19]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07da 011c f722
+[bcmPW.0]Packet[19]: data[0060]: 0000 0154 0000 0000
+[bcmPW.0]Packet[19]: length 104 (104). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[19]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[19]: reasons: FilterMatch
+[bcmPW.0]Packet[19]:
+Packet[19]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[19]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[19]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+[bcmPW.0]
+[bcmPW.0]Packet[20]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[20]: data[0010]: 0800 4500 002e 0000 0000 4006 3e8c 0a0a
+[bcmPW.0]Packet[20]: data[0020]: 0aaa 0b0b 0bbb 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[20]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[20]: data[0040]: 1a1b 1c1d 1f20 2122 2324 2526 2728 292a
+[bcmPW.0]Packet[20]: data[0050]: 2b2c 2d2e 2f30 f5e9 81a4 07da 011c f722
+[bcmPW.0]Packet[20]: data[0060]: 0000 0154 0000 0000 07da 011d 24e2 0000
+[bcmPW.0]Packet[20]: data[0070]: 0177 01f0 6335
+[bcmPW.0]Packet[20]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[20]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[20]: reasons: FilterMatch
+[bcmPW.0]Packet[20]:
+Packet[20]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[20]:   IP: V(4) src<10.10.10.170> dst<11.11.11.187> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x3e8c>
+Packet[20]:   TCP: sPort<1> dPort<515> Seq<67438087> Ack<134810123> Off<0> Flags<0x0d=FIN,RST,PUSH> Csum<0x1011> Urp<0x1213>
+bcm_error_t $$ = BCM_E_NONE (0)

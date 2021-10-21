@@ -1,0 +1,166 @@
+|||| WITH CHANGING VID FROM VCAP ||||
+
+BCM.0> cint vfp_termination_override.c
+int opt_ChangeVlanInVfp = 1 (0x1)        
+int opt_AddMplsLookupEnable = 0 (0x0)    
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 3 (0x3) 
+Doing mpls related configuration...      
+Doing sc egress mode   
+Doing gport get        
+Doing l3 intf create   
+Doing l3 egress create 
+Doing l3 route add     
+Doing Add l2 tunnel switch add           
+Doing Add l2 tunnel add for VID= 0064    
+Doing Add l2 tunnel add for CHANGED VID 00C8               
+Doing Group create 100 
+Doing bcm_field_entry_create!            
+Doing bcm_field_qualify_clear!           
+Doing InPort qualifier 
+Doing VlanNew action add                 
+Doing TerminationAllowed action add      
+Doing Entry create 1
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 200. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8E27007D0D27450000360000000040FF3D8B141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=92
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 8847 003e 8e27 007d 0d27 4500 0036 0000
+[bcmPW.0]Packet[2]: data[0020]: 0000 40ff 3d8b 1414 1416 0a0a 0a0b 0001
+[bcmPW.0]Packet[2]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[2]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021
+[bcmPW.0]Packet[2]: data[0050]: 2223 2425 8569 a726 0000 0000
+[bcmPW.0]Packet[2]: length 92 (92). rx-port 1. cos 0. prio_int 0. vlan 200. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8e 27 00 7d 0d 27 45 00 00 36 00 00 00 00 40 ff 3d 8b 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000002
+
+
+         Final STAT count should be 2
+
+         Also Final Egress packet should be a normal IP packet (not mpls)
+
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+BCM.0>
+
+############################
+##################################################################################
+|||| WITHOUT CHANGING VID FROM VCAP ||||
+
+BCM.0> cint vfp_termination_override.c
+int opt_ChangeVlanInVfp = 0 (0x0)   
+int opt_AddMplsLookupEnable = 0 (0x0)
+int ing_port1 = 1 (0x1)              
+int ing_port2 = 2 (0x2)              
+int egr_port = 3 (0x3)               
+Doing mpls related configuration...  
+Doing sc egress mode                 
+Doing gport get                      
+Doing l3 intf create                 
+Doing l3 egress create               
+Doing l3 route add                   
+Doing Add l2 tunnel switch add       
+Doing Add l2 tunnel add for VID= 0064
+Doing Add l2 tunnel add for CHANGED VID 00C8
+Doing Group create 100                      
+Doing bcm_field_entry_create!               
+Doing bcm_field_qualify_clear!              
+Doing InPort qualifier                      
+Doing TerminationAllowed action add         
+Doing Entry create 1                        
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8F274500003A0000000040FF3D87141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=88
+sleep 3                       
+Sleeping for 3 seconds        
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 8847 003e 8f27 4500 003a 0000 0000 40ff 
+[bcmPW.0]Packet[1]: data[0020]: 3d87 1414 1416 0a0a 0a0b 0001 0203 0405 
+[bcmPW.0]Packet[1]: data[0030]: 0607 0809 0a0b 0c0d 0e0f 1011 1213 1415 
+[bcmPW.0]Packet[1]: data[0040]: 1617 1819 1a1b 1c1d 1e1f 2021 2223 2425
+[bcmPW.0]Packet[1]: data[0050]: 8569 a726 0000 0000
+[bcmPW.0]Packet[1]: length 88 (88). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 3. dest-mod 0. src-port 1. src-mod 0. opcode 1.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]:
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8f 27 45 00 00 3a 00 00 00 00 40 ff 3d 87 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {0000000000ee} {0000000000dd} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 003a 0000 0000 26ff 5787 1414
+[bcmPW.0]Packet[2]: data[0020]: 1416 0a0a 0a0b 0001 0203 0405 0607 0809
+[bcmPW.0]Packet[2]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819
+[bcmPW.0]Packet[2]: data[0040]: 1a1b 1c1d 1e1f 2021 2223 2425 8569 a726
+[bcmPW.0]Packet[2]: data[0050]: 0000 0000
+[bcmPW.0]Packet[2]: length 84 (84). rx-port 3. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 223. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]:
+Packet[2]:   Ethernet: dst<00:00:00:00:00:ee> src<00:00:00:00:00:dd> Tagged Packet ProtID<0x8100> Ctrl<0x0064> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<20.20.20.22> dst<10.10.10.11> hl<5> service-type<0> tl<58> id<0> frg-off<0> ttl<38> > chk-sum<0x5787>
+fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC810000648847003E8E27007D0D27450000360000000040FF3D8B141414160A0A0A0B000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324258569A726
+
+Packet from data=<>, length=92
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 8847 003e 8e27 007d 0d27 4500 0036 0000
+[bcmPW.0]Packet[3]: data[0020]: 0000 40ff 3d8b 1414 1416 0a0a 0a0b 0001
+[bcmPW.0]Packet[3]: data[0030]: 0203 0405 0607 0809 0a0b 0c0d 0e0f 1011
+[bcmPW.0]Packet[3]: data[0040]: 1213 1415 1617 1819 1a1b 1c1d 1e1f 2021
+[bcmPW.0]Packet[3]: data[0050]: 2223 2425 8569 a726 0000 0000
+[bcmPW.0]Packet[3]: length 92 (92). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 88 47 00 3e 8e 27 00 7d 0d 27 45 00 00 36 00 00 00 00 40 ff 3d 8b 14 14 14 16 0a 0a 0a 0b 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000002
+
+
+         Final STAT count should be 2
+
+         Also Final Egress packet should be a normal IP packet (not mpls)
+
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+
+

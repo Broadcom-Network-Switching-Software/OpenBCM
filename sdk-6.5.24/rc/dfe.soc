@@ -1,0 +1,41 @@
+# $Id: dfe.soc,v 1.18 Broadcom SDK $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2021 Broadcom Inc. All rights reserved.
+#
+
+#Debug level
+debug info
+debug soc tests warn
+debug appl rcload warn
+debug appl symtab warn
+debug soc phy,schan,reg,socmem,dma,mem,miim,mii,intr,counter,physim warn
+debug sys verinet warn
+debug bcm attach warn
+
+# This is added for a mgmt system containing DNX devices and a DFE device, where the DFE is the last unit.
+# In this case the DFE overrides the other units configurations.
+debug socdnx DbalDnx warn
+debug socdnx DiagDbalDnx warn
+debug socdnx DbalAccessDnx warn
+
+# In systems containing J2P device, the system ref core clock should be set to 1.6GHz
+if $?BCM_J2P_IN_SYSTEM \
+    'config delete system_ref_core_clock_khz*;\
+    config add system_ref_core_clock_khz=1600000;'
+
+# Shutdown threads if system is already running
+counter off
+linkscan off
+
+#board related configuration
+if $?BCM88770_A1 || $?BCM88773_A1 || $?BCM88774_A1 || $?BCM88775_A1 || $?BCM88776_A1 || $?BCM88950_A0 || $?BCM88950_A1 || $?BCM88953_A1 || $?BCM88954_A1 || $?BCM88955_A1 || $?BCM88956_A1 || $?BCM88772_A1 || $?BCM88952_A0 || $?BCM88952_A1\
+   'rcload bcm88950_board.soc;'
+
+if !$?warmboot "\
+  local warmboot 0"
+
+INIT_DNX ModID=5 Warmboot=$warmboot
+
+
+echo "dfe.soc: Done."

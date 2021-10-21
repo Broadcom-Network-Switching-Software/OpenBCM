@@ -1,0 +1,53 @@
+# $Id: test_th3_tr147.soc,v 1.0 2021/01/07 17:10:08 Venkata Kancharla $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2021 Broadcom Inc. All rights reserved.
+#
+# Tomahawk3 MBIST test
+# By default use config: $SDK/rc/rc/config_th3_64x100_SVK0010.bcm for base SKU
+
+# Set run command script not to fail on errors reported by commands
+# this allows the script to continue if a test fails
+set rcerror=false
+
+# Set up test mode: don't stop on errors, show progress on each test
+tm -stoponerror +progress
+# Unselect all
+ts -*
+
+echo "testsuite: started: THThreeMBIST"
+
+#Display some useful information
+date
+ver
+soc
+
+rcload rc.soc
+
+echo "Stopping m0 for this test"
+m0 stop 0
+
+counter off;linkscan off;l2mode off; l2learn off;
+
+#Start Test
+echo "Running TH3 MBIST test..."
+
+echo "Running tr 147"
+tr 147
+$done
+
+
+date
+tl
+local returnCode $?
+
+echo Tests Complete.  Reinitializing ...
+config refresh
+echo "Re-enabling m0 for this test"
+m0 start 0
+rcload rc.soc
+
+# We want to show the return code from the tl command which
+# lists the results. The automated test infrastructure keys off of this
+# value
+echo "testsuite: finished: THThreeMBIST: $returnCode"

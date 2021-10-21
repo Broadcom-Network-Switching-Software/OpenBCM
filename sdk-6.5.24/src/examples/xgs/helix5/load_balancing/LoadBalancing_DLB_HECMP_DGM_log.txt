@@ -1,0 +1,1974 @@
+
+
+### Below error if no opt_* overrides are in place.
+
+#####     RH + DLB + DGM not supported in TD3/Hx5 family of devices. Hence -4 is returned.
+
+BCM.0> cint LoadBalancing_DLB_HECMP_DGM.c YES 1 1 1           
+int ARGC = 4 (0x4)            
+int opt_TestTypeRH = 1 (0x1)  
+int opt_TestTypeDLB = 1 (0x1) 
+int opt_TestTypeDGM_HECMP = 1 (0x1)
+int ing_port1 = 1 (0x1)            
+int ing_port2 = 2 (0x2)            
+int egr_port1_rh = 3 (0x3)         
+int egr_port2_rh = 4 (0x4)         
+int egr_port3_rh = 5 (0x5)         
+int egr_port4_rh = 6 (0x6)         
+int egr_port1_dlb = 7 (0x7)        
+int egr_port2_dlb = 8 (0x8)        
+int egr_port3_dlb = 9 (0x9)        
+int egr_port4_dlb = 10 (0xa)       
+int egr_port1_hecmp_ul1 = 11 (0xb) 
+int egr_port2_hecmp_ul1 = 12 (0xc) 
+int egr_port1_hecmp_ul2 = 13 (0xd) 
+int egr_port2_hecmp_ul2 = 14 (0xe) 
+int egr_port3_hecmp_ul2 = 15 (0xf) 
+int egr_port1_hecmp_ul1_alt = 16 (0x10)
+int egr_port2_hecmp_ul1_alt = 17 (0x11)
+int egr_port1_hecmp_ul2_alt = 18 (0x12)
+int egr_port2_hecmp_ul2_alt = 19 (0x13)
+execute(): Start                       
+Doing RTAG7 Config...                  
+
+
+//////////   Resilient Hashing  ///////////////
+Doing Setup of Resilient Hashing...            
+Doing intf create...                           
+int $$ = 1 (0x1)
+Doing l3 egress create  0
+Done l3 egress create  100002
+Doing intf create...
+int $$ = 2 (0x2)
+Doing l3 egress create  1
+Done l3 egress create  100003
+Doing intf create...
+int $$ = 3 (0x3)
+Doing l3 egress create  2
+Done l3 egress create  100004
+Doing intf create...
+int $$ = 4 (0x4)
+Doing l3 egress create  3
+Done l3 egress create  100005
+Doing RH ECMP create for members = 4
+Done creating RH ecmp.
+
+Doing agm stat create for 200768, members:4...
+Doing agm create...
+Doing agm attach...
+
+
+Doing DLB COMMON INIT...
+Doing PQBytesExponent...
+Doing PQDecreaseReset...
+Doing EBytesMinThreshold
+Doing EBytesMaxThreshold
+Doing PQBytesMinThreshold
+Doing PQBytesMaxThreshold
+
+//////////   DLB Hashing  ///////////////
+Doing Setup of Resilient Hashing...
+Doing intf create...
+int $$ = 5 (0x5)
+Doing l3 egress create  0
+Done l3 egress create  100006
+Doing intf create...
+int $$ = 6 (0x6)
+Doing l3 egress create  1
+Done l3 egress create  100007
+Doing intf create...
+int $$ = 7 (0x7)
+Doing l3 egress create  2
+Done l3 egress create  100008
+Doing intf create...
+int $$ = 8 (0x8)
+Doing l3 egress create  3
+Done l3 egress create  100009
+Doing DLB ECMP create for members = 4
+Configuring load balancing config failed with -4
+int $$ = -4 (0xfffffffc)
+execute(): End
+BCM.0>
+
+######################################################################################
+#####     Only RH (Resilient Hashing)
+
+BCM.0> 
+BCM.0> 
+BCM.0> cint LoadBalancing_DLB_HECMP_DGM.c YES 1 0 0
+int ARGC = 4 (0x4)
+int opt_TestTypeRH = 1 (0x1)
+int opt_TestTypeDLB = 0 (0x0)
+int opt_TestTypeDGM_HECMP = 0 (0x0)
+int opt_PortSpeedFactor = 10 (0xa)
+int ing_port1 = 13 (0xd)
+int ing_port2 = 14 (0xe)
+int egr_port1_rh = 15 (0xf)
+int egr_port2_rh = 16 (0x10)
+int egr_port3_rh = 17 (0x11)
+int egr_port4_rh = 18 (0x12)
+int egr_port1_dlb = 19 (0x13)
+int egr_port2_dlb = 20 (0x14)
+int egr_port3_dlb = 21 (0x15)
+int egr_port4_dlb = 22 (0x16)
+int egr_port1_hecmp_ul1 = 23 (0x17)
+int egr_port2_hecmp_ul1 = 24 (0x18)
+int egr_port1_hecmp_ul2 = 25 (0x19)
+int egr_port2_hecmp_ul2 = 26 (0x1a)
+int egr_port3_hecmp_ul2 = 27 (0x1b)
+int egr_port1_hecmp_ul1_alt = 28 (0x1c)
+int egr_port2_hecmp_ul1_alt = 29 (0x1d)
+int egr_port1_hecmp_ul2_alt = 30 (0x1e)
+int egr_port2_hecmp_ul2_alt = 31 (0x1f)
+Doing RTAG7 Config...
+
+
+//////////   Resilient Hashing  ///////////////
+Doing Setup of Resilient Hashing...
+Doing intf create...
+int $$ = 1 (0x1)
+Doing l3 egress create  0
+Done l3 egress create  100002
+Doing intf create...
+int $$ = 2 (0x2)
+Doing l3 egress create  1
+Done l3 egress create  100003
+Doing intf create...
+int $$ = 3 (0x3)
+Doing l3 egress create  2
+Done l3 egress create  100004
+Doing intf create...
+int $$ = 4 (0x4)
+Doing l3 egress create  3
+Done l3 egress create  100005
+Doing RH ECMP create for members = 4
+Done creating RH ecmp.
+
+Doing agm stat create for 200768, members:4...
+Doing agm create...
+Doing agm attach...
+
+
+
+##############   VERIFY   #######################
+
+
+
+
+############  Sending for RESILIENT HASHING 1  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000220000000000AA8100000A08004500004E00000000400659A911000001100000011111222200000000000000005000000050D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1446B931F11
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			100		   +100
+RUC_64.xe0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			100		   +100
+XLMIB_R127.xe0		    :			100		   +100
+XLMIB_RPKT.xe0		    :			100		   +100
+XLMIB_RUCA.xe0		    :			100		   +100
+XLMIB_RPRM.xe0		    :			100		   +100
+XLMIB_RVLN.xe0		    :			100		   +100
+XLMIB_RPOK.xe0		    :			100		   +100
+XLMIB_RBYT.xe0		    :		     10,400		+10,400
+XLMIB_T127.xe0		    :			100		   +100
+XLMIB_TPOK.xe0		    :			100		   +100
+XLMIB_TPKT.xe0		    :			100		   +100
+XLMIB_TUCA.xe0		    :			100		   +100
+XLMIB_TVLN.xe0		    :			100		   +100
+XLMIB_TBYT.xe0		    :		     10,400		+10,400
+XLMIB_RPROG2.xe0	    :			100		   +100
+UC_PERQ_PKT(0).xe0	    :			100		   +100
+UC_PERQ_BYTE(0).xe0	    :		     10,400		+10,400
+RUC_64.xe5		    :			100		   +100
+RDBGC0_64.xe5		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe5    :			100		   +100
+TDBGC4_64.xe5		    :			100		   +100
+XLMIB_R127.xe5		    :			100		   +100
+XLMIB_RPKT.xe5		    :			100		   +100
+XLMIB_RUCA.xe5		    :			100		   +100
+XLMIB_RPRM.xe5		    :			100		   +100
+XLMIB_RVLN.xe5		    :			100		   +100
+XLMIB_RPOK.xe5		    :			100		   +100
+XLMIB_RBYT.xe5		    :		     10,400		+10,400
+XLMIB_T127.xe5		    :			100		   +100
+XLMIB_TPOK.xe5		    :			100		   +100
+XLMIB_TPKT.xe5		    :			100		   +100
+XLMIB_TUCA.xe5		    :			100		   +100
+XLMIB_TVLN.xe5		    :			100		   +100
+XLMIB_TBYT.xe5		    :		     10,400		+10,400
+XLMIB_RPROG2.xe5	    :			100		   +100
+UC_PERQ_PKT(0).xe5	    :			100		   +100
+UC_PERQ_BYTE(0).xe5	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+
+############  Sending for RESILIENT HASHING 2  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000220001010000AB8100000A08004500004E00000000400659A911000001100000011112222300000000000000005000000050D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1446B931F11
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			200		   +100
+RUC_64.xe0		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			200		   +100
+XLMIB_R127.xe0		    :			200		   +100
+XLMIB_RPKT.xe0		    :			200		   +100
+XLMIB_RUCA.xe0		    :			200		   +100
+XLMIB_RPRM.xe0		    :			200		   +100
+XLMIB_RVLN.xe0		    :			200		   +100
+XLMIB_RPOK.xe0		    :			200		   +100
+XLMIB_RBYT.xe0		    :		     20,800		+10,400
+XLMIB_T127.xe0		    :			200		   +100
+XLMIB_TPOK.xe0		    :			200		   +100
+XLMIB_TPKT.xe0		    :			200		   +100
+XLMIB_TUCA.xe0		    :			200		   +100
+XLMIB_TVLN.xe0		    :			200		   +100
+XLMIB_TBYT.xe0		    :		     20,800		+10,400
+XLMIB_RPROG2.xe0	    :			200		   +100
+UC_PERQ_PKT(0).xe0	    :			200		   +100
+UC_PERQ_BYTE(0).xe0	    :		     20,800		+10,400
+RUC_64.xe5		    :			200		   +100
+RDBGC0_64.xe5		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe5    :			200		   +100
+TDBGC4_64.xe5		    :			200		   +100
+XLMIB_R127.xe5		    :			200		   +100
+XLMIB_RPKT.xe5		    :			200		   +100
+XLMIB_RUCA.xe5		    :			200		   +100
+XLMIB_RPRM.xe5		    :			200		   +100
+XLMIB_RVLN.xe5		    :			200		   +100
+XLMIB_RPOK.xe5		    :			200		   +100
+XLMIB_RBYT.xe5		    :		     20,800		+10,400
+XLMIB_T127.xe5		    :			200		   +100
+XLMIB_TPOK.xe5		    :			200		   +100
+XLMIB_TPKT.xe5		    :			200		   +100
+XLMIB_TUCA.xe5		    :			200		   +100
+XLMIB_TVLN.xe5		    :			200		   +100
+XLMIB_TBYT.xe5		    :		     20,800		+10,400
+XLMIB_RPROG2.xe5	    :			200		   +100
+UC_PERQ_PKT(0).xe5	    :			200		   +100
+UC_PERQ_BYTE(0).xe5	    :		     20,800		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+
+############  Sending for RESILIENT HASHING 3  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000220002020000AC8100000A08004500004E00000000400659A911000001100000011113222400000000000000005000000050D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1446B931F11
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			300		   +100
+RUC_64.xe0		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			300		   +100
+XLMIB_R127.xe0		    :			300		   +100
+XLMIB_RPKT.xe0		    :			300		   +100
+XLMIB_RUCA.xe0		    :			300		   +100
+XLMIB_RPRM.xe0		    :			300		   +100
+XLMIB_RVLN.xe0		    :			300		   +100
+XLMIB_RPOK.xe0		    :			300		   +100
+XLMIB_RBYT.xe0		    :		     31,200		+10,400
+XLMIB_T127.xe0		    :			300		   +100
+XLMIB_TPOK.xe0		    :			300		   +100
+XLMIB_TPKT.xe0		    :			300		   +100
+XLMIB_TUCA.xe0		    :			300		   +100
+XLMIB_TVLN.xe0		    :			300		   +100
+XLMIB_TBYT.xe0		    :		     31,200		+10,400
+XLMIB_RPROG2.xe0	    :			300		   +100
+UC_PERQ_PKT(0).xe0	    :			300		   +100
+UC_PERQ_BYTE(0).xe0	    :		     31,200		+10,400
+RUC_64.xe4		    :			100		   +100
+RDBGC0_64.xe4		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe4    :			100		   +100
+TDBGC4_64.xe4		    :			100		   +100
+XLMIB_R127.xe4		    :			100		   +100
+XLMIB_RPKT.xe4		    :			100		   +100
+XLMIB_RUCA.xe4		    :			100		   +100
+XLMIB_RPRM.xe4		    :			100		   +100
+XLMIB_RVLN.xe4		    :			100		   +100
+XLMIB_RPOK.xe4		    :			100		   +100
+XLMIB_RBYT.xe4		    :		     10,400		+10,400
+XLMIB_T127.xe4		    :			100		   +100
+XLMIB_TPOK.xe4		    :			100		   +100
+XLMIB_TPKT.xe4		    :			100		   +100
+XLMIB_TUCA.xe4		    :			100		   +100
+XLMIB_TVLN.xe4		    :			100		   +100
+XLMIB_TBYT.xe4		    :		     10,400		+10,400
+XLMIB_RPROG2.xe4	    :			100		   +100
+UC_PERQ_PKT(0).xe4	    :			100		   +100
+UC_PERQ_BYTE(0).xe4	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+
+############  Sending for RESILIENT HASHING 4  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000220003030000AD8100000A08004500004E00000000400659A911000001100000011114222500000000000000005000000050D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1446B931F11
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			400		   +100
+RUC_64.xe0		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			400		   +100
+XLMIB_R127.xe0		    :			400		   +100
+XLMIB_RPKT.xe0		    :			400		   +100
+XLMIB_RUCA.xe0		    :			400		   +100
+XLMIB_RPRM.xe0		    :			400		   +100
+XLMIB_RVLN.xe0		    :			400		   +100
+XLMIB_RPOK.xe0		    :			400		   +100
+XLMIB_RBYT.xe0		    :		     41,600		+10,400
+XLMIB_T127.xe0		    :			400		   +100
+XLMIB_TPOK.xe0		    :			400		   +100
+XLMIB_TPKT.xe0		    :			400		   +100
+XLMIB_TUCA.xe0		    :			400		   +100
+XLMIB_TVLN.xe0		    :			400		   +100
+XLMIB_TBYT.xe0		    :		     41,600		+10,400
+XLMIB_RPROG2.xe0	    :			400		   +100
+UC_PERQ_PKT(0).xe0	    :			400		   +100
+UC_PERQ_BYTE(0).xe0	    :		     41,600		+10,400
+RUC_64.xe5		    :			300		   +100
+RDBGC0_64.xe5		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe5    :			300		   +100
+TDBGC4_64.xe5		    :			300		   +100
+XLMIB_R127.xe5		    :			300		   +100
+XLMIB_RPKT.xe5		    :			300		   +100
+XLMIB_RUCA.xe5		    :			300		   +100
+XLMIB_RPRM.xe5		    :			300		   +100
+XLMIB_RVLN.xe5		    :			300		   +100
+XLMIB_RPOK.xe5		    :			300		   +100
+XLMIB_RBYT.xe5		    :		     31,200		+10,400
+XLMIB_T127.xe5		    :			300		   +100
+XLMIB_TPOK.xe5		    :			300		   +100
+XLMIB_TPKT.xe5		    :			300		   +100
+XLMIB_TUCA.xe5		    :			300		   +100
+XLMIB_TVLN.xe5		    :			300		   +100
+XLMIB_TBYT.xe5		    :		     31,200		+10,400
+XLMIB_RPROG2.xe5	    :			300		   +100
+UC_PERQ_PKT(0).xe5	    :			300		   +100
+UC_PERQ_BYTE(0).xe5	    :		     31,200		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+
+############  Sending for RESILIENT HASHING 5  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000220004040000AE8100000A08004500004E00000000400659A911000001100000011115222600000000000000005000000050D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1446B931F11
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			500		   +100
+RUC_64.xe0		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			500		   +100
+XLMIB_R127.xe0		    :			500		   +100
+XLMIB_RPKT.xe0		    :			500		   +100
+XLMIB_RUCA.xe0		    :			500		   +100
+XLMIB_RPRM.xe0		    :			500		   +100
+XLMIB_RVLN.xe0		    :			500		   +100
+XLMIB_RPOK.xe0		    :			500		   +100
+XLMIB_RBYT.xe0		    :		     52,000		+10,400
+XLMIB_T127.xe0		    :			500		   +100
+XLMIB_TPOK.xe0		    :			500		   +100
+XLMIB_TPKT.xe0		    :			500		   +100
+XLMIB_TUCA.xe0		    :			500		   +100
+XLMIB_TVLN.xe0		    :			500		   +100
+XLMIB_TBYT.xe0		    :		     52,000		+10,400
+XLMIB_RPROG2.xe0	    :			500		   +100
+UC_PERQ_PKT(0).xe0	    :			500		   +100
+UC_PERQ_BYTE(0).xe0	    :		     52,000		+10,400
+RUC_64.xe5		    :			400		   +100
+RDBGC0_64.xe5		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe5    :			400		   +100
+TDBGC4_64.xe5		    :			400		   +100
+XLMIB_R127.xe5		    :			400		   +100
+XLMIB_RPKT.xe5		    :			400		   +100
+XLMIB_RUCA.xe5		    :			400		   +100
+XLMIB_RPRM.xe5		    :			400		   +100
+XLMIB_RVLN.xe5		    :			400		   +100
+XLMIB_RPOK.xe5		    :			400		   +100
+XLMIB_RBYT.xe5		    :		     41,600		+10,400
+XLMIB_T127.xe5		    :			400		   +100
+XLMIB_TPOK.xe5		    :			400		   +100
+XLMIB_TPKT.xe5		    :			400		   +100
+XLMIB_TUCA.xe5		    :			400		   +100
+XLMIB_TVLN.xe5		    :			400		   +100
+XLMIB_TBYT.xe5		    :		     41,600		+10,400
+XLMIB_RPROG2.xe5	    :			400		   +100
+UC_PERQ_PKT(0).xe5	    :			400		   +100
+UC_PERQ_BYTE(0).xe5	    :		     41,600		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+######################################################################################
+
+#####     Only DLB + DGM 
+
+BCM.0> 
+BCM.0> 
+BCM.0> cint LoadBalancing_DLB_HECMP_DGM.c YES 0 1 1
+int ARGC = 4 (0x4)
+int opt_TestTypeRH = 0 (0x0)
+int opt_TestTypeDLB = 1 (0x1)
+int opt_TestTypeDGM_HECMP = 1 (0x1)
+int opt_PortSpeedFactor = 10 (0xa)
+int ing_port1 = 13 (0xd)
+int ing_port2 = 14 (0xe)
+int egr_port1_rh = 15 (0xf)
+int egr_port2_rh = 16 (0x10)
+int egr_port3_rh = 17 (0x11)
+int egr_port4_rh = 18 (0x12)
+int egr_port1_dlb = 19 (0x13)
+int egr_port2_dlb = 20 (0x14)
+int egr_port3_dlb = 21 (0x15)
+int egr_port4_dlb = 22 (0x16)
+int egr_port1_hecmp_ul1 = 23 (0x17)
+int egr_port2_hecmp_ul1 = 24 (0x18)
+int egr_port1_hecmp_ul2 = 25 (0x19)
+int egr_port2_hecmp_ul2 = 26 (0x1a)
+int egr_port3_hecmp_ul2 = 27 (0x1b)
+int egr_port1_hecmp_ul1_alt = 28 (0x1c)
+int egr_port2_hecmp_ul1_alt = 29 (0x1d)
+int egr_port1_hecmp_ul2_alt = 30 (0x1e)
+int egr_port2_hecmp_ul2_alt = 31 (0x1f)
+Doing RTAG7 Config...
+
+
+Doing DLB COMMON INIT...
+Doing PQBytesExponent...
+Doing PQDecreaseReset...
+Doing EBytesMinThreshold
+Doing EBytesMaxThreshold
+Doing PQBytesMinThreshold
+Doing PQBytesMaxThreshold
+
+//////////   DLB Hashing  ///////////////
+Doing Setup of Resilient Hashing...
+Doing intf create...
+int $$ = 1 (0x1)
+Doing l3 egress create  0
+Done l3 egress create  100002
+Doing intf create...
+int $$ = 2 (0x2)
+Doing l3 egress create  1
+Done l3 egress create  100003
+Doing intf create...
+int $$ = 3 (0x3)
+Doing l3 egress create  2
+Done l3 egress create  100004
+Doing intf create...
+int $$ = 4 (0x4)
+Doing l3 egress create  3
+Done l3 egress create  100005
+Doing DLB ECMP create for members = 4
+Doing member status set...
+Doing agm stat create for DLB 200768, members:4...
+Doing agm create...
+Doing agm attach...
+
+
+//////////   DGM Hashing on HECMP ///////////////
+Doing Setup of DGM Hashing for HECMP...
+Creating Underlay NHOPS...
+Doing intf create...
+int $$ = 5 (0x5)
+Doing tunnel initiator set...for Tunnel # 1
+Doing l3 egress create  0 for path MAIN
+ Done l3 egress create 100006
+Doing intf create...
+int $$ = 6 (0x6)
+Doing tunnel initiator set...for Tunnel # 1
+Doing l3 egress create  1 for path MAIN
+ Done l3 egress create 100007
+Doing intf create...
+int $$ = 7 (0x7)
+Doing tunnel initiator set...for Tunnel # 1
+Doing l3 egress create  2 for path ALT
+ Done l3 egress create 100008
+Doing intf create...
+int $$ = 8 (0x8)
+Doing tunnel initiator set...for Tunnel # 1
+Doing l3 egress create  3 for path ALT
+ Done l3 egress create 100009
+Doing intf create...
+int $$ = 9 (0x9)
+Doing tunnel initiator set...for Tunnel # 2
+Doing l3 egress create  4 for path MAIN
+ Done l3 egress create 100010
+Doing intf create...
+int $$ = 10 (0xa)
+Doing tunnel initiator set...for Tunnel # 2
+Doing l3 egress create  5 for path MAIN
+ Done l3 egress create 100011
+Doing intf create...
+int $$ = 11 (0xb)
+Doing tunnel initiator set...for Tunnel # 2
+Doing l3 egress create  6 for path MAIN
+ Done l3 egress create 100012
+Doing intf create...
+int $$ = 12 (0xc)
+Doing tunnel initiator set...for Tunnel # 2
+Doing l3 egress create  7 for path ALT
+ Done l3 egress create 100013
+Doing intf create...
+int $$ = 13 (0xd)
+Doing tunnel initiator set...for Tunnel # 2
+Doing l3 egress create  8 for path ALT
+ Done l3 egress create 100014
+
+Doing Underlay ECMP for Tunnel 1. Create for members = 4
+Setting member status...
+Doing Underlay ECMP for Tunnel 2. Create for members = 5
+Setting member status...
+
+Doing Overlay ECMP. Create for members = 2
+
+Doing agm stat create for DGM-HECMP ul1 200770, members:4...
+Doing agm create...
+Doing agm attach...
+Doing agm stat create for DGM-HECMP ul2 200772, members:5...
+Doing agm create...
+Doing agm attach...
+
+##############   VERIFY   #######################
+
+
+
+Setting ethertypes for DLB...
+
+
+############  Sending for DLB HASHING 1  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000330000000000AA8100000A08004500004E00000000400639A921000001200000011111222200000000000000005000000030D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E14418804592
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			100		   +100
+RUC_64.xe0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			100		   +100
+XLMIB_R127.xe0		    :			100		   +100
+XLMIB_RPKT.xe0		    :			100		   +100
+XLMIB_RUCA.xe0		    :			100		   +100
+XLMIB_RPRM.xe0		    :			100		   +100
+XLMIB_RVLN.xe0		    :			100		   +100
+XLMIB_RPOK.xe0		    :			100		   +100
+XLMIB_RBYT.xe0		    :		     10,400		+10,400
+XLMIB_T127.xe0		    :			100		   +100
+XLMIB_TPOK.xe0		    :			100		   +100
+XLMIB_TPKT.xe0		    :			100		   +100
+XLMIB_TUCA.xe0		    :			100		   +100
+XLMIB_TVLN.xe0		    :			100		   +100
+XLMIB_TBYT.xe0		    :		     10,400		+10,400
+XLMIB_RPROG2.xe0	    :			100		   +100
+UC_PERQ_PKT(0).xe0	    :			100		   +100
+UC_PERQ_BYTE(0).xe0	    :		     10,400		+10,400
+RUC_64.xe9		    :			100		   +100
+RDBGC0_64.xe9		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe9    :			100		   +100
+TDBGC4_64.xe9		    :			100		   +100
+CLMIB_R127.xe9		    :			100		   +100
+CLMIB_RPKT.xe9		    :			100		   +100
+CLMIB_RUCA.xe9		    :			100		   +100
+CLMIB_RPRM.xe9		    :			100		   +100
+CLMIB_RVLN.xe9		    :			100		   +100
+CLMIB_RPOK.xe9		    :			100		   +100
+CLMIB_RBYT.xe9		    :		     10,400		+10,400
+CLMIB_T127.xe9		    :			100		   +100
+CLMIB_TPOK.xe9		    :			100		   +100
+CLMIB_TPKT.xe9		    :			100		   +100
+CLMIB_TUCA.xe9		    :			100		   +100
+CLMIB_TVLN.xe9		    :			100		   +100
+CLMIB_TBYT.xe9		    :		     10,400		+10,400
+CLMIB_RPROG2.xe9	    :			100		   +100
+UC_PERQ_PKT(0).xe9	    :			100		   +100
+UC_PERQ_BYTE(0).xe9	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000064}
+    uint64 bytes = {0x00000000 0x000028A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DLB HASHING 2  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000330001010000AB8100000A08004500004E00000000400639A921000001200000011112222300000000000000005000000030D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E14418804592
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			200		   +100
+RUC_64.xe0		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			200		   +100
+XLMIB_R127.xe0		    :			200		   +100
+XLMIB_RPKT.xe0		    :			200		   +100
+XLMIB_RUCA.xe0		    :			200		   +100
+XLMIB_RPRM.xe0		    :			200		   +100
+XLMIB_RVLN.xe0		    :			200		   +100
+XLMIB_RPOK.xe0		    :			200		   +100
+XLMIB_RBYT.xe0		    :		     20,800		+10,400
+XLMIB_T127.xe0		    :			200		   +100
+XLMIB_TPOK.xe0		    :			200		   +100
+XLMIB_TPKT.xe0		    :			200		   +100
+XLMIB_TUCA.xe0		    :			200		   +100
+XLMIB_TVLN.xe0		    :			200		   +100
+XLMIB_TBYT.xe0		    :		     20,800		+10,400
+XLMIB_RPROG2.xe0	    :			200		   +100
+UC_PERQ_PKT(0).xe0	    :			200		   +100
+UC_PERQ_BYTE(0).xe0	    :		     20,800		+10,400
+RUC_64.xe8		    :			100		   +100
+RDBGC0_64.xe8		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe8    :			100		   +100
+TDBGC4_64.xe8		    :			100		   +100
+XLMIB_R127.xe8		    :			100		   +100
+XLMIB_RPKT.xe8		    :			100		   +100
+XLMIB_RUCA.xe8		    :			100		   +100
+XLMIB_RPRM.xe8		    :			100		   +100
+XLMIB_RVLN.xe8		    :			100		   +100
+XLMIB_RPOK.xe8		    :			100		   +100
+XLMIB_RBYT.xe8		    :		     10,400		+10,400
+XLMIB_T127.xe8		    :			100		   +100
+XLMIB_TPOK.xe8		    :			100		   +100
+XLMIB_TPKT.xe8		    :			100		   +100
+XLMIB_TUCA.xe8		    :			100		   +100
+XLMIB_TVLN.xe8		    :			100		   +100
+XLMIB_TBYT.xe8		    :		     10,400		+10,400
+XLMIB_RPROG2.xe8	    :			100		   +100
+UC_PERQ_PKT(0).xe8	    :			100		   +100
+UC_PERQ_BYTE(0).xe8	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000064}
+    uint64 bytes = {0x00000000 0x000028A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DLB HASHING 3  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000330002020000AC8100000A08004500004E00000000400639A921000001200000011113222400000000000000005000000030D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E14418804592
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			300		   +100
+RUC_64.xe0		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			300		   +100
+XLMIB_R127.xe0		    :			300		   +100
+XLMIB_RPKT.xe0		    :			300		   +100
+XLMIB_RUCA.xe0		    :			300		   +100
+XLMIB_RPRM.xe0		    :			300		   +100
+XLMIB_RVLN.xe0		    :			300		   +100
+XLMIB_RPOK.xe0		    :			300		   +100
+XLMIB_RBYT.xe0		    :		     31,200		+10,400
+XLMIB_T127.xe0		    :			300		   +100
+XLMIB_TPOK.xe0		    :			300		   +100
+XLMIB_TPKT.xe0		    :			300		   +100
+XLMIB_TUCA.xe0		    :			300		   +100
+XLMIB_TVLN.xe0		    :			300		   +100
+XLMIB_TBYT.xe0		    :		     31,200		+10,400
+XLMIB_RPROG2.xe0	    :			300		   +100
+UC_PERQ_PKT(0).xe0	    :			300		   +100
+UC_PERQ_BYTE(0).xe0	    :		     31,200		+10,400
+RUC_64.xe9		    :			200		   +100
+RDBGC0_64.xe9		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe9    :			200		   +100
+TDBGC4_64.xe9		    :			200		   +100
+CLMIB_R127.xe9		    :			200		   +100
+CLMIB_RPKT.xe9		    :			200		   +100
+CLMIB_RUCA.xe9		    :			200		   +100
+CLMIB_RPRM.xe9		    :			200		   +100
+CLMIB_RVLN.xe9		    :			200		   +100
+CLMIB_RPOK.xe9		    :			200		   +100
+CLMIB_RBYT.xe9		    :		     20,800		+10,400
+CLMIB_T127.xe9		    :			200		   +100
+CLMIB_TPOK.xe9		    :			200		   +100
+CLMIB_TPKT.xe9		    :			200		   +100
+CLMIB_TUCA.xe9		    :			200		   +100
+CLMIB_TVLN.xe9		    :			200		   +100
+CLMIB_TBYT.xe9		    :		     20,800		+10,400
+CLMIB_RPROG2.xe9	    :			200		   +100
+UC_PERQ_PKT(0).xe9	    :			200		   +100
+UC_PERQ_BYTE(0).xe9	    :		     20,800		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000064}
+    uint64 bytes = {0x00000000 0x000028A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DLB HASHING 4  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000330003030000AD8100000A08004500004E00000000400639A921000001200000011114222500000000000000005000000030D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E14418804592
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			400		   +100
+RUC_64.xe0		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			400		   +100
+XLMIB_R127.xe0		    :			400		   +100
+XLMIB_RPKT.xe0		    :			400		   +100
+XLMIB_RUCA.xe0		    :			400		   +100
+XLMIB_RPRM.xe0		    :			400		   +100
+XLMIB_RVLN.xe0		    :			400		   +100
+XLMIB_RPOK.xe0		    :			400		   +100
+XLMIB_RBYT.xe0		    :		     41,600		+10,400
+XLMIB_T127.xe0		    :			400		   +100
+XLMIB_TPOK.xe0		    :			400		   +100
+XLMIB_TPKT.xe0		    :			400		   +100
+XLMIB_TUCA.xe0		    :			400		   +100
+XLMIB_TVLN.xe0		    :			400		   +100
+XLMIB_TBYT.xe0		    :		     41,600		+10,400
+XLMIB_RPROG2.xe0	    :			400		   +100
+UC_PERQ_PKT(0).xe0	    :			400		   +100
+UC_PERQ_BYTE(0).xe0	    :		     41,600		+10,400
+RUC_64.xe6		    :			100		   +100
+RDBGC0_64.xe6		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe6    :			100		   +100
+TDBGC4_64.xe6		    :			100		   +100
+XLMIB_R127.xe6		    :			100		   +100
+XLMIB_RPKT.xe6		    :			100		   +100
+XLMIB_RUCA.xe6		    :			100		   +100
+XLMIB_RPRM.xe6		    :			100		   +100
+XLMIB_RVLN.xe6		    :			100		   +100
+XLMIB_RPOK.xe6		    :			100		   +100
+XLMIB_RBYT.xe6		    :		     10,400		+10,400
+XLMIB_T127.xe6		    :			100		   +100
+XLMIB_TPOK.xe6		    :			100		   +100
+XLMIB_TPKT.xe6		    :			100		   +100
+XLMIB_TUCA.xe6		    :			100		   +100
+XLMIB_TVLN.xe6		    :			100		   +100
+XLMIB_TBYT.xe6		    :		     10,400		+10,400
+XLMIB_RPROG2.xe6	    :			100		   +100
+UC_PERQ_PKT(0).xe6	    :			100		   +100
+UC_PERQ_BYTE(0).xe6	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000064}
+    uint64 bytes = {0x00000000 0x000028A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DLB HASHING 5  #######
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000330004040000AE8100000A08004500004E00000000400639A921000001200000011115222600000000000000005000000030D70000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E14418804592
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			500		   +100
+RUC_64.xe0		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			500		   +100
+XLMIB_R127.xe0		    :			500		   +100
+XLMIB_RPKT.xe0		    :			500		   +100
+XLMIB_RUCA.xe0		    :			500		   +100
+XLMIB_RPRM.xe0		    :			500		   +100
+XLMIB_RVLN.xe0		    :			500		   +100
+XLMIB_RPOK.xe0		    :			500		   +100
+XLMIB_RBYT.xe0		    :		     52,000		+10,400
+XLMIB_T127.xe0		    :			500		   +100
+XLMIB_TPOK.xe0		    :			500		   +100
+XLMIB_TPKT.xe0		    :			500		   +100
+XLMIB_TUCA.xe0		    :			500		   +100
+XLMIB_TVLN.xe0		    :			500		   +100
+XLMIB_TBYT.xe0		    :		     52,000		+10,400
+XLMIB_RPROG2.xe0	    :			500		   +100
+UC_PERQ_PKT(0).xe0	    :			500		   +100
+UC_PERQ_BYTE(0).xe0	    :		     52,000		+10,400
+RUC_64.xe7		    :			100		   +100
+RDBGC0_64.xe7		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe7    :			100		   +100
+TDBGC4_64.xe7		    :			100		   +100
+XLMIB_R127.xe7		    :			100		   +100
+XLMIB_RPKT.xe7		    :			100		   +100
+XLMIB_RUCA.xe7		    :			100		   +100
+XLMIB_RPRM.xe7		    :			100		   +100
+XLMIB_RVLN.xe7		    :			100		   +100
+XLMIB_RPOK.xe7		    :			100		   +100
+XLMIB_RBYT.xe7		    :		     10,400		+10,400
+XLMIB_T127.xe7		    :			100		   +100
+XLMIB_TPOK.xe7		    :			100		   +100
+XLMIB_TPKT.xe7		    :			100		   +100
+XLMIB_TUCA.xe7		    :			100		   +100
+XLMIB_TVLN.xe7		    :			100		   +100
+XLMIB_TBYT.xe7		    :		     10,400		+10,400
+XLMIB_RPROG2.xe7	    :			100		   +100
+UC_PERQ_PKT(0).xe7	    :			100		   +100
+UC_PERQ_BYTE(0).xe7	    :		     10,400		+10,400
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100002 (0x186a2)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000064}
+    uint64 bytes = {0x00000000 0x000028A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100003 (0x186a3)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100004 (0x186a4)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100005 (0x186a5)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+
+
+############  Sending for DGM HASHING for HECMP 1  #######
+Doing agm restart...
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000440000000000AA8100000A08004500004E000000004006D9A8510000015000000111112222000000000000000050000000D0D60000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1443E4A9062
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			600		   +100
+RUC_64.xe0		    :			600		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			600		   +100
+XLMIB_R127.xe0		    :			600		   +100
+XLMIB_RPKT.xe0		    :			600		   +100
+XLMIB_RUCA.xe0		    :			600		   +100
+XLMIB_RPRM.xe0		    :			600		   +100
+XLMIB_RVLN.xe0		    :			600		   +100
+XLMIB_RPOK.xe0		    :			600		   +100
+XLMIB_RBYT.xe0		    :		     62,400		+10,400
+XLMIB_T127.xe0		    :			600		   +100
+XLMIB_TPOK.xe0		    :			600		   +100
+XLMIB_TPKT.xe0		    :			600		   +100
+XLMIB_TUCA.xe0		    :			600		   +100
+XLMIB_TVLN.xe0		    :			600		   +100
+XLMIB_TBYT.xe0		    :		     62,400		+10,400
+XLMIB_RPROG2.xe0	    :			600		   +100
+UC_PERQ_PKT(0).xe0	    :			600		   +100
+UC_PERQ_BYTE(0).xe0	    :		     62,400		+10,400
+RUC_64.xe10		    :			 11		    +11
+RDBGC0_64.xe10		    :			 11		    +11
+ING_NIV_RX_FRAMES_VL.xe10   :			 11		    +11
+TDBGC4_64.xe10		    :			 11		    +11
+CLMIB_R127.xe10 	    :			 11		    +11
+CLMIB_RPKT.xe10 	    :			 11		    +11
+CLMIB_RUCA.xe10 	    :			 11		    +11
+CLMIB_RPRM.xe10 	    :			 11		    +11
+CLMIB_RVLN.xe10 	    :			 11		    +11
+CLMIB_RPOK.xe10 	    :			 11		    +11
+CLMIB_RBYT.xe10 	    :		      1,364		 +1,364
+CLMIB_T127.xe10 	    :			 11		    +11
+CLMIB_TPOK.xe10 	    :			 11		    +11
+CLMIB_TPKT.xe10 	    :			 11		    +11
+CLMIB_TUCA.xe10 	    :			 11		    +11
+CLMIB_TVLN.xe10 	    :			 11		    +11
+CLMIB_TBYT.xe10 	    :		      1,364		 +1,364
+CLMIB_RPROG3.xe10	    :			 11		    +11
+UC_PERQ_PKT(0).xe10	    :			 11		    +11
+UC_PERQ_BYTE(0).xe10	    :		      1,364		 +1,364
+RUC_64.xe11		    :			 42		    +42
+RDBGC0_64.xe11		    :			 42		    +42
+ING_NIV_RX_FRAMES_VL.xe11   :			 42		    +42
+TDBGC4_64.xe11		    :			 42		    +42
+CLMIB_R127.xe11 	    :			 42		    +42
+CLMIB_RPKT.xe11 	    :			 42		    +42
+CLMIB_RUCA.xe11 	    :			 42		    +42
+CLMIB_RPRM.xe11 	    :			 42		    +42
+CLMIB_RVLN.xe11 	    :			 42		    +42
+CLMIB_RPOK.xe11 	    :			 42		    +42
+CLMIB_RBYT.xe11 	    :		      5,208		 +5,208
+CLMIB_T127.xe11 	    :			 42		    +42
+CLMIB_TPOK.xe11 	    :			 42		    +42
+CLMIB_TPKT.xe11 	    :			 42		    +42
+CLMIB_TUCA.xe11 	    :			 42		    +42
+CLMIB_TVLN.xe11 	    :			 42		    +42
+CLMIB_TBYT.xe11 	    :		      5,208		 +5,208
+CLMIB_RPROG3.xe11	    :			 42		    +42
+UC_PERQ_PKT(0).xe11	    :			 42		    +42
+UC_PERQ_BYTE(0).xe11	    :		      5,208		 +5,208
+RUC_64.xe13		    :			 11		    +11
+RDBGC0_64.xe13		    :			 11		    +11
+ING_NIV_RX_FRAMES_VL.xe13   :			 11		    +11
+TDBGC4_64.xe13		    :			 11		    +11
+CLMIB_R127.xe13 	    :			 11		    +11
+CLMIB_RPKT.xe13 	    :			 11		    +11
+CLMIB_RUCA.xe13 	    :			 11		    +11
+CLMIB_RPRM.xe13 	    :			 11		    +11
+CLMIB_RVLN.xe13 	    :			 11		    +11
+CLMIB_RPOK.xe13 	    :			 11		    +11
+CLMIB_RBYT.xe13 	    :		      1,364		 +1,364
+CLMIB_T127.xe13 	    :			 11		    +11
+CLMIB_TPOK.xe13 	    :			 11		    +11
+CLMIB_TPKT.xe13 	    :			 11		    +11
+CLMIB_TUCA.xe13 	    :			 11		    +11
+CLMIB_TVLN.xe13 	    :			 11		    +11
+CLMIB_TBYT.xe13 	    :		      1,364		 +1,364
+CLMIB_RPROG3.xe13	    :			 11		    +11
+UC_PERQ_PKT(0).xe13	    :			 11		    +11
+UC_PERQ_BYTE(0).xe13	    :		      1,364		 +1,364
+RUC_64.xe14		    :			 36		    +36
+RDBGC0_64.xe14		    :			 36		    +36
+ING_NIV_RX_FRAMES_VL.xe14   :			 36		    +36
+TDBGC4_64.xe14		    :			 36		    +36
+CLMIB_R127.xe14 	    :			 36		    +36
+CLMIB_RPKT.xe14 	    :			 36		    +36
+CLMIB_RUCA.xe14 	    :			 36		    +36
+CLMIB_RPRM.xe14 	    :			 36		    +36
+CLMIB_RVLN.xe14 	    :			 36		    +36
+CLMIB_RPOK.xe14 	    :			 36		    +36
+CLMIB_RBYT.xe14 	    :		      4,464		 +4,464
+CLMIB_T127.xe14 	    :			 36		    +36
+CLMIB_TPOK.xe14 	    :			 36		    +36
+CLMIB_TPKT.xe14 	    :			 36		    +36
+CLMIB_TUCA.xe14 	    :			 36		    +36
+CLMIB_TVLN.xe14 	    :			 36		    +36
+CLMIB_TBYT.xe14 	    :		      4,464		 +4,464
+CLMIB_RPROG3.xe14	    :			 36		    +36
+UC_PERQ_PKT(0).xe14	    :			 36		    +36
+UC_PERQ_BYTE(0).xe14	    :		      4,464		 +4,464
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000B}
+    uint64 bytes = {0x00000000 0x00000478}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000002A}
+    uint64 bytes = {0x00000000 0x00001110}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000B}
+    uint64 bytes = {0x00000000 0x00000478}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000024}
+    uint64 bytes = {0x00000000 0x00000EA0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100012 (0x186ac)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DGM HASHING for HECMP 2  #######
+Doing agm restart...
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000440001010000AB8100000A08004500004E000000004006D9A8510000015000000111122223000000000000000050000000D0D60000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1443E4A9062
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			700		   +100
+RUC_64.xe0		    :			700		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			700		   +100
+XLMIB_R127.xe0		    :			700		   +100
+XLMIB_RPKT.xe0		    :			700		   +100
+XLMIB_RUCA.xe0		    :			700		   +100
+XLMIB_RPRM.xe0		    :			700		   +100
+XLMIB_RVLN.xe0		    :			700		   +100
+XLMIB_RPOK.xe0		    :			700		   +100
+XLMIB_RBYT.xe0		    :		     72,800		+10,400
+XLMIB_T127.xe0		    :			700		   +100
+XLMIB_TPOK.xe0		    :			700		   +100
+XLMIB_TPKT.xe0		    :			700		   +100
+XLMIB_TUCA.xe0		    :			700		   +100
+XLMIB_TVLN.xe0		    :			700		   +100
+XLMIB_TBYT.xe0		    :		     72,800		+10,400
+XLMIB_RPROG2.xe0	    :			700		   +100
+UC_PERQ_PKT(0).xe0	    :			700		   +100
+UC_PERQ_BYTE(0).xe0	    :		     72,800		+10,400
+RUC_64.xe10		    :			 37		    +26
+RDBGC0_64.xe10		    :			 37		    +26
+ING_NIV_RX_FRAMES_VL.xe10   :			 37		    +26
+TDBGC4_64.xe10		    :			 37		    +26
+CLMIB_R127.xe10 	    :			 37		    +26
+CLMIB_RPKT.xe10 	    :			 37		    +26
+CLMIB_RUCA.xe10 	    :			 37		    +26
+CLMIB_RPRM.xe10 	    :			 37		    +26
+CLMIB_RVLN.xe10 	    :			 37		    +26
+CLMIB_RPOK.xe10 	    :			 37		    +26
+CLMIB_RBYT.xe10 	    :		      4,588		 +3,224
+CLMIB_T127.xe10 	    :			 37		    +26
+CLMIB_TPOK.xe10 	    :			 37		    +26
+CLMIB_TPKT.xe10 	    :			 37		    +26
+CLMIB_TUCA.xe10 	    :			 37		    +26
+CLMIB_TVLN.xe10 	    :			 37		    +26
+CLMIB_TBYT.xe10 	    :		      4,588		 +3,224
+CLMIB_RPROG3.xe10	    :			 37		    +26
+UC_PERQ_PKT(0).xe10	    :			 37		    +26
+UC_PERQ_BYTE(0).xe10	    :		      4,588		 +3,224
+RUC_64.xe11		    :			 65		    +23
+RDBGC0_64.xe11		    :			 65		    +23
+ING_NIV_RX_FRAMES_VL.xe11   :			 65		    +23
+TDBGC4_64.xe11		    :			 65		    +23
+CLMIB_R127.xe11 	    :			 65		    +23
+CLMIB_RPKT.xe11 	    :			 65		    +23
+CLMIB_RUCA.xe11 	    :			 65		    +23
+CLMIB_RPRM.xe11 	    :			 65		    +23
+CLMIB_RVLN.xe11 	    :			 65		    +23
+CLMIB_RPOK.xe11 	    :			 65		    +23
+CLMIB_RBYT.xe11 	    :		      8,060		 +2,852
+CLMIB_T127.xe11 	    :			 65		    +23
+CLMIB_TPOK.xe11 	    :			 65		    +23
+CLMIB_TPKT.xe11 	    :			 65		    +23
+CLMIB_TUCA.xe11 	    :			 65		    +23
+CLMIB_TVLN.xe11 	    :			 65		    +23
+CLMIB_TBYT.xe11 	    :		      8,060		 +2,852
+CLMIB_RPROG3.xe11	    :			 65		    +23
+UC_PERQ_PKT(0).xe11	    :			 65		    +23
+UC_PERQ_BYTE(0).xe11	    :		      8,060		 +2,852
+RUC_64.xe13		    :			 34		    +23
+RDBGC0_64.xe13		    :			 34		    +23
+ING_NIV_RX_FRAMES_VL.xe13   :			 34		    +23
+TDBGC4_64.xe13		    :			 34		    +23
+CLMIB_R127.xe13 	    :			 34		    +23
+CLMIB_RPKT.xe13 	    :			 34		    +23
+CLMIB_RUCA.xe13 	    :			 34		    +23
+CLMIB_RPRM.xe13 	    :			 34		    +23
+CLMIB_RVLN.xe13 	    :			 34		    +23
+CLMIB_RPOK.xe13 	    :			 34		    +23
+CLMIB_RBYT.xe13 	    :		      4,216		 +2,852
+CLMIB_T127.xe13 	    :			 34		    +23
+CLMIB_TPOK.xe13 	    :			 34		    +23
+CLMIB_TPKT.xe13 	    :			 34		    +23
+CLMIB_TUCA.xe13 	    :			 34		    +23
+CLMIB_TVLN.xe13 	    :			 34		    +23
+CLMIB_TBYT.xe13 	    :		      4,216		 +2,852
+CLMIB_RPROG3.xe13	    :			 34		    +23
+UC_PERQ_PKT(0).xe13	    :			 34		    +23
+UC_PERQ_BYTE(0).xe13	    :		      4,216		 +2,852
+RUC_64.xe14		    :			 64		    +28
+RDBGC0_64.xe14		    :			 64		    +28
+ING_NIV_RX_FRAMES_VL.xe14   :			 64		    +28
+TDBGC4_64.xe14		    :			 64		    +28
+CLMIB_R127.xe14 	    :			 64		    +28
+CLMIB_RPKT.xe14 	    :			 64		    +28
+CLMIB_RUCA.xe14 	    :			 64		    +28
+CLMIB_RPRM.xe14 	    :			 64		    +28
+CLMIB_RVLN.xe14 	    :			 64		    +28
+CLMIB_RPOK.xe14 	    :			 64		    +28
+CLMIB_RBYT.xe14 	    :		      7,936		 +3,472
+CLMIB_T127.xe14 	    :			 64		    +28
+CLMIB_TPOK.xe14 	    :			 64		    +28
+CLMIB_TPKT.xe14 	    :			 64		    +28
+CLMIB_TUCA.xe14 	    :			 64		    +28
+CLMIB_TVLN.xe14 	    :			 64		    +28
+CLMIB_TBYT.xe14 	    :		      7,936		 +3,472
+CLMIB_RPROG3.xe14	    :			 64		    +28
+UC_PERQ_PKT(0).xe14	    :			 64		    +28
+UC_PERQ_BYTE(0).xe14	    :		      7,936		 +3,472
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000001A}
+    uint64 bytes = {0x00000000 0x00000A90}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000017}
+    uint64 bytes = {0x00000000 0x00000958}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000017}
+    uint64 bytes = {0x00000000 0x00000958}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000001C}
+    uint64 bytes = {0x00000000 0x00000B60}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100012 (0x186ac)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DGM HASHING for HECMP 3  #######
+Doing agm restart...
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000440002020000AC8100000A08004500004E000000004006D9A8510000015000000111132224000000000000000050000000D0D60000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1443E4A9062
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			800		   +100
+RUC_64.xe0		    :			800		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			800		   +100
+XLMIB_R127.xe0		    :			800		   +100
+XLMIB_RPKT.xe0		    :			800		   +100
+XLMIB_RUCA.xe0		    :			800		   +100
+XLMIB_RPRM.xe0		    :			800		   +100
+XLMIB_RVLN.xe0		    :			800		   +100
+XLMIB_RPOK.xe0		    :			800		   +100
+XLMIB_RBYT.xe0		    :		     83,200		+10,400
+XLMIB_T127.xe0		    :			800		   +100
+XLMIB_TPOK.xe0		    :			800		   +100
+XLMIB_TPKT.xe0		    :			800		   +100
+XLMIB_TUCA.xe0		    :			800		   +100
+XLMIB_TVLN.xe0		    :			800		   +100
+XLMIB_TBYT.xe0		    :		     83,200		+10,400
+XLMIB_RPROG2.xe0	    :			800		   +100
+UC_PERQ_PKT(0).xe0	    :			800		   +100
+UC_PERQ_BYTE(0).xe0	    :		     83,200		+10,400
+RUC_64.xe10		    :			 38		     +1
+RDBGC0_64.xe10		    :			 38		     +1
+ING_NIV_RX_FRAMES_VL.xe10   :			 38		     +1
+TDBGC4_64.xe10		    :			 38		     +1
+CLMIB_R127.xe10 	    :			 38		     +1
+CLMIB_RPKT.xe10 	    :			 38		     +1
+CLMIB_RUCA.xe10 	    :			 38		     +1
+CLMIB_RPRM.xe10 	    :			 38		     +1
+CLMIB_RVLN.xe10 	    :			 38		     +1
+CLMIB_RPOK.xe10 	    :			 38		     +1
+CLMIB_RBYT.xe10 	    :		      4,712		   +124
+CLMIB_T127.xe10 	    :			 38		     +1
+CLMIB_TPOK.xe10 	    :			 38		     +1
+CLMIB_TPKT.xe10 	    :			 38		     +1
+CLMIB_TUCA.xe10 	    :			 38		     +1
+CLMIB_TVLN.xe10 	    :			 38		     +1
+CLMIB_TBYT.xe10 	    :		      4,712		   +124
+CLMIB_RPROG3.xe10	    :			 38		     +1
+UC_PERQ_PKT(0).xe10	    :			 38		     +1
+UC_PERQ_BYTE(0).xe10	    :		      4,712		   +124
+RUC_64.xe11		    :			104		    +39
+RDBGC0_64.xe11		    :			104		    +39
+ING_NIV_RX_FRAMES_VL.xe11   :			104		    +39
+TDBGC4_64.xe11		    :			104		    +39
+CLMIB_R127.xe11 	    :			104		    +39
+CLMIB_RPKT.xe11 	    :			104		    +39
+CLMIB_RUCA.xe11 	    :			104		    +39
+CLMIB_RPRM.xe11 	    :			104		    +39
+CLMIB_RVLN.xe11 	    :			104		    +39
+CLMIB_RPOK.xe11 	    :			104		    +39
+CLMIB_RBYT.xe11 	    :		     12,896		 +4,836
+CLMIB_T127.xe11 	    :			104		    +39
+CLMIB_TPOK.xe11 	    :			104		    +39
+CLMIB_TPKT.xe11 	    :			104		    +39
+CLMIB_TUCA.xe11 	    :			104		    +39
+CLMIB_TVLN.xe11 	    :			104		    +39
+CLMIB_TBYT.xe11 	    :		     12,896		 +4,836
+CLMIB_RPROG3.xe11	    :			104		    +39
+UC_PERQ_PKT(0).xe11	    :			104		    +39
+UC_PERQ_BYTE(0).xe11	    :		     12,896		 +4,836
+RUC_64.xe12		    :			 10		    +10
+RDBGC0_64.xe12		    :			 10		    +10
+ING_NIV_RX_FRAMES_VL.xe12   :			 10		    +10
+TDBGC4_64.xe12		    :			 10		    +10
+CLMIB_R127.xe12 	    :			 10		    +10
+CLMIB_RPKT.xe12 	    :			 10		    +10
+CLMIB_RUCA.xe12 	    :			 10		    +10
+CLMIB_RPRM.xe12 	    :			 10		    +10
+CLMIB_RVLN.xe12 	    :			 10		    +10
+CLMIB_RPOK.xe12 	    :			 10		    +10
+CLMIB_RBYT.xe12 	    :		      1,240		 +1,240
+CLMIB_T127.xe12 	    :			 10		    +10
+CLMIB_TPOK.xe12 	    :			 10		    +10
+CLMIB_TPKT.xe12 	    :			 10		    +10
+CLMIB_TUCA.xe12 	    :			 10		    +10
+CLMIB_TVLN.xe12 	    :			 10		    +10
+CLMIB_TBYT.xe12 	    :		      1,240		 +1,240
+CLMIB_RPROG3.xe12	    :			 10		    +10
+UC_PERQ_PKT(0).xe12	    :			 10		    +10
+UC_PERQ_BYTE(0).xe12	    :		      1,240		 +1,240
+RUC_64.xe13		    :			 49		    +15
+RDBGC0_64.xe13		    :			 49		    +15
+ING_NIV_RX_FRAMES_VL.xe13   :			 49		    +15
+TDBGC4_64.xe13		    :			 49		    +15
+CLMIB_R127.xe13 	    :			 49		    +15
+CLMIB_RPKT.xe13 	    :			 49		    +15
+CLMIB_RUCA.xe13 	    :			 49		    +15
+CLMIB_RPRM.xe13 	    :			 49		    +15
+CLMIB_RVLN.xe13 	    :			 49		    +15
+CLMIB_RPOK.xe13 	    :			 49		    +15
+CLMIB_RBYT.xe13 	    :		      6,076		 +1,860
+CLMIB_T127.xe13 	    :			 49		    +15
+CLMIB_TPOK.xe13 	    :			 49		    +15
+CLMIB_TPKT.xe13 	    :			 49		    +15
+CLMIB_TUCA.xe13 	    :			 49		    +15
+CLMIB_TVLN.xe13 	    :			 49		    +15
+CLMIB_TBYT.xe13 	    :		      6,076		 +1,860
+CLMIB_RPROG3.xe13	    :			 49		    +15
+UC_PERQ_PKT(0).xe13	    :			 49		    +15
+UC_PERQ_BYTE(0).xe13	    :		      6,076		 +1,860
+RUC_64.xe14		    :			 99		    +35
+RDBGC0_64.xe14		    :			 99		    +35
+ING_NIV_RX_FRAMES_VL.xe14   :			 99		    +35
+TDBGC4_64.xe14		    :			 99		    +35
+CLMIB_R127.xe14 	    :			 99		    +35
+CLMIB_RPKT.xe14 	    :			 99		    +35
+CLMIB_RUCA.xe14 	    :			 99		    +35
+CLMIB_RPRM.xe14 	    :			 99		    +35
+CLMIB_RVLN.xe14 	    :			 99		    +35
+CLMIB_RPOK.xe14 	    :			 99		    +35
+CLMIB_RBYT.xe14 	    :		     12,276		 +4,340
+CLMIB_T127.xe14 	    :			 99		    +35
+CLMIB_TPOK.xe14 	    :			 99		    +35
+CLMIB_TPKT.xe14 	    :			 99		    +35
+CLMIB_TUCA.xe14 	    :			 99		    +35
+CLMIB_TVLN.xe14 	    :			 99		    +35
+CLMIB_TBYT.xe14 	    :		     12,276		 +4,340
+CLMIB_RPROG3.xe14	    :			 99		    +35
+UC_PERQ_PKT(0).xe14	    :			 99		    +35
+UC_PERQ_BYTE(0).xe14	    :		     12,276		 +4,340
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000001}
+    uint64 bytes = {0x00000000 0x00000068}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000027}
+    uint64 bytes = {0x00000000 0x00000FD8}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000A}
+    uint64 bytes = {0x00000000 0x00000410}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000F}
+    uint64 bytes = {0x00000000 0x00000618}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000023}
+    uint64 bytes = {0x00000000 0x00000E38}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100012 (0x186ac)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DGM HASHING for HECMP 4  #######
+Doing agm restart...
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000440003030000AD8100000A08004500004E000000004006D9A8510000015000000111142225000000000000000050000000D0D60000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1443E4A9062
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :			900		   +100
+RUC_64.xe0		    :			900		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			900		   +100
+XLMIB_R127.xe0		    :			900		   +100
+XLMIB_RPKT.xe0		    :			900		   +100
+XLMIB_RUCA.xe0		    :			900		   +100
+XLMIB_RPRM.xe0		    :			900		   +100
+XLMIB_RVLN.xe0		    :			900		   +100
+XLMIB_RPOK.xe0		    :			900		   +100
+XLMIB_RBYT.xe0		    :		     93,600		+10,400
+XLMIB_T127.xe0		    :			900		   +100
+XLMIB_TPOK.xe0		    :			900		   +100
+XLMIB_TPKT.xe0		    :			900		   +100
+XLMIB_TUCA.xe0		    :			900		   +100
+XLMIB_TVLN.xe0		    :			900		   +100
+XLMIB_TBYT.xe0		    :		     93,600		+10,400
+XLMIB_RPROG2.xe0	    :			900		   +100
+UC_PERQ_PKT(0).xe0	    :			900		   +100
+UC_PERQ_BYTE(0).xe0	    :		     93,600		+10,400
+RUC_64.xe10		    :			 85		    +47
+RDBGC0_64.xe10		    :			 85		    +47
+ING_NIV_RX_FRAMES_VL.xe10   :			 85		    +47
+TDBGC4_64.xe10		    :			 85		    +47
+CLMIB_R127.xe10 	    :			 85		    +47
+CLMIB_RPKT.xe10 	    :			 85		    +47
+CLMIB_RUCA.xe10 	    :			 85		    +47
+CLMIB_RPRM.xe10 	    :			 85		    +47
+CLMIB_RVLN.xe10 	    :			 85		    +47
+CLMIB_RPOK.xe10 	    :			 85		    +47
+CLMIB_RBYT.xe10 	    :		     10,540		 +5,828
+CLMIB_T127.xe10 	    :			 85		    +47
+CLMIB_TPOK.xe10 	    :			 85		    +47
+CLMIB_TPKT.xe10 	    :			 85		    +47
+CLMIB_TUCA.xe10 	    :			 85		    +47
+CLMIB_TVLN.xe10 	    :			 85		    +47
+CLMIB_TBYT.xe10 	    :		     10,540		 +5,828
+CLMIB_RPROG3.xe10	    :			 85		    +47
+UC_PERQ_PKT(0).xe10	    :			 85		    +47
+UC_PERQ_BYTE(0).xe10	    :		     10,540		 +5,828
+RUC_64.xe11		    :			108		     +4
+RDBGC0_64.xe11		    :			108		     +4
+ING_NIV_RX_FRAMES_VL.xe11   :			108		     +4
+TDBGC4_64.xe11		    :			108		     +4
+CLMIB_R127.xe11 	    :			108		     +4
+CLMIB_RPKT.xe11 	    :			108		     +4
+CLMIB_RUCA.xe11 	    :			108		     +4
+CLMIB_RPRM.xe11 	    :			108		     +4
+CLMIB_RVLN.xe11 	    :			108		     +4
+CLMIB_RPOK.xe11 	    :			108		     +4
+CLMIB_RBYT.xe11 	    :		     13,392		   +496
+CLMIB_T127.xe11 	    :			108		     +4
+CLMIB_TPOK.xe11 	    :			108		     +4
+CLMIB_TPKT.xe11 	    :			108		     +4
+CLMIB_TUCA.xe11 	    :			108		     +4
+CLMIB_TVLN.xe11 	    :			108		     +4
+CLMIB_TBYT.xe11 	    :		     13,392		   +496
+CLMIB_RPROG3.xe11	    :			108		     +4
+UC_PERQ_PKT(0).xe11	    :			108		     +4
+UC_PERQ_BYTE(0).xe11	    :		     13,392		   +496
+RUC_64.xe13		    :			 64		    +15
+RDBGC0_64.xe13		    :			 64		    +15
+ING_NIV_RX_FRAMES_VL.xe13   :			 64		    +15
+TDBGC4_64.xe13		    :			 64		    +15
+CLMIB_R127.xe13 	    :			 64		    +15
+CLMIB_RPKT.xe13 	    :			 64		    +15
+CLMIB_RUCA.xe13 	    :			 64		    +15
+CLMIB_RPRM.xe13 	    :			 64		    +15
+CLMIB_RVLN.xe13 	    :			 64		    +15
+CLMIB_RPOK.xe13 	    :			 64		    +15
+CLMIB_RBYT.xe13 	    :		      7,936		 +1,860
+CLMIB_T127.xe13 	    :			 64		    +15
+CLMIB_TPOK.xe13 	    :			 64		    +15
+CLMIB_TPKT.xe13 	    :			 64		    +15
+CLMIB_TUCA.xe13 	    :			 64		    +15
+CLMIB_TVLN.xe13 	    :			 64		    +15
+CLMIB_TBYT.xe13 	    :		      7,936		 +1,860
+CLMIB_RPROG3.xe13	    :			 64		    +15
+UC_PERQ_PKT(0).xe13	    :			 64		    +15
+UC_PERQ_BYTE(0).xe13	    :		      7,936		 +1,860
+RUC_64.xe14		    :			133		    +34
+RDBGC0_64.xe14		    :			133		    +34
+ING_NIV_RX_FRAMES_VL.xe14   :			133		    +34
+TDBGC4_64.xe14		    :			133		    +34
+CLMIB_R127.xe14 	    :			133		    +34
+CLMIB_RPKT.xe14 	    :			133		    +34
+CLMIB_RUCA.xe14 	    :			133		    +34
+CLMIB_RPRM.xe14 	    :			133		    +34
+CLMIB_RVLN.xe14 	    :			133		    +34
+CLMIB_RPOK.xe14 	    :			133		    +34
+CLMIB_RBYT.xe14 	    :		     16,492		 +4,216
+CLMIB_T127.xe14 	    :			133		    +34
+CLMIB_TPOK.xe14 	    :			133		    +34
+CLMIB_TPKT.xe14 	    :			133		    +34
+CLMIB_TUCA.xe14 	    :			133		    +34
+CLMIB_TVLN.xe14 	    :			133		    +34
+CLMIB_TBYT.xe14 	    :		     16,492		 +4,216
+CLMIB_RPROG3.xe14	    :			133		    +34
+UC_PERQ_PKT(0).xe14	    :			133		    +34
+UC_PERQ_BYTE(0).xe14	    :		     16,492		 +4,216
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000002F}
+    uint64 bytes = {0x00000000 0x00001318}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000004}
+    uint64 bytes = {0x00000000 0x000001A0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000F}
+    uint64 bytes = {0x00000000 0x00000618}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000022}
+    uint64 bytes = {0x00000000 0x00000DD0}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100012 (0x186ac)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+
+############  Sending for DGM HASHING for HECMP 5  #######
+Doing agm restart...
+Doing agm restart...
+B_CM.0> tx 100 pbm=13 data=0000000000440004040000AE8100000A08004500004E000000004006D9A8510000015000000111152226000000000000000050000000D0D60000ECB0E14491AAC4836F54D30B8902602E00200000E7A41AA3B1040000E70727EB2AA8ECB0E1443E4A9062
+Packet from data=<>, length=104
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RIPC4_64.xe0		    :		      1,000		   +100
+RUC_64.xe0		    :		      1,000		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :		      1,000		   +100
+XLMIB_R127.xe0		    :		      1,000		   +100
+XLMIB_RPKT.xe0		    :		      1,000		   +100
+XLMIB_RUCA.xe0		    :		      1,000		   +100
+XLMIB_RPRM.xe0		    :		      1,000		   +100
+XLMIB_RVLN.xe0		    :		      1,000		   +100
+XLMIB_RPOK.xe0		    :		      1,000		   +100
+XLMIB_RBYT.xe0		    :		    104,000		+10,400
+XLMIB_T127.xe0		    :		      1,000		   +100
+XLMIB_TPOK.xe0		    :		      1,000		   +100
+XLMIB_TPKT.xe0		    :		      1,000		   +100
+XLMIB_TUCA.xe0		    :		      1,000		   +100
+XLMIB_TVLN.xe0		    :		      1,000		   +100
+XLMIB_TBYT.xe0		    :		    104,000		+10,400
+XLMIB_RPROG2.xe0	    :		      1,000		   +100
+UC_PERQ_PKT(0).xe0	    :		      1,000		   +100
+UC_PERQ_BYTE(0).xe0	    :		    104,000		+10,400
+RUC_64.xe10		    :			 86		     +1
+RDBGC0_64.xe10		    :			 86		     +1
+ING_NIV_RX_FRAMES_VL.xe10   :			 86		     +1
+TDBGC4_64.xe10		    :			 86		     +1
+CLMIB_R127.xe10 	    :			 86		     +1
+CLMIB_RPKT.xe10 	    :			 86		     +1
+CLMIB_RUCA.xe10 	    :			 86		     +1
+CLMIB_RPRM.xe10 	    :			 86		     +1
+CLMIB_RVLN.xe10 	    :			 86		     +1
+CLMIB_RPOK.xe10 	    :			 86		     +1
+CLMIB_RBYT.xe10 	    :		     10,664		   +124
+CLMIB_T127.xe10 	    :			 86		     +1
+CLMIB_TPOK.xe10 	    :			 86		     +1
+CLMIB_TPKT.xe10 	    :			 86		     +1
+CLMIB_TUCA.xe10 	    :			 86		     +1
+CLMIB_TVLN.xe10 	    :			 86		     +1
+CLMIB_TBYT.xe10 	    :		     10,664		   +124
+CLMIB_RPROG3.xe10	    :			 86		     +1
+UC_PERQ_PKT(0).xe10	    :			 86		     +1
+UC_PERQ_BYTE(0).xe10	    :		     10,664		   +124
+RUC_64.xe11		    :			159		    +51
+RDBGC0_64.xe11		    :			159		    +51
+ING_NIV_RX_FRAMES_VL.xe11   :			159		    +51
+TDBGC4_64.xe11		    :			159		    +51
+CLMIB_R127.xe11 	    :			159		    +51
+CLMIB_RPKT.xe11 	    :			159		    +51
+CLMIB_RUCA.xe11 	    :			159		    +51
+CLMIB_RPRM.xe11 	    :			159		    +51
+CLMIB_RVLN.xe11 	    :			159		    +51
+CLMIB_RPOK.xe11 	    :			159		    +51
+CLMIB_RBYT.xe11 	    :		     19,716		 +6,324
+CLMIB_T127.xe11 	    :			159		    +51
+CLMIB_TPOK.xe11 	    :			159		    +51
+CLMIB_TPKT.xe11 	    :			159		    +51
+CLMIB_TUCA.xe11 	    :			159		    +51
+CLMIB_TVLN.xe11 	    :			159		    +51
+CLMIB_TBYT.xe11 	    :		     19,716		 +6,324
+CLMIB_RPROG3.xe11	    :			159		    +51
+UC_PERQ_PKT(0).xe11	    :			159		    +51
+UC_PERQ_BYTE(0).xe11	    :		     19,716		 +6,324
+RUC_64.xe12		    :			 48		    +38
+RDBGC0_64.xe12		    :			 48		    +38
+ING_NIV_RX_FRAMES_VL.xe12   :			 48		    +38
+TDBGC4_64.xe12		    :			 48		    +38
+CLMIB_R127.xe12 	    :			 48		    +38
+CLMIB_RPKT.xe12 	    :			 48		    +38
+CLMIB_RUCA.xe12 	    :			 48		    +38
+CLMIB_RPRM.xe12 	    :			 48		    +38
+CLMIB_RVLN.xe12 	    :			 48		    +38
+CLMIB_RPOK.xe12 	    :			 48		    +38
+CLMIB_RBYT.xe12 	    :		      5,952		 +4,712
+CLMIB_T127.xe12 	    :			 48		    +38
+CLMIB_TPOK.xe12 	    :			 48		    +38
+CLMIB_TPKT.xe12 	    :			 48		    +38
+CLMIB_TUCA.xe12 	    :			 48		    +38
+CLMIB_TVLN.xe12 	    :			 48		    +38
+CLMIB_TBYT.xe12 	    :		      5,952		 +4,712
+CLMIB_RPROG3.xe12	    :			 48		    +38
+UC_PERQ_PKT(0).xe12	    :			 48		    +38
+UC_PERQ_BYTE(0).xe12	    :		      5,952		 +4,712
+RUC_64.xe13		    :			 74		    +10
+RDBGC0_64.xe13		    :			 74		    +10
+ING_NIV_RX_FRAMES_VL.xe13   :			 74		    +10
+TDBGC4_64.xe13		    :			 74		    +10
+CLMIB_R127.xe13 	    :			 74		    +10
+CLMIB_RPKT.xe13 	    :			 74		    +10
+CLMIB_RUCA.xe13 	    :			 74		    +10
+CLMIB_RPRM.xe13 	    :			 74		    +10
+CLMIB_RVLN.xe13 	    :			 74		    +10
+CLMIB_RPOK.xe13 	    :			 74		    +10
+CLMIB_RBYT.xe13 	    :		      9,176		 +1,240
+CLMIB_T127.xe13 	    :			 74		    +10
+CLMIB_TPOK.xe13 	    :			 74		    +10
+CLMIB_TPKT.xe13 	    :			 74		    +10
+CLMIB_TUCA.xe13 	    :			 74		    +10
+CLMIB_TVLN.xe13 	    :			 74		    +10
+CLMIB_TBYT.xe13 	    :		      9,176		 +1,240
+CLMIB_RPROG3.xe13	    :			 74		    +10
+UC_PERQ_PKT(0).xe13	    :			 74		    +10
+UC_PERQ_BYTE(0).xe13	    :		      9,176		 +1,240
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000001}
+    uint64 bytes = {0x00000000 0x00000068}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000033}
+    uint64 bytes = {0x00000000 0x000014B8}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100006 (0x186a6)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100007 (0x186a7)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000026}
+    uint64 bytes = {0x00000000 0x00000F70}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x0000000A}
+    uint64 bytes = {0x00000000 0x00000410}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100012 (0x186ac)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100010 (0x186aa)
+}
+bcm_switch_agm_stat_t $$ = {
+    uint64 packets = {0x00000000 0x00000000}
+    uint64 bytes = {0x00000000 0x00000000}
+    int period = 0 (0x0)
+    int gport_id = -1 (0xffffffff)
+    int intf_id = 100011 (0x186ab)
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 
