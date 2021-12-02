@@ -1,0 +1,368 @@
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2021 Broadcom Inc. All rights reserved.
+ */
+
+/** \file flow_lif_mgmt.h
+ * 
+ *
+ * This file contains the public APIs required for lif table allocations HW configuration.
+ *
+ */
+
+#ifndef  INCLUDE_FLOW_LIF_MGMT_H_INCLUDED
+#define  INCLUDE_FLOW_LIF_MGMT_H_INCLUDED
+
+/*************
+ * INCLUDES  *
+ *************/
+/*
+ * {
+ */
+
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_max_device.h>
+#include <soc/dnx/dbal/dbal.h>
+#include <bcm_int/dnx/algo/res_mngr/res_mngr_types.h>
+#include <bcm_int/dnx/algo/lif_mngr/lif_mngr.h>
+#include <bcm_int/dnx/algo/lif_mngr/lif_mngr_api.h>
+#include <bcm_int/dnx/flow/flow.h>
+
+/*
+ * }
+ */
+/*************
+ * DEFINES   *
+ *************/
+/*
+ * {
+ */
+#define FLOW_LIF_MGMT_INVALID_RESULT_TYPE   (-1)
+
+/*
+ * }
+ */
+/*************
+ * MACROS    *
+ *************/
+/*
+ * {
+ */
+
+/*
+ * }
+ */
+/*************
+ * TYPE DEFS *
+ *************/
+/*
+ * {
+ */
+ /*
+  * Enum defining which type of module is handled by FLOW-LIF-Mgmt operation.
+  * Should be mainly used to perform module specific operations that are to be
+  * handled within the FLOW-LIF-Mgmt operation sequence
+  */
+typedef enum
+{
+    FLOW_LIF_MGMT_MODULE_INVALID = -1,
+    FLOW_LIF_MGMT_MODULE_UNRESOLVED,
+    FLOW_LIF_MGMT_MODULE_FIRST,
+    FLOW_LIF_MGMT_MODULE_VLAN_PORT = FLOW_LIF_MGMT_MODULE_FIRST,
+    FLOW_LIF_MGMT_MODULE_PON,
+    FLOW_LIF_MGMT_MODULE_MPLS,
+    FLOW_LIF_MGMT_MODULE_L3_TUNNELS,
+    FLOW_LIF_MGMT_MODULE_EXTENDER,
+    FLOW_LIF_MGMT_MODULE_PPP,
+    FLOW_LIF_MGMT_MODULE_GTP,
+    FLOW_LIF_MGMT_MODULE_BIER,
+    FLOW_LIF_MGMT_MODULE_LAST = FLOW_LIF_MGMT_MODULE_BIER,
+    FLOW_LIF_MGMT_MODULE_COUNT
+} flow_lif_mgmt_module_e;
+
+/*
+ * }
+ */
+/*************
+ * GLOBALS   *
+ *************/
+/*
+ * {
+ */
+
+/*
+ * }
+ */
+/*************
+ * FUNCTIONS *
+ *************/
+/*
+ * {
+ */
+/** for a given gport, validate if it is allocated. gport can be translated to either global_lif or virtual ID */
+shr_error_e flow_lif_mgmt_is_gport_allocated(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_flow_app_config_t * flow_app_info,
+    uint8 *is_allocated);
+
+/**
+ * \brief - Perform DNX related FLOW LIF Mgmt initializations:
+ * Initialize a mapping table between the field index in a
+ * superset to field index in all the result types where this
+ * field or its subfields participate.
+ *
+ * \par DIRECT_INPUT:
+ *   \param [in] unit - unit id
+ * \par DIRECT OUTPUT:
+ *   shr_error_e
+ * \see
+ *   dnx_flow_init
+ */
+shr_error_e dnx_flow_lif_mgmt_init(
+    int unit);
+
+/**
+ * \brief - Perform DNX related FLOW LIF Mgmt
+ * de-initializations: Free the allocation of a mapping table
+ * between the field index in a superset to field index in all
+ * the result types where this field or its subfields
+ * participate.
+ *
+ * \par DIRECT_INPUT:
+ *   \param [in] unit - unit id
+ * \par DIRECT OUTPUT:
+ *   shr_error_e
+ * \see
+ *   dnx_flow_deinit
+ */
+shr_error_e dnx_flow_lif_mgmt_deinit(
+    int unit);
+
+/**
+ * \brief - Manage FLOW Initiator local lif creation:
+ *          1. Decide on result type according to the set of fields that were set on the handle.
+ *          2. If a result type with a parent field was chosen - If one of the parent's sub-field was set - get() API needs to get the sub-field id
+ *          3. Allocate a local LIF
+ *          4. Fill the relevant HW LIF table
+ *          5. Write to GLEM if required
+ *          6. Add global to local SW mapping
+ *
+ *      For replace:
+ *          1. Find a new result type if required
+ *          2. Allocate the new local lif
+ *          3. Create a new lif entry in HW Lif table and copy old content into the new entry
+ *          4. Change all EEDB pointers to point to the new lif
+ *          5. Update the GLEM if required
+ *          6. Write the new content to the new entry
+ *          7. Free old local lif entry
+ *          8. Update global to local SW mapping
+ *
+ *   \param [in] unit - unit id
+ *   \param [in] flow_handle_info - FLOW handle that identifies the FLOW application
+ *   \param [in] entry_handle_id - DBAL entry handle. The entry must be of type DBAL_SUPERSET_RESULT_TYPE
+ *   \param [out] local_lif_id - local outlif allocated
+ *   \param [in] lif_info - struct containing the requirements for the new LIf and all the fields
+ *   \param [in] selectable_result_types - A bitmap of the
+ *          selectable result types or zero when all the result
+ *          types are selectable.
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ * \see
+ *   lif_table_mngr_outlif_info_t
+ */
+shr_error_e dnx_flow_lif_mgmt_initiator_info_allocate_and_set_hw(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    uint32 entry_handle_id,
+    int *local_lif_id,
+    lif_table_mngr_outlif_info_t * lif_info,
+    uint32 selectable_result_types);
+
+shr_error_e dnx_flow_lif_mgmt_terminator_info_get(
+    int unit,
+    dnx_flow_app_config_t * flow_app_info,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    uint32 entry_handle_id);
+
+/**
+ * \brief - Manage FLOW Terminator local lif replace:
+ *          1. Find a new result type if required
+ *          2. Allocate the new local lif
+ *          3. For AC: Create new lif entry in HW Lif table and copy old content into the new entry
+ *          4. For AC: change all ISEM pointers to point to the 
+ *             new lif
+ *          5. Write the new content to the new entry
+ *          6. Free old local lif entry
+ *          7. Update global to local SW mapping
+ *
+ *   \param [in] unit - unit id
+ *   \param [in] flow_handle_info - FLOW handle that identifies the FLOW application
+ *   \param [in] gport_hw_resources - Lif related SW info
+ *   \param [in] entry_handle_id - DBAL entry handle. The entry must be of type DBAL_SUPERSET_RESULT_TYPE
+ *   \param [in] lif_info - struct containing the requirements for the new LIf and all the fields
+ *   \param [in] selectable_result_types - A bitmap of the
+ *          selectable result types or zero when all the result
+ *          types are selectable.
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ * \see
+ *   lif_table_mngr_outlif_info_t
+ */
+shr_error_e dnx_flow_lif_mgmt_terminator_info_replace(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    uint32 entry_handle_id,
+    lif_table_mngr_inlif_info_t * lif_info,
+    uint32 selectable_result_types);
+
+/**
+ * \brief - Manage FLOW Terminator local lif create:
+ *          1. Decide on result type according to the set of fields that were set on the handle.
+ *          2. If a result type with a parent field was chosen - If one of the parent's sub-field was set - get() API needs to get the sub-field id
+ *          3. Allocate a local LIF
+ *          4. Fill the relevant HW LIF table
+ *          5. Add global to local SW mapping
+ *   \param [in] unit - unit id
+ *   \param [in] flow_handle_info - FLOW handle that identifies the FLOW application
+ *   \param [in] entry_handle_id - DBAL entry handle. The entry must be of type DBAL_SUPERSET_RESULT_TYPE
+ *   \param [out] local_lif_id - local inlif allocated
+ *   \param [in] lif_info - struct containing the requirements for the new LIf and all the fields
+ *   \param [in] selectable_result_types - A bitmap of the
+ *          selectable result types or zero when all the result
+ *          types are selectable.
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ * \see
+ *   lif_table_mngr_outlif_info_t
+ */
+shr_error_e dnx_flow_lif_mgmt_terminator_info_create(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    uint32 entry_handle_id,
+    int *local_lif_id,
+    lif_table_mngr_inlif_info_t * lif_info,
+    uint32 selectable_result_types);
+
+shr_error_e dnx_flow_lif_mgmt_terminator_info_clear(
+    int unit,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources);
+
+shr_error_e dnx_flow_lif_mgmt_initiator_info_clear(
+    int unit,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources);
+
+/** Check whether a specific field was set for a local LIF / Virtual gport. A field was set == true if it was previously
+ *  set into HW for this LIF/gport using lif tbl mngr. */
+shr_error_e dnx_flow_lif_mgmt_field_is_set_in_hw(
+    int unit,
+    bcm_flow_handle_info_t * flow_handle_info,
+    dnx_algo_gpm_gport_hw_resources_t * gport_hw_resources,
+    dbal_fields_e field_id,
+    uint8 *is_valid);
+
+/**
+ * \brief - Retrieve a virtual LIF entry with no local LIF from 
+ *        DBAL to the handle, by using the sw mapping from a
+ *        virtual gport to its match keys.
+ *  
+ *   \param [in] unit - unit id
+ *   \param [in] no_local_lif_gport - The gport of the retrieved
+ *          entry that has no local LIF
+ *   \param [in] entry_handle_id - The DBAL handler to which the
+ *          field values are set.
+ *  
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ */
+shr_error_e dnx_flow_lif_mgmt_no_local_lif_entry_on_handle_get(
+    int unit,
+    bcm_gport_t no_local_lif_gport,
+    uint32 entry_handle_id);
+
+/**
+ * \brief - Perform no-local-LIF gport entry removal - DBAL 
+ *        entry clear, but also valid fields sw state and sw
+ *        match mapping. The function assumes that the virtual
+ *        key is already set in the DBAL handle.
+ *  
+ *   \param [in] unit - unit id
+ *   \param [in] no_local_lif_gport - The gport of the removed
+ *          no local LIF entry 
+ *   \param [in] entry_handle_id - The DBAL handler for the
+ *          cleared entry.
+ *  
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ */
+shr_error_e dnx_flow_lif_mgmt_no_local_lif_entry_clear(
+    int unit,
+    bcm_gport_t no_local_lif_gport,
+    uint32 entry_handle_id);
+
+/**
+ * \brief - Add an entry to a SW table that maps a virtual gport 
+ *        to the match keys of the entry and the selected
+ *        result-type. The match keys and the result-type are
+ *        taken from a DBAL handler.
+ *  
+ *   \param [in] unit - unit id
+ *   \param [in] virtual_lif_gport - The gport of the added
+ *          virtual LIF
+ *   \param [in] entry_handle_id - The DBAL handler from which
+ *          the match keys and the result-type are retrieved.
+ *   \param [in] flow_app_info - Pointer to the application
+ *          definition info to determine the type of match.
+ *  
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ */
+shr_error_e dnx_flow_virtual_match_sw_add(
+    int unit,
+    bcm_gport_t virtual_lif_gport,
+    uint32 entry_handle_id,
+    dnx_flow_app_config_t * flow_app_info);
+
+/**
+ * \brief - Retrieve a terminator Virtual local LIF from a virtual gport and core-id using SW mapping
+ *  
+ *   \param [in] unit - unit id
+ *   \param [in] virtual_id - The id from the virtual gport
+ *   \param [in] core_idx - The core_id of the request local
+ *          In-LIF
+ *   \param [out] local_in_lif - The returned local In-LIF
+ *  
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ */
+shr_error_e dnx_flow_terminator_virtual_mapping_sw_local_lif_get(
+    int unit,
+    int virtual_id,
+    int core_idx,
+    int *local_in_lif);
+
+/**
+ * \brief - Retrieve a terminator Virtual local gport from a virtual local LIF and core-id using SW mapping
+ *  
+ *   \param [in] unit - unit id
+ *   \param [in] local_in_lif - The local In-LIF
+ *   \param [in] core_idx - The core_id of the local In-LIF
+ *   \param [out] virtual_id - The returned id from the virtual
+ *          gport
+ *  
+ * \return DIRECT OUTPUT:
+ *   shr_error_e
+ */
+shr_error_e dnx_flow_terminator_virtual_mapping_sw_gport_get(
+    int unit,
+    int local_in_lif,
+    int core_idx,
+    int *virtual_id);
+
+/*
+ * }
+ */
+
+#endif /* INCLUDE_FLOW_LIF_MGMT_H_INCLUDED */

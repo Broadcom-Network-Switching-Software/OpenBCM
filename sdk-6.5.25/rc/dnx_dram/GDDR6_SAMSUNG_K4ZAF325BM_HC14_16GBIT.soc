@@ -1,0 +1,45 @@
+###############################################################################################
+# Note: 
+# Most parameters are in ps except 
+# 1) parameters that end with "c" which are in clock cycles
+# 2) refi_sb_in_ns and abref_in_ns which are in nano secounds (ns)
+# Most parameters are per Datasheet/JEDEC name definition except datasheet/JEDEC tREFIPB is equivalent to ext_ram_t_refi_sb_in_ns (Single Bank)
+# 1v0 Initial
+#    - Parameters should be integrated in SDK 6.5.25
+###############################################################################################
+if $?dram_type_GDDR6_SAMSUNG_K4ZAF325BM_HC14_16GBIT_1V0 "\
+  config add ext_ram_t_rfc.BCM8848X=120000;\
+  config add ext_ram_t_rc.BCM8848X=51000;\
+  config add ext_ram_t_rcd_wr.BCM8848X=11000;\
+  config add ext_ram_t_rcd_rd.BCM8848X=17000;\
+  config add ext_ram_t_rcdltr.BCM8848X=6177;\
+  config add ext_ram_t_rcdrtr.BCM8848X=6177;\
+  config add ext_ram_t_reftr.BCM8848X=13177;\
+  config add ext_ram_t_ltltr.BCM8848X=4c;\
+  config add ext_ram_t_ltrtr.BCM8848X=4c;\
+  config add ext_ram_t_rdtlt.BCM8848X=23c;\
+  config add ext_ram_t_rcdwtr.BCM8848X=10177;\
+  config add ext_ram_t_wtrtr.BCM8848X=12c;\
+  config add ext_ram_t_wrwtr.BCM8848X=2c;\
+  config add ext_ram_t_rrd_l.BCM8848X=6000;\
+  config add ext_ram_t_rrd_s.BCM8848X=6000;\
+  config add ext_ram_t_ras.BCM8848X=34000;\
+  config add ext_ram_t_rp.BCM8848X=17000;\
+  config add ext_ram_t_wr.BCM8848X=17000;\
+  config add ext_ram_t_faw.BCM8848X=24000;\
+  config add ext_ram_t_rtp_s.BCM8848X=2c;\
+  config add ext_ram_t_rtp_l.BCM8848X=4c;\
+  config add ext_ram_t_wtr_s.BCM8848X=6353;\
+  config add ext_ram_t_wtr_l.BCM8848X=8706;\
+  config add ext_ram_t_rtw.BCM8848X=20c;\
+  config add ext_ram_t_ccd_l.BCM8848X=4c;\
+  config add ext_ram_t_ccd_s.BCM8848X=2c;\
+  config add ext_ram_t_refi_sb_in_ns.BCM8848X=118;\
+  config add ext_ram_t_abref_in_ns.BCM8848X=1000000;\
+  config add ext_ram_write_latency.BCM8848X=8c;\
+  config add ext_ram_read_latency.BCM8848X=18c;\
+  config add ext_ram_t_crc_rd_latency.BCM8848X=3c;\
+  config add ext_ram_t_crc_wr_latency.BCM8848X=13c;\
+  config add ext_ram_wck_granularity.BCM8848X=WCK_PER_BYTE;\
+  config add ext_ram_ck_termination.BCM8848X=60_OHM;\
+  config add ext_ram_temp_read_enable.BCM8848X=1;"

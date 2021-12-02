@@ -1,0 +1,260 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2021 Broadcom Inc. All rights reserved.
+#
+# For Adaper, interrupts are not implemented so take INTR out
+#
+FEATURE_LIST := CINT  L3 CPU_I2C MEM_SCAN EDITLINE TEST BCM_SAL_PROFILE RCPU APIMODE PTP
+FEATURE_LIST += AUTOCOMPLETE
+
+DL_ENABLE=TRUE
+
+ifeq ($(BUILD_MENTAT),1)
+# {
+  CFLAGS += -DBUILD_MENTAT=1
+# }
+endif
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+#
+# Specifying '-Werror=all' (below) does NOT guarantee all warnings to
+# be converted into errors. Only some do.
+# The warnings below need to be added one by one.
+# 
+CFLAGS += -Werror=strict-prototypes
+CFLAGS += -Werror=format
+ifeq ($(USE_CLANG),1)
+# {
+  CFLAGS += -Wno-static-in-inline
+  CFLAGS += -Wno-format-security
+  CFLAGS += -Wno-gnu-zero-variadic-macro-arguments
+  CFLAGS += -Wno-shift-count-overflow
+
+  CFLAGS += -Wno-keyword-macro
+  CFLAGS += -Wno-logical-not-parentheses
+  CFLAGS += -Wno-literal-conversion
+# }
+else
+# {
+  CFLAGS += -Werror=maybe-uninitialized
+# }
+endif
+
+ifneq ($(DEBUG_OPTIMIZE),FALSE)
+DEBUG_CFLAGS += -O2
+endif
+
+BCM_PTL_SPT=1
+
+ifeq ($(ON_VM),1)
+# {
+DEBUG_CFLAGS += -Wno-variadic-macros
+DEBUG_CFLAGS += -Wno-format
+DEBUG_CFLAGS += -Wno-long-long
+# }
+endif
+#
+# This is for 'DNX only' compilation. Take DPP and DFE out.
+#
+# ALL_DPP_CHIPS = 1
+# ALL_DFE_CHIPS = 1
+ifneq ($(EXCLUDE_DNX2),1)
+# {
+ALL_DNX_CHIPS = 1
+# }
+endif
+
+
+
+ifeq ($(VALGRIND_SUPPORT),1)
+  VALGRIND_DIR = /projects/NTSW_SW_USRS/common/tools/valgrind-3.11.0
+  CFGFLAGS += -DUSE_EXTERNAL_MEM_CHECKING=1
+  CFGFLAGS += -DUSE_VALGRIND_CLIENT_REQUESTS -I$(VALGRIND_DIR) -I$(VALGRIND_DIR)/include
+  CFGFLAGS += -DVALGRIND_SUPPORT=1
+  #
+  # Indicate we want to use our string utilities (such as strcmp) and
+  # not the standard C-runtime-library. 
+  # This may be required because, for some compilers, the runtime-library accesses
+  # memory in resolution of 8 bytes, which collides with Valgrind.
+  #
+  CFGFLAGS += -DUSE_CUSTOM_STR_UTILS=1
+endif
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -DADAPTER_SERVER_MODE
+CFGFLAGS += -DLONGS_ARE_64BITS
+CFGFLAGS += -DPTRS_ARE_64BITS
+CFGFLAGS += -DPHYS_ADDRS_ARE_64BITS
+
+ifneq ($(ON_VM),1)
+# {
+ifeq ($(USE_CLANG),1)
+# {
+#
+# Consider every warning as error.
+#
+CFLAGS += -Werror
+# }
+else
+# {
+CFLAGS += -Werror=all
+# }
+endif
+# }
+endif
+
+ifeq ($(APPLY_ASAN),1)
+    APPLY_ASAN_UBSAN_TSAN = 1
+endif
+ifeq ($(APPLY_UBSAN),1)
+    APPLY_ASAN_UBSAN_TSAN = 1
+endif
+ifeq ($(APPLY_TSAN),1)
+    APPLY_ASAN_UBSAN_TSAN = 1
+    DEBUG_OPTIMIZE=FALSE
+endif
+
+ifeq ($(APPLY_ASAN_UBSAN_TSAN),1)
+DEBUG_CFLAGS += -Wno-psabi
+DEBUG_CFLAGS += -Wno-unused-but-set-variable
+DEBUG_CFLAGS += -Wno-implicit-function-declaration
+DEBUG_CFLAGS += -Wno-misleading-indentation
+DEBUG_CFLAGS += -Wno-unused-const-variable
+DEBUG_CFLAGS += -Wno-sizeof-array-argument
+DEBUG_CFLAGS += -Wno-int-in-bool-context
+DEBUG_CFLAGS += -Wno-format-extra-args
+DEBUG_CFLAGS += -Wno-stringop-overflow
+DEBUG_CFLAGS += -Wno-stringop-truncation
+
+ifneq ($(DEBUG_OPTIMIZE),FALSE)
+DEBUG_CFLAGS += -Wuninitialized -O
+endif
+
+CFGFLAGS += -DCOMPILER_OVERRIDE_NO_INLINE
+#
+# From make.cistom.gts.asan
+CFGFLAGS += -D_SIMPLE_MEMORY_ALLOCATION_=9
+CFGFLAGS += -DUSE_LINUX_BDE_MMAP=1
+CFGFLAGS += -DDNX_INTERNAL -Werror=pointer-sign
+#
+# Indicate we want to use our string utilities (such as strcmp) and
+# not the standard C-runtime-library.
+# This is because it seems that, for this compiler, the runtime-library accesses
+# memory in resolution of 8 bytes, which collides with Valgrind.
+#
+CFGFLAGS += -DUSE_CUSTOM_STR_UTILS=1
+
+#
+# It is possible to reduce code size by excluding support for
+# some of the chips.
+#
+#CFGFLAGS += -DNO_BCM_88800_A0
+#CFGFLAGS += -Os
+#
+endif
+
+ifeq ($(APPLY_ASAN),1)
+# {
+# This flags are needed for Address sanitizer
+CFGFLAGS += -fsanitize=address -fsanitize-recover=address -fno-omit-frame-pointer
+## LDFLAGS  += -lasan -v
+LDFLAGS  += -fsanitize=address -static-libasan
+# }
+endif
+ifeq ($(APPLY_UBSAN),1)
+# {
+# This flags are needed for UndefinedBehavior sanitizer
+CFGFLAGS += -fsanitize=undefined
+
+LDFLAGS  += -fsanitize=undefined
+# }
+endif
+ifeq ($(APPLY_TSAN),1)
+# {
+CFGFLAGS += -DTHREAD_SANITIZER_IS_ACTIVE=1
+# These flags are needed for Thread Sanitizer
+CFGFLAGS += -fsanitize=thread
+LDFLAGS += -fsanitize=thread
+# }
+endif
+
+#Set DWARF lvl 2.
+#Used to print Debug symbols in GCC v8.1.0
+CFLAGS   += -gdwarf-2
+
+CFGFLAGS += -DCINT_CONFIG_INCLUDE_LONGLONGS -DSAND_PEDANTIC
+
+ifeq ($(APPLY_ASAN_UBSAN_TSAN),1)
+    CFGFLAGS += -std=gnu99
+endif
+
+DEBUG_PEDANTIC = TRUE
+DEBUG_CFLAGS += -Werror=vla
+
+ifneq ($(EXCLUDE_VENDORS),1)
+endif
+
+ifeq ($(USE_CLANG),1)
+# {
+ifeq ($(APPLY_MSAN),1)
+# {
+    #
+    # Note that on MSAN manual, they recommend optimization (-O1 or higher)
+    # to make execution time more 'reasonable'.
+    #
+    CFLAGS += -O1
+    CFLAGS += -fsanitize=memory -fPIE -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor
+    LDFLAGS += -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize-memory-track-origins -fsanitize-memory-use-after-dtor
+    LINK_STATIC := 0
+# }
+endif
+  #
+  # CLANG compiler is selected from rhel7.
+  #
+  HCC=/tools/oss/packages/x86_64-rhel7/llvm/6.0.1/bin/clang
+  #
+  # CXX is set here to result in using CLANG as the linker.
+  # Otherwise, the make system selects g++
+  #
+  CXX=/tools/oss/packages/x86_64-rhel7/llvm/6.0.1/bin/clang
+  export LLVMVER=6.0.1
+# }
+else
+# {
+ifeq ($(GCC_11_2_0),1)
+# {
+ifeq ($(ACTIVATE_STATIC_ANALYSIS),1)
+# {
+  #
+  # -fanalyzer enables a new static analysis pass and associated warnings. This pass performs a
+  # time-consuming exploration of paths through the code in the hope of detecting various common
+  # errors, such as double-free bugs. This option should be regarded as experimental in this
+  # release. In particular, analysis of non-C code is unlikely to work.
+  #
+  CFLAGS += -fanalyzer
+  CFLAGS += -Wno-analyzer-file-leak
+  CFLAGS += -DACTIVATE_STATIC_ANALYSIS=1
+  CFLAGS += -Wno-misleading-indentation
+# }
+endif
+  #
+  # adding -flarge-source-files will allow for more column-tracking,
+  # at the expense of compilation time and memory
+  #
+  CFLAGS += -flarge-source-files
+  export GCCVER=11.2.0
+# }
+else
+# {
+  export GCCVER=8.1.0
+# }
+endif
+  HCC=/tools/bin/gcc
+# }
+endif
+$(info $(shell GCCVER=$(GCCVER) $(HCC) --version))
+
