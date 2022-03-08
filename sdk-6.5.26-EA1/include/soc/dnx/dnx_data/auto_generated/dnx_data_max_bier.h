@@ -1,0 +1,84 @@
+
+/* *INDENT-OFF* */
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_MAX_BIER_H_
+
+#define _DNX_DATA_MAX_BIER_H_
+
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX (JR2) family only!"
+#endif
+
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_BITSTRING_SIZE (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_BITSTRING_SIZE
+
+#define DNX_DATA_MAX_BIER_PARAMS_BITSTRING_SIZE (256)
+
+#endif 
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_BFR_ENTRY_SIZE (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_BFR_ENTRY_SIZE
+
+#define DNX_DATA_MAX_BIER_PARAMS_BFR_ENTRY_SIZE (4)
+
+#endif 
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_BANK_ENTRIES (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_BANK_ENTRIES
+
+#define DNX_DATA_MAX_BIER_PARAMS_BANK_ENTRIES (2048)
+
+#endif 
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS
+
+#define DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS (5)
+
+#endif 
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS_NET (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS_NET
+
+#define DNX_DATA_MAX_BIER_PARAMS_BUNDLE_NOF_BANKS_NET (4)
+
+#endif 
+
+
+#define DNX_DATA_MAX_BIER_PARAMS_NOF_EGR_TABLE_COPIES (1)
+#ifdef BCM_DNX2_SUPPORT
+
+#undef DNX_DATA_MAX_BIER_PARAMS_NOF_EGR_TABLE_COPIES
+
+#define DNX_DATA_MAX_BIER_PARAMS_NOF_EGR_TABLE_COPIES (2)
+
+#endif 
+
+
+
+
+#endif 
+

@@ -1,0 +1,65 @@
+
+
+# SDK CFLGAS
+CFGFLAGS += -DSYS_BE_PIO=1 -DSYS_BE_PACKET=0 -DSYS_BE_OTHER=1
+ENDIAN_DEF = -DBE_HOST=1
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+CFGFLAGS += -fPIC
+endif
+
+
+CFGFLAGS += -DBCM_PLATFORM_STRING=\"unix-dnxc-64\"
+
+# For GCC 4.2.x, add -Wno-address
+GCC_MAJOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f1)
+GCC_MINOR_VER  = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | cut -d'.' -f2)
+ifeq (${GCC_MAJOR_VER}, 4)
+ifeq (${GCC_MINOR_VER}, 2)
+CFGFLAGS += -Wno-address
+endif
+endif
+
+ifndef ORIGIN
+    ORIGIN = Broadcom
+endif
+
+OSTYPE = UNIX
+ifneq ($(targetplat),user)
+OSTYPE = LINUX
+endif
+
+STD_CFLAGS = ${OPTFLAGS} -D_REENTRANT -D${OSTYPE} ${CFGFLAGS} \
+    ${ENDIAN_DEF}
+STD_CPPFLAGS = ${STD_CFLAGS}
+STD_CXXFLAGS = ${STD_CFLAGS}
+
+BCM_CFLAGS   ?= -Wall -Werror
+
+BCM_CFLAGS   += ${BCM_EXTRA_CC_CFLAGS}
+
+BCM_CPPFLAGS = ${BCM_CFLAGS}
+BCM_CXXFLAGS = ${BCM_CFLAGS}
+
+ifeq (${ORIGIN}, Broadcom)
+    CFLAGS   += ${STD_CFLAGS}   ${BCM_CFLAGS}   ${OPT_CFLAGS}
+    CPPFLAGS += ${STD_CPPFLAGS} ${BCM_CPPFLAGS} ${OPT_CPPFLAGS}
+    CXXFLAGS += ${STD_CXXFLAGS} ${BCM_CXXFLAGS} ${OPT_CXXFLAGS}
+else
+    CFLAGS   += ${STD_CFLAGS}   ${OPT_CFLAGS}
+    CPPFLAGS += ${STD_CPPFLAGS} ${OPT_CPPFLAGS}
+    CXXFLAGS 
+endif
+
+#
+# Add flags required for running on unix.
+# For GCC version > 4.6, add -Wl,--no-as-needed
+# This is needed for compilation with shared libraries.
+#
+ifeq ($(LINUX_MAKE_SHARED_LIB),1)
+GCC_VERSION = $(shell GCCVER=$(GCCVER) $(CC) -dumpversion | tr \\. 0)
+ifeq ($(shell test $(GCC_VERSION) -ge 40600; echo $$?),0)
+LDFLAGS += -Wl,--no-as-needed
+endif
+endif
+
+LDFLAGS += ${LIBS}

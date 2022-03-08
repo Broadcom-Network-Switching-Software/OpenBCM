@@ -1,0 +1,34 @@
+
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ */
+
+#ifndef __INSTRU_COUNTERS_LAYOUT_H__
+#define __INSTRU_COUNTERS_LAYOUT_H__
+
+#include <include/soc/dnxc/swstate/types/dnxc_sw_state_layout.h>
+#include <include/soc/dnxc/swstate/auto_generated/types/dnxc_module_ids_types.h>
+
+
+int instru_counters_init_layout_structure(int unit);
+
+typedef enum
+{
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS = DNXC_SW_STATE_LAYOUT_NODE_ID_GET(INSTRU_COUNTERS_MODULE_ID, 0),
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__ICGM_COUNTES,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__NIF_COUNTES,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__ICGM_COUNTES__SYNC_COUNTERS_STARTED,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__ICGM_COUNTES__TOD_1588_TIMESTAMP_START,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__ICGM_COUNTES__PER_CORE_INFO,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__ICGM_COUNTES__PER_CORE_INFO__RECORD_LAST_READ_NOF,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__NIF_COUNTES__SYNC_COUNTERS_STARTED,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__NIF_COUNTES__TOD_1588_TIMESTAMP_START,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__NIF_COUNTES__PER_ETHU_INFO,
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS__NIF_COUNTES__PER_ETHU_INFO__RECORD_LAST_READ_NOF,
+    
+    DNX_SW_STATE_INSTRU_SYNC_COUNTERS_NOF_PARAMS,
+} dnxc_sw_state_layout_instru_counters_node_id_e;
+
+#endif 

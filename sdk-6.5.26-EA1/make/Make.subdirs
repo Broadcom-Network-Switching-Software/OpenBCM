@@ -1,0 +1,26 @@
+# $Id: Make.subdirs,v 1.8 Broadcom SDK $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2022 Broadcom Inc. All rights reserved.
+#
+# Make rules/targets for handling subdirectories
+
+.PHONY: ${subdirs}
+
+all:: ${subdirs}
+ifdef QUIET
+	@$(ECHO) Subdirectory build for ${subdirs}
+endif
+
+${subdirs}::
+	$Q$(MAKE) -C $@ kernel_version=$(kernel_version) LINUX_MAKE_SHARED_LIB=${LINUX_MAKE_SHARED_LIB} SHAREDLIBVER=${SHAREDLIBVER} ${CLEAN_SUBDIRS}
+
+clean clean_d install distclean::
+ifdef QUIET
+	@$(ECHO) Subdirectory $@ for ${subdirs}
+endif
+	$(MAKE) clean_subdirs CLEAN_SUBDIRS=$@
+
+clean_subdirs: ${subdirs}
+
+.PHONY: clean_subdirs

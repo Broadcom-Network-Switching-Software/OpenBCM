@@ -1,0 +1,61 @@
+#
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2022 Broadcom Inc. All rights reserved.
+#
+# For Adaper, interrupts are not implemented so take INTR out
+#
+FEATURE_LIST := CINT  L3 CPU_I2C MEM_SCAN EDITLINE TEST BCM_SAL_PROFILE RCPU APIMODE PTP
+FEATURE_LIST += AUTOCOMPLETE
+
+DL_ENABLE=TRUE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+
+ifneq ($(DEBUG_OPTIMIZE),FALSE)
+DEBUG_CFLAGS += -O2
+endif
+
+BCM_PTL_SPT=1
+
+#
+# This is for 'DNX only' compilation. Take DPP and DFE out.
+#
+# ALL_DPP_CHIPS = 1
+# ALL_DFE_CHIPS = 1
+# In order to keep backward compatability for J2 gen compilation, we keep using ALL_DNX_CHIPS for DNX2 and map ALL_DNX_CHIPS to ALL_DNX2_CHIPS in Make.config
+ifneq ($(EXCLUDE_DNX2),1)
+#
+# KBP is defined for DNX2 only
+#
+FEATURE_LIST += KBP
+KBP_DEVICE := KBP_ALG
+
+ALL_DNX_CHIPS = 1
+endif
+
+ifneq (,$(findstring FLEXE_OTN,$(ADDED_FEATURE)))
+# {
+FEATURE_LIST += FLEXE_OTN
+FEATURE_LIST += FLEXE_DBG
+# }
+endif
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -DADAPTER_SERVER_MODE
+
+CFGFLAGS += -Werror=all
+#Set DWARF lvl 2.
+#Used to print Debug symbols in GCC v8.1.0
+CFLAGS   += -gdwarf-2
+
+CFGFLAGS += -DCINT_CONFIG_INCLUDE_LONGLONGS
+
+
+export GCCVER=8.1.0
+HCC=/tools/bin/gcc
+$(info $(shell GCCVER=$(GCCVER) $(HCC) --version))
+
