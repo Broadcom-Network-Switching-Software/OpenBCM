@@ -1,0 +1,97 @@
+/*
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ *
+ * File:    knetsync.h
+ * Purpose: KnetSync definitions common to SDK and uKernel
+ *
+ * Notes:   Definition changes should be avoided in order to
+ *          maintain compatibility between SDK and uKernel since
+ *          both images are built and loaded separately.
+ *
+ */
+
+#ifndef _SOC_SHARED_KNETSYNC_H
+#define _SOC_SHARED_KNETSYNC_H
+
+/* KnetSync message subclasses */
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_APPL_READY            0x0
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_INIT                  0x1
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_UNINIT                0x2
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG               0x3
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_SET       0x4
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_GET       0x5
+#define MOS_MSG_SUBCALSS_KNETSYNC_ID_VERSION_EXCHANGE      0x6
+
+#define MOS_MSG_SUBCLASS_KNETSYNC_APPL_READY               MOS_MSG_SUBCALSS_KNETSYNC_ID_APPL_READY
+#define MOS_MSG_SUBCLASS_KNETSYNC_INIT                     MOS_MSG_SUBCALSS_KNETSYNC_ID_INIT
+#define MOS_MSG_SUBCLASS_KNETSYNC_INIT_REPLY               MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_INIT)
+#define MOS_MSG_SUBCLASS_KNETSYNC_UNINIT                   MOS_MSG_SUBCALSS_KNETSYNC_ID_UNINIT
+#define MOS_MSG_SUBCLASS_KNETSYNC_UNINIT_REPLY             MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_UNINIT)
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG                  MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG_REPLY            MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG)
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG_LVL_SET          MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_SET
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG_LVL_SET_REPLY    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_SET)
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG_LVL_GET          MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_GET
+#define MOS_MSG_SUBCLASS_KNETSYNC_HOSTLOG_LVL_GET_REPLY    MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_HOSTLOG_LVL_GET)
+#define MOS_MSG_SUBCLASS_KNETSYNC_VERSION_EXCHANGE         MOS_MSG_SUBCALSS_KNETSYNC_ID_VERSION_EXCHANGE
+#define MOS_MSG_SUBCLASS_KNETSYNC_VERSION_EXCHANGE_REPLY   MOS_MSG_SUBCLASS_REPLY(MOS_MSG_SUBCALSS_KNETSYNC_ID_VERSION_EXCHANGE)
+
+
+#ifdef BCM_UKERNEL
+  /* Build for uKernel not SDK */
+  #include "sdk_typedefs.h"
+#else
+  #include <sal/types.h>
+#endif
+
+#define KNETSYNC_SDK_VERSION    ((1 << 8) | (0))
+
+#define KNETSYNC_APPL_VERSION   ((1 << 8) | (0))
+
+
+/* KnetSync HostLog levels. */
+#define KNETSYNC_HOSTLOG_LEVEL_SYS_INFO   (0x00000001)
+#define KNETSYNC_HOSTLOG_LEVEL_SYS_WARN   (0x00000002)
+#define KNETSYNC_HOSTLOG_LEVEL_SYS_ERR    (0x00000004)
+#define KNETSYNC_HOSTLOG_LEVEL_SYS_CRIT   (0x00000008)
+
+/*****************************************
+ * KNETSYNC uController Error codes
+ */
+typedef enum shr_knetsync_uc_error_e {
+    SHR_KNETSYNC_UC_E_NONE = 0,
+    SHR_KNETSYNC_UC_E_INTERNAL,
+    SHR_KNETSYNC_UC_E_MEMORY,
+    SHR_KNETSYNC_UC_E_UNIT,
+    SHR_KNETSYNC_UC_E_PARAM,
+    SHR_KNETSYNC_UC_E_EMPTY,
+    SHR_KNETSYNC_UC_E_FULL,
+    SHR_KNETSYNC_UC_E_NOT_FOUND,
+    SHR_KNETSYNC_UC_E_EXISTS,
+    SHR_KNETSYNC_UC_E_TIMEOUT,
+    SHR_KNETSYNC_UC_E_BUSY,
+    SHR_KNETSYNC_UC_E_FAIL,
+    SHR_KNETSYNC_UC_E_DISABLED,
+    SHR_KNETSYNC_UC_E_BADID,
+    SHR_KNETSYNC_UC_E_RESOURCE,
+    SHR_KNETSYNC_UC_E_CONFIG,
+    SHR_KNETSYNC_UC_E_UNAVAIL,
+    SHR_KNETSYNC_UC_E_INIT,
+    SHR_KNETSYNC_UC_E_PORT
+} shr_knetsync_uc_error_t;
+
+#define KNETSYNC_HOSTLOG_ENTRY_SIZE   128
+
+typedef struct knetsync_hostlog_info_s {
+    uint32 rd_ptr;
+    uint32 wr_ptr;
+    uint32 num_entries;
+
+    uint32 wr_ptr_addr;
+    uint32 log_addr;
+} knetsync_hostlog_info_t;
+
+#endif /* _SOC_SHARED_KNETSYNC_H */

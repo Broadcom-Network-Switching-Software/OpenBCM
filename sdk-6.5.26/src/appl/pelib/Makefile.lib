@@ -1,0 +1,48 @@
+# source files.
+SRC =  	src/bcm_debug.c  src/bcm_utils.c  src/bcm_xmod.c  src/bcm_xmod_arg_len.c  src/bcm_xmod_pe_api.c src/dscdump.c src/eyescan.c src/prbs.c src/tsc_functions.c
+ 
+OBJ = $(SRC:.c=.o)
+ 
+OUT = ./pe-sdk.a
+ 
+# include directories
+INCLUDES = -I. -I./include/ 
+ 
+# C compiler flags (-g -O2 -Wall)
+CFLAGS = -g 
+
+# compiler
+CC = gcc
+ 
+# library paths
+LIBS = -L../ -L/usr/local/lib 
+ 
+# compile flags
+LDFLAGS = -g
+ 
+#APP = ./pe-sdk.exe
+#SRC_APP = main.c
+#OBJ_APP = $(SRC_APP:.c=.o)
+#CFLAGS += -DINCLUDE_MAIN
+
+
+.SUFFIXES: .c
+ 
+all default: dep $(OUT) $(APP)
+ 
+.c.o:
+	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+$(APP): $(OBJ) $(OBJ_APP)
+	$(CC) -o $(APP) $(OBJ) $(OBJ_APP)  
+
+$(OUT): $(OBJ)
+	ar rcs $(OUT) $(OBJ)
+ 
+depend: dep
+ 
+dep:
+	#makedepend -- $(CFLAGS) -- $(INCLUDES) $(SRC)
+ 
+clean:
+	rm -f $(OBJ) $(OUT) $(OBJ_APP) Makefile.bak

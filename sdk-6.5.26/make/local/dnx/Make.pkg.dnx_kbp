@@ -1,0 +1,61 @@
+FEATURE_LIST := CINT L3 CPU_I2C MEM_SCAN EDITLINE TEST BCM_SAL_PROFILE RCPU DUNE_UI INTR APIMODE PTP  AUTOCOMPLETE
+
+#DEBUG_OPTIMIZE=FALSE
+
+DEBUG_CFLAGS=-Wdeclaration-after-statement
+DL_ENABLE=TRUE
+
+BCM_PTL_SPT=1
+
+ifneq ($(EXCLUDE_DNX2),1)
+# {
+#
+# KBP is defined for DNX2 only
+#
+FEATURE_LIST += KBP
+KBP_DEVICE := KBP_ALG
+
+ALL_DPP_CHIPS = 1
+ALL_DFE_CHIPS = 1
+#
+# Specify that, in addition to DPP, we want to compile for the new DNX line, starting
+# with JR2
+#
+ALL_DNX_CHIPS = 1
+ALL_DNXF_CHIPS = 1
+# }
+endif
+
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT
+CFGFLAGS += -DBCM_WARM_BOOT_SUPPORT_SW_DUMP
+CFGFLAGS += -DBCM_EASY_RELOAD_WB_COMPAT_SUPPORT
+CFGFLAGS += -DBCM_CONTROL_API_TRACKING
+CFGFLAGS += -DSCACHE_CRC_CHECK
+CFGFLAGS += -fstack-protector-all
+
+CFGFLAGS += -Werror=all
+
+#Assaf - 2/4/14, commneted out - this Makefile is used at many regression tests ant can not be changed
+#        in case we want to add vendor flags a new Makefile should be created.
+ifneq ($(EXCLUDE_VENDORS),1)
+endif
+#
+# All warnings are treated as errors (-Werror). We exclude, however, 'missing-braces'
+# wanings since earlier versions of GCC treated the universal 0 setting (= {0}) as an
+# error in case of arrays or structures of structures.
+# See make/Makefile.unix-common
+#
+BCM_EXTRA_CC_CFLAGS += -Wno-missing-braces
+
+ifeq ($(USE_4_2_1),1)
+# {
+export GCCVER=4.2.1
+# }
+else
+# {
+CFGFLAGS += -Wno-misleading-indentation
+export GCCVER=8.1.0
+# }
+endif
+HCC=/tools/bin/gcc
+$(info $(shell GCCVER=$(GCCVER) $(HCC) --version))
