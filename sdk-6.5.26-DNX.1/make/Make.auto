@@ -1,0 +1,39 @@
+# $Id: Make.auto,v 1.9 
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2022 Broadcom Inc. All rights reserved.
+# composed of targets to run the autocoders
+
+# Basic Commands
+MAKE = make
+ECHO = echo
+
+# Prepare a list of the relevant autocoders for the compilation.
+AUTOCODERS_LIST=
+ifdef DNX_CHIPS
+	AUTOCODERS_LIST+=dnxdata
+endif
+ifdef DNXF_CHIPS
+	AUTOCODERS_LIST+=dnxfdata
+endif
+AUTOCODERS_COMPILE_FOR = $(addprefix --,$(AUTOCODERS_LIST))
+
+# Setting JAVAVER environment variable
+JAVAVER = jdk1.8.0_92
+export JAVAVER
+
+.PHONY: autocoders autogen
+autogen: 
+autocoders: ${AUTOCODERS_LIST}
+
+build_autocoders:
+	@${ECHO} "Compile Autocoder files"
+	${SDK}/tools/dnx/tools.sh ${AUTOCODERS_COMPILE_FOR} --compilation --temp-folder $(SDKBUILD) --only-compile-autocoder
+
+dnxdata: build_autocoders
+	@${ECHO} "Run dnx-data autocoder"
+	${SDK}/tools/dnx/tools.sh --dnxdata --compilation --temp-folder $(SDKBUILD) --run-autocoder-from-precompiled-jar
+
+dnxfdata: build_autocoders
+	@${ECHO} "Run dnxf-data autocoder"
+	${SDK}/tools/dnx/tools.sh --dnxfdata --compilation --temp-folder $(SDKBUILD) --run-autocoder-from-precompiled-jar

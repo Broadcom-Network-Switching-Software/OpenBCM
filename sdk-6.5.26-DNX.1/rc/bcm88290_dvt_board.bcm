@@ -1,0 +1,114 @@
+# $Id:
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2022 Broadcom Inc. All rights reserved.
+
+#Dram dq and NIF lane swaps for BCM88290 (SKU of BCM88480)
+
+ext_ram_channel_swap_en_dram1.BCM8848X=0
+ 
+# soc for interface= 1; Channel= A; byte= 0
+ext_ram_dq_swap_dram1_byte0_bit0.BCM8848X=7
+ext_ram_dq_swap_dram1_byte0_bit1.BCM8848X=6
+ext_ram_dq_swap_dram1_byte0_bit2.BCM8848X=5
+ext_ram_dq_swap_dram1_byte0_bit3.BCM8848X=4
+ext_ram_dq_swap_dram1_byte0_bit4.BCM8848X=1
+ext_ram_dq_swap_dram1_byte0_bit5.BCM8848X=2
+ext_ram_dq_swap_dram1_byte0_bit6.BCM8848X=0
+ext_ram_dq_swap_dram1_byte0_bit7.BCM8848X=3
+ 
+# soc for interface= 1; Channel= A; byte= 1
+ext_ram_dq_swap_dram1_byte1_bit0.BCM8848X=0
+ext_ram_dq_swap_dram1_byte1_bit1.BCM8848X=1
+ext_ram_dq_swap_dram1_byte1_bit2.BCM8848X=2
+ext_ram_dq_swap_dram1_byte1_bit3.BCM8848X=3
+ext_ram_dq_swap_dram1_byte1_bit4.BCM8848X=7
+ext_ram_dq_swap_dram1_byte1_bit5.BCM8848X=6
+ext_ram_dq_swap_dram1_byte1_bit6.BCM8848X=5
+ext_ram_dq_swap_dram1_byte1_bit7.BCM8848X=4
+ 
+# soc for interface= 1; Channel= B; byte= 0
+ext_ram_dq_swap_dram1_byte2_bit0.BCM8848X=5
+ext_ram_dq_swap_dram1_byte2_bit1.BCM8848X=4
+ext_ram_dq_swap_dram1_byte2_bit2.BCM8848X=6
+ext_ram_dq_swap_dram1_byte2_bit3.BCM8848X=7
+ext_ram_dq_swap_dram1_byte2_bit4.BCM8848X=3
+ext_ram_dq_swap_dram1_byte2_bit5.BCM8848X=1
+ext_ram_dq_swap_dram1_byte2_bit6.BCM8848X=2
+ext_ram_dq_swap_dram1_byte2_bit7.BCM8848X=0
+ 
+# soc for interface= 1; Channel= B; byte= 1
+ext_ram_dq_swap_dram1_byte3_bit0.BCM8848X=4
+ext_ram_dq_swap_dram1_byte3_bit1.BCM8848X=5
+ext_ram_dq_swap_dram1_byte3_bit2.BCM8848X=7
+ext_ram_dq_swap_dram1_byte3_bit3.BCM8848X=6
+ext_ram_dq_swap_dram1_byte3_bit4.BCM8848X=3
+ext_ram_dq_swap_dram1_byte3_bit5.BCM8848X=2
+ext_ram_dq_swap_dram1_byte3_bit6.BCM8848X=1
+ext_ram_dq_swap_dram1_byte3_bit7.BCM8848X=0
+
+#Lane swap
+lane_to_serdes_map_nif_lane16.BCM8848X=rx16:tx16
+lane_to_serdes_map_nif_lane17.BCM8848X=rx17:tx17
+lane_to_serdes_map_nif_lane18.BCM8848X=rx18:tx18
+lane_to_serdes_map_nif_lane19.BCM8848X=rx19:tx19
+lane_to_serdes_map_nif_lane20.BCM8848X=rx23:tx21
+lane_to_serdes_map_nif_lane21.BCM8848X=rx21:tx20
+lane_to_serdes_map_nif_lane22.BCM8848X=rx22:tx22
+lane_to_serdes_map_nif_lane23.BCM8848X=rx20:tx23
+lane_to_serdes_map_nif_lane32.BCM8848X=rx32:tx32
+lane_to_serdes_map_nif_lane33.BCM8848X=rx33:tx33
+lane_to_serdes_map_nif_lane34.BCM8848X=rx34:tx34
+lane_to_serdes_map_nif_lane35.BCM8848X=rx35:tx35
+lane_to_serdes_map_nif_lane44.BCM8848X=rx44:tx44
+lane_to_serdes_map_nif_lane45.BCM8848X=rx45:tx45 
+lane_to_serdes_map_nif_lane46.BCM8848X=rx46:tx46
+lane_to_serdes_map_nif_lane47.BCM8848X=rx47:tx47 
+lane_to_serdes_map_nif_lane48.BCM8848X=rx48:tx48
+lane_to_serdes_map_nif_lane49.BCM8848X=rx49:tx49
+lane_to_serdes_map_nif_lane50.BCM8848X=rx50:tx50
+lane_to_serdes_map_nif_lane51.BCM8848X=rx51:tx51
+ 
+#RX polarity swap 
+phy_rx_polarity_flip_phy16.BCM8848X=0          
+phy_rx_polarity_flip_phy17.BCM8848X=0           
+phy_rx_polarity_flip_phy18.BCM8848X=0           
+phy_rx_polarity_flip_phy19.BCM8848X=0           
+phy_rx_polarity_flip_phy20.BCM8848X=0
+phy_rx_polarity_flip_phy21.BCM8848X=0           
+phy_rx_polarity_flip_phy22.BCM8848X=1
+phy_rx_polarity_flip_phy23.BCM8848X=0           
+phy_rx_polarity_flip_phy32.BCM8848X=0
+phy_rx_polarity_flip_phy33.BCM8848X=0           
+phy_rx_polarity_flip_phy34.BCM8848X=0
+phy_rx_polarity_flip_phy35.BCM8848X=0           
+phy_rx_polarity_flip_phy44.BCM8848X=0
+phy_rx_polarity_flip_phy45.BCM8848X=0           
+phy_rx_polarity_flip_phy46.BCM8848X=0
+phy_rx_polarity_flip_phy47.BCM8848X=0           
+phy_rx_polarity_flip_phy48.BCM8848X=0
+phy_rx_polarity_flip_phy49.BCM8848X=0           
+phy_rx_polarity_flip_phy50.BCM8848X=0
+phy_rx_polarity_flip_phy51.BCM8848X=0           
+ 
+#TX polarity swap
+phy_tx_polarity_flip_phy16.BCM8848X=0         
+phy_tx_polarity_flip_phy17.BCM8848X=0           
+phy_tx_polarity_flip_phy18.BCM8848X=0           
+phy_tx_polarity_flip_phy19.BCM8848X=0           
+phy_tx_polarity_flip_phy20.BCM8848X=0
+phy_tx_polarity_flip_phy21.BCM8848X=1           
+phy_tx_polarity_flip_phy22.BCM8848X=0
+phy_tx_polarity_flip_phy23.BCM8848X=0           
+phy_tx_polarity_flip_phy32.BCM8848X=0
+phy_tx_polarity_flip_phy33.BCM8848X=0           
+phy_tx_polarity_flip_phy34.BCM8848X=0
+phy_tx_polarity_flip_phy35.BCM8848X=0           
+phy_tx_polarity_flip_phy44.BCM8848X=0
+phy_tx_polarity_flip_phy45.BCM8848X=0           
+phy_tx_polarity_flip_phy46.BCM8848X=0
+phy_tx_polarity_flip_phy47.BCM8848X=0           
+phy_tx_polarity_flip_phy48.BCM8848X=0                  
+phy_tx_polarity_flip_phy49.BCM8848X=0
+phy_tx_polarity_flip_phy50.BCM8848X=0           
+phy_tx_polarity_flip_phy51.BCM8848X=0           
