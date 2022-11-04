@@ -1,0 +1,640 @@
+BCM.0> cint trunk_agm.c YES 0
+int opt_TestTypeEcmp = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 3 (0x3)
+int egr_port2 = 4 (0x4)
+int egr_port3 = 5 (0x5)
+int egr_port4 = 6 (0x6)
+int egr_port5 = 7 (0x7)
+Initialize Hashing
+Doing HASH Initializations...DONE
+Create trunk group with port 3, 4, 5
+Doing trunk group create...: Done. Trunk group id: 0
+Doing add ports to trunk group 0 : Done
+
+##############   VERIFY   #######################
+
+
+############  Sending UC packet 0  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110022222222228100006408004500002E0000000040065CC8140000020A0000011111222200000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   100                +100
+GR127.ge0                   :                   100                +100
+GRPKT.ge0                   :                   100                +100
+GRBYT.ge0                   :                 7,200              +7,200
+GRUC.ge0                    :                   100                +100
+GRPOK.ge0                   :                   100                +100
+GT127.ge0                   :                   100                +100
+GTPKT.ge0                   :                   100                +100
+GTBYT.ge0                   :                 7,200              +7,200
+GTUC.ge0                    :                   100                +100
+GTPOK.ge0                   :                   100                +100
+UC_PERQ_PKT(0).ge0          :                   100                +100
+UC_PERQ_BYTE(0).ge0         :                 7,200              +7,200
+RUC_64.ge4                  :                   100                +100
+RDBGC0_64.ge4               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   100                +100
+GR127.ge4                   :                   100                +100
+GRPKT.ge4                   :                   100                +100
+GRBYT.ge4                   :                 7,200              +7,200
+GRUC.ge4                    :                   100                +100
+GRPOK.ge4                   :                   100                +100
+GT127.ge4                   :                   100                +100
+GTPKT.ge4                   :                   100                +100
+GTBYT.ge4                   :                 7,200              +7,200
+GTUC.ge4                    :                   100                +100
+GTPOK.ge4                   :                   100                +100
+UC_PERQ_PKT(0).ge4          :                   100                +100
+UC_PERQ_BYTE(0).ge4         :                 7,200              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 1  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110023232222238100006408004500002E0000000040065CC8140000020A0000011112222300000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   200                +100
+GR127.ge0                   :                   200                +100
+GRPKT.ge0                   :                   200                +100
+GRBYT.ge0                   :                14,400              +7,200
+GRUC.ge0                    :                   200                +100
+GRPOK.ge0                   :                   200                +100
+GT127.ge0                   :                   200                +100
+GTPKT.ge0                   :                   200                +100
+GTBYT.ge0                   :                14,400              +7,200
+GTUC.ge0                    :                   200                +100
+GTPOK.ge0                   :                   200                +100
+UC_PERQ_PKT(0).ge0          :                   200                +100
+UC_PERQ_BYTE(0).ge0         :                14,400              +7,200
+RUC_64.ge3                  :                   100                +100
+RDBGC0_64.ge3               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   100                +100
+GR127.ge3                   :                   100                +100
+GRPKT.ge3                   :                   100                +100
+GRBYT.ge3                   :                 7,200              +7,200
+GRUC.ge3                    :                   100                +100
+GRPOK.ge3                   :                   100                +100
+GT127.ge3                   :                   100                +100
+GTPKT.ge3                   :                   100                +100
+GTBYT.ge3                   :                 7,200              +7,200
+GTUC.ge3                    :                   100                +100
+GTPOK.ge3                   :                   100                +100
+UC_PERQ_PKT(0).ge3          :                   100                +100
+UC_PERQ_BYTE(0).ge3         :                 7,200              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 2  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110024242222248100006408004500002E0000000040065CC8140000020A0000011113222400000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   300                +100
+GR127.ge0                   :                   300                +100
+GRPKT.ge0                   :                   300                +100
+GRBYT.ge0                   :                21,600              +7,200
+GRUC.ge0                    :                   300                +100
+GRPOK.ge0                   :                   300                +100
+GT127.ge0                   :                   300                +100
+GTPKT.ge0                   :                   300                +100
+GTBYT.ge0                   :                21,600              +7,200
+GTUC.ge0                    :                   300                +100
+GTPOK.ge0                   :                   300                +100
+UC_PERQ_PKT(0).ge0          :                   300                +100
+UC_PERQ_BYTE(0).ge0         :                21,600              +7,200
+RUC_64.ge4                  :                   200                +100
+RDBGC0_64.ge4               :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   200                +100
+GR127.ge4                   :                   200                +100
+GRPKT.ge4                   :                   200                +100
+GRBYT.ge4                   :                14,400              +7,200
+GRUC.ge4                    :                   200                +100
+GRPOK.ge4                   :                   200                +100
+GT127.ge4                   :                   200                +100
+GTPKT.ge4                   :                   200                +100
+GTBYT.ge4                   :                14,400              +7,200
+GTUC.ge4                    :                   200                +100
+GTPOK.ge4                   :                   200                +100
+UC_PERQ_PKT(0).ge4          :                   200                +100
+UC_PERQ_BYTE(0).ge4         :                14,400              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 3  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110025252222258100006408004500002E0000000040065CC8140000020A0000011114222500000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   400                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   400                +100
+GR127.ge0                   :                   400                +100
+GRPKT.ge0                   :                   400                +100
+GRBYT.ge0                   :                28,800              +7,200
+GRUC.ge0                    :                   400                +100
+GRPOK.ge0                   :                   400                +100
+GT127.ge0                   :                   400                +100
+GTPKT.ge0                   :                   400                +100
+GTBYT.ge0                   :                28,800              +7,200
+GTUC.ge0                    :                   400                +100
+GTPOK.ge0                   :                   400                +100
+UC_PERQ_PKT(0).ge0          :                   400                +100
+UC_PERQ_BYTE(0).ge0         :                28,800              +7,200
+RUC_64.ge3                  :                   200                +100
+RDBGC0_64.ge3               :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   200                +100
+GR127.ge3                   :                   200                +100
+GRPKT.ge3                   :                   200                +100
+GRBYT.ge3                   :                14,400              +7,200
+GRUC.ge3                    :                   200                +100
+GRPOK.ge3                   :                   200                +100
+GT127.ge3                   :                   200                +100
+GTPKT.ge3                   :                   200                +100
+GTBYT.ge3                   :                14,400              +7,200
+GTUC.ge3                    :                   200                +100
+GTPOK.ge3                   :                   200                +100
+UC_PERQ_PKT(0).ge3          :                   200                +100
+UC_PERQ_BYTE(0).ge3         :                14,400              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 4  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110026262222268100006408004500002E0000000040065CC8140000020A0000011115222600000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   500                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   500                +100
+GR127.ge0                   :                   500                +100
+GRPKT.ge0                   :                   500                +100
+GRBYT.ge0                   :                36,000              +7,200
+GRUC.ge0                    :                   500                +100
+GRPOK.ge0                   :                   500                +100
+GT127.ge0                   :                   500                +100
+GTPKT.ge0                   :                   500                +100
+GTBYT.ge0                   :                36,000              +7,200
+GTUC.ge0                    :                   500                +100
+GTPOK.ge0                   :                   500                +100
+UC_PERQ_PKT(0).ge0          :                   500                +100
+UC_PERQ_BYTE(0).ge0         :                36,000              +7,200
+RUC_64.ge3                  :                   300                +100
+RDBGC0_64.ge3               :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   300                +100
+GR127.ge3                   :                   300                +100
+GRPKT.ge3                   :                   300                +100
+GRBYT.ge3                   :                21,600              +7,200
+GRUC.ge3                    :                   300                +100
+GRPOK.ge3                   :                   300                +100
+GT127.ge3                   :                   300                +100
+GTPKT.ge3                   :                   300                +100
+GTBYT.ge3                   :                21,600              +7,200
+GTUC.ge3                    :                   300                +100
+GTPOK.ge3                   :                   300                +100
+UC_PERQ_PKT(0).ge3          :                   300                +100
+UC_PERQ_BYTE(0).ge3         :                21,600              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000000}
+        uint64 bytes = {0x00000000 0x00000000}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x0000012C}
+        uint64 bytes = {0x00000000 0x00005460}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 5  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110027272222278100006408004500002E0000000040065CC8140000020A0000011116222700000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   600                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   600                +100
+GR127.ge0                   :                   600                +100
+GRPKT.ge0                   :                   600                +100
+GRBYT.ge0                   :                43,200              +7,200
+GRUC.ge0                    :                   600                +100
+GRPOK.ge0                   :                   600                +100
+GT127.ge0                   :                   600                +100
+GTPKT.ge0                   :                   600                +100
+GTBYT.ge0                   :                43,200              +7,200
+GTUC.ge0                    :                   600                +100
+GTPOK.ge0                   :                   600                +100
+UC_PERQ_PKT(0).ge0          :                   600                +100
+UC_PERQ_BYTE(0).ge0         :                43,200              +7,200
+RUC_64.ge2                  :                   100                +100
+RDBGC0_64.ge2               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge2    :                   100                +100
+GR127.ge2                   :                   100                +100
+GRPKT.ge2                   :                   100                +100
+GRBYT.ge2                   :                 7,200              +7,200
+GRUC.ge2                    :                   100                +100
+GRPOK.ge2                   :                   100                +100
+GT127.ge2                   :                   100                +100
+GTPKT.ge2                   :                   100                +100
+GTBYT.ge2                   :                 7,200              +7,200
+GTUC.ge2                    :                   100                +100
+GTPOK.ge2                   :                   100                +100
+UC_PERQ_PKT(0).ge2          :                   100                +100
+UC_PERQ_BYTE(0).ge2         :                 7,200              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x0000012C}
+        uint64 bytes = {0x00000000 0x00005460}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 6  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110028282222288100006408004500002E0000000040065CC8140000020A0000011117222800000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   700                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   700                +100
+GR127.ge0                   :                   700                +100
+GRPKT.ge0                   :                   700                +100
+GRBYT.ge0                   :                50,400              +7,200
+GRUC.ge0                    :                   700                +100
+GRPOK.ge0                   :                   700                +100
+GT127.ge0                   :                   700                +100
+GTPKT.ge0                   :                   700                +100
+GTBYT.ge0                   :                50,400              +7,200
+GTUC.ge0                    :                   700                +100
+GTPOK.ge0                   :                   700                +100
+UC_PERQ_PKT(0).ge0          :                   700                +100
+UC_PERQ_BYTE(0).ge0         :                50,400              +7,200
+RUC_64.ge3                  :                   400                +100
+RDBGC0_64.ge3               :                   400                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   400                +100
+GR127.ge3                   :                   400                +100
+GRPKT.ge3                   :                   400                +100
+GRBYT.ge3                   :                28,800              +7,200
+GRUC.ge3                    :                   400                +100
+GRPOK.ge3                   :                   400                +100
+GT127.ge3                   :                   400                +100
+GTPKT.ge3                   :                   400                +100
+GTBYT.ge3                   :                28,800              +7,200
+GTUC.ge3                    :                   400                +100
+GTPOK.ge3                   :                   400                +100
+UC_PERQ_PKT(0).ge3          :                   400                +100
+UC_PERQ_BYTE(0).ge3         :                28,800              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x00000064}
+        uint64 bytes = {0x00000000 0x00001C20}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000190}
+        uint64 bytes = {0x00000000 0x00007080}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 7  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110029292222298100006408004500002E0000000040065CC8140000020A0000011118222900000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   800                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   800                +100
+GR127.ge0                   :                   800                +100
+GRPKT.ge0                   :                   800                +100
+GRBYT.ge0                   :                57,600              +7,200
+GRUC.ge0                    :                   800                +100
+GRPOK.ge0                   :                   800                +100
+GT127.ge0                   :                   800                +100
+GTPKT.ge0                   :                   800                +100
+GTBYT.ge0                   :                57,600              +7,200
+GTUC.ge0                    :                   800                +100
+GTPOK.ge0                   :                   800                +100
+UC_PERQ_PKT(0).ge0          :                   800                +100
+UC_PERQ_BYTE(0).ge0         :                57,600              +7,200
+RUC_64.ge2                  :                   200                +100
+RDBGC0_64.ge2               :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge2    :                   200                +100
+GR127.ge2                   :                   200                +100
+GRPKT.ge2                   :                   200                +100
+GRBYT.ge2                   :                14,400              +7,200
+GRUC.ge2                    :                   200                +100
+GRPOK.ge2                   :                   200                +100
+GT127.ge2                   :                   200                +100
+GTPKT.ge2                   :                   200                +100
+GTBYT.ge2                   :                14,400              +7,200
+GTUC.ge2                    :                   200                +100
+GTPOK.ge2                   :                   200                +100
+UC_PERQ_PKT(0).ge2          :                   200                +100
+UC_PERQ_BYTE(0).ge2         :                14,400              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000190}
+        uint64 bytes = {0x00000000 0x00007080}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 8  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002A2A22222A8100006408004500002E0000000040065CC8140000020A0000011119222A00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   900                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   900                +100
+GR127.ge0                   :                   900                +100
+GRPKT.ge0                   :                   900                +100
+GRBYT.ge0                   :                64,800              +7,200
+GRUC.ge0                    :                   900                +100
+GRPOK.ge0                   :                   900                +100
+GT127.ge0                   :                   900                +100
+GTPKT.ge0                   :                   900                +100
+GTBYT.ge0                   :                64,800              +7,200
+GTUC.ge0                    :                   900                +100
+GTPOK.ge0                   :                   900                +100
+UC_PERQ_PKT(0).ge0          :                   900                +100
+UC_PERQ_BYTE(0).ge0         :                64,800              +7,200
+RUC_64.ge2                  :                   300                +100
+RDBGC0_64.ge2               :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge2    :                   300                +100
+GR127.ge2                   :                   300                +100
+GRPKT.ge2                   :                   300                +100
+GRBYT.ge2                   :                21,600              +7,200
+GRUC.ge2                    :                   300                +100
+GRPOK.ge2                   :                   300                +100
+GT127.ge2                   :                   300                +100
+GTPKT.ge2                   :                   300                +100
+GTBYT.ge2                   :                21,600              +7,200
+GTUC.ge2                    :                   300                +100
+GTPOK.ge2                   :                   300                +100
+UC_PERQ_PKT(0).ge2          :                   300                +100
+UC_PERQ_BYTE(0).ge2         :                21,600              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000012C}
+        uint64 bytes = {0x00000000 0x00005460}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000190}
+        uint64 bytes = {0x00000000 0x00007080}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x000000C8}
+        uint64 bytes = {0x00000000 0x00003840}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+
+############  Sending UC packet 9  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002B2B22222B8100006408004500002E0000000040065CC8140000020A000001111A222B00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                 1,000                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                 1,000                +100
+GR127.ge0                   :                 1,000                +100
+GRPKT.ge0                   :                 1,000                +100
+GRBYT.ge0                   :                72,000              +7,200
+GRUC.ge0                    :                 1,000                +100
+GRPOK.ge0                   :                 1,000                +100
+GT127.ge0                   :                 1,000                +100
+GTPKT.ge0                   :                 1,000                +100
+GTBYT.ge0                   :                72,000              +7,200
+GTUC.ge0                    :                 1,000                +100
+GTPOK.ge0                   :                 1,000                +100
+UC_PERQ_PKT(0).ge0          :                 1,000                +100
+UC_PERQ_BYTE(0).ge0         :                72,000              +7,200
+RUC_64.ge4                  :                   300                +100
+RDBGC0_64.ge4               :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   300                +100
+GR127.ge4                   :                   300                +100
+GRPKT.ge4                   :                   300                +100
+GRBYT.ge4                   :                21,600              +7,200
+GRUC.ge4                    :                   300                +100
+GRPOK.ge4                   :                   300                +100
+GT127.ge4                   :                   300                +100
+GTPKT.ge4                   :                   300                +100
+GTBYT.ge4                   :                21,600              +7,200
+GTUC.ge4                    :                   300                +100
+GTPOK.ge4                   :                   300                +100
+UC_PERQ_PKT(0).ge4          :                   300                +100
+UC_PERQ_BYTE(0).ge4         :                21,600              +7,200
+Group AGM stats returned:
+bcm_switch_agm_stat_t[3] agm_stat = {
+    bcm_switch_agm_stat_t agm_stat[0] = {
+        uint64 packets = {0x00000000 0x0000012C}
+        uint64 bytes = {0x00000000 0x00005460}
+        int period = 0 (0x0)
+        int gport_id = 134217731 (0x8000003)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[1] = {
+        uint64 packets = {0x00000000 0x00000190}
+        uint64 bytes = {0x00000000 0x00007080}
+        int period = 0 (0x0)
+        int gport_id = 134217732 (0x8000004)
+        int intf_id = -1 (0xffffffff)
+    }
+    bcm_switch_agm_stat_t agm_stat[2] = {
+        uint64 packets = {0x00000000 0x0000012C}
+        uint64 bytes = {0x00000000 0x00005460}
+        int period = 0 (0x0)
+        int gport_id = 134217733 (0x8000005)
+        int intf_id = -1 (0xffffffff)
+    }
+}
+B_CM.0> sleep 1
+Sleeping for 1 second
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>

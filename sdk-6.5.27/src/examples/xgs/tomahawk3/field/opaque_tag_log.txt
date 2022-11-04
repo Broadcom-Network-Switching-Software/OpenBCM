@@ -1,0 +1,209 @@
+###############################################################################
+BCM.0> cint opaque_tag.c                    
+int opt_OpaqueTagLen = 1 (0x1)                       
+Doing Opaque tag config..    
+BCM.0> g chg OPAQUE_TAG_CONFIG_0                     
+OPAQUE_TAG_CONFIG_0.ipipe0[1][0x6001e00]=0x169100: <VALID=1,TAG_SIZE=1,      
+   OPAQUE_TAG_TYPE=2,ETHERTYPE=0x9100>               
+Doing FP Group create..      
+Doing FP Entry create..      
+Doing Opaque LOW set..       
+Doing FP Action add...       
+Doing FP Entry Install       
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000065AABBCCEEc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+sleep 3                       
+Sleeping for 3 seconds        
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 9100 0065 aabb ccee c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0040]: c5c5 c5c5 0000 0000                     
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch 
+[bcmPW.0]Packet[1]:                      
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 65 aa bb cc ee c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5                      
+fp stat get si=1 t=p              
+The value is: 0x000000001         
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000066AABBCCEEc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]                     
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 9100 0066 aabb ccee c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0040]: c5c5 c5c5 0000 0000                     
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch 
+[bcmPW.0]Packet[2]:                      
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 66 aa bb cc ee c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5                      
+sleep 3   
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000065AABBCCDDc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 9100 0065 aabb ccdd c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0040]: c5c5 c5c5 0000 0000
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 65 aa bb cc dd c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000002
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000066AABBCCDDc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 9100 0066 aabb ccdd c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0040]: c5c5 c5c5 0000 0000
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 66 aa bb cc dd c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000002
+
+
+
+OnSuccess: Final stat count should be 2
+
+
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+
+
+
+###########################################################################
+###########################################################################
+###########################################################################
+###########################################################################
+
+
+BCM.0> cint opaque_tag.c                    
+int opt_OpaqueTagLen = 2 (0x2)                       
+Doing Opaque tag config..    
+BCM.0> g chg OPAQUE_TAG_CONFIG_0                     
+OPAQUE_TAG_CONFIG_0.ipipe0[1][0x6001e00]=0x1a9100: <VALID=1,TAG_SIZE=2,      
+   OPAQUE_TAG_TYPE=2,ETHERTYPE=0x9100>               
+Doing FP Group create..      
+Doing FP Entry create..      
+Doing Opaque HIGH set..      
+Doing FP Action add...       
+Doing FP Entry Install       
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000065AABBCCEEc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+sleep 3                       
+Sleeping for 3 seconds        
+[bcmPW.0]                     
+[bcmPW.0]Packet[1]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 9100 0065 aabb ccee c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[1]: data[0040]: c5c5 c5c5 0000 0000                     
+[bcmPW.0]Packet[1]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch 
+[bcmPW.0]Packet[1]:                      
+Packet[1]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 65 aa bb cc ee c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5                      
+fp stat get si=1 t=p              
+The value is: 0x000000000         
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000066AABBCCEEc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]                     
+[bcmPW.0]Packet[2]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 9100 0066 aabb ccee c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 
+[bcmPW.0]Packet[2]: data[0040]: c5c5 c5c5 0000 0000                     
+[bcmPW.0]Packet[2]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch 
+[bcmPW.0]Packet[2]:                      
+Packet[2]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 66 aa bb cc ee c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5                      
+sleep 3   
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000000
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000065AABBCCDDc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 9100 0065 aabb ccdd c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[3]: data[0040]: c5c5 c5c5 0000 0000
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]:
+Packet[3]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 65 aa bb cc dd c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006491000066AABBCCDDc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5
+
+Packet from data=<>, length=72
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {0000000000dd} {0000000000cc} 8100 0064
+[bcmPW.0]Packet[4]: data[0010]: 9100 0066 aabb ccdd c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0020]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0030]: c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5 c5c5
+[bcmPW.0]Packet[4]: data[0040]: c5c5 c5c5 0000 0000
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 0. prio_int 0. vlan 100. reason 0x400. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 0. opcode 0.  matched 222. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]:
+Packet[4]:   Ethernet: dst<00:00:00:00:00:dd> src<00:00:00:00:00:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0064> * Unknown/Experimental format * 00 00 00 00 00 dd 00 00 00 00 00 cc 81 00 00 64 91 00 00 66 aa bb cc dd c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5 c5
+sleep 3
+Sleeping for 3 seconds
+fp stat get si=1 t=p
+The value is: 0x000000001
+
+
+
+OnSuccess: Final stat count should be 1
+
+
+bcm_error_t $$ = BCM_E_NONE (0)
+############################
+

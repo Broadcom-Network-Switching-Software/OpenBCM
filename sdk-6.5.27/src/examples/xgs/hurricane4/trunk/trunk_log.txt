@@ -1,0 +1,401 @@
+BCM.0> cint trunk.c YES 0
+int opt_TestTypeDlb = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 3 (0x3)
+int egr_port2 = 4 (0x4)
+int egr_port3 = 5 (0x5)
+int egr_port4 = 6 (0x6)
+int egr_port5 = 7 (0x7)
+
+1. Enable non uc traffic on trunk port
+Enable non uc traffic trunk : Done
+
+2. Create trunk group with port 3, 4, 5
+Create trunk group : Done. Trunk group id: 0
+Add ports to trunk group 0 : Done
+
+3. Add port 7 to trunk group 0
+Add port to trunk group 0 : Done
+
+4. Delete port 7 from trunk group 0
+Delete port 7 from trunk group 0 : Done
+
+5. Update trunk hash psc to SRCIP
+Get trunk group 0 info : Done
+Set trunk group 0 psc as 4 : Done
+
+6. Update trunk hash psc to hash based on IPv4 L4 Ports
+Get trunk group 0 info : Done
+Set trunk group 0 psc as 9 : Done
+Get Hash control information : Done
+Enable RTAG7 on non-uc traffic : Done
+Enable CRC32LO on rtag7 hashing : Done
+Get Hash select control information : Done
+Enable IPv4 hash : Done
+Enable src and dst L4 port hashing for ipv4: Done
+Enable src and dst L4 port hashing for udp/tcp  : Done
+Enable src and dst L4 port hashing for udp/tcp where dest port equal to src port : Done
+
+############  Sending UC packet 0  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110022222222228100006408004500002E0000000040065CC8140000020A0000011111222200000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   100                +100
+GR127.ge0                   :                   100                +100
+GRPKT.ge0                   :                   100                +100
+GRBYT.ge0                   :                 7,200              +7,200
+GRUC.ge0                    :                   100                +100
+GRPOK.ge0                   :                   100                +100
+GT127.ge0                   :                   100                +100
+GTPKT.ge0                   :                   100                +100
+GTBYT.ge0                   :                 7,200              +7,200
+GTUC.ge0                    :                   100                +100
+GTPOK.ge0                   :                   100                +100
+UC_PERQ_PKT(0).ge0          :                   100                +100
+UC_PERQ_BYTE(0).ge0         :                 7,200              +7,200
+RUC_64.ge4                  :                   100                +100
+RDBGC0_64.ge4               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   100                +100
+GR127.ge4                   :                   100                +100
+GRPKT.ge4                   :                   100                +100
+GRBYT.ge4                   :                 7,200              +7,200
+GRUC.ge4                    :                   100                +100
+GRPOK.ge4                   :                   100                +100
+GT127.ge4                   :                   100                +100
+GTPKT.ge4                   :                   100                +100
+GTBYT.ge4                   :                 7,200              +7,200
+GTUC.ge4                    :                   100                +100
+GTPOK.ge4                   :                   100                +100
+UC_PERQ_PKT(0).ge4          :                   100                +100
+UC_PERQ_BYTE(0).ge4         :                 7,200              +7,200
+
+############  Sending UC packet 1  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110023232222228100006408004500002E0000000040065CC8140000030A0000021112222300000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   200                +100
+GR127.ge0                   :                   200                +100
+GRPKT.ge0                   :                   200                +100
+GRBYT.ge0                   :                14,400              +7,200
+GRUC.ge0                    :                   200                +100
+GRPOK.ge0                   :                   200                +100
+GT127.ge0                   :                   200                +100
+GTPKT.ge0                   :                   200                +100
+GTBYT.ge0                   :                14,400              +7,200
+GTUC.ge0                    :                   200                +100
+GTPOK.ge0                   :                   200                +100
+UC_PERQ_PKT(0).ge0          :                   200                +100
+UC_PERQ_BYTE(0).ge0         :                14,400              +7,200
+RUC_64.ge4                  :                   200                +100
+RDBGC0_64.ge4               :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   200                +100
+GR127.ge4                   :                   200                +100
+GRPKT.ge4                   :                   200                +100
+GRBYT.ge4                   :                14,400              +7,200
+GRUC.ge4                    :                   200                +100
+GRPOK.ge4                   :                   200                +100
+GT127.ge4                   :                   200                +100
+GTPKT.ge4                   :                   200                +100
+GTBYT.ge4                   :                14,400              +7,200
+GTUC.ge4                    :                   200                +100
+GTPOK.ge4                   :                   200                +100
+UC_PERQ_PKT(0).ge4          :                   200                +100
+UC_PERQ_BYTE(0).ge4         :                14,400              +7,200
+
+############  Sending UC packet 2  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110024242222228100006408004500002E0000000040065CC8140000040A0000031113222400000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   300                +100
+GR127.ge0                   :                   300                +100
+GRPKT.ge0                   :                   300                +100
+GRBYT.ge0                   :                21,600              +7,200
+GRUC.ge0                    :                   300                +100
+GRPOK.ge0                   :                   300                +100
+GT127.ge0                   :                   300                +100
+GTPKT.ge0                   :                   300                +100
+GTBYT.ge0                   :                21,600              +7,200
+GTUC.ge0                    :                   300                +100
+GTPOK.ge0                   :                   300                +100
+UC_PERQ_PKT(0).ge0          :                   300                +100
+UC_PERQ_BYTE(0).ge0         :                21,600              +7,200
+RUC_64.ge3                  :                   100                +100
+RDBGC0_64.ge3               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   100                +100
+GR127.ge3                   :                   100                +100
+GRPKT.ge3                   :                   100                +100
+GRBYT.ge3                   :                 7,200              +7,200
+GRUC.ge3                    :                   100                +100
+GRPOK.ge3                   :                   100                +100
+GT127.ge3                   :                   100                +100
+GTPKT.ge3                   :                   100                +100
+GTBYT.ge3                   :                 7,200              +7,200
+GTUC.ge3                    :                   100                +100
+GTPOK.ge3                   :                   100                +100
+UC_PERQ_PKT(0).ge3          :                   100                +100
+UC_PERQ_BYTE(0).ge3         :                 7,200              +7,200
+
+############  Sending UC packet 3  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110025252222228100006408004500002E0000000040065CC8140000050A0000041114222500000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   400                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   400                +100
+GR127.ge0                   :                   400                +100
+GRPKT.ge0                   :                   400                +100
+GRBYT.ge0                   :                28,800              +7,200
+GRUC.ge0                    :                   400                +100
+GRPOK.ge0                   :                   400                +100
+GT127.ge0                   :                   400                +100
+GTPKT.ge0                   :                   400                +100
+GTBYT.ge0                   :                28,800              +7,200
+GTUC.ge0                    :                   400                +100
+GTPOK.ge0                   :                   400                +100
+UC_PERQ_PKT(0).ge0          :                   400                +100
+UC_PERQ_BYTE(0).ge0         :                28,800              +7,200
+RUC_64.ge4                  :                   300                +100
+RDBGC0_64.ge4               :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   300                +100
+GR127.ge4                   :                   300                +100
+GRPKT.ge4                   :                   300                +100
+GRBYT.ge4                   :                21,600              +7,200
+GRUC.ge4                    :                   300                +100
+GRPOK.ge4                   :                   300                +100
+GT127.ge4                   :                   300                +100
+GTPKT.ge4                   :                   300                +100
+GTBYT.ge4                   :                21,600              +7,200
+GTUC.ge4                    :                   300                +100
+GTPOK.ge4                   :                   300                +100
+UC_PERQ_PKT(0).ge4          :                   300                +100
+UC_PERQ_BYTE(0).ge4         :                21,600              +7,200
+
+############  Sending UC packet 4  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110026262222228100006408004500002E0000000040065CC8140000060A0000051115222600000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   500                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   500                +100
+GR127.ge0                   :                   500                +100
+GRPKT.ge0                   :                   500                +100
+GRBYT.ge0                   :                36,000              +7,200
+GRUC.ge0                    :                   500                +100
+GRPOK.ge0                   :                   500                +100
+GT127.ge0                   :                   500                +100
+GTPKT.ge0                   :                   500                +100
+GTBYT.ge0                   :                36,000              +7,200
+GTUC.ge0                    :                   500                +100
+GTPOK.ge0                   :                   500                +100
+UC_PERQ_PKT(0).ge0          :                   500                +100
+UC_PERQ_BYTE(0).ge0         :                36,000              +7,200
+RUC_64.ge3                  :                   200                +100
+RDBGC0_64.ge3               :                   200                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   200                +100
+GR127.ge3                   :                   200                +100
+GRPKT.ge3                   :                   200                +100
+GRBYT.ge3                   :                14,400              +7,200
+GRUC.ge3                    :                   200                +100
+GRPOK.ge3                   :                   200                +100
+GT127.ge3                   :                   200                +100
+GTPKT.ge3                   :                   200                +100
+GTBYT.ge3                   :                14,400              +7,200
+GTUC.ge3                    :                   200                +100
+GTPOK.ge3                   :                   200                +100
+UC_PERQ_PKT(0).ge3          :                   200                +100
+UC_PERQ_BYTE(0).ge3         :                14,400              +7,200
+
+############  Sending UC packet 5  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110027272222228100006408004500002E0000000040065CC8140000070A0000061116222700000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   600                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   600                +100
+GR127.ge0                   :                   600                +100
+GRPKT.ge0                   :                   600                +100
+GRBYT.ge0                   :                43,200              +7,200
+GRUC.ge0                    :                   600                +100
+GRPOK.ge0                   :                   600                +100
+GT127.ge0                   :                   600                +100
+GTPKT.ge0                   :                   600                +100
+GTBYT.ge0                   :                43,200              +7,200
+GTUC.ge0                    :                   600                +100
+GTPOK.ge0                   :                   600                +100
+UC_PERQ_PKT(0).ge0          :                   600                +100
+UC_PERQ_BYTE(0).ge0         :                43,200              +7,200
+RUC_64.ge3                  :                   300                +100
+RDBGC0_64.ge3               :                   300                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   300                +100
+GR127.ge3                   :                   300                +100
+GRPKT.ge3                   :                   300                +100
+GRBYT.ge3                   :                21,600              +7,200
+GRUC.ge3                    :                   300                +100
+GRPOK.ge3                   :                   300                +100
+GT127.ge3                   :                   300                +100
+GTPKT.ge3                   :                   300                +100
+GTBYT.ge3                   :                21,600              +7,200
+GTUC.ge3                    :                   300                +100
+GTPOK.ge3                   :                   300                +100
+UC_PERQ_PKT(0).ge3          :                   300                +100
+UC_PERQ_BYTE(0).ge3         :                21,600              +7,200
+
+############  Sending UC packet 6  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110028282222228100006408004500002E0000000040065CC8140000080A0000071117222800000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   700                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   700                +100
+GR127.ge0                   :                   700                +100
+GRPKT.ge0                   :                   700                +100
+GRBYT.ge0                   :                50,400              +7,200
+GRUC.ge0                    :                   700                +100
+GRPOK.ge0                   :                   700                +100
+GT127.ge0                   :                   700                +100
+GTPKT.ge0                   :                   700                +100
+GTBYT.ge0                   :                50,400              +7,200
+GTUC.ge0                    :                   700                +100
+GTPOK.ge0                   :                   700                +100
+UC_PERQ_PKT(0).ge0          :                   700                +100
+UC_PERQ_BYTE(0).ge0         :                50,400              +7,200
+RUC_64.ge2                  :                   100                +100
+RDBGC0_64.ge2               :                   100                +100
+ING_NIV_RX_FRAMES_VL.ge2    :                   100                +100
+GR127.ge2                   :                   100                +100
+GRPKT.ge2                   :                   100                +100
+GRBYT.ge2                   :                 7,200              +7,200
+GRUC.ge2                    :                   100                +100
+GRPOK.ge2                   :                   100                +100
+GT127.ge2                   :                   100                +100
+GTPKT.ge2                   :                   100                +100
+GTBYT.ge2                   :                 7,200              +7,200
+GTUC.ge2                    :                   100                +100
+GTPOK.ge2                   :                   100                +100
+UC_PERQ_PKT(0).ge2          :                   100                +100
+UC_PERQ_BYTE(0).ge2         :                 7,200              +7,200
+
+############  Sending UC packet 7  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110029292222228100006408004500002E0000000040065CC8140000090A0000081118222900000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   800                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   800                +100
+GR127.ge0                   :                   800                +100
+GRPKT.ge0                   :                   800                +100
+GRBYT.ge0                   :                57,600              +7,200
+GRUC.ge0                    :                   800                +100
+GRPOK.ge0                   :                   800                +100
+GT127.ge0                   :                   800                +100
+GTPKT.ge0                   :                   800                +100
+GTBYT.ge0                   :                57,600              +7,200
+GTUC.ge0                    :                   800                +100
+GTPOK.ge0                   :                   800                +100
+UC_PERQ_PKT(0).ge0          :                   800                +100
+UC_PERQ_BYTE(0).ge0         :                57,600              +7,200
+RUC_64.ge4                  :                   400                +100
+RDBGC0_64.ge4               :                   400                +100
+ING_NIV_RX_FRAMES_VL.ge4    :                   400                +100
+GR127.ge4                   :                   400                +100
+GRPKT.ge4                   :                   400                +100
+GRBYT.ge4                   :                28,800              +7,200
+GRUC.ge4                    :                   400                +100
+GRPOK.ge4                   :                   400                +100
+GT127.ge4                   :                   400                +100
+GTPKT.ge4                   :                   400                +100
+GTBYT.ge4                   :                28,800              +7,200
+GTUC.ge4                    :                   400                +100
+GTPOK.ge4                   :                   400                +100
+UC_PERQ_PKT(0).ge4          :                   400                +100
+UC_PERQ_BYTE(0).ge4         :                28,800              +7,200
+
+############  Sending UC packet 8  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002A2A2222228100006408004500002E0000000040065CC81400000A0A0000091119222A00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                   900                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                   900                +100
+GR127.ge0                   :                   900                +100
+GRPKT.ge0                   :                   900                +100
+GRBYT.ge0                   :                64,800              +7,200
+GRUC.ge0                    :                   900                +100
+GRPOK.ge0                   :                   900                +100
+GT127.ge0                   :                   900                +100
+GTPKT.ge0                   :                   900                +100
+GTBYT.ge0                   :                64,800              +7,200
+GTUC.ge0                    :                   900                +100
+GTPOK.ge0                   :                   900                +100
+UC_PERQ_PKT(0).ge0          :                   900                +100
+UC_PERQ_BYTE(0).ge0         :                64,800              +7,200
+RUC_64.ge3                  :                   400                +100
+RDBGC0_64.ge3               :                   400                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   400                +100
+GR127.ge3                   :                   400                +100
+GRPKT.ge3                   :                   400                +100
+GRBYT.ge3                   :                28,800              +7,200
+GRUC.ge3                    :                   400                +100
+GRPOK.ge3                   :                   400                +100
+GT127.ge3                   :                   400                +100
+GTPKT.ge3                   :                   400                +100
+GTBYT.ge3                   :                28,800              +7,200
+GTUC.ge3                    :                   400                +100
+GTPOK.ge3                   :                   400                +100
+UC_PERQ_PKT(0).ge3          :                   400                +100
+UC_PERQ_BYTE(0).ge3         :                28,800              +7,200
+
+############  Sending UC packet 9  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002B2B2222228100006408004500002E0000000040065CC81400000B0A00000A111A222B00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.ge0                  :                 1,000                +100
+ING_NIV_RX_FRAMES_VL.ge0    :                 1,000                +100
+GR127.ge0                   :                 1,000                +100
+GRPKT.ge0                   :                 1,000                +100
+GRBYT.ge0                   :                72,000              +7,200
+GRUC.ge0                    :                 1,000                +100
+GRPOK.ge0                   :                 1,000                +100
+GT127.ge0                   :                 1,000                +100
+GTPKT.ge0                   :                 1,000                +100
+GTBYT.ge0                   :                72,000              +7,200
+GTUC.ge0                    :                 1,000                +100
+GTPOK.ge0                   :                 1,000                +100
+UC_PERQ_PKT(0).ge0          :                 1,000                +100
+UC_PERQ_BYTE(0).ge0         :                72,000              +7,200
+RUC_64.ge3                  :                   500                +100
+RDBGC0_64.ge3               :                   500                +100
+ING_NIV_RX_FRAMES_VL.ge3    :                   500                +100
+GR127.ge3                   :                   500                +100
+GRPKT.ge3                   :                   500                +100
+GRBYT.ge3                   :                36,000              +7,200
+GRUC.ge3                    :                   500                +100
+GRPOK.ge3                   :                   500                +100
+GT127.ge3                   :                   500                +100
+GTPKT.ge3                   :                   500                +100
+GTBYT.ge3                   :                36,000              +7,200
+GTUC.ge3                    :                   500                +100
+GTPOK.ge3                   :                   500                +100
+UC_PERQ_PKT(0).ge3          :                   500                +100
+UC_PERQ_BYTE(0).ge3         :                36,000              +7,200
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0>
+BCM.0>

@@ -1,0 +1,364 @@
+BCM.0> c macsec_encrypt_decrypt_4_sa_multi_vlans_qinq_per_pvlan_sc_cos.c
+execute(): Start
+open /dev/linux-bcm-knet: : No such device or address
+0:soc_knet_init: knet open failed
+0:soc_dma_attach: Failed to initialize KNET: rv=-11
+ingress_port =1
+egress_port1 =2
+qMapId = 0x400
+qMapId = 0x800
+vlan_xlate_access_setup()
+vlan_xlate_network_setup()
+egress_vlan_xlate_access_setup()
+egress_vlan_xlate_network_setup()
+> VFP rules installed (decrypt).
+> IFP rule to send MACsec packets to MACsec lb port installed (decrypt-1st pass).
+> IFP rule to map DGPP to final DGPP installed (encrypt-2nd pass).
+pkt_format_info_get succeeded
+not_allowed_chunk_bitmap = 0xff9f
+bmpChunk: 0x00000020
+UDF created Successfully: udf_id=1
+efp_group: 0x5 created
+efp_decryption_setup completed
+Configure macsec_port[0]
+
+-------------------------------------------
+Start macsec_port_config() for port-2
+---------------------------------------------
+Enable MACsec on the port 2
+Configure per port disabled egress SC
+
+Created securty channel with id: 0x4000000
+
+Enabled secure channel with id: 0x4000000
+Configure macsec_vlan[0]
+
+-------------------------------------------
+Start macsec_vlan_config() for vlan-1000
+---------------------------------------------
+Call bcm_multicast_control_set() to remap group 0x7000001 to 0x2000002
+
+Created decrypt policy with id:0x28000000
+Configure SC/SA for macsec_vlan_port[0]
+
+-------------------------------------------------------------
+Start macsec_vlan_port_config() for vlan=1000, port=2, p_vlan=100
+---------------------------------------------------------------
+
+Created securty channel with id: 0x8000000
+
+Enabled secure channel with id: 0x8000000
+
+Created security association with id:0x18000000
+
+Created security association with id:0x18000001
+
+Created security association with id:0x18000002
+
+Created security association with id:0x18000003
+
+Created securty channel with id: 0x4000001
+int $$ = 0 (0x0)
+Subport_id 0x44000001 for the sc 0x4000001
+Subport_num 0x1 for the sc 0x4000001
+
+Enabled secure channel with id: 0x4000001
+
+Created security association with id:0x14000004
+
+Created security association with id:0x14000005
+
+Created security association with id:0x14000006
+
+Created security association with id:0x14000007
+> EFP rule to modify encrypt SVTAG installed.
+
+> EFP rule to modify encrypt SVTAG installed.
+
+> EFP rule to modify encrypt SVTAG installed.
+
+
+Bind secure channel 0x8000000 to decrypt policy 0x28000000, pri=0
+Configure decrypt flow for macsec_vlan_port[0]
+
+--------------------------------------------------
+Start macsec_vlan_port_config() for vlan=1000, port=2, p_vlan=100
+----------------------------------------------------
+int $$ = 0 (0x0)
+
+Created decrypt flow with id:0x38000000
+int $$ = 0 (0x0)
+
+Enabled decrypt flow with id:0x38000000
+Registered Packet callback
+
+vlan 1  ports cpu,ge,xe,hg (0x00000000000000000000000000000000000000000000001e000000007fffffff), untagged ge,xe,hg (0x000000000000000000000000000000000000000000000000000000007ffffffe) MCAST_FLOOD_UNKNOWN
+vlan 1000       ports ge0-ge1 (0x0000000000000000000000000000000000000000000000000000000000000006), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+
+
+==========  Test1: MACsec Encryption - Unicast ==================
+ADD: mac=00:00:00:00:00:22 vlan=1000 GPORT=0x2 modid=2 port=2/ge1 Static
+>>> Input Unicast packet @ port-1:
+>>> Output MACsec encrypted packet with SCI-x @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x2, length=0x6c
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000022} {000000000001} 8100 0064
+[bcmPW.0]Packet[1]: data[0010]: 88e5 2c00 0000 0005 0000 0000 0000 0008
+[bcmPW.0]Packet[1]: data[0020]: f56b 4878 bdef b306 03bc 7031 8fe8 7355
+[bcmPW.0]Packet[1]: data[0030]: d014 2b93 9c35 5844 1b4a 0701 f714 9315
+[bcmPW.0]Packet[1]: data[0040]: 7a69 53d9 49dd 252f 0e42 7858 42bc e8af
+[bcmPW.0]Packet[1]: data[0050]: 8a75 fd46 50c0 5e76 50d8 012a 0010 d56f
+[bcmPW.0]Packet[1]: data[0060]: ab6d 7cd8 a431 3a9d 1a7d d604
+[bcmPW.0]Packet[1]: length 108 (108). rx-port 2. cos 3. prio_int 11. vlan 100. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 2. src-port 2. src-mod 2. opcode 1.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test1 = [PASS]
+-----------------------------------------------------------
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+==========  Test2: MACsec Encryption - BC/DLF ==================
+>>> Input BC/DLF packet @ port-1:
+>>> Output MACsec encrypted packet with SCI-x @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x2, length=0x6c
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {ffffffffffff} {000000000001} 8100 0064
+[bcmPW.0]Packet[2]: data[0010]: 88e5 2c00 0000 0006 0000 0000 0000 0008
+[bcmPW.0]Packet[2]: data[0020]: 5f4c a150 73ff f0ac 1878 f83e d070 f7cc
+[bcmPW.0]Packet[2]: data[0030]: aa8c f144 e2c9 ee0a a0dd 297d 2f3d 04a5
+[bcmPW.0]Packet[2]: data[0040]: 8b9b 0aaa 10e7 a2b5 4e9e 1f40 dfbc af33
+[bcmPW.0]Packet[2]: data[0050]: 3f51 b08a 916f bf2a a162 e724 b538 76bc
+[bcmPW.0]Packet[2]: data[0060]: 92f0 56be 1408 0781 9a7e 7044
+[bcmPW.0]Packet[2]: length 108 (108). rx-port 2. cos 3. prio_int 11. vlan 100. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 2. src-port 2. src-mod 2. opcode 1.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test2 = [PASS]
+-----------------------------------------------------------
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+==========  Test3: MACsec Encryption - Unicast (after manual SA switch) ==================
+>>> Input Unicast packet @ port-1:
+>>> Output MACsec encrypted packet with SCI-x @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x2, length=0x6c
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000022} {000000000001} 8100 0064
+[bcmPW.0]Packet[3]: data[0010]: 88e5 2d00 0000 0005 0000 0000 0000 0008
+[bcmPW.0]Packet[3]: data[0020]: f591 7c2d 26fd 2610 3599 d865 9a7c 62a8
+[bcmPW.0]Packet[3]: data[0030]: e25c cf0b 3384 581f 2f39 f59b 40b5 d5d9
+[bcmPW.0]Packet[3]: data[0040]: 8d17 0cfa db04 89de 8f83 99d2 372d d6c2
+[bcmPW.0]Packet[3]: data[0050]: f911 0308 f872 65a3 1867 1498 18c5 dd00
+[bcmPW.0]Packet[3]: data[0060]: 12b8 656d e13c 55da c644 b112
+[bcmPW.0]Packet[3]: length 108 (108). rx-port 2. cos 3. prio_int 11. vlan 100. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 2. src-port 2. src-mod 2. opcode 1.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test3 = [PASS]
+-----------------------------------------------------------
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000003}
+
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+==========  Test4: MACsec decryption - Unicast ==================
+ADD: mac=00:00:00:00:00:22 vlan=1000 GPORT=0x1 modid=2 port=1/ge0 Static
+>>> Input Unicast packet @ port-2:
+>>> Output decrypted pkt @ port-1:
+Packet from data=<>, length=108
+RxCallback: received from port 0x1, length=0x48
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[4]: data[0010]: ffff 4578 002e 0000 0000 40ff 8457 1400
+[bcmPW.0]Packet[4]: data[0020]: 0001 e100 0001 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[4]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[4]: data[0040]: 2d0a 03ab 0911 56a1
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 2. src-port 1. src-mod 2. opcode 1.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test4 = [PASS]
+-----------------------------------------------------------
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000003}
+
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+==========  Test5: MACsec decryption - Unicast (through the 2nd ingress SA */==================
+ADD: mac=00:00:00:00:00:22 vlan=1000 GPORT=0x1 modid=2 port=1/ge0 Static
+>>> Input Unicast packet @ port-2:
+>>> Output decrypted pkt @ port-1:
+Packet from data=<>, length=108
+RxCallback: received from port 0x1, length=0x48
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[5]: data[0010]: ffff 4578 002e 0000 0000 40ff 8457 1400
+[bcmPW.0]Packet[5]: data[0020]: 0001 e100 0001 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[5]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[5]: data[0040]: 2d0a 03ab 0911 56a1
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 2. src-port 1. src-mod 2. opcode 1.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test5 = [PASS]
+-----------------------------------------------------------
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000003}
+
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+test_verify() [PASS]
+--------------------------------
+port 65 Unicast TX Stats
+--------------------------------
+queue gport=0x24104000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104004, cos=4, uint64 outpkt = {0x00000000 0x00000002}
+queue gport=0x24104005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 66 Unicast TX Stats
+--------------------------------
+queue gport=0x24108000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 2 Unicast TX Stats
+--------------------------------
+queue gport=0x24008000, cos=0, uint64 outpkt = {0x00000000 0x00000002}
+queue gport=0x24008001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008004, cos=4, uint64 outpkt = {0x00000000 0x00000003}
+queue gport=0x24008005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 65 Multicast TX Stats
+--------------------------------
+queue gport=0x30104000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104003, cos=3, uint64 outpkt = {0x00000000 0x00000001}
+queue gport=0x30104004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 66 Multicast TX Stats
+--------------------------------
+queue gport=0x30108000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 2 Multicast TX Stats
+--------------------------------
+queue gport=0x30008000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+===========================================================================
+--------------------------------
+port 67 Unicast TX Stats
+--------------------------------
+queue gport=0x2410c000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c004, cos=4, uint64 outpkt = {0x00000000 0x00000002}
+queue gport=0x2410c005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 68 Unicast TX Stats
+--------------------------------
+queue gport=0x24110000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 1 Unicast TX Stats
+--------------------------------
+queue gport=0x24004000, cos=0, uint64 outpkt = {0x00000000 0x00000003}
+queue gport=0x24004001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004004, cos=4, uint64 outpkt = {0x00000000 0x00000002}
+queue gport=0x24004005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 67 Multicast TX Stats
+--------------------------------
+queue gport=0x3010c000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 68 Multicast TX Stats
+--------------------------------
+queue gport=0x30110000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 1 Multicast TX Stats
+--------------------------------
+queue gport=0x30004000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

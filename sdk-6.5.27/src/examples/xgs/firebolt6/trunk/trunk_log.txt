@@ -1,0 +1,1541 @@
+rack# ./bcm.user
+sal_config_refresh: unknown entry "pp_clock_frequency" on configFb6.bcm line 13
+sal_config_refresh: unknown entry "management_port_mode" on configFb6.bcm line 55
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.20 built 20200619 (Fri Jun 19 06:36:21 2020)
+From sr936857@xl-sj1-31:/projects/ntsw-sw-ae/home/sr936857/git-code/sdk6
+Platform: SLK_BCM957812
+OS: Unix (Posix)
+Found 0 devices.
+DMA pool size: 33554432
+BDE dev 0 (PCI), Dev 0xb470, Rev 0x01, Chip BCM56470_A0, Driver BCM56470_A0
+SOC unit 0 attached to PCI device BCM56470_A0
+WARNING: bcm esw command CoupledMemWrite not alphabetized
+rc: unit 0 device BCM56470_A0
+Loading M0 Firmware located at BP3-Broadcom_CSG_HW-License-48.BCM56470AA0_A0.21436587badcfe00.bin
+HLA: Error: Unable to open file: BP3-Broadcom_CSG_HW-License-48.BCM56470AA0_A0.21436587badcfe00.bin
+Loading M0 Firmware located at ../../../../rc/cmicfw/linkscan_led_fw.bin
+Firmware download successed (0x32042f38).
+Loading M0 Firmware located at ../../../../rc/cmicfw/custom_led.bin
+Firmware download successed (0x4bc6bdc6).
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.10
+
+	CMH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+	CCH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+	CEH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+rc: MMU initialized
+0:_bcm_l3_defip_init: ALPM mode support is not compiled. Please, recompile the SDK with ALPM_ENABLE proprocessor variable defined
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0> cd cint
+BCM.0> 
+BCM.0> 
+BCM.0> cint trunk.c YES 0
+int opt_TestTypeDlb = 0 (0x0)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 5 (0x5)
+int egr_port2 = 9 (0x9)
+int egr_port3 = 13 (0xd)
+int egr_port4 = 17 (0x11)
+int egr_port5 = 21 (0x15)
+
+1. Enable non uc traffic on trunk port
+Enable non uc traffic trunk : Done
+
+2. Create trunk group with port 5, 9, 13
+Create trunk group : Done. Trunk group id: 0
+Add ports to trunk group 0 : Done
+
+3. Add port 21 to trunk group 0
+Add port to trunk group 0 : Done
+
+4. Delete port 21 from trunk group 0
+Delete port 21 from trunk group 0 : Done
+
+5. Update trunk hash psc to SRCIP
+Get trunk group 0 info : Done
+Set trunk group 0 psc as 4 : Done
+
+6. Update trunk hash psc to hash based on IPv4 L4 Ports
+Get trunk group 0 info : Done
+Set trunk group 0 psc as 9 : Done
+Get Hash control information : Done
+Enable RTAG7 on non-uc traffic : Done
+Enable CRC32LO on rtag7 hashing : Done
+Get Hash select control information : Done
+Enable IPv4 hash : Done
+Enable src and dst L4 port hashing for ipv4: Done
+Enable src and dst L4 port hashing for udp/tcp  : Done
+Enable src and dst L4 port hashing for udp/tcp where dest port equal to src port : Done
+
+############  Sending UC packet 0  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110022222222228100006408004500002E0000000040065CC8140000020A0000011111222200000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			100		   +100
+R127.xe0		    :			100		   +100
+RPKT.xe0		    :			100		   +100
+RUCA.xe0		    :			100		   +100
+RPRM.xe0		    :			100		   +100
+RVLN.xe0		    :			100		   +100
+RPOK.xe0		    :			100		   +100
+RBYT.xe0		    :		      7,200		 +7,200
+T127.xe0		    :			100		   +100
+TPOK.xe0		    :			100		   +100
+TPKT.xe0		    :			100		   +100
+TUCA.xe0		    :			100		   +100
+TVLN.xe0		    :			100		   +100
+TBYT.xe0		    :		      7,200		 +7,200
+RPROG0.xe0		    :			100		   +100
+UC_PERQ_PKT(0).xe0	    :			100		   +100
+UC_PERQ_BYTE(0).xe0	    :		      7,200		 +7,200
+RUC_64.ce2		    :			100		   +100
+RDBGC0_64.ce2		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.ce2    :			100		   +100
+R127.ce2		    :			100		   +100
+RPKT.ce2		    :			100		   +100
+RUCA.ce2		    :			100		   +100
+RPRM.ce2		    :			100		   +100
+RVLN.ce2		    :			100		   +100
+RPOK.ce2		    :			100		   +100
+RBYT.ce2		    :		      7,200		 +7,200
+T127.ce2		    :			100		   +100
+TPOK.ce2		    :			100		   +100
+TPKT.ce2		    :			100		   +100
+TUCA.ce2		    :			100		   +100
+TVLN.ce2		    :			100		   +100
+TBYT.ce2		    :		      7,200		 +7,200
+RPROG0.ce2		    :			100		   +100
+UC_PERQ_PKT(0).ce2	    :			100		   +100
+UC_PERQ_BYTE(0).ce2	    :		      7,200		 +7,200
+
+############  Sending UC packet 1  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110023232222228100006408004500002E0000000040065CC8140000030A0000021112222300000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			200		   +100
+R127.xe0		    :			200		   +100
+RPKT.xe0		    :			200		   +100
+RUCA.xe0		    :			200		   +100
+RPRM.xe0		    :			200		   +100
+RVLN.xe0		    :			200		   +100
+RPOK.xe0		    :			200		   +100
+RBYT.xe0		    :		     14,400		 +7,200
+T127.xe0		    :			200		   +100
+TPOK.xe0		    :			200		   +100
+TPKT.xe0		    :			200		   +100
+TUCA.xe0		    :			200		   +100
+TVLN.xe0		    :			200		   +100
+TBYT.xe0		    :		     14,400		 +7,200
+RPROG0.xe0		    :			200		   +100
+UC_PERQ_PKT(0).xe0	    :			200		   +100
+UC_PERQ_BYTE(0).xe0	    :		     14,400		 +7,200
+RUC_64.ce2		    :			200		   +100
+RDBGC0_64.ce2		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.ce2    :			200		   +100
+R127.ce2		    :			200		   +100
+RPKT.ce2		    :			200		   +100
+RUCA.ce2		    :			200		   +100
+RPRM.ce2		    :			200		   +100
+RVLN.ce2		    :			200		   +100
+RPOK.ce2		    :			200		   +100
+RBYT.ce2		    :		     14,400		 +7,200
+T127.ce2		    :			200		   +100
+TPOK.ce2		    :			200		   +100
+TPKT.ce2		    :			200		   +100
+TUCA.ce2		    :			200		   +100
+TVLN.ce2		    :			200		   +100
+TBYT.ce2		    :		     14,400		 +7,200
+RPROG0.ce2		    :			200		   +100
+UC_PERQ_PKT(0).ce2	    :			200		   +100
+UC_PERQ_BYTE(0).ce2	    :		     14,400		 +7,200
+
+############  Sending UC packet 2  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110024242222228100006408004500002E0000000040065CC8140000040A0000031113222400000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			300		   +100
+R127.xe0		    :			300		   +100
+RPKT.xe0		    :			300		   +100
+RUCA.xe0		    :			300		   +100
+RPRM.xe0		    :			300		   +100
+RVLN.xe0		    :			300		   +100
+RPOK.xe0		    :			300		   +100
+RBYT.xe0		    :		     21,600		 +7,200
+T127.xe0		    :			300		   +100
+TPOK.xe0		    :			300		   +100
+TPKT.xe0		    :			300		   +100
+TUCA.xe0		    :			300		   +100
+TVLN.xe0		    :			300		   +100
+TBYT.xe0		    :		     21,600		 +7,200
+RPROG0.xe0		    :			300		   +100
+UC_PERQ_PKT(0).xe0	    :			300		   +100
+UC_PERQ_BYTE(0).xe0	    :		     21,600		 +7,200
+RUC_64.ce1		    :			100		   +100
+RDBGC0_64.ce1		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.ce1    :			100		   +100
+R127.ce1		    :			100		   +100
+RPKT.ce1		    :			100		   +100
+RUCA.ce1		    :			100		   +100
+RPRM.ce1		    :			100		   +100
+RVLN.ce1		    :			100		   +100
+RPOK.ce1		    :			100		   +100
+RBYT.ce1		    :		      7,200		 +7,200
+T127.ce1		    :			100		   +100
+TPOK.ce1		    :			100		   +100
+TPKT.ce1		    :			100		   +100
+TUCA.ce1		    :			100		   +100
+TVLN.ce1		    :			100		   +100
+TBYT.ce1		    :		      7,200		 +7,200
+RPROG0.ce1		    :			100		   +100
+UC_PERQ_PKT(0).ce1	    :			100		   +100
+UC_PERQ_BYTE(0).ce1	    :		      7,200		 +7,200
+
+############  Sending UC packet 3  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110025252222228100006408004500002E0000000040065CC8140000050A0000041114222500000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			400		   +100
+R127.xe0		    :			400		   +100
+RPKT.xe0		    :			400		   +100
+RUCA.xe0		    :			400		   +100
+RPRM.xe0		    :			400		   +100
+RVLN.xe0		    :			400		   +100
+RPOK.xe0		    :			400		   +100
+RBYT.xe0		    :		     28,800		 +7,200
+T127.xe0		    :			400		   +100
+TPOK.xe0		    :			400		   +100
+TPKT.xe0		    :			400		   +100
+TUCA.xe0		    :			400		   +100
+TVLN.xe0		    :			400		   +100
+TBYT.xe0		    :		     28,800		 +7,200
+RPROG0.xe0		    :			400		   +100
+UC_PERQ_PKT(0).xe0	    :			400		   +100
+UC_PERQ_BYTE(0).xe0	    :		     28,800		 +7,200
+RUC_64.ce2		    :			300		   +100
+RDBGC0_64.ce2		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.ce2    :			300		   +100
+R127.ce2		    :			300		   +100
+RPKT.ce2		    :			300		   +100
+RUCA.ce2		    :			300		   +100
+RPRM.ce2		    :			300		   +100
+RVLN.ce2		    :			300		   +100
+RPOK.ce2		    :			300		   +100
+RBYT.ce2		    :		     21,600		 +7,200
+T127.ce2		    :			300		   +100
+TPOK.ce2		    :			300		   +100
+TPKT.ce2		    :			300		   +100
+TUCA.ce2		    :			300		   +100
+TVLN.ce2		    :			300		   +100
+TBYT.ce2		    :		     21,600		 +7,200
+RPROG0.ce2		    :			300		   +100
+UC_PERQ_PKT(0).ce2	    :			300		   +100
+UC_PERQ_BYTE(0).ce2	    :		     21,600		 +7,200
+
+############  Sending UC packet 4  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110026262222228100006408004500002E0000000040065CC8140000060A0000051115222600000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			500		   +100
+R127.xe0		    :			500		   +100
+RPKT.xe0		    :			500		   +100
+RUCA.xe0		    :			500		   +100
+RPRM.xe0		    :			500		   +100
+RVLN.xe0		    :			500		   +100
+RPOK.xe0		    :			500		   +100
+RBYT.xe0		    :		     36,000		 +7,200
+T127.xe0		    :			500		   +100
+TPOK.xe0		    :			500		   +100
+TPKT.xe0		    :			500		   +100
+TUCA.xe0		    :			500		   +100
+TVLN.xe0		    :			500		   +100
+TBYT.xe0		    :		     36,000		 +7,200
+RPROG0.xe0		    :			500		   +100
+UC_PERQ_PKT(0).xe0	    :			500		   +100
+UC_PERQ_BYTE(0).xe0	    :		     36,000		 +7,200
+RUC_64.ce1		    :			200		   +100
+RDBGC0_64.ce1		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.ce1    :			200		   +100
+R127.ce1		    :			200		   +100
+RPKT.ce1		    :			200		   +100
+RUCA.ce1		    :			200		   +100
+RPRM.ce1		    :			200		   +100
+RVLN.ce1		    :			200		   +100
+RPOK.ce1		    :			200		   +100
+RBYT.ce1		    :		     14,400		 +7,200
+T127.ce1		    :			200		   +100
+TPOK.ce1		    :			200		   +100
+TPKT.ce1		    :			200		   +100
+TUCA.ce1		    :			200		   +100
+TVLN.ce1		    :			200		   +100
+TBYT.ce1		    :		     14,400		 +7,200
+RPROG0.ce1		    :			200		   +100
+UC_PERQ_PKT(0).ce1	    :			200		   +100
+UC_PERQ_BYTE(0).ce1	    :		     14,400		 +7,200
+
+############  Sending UC packet 5  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110027272222228100006408004500002E0000000040065CC8140000070A0000061116222700000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			600		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			600		   +100
+R127.xe0		    :			600		   +100
+RPKT.xe0		    :			600		   +100
+RUCA.xe0		    :			600		   +100
+RPRM.xe0		    :			600		   +100
+RVLN.xe0		    :			600		   +100
+RPOK.xe0		    :			600		   +100
+RBYT.xe0		    :		     43,200		 +7,200
+T127.xe0		    :			600		   +100
+TPOK.xe0		    :			600		   +100
+TPKT.xe0		    :			600		   +100
+TUCA.xe0		    :			600		   +100
+TVLN.xe0		    :			600		   +100
+TBYT.xe0		    :		     43,200		 +7,200
+RPROG0.xe0		    :			600		   +100
+UC_PERQ_PKT(0).xe0	    :			600		   +100
+UC_PERQ_BYTE(0).xe0	    :		     43,200		 +7,200
+RUC_64.ce1		    :			300		   +100
+RDBGC0_64.ce1		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.ce1    :			300		   +100
+R127.ce1		    :			300		   +100
+RPKT.ce1		    :			300		   +100
+RUCA.ce1		    :			300		   +100
+RPRM.ce1		    :			300		   +100
+RVLN.ce1		    :			300		   +100
+RPOK.ce1		    :			300		   +100
+RBYT.ce1		    :		     21,600		 +7,200
+T127.ce1		    :			300		   +100
+TPOK.ce1		    :			300		   +100
+TPKT.ce1		    :			300		   +100
+TUCA.ce1		    :			300		   +100
+TVLN.ce1		    :			300		   +100
+TBYT.ce1		    :		     21,600		 +7,200
+RPROG0.ce1		    :			300		   +100
+UC_PERQ_PKT(0).ce1	    :			300		   +100
+UC_PERQ_BYTE(0).ce1	    :		     21,600		 +7,200
+
+############  Sending UC packet 6  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110028282222228100006408004500002E0000000040065CC8140000080A0000071117222800000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			700		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			700		   +100
+R127.xe0		    :			700		   +100
+RPKT.xe0		    :			700		   +100
+RUCA.xe0		    :			700		   +100
+RPRM.xe0		    :			700		   +100
+RVLN.xe0		    :			700		   +100
+RPOK.xe0		    :			700		   +100
+RBYT.xe0		    :		     50,400		 +7,200
+T127.xe0		    :			700		   +100
+TPOK.xe0		    :			700		   +100
+TPKT.xe0		    :			700		   +100
+TUCA.xe0		    :			700		   +100
+TVLN.xe0		    :			700		   +100
+TBYT.xe0		    :		     50,400		 +7,200
+RPROG0.xe0		    :			700		   +100
+UC_PERQ_PKT(0).xe0	    :			700		   +100
+UC_PERQ_BYTE(0).xe0	    :		     50,400		 +7,200
+RUC_64.ce0		    :			100		   +100
+RDBGC0_64.ce0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.ce0    :			100		   +100
+R127.ce0		    :			100		   +100
+RPKT.ce0		    :			100		   +100
+RUCA.ce0		    :			100		   +100
+RPRM.ce0		    :			100		   +100
+RVLN.ce0		    :			100		   +100
+RPOK.ce0		    :			100		   +100
+RBYT.ce0		    :		      7,200		 +7,200
+T127.ce0		    :			100		   +100
+TPOK.ce0		    :			100		   +100
+TPKT.ce0		    :			100		   +100
+TUCA.ce0		    :			100		   +100
+TVLN.ce0		    :			100		   +100
+TBYT.ce0		    :		      7,200		 +7,200
+RPROG0.ce0		    :			100		   +100
+UC_PERQ_PKT(0).ce0	    :			100		   +100
+UC_PERQ_BYTE(0).ce0	    :		      7,200		 +7,200
+
+############  Sending UC packet 7  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110029292222228100006408004500002E0000000040065CC8140000090A0000081118222900000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			800		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			800		   +100
+R127.xe0		    :			800		   +100
+RPKT.xe0		    :			800		   +100
+RUCA.xe0		    :			800		   +100
+RPRM.xe0		    :			800		   +100
+RVLN.xe0		    :			800		   +100
+RPOK.xe0		    :			800		   +100
+RBYT.xe0		    :		     57,600		 +7,200
+T127.xe0		    :			800		   +100
+TPOK.xe0		    :			800		   +100
+TPKT.xe0		    :			800		   +100
+TUCA.xe0		    :			800		   +100
+TVLN.xe0		    :			800		   +100
+TBYT.xe0		    :		     57,600		 +7,200
+RPROG0.xe0		    :			800		   +100
+UC_PERQ_PKT(0).xe0	    :			800		   +100
+UC_PERQ_BYTE(0).xe0	    :		     57,600		 +7,200
+RUC_64.ce2		    :			400		   +100
+RDBGC0_64.ce2		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.ce2    :			400		   +100
+R127.ce2		    :			400		   +100
+RPKT.ce2		    :			400		   +100
+RUCA.ce2		    :			400		   +100
+RPRM.ce2		    :			400		   +100
+RVLN.ce2		    :			400		   +100
+RPOK.ce2		    :			400		   +100
+RBYT.ce2		    :		     28,800		 +7,200
+T127.ce2		    :			400		   +100
+TPOK.ce2		    :			400		   +100
+TPKT.ce2		    :			400		   +100
+TUCA.ce2		    :			400		   +100
+TVLN.ce2		    :			400		   +100
+TBYT.ce2		    :		     28,800		 +7,200
+RPROG0.ce2		    :			400		   +100
+UC_PERQ_PKT(0).ce2	    :			400		   +100
+UC_PERQ_BYTE(0).ce2	    :		     28,800		 +7,200
+
+############  Sending UC packet 8  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002A2A2222228100006408004500002E0000000040065CC81400000A0A0000091119222A00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			900		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			900		   +100
+R127.xe0		    :			900		   +100
+RPKT.xe0		    :			900		   +100
+RUCA.xe0		    :			900		   +100
+RPRM.xe0		    :			900		   +100
+RVLN.xe0		    :			900		   +100
+RPOK.xe0		    :			900		   +100
+RBYT.xe0		    :		     64,800		 +7,200
+T127.xe0		    :			900		   +100
+TPOK.xe0		    :			900		   +100
+TPKT.xe0		    :			900		   +100
+TUCA.xe0		    :			900		   +100
+TVLN.xe0		    :			900		   +100
+TBYT.xe0		    :		     64,800		 +7,200
+RPROG0.xe0		    :			900		   +100
+UC_PERQ_PKT(0).xe0	    :			900		   +100
+UC_PERQ_BYTE(0).xe0	    :		     64,800		 +7,200
+RUC_64.ce1		    :			400		   +100
+RDBGC0_64.ce1		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.ce1    :			400		   +100
+R127.ce1		    :			400		   +100
+RPKT.ce1		    :			400		   +100
+RUCA.ce1		    :			400		   +100
+RPRM.ce1		    :			400		   +100
+RVLN.ce1		    :			400		   +100
+RPOK.ce1		    :			400		   +100
+RBYT.ce1		    :		     28,800		 +7,200
+T127.ce1		    :			400		   +100
+TPOK.ce1		    :			400		   +100
+TPKT.ce1		    :			400		   +100
+TUCA.ce1		    :			400		   +100
+TVLN.ce1		    :			400		   +100
+TBYT.ce1		    :		     28,800		 +7,200
+RPROG0.ce1		    :			400		   +100
+UC_PERQ_PKT(0).ce1	    :			400		   +100
+UC_PERQ_BYTE(0).ce1	    :		     28,800		 +7,200
+
+############  Sending UC packet 9  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002B2B2222228100006408004500002E0000000040065CC81400000B0A00000A111A222B00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :		      1,000		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :		      1,000		   +100
+R127.xe0		    :		      1,000		   +100
+RPKT.xe0		    :		      1,000		   +100
+RUCA.xe0		    :		      1,000		   +100
+RPRM.xe0		    :		      1,000		   +100
+RVLN.xe0		    :		      1,000		   +100
+RPOK.xe0		    :		      1,000		   +100
+RBYT.xe0		    :		     72,000		 +7,200
+T127.xe0		    :		      1,000		   +100
+TPOK.xe0		    :		      1,000		   +100
+TPKT.xe0		    :		      1,000		   +100
+TUCA.xe0		    :		      1,000		   +100
+TVLN.xe0		    :		      1,000		   +100
+TBYT.xe0		    :		     72,000		 +7,200
+RPROG0.xe0		    :		      1,000		   +100
+UC_PERQ_PKT(0).xe0	    :		      1,000		   +100
+UC_PERQ_BYTE(0).xe0	    :		     72,000		 +7,200
+RUC_64.ce1		    :			500		   +100
+RDBGC0_64.ce1		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.ce1    :			500		   +100
+R127.ce1		    :			500		   +100
+RPKT.ce1		    :			500		   +100
+RUCA.ce1		    :			500		   +100
+RPRM.ce1		    :			500		   +100
+RVLN.ce1		    :			500		   +100
+RPOK.ce1		    :			500		   +100
+RBYT.ce1		    :		     36,000		 +7,200
+T127.ce1		    :			500		   +100
+TPOK.ce1		    :			500		   +100
+TPKT.ce1		    :			500		   +100
+TUCA.ce1		    :			500		   +100
+TVLN.ce1		    :			500		   +100
+TBYT.ce1		    :		     36,000		 +7,200
+RPROG0.ce1		    :			500		   +100
+UC_PERQ_PKT(0).ce1	    :			500		   +100
+UC_PERQ_BYTE(0).ce1	    :		     36,000		 +7,200
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+BCM.0> 
+#########################################################################
+
+
+BCM.0> cint trunk.c YES 1
+int opt_TestTypeDlb = 1 (0x1)
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port1 = 5 (0x5)
+int egr_port2 = 9 (0x9)
+int egr_port3 = 13 (0xd)
+int egr_port4 = 17 (0x11)
+int egr_port5 = 21 (0x15)
+B_CM.0> port 5 encap=higig2
+B_CM.0> port 9 encap=higig2
+B_CM.0> port 13 encap=higig2
+B_CM.0> port 17 encap=higig2
+B_CM.0> port 21 encap=higig2
+Create trunk group Done. 
+Get my modid: 0
+Configure DLB information for trunk 1025 Done 
+
+############  Sending UC packet 0  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110022222222228100006408004500002E0000000040065CC8140000020A0000011111222200000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			100		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			100		   +100
+R127.xe0		    :			100		   +100
+RPKT.xe0		    :			100		   +100
+RUCA.xe0		    :			100		   +100
+RPRM.xe0		    :			100		   +100
+RVLN.xe0		    :			100		   +100
+RPOK.xe0		    :			100		   +100
+RBYT.xe0		    :		      7,200		 +7,200
+T127.xe0		    :			100		   +100
+TPOK.xe0		    :			100		   +100
+TPKT.xe0		    :			100		   +100
+TUCA.xe0		    :			100		   +100
+TVLN.xe0		    :			100		   +100
+TBYT.xe0		    :		      7,200		 +7,200
+RPROG0.xe0		    :			100		   +100
+UC_PERQ_PKT(0).xe0	    :			100		   +100
+UC_PERQ_BYTE(0).xe0	    :		      7,200		 +7,200
+RUC_64.hg0		    :			 33		    +33
+RDBGC0_64.hg0		    :			 33		    +33
+ING_NIV_RX_FRAMES_VL.hg0    :			 33		    +33
+R127.hg0		    :			 33		    +33
+RPKT.hg0		    :			 33		    +33
+RUCA.hg0		    :			 33		    +33
+RPRM.hg0		    :			 33		    +33
+RPOK.hg0		    :			 33		    +33
+RBYT.hg0		    :		      2,772		 +2,772
+T127.hg0		    :			 33		    +33
+TPOK.hg0		    :			 33		    +33
+TPKT.hg0		    :			 33		    +33
+TUCA.hg0		    :			 33		    +33
+TBYT.hg0		    :		      2,772		 +2,772
+RPROG1.hg0		    :			 33		    +33
+UC_PERQ_PKT(0).hg0	    :			 33		    +33
+UC_PERQ_BYTE(0).hg0	    :		      2,244		 +2,244
+RUC_64.hg1		    :			 14		    +14
+RDBGC0_64.hg1		    :			 14		    +14
+ING_NIV_RX_FRAMES_VL.hg1    :			 14		    +14
+R127.hg1		    :			 14		    +14
+RPKT.hg1		    :			 14		    +14
+RUCA.hg1		    :			 14		    +14
+RPRM.hg1		    :			 14		    +14
+RPOK.hg1		    :			 14		    +14
+RBYT.hg1		    :		      1,176		 +1,176
+T127.hg1		    :			 14		    +14
+TPOK.hg1		    :			 14		    +14
+TPKT.hg1		    :			 14		    +14
+TUCA.hg1		    :			 14		    +14
+TBYT.hg1		    :		      1,176		 +1,176
+RPROG1.hg1		    :			 14		    +14
+UC_PERQ_PKT(0).hg1	    :			 14		    +14
+UC_PERQ_BYTE(0).hg1	    :			952		   +952
+RUC_64.hg2		    :			 18		    +18
+RDBGC0_64.hg2		    :			 18		    +18
+ING_NIV_RX_FRAMES_VL.hg2    :			 18		    +18
+R127.hg2		    :			 18		    +18
+RPKT.hg2		    :			 18		    +18
+RUCA.hg2		    :			 18		    +18
+RPRM.hg2		    :			 18		    +18
+RPOK.hg2		    :			 18		    +18
+RBYT.hg2		    :		      1,512		 +1,512
+T127.hg2		    :			 18		    +18
+TPOK.hg2		    :			 18		    +18
+TPKT.hg2		    :			 18		    +18
+TUCA.hg2		    :			 18		    +18
+TBYT.hg2		    :		      1,512		 +1,512
+RPROG1.hg2		    :			 18		    +18
+UC_PERQ_PKT(0).hg2	    :			 18		    +18
+UC_PERQ_BYTE(0).hg2	    :		      1,224		 +1,224
+RUC_64.hg3		    :			 35		    +35
+RDBGC0_64.hg3		    :			 35		    +35
+ING_NIV_RX_FRAMES_VL.hg3    :			 35		    +35
+R127.hg3		    :			 35		    +35
+RPKT.hg3		    :			 35		    +35
+RUCA.hg3		    :			 35		    +35
+RPRM.hg3		    :			 35		    +35
+RPOK.hg3		    :			 35		    +35
+RBYT.hg3		    :		      2,940		 +2,940
+T127.hg3		    :			 35		    +35
+TPOK.hg3		    :			 35		    +35
+TPKT.hg3		    :			 35		    +35
+TUCA.hg3		    :			 35		    +35
+TBYT.hg3		    :		      2,940		 +2,940
+RPROG1.hg3		    :			 35		    +35
+UC_PERQ_PKT(0).hg3	    :			 35		    +35
+UC_PERQ_BYTE(0).hg3	    :		      2,380		 +2,380
+
+############  Sending UC packet 1  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110023232222228100006408004500002E0000000040065CC8140000030A0000021112222300000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			200		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			200		   +100
+R127.xe0		    :			200		   +100
+RPKT.xe0		    :			200		   +100
+RUCA.xe0		    :			200		   +100
+RPRM.xe0		    :			200		   +100
+RVLN.xe0		    :			200		   +100
+RPOK.xe0		    :			200		   +100
+RBYT.xe0		    :		     14,400		 +7,200
+T127.xe0		    :			200		   +100
+TPOK.xe0		    :			200		   +100
+TPKT.xe0		    :			200		   +100
+TUCA.xe0		    :			200		   +100
+TVLN.xe0		    :			200		   +100
+TBYT.xe0		    :		     14,400		 +7,200
+RPROG0.xe0		    :			200		   +100
+UC_PERQ_PKT(0).xe0	    :			200		   +100
+UC_PERQ_BYTE(0).xe0	    :		     14,400		 +7,200
+RUC_64.hg0		    :			 63		    +30
+RDBGC0_64.hg0		    :			 63		    +30
+ING_NIV_RX_FRAMES_VL.hg0    :			 63		    +30
+R127.hg0		    :			 63		    +30
+RPKT.hg0		    :			 63		    +30
+RUCA.hg0		    :			 63		    +30
+RPRM.hg0		    :			 63		    +30
+RPOK.hg0		    :			 63		    +30
+RBYT.hg0		    :		      5,292		 +2,520
+T127.hg0		    :			 63		    +30
+TPOK.hg0		    :			 63		    +30
+TPKT.hg0		    :			 63		    +30
+TUCA.hg0		    :			 63		    +30
+TBYT.hg0		    :		      5,292		 +2,520
+RPROG1.hg0		    :			 63		    +30
+UC_PERQ_PKT(0).hg0	    :			 63		    +30
+UC_PERQ_BYTE(0).hg0	    :		      4,284		 +2,040
+RUC_64.hg1		    :			 43		    +29
+RDBGC0_64.hg1		    :			 43		    +29
+ING_NIV_RX_FRAMES_VL.hg1    :			 43		    +29
+R127.hg1		    :			 43		    +29
+RPKT.hg1		    :			 43		    +29
+RUCA.hg1		    :			 43		    +29
+RPRM.hg1		    :			 43		    +29
+RPOK.hg1		    :			 43		    +29
+RBYT.hg1		    :		      3,612		 +2,436
+T127.hg1		    :			 43		    +29
+TPOK.hg1		    :			 43		    +29
+TPKT.hg1		    :			 43		    +29
+TUCA.hg1		    :			 43		    +29
+TBYT.hg1		    :		      3,612		 +2,436
+RPROG1.hg1		    :			 43		    +29
+UC_PERQ_PKT(0).hg1	    :			 43		    +29
+UC_PERQ_BYTE(0).hg1	    :		      2,924		 +1,972
+RUC_64.hg2		    :			 37		    +19
+RDBGC0_64.hg2		    :			 37		    +19
+ING_NIV_RX_FRAMES_VL.hg2    :			 37		    +19
+R127.hg2		    :			 37		    +19
+RPKT.hg2		    :			 37		    +19
+RUCA.hg2		    :			 37		    +19
+RPRM.hg2		    :			 37		    +19
+RPOK.hg2		    :			 37		    +19
+RBYT.hg2		    :		      3,108		 +1,596
+T127.hg2		    :			 37		    +19
+TPOK.hg2		    :			 37		    +19
+TPKT.hg2		    :			 37		    +19
+TUCA.hg2		    :			 37		    +19
+TBYT.hg2		    :		      3,108		 +1,596
+RPROG1.hg2		    :			 37		    +19
+UC_PERQ_PKT(0).hg2	    :			 37		    +19
+UC_PERQ_BYTE(0).hg2	    :		      2,516		 +1,292
+RUC_64.hg3		    :			 57		    +22
+RDBGC0_64.hg3		    :			 57		    +22
+ING_NIV_RX_FRAMES_VL.hg3    :			 57		    +22
+R127.hg3		    :			 57		    +22
+RPKT.hg3		    :			 57		    +22
+RUCA.hg3		    :			 57		    +22
+RPRM.hg3		    :			 57		    +22
+RPOK.hg3		    :			 57		    +22
+RBYT.hg3		    :		      4,788		 +1,848
+T127.hg3		    :			 57		    +22
+TPOK.hg3		    :			 57		    +22
+TPKT.hg3		    :			 57		    +22
+TUCA.hg3		    :			 57		    +22
+TBYT.hg3		    :		      4,788		 +1,848
+RPROG1.hg3		    :			 57		    +22
+UC_PERQ_PKT(0).hg3	    :			 57		    +22
+UC_PERQ_BYTE(0).hg3	    :		      3,876		 +1,496
+
+############  Sending UC packet 2  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110024242222228100006408004500002E0000000040065CC8140000040A0000031113222400000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			300		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			300		   +100
+R127.xe0		    :			300		   +100
+RPKT.xe0		    :			300		   +100
+RUCA.xe0		    :			300		   +100
+RPRM.xe0		    :			300		   +100
+RVLN.xe0		    :			300		   +100
+RPOK.xe0		    :			300		   +100
+RBYT.xe0		    :		     21,600		 +7,200
+T127.xe0		    :			300		   +100
+TPOK.xe0		    :			300		   +100
+TPKT.xe0		    :			300		   +100
+TUCA.xe0		    :			300		   +100
+TVLN.xe0		    :			300		   +100
+TBYT.xe0		    :		     21,600		 +7,200
+RPROG0.xe0		    :			300		   +100
+UC_PERQ_PKT(0).xe0	    :			300		   +100
+UC_PERQ_BYTE(0).xe0	    :		     21,600		 +7,200
+RUC_64.hg0		    :			 81		    +18
+RDBGC0_64.hg0		    :			 81		    +18
+ING_NIV_RX_FRAMES_VL.hg0    :			 81		    +18
+R127.hg0		    :			 81		    +18
+RPKT.hg0		    :			 81		    +18
+RUCA.hg0		    :			 81		    +18
+RPRM.hg0		    :			 81		    +18
+RPOK.hg0		    :			 81		    +18
+RBYT.hg0		    :		      6,804		 +1,512
+T127.hg0		    :			 81		    +18
+TPOK.hg0		    :			 81		    +18
+TPKT.hg0		    :			 81		    +18
+TUCA.hg0		    :			 81		    +18
+TBYT.hg0		    :		      6,804		 +1,512
+RPROG1.hg0		    :			 81		    +18
+UC_PERQ_PKT(0).hg0	    :			 81		    +18
+UC_PERQ_BYTE(0).hg0	    :		      5,508		 +1,224
+RUC_64.hg1		    :			 71		    +28
+RDBGC0_64.hg1		    :			 71		    +28
+ING_NIV_RX_FRAMES_VL.hg1    :			 71		    +28
+R127.hg1		    :			 71		    +28
+RPKT.hg1		    :			 71		    +28
+RUCA.hg1		    :			 71		    +28
+RPRM.hg1		    :			 71		    +28
+RPOK.hg1		    :			 71		    +28
+RBYT.hg1		    :		      5,964		 +2,352
+T127.hg1		    :			 71		    +28
+TPOK.hg1		    :			 71		    +28
+TPKT.hg1		    :			 71		    +28
+TUCA.hg1		    :			 71		    +28
+TBYT.hg1		    :		      5,964		 +2,352
+RPROG1.hg1		    :			 71		    +28
+UC_PERQ_PKT(0).hg1	    :			 71		    +28
+UC_PERQ_BYTE(0).hg1	    :		      4,828		 +1,904
+RUC_64.hg2		    :			 65		    +28
+RDBGC0_64.hg2		    :			 65		    +28
+ING_NIV_RX_FRAMES_VL.hg2    :			 65		    +28
+R127.hg2		    :			 65		    +28
+RPKT.hg2		    :			 65		    +28
+RUCA.hg2		    :			 65		    +28
+RPRM.hg2		    :			 65		    +28
+RPOK.hg2		    :			 65		    +28
+RBYT.hg2		    :		      5,460		 +2,352
+T127.hg2		    :			 65		    +28
+TPOK.hg2		    :			 65		    +28
+TPKT.hg2		    :			 65		    +28
+TUCA.hg2		    :			 65		    +28
+TBYT.hg2		    :		      5,460		 +2,352
+RPROG1.hg2		    :			 65		    +28
+UC_PERQ_PKT(0).hg2	    :			 65		    +28
+UC_PERQ_BYTE(0).hg2	    :		      4,420		 +1,904
+RUC_64.hg3		    :			 83		    +26
+RDBGC0_64.hg3		    :			 83		    +26
+ING_NIV_RX_FRAMES_VL.hg3    :			 83		    +26
+R127.hg3		    :			 83		    +26
+RPKT.hg3		    :			 83		    +26
+RUCA.hg3		    :			 83		    +26
+RPRM.hg3		    :			 83		    +26
+RPOK.hg3		    :			 83		    +26
+RBYT.hg3		    :		      6,972		 +2,184
+T127.hg3		    :			 83		    +26
+TPOK.hg3		    :			 83		    +26
+TPKT.hg3		    :			 83		    +26
+TUCA.hg3		    :			 83		    +26
+TBYT.hg3		    :		      6,972		 +2,184
+RPROG1.hg3		    :			 83		    +26
+UC_PERQ_PKT(0).hg3	    :			 83		    +26
+UC_PERQ_BYTE(0).hg3	    :		      5,644		 +1,768
+
+############  Sending UC packet 3  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110025252222228100006408004500002E0000000040065CC8140000050A0000041114222500000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			400		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			400		   +100
+R127.xe0		    :			400		   +100
+RPKT.xe0		    :			400		   +100
+RUCA.xe0		    :			400		   +100
+RPRM.xe0		    :			400		   +100
+RVLN.xe0		    :			400		   +100
+RPOK.xe0		    :			400		   +100
+RBYT.xe0		    :		     28,800		 +7,200
+T127.xe0		    :			400		   +100
+TPOK.xe0		    :			400		   +100
+TPKT.xe0		    :			400		   +100
+TUCA.xe0		    :			400		   +100
+TVLN.xe0		    :			400		   +100
+TBYT.xe0		    :		     28,800		 +7,200
+RPROG0.xe0		    :			400		   +100
+UC_PERQ_PKT(0).xe0	    :			400		   +100
+UC_PERQ_BYTE(0).xe0	    :		     28,800		 +7,200
+RUC_64.hg0		    :			101		    +20
+RDBGC0_64.hg0		    :			101		    +20
+ING_NIV_RX_FRAMES_VL.hg0    :			101		    +20
+R127.hg0		    :			101		    +20
+RPKT.hg0		    :			101		    +20
+RUCA.hg0		    :			101		    +20
+RPRM.hg0		    :			101		    +20
+RPOK.hg0		    :			101		    +20
+RBYT.hg0		    :		      8,484		 +1,680
+T127.hg0		    :			101		    +20
+TPOK.hg0		    :			101		    +20
+TPKT.hg0		    :			101		    +20
+TUCA.hg0		    :			101		    +20
+TBYT.hg0		    :		      8,484		 +1,680
+RPROG1.hg0		    :			101		    +20
+UC_PERQ_PKT(0).hg0	    :			101		    +20
+UC_PERQ_BYTE(0).hg0	    :		      6,868		 +1,360
+RUC_64.hg1		    :			 95		    +24
+RDBGC0_64.hg1		    :			 95		    +24
+ING_NIV_RX_FRAMES_VL.hg1    :			 95		    +24
+R127.hg1		    :			 95		    +24
+RPKT.hg1		    :			 95		    +24
+RUCA.hg1		    :			 95		    +24
+RPRM.hg1		    :			 95		    +24
+RPOK.hg1		    :			 95		    +24
+RBYT.hg1		    :		      7,980		 +2,016
+T127.hg1		    :			 95		    +24
+TPOK.hg1		    :			 95		    +24
+TPKT.hg1		    :			 95		    +24
+TUCA.hg1		    :			 95		    +24
+TBYT.hg1		    :		      7,980		 +2,016
+RPROG1.hg1		    :			 95		    +24
+UC_PERQ_PKT(0).hg1	    :			 95		    +24
+UC_PERQ_BYTE(0).hg1	    :		      6,460		 +1,632
+RUC_64.hg2		    :			 95		    +30
+RDBGC0_64.hg2		    :			 95		    +30
+ING_NIV_RX_FRAMES_VL.hg2    :			 95		    +30
+R127.hg2		    :			 95		    +30
+RPKT.hg2		    :			 95		    +30
+RUCA.hg2		    :			 95		    +30
+RPRM.hg2		    :			 95		    +30
+RPOK.hg2		    :			 95		    +30
+RBYT.hg2		    :		      7,980		 +2,520
+T127.hg2		    :			 95		    +30
+TPOK.hg2		    :			 95		    +30
+TPKT.hg2		    :			 95		    +30
+TUCA.hg2		    :			 95		    +30
+TBYT.hg2		    :		      7,980		 +2,520
+RPROG1.hg2		    :			 95		    +30
+UC_PERQ_PKT(0).hg2	    :			 95		    +30
+UC_PERQ_BYTE(0).hg2	    :		      6,460		 +2,040
+RUC_64.hg3		    :			109		    +26
+RDBGC0_64.hg3		    :			109		    +26
+ING_NIV_RX_FRAMES_VL.hg3    :			109		    +26
+R127.hg3		    :			109		    +26
+RPKT.hg3		    :			109		    +26
+RUCA.hg3		    :			109		    +26
+RPRM.hg3		    :			109		    +26
+RPOK.hg3		    :			109		    +26
+RBYT.hg3		    :		      9,156		 +2,184
+T127.hg3		    :			109		    +26
+TPOK.hg3		    :			109		    +26
+TPKT.hg3		    :			109		    +26
+TUCA.hg3		    :			109		    +26
+TBYT.hg3		    :		      9,156		 +2,184
+RPROG1.hg3		    :			109		    +26
+UC_PERQ_PKT(0).hg3	    :			109		    +26
+UC_PERQ_BYTE(0).hg3	    :		      7,412		 +1,768
+
+############  Sending UC packet 4  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110026262222228100006408004500002E0000000040065CC8140000060A0000051115222600000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			500		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			500		   +100
+R127.xe0		    :			500		   +100
+RPKT.xe0		    :			500		   +100
+RUCA.xe0		    :			500		   +100
+RPRM.xe0		    :			500		   +100
+RVLN.xe0		    :			500		   +100
+RPOK.xe0		    :			500		   +100
+RBYT.xe0		    :		     36,000		 +7,200
+T127.xe0		    :			500		   +100
+TPOK.xe0		    :			500		   +100
+TPKT.xe0		    :			500		   +100
+TUCA.xe0		    :			500		   +100
+TVLN.xe0		    :			500		   +100
+TBYT.xe0		    :		     36,000		 +7,200
+RPROG0.xe0		    :			500		   +100
+UC_PERQ_PKT(0).xe0	    :			500		   +100
+UC_PERQ_BYTE(0).xe0	    :		     36,000		 +7,200
+RUC_64.hg0		    :			127		    +26
+RDBGC0_64.hg0		    :			127		    +26
+ING_NIV_RX_FRAMES_VL.hg0    :			127		    +26
+R127.hg0		    :			127		    +26
+RPKT.hg0		    :			127		    +26
+RUCA.hg0		    :			127		    +26
+RPRM.hg0		    :			127		    +26
+RPOK.hg0		    :			127		    +26
+RBYT.hg0		    :		     10,668		 +2,184
+T127.hg0		    :			127		    +26
+TPOK.hg0		    :			127		    +26
+TPKT.hg0		    :			127		    +26
+TUCA.hg0		    :			127		    +26
+TBYT.hg0		    :		     10,668		 +2,184
+RPROG1.hg0		    :			127		    +26
+UC_PERQ_PKT(0).hg0	    :			127		    +26
+UC_PERQ_BYTE(0).hg0	    :		      8,636		 +1,768
+RUC_64.hg1		    :			127		    +32
+RDBGC0_64.hg1		    :			127		    +32
+ING_NIV_RX_FRAMES_VL.hg1    :			127		    +32
+R127.hg1		    :			127		    +32
+RPKT.hg1		    :			127		    +32
+RUCA.hg1		    :			127		    +32
+RPRM.hg1		    :			127		    +32
+RPOK.hg1		    :			127		    +32
+RBYT.hg1		    :		     10,668		 +2,688
+T127.hg1		    :			127		    +32
+TPOK.hg1		    :			127		    +32
+TPKT.hg1		    :			127		    +32
+TUCA.hg1		    :			127		    +32
+TBYT.hg1		    :		     10,668		 +2,688
+RPROG1.hg1		    :			127		    +32
+UC_PERQ_PKT(0).hg1	    :			127		    +32
+UC_PERQ_BYTE(0).hg1	    :		      8,636		 +2,176
+RUC_64.hg2		    :			117		    +22
+RDBGC0_64.hg2		    :			117		    +22
+ING_NIV_RX_FRAMES_VL.hg2    :			117		    +22
+R127.hg2		    :			117		    +22
+RPKT.hg2		    :			117		    +22
+RUCA.hg2		    :			117		    +22
+RPRM.hg2		    :			117		    +22
+RPOK.hg2		    :			117		    +22
+RBYT.hg2		    :		      9,828		 +1,848
+T127.hg2		    :			117		    +22
+TPOK.hg2		    :			117		    +22
+TPKT.hg2		    :			117		    +22
+TUCA.hg2		    :			117		    +22
+TBYT.hg2		    :		      9,828		 +1,848
+RPROG1.hg2		    :			117		    +22
+UC_PERQ_PKT(0).hg2	    :			117		    +22
+UC_PERQ_BYTE(0).hg2	    :		      7,956		 +1,496
+RUC_64.hg3		    :			129		    +20
+RDBGC0_64.hg3		    :			129		    +20
+ING_NIV_RX_FRAMES_VL.hg3    :			129		    +20
+R127.hg3		    :			129		    +20
+RPKT.hg3		    :			129		    +20
+RUCA.hg3		    :			129		    +20
+RPRM.hg3		    :			129		    +20
+RPOK.hg3		    :			129		    +20
+RBYT.hg3		    :		     10,836		 +1,680
+T127.hg3		    :			129		    +20
+TPOK.hg3		    :			129		    +20
+TPKT.hg3		    :			129		    +20
+TUCA.hg3		    :			129		    +20
+TBYT.hg3		    :		     10,836		 +1,680
+RPROG1.hg3		    :			129		    +20
+UC_PERQ_PKT(0).hg3	    :			129		    +20
+UC_PERQ_BYTE(0).hg3	    :		      8,772		 +1,360
+
+############  Sending UC packet 5  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110027272222228100006408004500002E0000000040065CC8140000070A0000061116222700000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			600		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			600		   +100
+R127.xe0		    :			600		   +100
+RPKT.xe0		    :			600		   +100
+RUCA.xe0		    :			600		   +100
+RPRM.xe0		    :			600		   +100
+RVLN.xe0		    :			600		   +100
+RPOK.xe0		    :			600		   +100
+RBYT.xe0		    :		     43,200		 +7,200
+T127.xe0		    :			600		   +100
+TPOK.xe0		    :			600		   +100
+TPKT.xe0		    :			600		   +100
+TUCA.xe0		    :			600		   +100
+TVLN.xe0		    :			600		   +100
+TBYT.xe0		    :		     43,200		 +7,200
+RPROG0.xe0		    :			600		   +100
+UC_PERQ_PKT(0).xe0	    :			600		   +100
+UC_PERQ_BYTE(0).xe0	    :		     43,200		 +7,200
+RUC_64.hg0		    :			147		    +20
+RDBGC0_64.hg0		    :			147		    +20
+ING_NIV_RX_FRAMES_VL.hg0    :			147		    +20
+R127.hg0		    :			147		    +20
+RPKT.hg0		    :			147		    +20
+RUCA.hg0		    :			147		    +20
+RPRM.hg0		    :			147		    +20
+RPOK.hg0		    :			147		    +20
+RBYT.hg0		    :		     12,348		 +1,680
+T127.hg0		    :			147		    +20
+TPOK.hg0		    :			147		    +20
+TPKT.hg0		    :			147		    +20
+TUCA.hg0		    :			147		    +20
+TBYT.hg0		    :		     12,348		 +1,680
+RPROG1.hg0		    :			147		    +20
+UC_PERQ_PKT(0).hg0	    :			147		    +20
+UC_PERQ_BYTE(0).hg0	    :		      9,996		 +1,360
+RUC_64.hg1		    :			151		    +24
+RDBGC0_64.hg1		    :			151		    +24
+ING_NIV_RX_FRAMES_VL.hg1    :			151		    +24
+R127.hg1		    :			151		    +24
+RPKT.hg1		    :			151		    +24
+RUCA.hg1		    :			151		    +24
+RPRM.hg1		    :			151		    +24
+RPOK.hg1		    :			151		    +24
+RBYT.hg1		    :		     12,684		 +2,016
+T127.hg1		    :			151		    +24
+TPOK.hg1		    :			151		    +24
+TPKT.hg1		    :			151		    +24
+TUCA.hg1		    :			151		    +24
+TBYT.hg1		    :		     12,684		 +2,016
+RPROG1.hg1		    :			151		    +24
+UC_PERQ_PKT(0).hg1	    :			151		    +24
+UC_PERQ_BYTE(0).hg1	    :		     10,268		 +1,632
+RUC_64.hg2		    :			143		    +26
+RDBGC0_64.hg2		    :			143		    +26
+ING_NIV_RX_FRAMES_VL.hg2    :			143		    +26
+R127.hg2		    :			143		    +26
+RPKT.hg2		    :			143		    +26
+RUCA.hg2		    :			143		    +26
+RPRM.hg2		    :			143		    +26
+RPOK.hg2		    :			143		    +26
+RBYT.hg2		    :		     12,012		 +2,184
+T127.hg2		    :			143		    +26
+TPOK.hg2		    :			143		    +26
+TPKT.hg2		    :			143		    +26
+TUCA.hg2		    :			143		    +26
+TBYT.hg2		    :		     12,012		 +2,184
+RPROG1.hg2		    :			143		    +26
+UC_PERQ_PKT(0).hg2	    :			143		    +26
+UC_PERQ_BYTE(0).hg2	    :		      9,724		 +1,768
+RUC_64.hg3		    :			159		    +30
+RDBGC0_64.hg3		    :			159		    +30
+ING_NIV_RX_FRAMES_VL.hg3    :			159		    +30
+R127.hg3		    :			159		    +30
+RPKT.hg3		    :			159		    +30
+RUCA.hg3		    :			159		    +30
+RPRM.hg3		    :			159		    +30
+RPOK.hg3		    :			159		    +30
+RBYT.hg3		    :		     13,356		 +2,520
+T127.hg3		    :			159		    +30
+TPOK.hg3		    :			159		    +30
+TPKT.hg3		    :			159		    +30
+TUCA.hg3		    :			159		    +30
+TBYT.hg3		    :		     13,356		 +2,520
+RPROG1.hg3		    :			159		    +30
+UC_PERQ_PKT(0).hg3	    :			159		    +30
+UC_PERQ_BYTE(0).hg3	    :		     10,812		 +2,040
+
+############  Sending UC packet 6  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110028282222228100006408004500002E0000000040065CC8140000080A0000071117222800000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			700		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			700		   +100
+R127.xe0		    :			700		   +100
+RPKT.xe0		    :			700		   +100
+RUCA.xe0		    :			700		   +100
+RPRM.xe0		    :			700		   +100
+RVLN.xe0		    :			700		   +100
+RPOK.xe0		    :			700		   +100
+RBYT.xe0		    :		     50,400		 +7,200
+T127.xe0		    :			700		   +100
+TPOK.xe0		    :			700		   +100
+TPKT.xe0		    :			700		   +100
+TUCA.xe0		    :			700		   +100
+TVLN.xe0		    :			700		   +100
+TBYT.xe0		    :		     50,400		 +7,200
+RPROG0.xe0		    :			700		   +100
+UC_PERQ_PKT(0).xe0	    :			700		   +100
+UC_PERQ_BYTE(0).xe0	    :		     50,400		 +7,200
+RUC_64.hg0		    :			178		    +31
+RDBGC0_64.hg0		    :			178		    +31
+ING_NIV_RX_FRAMES_VL.hg0    :			178		    +31
+R127.hg0		    :			178		    +31
+RPKT.hg0		    :			178		    +31
+RUCA.hg0		    :			178		    +31
+RPRM.hg0		    :			178		    +31
+RPOK.hg0		    :			178		    +31
+RBYT.hg0		    :		     14,952		 +2,604
+T127.hg0		    :			178		    +31
+TPOK.hg0		    :			178		    +31
+TPKT.hg0		    :			178		    +31
+TUCA.hg0		    :			178		    +31
+TBYT.hg0		    :		     14,952		 +2,604
+RPROG1.hg0		    :			178		    +31
+UC_PERQ_PKT(0).hg0	    :			178		    +31
+UC_PERQ_BYTE(0).hg0	    :		     12,104		 +2,108
+RUC_64.hg1		    :			174		    +23
+RDBGC0_64.hg1		    :			174		    +23
+ING_NIV_RX_FRAMES_VL.hg1    :			174		    +23
+R127.hg1		    :			174		    +23
+RPKT.hg1		    :			174		    +23
+RUCA.hg1		    :			174		    +23
+RPRM.hg1		    :			174		    +23
+RPOK.hg1		    :			174		    +23
+RBYT.hg1		    :		     14,616		 +1,932
+T127.hg1		    :			174		    +23
+TPOK.hg1		    :			174		    +23
+TPKT.hg1		    :			174		    +23
+TUCA.hg1		    :			174		    +23
+TBYT.hg1		    :		     14,616		 +1,932
+RPROG1.hg1		    :			174		    +23
+UC_PERQ_PKT(0).hg1	    :			174		    +23
+UC_PERQ_BYTE(0).hg1	    :		     11,832		 +1,564
+RUC_64.hg2		    :			168		    +25
+RDBGC0_64.hg2		    :			168		    +25
+ING_NIV_RX_FRAMES_VL.hg2    :			168		    +25
+R127.hg2		    :			168		    +25
+RPKT.hg2		    :			168		    +25
+RUCA.hg2		    :			168		    +25
+RPRM.hg2		    :			168		    +25
+RPOK.hg2		    :			168		    +25
+RBYT.hg2		    :		     14,112		 +2,100
+T127.hg2		    :			168		    +25
+TPOK.hg2		    :			168		    +25
+TPKT.hg2		    :			168		    +25
+TUCA.hg2		    :			168		    +25
+TBYT.hg2		    :		     14,112		 +2,100
+RPROG1.hg2		    :			168		    +25
+UC_PERQ_PKT(0).hg2	    :			168		    +25
+UC_PERQ_BYTE(0).hg2	    :		     11,424		 +1,700
+RUC_64.hg3		    :			180		    +21
+RDBGC0_64.hg3		    :			180		    +21
+ING_NIV_RX_FRAMES_VL.hg3    :			180		    +21
+R127.hg3		    :			180		    +21
+RPKT.hg3		    :			180		    +21
+RUCA.hg3		    :			180		    +21
+RPRM.hg3		    :			180		    +21
+RPOK.hg3		    :			180		    +21
+RBYT.hg3		    :		     15,120		 +1,764
+T127.hg3		    :			180		    +21
+TPOK.hg3		    :			180		    +21
+TPKT.hg3		    :			180		    +21
+TUCA.hg3		    :			180		    +21
+TBYT.hg3		    :		     15,120		 +1,764
+RPROG1.hg3		    :			180		    +21
+UC_PERQ_PKT(0).hg3	    :			180		    +21
+UC_PERQ_BYTE(0).hg3	    :		     12,240		 +1,428
+
+############  Sending UC packet 7  #######
+B_CM.0> tx 100 pbm=1 data=0011111111110029292222228100006408004500002E0000000040065CC8140000090A0000081118222900000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			800		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			800		   +100
+R127.xe0		    :			800		   +100
+RPKT.xe0		    :			800		   +100
+RUCA.xe0		    :			800		   +100
+RPRM.xe0		    :			800		   +100
+RVLN.xe0		    :			800		   +100
+RPOK.xe0		    :			800		   +100
+RBYT.xe0		    :		     57,600		 +7,200
+T127.xe0		    :			800		   +100
+TPOK.xe0		    :			800		   +100
+TPKT.xe0		    :			800		   +100
+TUCA.xe0		    :			800		   +100
+TVLN.xe0		    :			800		   +100
+TBYT.xe0		    :		     57,600		 +7,200
+RPROG0.xe0		    :			800		   +100
+UC_PERQ_PKT(0).xe0	    :			800		   +100
+UC_PERQ_BYTE(0).xe0	    :		     57,600		 +7,200
+RUC_64.hg0		    :			210		    +32
+RDBGC0_64.hg0		    :			210		    +32
+ING_NIV_RX_FRAMES_VL.hg0    :			210		    +32
+R127.hg0		    :			210		    +32
+RPKT.hg0		    :			210		    +32
+RUCA.hg0		    :			210		    +32
+RPRM.hg0		    :			210		    +32
+RPOK.hg0		    :			210		    +32
+RBYT.hg0		    :		     17,640		 +2,688
+T127.hg0		    :			210		    +32
+TPOK.hg0		    :			210		    +32
+TPKT.hg0		    :			210		    +32
+TUCA.hg0		    :			210		    +32
+TBYT.hg0		    :		     17,640		 +2,688
+RPROG1.hg0		    :			210		    +32
+UC_PERQ_PKT(0).hg0	    :			210		    +32
+UC_PERQ_BYTE(0).hg0	    :		     14,280		 +2,176
+RUC_64.hg1		    :			196		    +22
+RDBGC0_64.hg1		    :			196		    +22
+ING_NIV_RX_FRAMES_VL.hg1    :			196		    +22
+R127.hg1		    :			196		    +22
+RPKT.hg1		    :			196		    +22
+RUCA.hg1		    :			196		    +22
+RPRM.hg1		    :			196		    +22
+RPOK.hg1		    :			196		    +22
+RBYT.hg1		    :		     16,464		 +1,848
+T127.hg1		    :			196		    +22
+TPOK.hg1		    :			196		    +22
+TPKT.hg1		    :			196		    +22
+TUCA.hg1		    :			196		    +22
+TBYT.hg1		    :		     16,464		 +1,848
+RPROG1.hg1		    :			196		    +22
+UC_PERQ_PKT(0).hg1	    :			196		    +22
+UC_PERQ_BYTE(0).hg1	    :		     13,328		 +1,496
+RUC_64.hg2		    :			195		    +27
+RDBGC0_64.hg2		    :			195		    +27
+ING_NIV_RX_FRAMES_VL.hg2    :			195		    +27
+R127.hg2		    :			195		    +27
+RPKT.hg2		    :			195		    +27
+RUCA.hg2		    :			195		    +27
+RPRM.hg2		    :			195		    +27
+RPOK.hg2		    :			195		    +27
+RBYT.hg2		    :		     16,380		 +2,268
+T127.hg2		    :			195		    +27
+TPOK.hg2		    :			195		    +27
+TPKT.hg2		    :			195		    +27
+TUCA.hg2		    :			195		    +27
+TBYT.hg2		    :		     16,380		 +2,268
+RPROG1.hg2		    :			195		    +27
+UC_PERQ_PKT(0).hg2	    :			195		    +27
+UC_PERQ_BYTE(0).hg2	    :		     13,260		 +1,836
+RUC_64.hg3		    :			199		    +19
+RDBGC0_64.hg3		    :			199		    +19
+ING_NIV_RX_FRAMES_VL.hg3    :			199		    +19
+R127.hg3		    :			199		    +19
+RPKT.hg3		    :			199		    +19
+RUCA.hg3		    :			199		    +19
+RPRM.hg3		    :			199		    +19
+RPOK.hg3		    :			199		    +19
+RBYT.hg3		    :		     16,716		 +1,596
+T127.hg3		    :			199		    +19
+TPOK.hg3		    :			199		    +19
+TPKT.hg3		    :			199		    +19
+TUCA.hg3		    :			199		    +19
+TBYT.hg3		    :		     16,716		 +1,596
+RPROG1.hg3		    :			199		    +19
+UC_PERQ_PKT(0).hg3	    :			199		    +19
+UC_PERQ_BYTE(0).hg3	    :		     13,532		 +1,292
+
+############  Sending UC packet 8  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002A2A2222228100006408004500002E0000000040065CC81400000A0A0000091119222A00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :			900		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :			900		   +100
+R127.xe0		    :			900		   +100
+RPKT.xe0		    :			900		   +100
+RUCA.xe0		    :			900		   +100
+RPRM.xe0		    :			900		   +100
+RVLN.xe0		    :			900		   +100
+RPOK.xe0		    :			900		   +100
+RBYT.xe0		    :		     64,800		 +7,200
+T127.xe0		    :			900		   +100
+TPOK.xe0		    :			900		   +100
+TPKT.xe0		    :			900		   +100
+TUCA.xe0		    :			900		   +100
+TVLN.xe0		    :			900		   +100
+TBYT.xe0		    :		     64,800		 +7,200
+RPROG0.xe0		    :			900		   +100
+UC_PERQ_PKT(0).xe0	    :			900		   +100
+UC_PERQ_BYTE(0).xe0	    :		     64,800		 +7,200
+RUC_64.hg0		    :			231		    +21
+RDBGC0_64.hg0		    :			231		    +21
+ING_NIV_RX_FRAMES_VL.hg0    :			231		    +21
+R127.hg0		    :			231		    +21
+RPKT.hg0		    :			231		    +21
+RUCA.hg0		    :			231		    +21
+RPRM.hg0		    :			231		    +21
+RPOK.hg0		    :			231		    +21
+RBYT.hg0		    :		     19,404		 +1,764
+T127.hg0		    :			231		    +21
+TPOK.hg0		    :			231		    +21
+TPKT.hg0		    :			231		    +21
+TUCA.hg0		    :			231		    +21
+TBYT.hg0		    :		     19,404		 +1,764
+RPROG1.hg0		    :			231		    +21
+UC_PERQ_PKT(0).hg0	    :			231		    +21
+UC_PERQ_BYTE(0).hg0	    :		     15,708		 +1,428
+RUC_64.hg1		    :			220		    +24
+RDBGC0_64.hg1		    :			220		    +24
+ING_NIV_RX_FRAMES_VL.hg1    :			220		    +24
+R127.hg1		    :			220		    +24
+RPKT.hg1		    :			220		    +24
+RUCA.hg1		    :			220		    +24
+RPRM.hg1		    :			220		    +24
+RPOK.hg1		    :			220		    +24
+RBYT.hg1		    :		     18,480		 +2,016
+T127.hg1		    :			220		    +24
+TPOK.hg1		    :			220		    +24
+TPKT.hg1		    :			220		    +24
+TUCA.hg1		    :			220		    +24
+TBYT.hg1		    :		     18,480		 +2,016
+RPROG1.hg1		    :			220		    +24
+UC_PERQ_PKT(0).hg1	    :			220		    +24
+UC_PERQ_BYTE(0).hg1	    :		     14,960		 +1,632
+RUC_64.hg2		    :			223		    +28
+RDBGC0_64.hg2		    :			223		    +28
+ING_NIV_RX_FRAMES_VL.hg2    :			223		    +28
+R127.hg2		    :			223		    +28
+RPKT.hg2		    :			223		    +28
+RUCA.hg2		    :			223		    +28
+RPRM.hg2		    :			223		    +28
+RPOK.hg2		    :			223		    +28
+RBYT.hg2		    :		     18,732		 +2,352
+T127.hg2		    :			223		    +28
+TPOK.hg2		    :			223		    +28
+TPKT.hg2		    :			223		    +28
+TUCA.hg2		    :			223		    +28
+TBYT.hg2		    :		     18,732		 +2,352
+RPROG1.hg2		    :			223		    +28
+UC_PERQ_PKT(0).hg2	    :			223		    +28
+UC_PERQ_BYTE(0).hg2	    :		     15,164		 +1,904
+RUC_64.hg3		    :			226		    +27
+RDBGC0_64.hg3		    :			226		    +27
+ING_NIV_RX_FRAMES_VL.hg3    :			226		    +27
+R127.hg3		    :			226		    +27
+RPKT.hg3		    :			226		    +27
+RUCA.hg3		    :			226		    +27
+RPRM.hg3		    :			226		    +27
+RPOK.hg3		    :			226		    +27
+RBYT.hg3		    :		     18,984		 +2,268
+T127.hg3		    :			226		    +27
+TPOK.hg3		    :			226		    +27
+TPKT.hg3		    :			226		    +27
+TUCA.hg3		    :			226		    +27
+TBYT.hg3		    :		     18,984		 +2,268
+RPROG1.hg3		    :			226		    +27
+UC_PERQ_PKT(0).hg3	    :			226		    +27
+UC_PERQ_BYTE(0).hg3	    :		     15,368		 +1,836
+
+############  Sending UC packet 9  #######
+B_CM.0> tx 100 pbm=1 data=001111111111002B2B2222228100006408004500002E0000000040065CC81400000B0A00000A111A222B00000000000000005000000058A00000000102030405BD437B28
+Packet from data=<>, length=72
+B_CM.0> sleep 2
+Sleeping for 2 seconds
+B_CM.0> show c
+RUC_64.xe0		    :		      1,000		   +100
+ING_NIV_RX_FRAMES_VL.xe0    :		      1,000		   +100
+R127.xe0		    :		      1,000		   +100
+RPKT.xe0		    :		      1,000		   +100
+RUCA.xe0		    :		      1,000		   +100
+RPRM.xe0		    :		      1,000		   +100
+RVLN.xe0		    :		      1,000		   +100
+RPOK.xe0		    :		      1,000		   +100
+RBYT.xe0		    :		     72,000		 +7,200
+T127.xe0		    :		      1,000		   +100
+TPOK.xe0		    :		      1,000		   +100
+TPKT.xe0		    :		      1,000		   +100
+TUCA.xe0		    :		      1,000		   +100
+TVLN.xe0		    :		      1,000		   +100
+TBYT.xe0		    :		     72,000		 +7,200
+RPROG0.xe0		    :		      1,000		   +100
+UC_PERQ_PKT(0).xe0	    :		      1,000		   +100
+UC_PERQ_BYTE(0).xe0	    :		     72,000		 +7,200
+RUC_64.hg0		    :			263		    +32
+RDBGC0_64.hg0		    :			263		    +32
+ING_NIV_RX_FRAMES_VL.hg0    :			263		    +32
+R127.hg0		    :			263		    +32
+RPKT.hg0		    :			263		    +32
+RUCA.hg0		    :			263		    +32
+RPRM.hg0		    :			263		    +32
+RPOK.hg0		    :			263		    +32
+RBYT.hg0		    :		     22,092		 +2,688
+T127.hg0		    :			263		    +32
+TPOK.hg0		    :			263		    +32
+TPKT.hg0		    :			263		    +32
+TUCA.hg0		    :			263		    +32
+TBYT.hg0		    :		     22,092		 +2,688
+RPROG1.hg0		    :			263		    +32
+UC_PERQ_PKT(0).hg0	    :			263		    +32
+UC_PERQ_BYTE(0).hg0	    :		     17,884		 +2,176
+RUC_64.hg1		    :			247		    +27
+RDBGC0_64.hg1		    :			247		    +27
+ING_NIV_RX_FRAMES_VL.hg1    :			247		    +27
+R127.hg1		    :			247		    +27
+RPKT.hg1		    :			247		    +27
+RUCA.hg1		    :			247		    +27
+RPRM.hg1		    :			247		    +27
+RPOK.hg1		    :			247		    +27
+RBYT.hg1		    :		     20,748		 +2,268
+T127.hg1		    :			247		    +27
+TPOK.hg1		    :			247		    +27
+TPKT.hg1		    :			247		    +27
+TUCA.hg1		    :			247		    +27
+TBYT.hg1		    :		     20,748		 +2,268
+RPROG1.hg1		    :			247		    +27
+UC_PERQ_PKT(0).hg1	    :			247		    +27
+UC_PERQ_BYTE(0).hg1	    :		     16,796		 +1,836
+RUC_64.hg2		    :			244		    +21
+RDBGC0_64.hg2		    :			244		    +21
+ING_NIV_RX_FRAMES_VL.hg2    :			244		    +21
+R127.hg2		    :			244		    +21
+RPKT.hg2		    :			244		    +21
+RUCA.hg2		    :			244		    +21
+RPRM.hg2		    :			244		    +21
+RPOK.hg2		    :			244		    +21
+RBYT.hg2		    :		     20,496		 +1,764
+T127.hg2		    :			244		    +21
+TPOK.hg2		    :			244		    +21
+TPKT.hg2		    :			244		    +21
+TUCA.hg2		    :			244		    +21
+TBYT.hg2		    :		     20,496		 +1,764
+RPROG1.hg2		    :			244		    +21
+UC_PERQ_PKT(0).hg2	    :			244		    +21
+UC_PERQ_BYTE(0).hg2	    :		     16,592		 +1,428
+RUC_64.hg3		    :			246		    +20
+RDBGC0_64.hg3		    :			246		    +20
+ING_NIV_RX_FRAMES_VL.hg3    :			246		    +20
+R127.hg3		    :			246		    +20
+RPKT.hg3		    :			246		    +20
+RUCA.hg3		    :			246		    +20
+RPRM.hg3		    :			246		    +20
+RPOK.hg3		    :			246		    +20
+RBYT.hg3		    :		     20,664		 +1,680
+T127.hg3		    :			246		    +20
+TPOK.hg3		    :			246		    +20
+TPKT.hg3		    :			246		    +20
+TUCA.hg3		    :			246		    +20
+TBYT.hg3		    :		     20,664		 +1,680
+RPROG1.hg3		    :			246		    +20
+UC_PERQ_PKT(0).hg3	    :			246		    +20
+UC_PERQ_BYTE(0).hg3	    :		     16,728		 +1,360
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> ps
+                 ena/        speed/ link auto    STP                  lrn  inter   max   cut   loop
+           port  link  Lns   duplex scan neg?   state   pause  discrd ops   face frame  thru?  back
+       xe0(  1)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284         MAC
+       xe1(  2)  up     1   25G  FD   SW  No   Forward  TX RX    All   FA     CR 12284         MAC
+       hg0(  5)  up     4  100G  FD   SW  No   Forward           All   FA    CR4 12288         MAC
+       hg1(  9)  up     4  100G  FD   SW  No   Forward           All   FA    CR4 12288         MAC
+       hg2( 13)  up     4  100G  FD   SW  No   Forward           All   FA    CR4 12288         MAC
+       hg3( 17)  up     4  100G  FD   SW  No   Forward           All   FA    CR4 12288         MAC
+       hg4( 21)  up     1   25G  FD   SW  No   Forward           All   FA     CR 12288         MAC
+       xe2( 22)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe3( 23)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe4( 24)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe5( 25)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe6( 26)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe7( 27)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe8( 28)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+       xe9( 29)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe10( 30)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe11( 31)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe12( 32)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe13( 33)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe14( 34)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe15( 35)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe16( 36)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe17( 37)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe18( 38)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe19( 39)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe20( 40)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe21( 41)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe22( 42)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe23( 43)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe24( 44)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe25( 45)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe26( 46)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe27( 47)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe28( 48)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe29( 49)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe30( 50)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe31( 51)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe32( 52)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe33( 53)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe34( 54)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe35( 55)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe36( 56)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe37( 57)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe38( 58)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe39( 59)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe40( 60)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe41( 61)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe42( 62)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe43( 63)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe44( 64)  up     1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe45( 65)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe46( 66)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe47( 67)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+      xe48( 68)  down   1   25G  FD   SW  No   Forward  TX RX   None   FA     CR 12284            
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0>       

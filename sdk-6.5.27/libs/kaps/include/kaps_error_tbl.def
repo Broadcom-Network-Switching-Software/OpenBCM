@@ -1,0 +1,188 @@
+/*******************************************************************************
+ *
+ * Copyright 2011-2018 Broadcom Corporation
+ *
+ * This program is the proprietary software of Broadcom Corporation and/or its
+ * licensors, and may only be used, duplicated, modified or distributed pursuant
+ * to the terms and conditions of a separate, written license agreement executed
+ * between you and Broadcom (an "Authorized License").  Except as set forth in an
+ * Authorized License, Broadcom grants no license (express or implied), right to
+ * use, or waiver of any kind with respect to the Software, and Broadcom expressly
+ * reserves all rights in and to the Software and all intellectual property rights
+ * therein.  IF YOU HAVE NO AUTHORIZED LICENSE, THEN YOU HAVE NO RIGHT TO USE THIS
+ * SOFTWARE IN ANY WAY, AND SHOULD IMMEDIATELY NOTIFY BROADCOM AND DISCONTINUE
+ * ALL USE OF THE SOFTWARE.
+ *
+ * Except as expressly set forth in the Authorized License,
+ *
+ * 1.     This program, including its structure, sequence and organization,
+ * constitutes the valuable trade secrets of Broadcom, and you shall use all
+ * reasonable efforts to protect the confidentiality thereof, and to use this
+ * information only in connection with your use of Broadcom integrated circuit
+ * products.
+ *
+ * 2.     TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED
+ * "AS IS" AND WITH ALL FAULTS AND BROADCOM MAKES NO PROMISES, REPRESENTATIONS
+ * OR WARRANTIES, EITHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, WITH RESPECT
+ * TO THE SOFTWARE. BROADCOM SPECIFICALLY DISCLAIMS ANY AND ALL IMPLIED WARRANTIES
+ * OF TITLE, MERCHANTABILITY, NONINFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE,
+ * LACK OF VIRUSES, ACCURACY OR COMPLETENESS, QUIET ENJOYMENT, QUIET POSSESSION
+ * OR CORRESPONDENCE TO DESCRIPTION. YOU ASSUME THE ENTIRE RISK ARISING OUT OF
+ * USE OR PERFORMANCE OF THE SOFTWARE.
+ *
+ * 3.     TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BROADCOM
+ * OR ITS LICENSORS BE LIABLE FOR (i) CONSEQUENTIAL, INCIDENTAL, SPECIAL, INDIRECT,
+ * OR EXEMPLARY DAMAGES WHATSOEVER ARISING OUT OF OR IN ANY WAY RELATING TO YOUR
+ * USE OF OR INABILITY TO USE THE SOFTWARE EVEN IF BROADCOM HAS BEEN ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGES; OR (ii) ANY AMOUNT IN EXCESS OF THE AMOUNT
+ * ACTUALLY PAID FOR THE SOFTWARE ITSELF OR U.S. $1, WHICHEVER IS GREATER. THESE
+ * LIMITATIONS SHALL APPLY NOTWITHSTANDING ANY FAILURE OF ESSENTIAL PURPOSE OF
+ * ANY LIMITED REMEDY.
+ *
+ *******************************************************************************/
+
+KAPS_INC_SEL(KAPS_OK, "all ok")
+KAPS_INC_SEL(KAPS_INVALID_ARGUMENT, "invalid or null argument")
+KAPS_INC_SEL(KAPS_OUT_OF_MEMORY, "could not allocate any more memory")
+KAPS_INC_SEL(KAPS_INTERNAL_ERROR, "unexpected internal error")
+KAPS_INC_SEL(KAPS_FATAL_TRANSPORT_ERROR, "Fatal error occurred in transport layer")
+KAPS_INC_SEL(KAPS_EXCEEDED_RANGES, "exceeded maximum number of ranges supported by hardware")
+KAPS_INC_SEL(KAPS_DUPLICATE, "duplicate entry")
+KAPS_INC_SEL(KAPS_INVALID_FILE, "File does not exist or has incorrect permissions")
+KAPS_INC_SEL(KAPS_INVALID_FORMAT, "ACL file has unrecognized format")
+KAPS_INC_SEL(KAPS_UNALIGNED_RANGE, "Range offset is not aligned to 16 bit boundary")
+KAPS_INC_SEL(KAPS_MISMATCH, "Search key does not match")
+KAPS_INC_SEL(KAPS_DATA_MISMATCH, "Read data does not match with written data")
+KAPS_INC_SEL(KAPS_MATCH, "Search key matches")
+KAPS_INC_SEL(KAPS_OUT_OF_INDEX, "Exhausted index range available to database")
+KAPS_INC_SEL(KAPS_OUT_OF_UDA, "Exhausted UDA resources available to database")
+KAPS_INC_SEL(KAPS_OUT_OF_AD, "Exhausted AD resources available")
+KAPS_INC_SEL(KAPS_OUT_OF_HITBIT, "Exhausted Hitbit resources available")
+KAPS_INC_SEL(KAPS_OUT_OF_DBA, "Exhausted DBA resources available to database")
+KAPS_INC_SEL(KAPS_OUT_OF_UIT, "Exhausted UIT resources available to database")
+KAPS_INC_SEL(KAPS_LSN_FULL, "Exhausted space in the LSN")
+KAPS_INC_SEL(KAPS_PARSE_ERROR, "Error parsing file")
+KAPS_INC_SEL(KAPS_INVALID_SEARCH_SPEC, "Invalid search scenario specification")
+KAPS_INC_SEL(KAPS_INVALID_TABLE_SPEC, "Invalid table specification")
+KAPS_INC_SEL(KAPS_KEY_FIELD_MISSING, "a database key field is missing from the master key")
+KAPS_INC_SEL(KAPS_KEY_GRAN_ERROR, "database key can be derived from the master key only from byte boundaries")
+KAPS_INC_SEL(KAPS_NUM_SEARCHES_EXCEEDED, "number of searches specified for an LTR cannot be handled by the device")
+KAPS_INC_SEL(KAPS_NUM_SEARCHES_EXCEEDED_ON_SMT, "number of searches specified on SMT mode cannot be handled by the device")
+KAPS_INC_SEL(KAPS_DUPLICATE_KEY, "key for database/instruction already created")
+KAPS_INC_SEL(KAPS_DUPLICATE_INSTRUCTION_ID, "instruction with same id already encountered")
+KAPS_INC_SEL(KAPS_LTR_BUSY, "requested LTR is already in use")
+KAPS_INC_SEL(KAPS_INVALID_LTR_ID, "LTR Identifier specified is invalid")
+KAPS_INC_SEL(KAPS_INVALID_CB_ADDRESS, "Context buffer address specified is invalid")
+KAPS_INC_SEL(KAPS_INVALID_DEVICE_TYPE, "device type specified is invalid")
+KAPS_INC_SEL(KAPS_INVALID_RESOURCE_UDA, "invalid UDA memory range specified")
+KAPS_INC_SEL(KAPS_DB_ACTIVE, "database already active on the device")
+KAPS_INC_SEL(KAPS_INVALID_KEY, "missing/invalid key specification")
+KAPS_INC_SEL(KAPS_INVALID_MASTER_KEY, "missing/invalid master key specification")
+KAPS_INC_SEL(KAPS_ENTRY_ALREADY_ACTIVE, "cannot add Associated Data as the entry is already active")
+KAPS_INC_SEL(KAPS_DUPLICATE_DB_ID, "database with same ID already encountered")
+KAPS_INC_SEL(KAPS_KEY_WIDTH_UNSUPPORTED, "key width specified for database not supported")
+KAPS_INC_SEL(KAPS_TOO_MANY_KEY_FIELDS, "exceeded the number of key fields that can be supported")
+KAPS_INC_SEL(KAPS_TOO_MANY_AD, "more than supported number of associated data databases are being added to a single ACL/LPM or EM database")
+KAPS_INC_SEL(KAPS_TOO_MANY_INSTRUCTIONS, "more than supported number of instructions")
+KAPS_INC_SEL(KAPS_UNSUPPORTED_AD_SIZE, "requested AD size cannot be supported")
+KAPS_INC_SEL(KAPS_EXCEEDED_MAX_SEARCHES, "exceeded maximum number of databases that can be searched by the instruction")
+KAPS_INC_SEL(KAPS_EXCEEDED_MAX_LPM_SEARCHES, "exceeded maximum number of LPM databases that can be schedules by the instruction")
+KAPS_INC_SEL(KAPS_RESULT_NOT_VALID, "cannot honor the result number requested")
+KAPS_INC_SEL(KAPS_UNSUPPORTED, "Operation not supported")
+KAPS_INC_SEL(KAPS_DEVICE_UNLOCKED, "device configuration has not been locked")
+KAPS_INC_SEL(KAPS_DEVICE_ALREADY_LOCKED, "device configuration is already locked")
+KAPS_INC_SEL(KAPS_RESOURCE_FIT_FAIL, "failed to fit database resources on chip")
+KAPS_INC_SEL(KAPS_EXCESSIVE_DB_DUPLICATION, "database need to be duplicated multiple times")
+KAPS_INC_SEL(KAPS_EXHAUSTED_PCM_RESOURCE, "Out of power control module resources")
+KAPS_INC_SEL(KAPS_DUPLICATE_KEY_FIELD, "Key field with same name already encountered")
+KAPS_INC_SEL(KAPS_INCONSISTENT_TABLE_ID_OFFSET, "Table ID field in the table keys are at different offsets")
+KAPS_INC_SEL(KAPS_INCONSISTENT_TABLE_ID_WIDTH, "Table IF field widths differ in the table keys")
+KAPS_INC_SEL(KAPS_TOO_MANY_TABLE_ID, "Expect only a single key field to be identified as table ID")
+KAPS_INC_SEL(KAPS_MISSING_KEY, "Missing key specification for database. Perhaps the entry must be added to a table of this database.")
+KAPS_INC_SEL(KAPS_XPT_REQUEST_ERROR, "XPT returned an error when getting a request pointer")
+KAPS_INC_SEL(KAPS_XPT_RESULT_ERROR, "XPT returned an error when getting a result pointer")
+KAPS_INC_SEL(KAPS_INVALID_KEY_WIDTH, "Invalid key width or requested key width exceeded the constrained width")
+KAPS_INC_SEL(KAPS_ONE_ADDB_PER_DB, "An AD database can only be added to one ACL/LPM/EM database for now. This may be supported in future")
+KAPS_INC_SEL(KAPS_AD_ALREADY_ADDED, "Associated data previously added to entry")
+KAPS_INC_SEL(KAPS_AD_NOT_YET_ADDED, "Associated data has not yet been added to the entry")
+KAPS_INC_SEL(KAPS_AD_ENTRY_ACTIVE, "Associated data entry still in use")
+KAPS_INC_SEL(KAPS_AD_DB_ABSENT, "An AD database has not been associated with the ACL/LPM/EM database")
+KAPS_INC_SEL(KAPS_MISSING_TABLE_ID_FIELD, "There is no field with KAPS_KEY_FIELD_TABLE_ID in the DB key of the table")
+KAPS_INC_SEL(KAPS_DYNAMIC_UNSUPPORTED, "Dynamic database size specified using zero capacity is not yet supported")
+KAPS_INC_SEL(KAPS_DUPLICATE_TABLE_ID, "Table with same ID already encountered")
+KAPS_INC_SEL(KAPS_BATCH_MODE_UNSUPPORTED, "Running in batch mode is not supported for this database")
+KAPS_INC_SEL(KAPS_INSTRUCTION_ALREADY_INSTALLED, "Install already called on the instruction")
+KAPS_INC_SEL(KAPS_KEY_ALREADY_SET, "Key is already set to the database")
+KAPS_INC_SEL(KAPS_INSTRUCTION_NO_DB, "Instruction has no databases added to it")
+KAPS_INC_SEL(KAPS_INSTRUCTION_NOT_INSTALLED, "Instruction(s) have not been installed before calling device lock")
+KAPS_INC_SEL(KAPS_DEVICE_NO_INSTRUCTIONS, "No instructions have been added to the device")
+KAPS_INC_SEL(KAPS_DEVICE_NO_DB, "No databases have been added to the device")
+KAPS_INC_SEL(KAPS_MISSING_KEY_FIELD, "Database key has been defined with no fields")
+KAPS_INC_SEL(KAPS_LPM_TERNARY, "Ternary key fields not permitted for LPM database")
+KAPS_INC_SEL(KAPS_LPM_RANGE, "Range key fields not permitted for LPM database")
+KAPS_INC_SEL(KAPS_LPM_INVALID_KEY_FORMAT, "Key type prefix is followed by other key types")
+KAPS_INC_SEL(KAPS_MULTIPLE_PREFIX_FIELDS, "Multiple prefix key fields not permitted for LPM database")
+KAPS_INC_SEL(KAPS_MULTIPLE_TBLID_FIELDS, "Multiple table id key fields not permitted for LPM database")
+KAPS_INC_SEL(KAPS_PREFIX_NOT_FOUND, "Prefix entry handle not found")
+KAPS_INC_SEL(KAPS_CLONE_KEY_FORMAT_MISMATCH, "Cloned database key layout does not match the parent database")
+KAPS_INC_SEL(KAPS_INVALID_INDEX_RANGE, "Index range specified is not valid")
+KAPS_INC_SEL(KAPS_MORE_THAN_TWO_CLONES_IN_SRCH, "Search inst has more than 2 parent-clone combination")
+KAPS_INC_SEL(KAPS_PARENT_CLONE_WIDTH_NOT_SUPPORTED, "Search inst has parent and clone, where width is more than 320b")
+KAPS_INC_SEL(KAPS_PARENT_CLONE_PARALLEL_SRCH_NOT_SUPPORTED, "Search inst has parent and clone, configured in same LTR for compare3")
+KAPS_INC_SEL(KAPS_CLONE_PARENT_KEY_MISSING, "The database/table for which this clone key is being defined should have its key specified first")
+KAPS_INC_SEL(KAPS_ISSU_RESTORE_REQUIRED, "ISSU Restore needs to called before Reconcile Start")
+KAPS_INC_SEL(KAPS_ISSU_RECONCILE_REQUIRED, "Reconcile Start needs to called before Reconcile End")
+KAPS_INC_SEL(KAPS_ISSU_RESTORE_DONE, "ISSU Restore performed already")
+KAPS_INC_SEL(KAPS_DEVICE_NOT_EMPTY, "Cannot perform ISSU Restore, DB/Instructions already present in device")
+KAPS_INC_SEL(KAPS_RECONCILE_NOT_STARTED, "Reconcile Phase not yet started")
+KAPS_INC_SEL(KAPS_NV_READ_WRITE_FAILED, "Error in NV Read/Write operation")
+KAPS_INC_SEL(KAPS_NV_DATA_CORRUPT, "NV data for ISSU is corrupt")
+KAPS_INC_SEL(KAPS_INVALID_PREFIX_LENGTH, "Prefix length specified is greater than key length or invalid")
+KAPS_INC_SEL(KAPS_ISSU_IN_PROGRESS, "ISSU is in progress, API is not allowed")
+KAPS_INC_SEL(KAPS_DEVICE_NO_SKIP_INIT_FLAG, "Initialize the device with skip_init_flag")
+KAPS_INC_SEL(KAPS_INSTRUCTION_BUSY, "For requested instruction, DB is active")
+KAPS_INC_SEL(KAPS_ISSU_MISMATCH, "Mismatch between saved and restored data")
+KAPS_INC_SEL(KAPS_DB_ALREADY_ADDED_TO_INSTRUCTION, "Database is already added to instructions")
+KAPS_INC_SEL(KAPS_CONFLICTING_SEARCH_PORTS, "Multiple databases being searched from the same search interface")
+KAPS_INC_SEL(KAPS_INVALID_LTR_NUMBER, "Exceeded the supported LTR value")
+KAPS_INC_SEL(KAPS_TABLE_ID_AS_HOLE_UNSUPPORTED, "Table id cannot defined as hole in key of clone, cannot block mask")
+KAPS_INC_SEL(KAPS_RANGE_FIELDS_AS_HOLE_UNSUPPORTED, "Range fields cannot be defined as hole in key of clone, cannot block mask")
+KAPS_INC_SEL(KAPS_LPM_KEY_WITH_HOLE_UNSUPPORTED, "NetRoute algorithmic key cannot have hole in key, cannot block mask")
+KAPS_INC_SEL(KAPS_PENDING_ENTRY, "Entry not yet installed, read from device will have junk data")
+KAPS_INC_SEL(KAPS_INVALID_AD_WIDTH, "Provided AD width is not multiple of 32b")
+KAPS_INC_SEL(KAPS_EXCEEDED_MAX_PARALLEL_SEARCHES, "Databases, clones and tables belonging to the same database being searched excessively in parallel")
+KAPS_INC_SEL(KAPS_SEARCH_ERROR, "Error searching")
+KAPS_INC_SEL(KAPS_NO_RESP, "No response from the device")
+KAPS_INC_SEL(KAPS_UNSUPPORTED_DEVICE, "Device not supported")
+KAPS_INC_SEL(KAPS_INVALID_DEVICE_PTR, "Invalid device handle")
+KAPS_INC_SEL(KAPS_INVALID_DEVICE_DESC_PTR, "Invalid device description pointer")
+KAPS_INC_SEL(KAPS_INVALID_FLAGS, "Invalid device flag passed")
+KAPS_INC_SEL(KAPS_INVALID_KEY_TYPE, "Invalid key field type")
+KAPS_INC_SEL(KAPS_INVALID_DEVICE_COUNT, "Invalid device count")
+KAPS_INC_SEL(KAPS_INVALID_DB_TYPE, "Invalid database type")
+KAPS_INC_SEL(KAPS_INVALID_INSTRUCTION, "Invalid KBP instruction")
+KAPS_INC_SEL(KAPS_ADD_DEL_ENTRY_TO_CLONE_DB, "Entry cannot added or deleted from the clone database")
+KAPS_INC_SEL(KAPS_UNIT_NOT_FOUND, "Unable to find the requested unit")
+KAPS_INC_SEL(KAPS_UNSUPPORTED_DMA_WIDTH, "Unsupported width for DMA database")
+KAPS_INC_SEL(KAPS_DB_NOT_ASSOCIATED, "Database not being searched in any instruction")
+KAPS_INC_SEL(KAPS_INVALID_HANDLE, "Invalid entry handle")
+KAPS_INC_SEL(KAPS_INVALID_META_PRIORITY, "Specified meta priority value is out of range")
+KAPS_INC_SEL(KAPS_EXCEEDED_INDIRECTION, "Too much of indirection is not supported")
+KAPS_INC_SEL(KAPS_TOO_MANY_HB, "more than supported number of hit bit databases are being added to a single LPM database")
+KAPS_INC_SEL(KAPS_ONE_HB_DB_PER_DB, "An HB database can only be added to one LPM database")
+KAPS_INC_SEL(KAPS_HB_DB_ABSENT, "An HB database has not been associated with the LPM database")
+KAPS_INC_SEL(KAPS_HB_NO_AD, "First need to add AD database before HB database")
+KAPS_INC_SEL(KAPS_DB_FULL, "Can't add any more entries to the DB since the DB has reached maximum capacity")
+KAPS_INC_SEL(KAPS_TABLES_CREATION_NOT_ALLOWED, "Additional tables cannot be created once instructions have been added to the database or to any of the tables within the database")
+KAPS_INC_SEL(KAPS_DB_HAS_NO_HB, "Adding a hit bit to an entry is not expected")
+KAPS_INC_SEL(KAPS_EXHAUSTED_NV_MEMORY, "Exhausted NV memory")
+KAPS_INC_SEL(KAPS_NV_ALLOC_FAILED, "Failed to allocate the NV memory")
+KAPS_INC_SEL(KAPS_DUMMY_FILL_FIELD_UNSUPPORTED, "Dummy fill supported only for instructions and not databases")
+KAPS_INC_SEL(KAPS_EXCEEDED_NUM_DB, "Exceeded max number of databases")
+KAPS_INC_SEL(KAPS_EXCEEDED_NUM_AD_DB, "Exceeded max number of AD databases")
+KAPS_INC_SEL(KAPS_EXCEEDED_NUM_HB_DB, "Exceeded max number of HB databases")
+KAPS_INC_SEL(KAPS_INVALID_BB_CONFIG, "Invalid configuration of the BB config register")
+KAPS_INC_SEL(KAPS_DB_WB_LOCATION_BUSY, "Specified entry location is already in use")
+KAPS_INC_SEL(KAPS_AD_DB_ONLY_ONE_AD_HANDLE, "Only one ad handle should be created for 0b AD databases")
+KAPS_INC_SEL(KAPS_DB_0B_AD_FOR_ONLY_LPM, "0b AD databases are supported only for LPM databases")
+KAPS_INC_SEL(KAPS_UNSUPPORTED_FOR_0B_AD, "Operation not supported for 0b AD")

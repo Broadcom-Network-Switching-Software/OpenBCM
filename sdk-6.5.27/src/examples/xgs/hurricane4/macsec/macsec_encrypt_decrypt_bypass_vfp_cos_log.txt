@@ -1,0 +1,1307 @@
+BCM.0> c macsec_encrypt_decrypt_bypass_vfp_cos.c
+execute(): Start
+open /dev/linux-bcm-knet: : No such device or address
+0:soc_knet_init: knet open failed
+0:soc_dma_attach: Failed to initialize KNET: rv=-11
+ingress_port =1
+egress_port1 =2
+qMapId = 0x400
+qMapId = 0x800
+> IFP group to send MACsec packets to MACsec engine port installed (decrypt-1st pass).
+> IFP group to map DGPP to final DGPP installed (encrypt-2nd pass).
+> IFP rule to avoid redirect for 2nd pass decryption installed (decrypt-2nd pass).> IFP rule to send MACsec packets to MACsec engine port 67 installed (decrypt-1st pass).> IFP rule to send MACsec packets to MACsec engine port 68 installed (decrypt-1st pass).> IFP rule to use IFP modidBase (encrypt-2nd pass).pkt_format_info_get succeeded
+not_allowed_chunk_bitmap = 0xff9f
+bmpChunk: 0x00000020
+L2_UDF created Successfully: udf_id=1
+> IFP group to redirect control packets created (decrypt-1st pass), group = 0x5
+efp_group: 0x6 created
+efp_decryption_setup completed
+vfp_group: 0x7 created
+VFP ethii rule to assign opaqueObject1=0x1111 added
+VFP llc rule to assign opaqueObject1=0x1111 added
+VFP snap rule to assign opaqueObject1=0x1111 added
+VFP ethii rule to assign opaqueObject1=0x1111 added
+IFP rule to assign EditCtrlId=16 (for encryption 1st pass) added
+IFP rule to assign EditCtrlId=16 (for decryption 2nd pass) added
+
+Created decrypt policy with id:0x28000000
+
+Created decrypt policy with id:0x28000001
+
+Created decrypt policy with id:0x28000002
+
+-------------------------------------------
+Start macsec_port_create() for port-2
+-------------------------------------------
+Enable MACsec on the port 2
+
+Created securty channel with id: 0x8000000
+
+Enabled secure channel with id: 0x8000000
+
+Created security association with id:0x18000000
+
+Bind secure channel 0x8000000 to decrypt policy 0x28000002, pri=0
+
+Created decrypt flow with id:0x38000000
+
+Enabled decrypt flow with id:0x38000000
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:0
+
+Created decrypt flow with id:0x38000001
+
+Enabled decrypt flow with id:0x38000001
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:1
+
+Created decrypt flow with id:0x38000002
+
+Enabled decrypt flow with id:0x38000002
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:2
+
+Created decrypt flow with id:0x38000003
+
+Enabled decrypt flow with id:0x38000003
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:3
+
+Created decrypt flow with id:0x38000004
+
+Enabled decrypt flow with id:0x38000004
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:4
+
+Created decrypt flow with id:0x38000005
+
+Enabled decrypt flow with id:0x38000005
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:5
+
+Created decrypt flow with id:0x38000006
+
+Enabled decrypt flow with id:0x38000006
+
+Priority received in bcm_xflow_macsec_decrypt_flow_get:6
+
+Created securty channel with id: 0x4000000
+int $$ = 0 (0x0)
+Subport_id 0x44000000 for the sc 0x4000000
+Subport_num 0x0 for the sc 0x4000000
+
+Enabled secure channel with id: 0x4000000
+
+Created security association with id:0x14000000
+> EFP rule to modify encrypt SVTAG installed.
+
+> EFP rule to modify encrypt SVTAG installed.
+
+> EFP rule to modify encrypt SVTAG installed.
+
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+int $$ = 0 (0x0)
+Registered Packet callback
+
+vlan 1  ports cpu,ge,xe,hg (0x00000000000000000000000000000000000000000000001e000000007fffffff), untagged ge,xe,hg (0x000000000000000000000000000000000000000000000000000000007ffffffe) MCAST_FLOOD_UNKNOWN
+vlan 10 ports ge0-ge1 (0x0000000000000000000000000000000000000000000000000000000000000006), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+
+
+==========  Test1: MACsec Encryption - Unicast ==================
+ADD: mac=00:00:00:00:00:22 vlan=10 GPORT=0x2 modid=2 port=2/ge1 Static
+>>> Input Unicast packet @ port-1:
+>>> Output MACsec encrypted packet with SCI-x @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x2, length=0x68
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[1]: data[0010]: 88e5 2c00 0000 0005 0000 0000 0000 0008
+[bcmPW.0]Packet[1]: data[0020]: 8b94 0d0a 423e f67e 0392 30ce 0bbf 27aa
+[bcmPW.0]Packet[1]: data[0030]: 5442 de93 9c35 ad51 0d5c 0b0d fb18 9711
+[bcmPW.0]Packet[1]: data[0040]: 7e6d 6fe5 75e1 212b 0a46 7454 4eb0 ecab
+[bcmPW.0]Packet[1]: data[0050]: 8d54 d2c0 be7a 3527 f56e 8c63 345b 8a02
+[bcmPW.0]Packet[1]: data[0060]: f135 e73d 899e a423
+[bcmPW.0]Packet[1]: length 104 (104). rx-port 2. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 0. dest-mod 0. src-port 2. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test1 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000001}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+
+==========  Test2: MACsec Encryption - BC/DLF ==================
+>>> Input BC/DLF packet @ port-1:
+>>> Output MACsec encrypted packet with SCI-x @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x2, length=0x68
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {ffffffffffff} {000000000001} 8100 000a
+[bcmPW.0]Packet[2]: data[0010]: 88e5 2c00 0000 0006 0000 0000 0000 0008
+[bcmPW.0]Packet[2]: data[0020]: 21b3 e422 8c2e b5d4 1856 b8c1 5427 a333
+[bcmPW.0]Packet[2]: data[0030]: 2eda 0444 e2c9 1b1f b6cb 2571 2331 00a1
+[bcmPW.0]Packet[2]: data[0040]: 8f9f 3696 2cdb a6b1 4a9a 134c d3b0 ab37
+[bcmPW.0]Packet[2]: data[0050]: 3870 9f0c 5c48 a682 ad64 b5a2 12cb e59f
+[bcmPW.0]Packet[2]: data[0060]: c41a c561 099b cf08
+[bcmPW.0]Packet[2]: length 104 (104). rx-port 2. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 2. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test2 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+
+==========  Test3: MACsec decryption - Unicast ==================
+ADD: mac=00:00:00:00:00:22 vlan=10 GPORT=0x1 modid=2 port=1/ge0 Static
+>>> Input Unicast packet @ port-2:
+>>> Output decrypted pkt @ port-1:
+Packet from data=<>, length=104
+RxCallback: received from port 0x1, length=0x48
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[3]: data[0010]: ffff 4578 002e 0000 0000 40ff 8457 1400
+[bcmPW.0]Packet[3]: data[0020]: 0001 e100 0001 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[3]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[3]: data[0040]: 2d0a 03ab 0911 56a1
+[bcmPW.0]Packet[3]: length 72 (72). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 0. dest-mod 0. src-port 1. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test3 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000001}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+
+==========  Test4: MACsec decryption (drop_untag/pass_untag) - Unicast ==================
+ADD: mac=00:00:00:00:00:22 vlan=10 GPORT=0x1 modid=2 port=1/ge0 Static
+>>> Input Unicast packet @ port-2:
+>>> Output decrypted pkt @ port-1:
+Packet from data=<>, length=72
+RxCallback: received from port 0x1, length=0x48
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[4]: data[0010]: ffff 4578 002e 0000 0000 40ff 8457 1400
+[bcmPW.0]Packet[4]: data[0020]: 0001 e100 0001 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[4]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[4]: data[0040]: 2d0a 03ab 0911 56a1
+[bcmPW.0]Packet[4]: length 72 (72). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-port 1. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test4_1 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000002}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+
+flow_id 0x38000001 bound to policy_id 0x28000000
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=72
+
+-----------------------------------------------------------
+Test4_2 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000003}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000003}
+
+flow_id 0x38000001 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=72
+RxCallback: received from port 0x1, length=0x48
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[5]: data[0010]: ffff 4578 002e 0000 0000 40ff 8457 1400
+[bcmPW.0]Packet[5]: data[0020]: 0001 e100 0001 1415 1617 1819 1a1b 1c1d
+[bcmPW.0]Packet[5]: data[0030]: 1e1f 2021 2223 2425 2627 2829 2a2b 2c2d
+[bcmPW.0]Packet[5]: data[0040]: 2d0a 03ab 0911 56a1
+[bcmPW.0]Packet[5]: length 72 (72). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-port 1. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test4_3 = [PASS]
+-----------------------------------------------------------
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000004}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000004}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+==========  Test5: MACsec decryption (bypass EAPoL)  ==================
+delete L2_USER_ENTRY
+l2_user IFP: fp stat get statid=853 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000002 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=68
+RxCallback: received from port 0x2, length=0x44
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {0180c2000003} {000000000001} 8100 000a
+[bcmPW.0]Packet[6]: data[0010]: 888e 0100 0005 0101 0005 0100 0000 0000
+[bcmPW.0]Packet[6]: data[0020]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[6]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[6]: data[0040]: 0000 0000
+[bcmPW.0]Packet[6]: length 68 (68). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[6]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+RxCallback: received from port 0x1, length=0x44
+match pattern 1
+RxCallback: rx_count = 0x2
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {0180c2000003} {000000000001} 8100 000a
+[bcmPW.0]Packet[7]: data[0010]: 888e 0100 0005 0101 0005 0100 0000 0000
+[bcmPW.0]Packet[7]: data[0020]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[7]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[7]: data[0040]: fe79 8ef9
+[bcmPW.0]Packet[7]: length 68 (68). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[7]: dest-port 0. dest-mod 0. src-port 1. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test5 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000003}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000005}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000005}
+
+==========  Test6: MACsec decryption (bypass BPDU)  ==================
+delete L2_USER_ENTRY
+delete L2_USER_ENTRY
+l2_user IFP: fp stat get statid=854 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000004 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=143
+RxCallback: received from port 0x2, length=0x8f
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {0180c2000000} {000000000001} 8100 000a
+[bcmPW.0]Packet[8]: data[0010]: 0079 4242 0300 0003 027c 8000 000c 305d
+[bcmPW.0]Packet[8]: data[0020]: d100 0000 0000 8000 000c 305d d100 8005
+[bcmPW.0]Packet[8]: data[0030]: 0000 1400 0200 0f00 0000 5000 0000 0000
+[bcmPW.0]Packet[8]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[8]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 55bf
+[bcmPW.0]Packet[8]: data[0060]: 4e8a 44b2 5d44 2868 549c 1bf7 720f 0003
+[bcmPW.0]Packet[8]: data[0070]: 0d40 8000 001a a197 d180 137c 8005 000c
+[bcmPW.0]Packet[8]: data[0080]: 305d d100 0003 0d40 8080 1300 0000 00
+[bcmPW.0]Packet[8]: length 143 (143). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[8]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test6 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000004}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000006}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000006}
+
+==========  Test7: MACsec decryption (bypass CDP)  ==================
+l2_user IFP: fp stat get statid=855 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000005 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=396
+RxCallback: received from port 0x2, length=0x18c
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[9]: data[0000]: {01000ccccccc} {0018ba98688f} 8100 000a
+[bcmPW.0]Packet[9]: data[0010]: 0176 aaaa 0300 000c 2000 02b4 0bea 0001
+[bcmPW.0]Packet[9]: data[0020]: 0006 5331 0005 00c2 4369 7363 6f20 494f
+[bcmPW.0]Packet[9]: data[0030]: 5320 536f 6674 7761 7265 2c20 4333 3536
+[bcmPW.0]Packet[9]: data[0040]: 3020 536f 6674 7761 7265 2028 4333 3536
+[bcmPW.0]Packet[9]: data[0050]: 302d 4144 5649 5053 4552 5649 4345 534b
+[bcmPW.0]Packet[9]: data[0060]: 392d 4d29 2c20 5665 7273 696f 6e20 3132
+[bcmPW.0]Packet[9]: data[0070]: 2e32 2834 3429 5345 2c20 5245 4c45 4153
+[bcmPW.0]Packet[9]: data[0080]: 4520 534f 4654 5741 5245 2028 6663 3129
+[bcmPW.0]Packet[9]: data[0090]: 0a43 6f70 7972 6967 6874 2028 6329 2031
+[bcmPW.0]Packet[9]: data[00a0]: 3938 362d 3230 3038 2062 7920 4369 7363
+[bcmPW.0]Packet[9]: data[00b0]: 6f20 5379 7374 656d 732c 2049 6e63 2e0a
+[bcmPW.0]Packet[9]: data[00c0]: 436f 6d70 696c 6564 2053 6174 2030 352d
+[bcmPW.0]Packet[9]: data[00d0]: 4a61 6e2d 3038 2030 303a 3135 2062 7920
+[bcmPW.0]Packet[9]: data[00e0]: 7765 696c 6975 0006 0017 6369 7363 6f20
+[bcmPW.0]Packet[9]: data[00f0]: 5753 2d43 3335 3630 2d32 3454 5300 0200
+[bcmPW.0]Packet[9]: data[0100]: 1100 0000 0101 01cc 0004 0000 0000 0003
+[bcmPW.0]Packet[9]: data[0110]: 0014 4661 7374 4574 6865 726e 6574 302f
+[bcmPW.0]Packet[9]: data[0120]: 3133 0004 0008 0000 0028 0008 0024 0000
+[bcmPW.0]Packet[9]: data[0130]: 0c01 1200 0000 00ff ffff ff01 0220 ff00
+[bcmPW.0]Packet[9]: data[0140]: 0000 0000 0000 18ba 9868 80ff 0000 0009
+[bcmPW.0]Packet[9]: data[0150]: 0004 000a 0006 0001 000b 0005 0100 1200
+[bcmPW.0]Packet[9]: data[0160]: 0500 0013 0005 0000 1600 1100 0000 0101
+[bcmPW.0]Packet[9]: data[0170]: 01cc 0004 0000 0000 001a 0010 0000 0001
+[bcmPW.0]Packet[9]: data[0180]: 0000 0000 ffff ffff 0000 0000
+[bcmPW.0]Packet[9]: length 396 (396). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[9]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test7 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000005}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000007}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000007}
+
+==========  Test8: MACsec decryption (bypass LACP)  ==================
+l2_user IFP: fp stat get statid=856 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000006 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=132
+RxCallback: received from port 0x2, length=0x84
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[10]: data[0000]: {0180c2000002} {0013c4120f0d} 8100 000a
+[bcmPW.0]Packet[10]: data[0010]: 8809 0101 0114 8000 0013 c412 0f00 000d
+[bcmPW.0]Packet[10]: data[0020]: 8000 0016 8500 0000 0214 8000 000e 8316
+[bcmPW.0]Packet[10]: data[0030]: f500 000d 8000 0019 3600 0000 0310 8000
+[bcmPW.0]Packet[10]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[10]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[10]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[10]: data[0070]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[10]: data[0080]: 0000 0000
+[bcmPW.0]Packet[10]: length 132 (132). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[10]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test8 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000006}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000008}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000008}
+
+==========  Test9: MACsec decryption (bypass) - Unicast ==================
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000003 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-2:
+Packet from data=<>, length=74
+RxCallback: received from port 0x1, length=0x4a
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[11]: data[0000]: {000000000022} {000000000001} 8100 000a
+[bcmPW.0]Packet[11]: data[0010]: 0800 1234 4578 002e 0000 0000 40ff 8457
+[bcmPW.0]Packet[11]: data[0020]: 1400 0001 e100 0001 1415 1617 1819 1a1b
+[bcmPW.0]Packet[11]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 2829 2a2b
+[bcmPW.0]Packet[11]: data[0040]: 2c2d 2d0a 03ab 3c9b 49ed
+[bcmPW.0]Packet[11]: length 74 (74). rx-port 1. cos 3. prio_int 11. vlan 10. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[11]: dest-port 0. dest-mod 0. src-port 1. src-mod 2. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[11]: reasons: FilterMatch
+
+-----------------------------------------------------------
+Test9 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000006}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000009}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000001}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000009}
+
+==========  Test10: MACsec encryption+decryption (bypass EAPoL in both directions)  ==================
+l2_user IFP: fp stat get statid=857 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000002 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-1:
+Packet from data=<>, length=68
+RxCallback: received from port 0x2, length=0x44
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[12]: data[0000]: {0180c2000003} {000000000001} 8100 000a
+[bcmPW.0]Packet[12]: data[0010]: 888e 0100 0005 0101 0005 0100 0000 0000
+[bcmPW.0]Packet[12]: data[0020]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[12]: data[0030]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[12]: data[0040]: 0000 0000
+[bcmPW.0]Packet[12]: length 68 (68). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[12]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test10 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000002}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000003}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000001}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000007}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x0000000A}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000002}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x0000000A}
+
+==========  Test11: MACsec encryption+decryption (bypass BPDU in both directions)  ==================
+l2_user IFP: fp stat get statid=858 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000004 bound to policy_id 0x28000001
+>>> Input Unicast secTag untagged packet @ port-1:
+Packet from data=<>, length=143
+RxCallback: received from port 0x2, length=0x8f
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[13]: data[0000]: {0180c2000000} {000000000001} 8100 000a
+[bcmPW.0]Packet[13]: data[0010]: 0079 4242 0300 0003 027c 8000 000c 305d
+[bcmPW.0]Packet[13]: data[0020]: d100 0000 0000 8000 000c 305d d100 8005
+[bcmPW.0]Packet[13]: data[0030]: 0000 1400 0200 0f00 0000 5000 0000 0000
+[bcmPW.0]Packet[13]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[13]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 55bf
+[bcmPW.0]Packet[13]: data[0060]: 4e8a 44b2 5d44 2868 549c 1bf7 720f 0003
+[bcmPW.0]Packet[13]: data[0070]: 0d40 8000 001a a197 d180 137c 8005 000c
+[bcmPW.0]Packet[13]: data[0080]: 305d d100 0003 0d40 8080 1300 0000 00
+[bcmPW.0]Packet[13]: length 143 (143). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[13]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test11 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000002}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000000}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000004}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000002}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000008}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x0000000B}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000003}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x0000000B}
+
+==========  Test12: MACsec encryption+decryption (bypass CDP in both directions)  ==================
+l2_user IFP: fp stat get statid=859 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000005 bound to policy_id 0x28000001
+>>> Input Multicast cleartext packet @ port-1:
+Packet from data=<>, length=396
+RxCallback: received from port 0x2, length=0x18c
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[14]: data[0000]: {01000ccccccc} {0018ba98688f} 8100 000a
+[bcmPW.0]Packet[14]: data[0010]: 0176 aaaa 0300 000c 2000 02b4 0bea 0001
+[bcmPW.0]Packet[14]: data[0020]: 0006 5331 0005 00c2 4369 7363 6f20 494f
+[bcmPW.0]Packet[14]: data[0030]: 5320 536f 6674 7761 7265 2c20 4333 3536
+[bcmPW.0]Packet[14]: data[0040]: 3020 536f 6674 7761 7265 2028 4333 3536
+[bcmPW.0]Packet[14]: data[0050]: 302d 4144 5649 5053 4552 5649 4345 534b
+[bcmPW.0]Packet[14]: data[0060]: 392d 4d29 2c20 5665 7273 696f 6e20 3132
+[bcmPW.0]Packet[14]: data[0070]: 2e32 2834 3429 5345 2c20 5245 4c45 4153
+[bcmPW.0]Packet[14]: data[0080]: 4520 534f 4654 5741 5245 2028 6663 3129
+[bcmPW.0]Packet[14]: data[0090]: 0a43 6f70 7972 6967 6874 2028 6329 2031
+[bcmPW.0]Packet[14]: data[00a0]: 3938 362d 3230 3038 2062 7920 4369 7363
+[bcmPW.0]Packet[14]: data[00b0]: 6f20 5379 7374 656d 732c 2049 6e63 2e0a
+[bcmPW.0]Packet[14]: data[00c0]: 436f 6d70 696c 6564 2053 6174 2030 352d
+[bcmPW.0]Packet[14]: data[00d0]: 4a61 6e2d 3038 2030 303a 3135 2062 7920
+[bcmPW.0]Packet[14]: data[00e0]: 7765 696c 6975 0006 0017 6369 7363 6f20
+[bcmPW.0]Packet[14]: data[00f0]: 5753 2d43 3335 3630 2d32 3454 5300 0200
+[bcmPW.0]Packet[14]: data[0100]: 1100 0000 0101 01cc 0004 0000 0000 0003
+[bcmPW.0]Packet[14]: data[0110]: 0014 4661 7374 4574 6865 726e 6574 302f
+[bcmPW.0]Packet[14]: data[0120]: 3133 0004 0008 0000 0028 0008 0024 0000
+[bcmPW.0]Packet[14]: data[0130]: 0c01 1200 0000 00ff ffff ff01 0220 ff00
+[bcmPW.0]Packet[14]: data[0140]: 0000 0000 0000 18ba 9868 80ff 0000 0009
+[bcmPW.0]Packet[14]: data[0150]: 0004 000a 0006 0001 000b 0005 0100 1200
+[bcmPW.0]Packet[14]: data[0160]: 0500 0013 0005 0000 1600 1100 0000 0101
+[bcmPW.0]Packet[14]: data[0170]: 01cc 0004 0000 0000 001a 0010 0000 0001
+[bcmPW.0]Packet[14]: data[0180]: 0000 0000 ffff ffff 0000 0000
+[bcmPW.0]Packet[14]: length 396 (396). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[14]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test12 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000003}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000002}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000000}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000005}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000003}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000009}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x0000000C}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000004}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x0000000C}
+
+==========  Test13: MACsec encryption+decryption (bypass LACP in both directions)  ==================
+l2_user IFP: fp stat get statid=860 type=packets
+flow_id 0x38000001 bound to policy_id 0x28000000
+flow_id 0x38000005 bound to policy_id 0x28000001
+>>> Input Multicast cleartext packet @ port-1:
+Packet from data=<>, length=132
+RxCallback: received from port 0x2, length=0x84
+match pattern 0
+RxCallback: rx_count = 0x1
+[bcmPW.0]
+[bcmPW.0]Packet[15]: data[0000]: {0180c2000002} {0013c4120f0d} 8100 000a
+[bcmPW.0]Packet[15]: data[0010]: 8809 0101 0114 8000 0013 c412 0f00 000d
+[bcmPW.0]Packet[15]: data[0020]: 8000 0016 8500 0000 0214 8000 000e 8316
+[bcmPW.0]Packet[15]: data[0030]: f500 000d 8000 0019 3600 0000 0310 8000
+[bcmPW.0]Packet[15]: data[0040]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[15]: data[0050]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[15]: data[0060]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[15]: data[0070]: 0000 0000 0000 0000 0000 0000 0000 0000
+[bcmPW.0]Packet[15]: data[0080]: 0000 0000
+[bcmPW.0]Packet[15]: length 132 (132). rx-port 67. cos 3. prio_int 11. vlan 10. reason 0x0. Outer tagged.
+[bcmPW.0]Packet[15]: dest-port 1. dest-mod 20. src-port 2. src-mod 2. opcode 4.  matched 0. classification-tag 0.
+
+-----------------------------------------------------------
+Test13 = [PASS]
+-----------------------------------------------------------
+bcm_error_t $$ = BCM_E_NONE (0)
+Encrypted pkt count:
+uint64 val = {0x00000000 0x00000002}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Decrypted pkt count:
+uint64 val = {0x00000000 0x00000001}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+In Management pkt count:
+uint64 val = {0x00000000 0x00000000}
+
+bcm_error_t $$ = BCM_E_NONE (0)
+Out management pkt count:
+uint64 val = {0x00000000 0x00000004}
+
+vfp_stat_id_eapol:
+uint64 val = {0x00000000 0x00000002}
+vfp_stat_id_bpdu:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_cdp:
+uint64 val = {0x00000000 0x00000001}
+vfp_stat_id_lacp:
+uint64 val = {0x00000000 0x00000001}
+ifp_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000006}
+efp_encrypt_stat_id[0]:
+uint64 val = {0x00000000 0x00000004}
+efp_encrypt_stat_id[1]:
+uint64 val = {0x00000000 0x0000000A}
+efp_encrypt_stat_id[2]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[3]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[4]:
+uint64 val = {0x00000000 0x00000000}
+efp_encrypt_stat_id[5]:
+uint64 val = {0x00000000 0x00000000}
+ifp_decrypt_stat_id[0]:
+uint64 val = {0x00000000 0x0000000D}
+ifp_decrypt_stat_id[1]:
+uint64 val = {0x00000000 0x00000000}
+ifp_control_flow_encrypt_stat_id:
+uint64 val = {0x00000000 0x00000005}
+ifp_control_flow_decrypt_stat_id:
+uint64 val = {0x00000000 0x00000000}
+efp_decrypt_stat_id:
+uint64 val = {0x00000000 0x0000000D}
+
+test_verify() [PASS]
+--------------------------------
+port 65 Unicast TX Stats
+--------------------------------
+queue gport=0x24104000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104004, cos=4, uint64 outpkt = {0x00000000 0x00000001}
+queue gport=0x24104005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24104007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 66 Unicast TX Stats
+--------------------------------
+queue gport=0x24108000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24108007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 2 Unicast TX Stats
+--------------------------------
+queue gport=0x24008000, cos=0, uint64 outpkt = {0x00000000 0x00000009}
+queue gport=0x24008001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008004, cos=4, uint64 outpkt = {0x00000000 0x00000006}
+queue gport=0x24008005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24008007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 65 Multicast TX Stats
+--------------------------------
+queue gport=0x30104000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104003, cos=3, uint64 outpkt = {0x00000000 0x00000005}
+queue gport=0x30104004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30104007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 66 Multicast TX Stats
+--------------------------------
+queue gport=0x30108000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30108007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 2 Multicast TX Stats
+--------------------------------
+queue gport=0x30008000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30008007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+===========================================================================
+--------------------------------
+port 67 Unicast TX Stats
+--------------------------------
+queue gport=0x2410c000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c004, cos=4, uint64 outpkt = {0x00000000 0x0000000D}
+queue gport=0x2410c005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x2410c007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 68 Unicast TX Stats
+--------------------------------
+queue gport=0x24110000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24110007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+port 1 Unicast TX Stats
+--------------------------------
+queue gport=0x24004000, cos=0, uint64 outpkt = {0x00000000 0x00000006}
+queue gport=0x24004001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004004, cos=4, uint64 outpkt = {0x00000000 0x00000004}
+queue gport=0x24004005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x24004007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 67 Multicast TX Stats
+--------------------------------
+queue gport=0x3010c000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x3010c007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 68 Multicast TX Stats
+--------------------------------
+queue gport=0x30110000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110003, cos=3, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30110007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+--------------------------------
+Port 1 Multicast TX Stats
+--------------------------------
+queue gport=0x30004000, cos=0, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004001, cos=1, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004002, cos=2, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004003, cos=3, uint64 outpkt = {0x00000000 0x00000001}
+queue gport=0x30004004, cos=4, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004005, cos=5, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004006, cos=6, uint64 outpkt = {0x00000000 0x00000000}
+queue gport=0x30004007, cos=7, uint64 outpkt = {0x00000000 0x00000000}
+bcm_error_t $$ = BCM_E_NONE (0)
+execute(): End
+BCM.0>

@@ -1,0 +1,74 @@
+# $Id: Make.tools,v 1.17 Broadcom SDK $
+# This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+# 
+# Copyright 2007-2022 Broadcom Inc. All rights reserved.
+
+# Customize the location of your local tools below.
+# Several standard flavors are auto-selected based on uname -s
+# output.  If the SYSNAME environment variable is set, that overrides
+# calling uname.
+# HOSTTYPE is still set because it is used in various Makefiles in the tree
+
+SYSOK	= 0
+ifneq "$(SYSNAME)" ""
+SYSOK	= 1		# already set from environment
+endif
+
+# unix or unix-type type hosts
+ifeq "$(SYSOK)" "0"
+SYSNAME	:= $(shell uname -s)
+ifeq "$(SYSNAME)" "Linux"
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /bin/sed
+COMPRESS = /usr/bin/compress
+GZIP = /usr/bin/gzip
+LZMA = /projects/ntsw-tools/tools/bin/7za
+TEST	= /usr/bin/test
+PERL	= $(shell which perl)
+LN	= /bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= i386-linux
+endif
+ifeq "$(SYSNAME)" "NetBSD"
+SYSOK	= 1
+HCC ?= /usr/bin/gcc
+SED	= /usr/bin/sed
+COMPRESS = /usr/bin/compress
+GZIP = /usr/bin/gzip
+LZMA = LZMA_NOT_DEFINED
+PERL	= /usr/pkg/bin/perl
+LN	= /bin/ln
+TOUCH   = /bin/touch
+HOSTTYPE= i386-linux
+endif
+
+
+MKTOOL	=	$(PERL) ${SDK}/tools/mktool.pl
+BCM2C	=	$(PERL) ${SDK}/tools/bcm2c.pl
+MKVERS	=	$(PERL) ${SDK}/tools/version.pl
+RM	=	/bin/rm -rf
+CP	=	/bin/cp
+MKDIR	=	/bin/mkdir -p
+ECHO	=	/bin/echo
+PRINTF	=	/bin/printf
+endif
+
+#
+# You may override any of the previous decisions and assignments
+# determined above by providing your own makefile to be 
+# included here. Just set MAKE_TOOLS_LOCAL to the path to your makefile. 
+#
+# Don't forget to set SYSOK=1 in your local makefile if you are 
+# providing a brand new
+# environment. 
+#
+
+ifdef MAKE_TOOLS_LOCAL
+include        ${MAKE_TOOLS_LOCAL}
+endif
+
+
+ifeq "$(SYSOK)" "0"
+$(error Cannot figure out system type)
+endif

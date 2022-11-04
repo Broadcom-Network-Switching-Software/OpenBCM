@@ -1,0 +1,160 @@
+BCM.0> aa                     
+int ing_port1 = 1 (0x1)       
+int ing_port2 = 2 (0x2)       
+int egr_port = 3 (0x3)        
+
+
+fp show
+
+FP:     unit 0:
+PIPELINE STAGE FLOWTRACKER
+FP:           :tcam_sz=2044(0x7fc), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE EXACTMATCH                                          
+FP:           :tcam_sz=16384(0x4000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS                                               
+FP:           :tcam_sz=9216(0x2400), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS                                                
+FP:           :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=0,  
+PIPELINE STAGE LOOKUP                                                
+FP:           :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,  
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={DstMac, InPort, Stage, StageIngress},                                                                                                                      
+         aset={CopyToCpu, PolicerGroup, StatGroup},                                                                                                                       
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8191,
+                       counters_total=14336, counters_free=13309, meters_total=6144, meters_free=6142}  
+EID 0x00000001: gid=0x1,                                                                                
+         slice=2, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ DstMac 
+    Part:0 Offset0:  0 Width0:  16 
+    Part:0 Offset1: 20 Width1:  16 
+    Part:0 Offset2: 48 Width2:  16 
+    DATA=0x00000000 000000dd       
+    MASK=0x0000ffff ffffffff       
+ InPort                            
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         policer={pid=0x1, level=0, peak_kbits_sec=0x190, peak_kbits_burst=0, commit_kbits_sec=0xa0, commit_kbits_burst=0, PacketBased=0, mode=0x3, entries=2, Clean}
+         statistics={stat id 1  slice = 10 idx=4 entries=3}{GreenPackets}{YellowPackets}{RedPackets}{GreenBytes}{YellowBytes}{RedBytes}{NotGreenPackets}{NotYellowPackets}{NotRedPackets}{NotGreenBytes}{NotYellowBytes}{NotRedBytes}{Packets}{Bytes}                                                                                                                                                                                                               
+         Extended statistics=NULL                                                                                                                                                                                                 
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}                                                     
+         qset={InPort, Stage},                                                                                                                                                                                                    
+         aset={CopyToCpu, PolicerGroup, StatGroup},                                                                                                                                                                               
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8191,
+                       counters_total=14336, counters_free=13311, meters_total=6144, meters_free=5376}  
+EID 0x0001868d: gid=0x270e,                                                                             
+         slice=0, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL                                                         
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x00000000000000000000000000000000000000000000000000000000ffffffff}
+         qset={InPort, Stage},                                                                                                                                               
+         aset={CopyToCpu, PolicerGroup, StatGroup},                                                                                                                          
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=512(0x200), Entry free=511(0x1ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=8192, entries_free=8191,
+                       counters_total=14336, counters_free=13311, meters_total=6144, meters_free=5376}  
+EID 0x00018697: gid=0x270f,                                                                             
+         slice=1, slice_idx=0, part =0, prio=0, flags=0x10602, Installed, Enabled, color_indep=1        
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000003                
+    MASK=0x000000ff                
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=                                                                         
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}             
+         Extended statistics=NULL                                                         
+############                                                                              
+Sending 1 packets so that GREEN only hits                                                 
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2                       
+Sleeping for 2 seconds        
+The value is 0x01 green packets
+The value is 0x048 green bytes 
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes  
+The value is 0x00 red packets   
+The value is 0x00 red bytes     
+int $$ = 0 (0x0)                
+############                    
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x01 green packets
+The value is 0x048 green bytes
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes
+The value is 0x00 red packets
+The value is 0x00 red bytes
+
+
+
+############
+Sending 500 packets so that GREEN+YELLOW+RED hits
+
+
+tx 500 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x0c green packets
+The value is 0x0360 green bytes
+The value is 0x015 yellow packets
+The value is 0x05e8 yellow bytes
+The value is 0x01d4 red packets
+The value is 0x083a0 red bytes
+
+
+
+############
+Sending 100000 packets so that more of RED hits
+
+
+tx 100000 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x080d green packets
+The value is 0x0243a8 green bytes
+The value is 0x0100a yellow packets
+The value is 0x0482d0 yellow bytes
+The value is 0x01707e red packets
+The value is 0x067a370 red bytes
+
+
+For more accurate and controlled packet tx from CPU, you have to modify the SDK code.
+Code with which to modify is placed at the bottom of this CINT.
+Steps:
+         1. Modify the SDK code and compile and then load the new bcm.user.
+         2. Then execute this CINT which will run automated coarse tests.
+         3. Then you can run the hacked memwatch command as described in the CINT code snippet.
+bcm_error_t $$ = BCM_E_NONE (0)

@@ -1,0 +1,217 @@
+BCM.0> 
+BCM.0> reset
+rack# ./bcm.user
+sal_config_refresh: unknown entry "pp_clock_frequency" on configFb6_1.bcm line 13
+sal_config_refresh: unknown entry "management_port_mode" on configFb6_1.bcm line 55
+Broadcom Command Monitor: Copyright (c) 1998-2020 Broadcom
+Release: sdk-6.5.20 built 20200619 (Fri Jun 19 05:30:41 2020)
+From sr936857@xl-sj1-31:/projects/ntsw-sw-ae/home/sr936857/git-code/sdk6
+Platform: X86
+OS: Unix (Posix)
+Found 0 devices.
+DMA pool size: 33554432
+BDE dev 0 (PCI), Dev 0xb470, Rev 0x01, Chip BCM56470_A0, Driver BCM56470_A0
+SOC unit 0 attached to PCI device BCM56470_A0
+WARNING: bcm esw command CoupledMemWrite not alphabetized
+rc: unit 0 device BCM56470_A0
+Loading M0 Firmware located at BP3-Broadcom_CSG_HW-License-48.BCM56470AA0_A0.21436587badcfe00.bin
+HLA: Error: Unable to open file: BP3-Broadcom_CSG_HW-License-48.BCM56470AA0_A0.21436587badcfe00.bin
+Loading M0 Firmware located at ../../../../rc/cmicfw/linkscan_led_fw.bin
+Firmware download successed (0x32042f38).
+Loading M0 Firmware located at ../../../../rc/cmicfw/custom_led.bin
+Firmware download successed (0x4bc6bdc6).
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.10
+
+	CMH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+	CCH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+	CEH: LOADED
+	Ver: 03.00.10
+	SDK Ver: 06.05.20
+
+rc: MMU initialized
+0:_bcm_l3_defip_init: ALPM mode support is not compiled. Please, recompile the SDK with ALPM_ENABLE proprocessor variable defined
+rc: BCM driver initialized
+rc: L2 Table shadowing enabled
+rc: Port modes initialized
+BCM.0> cd cint
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> cint ifp_flex_stat_policer.c
+int ing_port1 = 1 (0x1)
+int ing_port2 = 2 (0x2)
+int egr_port = 5 (0x5)
+^M
+
+B_CM.0> fp show
+FP:	unit 0:
+PIPELINE STAGE AGGREGATE_EGRESS_FLOWTRACKER
+FP:	      :tcam_sz=1023(0x3ff), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE AGGREGATE_MMU_FLOWTRACKER
+FP:	      :tcam_sz=1023(0x3ff), tcam_slices=1, tcam_ext_numb=0,
+PIPELINE STAGE FLOWTRACKER
+FP:	      :tcam_sz=3064(0xbf8), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE EXACTMATCH
+FP:	      :tcam_sz=32768(0x8000), tcam_slices=2, tcam_ext_numb=0,
+PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=36864(0x9000), tcam_slices=18, tcam_ext_numb=0,
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=12288(0x3000), tcam_slices=4, tcam_ext_numb=0,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=2048(0x800), tcam_slices=4, tcam_ext_numb=0,
+GID          1: gid=0x1, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000000000000000001fffffffffffe22227}
+         qset={DstMac, InPort, Stage, StageIngress},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 0
+         slice_primary =  {slice_number=2, Entry count=2048(0x800), Entry free=2047(0x7ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=32768, entries_free=32767,
+                       counters_total=57344, counters_free=53245, meters_total=6144, meters_free=6142}
+EID 0x00000001: gid=0x1,
+ slice=2, slice_idx=0, part=0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ DstMac 
+    Part:0 Offset0:  0 Width0:  16 
+    Part:0 Offset1: 20 Width1:  16 
+    Part:0 Offset2: 48 Width2:  16 
+    DATA=0x00000000 000000dd 
+    MASK=0x0000ffff ffffffff 
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         policer={pid=0x1, level=0, peak_kbits_sec=0x190, peak_kbits_burst=0, commit_kbits_sec=0xa0, commit_kbits_burst=0, PacketBased=0, mode=0x3, entries=2, Clean}
+         statistics={stat id 1  slice = 10 idx=4 entries=3}{GreenPackets}{YellowPackets}{RedPackets}{GreenBytes}{YellowBytes}{RedBytes}{NotGreenPackets}{NotYellowPackets}{NotRedPackets}{NotGreenBytes}{NotYellowBytes}{NotRedBytes}{Packets}{Bytes}
+         Extended statistics=NULL
+GID       9998: gid=0x270e, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000000000000000001fffffffffffe22227}
+         qset={InPort, Stage},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 9998
+         slice_primary =  {slice_number=0, Entry count=2048(0x800), Entry free=2047(0x7ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=32768, entries_free=32767,
+                       counters_total=57344, counters_free=53247, meters_total=6144, meters_free=5376}
+EID 0x0001868d: gid=0x270e,
+ slice=0, slice_idx=0, part=0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000001 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=222(0xde), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9998  slice = 8 idx=3 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL
+GID       9999: gid=0x270f, instance=0 mode=Single, stage=Ingress lookup=Enabled, ActionResId={-1}, pbmp={0x000000000000000000000000000000000000000000000000000000000000001fffffffffffe22227}
+         qset={InPort, Stage},
+         aset={CopyToCpu, PolicerGroup, StatGroup},
+
+         group_priority= 9999
+         slice_primary =  {slice_number=1, Entry count=2048(0x800), Entry free=2047(0x7ff)},
+         group_status={prio_min=-2147483647, prio_max=2147483647, entries_total=32768, entries_free=32767,
+                       counters_total=57344, counters_free=53247, meters_total=6144, meters_free=5376}
+EID 0x00018697: gid=0x270f,
+ slice=1, slice_idx=0, part=0, prio=0, flags=0x810602, Installed, Enabled, color_indep=1
+
+ InPort 
+    Part:0 Offset0: 16 Width0:   4 
+    Part:0 Offset1: 36 Width1:   4 
+    DATA=0x00000005 
+    MASK=0x000000ff 
+         action={act=CopyToCpu, param0=1(0x1), param1=223(0xdf), param2=0(0), param3=0(0)}
+         policer=
+         statistics={stat id 9999  slice = 9 idx=3 entries=1}{Packets}{Bytes}
+         Extended statistics=NULL
+
+
+############
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x01 green packets
+The value is 0x048 green bytes
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes
+The value is 0x00 red packets
+The value is 0x00 red bytes
+int $$ = 0 (0x0)
+############
+Sending 1 packets so that GREEN only hits
+
+
+tx 1 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x01 green packets
+The value is 0x048 green bytes
+The value is 0x00 yellow packets
+The value is 0x00 yellow bytes
+The value is 0x00 red packets
+The value is 0x00 red bytes
+
+
+
+############
+Sending 500 packets so that GREEN+YELLOW+RED hits
+
+
+tx 500 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x06 green packets
+The value is 0x01b0 green bytes
+The value is 0x08 yellow packets
+The value is 0x0240 yellow bytes
+The value is 0x01e7 red packets
+The value is 0x088f8 red bytes
+
+
+
+############
+Sending 100000 packets so that more of RED hits
+
+
+tx 100000 pbm=1 data=0000000000DD0000000000CC8100006408004500002E0000000040063E8C141414160A0A0A0B227D00500000000000000000500000004ACA0000000102030405B0F9EB4F
+
+Packet from data=<>, length=72
+sleep 2
+Sleeping for 2 seconds
+The value is 0x02a8 green packets
+The value is 0x0bf40 green bytes
+The value is 0x054c yellow packets
+The value is 0x017d60 yellow bytes
+The value is 0x0180a1 red packets
+The value is 0x06c2d48 red bytes
+
+
+For more accurate and controlled packet tx from CPU, you have to modify the SDK code.
+Code with which to modify is placed at the bottom of this CINT.
+Steps:
+	 1. Modify the SDK code and compile and then load the new bcm.user.
+	 2. Then execute this CINT which will run automated coarse tests.
+	 3. Then you can run the hacked memwatch command as described in the CINT code snippet.
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 
+BCM.0> 

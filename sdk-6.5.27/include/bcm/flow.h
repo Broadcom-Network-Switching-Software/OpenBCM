@@ -1,0 +1,2416 @@
+/*
+ * 
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ *
+ */
+
+#ifndef __BCM_FLOW_H__
+#define __BCM_FLOW_H__
+
+#include <bcm/types.h>
+#include <bcm/l3.h>
+#include <bcm/tunnel.h>
+#include <bcm/vlan.h>
+#include <bcm/qos.h>
+#include <bcm/flexctr.h>
+
+/* flow handle */
+typedef uint32 bcm_flow_handle_t;
+
+/* flow option ID */
+typedef uint32 bcm_flow_option_id_t;
+
+/* flow field ID */
+typedef uint32 bcm_flow_field_id_t;
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_logical_field_t structure. */
+extern void bcm_flow_logical_field_t_init(
+    bcm_flow_logical_field_t *logical_field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow match options */
+#define BCM_FLOW_MATCH_OPTION_REPLACE   (1 << 1)   /* replace object attributes
+                                                      for a match criteria. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow match flags for hardware control parameters */
+#define BCM_FLOW_MATCH_FLAG_DROP            (1 << 0)   /* drop packet. */
+#define BCM_FLOW_MATCH_FLAG_COPY_TO_CPU     (1 << 1)   /* copy to cpu. */
+#define BCM_FLOW_MATCH_FLAG_CROSS_CONNECT   (1 << 2)   /* Indicate
+                                                          point-to-point
+                                                          service. */
+#define BCM_FLOW_MATCH_FLAG_USE_OUTER_TTL   (1 << 3)   /* Use outer header's
+                                                          TTL. */
+#define BCM_FLOW_MATCH_FLAG_USE_OUTER_PHB   (1 << 4)   /*  Use outer header to
+                                                          derive queuing and QoS
+                                                          remarking. */
+#define BCM_FLOW_MATCH_FLAG_TCAM            (1 << 5)   /* Flow match by TCAM. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow match valid elements. */
+#define BCM_FLOW_MATCH_VNID_VALID           (1 << 0)   /* VN_ID element is valid
+                                                          for this match. */
+#define BCM_FLOW_MATCH_VLAN_VALID           (1 << 1)   /* vlan element valid. */
+#define BCM_FLOW_MATCH_INNER_VLAN_VALID     (1 << 2)   /* inner vlan element
+                                                          valid. */
+#define BCM_FLOW_MATCH_PORT_VALID           (1 << 3)   /* port element valid. */
+#define BCM_FLOW_MATCH_SIP_VALID            (1 << 4)   /* source IPv4 address
+                                                          element valid. */
+#define BCM_FLOW_MATCH_SIP_V6_VALID         (1 << 5)   /* source IPv6 address
+                                                          element valid. */
+#define BCM_FLOW_MATCH_DIP_VALID            (1 << 6)   /* destination IPv4
+                                                          address element valid. */
+#define BCM_FLOW_MATCH_DIP_V6_VALID         (1 << 7)   /* destination IPv6
+                                                          address element valid. */
+#define BCM_FLOW_MATCH_VPN_VALID            (1 << 8)   /* VPN element valid. */
+#define BCM_FLOW_MATCH_FLOW_PORT_VALID      (1 << 9)   /* flow port element
+                                                          valid. */
+#define BCM_FLOW_MATCH_IIF_VALID            (1 << 10)  /* iif element valid. */
+#define BCM_FLOW_MATCH_FLEX_KEY_VALID       (1 << 11)  /* logical field elements
+                                                          for key valid. */
+#define BCM_FLOW_MATCH_FLEX_DATA_VALID      (1 << 12)  /* logical field elements
+                                                          for data valid. */
+#define BCM_FLOW_MATCH_UDP_SRC_PORT_VALID   (1 << 13)  /* udp source port field
+                                                          valid. */
+#define BCM_FLOW_MATCH_UDP_DST_PORT_VALID   (1 << 14)  /* udp destination port
+                                                          field valid. */
+#define BCM_FLOW_MATCH_PROTOCOL_VALID       (1 << 15)  /* protocol field valid. */
+#define BCM_FLOW_MATCH_MPLS_LABEL_VALID     (1 << 16)  /*  mpls label field
+                                                          valid. */
+#define BCM_FLOW_MATCH_FLAGS_VALID          (1 << 17)  /*  flags field valid. */
+#define BCM_FLOW_MATCH_DEFAULT_VLAN_VALID   (1 << 18)  /* Default VLAN element
+                                                          valid. */
+#define BCM_FLOW_MATCH_DEFAULT_VPN_VALID    (1 << 19)  /* Default VPN element
+                                                          valid. */
+#define BCM_FLOW_MATCH_CLASS_ID_VALID       (1 << 20)  /*  class_id field valid. */
+#define BCM_FLOW_MATCH_NEXT_HDR_VALID       (1 << 21)  /*  next_hdr field valid. */
+#define BCM_FLOW_MATCH_TNL_ACTION_VALID     (1 << 22)  /*  tnl_action field
+                                                          valid. */
+#define BCM_FLOW_MATCH_ETAG_VLAN_VALID      (1 << 23)  /* etag vlan element
+                                                          valid. */
+#define BCM_FLOW_MATCH_PREFIX_LEN_VALID     (1 << 24)  /* prefix_len field
+                                                          valid. */
+#define BCM_FLOW_MATCH_SID_LEN_VALID        (1 << 25)  /* sid_len field valid. */
+#define BCM_FLOW_MATCH_SI_OFFSET_VALID      (1 << 26)  /* si_offset field valid. */
+#define BCM_FLOW_MATCH_EGRESS_IF_VALID      (1 << 27)  /* egress_if field valid. */
+#define BCM_FLOW_MATCH_TUNNEL_ACTION_PBMP_VALID (1 << 28)  /* tunnel_action_pbmp
+                                                          field valid. */
+#define BCM_FLOW_MATCH_OTAG_VALID           (1 << 29)  /* OTAG field valid. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* flow match criteria. */
+typedef enum bcm_flow_match_criteria_e {
+    BCM_FLOW_MATCH_CRITERIA_INVALID = 0, /* Illegal. */
+    BCM_FLOW_MATCH_CRITERIA_PORT = 1,   /* {Module, Port} or Trunk. */
+    BCM_FLOW_MATCH_CRITERIA_PORT_VLAN = 2, /* Mod/port/trunk + outer VLAN. */
+    BCM_FLOW_MATCH_CRITERIA_PORT_INNER_VLAN = 3, /* Mod/port/trunk + inner VLAN. */
+    BCM_FLOW_MATCH_CRITERIA_PORT_VLAN_STACKED = 4, /* Mod/port/trunk + outer/inner VLAN. */
+    BCM_FLOW_MATCH_CRITERIA_VLAN_PRI = 5, /* Mod/port/trunk + VLAN-PRI + VLAN-CFI. */
+    BCM_FLOW_MATCH_CRITERIA_VN_ID = 6,  /* Match VN_ID */
+    BCM_FLOW_MATCH_CRITERIA_SIP = 7,    /* Match source IP address */
+    BCM_FLOW_MATCH_CRITERIA_SIP_VNID = 8, /* Match source IP address and vn_id */
+    BCM_FLOW_MATCH_CRITERIA_FLEX = 9,   /* Match key specified in logical fields */
+    BCM_FLOW_MATCH_CRITERIA_MPLS_LABEL = 10, /* Match MPLS label */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_VLAN = 11, /* Match port group + outer VID */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_INNER_VLAN = 12, /* Match port group + inner VID */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_VLAN_STACKED = 13, /* Match port group + outer VID + inner
+                                           VID */
+    BCM_FLOW_MATCH_CRITERIA_SVP_VNID = 14, /* Match Source VP and VN_ID */
+    BCM_FLOW_MATCH_CRITERIA_SIP_DIP = 15, /* Match source and destination IP
+                                           addresses */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_DEFAULT_VLAN = 16, /* Match port group + default VLAN */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_DEFAULT_VPN = 17, /* Match port group + default VPN */
+    BCM_FLOW_MATCH_CRITERIA_DIP = 18,   /* Match destination IP address */
+    BCM_FLOW_MATCH_CRITERIA_DIP_NHDR = 19, /* Match destination IP address and next
+                                           header */
+    BCM_FLOW_MATCH_CRITERIA_DIP_NHDR_OVID = 20, /* Match destination IP address, next
+                                           header, OVID */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_ETAG_VLAN = 21, /* Match port group + ETAG + outer VID */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_ETAG_INNER_VLAN = 22, /* Match port group + ETAG + inner VID */
+    BCM_FLOW_MATCH_CRITERIA_PORT_GROUP_ETAG_VLAN_STACKED = 23, /* Match port group + ETAG + outer VID +
+                                           inner VID */
+    BCM_FLOW_MATCH_CRITERIA_COUNT = 24  /* Must be last. */
+} bcm_flow_match_criteria_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* SRV6 tunnel action type enum */
+typedef enum bcm_flow_tunnel_srv6_action_e {
+    bcmFlowTunnelSrv6ActionTransitStdSid = 0, /* Perform transit action on standard
+                                           SID. */
+    bcmFlowTunnelSrv6ActionTransitGsid = 1, /* Perform transit action on generalized
+                                           SID. */
+    bcmFlowTunnelSrv6ActionTransitGsidPrefix2 = 2, /* Perform transit action on generalized
+                                           SID with PREFIX2 configuration. */
+    bcmFlowTunnelSrv6ActionTransitUsid = 3, /* Perform transit action on micro SID. */
+    bcmFlowTunnelSrv6ActionTransitUsidPrefix2 = 4, /* Perform transit action on micro SID
+                                           with PREFIX2 configuration. */
+    bcmFlowTunnelSrv6ActionPsp = 5,     /* Perform PSP action. */
+    bcmFlowTunnelSrv6ActionPspGsid = 6, /* Perform PSP action for gsid. */
+    bcmFlowTunnelSrv6ActionPspUsid = 7, /* Perform PSP action for usid. */
+    bcmFlowTunnelSrv6ActionUsd = 8,     /* Perform USD action. */
+    bcmFlowTunnelSrv6ActionUsdGsid = 9, /* Perform USD action for gsid. */
+    bcmFlowTunnelSrv6ActionUsdUsid = 10, /* Perform USD action for usid. */
+    bcmFlowTunnelSrv6ActionUsp = 11,    /* Perform USP action. */
+    bcmFlowTunnelSrv6ActionUspGsid = 12, /* Perform USP action for GSID. */
+    bcmFlowTunnelSrv6ActionUspUsid = 13, /* Perform USP action for USID. */
+    bcmFlowTunnelSrv6ActionCount = 14   /* Unused always last. */
+} bcm_flow_tunnel_srv6_action_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Same interface mode enum */
+typedef enum bcm_flow_same_interface_mode_e {
+    bcmFlowSameInterfaceModeDeviceScope = 0, /* Device Scope mode. */
+    bcmFlowSameInterfaceModeSystemScope = 1, /* System Scope mode. */
+    bcmFlowSameInterfaceModeDisable = 2, /* Disable Same Interface. */
+    bcmFlowSameInterfaceModeCount = 3   /* Must be last. */
+} bcm_flow_same_interface_mode_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow match config structure */
+typedef struct bcm_flow_match_config_s {
+    uint32 vnid;                        /* VN_ID. */
+    bcm_vlan_t vlan;                    /* Outer VLAN ID to match. */
+    bcm_vlan_t inner_vlan;              /* Inner VLAN ID to match. */
+    bcm_gport_t port;                   /* Match port / trunk */
+    bcm_ip_t sip;                       /* source IPv4 address */
+    bcm_ip_t sip_mask;                  /* source IPv4 address mask */
+    bcm_ip6_t sip6;                     /* source IPv6 address */
+    bcm_ip6_t sip6_mask;                /* source IPv6 address mask */
+    bcm_ip_t dip;                       /* destination IPv4 address */
+    bcm_ip_t dip_mask;                  /* destination IPv4 address mask */
+    bcm_ip6_t dip6;                     /* destination IPv6 address */
+    bcm_ip6_t dip6_mask;                /* destination IPv6 address mask */
+    uint16 udp_dst_port;                /* udp destination port. */
+    uint16 udp_src_port;                /* udp source port. */
+    uint16 protocol;                    /* IP protocol type. */
+    bcm_mpls_label_t mpls_label;        /* MPLS label. */
+    bcm_gport_t flow_port;              /* flow port id representing a SVP */
+    bcm_vpn_t vpn;                      /* VPN representing a vfi or vrf */
+    bcm_if_t intf_id;                   /* l3 interface id */
+    uint32 options;                     /* BCM_FLOW_MATCH_OPTION_xxx. */
+    bcm_flow_match_criteria_t criteria; /* flow match criteria. */
+    uint32 valid_elements;              /* bitmap of valid fields for the match
+                                           action */
+    bcm_flow_handle_t flow_handle;      /* flow handle derived from flow name */
+    uint32 flow_option;                 /* flow option derived from flow option
+                                           name */
+    uint32 flags;                       /* BCM_FLOW_MATCH_FLAG_xxx */
+    bcm_vlan_t default_vlan;            /* Default VLAN ID to match. */
+    bcm_vpn_t default_vpn;              /* Default VPN ID to match. */
+    uint32 class_id;                    /* class id field */
+    uint16 next_hdr;                    /* next header field */
+    bcm_flow_tunnel_srv6_action_t tunnel_action; /* SRv6 tunnel action on match */
+    bcm_vlan_t etag_vlan;               /* ETAG VLAN ID to match. */
+    uint16 prefix_len;                  /* Sid prefix length in number of bits. */
+    uint16 sid_len;                     /* Sid length in number of bits. */
+    uint16 si_offset;                   /* SRv6 Gsid SI index location, offset
+                                           from DIP's LSB. */
+    bcm_if_t egress_if;                 /* Assigned L3 egress object. */
+    bcm_pbmp_t tunnel_action_pbmp;      /* Allowed port bitmap for tunnel
+                                           action. */
+    bcm_flexctr_object_t flexctr_object; /* Flex counter object associated with
+                                           flow match configuration. */
+    uint32 flexctr_object_id;           /* Flex counter object ID pertained to
+                                           the above flex counter object. */
+    bcm_vlan_action_set_t action;       /* Action for outer and inner tag. */
+} bcm_flow_match_config_t;
+#endif
+
+/* bcm_flow_match_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_match_traverse_cb)(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+/* initialize the bcm_flow_match_config_t structure. */
+extern void bcm_flow_match_config_t_init(
+    bcm_flow_match_config_t *flow_match);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Add a match entry to assign switch objects for the matched packets */
+extern int bcm_flow_match_add(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete a match entry for the given matching key */
+extern int bcm_flow_match_delete(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get a match entry for the given matching key */
+extern int bcm_flow_match_get(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Traverse match entries */
+extern int bcm_flow_match_traverse(
+    int unit, 
+    bcm_flow_match_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel initiator valid elements. */
+#define BCM_FLOW_TUNNEL_INIT_TTL_VALID      (1 << 0)   
+#define BCM_FLOW_TUNNEL_INIT_DMAC_VALID     (1 << 1)   
+#define BCM_FLOW_TUNNEL_INIT_DIP_VALID      (1 << 2)   
+#define BCM_FLOW_TUNNEL_INIT_SIP_VALID      (1 << 3)   
+#define BCM_FLOW_TUNNEL_INIT_SIP6_VALID     (1 << 4)   
+#define BCM_FLOW_TUNNEL_INIT_DIP6_VALID     (1 << 5)   
+#define BCM_FLOW_TUNNEL_INIT_FLOW_LABEL_VALID (1 << 6)   
+#define BCM_FLOW_TUNNEL_INIT_DSCP_VALID     (1 << 7)   
+#define BCM_FLOW_TUNNEL_INIT_UDP_SPORT_VALID (1 << 8)   
+#define BCM_FLOW_TUNNEL_INIT_UDP_DPORT_VALID (1 << 9)   
+#define BCM_FLOW_TUNNEL_INIT_SMAC_VALID     (1 << 10)  
+#define BCM_FLOW_TUNNEL_INIT_VLAN_VALID     (1 << 11)  
+#define BCM_FLOW_TUNNEL_INIT_TPID_VALID     (1 << 12)  
+#define BCM_FLOW_TUNNEL_INIT_PKT_PRI_VALID  (1 << 13)  
+#define BCM_FLOW_TUNNEL_INIT_PKT_CFI_VALID  (1 << 14)  
+#define BCM_FLOW_TUNNEL_INIT_IP4_ID_VALID   (1 << 15)  
+#define BCM_FLOW_TUNNEL_INIT_FLEX_VALID     (1 << 16)  
+#define BCM_FLOW_TUNNEL_INIT_DSCP_ECN_VALID (1 << 17)  
+#define BCM_FLOW_TUNNEL_INIT_PRI_SEL_VALID  (1 << 18)  
+#define BCM_FLOW_TUNNEL_INIT_ECN_MAP_VALID  (1 << 19)  
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunneling initiator structure. */
+typedef struct bcm_flow_tunnel_initiator_s {
+    uint32 flags;                       /* Configuration flags. */
+    bcm_tunnel_type_t type;             /* Tunnel type. */
+    int ttl;                            /* Tunnel header TTL. */
+    bcm_mac_t dmac;                     /* Destination MAC address. */
+    bcm_ip_t dip;                       /* Tunnel header DIP (IPv4). */
+    bcm_ip_t sip;                       /* Tunnel header SIP (IPv4). */
+    bcm_ip6_t sip6;                     /* Tunnel header SIP (IPv6). */
+    bcm_ip6_t dip6;                     /* Tunnel header DIP (IPv6). */
+    uint32 flow_label;                  /* Tunnel header flow label (IPv6). */
+    bcm_tunnel_dscp_select_t dscp_sel;  /* Tunnel header DSCP select. */
+    int dscp;                           /* Tunnel header DSCP value. */
+    int dscp_map;                       /* DSCP-map ID. */
+    bcm_gport_t tunnel_id;              /* Tunnel ID */
+    uint16 udp_dst_port;                /* Destination UDP port */
+    uint16 udp_src_port;                /* Source UDP port */
+    bcm_mac_t smac;                     /* Src MAC */
+    bcm_vlan_t vlan;                    /* Tunnel VLAN */
+    uint16 tpid;                        /* Tunnel TPID */
+    uint8 pkt_pri;                      /* Tunnel priority */
+    uint8 pkt_cfi;                      /* Tunnel CFI */
+    uint16 ip4_id;                      /* IPv4 ID. */
+    bcm_if_t l3_intf_id;                /* l3 Interface ID. */
+    bcm_gport_t flow_port;              /* Flow port ID */
+    uint32 valid_elements;              /* bitmap of valid fields */
+    uint32 flow_handle;                 /* flow handle */
+    uint32 flow_option;                 /* flow option */
+    bcm_tunnel_dscp_ecn_select_t dscp_ecn_sel; /* Tunnel header DSCP and ECN select. */
+    int dscp_ecn_map;                   /* DSCP and ECN map ID. */
+    uint8 ecn;                          /* Tunnel header ECN value */
+    bcm_tunnel_pri_select_t pri_sel;    /* Tunnel header priority and CFI
+                                           select. */
+    int ecn_map;                        /* ECN map ID. */
+} bcm_flow_tunnel_initiator_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_tunnel_initiator_t structure. */
+extern void bcm_flow_tunnel_initiator_t_init(
+    bcm_flow_tunnel_initiator_t *info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Create a flow tunnel initiator object */
+extern int bcm_flow_tunnel_initiator_create(
+    int unit, 
+    bcm_flow_tunnel_initiator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete the flow tunnel initiator object */
+extern int bcm_flow_tunnel_initiator_destroy(
+    int unit, 
+    bcm_gport_t flow_tunnel_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the flow tunnel initiator object */
+extern int bcm_flow_tunnel_initiator_get(
+    int unit, 
+    bcm_flow_tunnel_initiator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_tunnel_initiator_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_tunnel_initiator_traverse_cb)(
+    int unit, 
+    bcm_flow_tunnel_initiator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Traverse tunnel initiator entries */
+extern int bcm_flow_tunnel_initiator_traverse(
+    int unit, 
+    bcm_flow_tunnel_initiator_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel terminator valid elements. */
+#define BCM_FLOW_TUNNEL_TERM_VRF_VALID      (1 << 0)   
+#define BCM_FLOW_TUNNEL_TERM_SIP_VALID      (1 << 1)   
+#define BCM_FLOW_TUNNEL_TERM_DIP_VALID      (1 << 2)   
+#define BCM_FLOW_TUNNEL_TERM_SIP_MASK_VALID (1 << 3)   
+#define BCM_FLOW_TUNNEL_TERM_DIP_MASK_VALID (1 << 4)   
+#define BCM_FLOW_TUNNEL_TERM_SIP6_VALID     (1 << 5)   
+#define BCM_FLOW_TUNNEL_TERM_DIP6_VALID     (1 << 6)   
+#define BCM_FLOW_TUNNEL_TERM_SIP6_MASK_VALID (1 << 7)   
+#define BCM_FLOW_TUNNEL_TERM_DIP6_MASK_VALID (1 << 8)   
+#define BCM_FLOW_TUNNEL_TERM_UDP_SRC_PORT_VALID (1 << 9)   
+#define BCM_FLOW_TUNNEL_TERM_UDP_DST_PORT_VALID (1 << 10)  
+#define BCM_FLOW_TUNNEL_TERM_VLAN_VALID     (1 << 11)  
+#define BCM_FLOW_TUNNEL_TERM_PROTOCOL_VALID (1 << 12)  
+#define BCM_FLOW_TUNNEL_TERM_FLEX_KEY_VALID (1 << 13)  
+#define BCM_FLOW_TUNNEL_TERM_FLEX_DATA_VALID (1 << 14)  
+#define BCM_FLOW_TUNNEL_TERM_VLAN_MASK_VALID (1 << 15)  
+#define BCM_FLOW_TUNNEL_TERM_CLASS_ID_VALID (1 << 16)  
+#define BCM_FLOW_TUNNEL_TERM_PBMP_VALID     (1 << 17)  
+#define BCM_FLOW_TUNNEL_TERM_NEXT_HDR_VALID (1 << 18)  
+#define BCM_FLOW_TUNNEL_TERM_FLOW_PORT_VALID (1 << 19)  
+#define BCM_FLOW_TUNNEL_TERM_INTF_ID_VALID  (1 << 20)  
+#define BCM_FLOW_TUNNEL_TERM_VPN_VALID      (1 << 21)  
+#define BCM_FLOW_TUNNEL_TERM_PREFIX_LEN_VALID (1 << 22)  
+#define BCM_FLOW_TUNNEL_TERM_SID_LEN_VALID  (1 << 23)  
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_VALID   (1 << 24)  
+#define BCM_FLOW_TUNNEL_TERM_DST_FLOW_PORT_VALID (1 << 25)  
+#define BCM_FLOW_TUNNEL_TERM_SI_OFFSET_VALID (1 << 26)  
+#define BCM_FLOW_TUNNEL_TERM_EGRESS_IF_VALID (1 << 27)  
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel terminator multicast tunnel states - issue flags */
+#define BCM_FLOW_MULTICAST_TUNNEL_STATE_BUD_ENABLE (1 << 1)   
+#define BCM_FLOW_MULTICAST_TUNNEL_STATE_BUD_DISABLE (1 << 2)   
+#define BCM_FLOW_MULTICAST_TUNNEL_PIM_BIDIR_FORWARD (1 << 3)   
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel terminator flags2 definition */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_DROP    (1 << 0)   /* Drop the packet. */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_COPY_TO_CPU (1 << 1)   /* Copy to cpu. */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_SVP_ASSIGN_FROM_MATCH (1 << 2)   /* Enable SVP assignment
+                                                          that is derived from
+                                                          flow match. */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_SGT_VALID (1 << 3)   /* Pass opaque object0 as
+                                                          SGT to egress for
+                                                          tunnel initiation. */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_OAM_FLAG (1 << 4)   /* OAM flag set. */
+#define BCM_FLOW_TUNNEL_TERM_FLAGS2_OAM_FLAG_MASK (1 << 5)   /* OAM flag mask set. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunneling terminator structure. */
+typedef struct bcm_flow_tunnel_terminator_s {
+    uint32 flags;                       /* Configuration flags. Use BCM_TUNNEL
+                                           flags */
+    uint32 multicast_flag;              /* VXLAN Multicast trigger flags. */
+    bcm_vrf_t vrf;                      /* Virtual router instance. */
+    bcm_ip_t sip;                       /* SIP for tunnel header match. */
+    bcm_ip_t dip;                       /* DIP for tunnel header match. */
+    bcm_ip_t sip_mask;                  /* Source IP mask. */
+    bcm_ip_t dip_mask;                  /* Destination IP mask. */
+    bcm_ip6_t sip6;                     /* SIP for tunnel header match (IPv6). */
+    bcm_ip6_t dip6;                     /* DIP for tunnel header match (IPv6). */
+    bcm_ip6_t sip6_mask;                /* Source IP mask (IPv6). */
+    bcm_ip6_t dip6_mask;                /* Destination IP mask (IPv6). */
+    uint32 udp_dst_port;                /* UDP dst port for UDP packets. */
+    uint32 udp_src_port;                /* UDP src port for UDP packets */
+    bcm_tunnel_type_t type;             /* Tunnel type */
+    bcm_vlan_t vlan;                    /* VLAN ID for tunnel header match. */
+    uint32 protocol;                    /* Protocol type */
+    uint32 valid_elements;              /* bitmap of valid fields */
+    uint32 flow_handle;                 /* flow handle */
+    uint32 flow_option;                 /* flow option */
+    bcm_vlan_t vlan_mask;               /* The VLAN ID mask. */
+    uint32 class_id;                    /* Class ID as a key in VFP. */
+    bcm_pbmp_t term_pbmp;               /* Allowed port bitmap for tunnel
+                                           termination. */
+    uint16 next_hdr;                    /* Match next header. */
+    bcm_gport_t flow_port;              /* Assign SVP. */
+    bcm_if_t intf_id;                   /* Assign L3_IIF. */
+    bcm_vpn_t vpn;                      /* VPN representing a vfi */
+    uint16 prefix_len;                  /* Sid prefix length in number of bits. */
+    uint16 sid_len;                     /* Sid length in number of bits. */
+    uint32 flags2;                      /* Use BCM_FLOW_TUNNEL_TERM_FLAGS2_xxx. */
+    bcm_gport_t dst_flow_port;          /* Destination flow port id. */
+    uint16 si_offset;                   /* SRv6 Gsid SI index location, offset
+                                           from DIP's LSB. */
+    bcm_if_t egress_if;                 /* Assigned L3 egress object. */
+    bcm_flexctr_object_t flexctr_object; /* Flex counter object associated with
+                                           flow tunnel termination. */
+    uint32 flexctr_object_id;           /* Flex counter object ID pertained to
+                                           the above flex counter object. */
+} bcm_flow_tunnel_terminator_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_tunnel_terminator_t structure. */
+extern void bcm_flow_tunnel_terminator_t_init(
+    bcm_flow_tunnel_terminator_t *info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Create a flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_create(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete a flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_destroy(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_get(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_tunnel_terminator_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_tunnel_terminator_traverse_cb)(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Traverse tunnel terminator entries */
+extern int bcm_flow_tunnel_terminator_traverse(
+    int unit, 
+    bcm_flow_tunnel_terminator_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow port encap valid elements. */
+#define BCM_FLOW_PORT_ENCAP_PORT_VALID      (1 << 0)   /* flow port(DVP) valid */
+#define BCM_FLOW_PORT_ENCAP_CLASS_ID_VALID  (1 << 1)   /* class id valid. */
+#define BCM_FLOW_PORT_ENCAP_MTU_VALID       (1 << 2)   /* mtu valid. */
+#define BCM_FLOW_PORT_ENCAP_FLAGS_VALID     (1 << 3)   /* flags valid. */
+#define BCM_FLOW_PORT_ENCAP_NETWORK_GROUP_VALID (1 << 4)   /* network group valid. */
+#define BCM_FLOW_PORT_ENCAP_DVP_GROUP_VALID (1 << 5)   /* DVP group valid. */
+#define BCM_FLOW_PORT_ENCAP_FLEX_DATA_VALID (1 << 6)   /* logical field valid. */
+#define BCM_FLOW_PORT_ENCAP_PKT_PRI_VALID   (1 << 7)   /* service tag priority
+                                                          valid. */
+#define BCM_FLOW_PORT_ENCAP_PKT_CFI_VALID   (1 << 8)   /* service tag CFI valid. */
+#define BCM_FLOW_PORT_ENCAP_TPID_VALID      (1 << 9)   /* service tag TPID
+                                                          valid. */
+#define BCM_FLOW_PORT_ENCAP_VLAN_VALID      (1 << 10)  /* vlan valid */
+#define BCM_FLOW_PORT_ENCAP_EGRESS_IF_VALID (1 << 11)  /* egress object valid */
+#define BCM_FLOW_PORT_ENCAP_IP4_ID_VALID    (1 << 12)  /* IPv4 ID valid */
+#define BCM_FLOW_PORT_ENCAP_VLAN_PRI_MAP_ID_VALID (1 << 13)  /* vlan_pri_map_id Valid */
+#define BCM_FLOW_PORT_ENCAP_DST_PORT_VALID  (1 << 14)  /* Destination port
+                                                          valid. */
+#define BCM_FLOW_PORT_ENCAP_ES_ID_VALID     (1 << 15)  /* Ethernet segment ID
+                                                          valid. */
+#define BCM_FLOW_PORT_ENCAP_OL_EGRESS_IF_VALID (1 << 16)  /* Overlay egress object
+                                                          valid. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow port encap set options */
+#define BCM_FLOW_PORT_ENCAP_OPTION_REPLACE  (1 << 1)   /* replace encap
+                                                          attributes. */
+#define BCM_FLOW_PORT_ENCAP_OPTION_CLEAR    (1 << 2)   /* clear encap
+                                                          attributes. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow port encap flags for hardware control parameters */
+#define BCM_FLOW_PORT_ENCAP_FLAG_SERVICE_TAGGED (1 << 0)   /* service tag mode for
+                                                          the given encap
+                                                          criteria. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_SERVICE_VLAN_ADD (1 << 1)   /* Add SD-TAG vlan. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_SERVICE_VLAN_TPID_REPLACE (1 << 2)   /* Replace Vlan and TPID. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_REPLACE (1 << 3)   /* Replace vlan. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_DELETE (1 << 4)   /* Delete vlan. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_PRI_TPID_REPLACE (1 << 5)   /* Replace vlan, priority
+                                                          and tpid. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_PRI_REPLACE (1 << 6)   /* Replace vlan and
+                                                          priority. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_PRI_REPLACE (1 << 7)   /* Replace priority. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_TPID_REPLACE (1 << 8)   /* Replace TPID. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_LOCAL      (1 << 9)   /* Encapsulate the FLOW
+                                                          tunnel on local device */
+#define BCM_FLOW_PORT_ENCAP_FLAG_DROP       (1 << 10)  /* Multicast drop control */
+#define BCM_FLOW_PORT_ENCAP_FLAG_MACSEC_ENCRYPT (1 << 11)  /* Enable macsec
+                                                          encryption for this
+                                                          flow. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_IP4_ID_SET_FIXED (1 << 12)  /* Use fixed starting ID
+                                                          for IPv4 tunnel */
+#define BCM_FLOW_PORT_ENCAP_FLAG_IP4_ID_SET_RANDOM (1 << 13)  /* Use random starting ID
+                                                          for IPv4 tunnel */
+#define BCM_FLOW_PORT_ENCAP_FLAG_EGRESS_CASCADED (1 << 14)  /* Indicate the egress
+                                                          object is linked to
+                                                          the flow port. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_OPAQUE_TAGGED (1 << 15)  /* Opaque tag mode. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_OPAQUE_TAG_REPLACE (1 << 16)  /* Replace the opaque
+                                                          tag. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_OPAQUE_TAG_DELETE (1 << 17)  /* Delete the opaque tag. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_OPAQUE_TAG_ADD (1 << 18)  /* Add the opaque tag. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_DELETE_OUTER_IF_DTAG (1 << 19)  /* Delete outer tag if
+                                                          incoming packet is
+                                                          double tagged. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_DELETE_IF_STAG (1 << 20)  /* Delete vlan tag if
+                                                          incoming packet is
+                                                          single tagged. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_REPLACE_OUTER_IF_DTAG (1 << 21)  /* Replace outer tag if
+                                                          incoming packet is
+                                                          double tagged. */
+#define BCM_FLOW_PORT_ENCAP_FLAG_VLAN_REPLACE_IF_STAG (1 << 22)  /* Replace vlan tag if
+                                                          incoming packet is
+                                                          single tagged. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* flow port encap config structure. */
+typedef struct bcm_flow_port_encap_s {
+    bcm_gport_t flow_port;          /* flow port id identifies DVP. */
+    uint32 options;                 /* BCM_FLOW_PORT_ENCAP_xxx. */
+    uint32 flags;                   /* BCM_FLOW_PORT_ENCAP_FLAG_xxx. */
+    uint32 class_id;                /* class id. */
+    uint16 mtu;                     /* MTU. */
+    uint32 network_group;           /* network group ID */
+    uint32 dvp_group;               /* DVP group ID */
+    uint8 pri;                      /* service tag priority. */
+    uint8 cfi;                      /* service tag cfi */
+    uint16 tpid;                    /* service tag tpid */
+    bcm_vlan_t vlan;                /* service VLAN ID. */
+    bcm_if_t egress_if;             /* egress object */
+    uint32 valid_elements;          /* bitmap of valid fields for hardware
+                                       parameters */
+    bcm_flow_handle_t flow_handle;  /* flow handle */
+    uint32 flow_option;             /* flow option id */
+    uint16 ip4_id;                  /* IPv4 ID */
+    int vlan_pri_map_id;            /* Remarking map ID for the payload VLAN
+                                       priority and CFI. */
+    bcm_gport_t dst_port;           /* Destination port / trunk. */
+    uint32 es_id;                   /* Ethernet segment ID. */
+    bcm_if_t ol_egress_if;          /* Overlay egress object. */
+} bcm_flow_port_encap_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize the bcm_flow_port_encap_t configuration structure */
+extern void bcm_flow_port_encap_t_init(
+    bcm_flow_port_encap_t *info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Set the L2 tunnel encapsulation parameters for the given flow_port */
+extern int bcm_flow_port_encap_set(
+    int unit, 
+    bcm_flow_port_encap_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the encapsulation configuration parameters */
+extern int bcm_flow_port_encap_get(
+    int unit, 
+    bcm_flow_port_encap_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow encap options */
+#define BCM_FLOW_ENCAP_OPTION_REPLACE   (1 << 1)   /* replace object attributes
+                                                      for a encap criteria. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow encap flags for hardware control parameters */
+#define BCM_FLOW_ENCAP_FLAG_SERVICE_TAGGED  (1 << 0)   /* service tag mode for
+                                                          the given encap
+                                                          criteria. */
+#define BCM_FLOW_ENCAP_FLAG_SERVICE_VLAN_ADD (1 << 1)   /* Add SD-TAG vlan. */
+#define BCM_FLOW_ENCAP_FLAG_SERVICE_VLAN_TPID_REPLACE (1 << 2)   /* Replace Vlan and TPID. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_REPLACE    (1 << 3)   /* Replace vlan. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_DELETE     (1 << 4)   /* Delete vlan. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_PRI_TPID_REPLACE (1 << 5)   /* Replace vlan, priority
+                                                          and tpid. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_PRI_REPLACE (1 << 6)   /* Replace vlan and
+                                                          priority. */
+#define BCM_FLOW_ENCAP_FLAG_PRI_REPLACE     (1 << 7)   /* Replace priority. */
+#define BCM_FLOW_ENCAP_FLAG_TPID_REPLACE    (1 << 8)   /* Replace TPID. */
+#define BCM_FLOW_ENCAP_FLAG_DROP            (1 << 9)   /* Drop packet. */
+#define BCM_FLOW_ENCAP_FLAG_HIGIG3_EXTENSION_ADD (1 << 10)  /* Add a HIGIG3 extension
+                                                          header. */
+#define BCM_FLOW_ENCAP_FLAG_OPAQUE_TAGGED   (1 << 11)  /* Opaque tag mode. */
+#define BCM_FLOW_ENCAP_FLAG_OPAQUE_TAG_REPLACE (1 << 12)  /* Replace the opaque
+                                                          tag. */
+#define BCM_FLOW_ENCAP_FLAG_OPAQUE_TAG_DELETE (1 << 13)  /* Delete the opaque tag. */
+#define BCM_FLOW_ENCAP_FLAG_OPAQUE_TAG_ADD  (1 << 14)  /* Add the opaque tag. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_DELETE_OUTER_IF_DTAG (1 << 15)  /* Delete outer tag if
+                                                          incoming packet is
+                                                          double tagged. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_DELETE_IF_STAG (1 << 16)  /* Delete vlan tag if
+                                                          incoming packet is
+                                                          single tagged. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_REPLACE_OUTER_IF_DTAG (1 << 17)  /* Replace outer tag if
+                                                          incoming packet is
+                                                          double tagged. */
+#define BCM_FLOW_ENCAP_FLAG_VLAN_REPLACE_IF_STAG (1 << 18)  /* Replace vlan tag if
+                                                          incoming packet is
+                                                          single tagged. */
+#define BCM_FLOW_ENCAP_FLAG_VXLAN_GBP_FLEX_ACCESS (1 << 19)  /* Requires
+                                                          BROADCOM_PREMIUM
+                                                          license */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow encap valid elements for hardware parameters. */
+#define BCM_FLOW_ENCAP_VNID_VALID           (1 << 0)   /* VN_ID element is valid
+                                                          for this encap. */
+#define BCM_FLOW_ENCAP_VLAN_VALID           (1 << 1)   /* vlan valid */
+#define BCM_FLOW_ENCAP_FLOW_PORT_VALID      (1 << 2)   /* flow port valid */
+#define BCM_FLOW_ENCAP_VPN_VALID            (1 << 3)   /* vpn valid. */
+#define BCM_FLOW_ENCAP_INTF_VALID           (1 << 4)   /* interface valid. */
+#define BCM_FLOW_ENCAP_PKT_PRI_VALID        (1 << 5)   /* service tag priority
+                                                          valid. */
+#define BCM_FLOW_ENCAP_PKT_CFI_VALID        (1 << 6)   /* service tag CFI valid. */
+#define BCM_FLOW_ENCAP_TPID_VALID           (1 << 7)   /* service tag TPID
+                                                          valid. */
+#define BCM_FLOW_ENCAP_FLEX_KEY_VALID       (1 << 8)   /* logical fields for
+                                                          key. */
+#define BCM_FLOW_ENCAP_FLEX_DATA_VALID      (1 << 9)   /* logical fields for
+                                                          attributes. */
+#define BCM_FLOW_ENCAP_DVP_GROUP_VALID      (1 << 10)  /* DVP group ID. */
+#define BCM_FLOW_ENCAP_OIF_GROUP_VALID      (1 << 11)  /* L3 OUT interface group
+                                                          ID. */
+#define BCM_FLOW_ENCAP_FLAGS_VALID          (1 << 12)  /* flags for hardware
+                                                          control parameters. */
+#define BCM_FLOW_ENCAP_SRC_FLOW_PORT_VALID  (1 << 13)  /* SVP valid. */
+#define BCM_FLOW_ENCAP_CLASS_ID_VALID       (1 << 14)  /* CLASS_ID valid. */
+#define BCM_FLOW_ENCAP_INT_PRI_VALID        (1 << 15)  /* INT_PRI valid. */
+#define BCM_FLOW_ENCAP_PORT_GROUP_VALID     (1 << 16)  /* PORT_GROUP valid. */
+#define BCM_FLOW_ENCAP_VLAN_PRI_MAP_ID_VALID (1 << 17)  /* VLAN_PRI_MAP_ID valid. */
+#define BCM_FLOW_ENCAP_FUNCTION_VALID       (1 << 18)  /* FUNCTION valid. */
+#define BCM_FLOW_ENCAP_ES_ID_VALID          (1 << 19)  /* ES_ID valid. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* flow encap criteria. */
+typedef enum bcm_flow_encap_criteria_e {
+    BCM_FLOW_ENCAP_CRITERIA_INVALID = 0, /* Illegal. */
+    BCM_FLOW_ENCAP_CRITERIA_DVP = 1,    /* DVP used as a key. */
+    BCM_FLOW_ENCAP_CRITERIA_VFI = 2,    /* VFI key. */
+    BCM_FLOW_ENCAP_CRITERIA_VFI_DVP = 3, /* VFI + DVP key. */
+    BCM_FLOW_ENCAP_CRITERIA_VRF_MAPPING = 4, /* VRF mapping key. */
+    BCM_FLOW_ENCAP_CRITERIA_L3_INTF = 5, /* L3 interface key. */
+    BCM_FLOW_ENCAP_CRITERIA_VFI_DVP_GROUP = 6, /* VFI + DVP group key. */
+    BCM_FLOW_ENCAP_CRITERIA_FLEX = 7,   /* flex key from logical fields */
+    BCM_FLOW_ENCAP_CRITERIA_SVP_DVP = 8, /* SVP + DVP key. */
+    BCM_FLOW_ENCAP_CRITERIA_DGPP_INT_PRI = 9, /* DGPP + INT_PRI key. */
+    BCM_FLOW_ENCAP_CRITERIA_DGPP_VLAN_INT_PRI = 10, /* DGPP + VLAN + INT_PRI key. */
+    BCM_FLOW_ENCAP_CRITERIA_VFI_PORT_GROUP = 11, /* VFI + port group key. */
+    BCM_FLOW_ENCAP_CRITERIA_VLAN_PORT_GROUP = 12, /* OVID + port group key. */
+    BCM_FLOW_ENCAP_CRITERIA_DGPP_VLAN = 13, /* DGPP + OVID key. */
+    BCM_FLOW_ENCAP_CRITERIA_COUNT = 14  /* Must be last. */
+} bcm_flow_encap_criteria_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow encap config structure */
+typedef struct bcm_flow_encap_config_s {
+    bcm_vpn_t vpn;                      /* VPN representing a vfi or vrf */
+    bcm_gport_t flow_port;              /* flow port id representing a DVP */
+    bcm_if_t intf_id;                   /* l3 interface id */
+    uint32 dvp_group;                   /* DVP group ID */
+    uint32 oif_group;                   /* L3 OUT interface group ID */
+    uint32 vnid;                        /* VN_ID. */
+    uint8 pri;                          /* service tag priority. */
+    uint8 cfi;                          /* service tag cfi */
+    uint16 tpid;                        /* service tag tpid */
+    bcm_vlan_t vlan;                    /* service VLAN ID. */
+    uint32 flags;                       /* BCM_FLOW_ENCAP_FLAG_xxx. */
+    uint32 options;                     /* BCM_FLOW_ENCAP_OPTION_xxx. */
+    bcm_flow_encap_criteria_t criteria; /* flow encap criteria. */
+    uint32 valid_elements;              /* bitmap of valid fields for the encap
+                                           action */
+    bcm_flow_handle_t flow_handle;      /* flow handle derived from flow name */
+    uint32 flow_option;                 /* flow option derived from flow option
+                                           name */
+    bcm_gport_t src_flow_port;          /* flow port id representing a SVP */
+    uint32 class_id;                    /* Class ID as a key in EFP. */
+    uint32 port_group;                  /* Port group ID. */
+    int vlan_pri_map_id;                /* VLAN priority and CFI map ID. */
+    uint32 function;                    /* Function value */
+    uint32 es_id;                       /* Ethernet segment ID. */
+    bcm_vlan_action_set_t action;       /* Action for outer and inner tag. */
+} bcm_flow_encap_config_t;
+#endif
+
+/* bcm_flow_encap_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_encap_traverse_cb)(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize flow encap config structure. */
+extern void bcm_flow_encap_config_t_init(
+    bcm_flow_encap_config_t *flow_encap);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Add a flow encap entry for L2 tunnel or L3 tunnel. */
+extern int bcm_flow_encap_add(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete a flow encap entry based on the given key. */
+extern int bcm_flow_encap_delete(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get a flow encap entry based on the given key. */
+extern int bcm_flow_encap_get(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Traverse encap entries */
+extern int bcm_flow_encap_traverse(
+    int unit, 
+    bcm_flow_encap_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* BCM_FLOW_* flags. */
+#define BCM_FLOW_PORT_WITH_ID               (1 << 0)   /* create FLOW port with
+                                                          specified ID */
+#define BCM_FLOW_PORT_NETWORK               (1 << 1)   /* Network facing
+                                                          interface */
+#define BCM_FLOW_PORT_COUNTED               (1 << 2)   /* Maintain packet/byte
+                                                          counts */
+#define BCM_FLOW_PORT_REPLACE               (1 << 3)   /* Replace existing entry */
+#define BCM_FLOW_PORT_SERVICE_TAGGED        (1 << 4)   /* Service tag mode */
+#define BCM_FLOW_PORT_DEFAULT               (1 << 5)   /* Create VXLAN Default
+                                                          Network Port */
+#define BCM_FLOW_PORT_DEFAULT_L2GRE         (1 << 6)   /* Create L2GRE Default
+                                                          Network Port */
+#define BCM_FLOW_PORT_DEFAULT_GPE           (1 << 7)   /* Create GPE Default
+                                                          Network Port */
+#define BCM_FLOW_PORT_DEFAULT_GENEVE        (1 << 8)   /* Create GENEVE Default
+                                                          Network Port */
+#define BCM_FLOW_PORT_MULTICAST_GROUP_REMAP (1 << 9)   /* Remap the multicast
+                                                          group to a new one. */
+#define BCM_FLOW_PORT_DVP_TABLE_EXTENSION   (1 << 10)  /* Use DVP table with
+                                                          extension. */
+#define BCM_FLOW_PORT_DEFAULT_SRV6          (1 << 11)  /* Create SRv6 default
+                                                          network port. */
+#define BCM_FLOW_PORT_ES_BUM_INDICATION     (1 << 12)  /* Enable BUM indication
+                                                          for ethernet segment
+                                                          ID filter. It disables
+                                                          destination MAC lookup
+                                                          for unicast packets. */
+#endif
+
+/* Flow port split horizon drop mode. */
+typedef enum bcm_flow_port_split_horizon_drop_e {
+    bcmFlowPortSplitHorizonDropAll = 0, /* Drop both L2 and L3 packets. */
+    bcmFlowPortSplitHorizonDropL2 = 1,  /* Drop L2 packets. */
+    bcmFlowPortSplitHorizonDropCount = 2 /* Must be last. */
+} bcm_flow_port_split_horizon_drop_t;
+
+/* Flex Flow VP Config Structure. */
+typedef struct bcm_flow_port_s {
+    bcm_gport_t flow_port_id;           /* GPORT identifier. */
+    uint32 flags;                       /* BCM_FLOW_PORT_xxx. */
+    uint32 if_class;                    /* Interface Class ID. */
+    bcm_switch_network_group_t network_group_id; /* Split Horizon network group
+                                           identifier. */
+    uint16 egress_service_tpid;         /* Service Vlan TPID Value. */
+    int dscp_map_id;                    /* DSCP based PHB map ID. */
+    int vlan_pri_map_id;                /* VLAN priority and CFI based PHB map
+                                           ID. */
+    bcm_flow_port_split_horizon_drop_t drop_mode; /* Drop mode when the split horizon
+                                           check fails. */
+    int ingress_opaque_ctrl_id;         /* Ingress opaque control ID. */
+    uint64 es_id_mask;                  /* Destination IP mask to get ethernet
+                                           segment ID. */
+    uint16 es_id_right_shift;           /* Right shift bits to get ethernet
+                                           segment ID. */
+} bcm_flow_port_t;
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Initialize the BCM FOW subsystem. */
+extern int bcm_flow_init(
+    int unit);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach the BCM FLOW subsystem. */
+extern int bcm_flow_cleanup(
+    int unit);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Initialize the bcm_flow_port_t structure */
+extern void bcm_flow_port_t_init(
+    bcm_flow_port_t *flow_port);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* 
+ * Create a flow port
+ * bcm_flow_port_create creates an Access or Network FLOW port
+ */
+extern int bcm_flow_port_create(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_flow_port_t *flow_port);
+#endif
+
+#if defined(INCLUDE_L3)
+/* bcm_flow_port_destroy FLOW port from FLOW network. */
+extern int bcm_flow_port_destroy(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_gport_t flow_port);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get FLOW port information. */
+extern int bcm_flow_port_get(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_flow_port_t *flow_port);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get all FLOW port information. */
+extern int bcm_flow_port_get_all(
+    int unit, 
+    bcm_vpn_t vpn, 
+    int port_max, 
+    bcm_flow_port_t *flow_port, 
+    int *port_count);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* FLOW VPN Definitions. */
+#define BCM_FLOW_VPN_ELINE      0x0001     /* ELINE FLOW VPN */
+#define BCM_FLOW_VPN_ELAN       0x0002     /* ELAN FLOW VPN */
+#define BCM_FLOW_VPN_WITH_ID    0x0004     /* With Id FLOW VPN */
+#define BCM_FLOW_VPN_REPLACE    0x0008     /* Replace VPN Id FLOW VPN */
+#define BCM_FLOW_VPN_INVALID    0xFFFF     /* Invalid FLOW VPN */
+#endif
+
+/* Flow L2 VPN Config Structure. */
+typedef struct bcm_flow_vpn_config_s {
+    uint32 flags;                       /* L2 VPN config flags. */
+    bcm_multicast_t broadcast_group;    /* broadcast group. */
+    bcm_multicast_t unknown_unicast_group; /* unknown unicast group. */
+    bcm_multicast_t unknown_multicast_group; /* unknown multicast group. */
+    bcm_vlan_protocol_packet_ctrl_t protocol_pkt; /* protocol packet handling */
+    bcm_gport_t match_port_class;       /* port class */
+} bcm_flow_vpn_config_t;
+
+/* bcm_flow_vpn_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_vpn_traverse_cb)(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_flow_vpn_config_t *info, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize FLOW VPN config structure. */
+extern void bcm_flow_vpn_config_t_init(
+    bcm_flow_vpn_config_t *info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* 
+ * Create or update FLOW VPN. The FLOW VPN provides a forwarding domain
+ * between FLOW ports, independent of a FLOW port's transport protocol.
+ *  Use BCM_FLOW_VPN_REPLACE to update an existing FLOW_VPN.
+ */
+extern int bcm_flow_vpn_create(
+    int unit, 
+    bcm_vpn_t *vpn, 
+    bcm_flow_vpn_config_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Destroy FLOW VPN. */
+extern int bcm_flow_vpn_destroy(
+    int unit, 
+    bcm_vpn_t vpn);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Destroy FLOW VPN. */
+extern int bcm_flow_vpn_destroy_all(
+    int unit);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get FLOW VPN. */
+extern int bcm_flow_vpn_get(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_flow_vpn_config_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Traverse all valid FLOW VPN entries and call the supplied callback
+ * routine.
+ */
+extern int bcm_flow_vpn_traverse(
+    int unit, 
+    bcm_flow_vpn_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get a handle for a given flow name string. */
+extern int bcm_flow_handle_get(
+    int unit, 
+    const char *flow_name, 
+    bcm_flow_handle_t *handle);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get a flow option ID for a given flow handle and flow option name. */
+extern int bcm_flow_option_id_get(
+    int unit, 
+    bcm_flow_handle_t flow_handle, 
+    const char *flow_option_name, 
+    bcm_flow_option_id_t *option_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the field id for logical field name in a flow. */
+extern int bcm_flow_logical_field_id_get(
+    int unit, 
+    bcm_flow_handle_t flow_handle, 
+    const char *field_name, 
+    bcm_flow_field_id_t *field_id);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow Functions. */
+typedef enum bcm_flow_function_type_e {
+    bcmFlowFuncTypeStart = 0,           /* Start. */
+    bcmFlowFuncTypeMatch = 1,           /* Match. */
+    bcmFlowFuncTypeEncap = 2,           /* Encap. */
+    bcmFlowFuncTypeTunnelInit = 3,      /* Tunnel Initiator. */
+    bcmFlowFuncTypeTunnelTerm = 4,      /* Tunnel Terminator. */
+    bcmFlowFuncTypeEncapSet = 5,        /* Encap set. */
+    bcmFlowFuncTypeL2Switch = 6,        /* L2 Switch. */
+    bcmFlowFuncTypeL3Host = 7,          /* L3 Host. */
+    bcmFlowFuncTypeL3Route = 8,         /* L3 Route. */
+    bcmFlowFuncTypeEgressObj = 9,       /* Egress  Object. */
+    bcmFlowFuncTypeEgressLabel = 10,    /* Egress Label. */
+    bcmFlowFuncTypeEgressIntf = 11,     /* Egress Intf. */
+    bcmFlowFuncTypeEnd = 12             /* End. */
+} bcm_flow_function_type_t;
+
+#define BCM_FLOW_FUNCTION_TYPE \
+{ \
+    "bcmFlowFuncTypeStart", \
+    "bcmFlowFuncTypeMatch", \
+    "bcmFlowFuncTypeEncap", \
+    "bcmFlowFuncTypeTunnelInit", \
+    "bcmFlowFuncTypeTunnelTerm", \
+    "bcmFlowFuncTypeEncapSet", \
+    "bcmFlowFuncTypeL2Switch", \
+    "bcmFlowFuncTypeL3Host", \
+    "bcmFlowFuncTypeL3Route", \
+    "bcmFlowFuncTypeEgressObj", \
+    "bcmFlowFuncTypeEgressLabel", \
+    "bcmFlowFuncTypeEgressIntf", \
+    "bcmFlowFuncTypeEnd"  \
+}
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow stat info valid elements. */
+#define BCM_FLOW_STAT_FLOW_PORT_VALID       (1 << 0)   /* flow port element
+                                                          valid. */
+#define BCM_FLOW_STAT_PORT_VALID            (1 << 1)   /* port element valid. */
+#define BCM_FLOW_STAT_VPN_VALID             (1 << 2)   /* VN_ID element is valid
+                                                          for this match. */
+#define BCM_FLOW_STAT_INNER_VLAN_VALID      (1 << 3)   /* Inner vlan element
+                                                          valid. */
+#define BCM_FLOW_STAT_VLAN_VALID            (1 << 4)   /* vlan element valid. */
+#define BCM_FLOW_STAT_VNID_VALID            (1 << 5)   /* VNID element valid. */
+#define BCM_FLOW_STAT_SIP_VALID             (1 << 6)   /* source IPv4 address
+                                                          element valid. */
+#define BCM_FLOW_STAT_DIP_VALID             (1 << 7)   /* Destination IPv4
+                                                          address element valid. */
+#define BCM_FLOW_STAT_SIP_MASK_VALID        (1 << 8)   /* source IPv4 address
+                                                          mask element valid. */
+#define BCM_FLOW_STAT_DIP_MASK_VALID        (1 << 9)   /* Destination IPv4
+                                                          address mask element
+                                                          valid. */
+#define BCM_FLOW_STAT_SIP6_VALID            (1 << 10)  /* source IPv6 address
+                                                          element valid. */
+#define BCM_FLOW_STAT_DIP6_VALID            (1 << 11)  /* Destination IPv6
+                                                          address element valid. */
+#define BCM_FLOW_STAT_SIP6_MASK_VALID       (1 << 12)  /* source IPv6 address
+                                                          mask element valid. */
+#define BCM_FLOW_STAT_DIP6_MASK_VALID       (1 << 13)  /* Destination IPv6
+                                                          address mask element
+                                                          valid. */
+#define BCM_FLOW_STAT_UDP_SRC_PORT_VALID    (1 << 14)  /* UDP source port
+                                                          element valid. */
+#define BCM_FLOW_STAT_UDP_DST_PORT_VALID    (1 << 15)  /* UDP Destination port
+                                                          element valid. */
+#define BCM_FLOW_STAT_PROTOCOL_VALID        (1 << 16)  /* Protocol element
+                                                          valid. */
+#define BCM_FLOW_STAT_TUNNEL_ID_VALID       (1 << 17)  /* Tunnel ID element
+                                                          valid. */
+#define BCM_FLOW_STAT_EGRESS_IF_VALID       (1 << 18)  /* Egress nexthop object
+                                                          index element valid. */
+#define BCM_FLOW_STAT_INTF_ID_VALID         (1 << 19)  /* L3 interface id
+                                                          element valid. */
+#define BCM_FLOW_STAT_MAC_VALID             (1 << 20)  /* L2 MAC address element
+                                                          valid. */
+#define BCM_FLOW_STAT_L3A_FLAGS_VALID       (1 << 21)  /* BCM_L3_xxx flag
+                                                          definitions. */
+#define BCM_FLOW_STAT_L3A_VRF_VALID         (1 << 22)  /* Virtual router
+                                                          instance. */
+#define BCM_FLOW_STAT_DVP_GROUP_VALID       (1 << 23)  /* DVP group ID */
+#define BCM_FLOW_STAT_OIF_GROUP_VALID       (1 << 24)  /* L3 Out Interface Group
+                                                          ID */
+#define BCM_FLOW_STAT_MATCH_CRITERIA_VALID  (1 << 25)  /* DVP group ID */
+#define BCM_FLOW_STAT_ENCAP_CRITERIA_VALID  (1 << 26)  /* L3 Out Interface Group
+                                                          ID */
+#define BCM_FLOW_STAT_MPLS_LABEL_VALID      (1 << 27)  /* Mpls Label is valid */
+#define BCM_FLOW_STAT_FLEX_KEY_VALID        (1 << 28)  /* Flex Key element
+                                                          valid. */
+#define BCM_FLOW_STAT_PREFIX_LEN_VALID      (1 << 29)  /* prefix_len element
+                                                          valid. */
+#define BCM_FLOW_STAT_OBJECT_VALUE_VALID    (1 << 30)  /* object_value element
+                                                          valid. */
+#define BCM_FLOW_STAT_NEXT_HDR_VALID        (1U << 31) /* next_hdr element
+                                                          valid. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* flow Stat. */
+typedef enum bcm_flow_stat_e {
+    bcmFlowInPackets = 1,   /* Flow InPackets */
+    bcmFlowOutPackets = 2,  /* Flow OutPackets */
+    bcmFlowInBytes = 3,     /* Flow InBytes */
+    bcmFlowOutBytes = 4     /* Flow OutBytes */
+} bcm_flow_stat_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow stat flags for parameter flags. */
+#define BCM_FLOW_STAT_FLAG_SRV6_GSID    (1 << 0)   /* Indicate SRv6 GSID
+                                                      operation. */
+#define BCM_FLOW_STAT_FLAG_SRV6_USID    (1 << 1)   /* Indicate SRv6 uSID
+                                                      operation. */
+#define BCM_FLOW_STAT_FLAG_SRV6_PSP     (1 << 2)   /* Indicate SRv6 PSP
+                                                      operation. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow stat info structure */
+typedef struct bcm_flow_stat_info_s {
+    bcm_gport_t flow_port;              /* Flow port */
+    bcm_gport_t port;                   /* Match port /trunk */
+    bcm_vpn_t vpn;                      /* VPN representing a vfi or vrf */
+    bcm_vlan_t inner_vlan;              /* Inner VLAN ID to match. */
+    bcm_vlan_t vlan;                    /* VLAN ID to match. */
+    uint32 vnid;                        /* VN_ID. */
+    bcm_ip_t sip;                       /* source IPv4 address */
+    bcm_ip_t dip;                       /* destination IPv4 address */
+    bcm_ip_t sip_mask;                  /* source IPv4 address mask */
+    bcm_ip_t dip_mask;                  /* destination IPv4 address mask */
+    bcm_ip6_t sip6;                     /* source IPv6 address */
+    bcm_ip6_t dip6;                     /* destination IPv6 address */
+    bcm_ip6_t sip6_mask;                /* source IPv6 address mask */
+    bcm_ip6_t dip6_mask;                /* destination IPv6 address mask */
+    uint16 udp_src_port;                /* udp source port. */
+    uint16 udp_dst_port;                /* udp destination port. */
+    uint16 protocol;                    /* IP protocol type. */
+    bcm_gport_t tunnel_id;              /* Tunnel ID */
+    bcm_if_t egress_if;                 /* egress object */
+    bcm_if_t intf_id;                   /* l3 interface id */
+    bcm_mac_t mac;                      /* 802.3 MAC address. */
+    uint32 l3a_flags;                   /* See BCM_L3_xxx flag definitions. */
+    bcm_vrf_t l3a_vrf;                  /* Virtual router instance. */
+    uint32 oif_group;                   /* L3 OUT interface group ID */
+    uint32 dvp_group;                   /* DVP group ID */
+    bcm_flow_match_criteria_t match_criteria; /* flow match criteria. */
+    bcm_flow_encap_criteria_t encap_criteria; /* flow encap criteria. */
+    bcm_mpls_label_t mpls_label;        /* MPLS label. */
+    uint32 valid_elements;              /* bitmap of valid fields */
+    uint32 flow_handle;                 /* flow handle derived from flow name */
+    uint32 flow_option;                 /* flow option derived from flow option
+                                           name */
+    bcm_flow_function_type_t function_type; /* flow function type */
+    uint16 prefix_len;                  /* Sid prefix length in number of bits. */
+    uint32 object_value;                /* Used to calculate flex counter index. */
+    uint16 next_hdr;                    /* next header field */
+    uint32 flags;                       /* BCM_FLOW_STAT_FLAG_xxx flag
+                                           definition. */
+} bcm_flow_stat_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize flow stat info structure. */
+extern void bcm_flow_stat_info_t_init(
+    bcm_flow_stat_info_t *flow_stat_info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Get the stat object for the flex view of flexible table. */
+extern int bcm_flow_stat_object_get(
+    int unit, 
+    bcm_flow_handle_t flow_handle, 
+    bcm_flow_option_id_t flow_option_id, 
+    bcm_flow_function_type_t function_type, 
+    bcm_stat_object_t *stat_object);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter for an entry. */
+extern int bcm_flow_stat_attach(
+    int unit, 
+    bcm_flow_stat_info_t *flow_stat_info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries to the given flex view table. */
+extern int bcm_flow_stat_detach(
+    int unit, 
+    bcm_flow_stat_info_t *flow_stat_info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get Stat Counter id for flow tables. */
+extern int bcm_flow_stat_id_get(
+    int unit, 
+    bcm_flow_stat_info_t *flow_stat_info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    bcm_stat_object_t stat_object, 
+    uint32 *stat_counter_id);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flags for Flow handle info */
+#define BCM_FLOW_HANDLE_INFO_WITH_ID        (1 << 0)   /* With ID */
+#define BCM_FLOW_HANDLE_INFO_REPLACE        (1 << 1)   /* Replace */
+#define BCM_FLOW_HANDLE_INFO_SYMMETRIC_ALLOC (1 << 2)   /* Allocate a FLOW ID
+                                                          that is free on both
+                                                          the Terminator and on
+                                                          the Initiator */
+#define BCM_FLOW_HANDLE_INFO_VIRTUAL        (1 << 3)   /* A FLOW ID that doesn't
+                                                          use a Global-LIF
+                                                          allocation */
+#define BCM_FLOW_HANDLE_INFO_BUD            (1 << 4)   /* Use to create Flow
+                                                          termination for BUD
+                                                          node. */
+#define BCM_FLOW_HANDLE_TRAVERSE_DELETE_ALL (1 << 5)   /* Use to delete entries
+                                                          using traverse, in
+                                                          this case cb function
+                                                          will not be invoked
+                                                          and entries will be
+                                                          deleted. */
+#define BCM_FLOW_HANDLE_NATIVE              (1 << 6)   /* Use to create native
+                                                          entry. */
+#define BCM_FLOW_HANDLE_INFO_ALLOC_BY_CORE_BM (1 << 7)   /* Use to create entry
+                                                          per core set in
+                                                          core_bitmap. */
+#endif
+
+#if defined(INCLUDE_L3)
+#define BCM_FLOW_TERMINATOR_INFO_EXTENDED_TERMINATION (1 << 0)   /* Use to create extended
+                                                          termination. */
+#endif
+
+#if defined(INCLUDE_L3)
+#define BCM_FLOW_HANDLE_TRAVERSE_ALL    0xFFFFFFFF /* When calling one of
+                                                      terminitmatch traverse
+                                                      APIs, this macro is used
+                                                      as a flow_handle value for
+                                                      traversing all
+                                                      applications (and their
+                                                      entries) of the relevant
+                                                      API type (terminitmatch). */
+#endif
+
+#if defined(INCLUDE_L3)
+#define BCM_FLOW_SPECIAL_FIELD_UIN32_ARR_MAX_SIZE 8          
+#define BCM_FLOW_SPECIAL_FIELD_UIN8_ARR_MAX_SIZE 16         
+#define BCM_FLOW_SPECIAL_FIELD_MAX_NOF_FIELDS 32         
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow Terminator elements (for valid, clear bitmaps). */
+#define BCM_FLOW_TERMINATOR_ELEMENT_VRF_VALID (1 << 0)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_STAT_ID_VALID (1 << 1)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_L3_INGRESS_INFO_VALID (1 << 2)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_STAT_PP_PROFILE_VALID (1 << 3)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_QOS_MAP_ID_VALID (1 << 4)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_QOS_INGRESS_MODEL_VALID (1 << 5)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_FLOW_DEST_INFO_VALID (1 << 6)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_ADDITIONAL_DATA_VALID (1 << 7)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_ACTION_GPORT_VALID (1 << 8)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_VSI_VALID (1 << 9)   
+#define BCM_FLOW_TERMINATOR_ELEMENT_L2_INGRESS_INFO_VALID (1 << 10)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_ID_VALID (1 << 11)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_FAILOVER_STATE_VALID (1 << 12)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_CLASS_ID_VALID (1 << 13)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_FIELD_CLASS_ID_VALID (1 << 14)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_L2_LEARN_INFO_VALID (1 << 15)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_LEARN_ENABLE_VALID (1 << 16)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_TPID_CLASS_ID_VALID (1 << 17)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_FIELD_CLASS_CS_ID_VALID (1 << 18)  
+#define BCM_FLOW_TERMINATOR_ELEMENT_OAM_SET_VALID (1 << 19)  /* OAM counting is
+                                                          enabled when flow is
+                                                          innermost or innermost
+                                                          with OAM SET */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow Initiator elements (for valid, clear bitmaps). */
+#define BCM_FLOW_INITIATOR_ELEMENT_STAT_ID_VALID (1 << 0)   
+#define BCM_FLOW_INITIATOR_ELEMENT_STAT_PP_PROFILE_VALID (1 << 1)   
+#define BCM_FLOW_INITIATOR_ELEMENT_QOS_MAP_ID_VALID (1 << 2)   
+#define BCM_FLOW_INITIATOR_ELEMENT_L3_INTF_ID_VALID (1 << 3)   
+#define BCM_FLOW_INITIATOR_ELEMENT_CLASS_ID_VALID (1 << 4)   
+#define BCM_FLOW_INITIATOR_ELEMENT_QOS_EGRESS_MODEL_VALID (1 << 5)   
+#define BCM_FLOW_INITIATOR_ELEMENT_ACTION_GPORT_VALID (1 << 6)   
+#define BCM_FLOW_INITIATOR_ELEMENT_MTU_PROFILE_VALID (1 << 7)   
+#define BCM_FLOW_INITIATOR_ELEMENT_L2_EGRESS_INFO_VALID (1 << 8)   
+#define BCM_FLOW_INITIATOR_ELEMENT_FAILOVER_ID_VALID (1 << 9)   
+#define BCM_FLOW_INITIATOR_ELEMENT_FAILOVER_STATE_VALID (1 << 10)  
+#define BCM_FLOW_INITIATOR_ELEMENT_TPID_CLASS_ID_VALID (1 << 11)  
+#define BCM_FLOW_INITIATOR_ELEMENT_TTL_VALID (1 << 12)  
+#define BCM_FLOW_INITIATOR_ELEMENT_OUTLIF_PROFILE_GROUP_VALID (1 << 13)  
+#define BCM_FLOW_INITIATOR_ELEMENT_FIELD_CLASS_ID_VALID (1 << 14)  
+#define BCM_FLOW_INITIATOR_ELEMENT_FIELD_CLASS_CS_ID_VALID (1 << 15)  
+#define BCM_FLOW_INITIATOR_ELEMENT_SVTAG_ENABLE_VALID (1 << 16)  /* If set, enables svtag
+                                                          - there is no
+                                                          corresponding field in
+                                                          the initiator_info
+                                                          structure */
+#define BCM_FLOW_INITIATOR_ELEMENT_OAM_SET_VALID (1 << 17)  /* OAM counting is
+                                                          enabled when flow is
+                                                          innermost or innermost
+                                                          with OAM SET */
+#endif
+
+/* L2 learn info flags. */
+#define BCM_FLOW_L2_LEARN_INFO_OPTIMIZED    (1 << 0)   /* Select a Non-Optimized
+                                                          Learn-Payload-Context */
+#define BCM_FLOW_L2_LEARN_INFO_DEST_ONLY    (1 << 1)   /* Select a
+                                                          Learn-Payload-Context
+                                                          with No LIF */
+
+#if defined(INCLUDE_L3)
+/* Service type */
+typedef enum bcm_flow_service_type_e {
+    bcmFlowServiceTypeMultiPoint = 0, 
+    bcmFlowServiceTypeCrossConnect = 1, 
+    bcmFlowServiceTypeCount = 2 
+} bcm_flow_service_type_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Failover state enum */
+typedef enum bcm_flow_failover_state_e {
+    bcmFlowFailoverStatePrimary = 0, 
+    bcmFlowFailoverStateSecondary = 1, 
+    bcmFlowFailoverStateCount = 2 
+} bcm_flow_failover_state_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow handle info structure */
+typedef struct bcm_flow_handle_info_s {
+    uint32 flags;           /* BCM_FLOW_HANDLE_XXX flags */
+    uint32 flow_handle;     /* Flow handle */
+    uint32 flow_option;     /* Flow option */
+    bcm_gport_t flow_id;    /* Flow Gport Identifier */
+    uint32 flow_priority;   /* Entry priority. The lower the number the higher
+                               the entry priority */
+    uint32 core_bitmap;     /* related cores for the entry,  this parameter is
+                               valid only when flag
+                               BCM_FLOW_HANDLE_INFO_ALLOC_BY_CORE_BM is set */
+} bcm_flow_handle_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow destination info */
+typedef struct bcm_flow_dest_info_s {
+    bcm_gport_t dest_port; 
+    bcm_if_t dest_encap; 
+} bcm_flow_dest_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* L2 ingress info */
+typedef struct bcm_flow_l2_ingress_info_s {
+    bcm_switch_network_group_t ingress_network_group_id; /* Split Horizon ingress network group
+                                           identifier */
+    bcm_flow_same_interface_mode_t same_interface_mode; /* Same interface mode */
+    int outer_policer_remark;           /* Outer policer remark */
+    int inner_policer_remark;           /* Inner policer remark */
+    int oam_default_profile;            /* OAM default profile */
+    bcm_flow_service_type_t service_type; /* Service type */
+} bcm_flow_l2_ingress_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* L3 ingress info */
+typedef struct bcm_flow_l3_ingress_info_s {
+    uint32 l3_ingress_flags;            /* BCM_L3_INGRESS_XXX */
+    bcm_l3_ingress_urpf_mode_t urpf_mode; /* URPF mode setting */
+    int oam_default_profile;            /* OAM default profile */
+    bcm_flow_service_type_t service_type; /* Service type */
+} bcm_flow_l3_ingress_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Learn info */
+typedef struct bcm_flow_l2_learn_info_s {
+    uint32 l2_learn_info_flags; /* Learn info control flags 
+                                   BCM_FLOW_L2_LEARN_INFO_XXX */
+    bcm_gport_t dest_port;      /* Learn destination gport */
+    uint32 flush_group;         /* Learn MACT flush group */
+    bcm_gport_t encap_id;       /* Out-LIF gport */
+    uint32 learn_strength;      /* Learn strength */
+} bcm_flow_l2_learn_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow special field structure */
+typedef struct bcm_flow_special_field_s {
+    bcm_flow_field_id_t field_id;       /* Field id */
+    uint8 is_clear;                     /* Relevant for replace, indicate field
+                                           should be ignored. */
+    uint32 shr_var_uint32;              /* Used for up to 32 bit fields included
+                                           IPv4. */
+    uint8 shr_var_uint8_arr[BCM_FLOW_SPECIAL_FIELD_UIN8_ARR_MAX_SIZE]; /* Used for array of uint8 fields such
+                                           as MAC address and IPv6 */
+    uint32 shr_var_uint32_arr[BCM_FLOW_SPECIAL_FIELD_UIN32_ARR_MAX_SIZE]; /* Used for array of uint32 fields */
+    int symbol;                         /* used for Enum fields */
+} bcm_flow_special_field_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow special fields structure */
+typedef struct bcm_flow_special_fields_s {
+    uint32 actual_nof_special_fields; 
+    bcm_flow_special_field_t special_fields[BCM_FLOW_SPECIAL_FIELD_MAX_NOF_FIELDS]; 
+} bcm_flow_special_fields_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* bcm_flow_terminator_info_t header type */
+typedef struct bcm_flow_terminator_info_s {
+    uint32 flags;                       /* Use BCM_FLOW_TERMINATOR_INFO_XXX
+                                           flags */
+    bcm_flow_l2_ingress_info_t l2_ingress_info; /* L2 ingress intf info */
+    bcm_flow_l3_ingress_info_t l3_ingress_info; /* L3 ingress intf info */
+    uint32 vsi;                         /* Virtual switch instance */
+    bcm_vrf_t vrf;                      /* Virtual router instance */
+    uint32 stat_id;                     /* Statistics ID */
+    int stat_pp_profile;                /* Statistics PP Profile */
+    int qos_map_id;                     /* QOS Map ID */
+    bcm_qos_ingress_model_t ingress_qos_model; /* Ingress QOS and TTL model */
+    bcm_flow_dest_info_t dest_info;     /* Destination info */
+    uint64 additional_data;             /* Additional data for LIF */
+    bcm_gport_t action_gport;           /* Hold the Trap Action-Profile */
+    bcm_failover_t failover_id;         /* Failover Object Index. */
+    bcm_flow_failover_state_t failover_state; /* State for the failover ID. */
+    uint32 class_id;                    /* Network Domain. */
+    uint32 field_class_id;              /* PMF Field Network Domain */
+    bcm_flow_l2_learn_info_t l2_learn_info; /* Learn info */
+    uint8 learn_enable;                 /* Learn enable indication */
+    uint32 valid_elements_set;          /* bitmap of set fields
+                                           BCM_FLOW_TERMINATOR_ELEMENT_XXX_VALID
+                                           upon creation/replace */
+    uint32 valid_elements_clear;        /* bitmap of clear fields
+                                           BCM_FLOW_TERMINATOR_ELEMENT_XXX_VALID
+                                           upon replace. The set fields will be
+                                           ignored in flow entry replace. In
+                                           case of a profile field - the
+                                           original profile will be freed. */
+    uint32 tpid_class_id;               /* TPID profile. */
+    uint32 field_class_cs_id;           /* Field class cs id. */
+} bcm_flow_terminator_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* L2 egress info */
+typedef struct bcm_flow_l2_egress_info_s {
+    bcm_switch_network_group_t egress_network_group_id; /* Split Horizon egress network group
+                                           identifier */
+} bcm_flow_l2_egress_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* bcm_flow_initiator_info_t header type */
+typedef struct bcm_flow_initiator_info_s {
+    uint32 flags;                       /* Use BCM_FLOW_INITIATOR_INFO_XXX flags */
+    uint32 stat_id;                     /* Statistics ID */
+    int stat_pp_profile;                /* Statistics PP Profile */
+    int qos_map_id;                     /* QOS Map ID */
+    bcm_qos_egress_model_t egress_qos_model; /* Egress QOS and TTL model */
+    bcm_if_t l3_intf_id;                /* Next intf pointing following tunnel. */
+    bcm_encap_access_t encap_access;    /* Encapsulation phase to be used */
+    bcm_flow_l2_egress_info_t l2_egress_info; /* L2 egress info */
+    bcm_failover_t failover_id;         /* Failover Object Index. */
+    bcm_flow_failover_state_t failover_state; /* State for the failover ID. */
+    bcm_gport_t action_gport;           /* Trap action gport */
+    uint8 mtu_profile;                  /* Trap MTU profile */
+    uint32 valid_elements_set;          /* Bitmap of set fields
+                                           BCM_FLOW_INITIATOR_ELEMENT_XXX upon
+                                           creation/replace */
+    uint32 valid_elements_clear;        /* Bitmap of clear fields
+                                           BCM_FLOW_INITIATOR_ELEMENT_XXX_VALID
+                                           upon replace. The set fields will be
+                                           removed from the flow entry. In case
+                                           of a profile field - the original
+                                           profile will be freed. */
+    uint32 tpid_class_id;               /* TPID profile. */
+    uint32 class_id;                    /* Network Domain. */
+    int outlif_profile_group;           /* Outlif profile group. */
+    int ttl;                            /* header TTL. */
+    int field_class_id;                 /* field class id. */
+    int field_class_cs_id;              /* field class cs id. */
+} bcm_flow_initiator_info_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize a structure that holds flow handle information. */
+extern void bcm_flow_handle_info_t_init(
+    bcm_flow_handle_info_t *flow_handle_info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize a structure that holds L3 ingress information. */
+extern void bcm_flow_l3_ingress_info_t_init(
+    bcm_flow_l3_ingress_info_t *flow_l3_ingress_info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_terminator_info_create(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_terminator_info_t *terminator_info, 
+    bcm_flow_special_fields_t *special_fields);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_terminator_info_destroy(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_terminator_info_get(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_terminator_info_t *terminator_info, 
+    bcm_flow_special_fields_t *special_fields);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_terminator_info_traverse_cb */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_terminator_info_traverse_cb)(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_terminator_info_t *terminator_info, 
+    bcm_flow_special_fields_t *special_fields, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_terminator_info_traverse(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_terminator_info_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_initiator_info_create(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_initiator_info_t *initiator_info, 
+    bcm_flow_special_fields_t *special_fields);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_initiator_info_destroy(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_initiator_info_get(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_initiator_info_t *initiator_info, 
+    bcm_flow_special_fields_t *special_fields);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_initiator_info_traverse_cb */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_initiator_info_traverse_cb)(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_initiator_info_t *initiator_info, 
+    bcm_flow_special_fields_t *special_fields, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_initiator_info_traverse(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_initiator_info_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_match_info_add(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_special_fields_t *key_special_fields);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_match_info_delete(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_special_fields_t *key_special_fields);
+#endif
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_match_info_get(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_special_fields_t *key_special_fields);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_match_info_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_match_info_traverse_cb)(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_special_fields_t *key_special_fields, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+extern int bcm_flow_match_info_traverse(
+    int unit, 
+    bcm_flow_handle_info_t *flow_handle_info, 
+    bcm_flow_match_info_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow port ethernet filtering control. */
+#define BCM_FLOW_ES_FILTER_DROP_ENABLE  (1 << 0)   /* Enable/Disable ethernet
+                                                      segment filtering */
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Specify the filter control for the given ethernet segment identifier. */
+extern int bcm_flow_es_filter_set(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 es_id, 
+    uint32 flags);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the filter status for the given ethernet segment identifier. */
+extern int bcm_flow_es_filter_get(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 es_id, 
+    uint32 *flags);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Set the flex counter object value to the ethernet segment filter. */
+extern int bcm_flow_es_filter_flexctr_object_set(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the flex counter object value from the ethernet segment filter. */
+extern int bcm_flow_es_filter_flexctr_object_get(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 *value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the ethernet segment filter. */
+extern int bcm_flow_es_filter_stat_attach(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the ethernet segment filter. */
+extern int bcm_flow_es_filter_stat_detach(
+    int unit, 
+    bcm_gport_t flow_port_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter id associated from ethernet segment filter. */
+extern int bcm_flow_es_filter_stat_id_get(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the given flow VPN. */
+extern int bcm_flow_vpn_stat_attach(
+    int unit, 
+    bcm_vpn_t vpn, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the given flow VPN. */
+extern int bcm_flow_vpn_stat_detach(
+    int unit, 
+    bcm_vpn_t vpn);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Detach counter entries from the given flow VPN with a given stat
+ * counter id.
+ */
+extern int bcm_flow_vpn_stat_detach_with_id(
+    int unit, 
+    bcm_vpn_t vpn, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the given flow VPN. */
+extern int bcm_flow_vpn_stat_id_get(
+    int unit, 
+    bcm_vpn_t vpn, 
+    bcm_flexctr_direction_t direction, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the given flow port. */
+extern int bcm_flow_port_stat_attach(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the given flow port. */
+extern int bcm_flow_port_stat_detach(
+    int unit, 
+    bcm_gport_t flow_port_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Detach counter entries from the given flow port with a given stat
+ * counter id.
+ */
+extern int bcm_flow_port_stat_detach_with_id(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the given flow port. */
+extern int bcm_flow_port_stat_id_get(
+    int unit, 
+    bcm_gport_t flow_port_id, 
+    bcm_flexctr_direction_t direction, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Set the flex counter object value to the given match entry. */
+extern int bcm_flow_match_flexctr_object_set(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the flex counter object value from the given match entry. */
+extern int bcm_flow_match_flexctr_object_get(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 *value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the given match entry. */
+extern int bcm_flow_match_stat_attach(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the given match entry. */
+extern int bcm_flow_match_stat_detach(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the given match entry. */
+extern int bcm_flow_match_stat_id_get(
+    int unit, 
+    bcm_flow_match_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Set the flex counter object value to the encap entry. */
+extern int bcm_flow_encap_flexctr_object_set(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the flex counter object value from the encap entry. */
+extern int bcm_flow_encap_flexctr_object_get(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 *value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the encap entry. */
+extern int bcm_flow_encap_stat_attach(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach the counter entries from the encap entry. */
+extern int bcm_flow_encap_stat_detach(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the encap entry. */
+extern int bcm_flow_encap_stat_id_get(
+    int unit, 
+    bcm_flow_encap_config_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the flow tunnel initiator. */
+extern int bcm_flow_tunnel_initiator_stat_attach(
+    int unit, 
+    bcm_gport_t tunnel_id, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the flow tunnel initiator. */
+extern int bcm_flow_tunnel_initiator_stat_detach(
+    int unit, 
+    bcm_gport_t tunnel_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the flow tunnel initiator. */
+extern int bcm_flow_tunnel_initiator_stat_id_get(
+    int unit, 
+    bcm_gport_t tunnel_id, 
+    uint32 *stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Get the flex counter object value associated to the flow tunnel
+ * initiator.
+ */
+extern int bcm_flow_tunnel_initiator_flexctr_object_get(
+    int unit, 
+    bcm_gport_t tunnel_id, 
+    uint32 *value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Set the flex counter object value to the flow tunnel terminator
+ * object.
+ */
+extern int bcm_flow_tunnel_terminator_flexctr_object_set(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Get the flex counter object value from the flow tunnel terminator
+ * object.
+ */
+extern int bcm_flow_tunnel_terminator_flexctr_object_get(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 *value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Attach counter entries to the flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_stat_attach(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 stat_counter_id);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Detach counter entries from the flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_stat_detach(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get stat counter ID associated to the flow tunnel terminator object. */
+extern int bcm_flow_tunnel_terminator_stat_id_get(
+    int unit, 
+    bcm_flow_tunnel_terminator_t *info, 
+    uint32 num_of_fields, 
+    bcm_flow_logical_field_t *field, 
+    uint32 *stat_counter_id);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+typedef enum bcm_flow_handle_control_e {
+    bcmFlowHandleControlInvalid = 0,    /* Illegal. */
+    bcmFlowHandleControlVerifyEnable = 1, /* Enable/disable input verification for
+                                           a specific Flow handle. */
+    bcmFlowHandleControlErrorRecoveryEnable = 2, /* Enable/disable error recovery for a
+                                           specific Flow handle. */
+    bcmbcmFlowHandleControl__Count = 3  /* Must be last. */
+} bcm_flow_handle_control_t;
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* 
+ * Set flow handle matching application property according to property
+ * enum.
+ */
+extern int bcm_flow_handle_control_set(
+    int unit, 
+    bcm_flow_handle_t flow_handle, 
+    bcm_flow_handle_control_t type, 
+    uint32 value);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Get flow handle matching application property according to property
+ * enum.
+ */
+extern int bcm_flow_handle_control_get(
+    int unit, 
+    bcm_flow_handle_t flow_handle, 
+    bcm_flow_handle_control_t type, 
+    uint32 *value);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_initiator_info_t structure. */
+extern void bcm_flow_initiator_info_t_init(
+    bcm_flow_initiator_info_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_terminator_info_t structure. */
+extern void bcm_flow_terminator_info_t_init(
+    bcm_flow_terminator_info_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_special_fields_t structure. */
+extern void bcm_flow_special_fields_t_init(
+    bcm_flow_special_fields_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_dest_info_t structure. */
+extern void bcm_flow_dest_info_t_init(
+    bcm_flow_dest_info_t *info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel SRV6 header valid elements. */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_NEXT_HDR_VALID (1 << 0)   
+#define BCM_FLOW_TUNNEL_SRV6_SRH_TAG_VALID  (1 << 1)   
+#define BCM_FLOW_TUNNEL_SRV6_SRH_EGR_OBJ_VALID (1 << 2)   
+#define BCM_FLOW_TUNNEL_SRV6_SRH_FLAGS_VALID (1 << 3)   
+#endif
+
+#if defined(INCLUDE_L3)
+/* Used for option parameter of the SRV6 header add api. */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_OPTION_WITH_ID (1 << 0)   /* create SRV6 header
+                                                          with specified tunnel
+                                                          ID */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_OPTION_REPLACE (1 << 1)   /* Replace existing entry */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Used for the flags parameter of bcm_flow_tunnel_srv6_srh_t. */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_REDUCED_MODE (1 << 0)   /* SRV6 header reduced
+                                                          mode */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_CANONICAL  (1 << 1)   /* Indicate canonical
+                                                          tunnel, tunnel header
+                                                          + SRH */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_DIP_AS_LAST_SID (1 << 2)   /* Destination IP address
+                                                          is the last segment ID */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_TYPE_STD_SID (1 << 3)   /* The SID is the
+                                                          standard segment ID */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_TYPE_GSID  (1 << 4)   /* The SID is the
+                                                          generalized segment ID */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_TYPE_USID  (1 << 5)   /* The SID is the micro
+                                                          segment ID */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_INSERT     (1 << 6)   /* Support End.B6.Insert */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_GSID_PREFIX2 (1 << 7)   /* Use prefix
+                                                          configuration 2,
+                                                          default is prefix1 */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_USID_PREFIX2 (1 << 8)   /* Use prefix
+                                                          configuration 2,
+                                                          default is prefix1 */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_ES_ID_DIP  (1 << 9)   /* Insert ethernet
+                                                          segment ID to
+                                                          destination IP
+                                                          address. By default,
+                                                          it is inserted to the
+                                                          last SID. */
+#define BCM_FLOW_TUNNEL_SRV6_SRH_PAYLOAD_VLAN_DELETE (1 << 10)  /* Delete payload outer
+                                                          VLAN of L2 SRv6
+                                                          tunnel. */
+#endif
+
+#if defined(INCLUDE_L3)
+/* bcm_flow_srv6_tag_select_t. */
+typedef enum bcm_flow_srv6_tag_select_e {
+    bcmFlowSrv6TagFixed = 0,            /* Use tag set from switch control. */
+    bcmFlowSrv6TagOverlayEgress = 1,    /* Use class ID from overlay next hop. */
+    bcmFlowSrv6TagUnderlayEgress = 2,   /* Use class ID from underlay next hop. */
+    bcmFlowSrv6TagI2e = 3,              /* Use class ID from ingress to egress. */
+    bcmFlowSrv6TagI2eAndOverlayEgress = 4, /* Use class ID from ingress to egress
+                                           and overlay next hop. */
+    bcmFlowSrv6TagI2eAndUnderlayEgress = 5, /* Use class ID from ingress to egress
+                                           and underlay next hop. */
+    bcmFlowSrv6TagPacket = 6,           /* Use tag from packet SRH header. */
+    bcmFlowSrv6TagCount = 7             /* Unused always last. */
+} bcm_flow_srv6_tag_select_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow tunnel SRV6 header structure. */
+typedef struct bcm_flow_tunnel_srv6_srh_s {
+    uint32 flags;                       /* Configuration flags. See
+                                           BCM_FLOW_TUNNEL_SRV6_SRH_xxx */
+    bcm_gport_t tunnel_id;              /* Tunnel ID */
+    uint8 next_hdr;                     /* next header type in the SRH */
+    uint16 tag;                         /* Tag field in the SRH */
+    bcm_if_t egr_obj;                   /* Egress Object for Non-Canonical
+                                           tunnel */
+    uint32 valid_elements;              /* bitmap of valid fields */
+    bcm_if_t l3_intf_id;                /* L3 interface ID for non-canonical
+                                           tunnel. */
+    uint32 function_mask;               /* Function mask. */
+    uint16 function_left_shift;         /* Left shift bits to get function
+                                           position. */
+    uint32 es_id_mask;                  /* Ethernet segment ID mask. */
+    uint16 es_id_left_shift;            /* Left shift bits to get ethernet
+                                           segment ID position. */
+    uint16 gsid_prefix_length;          /* GSID prefix length. */
+    bcm_flow_srv6_tag_select_t tag_select; /* SRH header tag selection. */
+    bcm_if_t second_pass_egress;        /* Egress object for the second pass. */
+    uint16 gsid_length;                 /* GSID length in bits. */
+    uint16 si_offset;                   /* Segment index offset from DIP6's LSB
+                                           in bits. */
+} bcm_flow_tunnel_srv6_srh_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize bcm_flow_tunnel_srv6_srh_t_init structure. */
+extern void bcm_flow_tunnel_srv6_srh_t_init(
+    bcm_flow_tunnel_srv6_srh_t *info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Add a Flow tunnel SRv6 SRH entry */
+extern int bcm_flow_tunnel_srv6_srh_add(
+    int unit, 
+    uint32 options, 
+    bcm_flow_tunnel_srv6_srh_t *info, 
+    int nofs, 
+    bcm_ip6_t *sid_list);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete a flow tunnel SRv6 SRH entry */
+extern int bcm_flow_tunnel_srv6_srh_delete(
+    int unit, 
+    bcm_gport_t tunnel_id );
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the SRV6 SRH entry's configuration parameters */
+extern int bcm_flow_tunnel_srv6_srh_get(
+    int unit, 
+    bcm_flow_tunnel_srv6_srh_t *info, 
+    int max_nofs, 
+    bcm_ip6_t *sid_list, 
+    int *count);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+/* bcm_flow_tunnel_srv6_srh_traverse callback */
+#if defined(INCLUDE_L3)
+typedef int (*bcm_flow_tunnel_srv6_srh_traverse_cb)(
+    int unit, 
+    bcm_flow_tunnel_srv6_srh_t *info, 
+    int nofs, 
+    bcm_ip6_t *sid_list, 
+    void *user_data);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Traverse hardware tables for all SRV6 SRH entries */
+extern int bcm_flow_tunnel_srv6_srh_traverse(
+    int unit, 
+    bcm_flow_tunnel_srv6_srh_traverse_cb cb, 
+    void *user_data);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Delete all SRv6 SRH entries */
+extern int bcm_flow_tunnel_srv6_srh_delete_all(
+    int unit);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Flow GBP egress fitlering flags. */
+#define BCM_FLOW_GBP_EGR_FILTER_DROP    (1 << 0)   /* Deny rule for GBP egress
+                                                      filtering */
+#define BCM_FLOW_GBP_EGR_FILTER_DELETE  (1 << 1)   /* Delete the entry for GBP
+                                                      egress filtering */
+#endif
+
+#if defined(INCLUDE_L3)
+/* Flow GBP egress filter structure. */
+typedef struct bcm_flow_gbp_egr_filter_s {
+    uint16 gbp_src_id;  /* GBP source ID */
+    uint16 gbp_dst_id;  /* GBP dest ID */
+    uint32 flags;       /* BCM_FLOW_GBP_EGR_FILTER_xxx flags for GBP egress
+                           filtering */
+} bcm_flow_gbp_egr_filter_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* Initialize the bcm_flow_gbp_egr_filter_t configuration structure */
+extern void bcm_flow_gbp_egr_filter_t_init(
+    bcm_flow_gbp_egr_filter_t *gbp_info);
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* 
+ * Set the GBP egress filtering policy for the given GBP SID and DID
+ * combination.
+ */
+extern int bcm_flow_gbp_egr_filter_set(
+    int unit, 
+    bcm_flow_gbp_egr_filter_t *gbp_info);
+#endif
+
+#if defined(INCLUDE_L3)
+/* 
+ * Get the GBP egress filtering policy for the given GBP SID and DID
+ * combination.
+ */
+extern int bcm_flow_gbp_egr_filter_get(
+    int unit, 
+    bcm_flow_gbp_egr_filter_t *gbp_info);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* SRV6 opaque object IDs for tunnel termination object extraction */
+typedef enum bcm_flow_srv6_opaque_object_id_e {
+    bcmFlowSrv6OpaqueObjectId0 = 0,     /* Opaque object 0 ID. */
+    bcmFlowSrv6OpaqueObjectId1 = 1,     /* Opaque object 1 ID. */
+    bcmFlowSrv6OpaqueObjectId2 = 2,     /* Opaque object 2 ID. */
+    bcmFlowSrv6OpaqueObjectIdCount = 3  /* Valid ID count. Must be last */
+} bcm_flow_srv6_opaque_object_id_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* SRV6 opaque object extraction source for tunnel termination */
+typedef enum bcm_flow_srv6_object_extraction_source_e {
+    bcmFlowSrv6ObjectExtractionSourceDip = 0, /* Object is extracted from DIP6. */
+    bcmFlowSrv6ObjectExtractionSourceLastSid = 1, /* Object is extracted from last SID. */
+    bcmFlowSrv6ObjectExtractionSourceSrhTag = 2, /* Object is extracted from SRH tag. */
+    bcmFlowSrv6ObjectExtractionSourceCount = 3 /* Valid source count. Must be last */
+} bcm_flow_srv6_object_extraction_source_t;
+#endif
+
+#if defined(INCLUDE_L3)
+/* SRv6 tunnel termination object extraction config structure */
+typedef struct bcm_flow_srv6_object_extraction_s {
+    bcm_flow_srv6_object_extraction_source_t source; /* SRV6 opaque object extraction source. */
+    uint16 mask;                        /* Mask applied to the extracted object */
+    int offset;                         /* Location of the object in the source,
+                                           offset from LSB */
+} bcm_flow_srv6_object_extraction_t;
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* 
+ * Perform opaque object extraction configuration for SRv6 tunnel
+ * termination.
+ */
+extern int bcm_flow_srv6_object_extraction_set(
+    int unit, 
+    bcm_flow_srv6_opaque_object_id_t objectId, 
+    bcm_flow_srv6_object_extraction_t *config);
+#endif
+
+#if defined(INCLUDE_L3)
+/* Get the SRv6 object extraction configuration for the given object ID. */
+extern int bcm_flow_srv6_object_extraction_get(
+    int unit, 
+    bcm_flow_srv6_opaque_object_id_t objectId, 
+    bcm_flow_srv6_object_extraction_t *config);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#if defined(INCLUDE_L3)
+/* Port class properties structure. */
+typedef struct bcm_flow_match_entry_info_s {
+    bcm_flow_handle_info_t flow_handle_info; 
+    bcm_flow_special_fields_t key_special_fields; /* Match entry special fields */
+} bcm_flow_match_entry_info_t;
+#endif
+
+#ifndef BCM_HIDE_DISPATCHABLE
+
+#if defined(INCLUDE_L3)
+/* Get flow match information */
+extern int bcm_flow_match_info_by_gport_multi_get(
+    int unit, 
+    bcm_gport_t gport, 
+    int size, 
+    bcm_flow_match_entry_info_t *match_array, 
+    int *count);
+#endif
+
+#endif /* BCM_HIDE_DISPATCHABLE */
+
+#endif /* __BCM_FLOW_H__ */

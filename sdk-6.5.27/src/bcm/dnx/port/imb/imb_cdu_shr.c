@@ -1,0 +1,1088 @@
+/** \file imb_cdu_shr.c
+ *
+ *  Ethernet ports procedures for DNX.
+ *
+ */
+
+/*
+ *         
+ * 
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ *         
+ */
+
+#include <soc/sand/shrextend/shrextend_debug.h>
+#include <soc/dnxc/drv_dnxc_utils.h>
+#include <soc/dnxc/dnxc_defs.h>
+#include <soc/sand/sand_aux_access.h>
+
+#include <bcm/port.h>
+#include <bcm_int/dnx/port/imb/imb_common.h>
+#include <bcm_int/dnx/port/imb/imb_internal.h>
+#include <bcm_int/dnx/port/imb/imb_otnu_phy.h>
+#include <bcm_int/dnx/port/nif/dnx_port_nif_arb.h>
+#include <bcm_int/dnx/port/nif/dnx_port_nif_ofr.h>
+#include <bcm_int/dnx/port/nif/dnx_port_nif_oft.h>
+#include "../nif/dnx_port_nif_oft_internal.h"
+#include <soc/portmod/portmod.h>
+#include <soc/phy/phymod_sim.h>
+#include <soc/dnx/swstate/auto_generated/access/dnx_port_imb_access.h>
+#include <soc/dnx/swstate/auto_generated/types/dnx_port_imb_types.h>
+#include <soc/dnx/swstate/auto_generated/access/instru_counters_access.h>
+#include <bcm_int/dnx/algo/swstate/auto_generated/access/dnx_algo_port_access.h>
+#include <bcm_int/dnx/port/imb/imb.h>
+#include <bcm_int/dnx/port/imb/imb_dispatch.h>
+#include "imb_utils.h"
+#include "imb_cdu_internal.h"
+#include <soc/portmod/cdmac.h>
+#include <soc/dnx/pll/pll.h>
+#include <soc/dnx/dnx_err_recovery_manager.h>
+#include <bcm_int/dnx/cosq/egress/egr_tm_dispatch.h>
+#include <bcm_int/dnx/cosq/egress/egr_queuing.h>
+#include <bcm_int/dnx/cosq/egress/esb.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_port.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_pll.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_esb.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_tsn.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_instru.h>
+#include <bcm_int/dnx/algo/port/algo_port_imb.h>
+#include <bcm_int/dnx/algo/lane_map/algo_lane_map.h>
+#include <shared/utilex/utilex_integer_arithmetic.h>
+#include <bcm_int/common/link.h>
+#ifdef INCLUDE_XFLOW_MACSEC
+#include <dnx/dnx_sec.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_macsec.h>
+#endif
+
+#ifdef BSL_LOG_MODULE
+#error "BSL_LOG_MODULE redefined"
+#endif
+#define BSL_LOG_MODULE BSL_LS_BCMDNX_PORT
+
+/**
+ * \brief - call back function to portmod to reset port credit
+ *
+ */
+int
+imb_cdu_shr_portmod_soft_reset(
+    int unit,
+    soc_port_t port,
+    portmod_call_back_action_type_t action)
+{
+    int mac_enable = 0, mac_rx_enable = 0, mac_tx_enable = 0;
+    dnx_algo_port_info_s port_info;
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+
+    if (DNX_ALGO_PORT_TYPE_IS_NIF_ETH(unit, port_info, 0))
+    {
+        switch (action)
+        {
+            case portmodCallBackActionTypeDuring:
+                break;
+
+            case portmodCallBackActionTypePre:
+                SHR_IF_ERR_EXIT(dnx_port_arb_pm_port_reset(unit, port, ARB_TX_DIRECTION, IMB_COMMON_IN_RESET));
+                break;
+
+            case portmodCallBackActionTypePost:
+                SHR_IF_ERR_EXIT(cdmac_enable_get(unit, port, CDMAC_ENABLE_SET_FLAGS_RX_EN, &mac_rx_enable));
+                mac_enable |= (mac_rx_enable) ? 1 : 0;
+                SHR_IF_ERR_EXIT(cdmac_enable_get(unit, port, CDMAC_ENABLE_SET_FLAGS_TX_EN, &mac_tx_enable));
+                mac_enable |= (mac_tx_enable) ? 1 : 0;
+                if (mac_enable)
+                {
+                    SHR_IF_ERR_EXIT(dnx_port_arb_pm_port_reset(unit, port, ARB_TX_DIRECTION, IMB_COMMON_OUT_OF_RESET));
+                }
+                break;
+
+            case portmodCallBackActionTypeLock:
+                SHR_IF_ERR_EXIT(dnx_algo_port_db.general.portmod_mac_soft_reset_cb_lock.take(unit, sal_mutex_FOREVER));
+                break;
+
+            case portmodCallBackActionTypeUnlock:
+                SHR_IF_ERR_EXIT(dnx_algo_port_db.general.portmod_mac_soft_reset_cb_lock.give(unit));
+                break;
+
+            default:
+                break;
+        }
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/**
+ * \brief - this function will configure a struct of type portmod_pm_create_info_t
+ *          before it is sent to portmod_port_macro_add
+ *
+ * \param [in] unit - chip unit id
+ * \param [in] imb_info - imb info to retrive CDU id
+ * \param [in] pm_in_cdu_index - pm index inside cdu
+ * \param [in] pm_info - pm configuration sturct
+ *
+ * \return
+ *   int - see _SHR_E_*
+ *
+ * \remarks
+ *   * None
+ * \see
+ *   * None
+ */
+static int
+imb_cdu_shr_port_macro_config(
+    int unit,
+    int pm_in_cdu_index,
+    const imb_create_info_t * imb_info,
+    portmod_pm_create_info_t * pm_info)
+{
+    bcm_port_t phy;
+    bcm_pbmp_t pm_pbmp;
+    int is_sim;
+    int pm_index;
+    int lane;
+    uint32 rx_polarity, tx_polarity;
+    phymod_lane_map_t lane_map = { 0 };
+    DNXC_SERDES_REF_CLOCK_TYPE ref_clk = DNXC_SERDES_REF_CLOCK_NOF;
+    int lcpll;
+    phymod_dispatch_type_t sim_type;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    if (dnx_data_nif.global.nof_lcplls_get(unit) > 1)
+    {
+        lcpll = imb_info->inst_id >= dnx_data_nif.eth.cdu_nof_per_core_get(unit) ? 1 : 0;
+    }
+    else
+    {
+        /** For devices w/o LCPLL, use fixed index 0 to retrieve ref clock from DNX-DATA */
+        lcpll = 0;
+    }
+    /** update type and phys */
+    /** CDU is always at index 0 */
+    pm_info->type = dnx_data_nif.portmod.pm_types_and_interfaces_get(unit, 0)->type;
+    pm_index = dnx_data_nif.eth.ethu_properties_get(unit, imb_info->inst_id)->pms[pm_in_cdu_index];
+    pm_pbmp = dnx_data_nif.eth.pm_properties_get(unit, pm_index)->phys;
+    BCM_PBMP_ITER(pm_pbmp, phy)
+    {
+        BCM_PBMP_PORT_ADD(pm_info->phys, phy);
+        /** lane polarity get */
+        rx_polarity = dnx_data_nif.phys.polarity_get(unit, (int) phy)->rx_polarity;
+        tx_polarity = dnx_data_nif.phys.polarity_get(unit, (int) phy)->tx_polarity;
+        lane = (int) phy % dnx_data_nif.eth.nof_lanes_in_cdu_get(unit);
+        pm_info->pm_specific_info.pm8x50_flexe_gen2.polarity.rx_polarity |= ((rx_polarity & 0x1) << lane);
+        pm_info->pm_specific_info.pm8x50_flexe_gen2.polarity.tx_polarity |= ((tx_polarity & 0x1) << lane);
+    }
+
+    ref_clk = dnx_data_pll.general.nif_pll_get(unit, lcpll)->out_freq;
+    if (ref_clk == DNXC_SERDES_REF_CLOCK_BYPASS)
+    {
+        ref_clk = dnx_data_pll.general.nif_pll_get(unit, lcpll)->in_freq;
+    }
+
+    SHR_IF_ERR_EXIT(dnxc_soc_to_phymod_ref_clk(unit, ref_clk, &(pm_info->pm_specific_info.pm8x50_flexe_gen2.ref_clk)));
+
+    /** As we do not know the speeds of the ports on the PM yet,we set vco to null */
+
+    /** update access struct with cdu info */
+    SHR_IF_ERR_EXIT(phymod_access_t_init(&(pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access)));
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access.user_acc = imb_info->imb_specific_info.cdu.user_acc;
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access.addr =
+        dnx_data_nif.eth.pm_properties_get(unit, pm_index)->phy_addr;
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access.bus = NULL;       /* Use default bus */
+
+    sim_type = dnx_data_nif.simulator.cdu_type_get(unit);
+    SHR_IF_ERR_EXIT(soc_physim_check_sim
+                    (unit, sim_type, &(pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access),
+                     (imb_info->inst_id << 16), 1, &is_sim));
+
+    if (is_sim)
+    {
+        pm_info->pm_specific_info.pm8x50_flexe_gen2.fw_load_method = phymodFirmwareLoadMethodNone;
+        /** enable clause45 just for sim - used by phy sim */
+        PHYMOD_ACC_F_CLAUSE45_SET(&pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access);
+        PHYMOD_ACC_F_PHYSIM_SET(&pm_info->pm_specific_info.pm8x50_flexe_gen2.access.access);
+    }
+    else
+    {
+        pm_info->pm_specific_info.pm8x50_flexe_gen2.fw_load_method =
+            dnx_data_port.static_add.nif_fw_load_method_get(unit);
+    }
+
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.lane_map = lane_map; /** lane map soc property will be read at a later stage, we pass an empty lane map for now*/
+
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.external_fw_loader = NULL; /**Tells Portmod to use default external loader */
+
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.portmod_mac_soft_reset = imb_cdu_shr_portmod_soft_reset;
+    /** pm_info->pm_specific_info.pm8x50_flexe_gen2.portmod_egress_buffer_reset = imb_ethu_port_credit_tx_reset; */
+
+    pm_info->pm_specific_info.pm8x50_flexe_gen2.flexible_pll_required =
+        (dnx_data_nif.global.otn_supported_get(unit) == 0 ? TRUE : FALSE);
+exit:
+    SHR_FUNC_EXIT;
+}
+
+int
+imb_cdu_shr_init(
+    int unit,
+    const imb_create_info_t * imb_info,
+    imb_specific_create_info_t * imb_specific_info)
+{
+    int pm_i;
+    int nof_cdus_per_core, cdu_id;
+    bcm_core_t core;
+    portmod_pm_create_info_t pm_info;
+    portmod_default_user_access_t *user_acc = NULL;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    /**
+     * 1. Initialize CDU DB
+     */
+    SHR_ALLOC_ERR_EXIT(user_acc, sizeof(portmod_default_user_access_t), "CDU user access", "%s%s%s", "user_acc",
+                       EMPTY, EMPTY);
+    SHR_IF_ERR_EXIT(portmod_default_user_access_t_init(unit, user_acc));
+    PORTMOD_USER_ACCESS_FW_LOAD_REVERSE_SET(user_acc);
+    user_acc->unit = unit;
+    user_acc->blk_id = dnx_drv_cdport_block(unit, imb_info->inst_id);
+    user_acc->mutex = sal_mutex_create("pm mutex");
+    SHR_NULL_CHECK(user_acc->mutex, _SHR_E_MEMORY, "user_access->mutex");
+    imb_specific_info->cdu.user_acc = user_acc;
+
+    /**
+     * 2. initialize register values
+     */
+    if (!sw_state_is_warm_boot(unit))
+    {
+        nof_cdus_per_core = dnx_data_nif.eth.cdu_nof_per_core_get(unit);
+        core = imb_info->inst_id >= nof_cdus_per_core ? 1 : 0;
+        cdu_id = imb_info->inst_id % nof_cdus_per_core;
+
+        /*
+         * Take PM out of reset
+         */
+        SHR_IF_ERR_EXIT(imb_cdu_pm_reset(unit, core, cdu_id, IMB_COMMON_OUT_OF_RESET));
+
+        /*
+         * Enable EEE for the CDU - this does not actually enable the EEE for the ports, but if this bit is not set,
+         * EEE will not work
+         */
+        SHR_IF_ERR_EXIT(imb_cdu_eee_enable_set(unit, core, cdu_id, 1));
+
+        /*
+         * Enable 400Gbit Ethernet - this does not actually enable the 400Gbit Ethernet for the ports,
+         * but if this bit is not set, 400Gbit Ethernet will not work
+         */
+        SHR_IF_ERR_EXIT(imb_cdu_400ge_enable_set(unit, core, cdu_id, 1));
+
+        if (dnx_data_tsn.general.feature_get(unit, dnx_data_tsn_general_is_supported)
+            && !soc_sand_is_emulation_system(unit))
+        {
+            /*
+             * Enable Frame Preemption - this does not actually enable the frame preemption for the ports,
+             * but if this bit is not set, frame preemption will not work
+             */
+            SHR_IF_ERR_EXIT(imb_cdu_frame_preemption_enable_set(unit, core, cdu_id, 1));
+        }
+
+        SHR_IF_ERR_EXIT(imb_cdu_iddq_enable_set(unit, core, cdu_id, 0));
+
+    }
+
+     /**
+     * 3. initialize portmod_pm_create_info_t
+     */
+    for (pm_i = 0; pm_i < dnx_data_nif.eth.nof_pms_in_cdu_get(unit); pm_i++)
+    {
+        SHR_IF_ERR_EXIT(portmod_pm_create_info_t_init(unit, &pm_info));
+        SHR_IF_ERR_EXIT(imb_cdu_shr_port_macro_config(unit, pm_i, imb_info, &pm_info));
+
+        /*
+         * Initialize specific pm8x50 info - after pm8x50 is implemented
+         */
+        SHR_IF_ERR_EXIT(portmod_port_macro_add(unit, &pm_info));
+    }
+
+exit:
+
+    if (SHR_FUNC_ERR())
+    {
+        if (user_acc != NULL)
+        {
+            if (user_acc->mutex != NULL)
+            {
+                sal_mutex_destroy(user_acc->mutex);
+            }
+
+            sal_free(user_acc);
+            imb_specific_info->cdu.user_acc = NULL;
+        }
+    }
+
+    SHR_FUNC_EXIT;
+}
+
+int
+imb_cdu_shr_deinit(
+    int unit,
+    const imb_create_info_t * imb_info,
+    imb_specific_create_info_t * imb_specific_info)
+{
+    portmod_default_user_access_t *user_acc;
+    SHR_FUNC_INIT_VARS(unit);
+
+    user_acc = imb_specific_info->cdu.user_acc;
+
+    if (user_acc != NULL)
+    {
+        if (user_acc->mutex != NULL)
+        {
+            sal_mutex_destroy(user_acc->mutex);
+        }
+
+        sal_free(user_acc);
+        imb_specific_info->cdu.user_acc = NULL;
+    }
+
+    SHR_FUNC_EXIT;
+
+}
+/**
+ * \brief - initialize Portmod add_info before calling
+ *        portmod_port_add
+ *
+ * \param [in] unit - chip unit id.
+ * \param [in] port - logical port
+ * \param [in] add_info - portmod add info
+ *
+ * \return
+ *   int - see _SHR_E_*
+ *
+ * \remarks
+ *   * None
+ * \see
+ *   * None
+ */
+int
+imb_cdu_shr_portmod_add_info_config(
+    int unit,
+    bcm_port_t port,
+    portmod_port_add_info_t * add_info)
+{
+    int i, nof_phys;
+    int pm_lower_bound, pm_upper_bound;
+    soc_dnxc_lane_map_db_map_t lane2serdes[DNX_DATA_MAX_NIF_ETH_NOF_LANES_IN_CDU];
+    int ext_txpi_enable, is_flr_fw_support;
+    dnx_algo_port_info_s port_info;
+
+    SHR_FUNC_INIT_VARS(unit);
+    SHR_IF_ERR_EXIT(portmod_port_add_info_t_init(unit, add_info));
+
+    /*
+     * Configure lane map info. Get the lane map info from swstate
+     */
+    SHR_IF_ERR_EXIT(dnx_algo_port_imb_ethu_port_pm_boundary_get(unit, port, &pm_lower_bound, &pm_upper_bound));
+    SHR_IF_ERR_EXIT(dnx_algo_lane_map_pm_lane_to_serdes_map_get
+                    (unit, DNX_ALGO_LANE_MAP_NIF_SIDE, pm_lower_bound, pm_upper_bound, lane2serdes));
+
+    /** Get port num of lanes */
+    SHR_IF_ERR_EXIT(dnx_algo_port_nif_phys_nof_get(unit, port, &add_info->interface_config.port_num_lanes));
+
+    for (i = 0; i < dnx_data_nif.eth.nof_lanes_in_cdu_get(unit); i++)
+    {
+        add_info->init_config.lane_map[0].lane_map_rx[i] = lane2serdes[i].rx_id;
+        add_info->init_config.lane_map[0].lane_map_tx[i] = lane2serdes[i].tx_id;
+    }
+    add_info->init_config.lane_map[0].num_of_lanes = dnx_data_nif.eth.nof_lanes_in_cdu_get(unit);
+    add_info->init_config.lane_map_overwrite = 1; /** we always overwrite lane map*/
+    add_info->init_config.polarity_overwrite = 0; /** same as in pm create, we don't need to overwrite*/
+    add_info->init_config.fw_load_method_overwrite = 0; /** same as in pm create, we don't need to overwrite*/
+    add_info->init_config.ref_clk_overwrite = 0; /** same as in pm create, we don't need to overwrite*/
+    /** Get TXPI mode */
+    SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+    if (DNX_ALGO_PORT_TYPE_IS_NIF_ETH_FEEDBACK(unit, port_info))
+    {
+        /*
+         * For feedback port, the TXPI is always enabled.
+         */
+        ext_txpi_enable = 1;
+    }
+    else
+    {
+        SHR_IF_ERR_EXIT(dnx_algo_port_nif_ext_txpi_enable_get(unit, port, &ext_txpi_enable));
+    }
+    add_info->init_config.txpi_mode = ext_txpi_enable;
+    if (ext_txpi_enable)
+    {
+        add_info->init_config.txpi_sdm_scheme = dnx_data_nif.phys.txpi_sdm_scheme_get(unit);
+    }
+    /** get port phys */
+    SHR_IF_ERR_EXIT(dnx_algo_port_nif_phys_get(unit, port, 0, (bcm_pbmp_t *) & (add_info->phys)));
+    /** get Max speed */
+    PORTMOD_PBMP_COUNT(add_info->phys, nof_phys);
+    add_info->interface_config.max_speed = dnx_data_nif.eth.max_speed_get(unit, nof_phys)->speed;
+
+    PORTMOD_PORT_ADD_F_SKIP_SPEED_INIT_SET(add_info);
+    PORTMOD_PORT_ADD_F_AUTONEG_CONFIG_SKIP_SET(add_info);
+    PORTMOD_PORT_ADD_F_RX_SRIP_CRC_SET(add_info);
+
+    if (dnx_data_port.static_add.nif_fw_crc_check_get(unit))
+    {
+        PORTMOD_PORT_ADD_F_BYPASS_FW_CRC_CHECK_CLR(add_info);
+    }
+    else
+    {
+        PORTMOD_PORT_ADD_F_BYPASS_FW_CRC_CHECK_SET(add_info);
+    }
+
+    if (dnx_data_port.static_add.nif_fw_load_verify_get(unit))
+    {
+        PORTMOD_PORT_ADD_F_FIRMWARE_LOAD_VERIFY_SET(add_info);
+    }
+    else
+    {
+        PORTMOD_PORT_ADD_F_FIRMWARE_LOAD_VERIFY_CLR(add_info);
+    }
+    /** Update the FLR flag */
+    SHR_IF_ERR_EXIT(dnx_algo_port_nif_flr_fw_support_get(unit, port, &is_flr_fw_support));
+    if (is_flr_fw_support)
+    {
+        PORTMOD_PORT_ADD_F_FLR_SUPPORT_SET(add_info);
+    }
+    else
+    {
+        PORTMOD_PORT_ADD_F_FLR_SUPPORT_CLR(add_info);
+    }
+
+    add_info->interface_config.interface = SOC_PORT_IF_NIF_ETH;
+
+exit:
+    SHR_FUNC_EXIT;
+}
+/**
+ * \brief - Configure the links status mux for HW
+ *    Linkscan. The link mux is from regular link
+ *    status from PM.
+ */
+static int
+imb_cdu_shr_port_link_status_mux_set(
+    int unit,
+    bcm_port_t port)
+{
+    dnx_algo_port_ethu_access_info_t ethu_info;
+
+    SHR_FUNC_INIT_VARS(unit);
+    /*
+     * Get ETHU access info
+     */
+    SHR_IF_ERR_EXIT(dnx_algo_port_ethu_access_info_get(unit, port, &ethu_info));
+    /*
+     * Configure link status MUX
+     */
+    SHR_IF_ERR_EXIT(imb_cdu_hw_linkscan_link_mux_set(unit, ethu_info.core, ethu_info.ethu_id_in_core,
+                                                     ethu_info.first_lane_in_port, IMB_PORT_LINK_STATUS_MUX_ETH));
+exit:
+    SHR_FUNC_EXIT;
+}
+
+int
+imb_cdu_shr_port_attach(
+    int unit,
+    bcm_port_t port,
+    uint32 flags)
+{
+    int is_master_port;
+    portmod_port_add_info_t add_info;
+    portmod_pause_control_t pause_control;
+    dnx_algo_port_info_s port_info;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+    SHR_IF_ERR_EXIT(dnx_algo_port_is_master_get(unit, port, 0, &is_master_port));
+
+    if (is_master_port && !DNX_ALGO_PORT_TYPE_IS_NIF_ETH_FEEDBACK(unit, port_info))
+    {
+        /*
+         * Adding shared blocks
+         */
+        SHR_IF_ERR_EXIT(dnx_port_ofr_port_add(unit, port));
+        SHR_IF_ERR_EXIT(dnx_port_oft_port_add(unit, port));
+        SHR_IF_ERR_EXIT(dnx_port_arb_port_add(unit, port));
+
+#ifdef INCLUDE_XFLOW_MACSEC
+        if (dnx_data_macsec.general.feature_get(unit, dnx_data_macsec_general_macsec_block_exists))
+        {
+            /** enable the MACSec core clk */
+            SHR_IF_ERR_EXIT(dnx_xflow_macsec_shared_macsec_core_power_down_set(unit, 0));
+        }
+#endif
+    }
+
+    /*
+     * 7.  Call Portmod API
+     *
+     */
+    SHR_IF_ERR_EXIT(imb_cdu_shr_portmod_add_info_config(unit, port, &add_info));
+    SHR_IF_ERR_EXIT(imb_er_portmod_port_add(unit, port, &add_info));
+
+    if (is_master_port && !DNX_ALGO_PORT_TYPE_IS_NIF_ETH_FEEDBACK(unit, port_info))
+    {
+        int frame_preemptable = 0;
+
+        DNX_ERR_RECOVERY_SUPPRESS(unit);
+        SHR_IF_ERR_EXIT(portmod_port_enable_set(unit, port, 0, 0));
+
+        SHR_IF_ERR_EXIT(dnx_algo_port_nif_frame_preemptable_get(unit, port, &frame_preemptable));
+        if (frame_preemptable)
+        {
+            /** If port is frame preemptable - enable preemption support in portmod */
+            SHR_IF_ERR_EXIT(portmod_preemption_control_set(unit, port, portmodPreemptionControlPreemptionSupport, 1));
+        }
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+
+        /*
+         * Pause - to be consistent with legacy disable TX and enable RX
+         */
+        SHR_IF_ERR_EXIT(portmod_pause_control_t_init(unit, &pause_control));
+        pause_control.tx_enable = FALSE;
+        pause_control.rx_enable = TRUE;
+        DNX_ERR_RECOVERY_SUPPRESS(unit);
+        SHR_IF_ERR_CONT(portmod_port_pause_control_set(unit, port, &pause_control));
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+        if (SHR_FUNC_ERR())
+        {
+            SHR_EXIT();
+        }
+        /*
+         * Configure Link status MUX for HW linkscan
+         */
+        if (dnx_data_nif.global.feature_get(unit, dnx_data_nif_global_framer_phy_hw_linkscan_supported))
+        {
+            SHR_IF_ERR_EXIT(imb_cdu_shr_port_link_status_mux_set(unit, port));
+        }
+    }
+exit:
+    SHR_FUNC_EXIT;
+
+}
+
+int
+imb_cdu_shr_port_detach(
+    int unit,
+    bcm_port_t port)
+{
+    int nof_channels, is_flr_fw_support;
+    bcm_port_flr_link_config_t link_config;
+    dnx_algo_port_info_s port_info;
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+    /*
+     * Check if last channel on port
+     */
+    SHR_IF_ERR_EXIT(dnx_algo_port_channels_nof_get(unit, port, &nof_channels));
+    if (nof_channels == 1 && !DNX_ALGO_PORT_TYPE_IS_NIF_ETH_FEEDBACK(unit, port_info))
+    {
+        /*
+         * Removing shared blocks
+         */
+        SHR_IF_ERR_EXIT(dnx_port_arb_port_remove(unit, port));
+        SHR_IF_ERR_EXIT(dnx_port_ofr_port_remove(unit, port));
+        SHR_IF_ERR_EXIT(dnx_port_oft_port_remove(unit, port));
+
+#ifdef INCLUDE_XFLOW_MACSEC
+        if (dnx_data_macsec.general.feature_get(unit, dnx_data_macsec_general_macsec_block_exists))
+        {
+            /*
+             * handle MACSec clean up
+             */
+            SHR_IF_ERR_EXIT(imb_common_port_macsec_port_enable_set(unit, port, 0 /** disable */ ));
+
+            /*
+             * disable the MACSec core clk ONLY in case this is the last port in the entire MACSec instance.
+             */
+            SHR_IF_ERR_EXIT(dnx_xflow_macsec_shared_macsec_core_power_down_set(unit, 1));
+        }
+#endif
+
+        DNX_ERR_RECOVERY_SUPPRESS(unit);
+        /*
+         * disable preemption support in portmod
+         */
+        SHR_IF_ERR_EXIT(portmod_preemption_control_set(unit, port, portmodPreemptionControlPreemptionSupport, 0));
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+        /*
+         * Clear FLR resources
+         */
+        SHR_IF_ERR_EXIT(dnx_algo_port_nif_flr_fw_support_get(unit, port, &is_flr_fw_support));
+        if (is_flr_fw_support && dnx_data_nif.flr.feature_get(unit, dnx_data_nif_flr_is_advanced_flr_supported))
+        {
+            SHR_IF_ERR_EXIT(imb_otnu_phy_port_lane_map_set(unit, port, 0, NULL, 0));
+            /*
+             * Clear FLR link mask configuration
+             */
+            sal_memset(&link_config, 0, sizeof(bcm_port_flr_link_config_t));
+            link_config.link_mask =
+                (BCM_PORT_FLR_LOS_DOWN_MASK | BCM_PORT_FLR_CDR_OOL_DOWN_MASK | BCM_PORT_FLR_CDR_LOCK_DOWN_MASK);
+            SHR_IF_ERR_EXIT(imb_otnu_phy_port_flr_link_config_set(unit, port, -1, &link_config));
+        }
+    }
+
+    /*
+     * 13.  Call Portmod API
+     */
+    SHR_IF_ERR_EXIT(imb_er_portmod_port_remove(unit, port));
+
+exit:
+    SHR_FUNC_EXIT;
+
+}
+
+static int
+imb_cdu_shr_port_feedback_port_enable_set(
+    int unit,
+    bcm_port_t port,
+    int enable)
+{
+    SHR_FUNC_INIT_VARS(unit);
+    /*
+     * enable the port in Portmod
+     */
+    SHR_IF_ERR_EXIT(imb_er_portmod_port_enable_set(unit, port, 0, enable));
+    /*
+     * Enable/Disable the external PMD interface for feedback port
+     */
+    SHR_IF_ERR_EXIT(imb_cdu_port_xpmd_lane_enable(unit, port, IMB_COMMON_DIRECTION_TX, enable));
+exit:
+    SHR_FUNC_EXIT;
+}
+
+int
+imb_cdu_shr_port_enable_set(
+    int unit,
+    bcm_port_t port,
+    uint32 flags,
+    int enable)
+{
+    dnx_algo_port_info_s port_info;
+    int is_flr_fw_support, is_advanced_flr_support;
+    bcm_port_t port_i;
+    bcm_pbmp_t pbmp_same_if;
+    int loopback, rv;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+    /*
+     * For feedback port the enable/disable sequence is simple, so call
+     * the dedicated API directly.
+     */
+    if (DNX_ALGO_PORT_TYPE_IS_NIF_ETH_FEEDBACK(unit, port_info))
+    {
+        SHR_IF_ERR_EXIT(imb_cdu_shr_port_feedback_port_enable_set(unit, port, enable));
+        SHR_EXIT();
+    }
+    SHR_IF_ERR_EXIT(dnx_algo_port_channels_get(unit, port, DNX_ALGO_PORT_CHANNELS_F_NON_L1_ONLY, &pbmp_same_if));
+
+    /*
+     * Enable port in OFT and resetting credits
+     */
+    if (enable)
+    {
+        SHR_IF_ERR_EXIT(dnx_port_oft_credits_counter_reset(unit, port, IMB_COMMON_IN_RESET));
+        SHR_IF_ERR_EXIT(dnx_port_oft_port_enable_set(unit, port, enable));
+    }
+    /*
+     * Enable port in Arb. Rx
+     */
+    SHR_IF_ERR_EXIT(dnx_port_arb_port_enable(unit, port, ARB_RX_DIRECTION, enable));
+
+    /*
+     * Enable port in OFR
+     */
+    SHR_IF_ERR_EXIT(dnx_port_ofr_port_enable(unit, port, enable));
+
+    /*
+     * Configure TXI logic and IRDY threshold
+     */
+    if (dnx_data_esb.general.feature_get(unit, dnx_data_esb_general_esb_support)
+        && DNX_ALGO_PORT_TYPE_IS_EGR_TM(unit, port_info))
+    {
+        SHR_IF_ERR_EXIT(dnx_esb_port_txi_config_set(unit, port, enable));
+    }
+
+    if (enable)
+    {
+        /*
+         * override the egress credits
+         */
+        if (DNX_ALGO_PORT_TYPE_IS_EGR_TM(unit, port_info))
+        {
+            /*
+             * Wait for NIF to finish transmitting initial credits
+             */
+            sal_usleep(10);
+
+            SHR_IF_ERR_EXIT(dnx_egr_tm_port_credit_init(unit, port));
+        }
+    }
+    SHR_IF_ERR_EXIT(dnx_algo_port_nif_flr_fw_support_get(unit, port, &is_flr_fw_support));
+    is_advanced_flr_support = is_flr_fw_support
+        && dnx_data_nif.flr.feature_get(unit, dnx_data_nif_flr_is_advanced_flr_supported);
+    /*
+     * Disable port in W40
+     */
+    if (!enable && is_advanced_flr_support)
+    {
+        SHR_IF_ERR_EXIT(imb_otnu_phy_port_enable_set(unit, port, IMB_PORT_ENABLE_F_SKIP_PORTMOD, 0));
+    }
+
+    if (!enable)
+    {
+        /*
+         * Disable Qpairs AND flush the buffer
+         */
+        if (DNX_ALGO_PORT_TYPE_IS_EGR_TM(unit, port_info))
+        {
+            _SHR_PBMP_ITER(pbmp_same_if, port_i)
+            {
+                SHR_IF_ERR_EXIT(dnx_egr_tm_port_enable_and_flush_set(unit, port_i, enable, TRUE));
+            }
+        }
+        /*
+         * Disable OFT after disabling flushing Qpair buffer
+         */
+        SHR_IF_ERR_EXIT(dnx_port_oft_port_enable_set(unit, port, enable));
+    }
+
+    /*
+     * enable the port in Portmod
+     */
+    SHR_IF_ERR_EXIT(imb_er_portmod_port_enable_set(unit, port, 0, enable));
+
+#ifdef INCLUDE_XFLOW_MACSEC
+    if (dnx_data_macsec.general.is_macsec_enabled_get(unit))
+    {
+        if (enable)
+        {
+            /** Enable macsec credits */
+            SHR_IF_ERR_EXIT(dnx_xflow_macsec_port_soft_reset_set(unit, port, IMB_COMMON_IN_RESET));
+            SHR_IF_ERR_EXIT(dnx_xflow_macsec_port_soft_reset_set(unit, port, IMB_COMMON_OUT_OF_RESET));
+        }
+    }
+#endif
+
+    /*
+     * Enable port in Arb. TX
+     */
+    SHR_IF_ERR_EXIT(dnx_port_arb_port_enable(unit, port, ARB_TX_DIRECTION, enable));
+
+    if (enable)
+    {
+        /*
+         * Enable credits in Arb. Tx
+         */
+        SHR_IF_ERR_EXIT(dnx_port_arb_credits_init(unit, port));
+
+        /*
+         * Resetting CDMAC for credits purpose.
+         */
+        DNX_ERR_RECOVERY_SUPPRESS(unit);
+        SHR_IF_ERR_EXIT(portmod_port_mac_reset_set(unit, port, TRUE));
+        SHR_IF_ERR_EXIT(portmod_port_mac_reset_set(unit, port, FALSE));
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+        /*
+         * Enable port in W40
+         */
+        if (is_advanced_flr_support)
+        {
+            SHR_IF_ERR_EXIT(imb_otnu_phy_port_enable_set(unit, port, IMB_PORT_ENABLE_F_SKIP_PORTMOD, 1));
+        }
+
+        if (DNX_ALGO_PORT_TYPE_IS_EGR_TM(unit, port_info))
+        {
+            /*
+             * Enable Qpairs
+             */
+            _SHR_PBMP_ITER(pbmp_same_if, port_i)
+            {
+                SHR_IF_ERR_EXIT(dnx_egr_tm_port_enable_and_flush_set(unit, port_i, enable, FALSE));
+            }
+        }
+    }
+    DNX_ERR_RECOVERY_SUPPRESS(unit);
+    SHR_IF_ERR_CONT(imb_port_loopback_get(unit, port, &loopback));
+    if (SHR_FUNC_ERR())
+    {
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+        SHR_EXIT();
+    }
+    rv = _bcm_linkscan_available(unit);
+    if ((loopback == BCM_PORT_LOOPBACK_MAC) && (rv == BCM_E_NONE))
+    {
+        SHR_IF_ERR_CONT(_bcm_link_force(unit, port, TRUE, enable));
+        if (SHR_FUNC_ERR())
+        {
+            DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+            SHR_EXIT();
+        }
+    }
+    DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+
+exit:
+    SHR_FUNC_EXIT;
+
+}
+
+int
+imb_cdu_shr_port_enable_get(
+    int unit,
+    bcm_port_t port,
+    int *enable)
+{
+    SHR_FUNC_INIT_VARS(unit);
+
+    DNX_ERR_RECOVERY_SUPPRESS(unit);
+    /*
+     * Get the indication from Portmod
+     */
+
+    SHR_IF_ERR_CONT(portmod_port_enable_get(unit, port, 0, enable));
+    if (SHR_FUNC_ERR())
+    {
+        DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+        SHR_EXIT();
+    }
+
+    DNX_ERR_RECOVERY_UNSUPPRESS(unit);
+
+exit:
+    SHR_FUNC_EXIT;
+
+}
+
+/**
+ * \brief - set the TX start threshold for the port
+ *
+ * \param [in] unit - chip unit id
+ * \param [in] port - logical port
+ * \param [in] speed - port interface rate
+ * \param [in] start_tx_thr - Start tx threshold
+ *
+ * \return
+ *   int - see _SHR_E*
+ *
+ * \remarks
+ *   * None
+ * \see
+ *   * None
+ */
+int
+imb_cdu_shr_port_tx_start_thr_set(
+    int unit,
+    bcm_port_t port,
+    int speed,
+    int start_tx_thr)
+{
+    int start_thr = -1;
+    int idx;
+    dnx_algo_port_info_s port_info;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    /*
+     * Get global TX threshold definition
+     */
+    start_thr = dnx_data_nif.global.start_tx_threshold_global_get(
+    unit);
+    if (start_thr < 0)
+    {
+        SHR_IF_ERR_EXIT(dnx_algo_port_info_get(unit, port, &port_info));
+        /*
+         * Global TX threshold not defined.
+         * Lookup TX threshold in table.
+         */
+        for (idx = 0; idx < dnx_data_nif.eth.start_tx_threshold_table_info_get(unit)->key_size[0]; idx++)
+        {
+            if (speed <= dnx_data_nif.eth.start_tx_threshold_table_get(unit, idx)->speed)
+            {
+                start_thr =
+                    DNX_ALGO_PORT_TYPE_IS_L1(unit, port_info) ? dnx_data_nif.eth.start_tx_threshold_table_get(unit,
+                                                                                                              idx)->start_thr_for_l1
+                    : dnx_data_nif.eth.start_tx_threshold_table_get(unit, idx)->start_thr;
+
+                if (start_thr == 0)
+                {
+                    /** If the value is 0, means the there is no valid start_thr for the current speed */
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        if (start_thr < 0)
+        {
+            SHR_ERR_EXIT(_SHR_E_PARAM, "unsupported speed %d (port %d)\n", speed, port);
+        }
+    }
+
+    SHR_IF_ERR_EXIT(dnx_port_nif_oft_tx_start_thr_set(unit, port, start_thr));
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/**
+ * \brief - Get the TX start threshold for the port
+ *
+ * \param [in] unit - chip unit id
+ * \param [in] port - logical port
+ * \param [out] start_tx_thr - Start tx threshold
+ *
+ * \return
+ *   int - see _SHR_E*
+ *
+ * \remarks
+ *   * None
+ * \see
+ *   * None
+ */
+int
+imb_cdu_shr_port_tx_start_thr_get(
+    int unit,
+    bcm_port_t port,
+    int *start_tx_thr)
+{
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_ERR_EXIT(_SHR_E_UNAVAIL, "This API is not supported currently\n");
+exit:
+    SHR_FUNC_EXIT;
+}
+
+static int
+imb_cdu_shr_port_to_pfc_port_idx_get(
+    int unit,
+    bcm_port_t port,
+    uint8 *pm_index,
+    uint8 *port_index_base,
+    uint32 *nof_port_indexes,
+    uint8 *nof_tcs)
+{
+    uint32 current_port_idx = 0;
+    int ports_count = 0;
+    int current_port = 0;
+    uint8 tc_bmp_temp8 = 0;
+    uint32 tc_bmp_temp = 0;
+    uint8 port_index_base_tmp = 0;
+    uint32 nof_port_indexes_tmp = 0;
+    int nof_tcs_in_bmp = 0;
+    uint8 pm_index_tmp = 0;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /** Initialize to invalid (over max) values */
+    *port_index_base = dnx_data_instru.synced_counters.nof_ports_for_pfc_get(unit);
+    *pm_index = dnx_data_instru.synced_counters.nof_pms_for_pfc_get(unit);
+    *nof_port_indexes = dnx_data_instru.synced_counters.nof_ports_for_pfc_get(unit) + 1;
+    *nof_tcs = BCM_COS_COUNT + 1;
+
+    /** Get the number of ports from the SW State */
+    SHR_IF_ERR_EXIT(instru_sync_counters.nof_ports_for_pfc_counters.get(unit, &ports_count));
+    for (current_port_idx = 0; current_port_idx < ports_count; current_port_idx++)
+    {
+        /** Get port from SW state and and find the port_idx_base it */
+        SHR_IF_ERR_EXIT(instru_sync_counters.ports_for_pfc_counters.port.get(unit, current_port_idx, &current_port));
+        if (current_port == port)
+        {
+            SHR_IF_ERR_EXIT(instru_sync_counters.ports_for_pfc_counters.
+                            pfc_port_idx_base.get(unit, current_port_idx, &pm_index_tmp));
+            SHR_IF_ERR_EXIT(instru_sync_counters.ports_for_pfc_counters.
+                            pfc_port_idx_base.get(unit, current_port_idx, &port_index_base_tmp));
+            SHR_IF_ERR_EXIT(instru_sync_counters.ports_for_pfc_counters.
+                            tc_bmp.get(unit, current_port_idx, &tc_bmp_temp8));
+            tc_bmp_temp = tc_bmp_temp8;
+            SHR_BITCOUNT_RANGE(&tc_bmp_temp, nof_tcs_in_bmp, 0, BCM_COS_COUNT);
+            nof_port_indexes_tmp =
+                UTILEX_DIV_ROUND_UP(nof_tcs_in_bmp, dnx_data_instru.synced_counters.nof_tcs_per_port_get(unit));
+
+            /** Set variables */
+            *port_index_base = port_index_base_tmp;
+            *nof_port_indexes = nof_port_indexes_tmp;
+            *nof_tcs = nof_tcs_in_bmp;
+            *pm_index = pm_index_tmp;
+            break;
+        }
+    }
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/**
+ * See .h file
+ */
+int
+imb_cdu_shr_port_instru_pfc_deadlock_counters_reset(
+    int unit,
+    bcm_port_t port)
+{
+    uint8 port_index_base;
+    uint32 nof_port_indexes;
+    uint8 nof_tcs;
+    uint8 pm_index = 0;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /** Get the port's PFC poer IDX base and number of indexes from the SW State */
+    SHR_IF_ERR_EXIT(imb_cdu_shr_port_to_pfc_port_idx_get
+                    (unit, port, &pm_index, &port_index_base, &nof_port_indexes, &nof_tcs));
+
+    /** Reset the port's PFC counters */
+    SHR_IF_ERR_EXIT(imb_cdu_internal_instru_traffic_pfc_deadlock_counters_ofr_reset
+                    (unit, pm_index, port_index_base, nof_port_indexes));
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+/**
+ * See .h file
+ */
+int
+imb_cdu_shr_instru_synced_counters_per_record_get(
+    int unit,
+    bcm_port_t port,
+    int record_index,
+    int nof_counters,
+    const int dbal_fields[],
+    uint64 counter_values[])
+{
+    uint8 port_index_base;
+    uint32 nof_port_indexes;
+    uint8 nof_tcs;
+    uint8 pm_index = 0;
+    SHR_FUNC_INIT_VARS(unit);
+
+    /** Get the port's PFC poer IDX base and number of indexes from the SW State */
+    SHR_IF_ERR_EXIT(imb_cdu_shr_port_to_pfc_port_idx_get
+                    (unit, port, &pm_index, &port_index_base, &nof_port_indexes, &nof_tcs));
+
+    /** Get the recoers from HW */
+    SHR_IF_ERR_EXIT(imb_cdu_internal_instru_synced_counters_per_record_ofr_get(unit,
+                                                                               port_index_base,
+                                                                               nof_port_indexes, nof_tcs,
+                                                                               record_index, nof_counters, dbal_fields,
+                                                                               counter_values));
+exit:
+    SHR_FUNC_EXIT;
+}
+
+#undef BSL_LOG_MODULE

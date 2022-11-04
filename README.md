@@ -16,4 +16,4 @@ The source code in the gpl-module and dcb-gpl-modules directories are covered by
 Supported devices
 =================
 This release has support for XGS switch devices such as Trident (TD2, TD3, TD4), Tomahawk (TH, TH2, TH3)
-and DNX devices such as Ramon, Qumran (Q2A, Q2U) and Jericho (JR2, J2C, J2X).
+and DNX devices such as Ramon, Qumran (Q2A, Q2U) and Jericho (JR2, J2C).

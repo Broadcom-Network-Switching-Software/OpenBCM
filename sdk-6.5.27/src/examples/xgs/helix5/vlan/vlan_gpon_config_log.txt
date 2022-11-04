@@ -1,0 +1,230 @@
+    portmap_29.0=72:25
+    portmap_4.0=13:1
+    portmap_10.0=37:1
+    portmap_5.0=17:1
+    portmap_11.0=41:1
+    portmap_20.0=63:10
+    port_gmii_mode{1}=1
+    portmap_6.0=21:1
+    portmap_12.0=45:1
+    portmap_21.0=64:10
+    portmap_30.0=73:25
+    portmap_7.0=25:1
+    portmap_13.0=49:20
+    portmap_22.0=65:25
+    portmap_31.0=74:25
+    portmap_8.0=29:1
+    portmap_14.0=51:20
+    fpem_mem_entries=8192
+    portmap_23.0=66:25
+    pbmp_xport_xe=0xC3C3ffffe
+    l2_mem_entries=16384
+    os=unix
+    portmap_32.0=75:25
+    portmap_9.0=33:1
+    portmap_15.0=53:10
+    portmap_24.0=67:25
+    port_flex_enable=1
+    portmap_33.0=76:25
+    port_gmii_mode{33}=1
+    portmap_16.0=55:10
+    l2delete_chunks=4096
+    portmap_25.0=68:25
+    port_gmii_mode{17}=1
+    core_clock_frequency=893
+    portmap_17.0=57:40
+    l2xmsg_mode=1
+    portmap_26.0=69:25
+    portmap_1.0=1:1
+    ifp_inports_support_enable=1
+    portmap_18.0=61:10
+    portmap_27.0=70:25
+    portmap_2.0=5:1
+    l3_mem_entries=16384
+    portmap_19.0=62:10
+    portmap_28.0=71:25
+    portmap_3.0=9:1
+Attach: Unit 0 (BCM56375_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2019 Broadcom
+Release: sdk-6.5.16 built 20190111 (Fri Jan 11 07:50:45 2019)
+From root@lc-sj1-5896:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.dpart.56370
+Platform: X86
+OS: Unix (Posix)
+Chips:
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       BCM56370_A0,
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5400, BCM5401,
+    BCM5402, BCM5404, BCM5424/34, BCM5411,
+    BCM5461, BCM5464, BCM5466, BCM5478,
+    BCM5488, BCM54980, BCM54980, BCM54980,
+    BCM54980, BCM53314, BCM5482/801x, BCM54684,
+    BCM54640, BCM54682E, BCM54684E, BCM54685,
+    BCM54616, BCM54618E, BCM54618SE, BCM84707,
+    BCM84073, BCM84074, BCM84728, BCM84748,
+    BCM84727, BCM84747, BCM84762, BCM84764,
+    BCM84042, BCM84044, BCM8806X, BCM54182,
+    BCM54185, BCM54180, BCM54140, BCM54192,
+    BCM54195, BCM54190, BCM54194, BCM54210,
+    BCM54220, BCM54280, BCM54282, BCM54240,
+    BCM54285, BCM5428X, BCM54290, BCM54292,
+    BCM54294, BCM54295, BCM54296, BCM5421S
+    BCM54680, BCM53324, BCM56160-GPHY, BCM53540-GPHY,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM54640E, BCM54880E, BCM54680E, BCM52681E,
+    BCM8703, BCM8704, BCM8705/24/25, BCM8706/8726,
+    BCM8727, BCM8728/8747, BCM8072, BCM8073,
+    BCM8074, BCM8040, BCM8481X, BCM84812,
+    BCM84821, BCM84822, BCM84823, BCM84833,
+    BCM84834, BCM84835, BCM84836, BCM84844,
+    BCM84846, BCM84848, BCM84858, BCM84856,
+    BCM84860, BCM84861, BCM84864, BCM84868,
+    BCM84888, BCM84884, BCM84888E, BCM84884E,
+    BCM84881, BCM84880, BCM84888S, BCM84887,
+    BCM84886, BCM84885, BCM8750, BCM8752,
+    BCM8754, BCM84740, BCM84164, BCM84758,
+    BCM84780, BCM84784, BCM84318, BCM84328,
+    BCM84793, BCM82328, Furia, Huracan
+    Sesto, Madura, BCM82780, copper sfp
+   
+Completed test setup successfully.
+Completed configuration(i.e executing configure_vlan_gpon()) successfully.
+Current header mode for unit 0 is now Ieee (0).
+Sending known unicast packet on network_port:1
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {000000000008} {0000000000aa} 8100 01f4
+[bcmPW.0]Packet[1]: data[0010]: 8100 01f5 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[1]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[1]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 61a9 3725 
+[bcmPW.0]Packet[1]: data[0040]: 1cdf 4421 
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 500. reason 0x1. Double tagged.
+[bcmPW.0]Packet[1]: dest-gport 1140850689. src-port 1. src-mod 0. opcode 1.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<00:00:00:00:00:08> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x01f4> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {000000000008} {0000000000aa} 8100 0065
+[bcmPW.0]Packet[2]: data[0010]: 8100 0019 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[2]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[2]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 61a9 3725 
+[bcmPW.0]Packet[2]: data[0040]: bf75 11ad 
+[bcmPW.0]Packet[2]: length 68 (68). rx-port 2. cos 0. prio_int 0. vlan 101. reason 0x1. Double tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-gport 1140850689. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<00:00:00:00:00:08> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0065> Wellfleet Communications
+Sending known multicast packet on network_port:1
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {01005e010203} {0000000000aa} 8100 01f4
+[bcmPW.0]Packet[3]: data[0010]: 8100 01f5 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[3]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[3]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 8a90 384e 
+[bcmPW.0]Packet[3]: data[0040]: 1cdf 4421 
+[bcmPW.0]Packet[3]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 500. reason 0x1. Double tagged.
+[bcmPW.0]Packet[3]: dest-port 1. dest-mod 32. src-port 1. src-mod 0. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<01:00:5e:01:02:03> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x01f4> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {01005e010203} {0000000000aa} 8100 0067
+[bcmPW.0]Packet[4]: data[0010]: 8100 002d 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[4]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[4]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 8a90 384e 
+[bcmPW.0]Packet[4]: data[0040]: f963 4ec1 
+[bcmPW.0]Packet[4]: length 68 (68). rx-port 4. cos 0. prio_int 0. vlan 103. reason 0x1. Double tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-gport 1140850691. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<01:00:5e:01:02:03> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0067> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[5]: data[0000]: {01005e010203} {0000000000aa} 8100 0065
+[bcmPW.0]Packet[5]: data[0010]: 8100 0019 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[5]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[5]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 8a90 384e 
+[bcmPW.0]Packet[5]: data[0040]: bf75 11ad 
+[bcmPW.0]Packet[5]: length 68 (68). rx-port 2. cos 0. prio_int 0. vlan 101. reason 0x1. Double tagged.
+[bcmPW.0]Packet[5]: dest-port 0. dest-mod 0. src-gport 1140850689. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[5]: reasons: FilterMatch
+[bcmPW.0]Packet[5]: 
+Packet[5]:   Ethernet: dst<01:00:5e:01:02:03> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0065> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[6]: data[0000]: {01005e010203} {0000000000aa} 8100 0066
+[bcmPW.0]Packet[6]: data[0010]: 8100 0023 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[6]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[6]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 8a90 384e 
+[bcmPW.0]Packet[6]: data[0040]: 67e0 662d 
+[bcmPW.0]Packet[6]: length 68 (68). rx-port 3. cos 0. prio_int 0. vlan 102. reason 0x1. Double tagged.
+[bcmPW.0]Packet[6]: dest-port 0. dest-mod 0. src-gport 1140850690. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[6]: reasons: FilterMatch
+[bcmPW.0]Packet[6]: 
+Packet[6]:   Ethernet: dst<01:00:5e:01:02:03> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0066> Wellfleet Communications
+Sending un-known multicast packet on network_port:1
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[7]: data[0000]: {01005e0000aa} {0000000000aa} 8100 01f4
+[bcmPW.0]Packet[7]: data[0010]: 8100 01f5 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[7]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[7]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 cceb 551f 
+[bcmPW.0]Packet[7]: data[0040]: 1cdf 4421 
+[bcmPW.0]Packet[7]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 500. reason 0x1. Double tagged.
+[bcmPW.0]Packet[7]: dest-port 1. dest-mod 32. src-port 1. src-mod 0. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[7]: reasons: FilterMatch
+[bcmPW.0]Packet[7]: 
+Packet[7]:   Ethernet: dst<01:00:5e:00:00:aa> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x01f4> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[8]: data[0000]: {01005e0000aa} {0000000000aa} 8100 0067
+[bcmPW.0]Packet[8]: data[0010]: 8100 002d 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[8]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[8]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 cceb 551f 
+[bcmPW.0]Packet[8]: data[0040]: f963 4ec1 
+[bcmPW.0]Packet[8]: length 68 (68). rx-port 4. cos 0. prio_int 0. vlan 103. reason 0x1. Double tagged.
+[bcmPW.0]Packet[8]: dest-port 0. dest-mod 0. src-gport 1140850691. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[8]: reasons: FilterMatch
+[bcmPW.0]Packet[8]: 
+Packet[8]:   Ethernet: dst<01:00:5e:00:00:aa> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0067> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[9]: data[0000]: {01005e0000aa} {0000000000aa} 8100 0065
+[bcmPW.0]Packet[9]: data[0010]: 8100 0019 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[9]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[9]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 cceb 551f 
+[bcmPW.0]Packet[9]: data[0040]: bf75 11ad 
+[bcmPW.0]Packet[9]: length 68 (68). rx-port 2. cos 0. prio_int 0. vlan 101. reason 0x1. Double tagged.
+[bcmPW.0]Packet[9]: dest-port 0. dest-mod 0. src-gport 1140850689. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[9]: reasons: FilterMatch
+[bcmPW.0]Packet[9]: 
+Packet[9]:   Ethernet: dst<01:00:5e:00:00:aa> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0065> Wellfleet Communications
+[bcmPW.0]
+[bcmPW.0]Packet[10]: data[0000]: {01005e0000aa} {0000000000aa} 8100 0066
+[bcmPW.0]Packet[10]: data[0010]: 8100 0023 0001 0203 0405 0607 0809 0a0b 
+[bcmPW.0]Packet[10]: data[0020]: 0c0d 0e0f 1011 1213 1415 1617 1819 1a1b 
+[bcmPW.0]Packet[10]: data[0030]: 1c1d 1e1f 2021 2223 2425 2627 cceb 551f 
+[bcmPW.0]Packet[10]: data[0040]: 67e0 662d 
+[bcmPW.0]Packet[10]: length 68 (68). rx-port 3. cos 0. prio_int 0. vlan 102. reason 0x1. Double tagged.
+[bcmPW.0]Packet[10]: dest-port 0. dest-mod 0. src-gport 1140850690. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[10]: reasons: FilterMatch
+[bcmPW.0]Packet[10]: 
+Packet[10]:   Ethernet: dst<01:00:5e:00:00:aa> src<00:00:00:00:00:aa> Tagged Packet ProtID<0x8100> Ctrl<0x0066> Wellfleet Communications
+

@@ -1,0 +1,75 @@
+#include <phymod/phymod.h>
+
+typedef enum {
+    TBHMOD_GEN4_SPEED_10G_IEEE_KR1,
+    TBHMOD_GEN4_SPEED_10G_IEEE_KR1_CL74,
+    TBHMOD_GEN4_SPEED_25G_IEEE_KS1_CS1,
+    TBHMOD_GEN4_SPEED_25G_IEEE_KS1_CS1_CL74,
+    TBHMOD_GEN4_SPEED_25G_IEEE_KR1_CR1,
+    TBHMOD_GEN4_SPEED_25G_IEEE_KR1_CR1_CL74,
+    TBHMOD_GEN4_SPEED_25G_IEEE_KR1_CR1_RS528,
+    TBHMOD_GEN4_SPEED_40G_IEEE_KR4,
+    TBHMOD_GEN4_SPEED_40G_IEEE_KR4_CL74,
+    TBHMOD_GEN4_SPEED_40G_IEEE_CR4,
+    TBHMOD_GEN4_SPEED_40G_IEEE_CR4_CL74,
+    TBHMOD_GEN4_SPEED_50G_IEEE_KR1_CR1,
+    TBHMOD_GEN4_SPEED_100G_IEEE_KR4,
+    TBHMOD_GEN4_SPEED_100G_IEEE_CR4,
+    TBHMOD_GEN4_SPEED_100G_IEEE_KR2_CR2,
+    TBHMOD_GEN4_SPEED_200G_IEEE_KR4_CR4,
+    TBHMOD_GEN4_SPEED_400G_IEEE_X8,
+    TBHMOD_GEN4_SPEED_20G_BRCM_KR1,
+    TBHMOD_GEN4_SPEED_20G_BRCM_KR1_CL74,
+    TBHMOD_GEN4_SPEED_20G_BRCM_CR1,
+    TBHMOD_GEN4_SPEED_20G_BRCM_CR1_CL74,
+    TBHMOD_GEN4_SPEED_25G_BRCM_KR1,
+    TBHMOD_GEN4_SPEED_25G_BRCM_KR1_CL74,
+    TBHMOD_GEN4_SPEED_25G_BRCM_KR1_RS528,
+    TBHMOD_GEN4_SPEED_25G_BRCM_CR1,
+    TBHMOD_GEN4_SPEED_25G_BRCM_CR1_CL74,
+    TBHMOD_GEN4_SPEED_25G_BRCM_CR1_RS528,
+    TBHMOD_GEN4_SPEED_25G_BRCM_NO_FEC_KR1_CR1,
+    TBHMOD_GEN4_SPEED_25G_BRCM_FEC_BASE_R_KR1_CR1,
+    TBHMOD_GEN4_SPEED_25G_BRCM_FEC_528_KR1_CR1,
+    TBHMOD_GEN4_SPEED_40G_BRCM_KR2,
+    TBHMOD_GEN4_SPEED_40G_BRCM_CR2,
+    TBHMOD_GEN4_SPEED_50G_BRCM_CR2_KR2_NO_FEC,
+    TBHMOD_GEN4_SPEED_50G_BRCM_CR2_KR2_RS_FEC,
+    TBHMOD_GEN4_SPEED_50G_BRCM_FEC_544_CR2_KR2,
+    TBHMOD_GEN4_SPEED_50G_BRCM_NO_FEC_CR1_KR1,
+    TBHMOD_GEN4_SPEED_50G_BRCM_FEC_528_CR1_KR1,
+    TBHMOD_GEN4_SPEED_50G_BRCM_FEC_544_CR1_KR1,
+    TBHMOD_GEN4_SPEED_50G_BRCM_FEC_272_CR1_KR1,
+    TBHMOD_GEN4_SPEED_100G_BRCM_NO_FEC_X4,
+    TBHMOD_GEN4_SPEED_100G_BRCM_KR4_CR4,
+    TBHMOD_GEN4_SPEED_100G_BRCM_NO_FEC_KR2_CR2,
+    TBHMOD_GEN4_SPEED_100G_BRCM_FEC_528_KR2_CR2,
+    TBHMOD_GEN4_SPEED_100G_BRCM_FEC_272_CR2_KR2,
+    TBHMOD_GEN4_SPEED_200G_BRCM_FEC_544_CR8_KR8,
+    TBHMOD_GEN4_SPEED_200G_BRCM_NO_FEC_KR4_CR4,
+    TBHMOD_GEN4_SPEED_200G_BRCM_KR4_CR4,
+    TBHMOD_GEN4_SPEED_200G_BRCM_FEC_272_CR4_KR4,
+    TBHMOD_GEN4_SPEED_200G_BRCM_FEC_272_N4,
+    TBHMOD_GEN4_SPEED_400G_BRCM_FEC_KR8_CR8,
+    TBHMOD_GEN4_SPEED_400G_BRCM_FEC_272_N8,
+    TBHMOD_GEN4_SPEED_MODE_COUNT
+}tbhmod_gen4_1588_table_index_t;
+
+typedef struct tbhmod_gen4_1588_lkup_table_entry_s {
+    /* Index for the default speed entry */
+    uint32_t mapped_spd_table_index;
+    phymod_fec_type_t fec_type;
+    /* Index of the 1588 table */
+    tbhmod_gen4_1588_table_index_t ts_table_index;
+    uint32_t table_size;
+} tbhmod_gen4_1588_lkup_table_entry_t;
+
+int tbhmod_gen4_1588_table_index_get(uint32_t speed_index,
+                                     phymod_fec_type_t fec,
+                                     int *ts_table_index,
+                                     uint32_t* table_size);
+
+extern tbhmod_gen2_ts_table_entry* tbhmod_gen4_ts_table_tx_sop_get(void);
+extern tbhmod_gen2_ts_table_entry* tbhmod_gen4_ts_table_rx_sop_get(void);
+extern tbhmod_gen2_ts_table_entry* tbhmod_gen4_ts_table_tx_sfd_get(void);
+extern tbhmod_gen2_ts_table_entry* tbhmod_gen4_ts_table_rx_sfd_get(void);

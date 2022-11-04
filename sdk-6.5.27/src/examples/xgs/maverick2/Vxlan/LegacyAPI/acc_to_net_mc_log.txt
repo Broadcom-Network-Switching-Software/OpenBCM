@@ -1,0 +1,484 @@
+Script started on Mon 17 Sep 2018 03:02:06 PM IST
+-------------------------------------------------------------------------------
+ Slot CPU   IP           Boot List Name     Name       Chips    Group Owner    
+03.13 GTS   10.123.46.25 UEFI BCM956770K    Maverick_2 56770_A0 AE    -        
+-------------------------------------------------------------------------------
+Trying 10.123.46.11...
+Connected to 10.123.46.11.
+Escape character is '^]'.
+
+>> 'nobody' initiated a new r/w session
+INFO:root:Rack connection live [0.78s]
+ 
+
+BCM.0> BCM.0>  init all; c acc_to_net_mc.c
+open /dev/linux-bcm-knet: : No such device or address
+*** unit 0: ports capable of limited speed range cut-thru
+0:bcmi_xgs5_bfd_init: uKernel BFD application not available
+    phy_chain_rx_polarity_flip_physical{61}=0x1
+    phy_chain_rx_polarity_flip_physical{44}=0x0
+    phy_chain_tx_lane_map_physical{49.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{27}=0x1
+    phy_chain_tx_polarity_flip_physical{81}=0x0
+    phy_chain_tx_polarity_flip_physical{64}=0x1
+    phy_chain_tx_polarity_flip_physical{47}=0x1
+    portmap_8=29:100
+    phy_chain_rx_polarity_flip_physical{70}=0x0
+    phy_chain_rx_polarity_flip_physical{53}=0x0
+    phy_chain_rx_polarity_flip_physical{36}=0x1
+    phy_chain_rx_polarity_flip_physical{19}=0x0
+    phy_chain_tx_polarity_flip_physical{73}=0x0
+    phy_chain_tx_polarity_flip_physical{56}=0x1
+    phy_chain_tx_polarity_flip_physical{39}=0x1
+    portmap_9=33:100
+    phy_chain_tx_polarity_flip_physical{2}=0x0
+    phy_chain_rx_lane_map_physical{21.0}=0x3120
+    phy_chain_rx_lane_map_physical{29.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{62}=0x1
+    phy_chain_rx_polarity_flip_physical{45}=0x0
+    phy_chain_rx_polarity_flip_physical{28}=0x1
+    phy_chain_tx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_lane_map_physical{5.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{48}=0x1
+    portmap_10=37:100
+    phy_chain_tx_lane_map_physical{33.0}=0x2031
+    phy_chain_rx_lane_map_physical{73.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{71}=0x1
+    phy_chain_rx_polarity_flip_physical{54}=0x0
+    phy_chain_rx_polarity_flip_physical{37}=0x1
+    phy_chain_tx_polarity_flip_physical{74}=0x1
+    phy_chain_tx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{3}=0x1
+    phy_chain_rx_polarity_flip_physical{80}=0x0
+    dpp_clock_ratio=2:3
+    phy_chain_rx_polarity_flip_physical{63}=0x0
+    phy_chain_rx_polarity_flip_physical{46}=0x0
+    phy_chain_rx_polarity_flip_physical{29}=0x0
+    phy_chain_tx_lane_map_physical{1.0}=0x2031
+    phy_chain_tx_polarity_flip_physical{66}=0x1
+    phy_chain_tx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_lane_map_physical{9.0}=0x2031
+    phy_chain_rx_lane_map_physical{13.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{72}=0x1
+    phy_chain_rx_polarity_flip_physical{55}=0x1
+    phy_chain_rx_polarity_flip_physical{38}=0x1
+    phy_chain_tx_polarity_flip_physical{75}=0x1
+    phy_chain_tx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{4}=0x1
+    phy_chain_tx_lane_map_physical{25.0}=0x2031
+    phy_chain_rx_lane_map_physical{65.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{81}=0x0
+    phy_chain_rx_polarity_flip_physical{64}=0x0
+    phy_chain_rx_polarity_flip_physical{47}=0x1
+    phy_chain_tx_polarity_flip_physical{67}=0x1
+    oversubscribe_mode=1
+    phy_chain_tx_lane_map_physical{77.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{73}=0x0
+    phy_chain_rx_polarity_flip_physical{56}=0x1
+    phy_chain_rx_polarity_flip_physical{39}=0x0
+    phy_chain_tx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{1}=0x1
+    phy_chain_tx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{5}=0x1
+    phy_chain_rx_polarity_flip_physical{65}=0x0
+    phy_chain_rx_polarity_flip_physical{48}=0x1
+    phy_chain_tx_polarity_flip_physical{68}=0x1
+    phy_chain_tx_polarity_flip_physical{10}=0x0
+    phy_chain_tx_lane_map_physical{17.0}=0x2031
+    phy_chain_rx_lane_map_physical{57.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{74}=0x0
+    phy_chain_rx_polarity_flip_physical{57}=0x0
+    phy_chain_tx_polarity_flip_physical{77}=0x0
+    phy_chain_rx_polarity_flip_physical{2}=0x1
+    phy_chain_tx_polarity_flip_physical{6}=0x0
+    portmap_41=41:100
+    phy_chain_tx_lane_map_physical{61.0}=0x3120
+    phy_chain_tx_lane_map_physical{69.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{66}=0x0
+    phy_chain_rx_polarity_flip_physical{49}=0x0
+    phy_chain_tx_polarity_flip_physical{69}=0x0
+    portmap_50=77:100
+    portmap_42=45:100
+    phy_chain_tx_polarity_flip_physical{11}=0x1
+    phy_chain_rx_polarity_flip_physical{75}=0x1
+    phy_chain_rx_polarity_flip_physical{58}=0x0
+    phy_chain_tx_polarity_flip_physical{78}=0x0
+    phy_chain_rx_polarity_flip_physical{3}=0x1
+    phy_chain_tx_polarity_flip_physical{7}=0x0
+    phy_chain_rx_lane_map_physical{41.0}=0x2031
+    portmap_43=49:100
+    phy_chain_tx_polarity_flip_physical{20}=0x1
+    phy_chain_rx_lane_map_physical{49.0}=0x2031
+    phy_chain_rx_polarity_flip_physical{67}=0x1
+    portmap_44=53:100
+    phy_chain_tx_lane_map_physical{53.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{12}=0x1
+    phy_chain_rx_polarity_flip_physical{76}=0x1
+    phy_chain_rx_polarity_flip_physical{59}=0x1
+    phy_chain_tx_polarity_flip_physical{79}=0x1
+    phy_chain_rx_polarity_flip_physical{4}=0x0
+    phy_chain_tx_polarity_flip_physical{8}=0x1
+    portmap_45=57:100
+    phy_chain_tx_polarity_flip_physical{21}=0x0
+    phy_chain_rx_polarity_flip_physical{68}=0x1
+    fpem_mem_entries=16384
+    phy_chain_rx_lane_map_physical{33.0}=0x1302
+    pbmp_xport_xe=0x10007fe00000007fe
+    phy_chain_rx_polarity_flip_physical{10}=0x0
+    portmap_46=61:100
+    phy_chain_tx_polarity_flip_physical{30}=0x1
+    phy_chain_tx_polarity_flip_physical{13}=0x0
+    phy_chain_rx_polarity_flip_physical{77}=0x1
+    l2_mem_entries=32768
+    os=unix
+    phy_chain_rx_polarity_flip_physical{5}=0x0
+    phy_chain_tx_polarity_flip_physical{9}=0x0
+    portmap_47=65:100
+    phy_chain_tx_lane_map_physical{45.0}=0x3120
+    phy_chain_tx_polarity_flip_physical{22}=0x0
+    phy_chain_rx_polarity_flip_physical{69}=0x0
+    phy_chain_rx_polarity_flip_physical{11}=0x1
+    portmap_64=81:10:4
+    portmap_48=69:100
+    phy_chain_tx_polarity_flip_physical{31}=0x1
+    phy_chain_tx_polarity_flip_physical{14}=0x0
+    phy_chain_rx_polarity_flip_physical{78}=0x1
+    phy_chain_rx_polarity_flip_physical{6}=0x0
+    phy_chain_rx_lane_map_physical{25.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{20}=0x0
+    portmap_65=82:10
+    portmap_49=73:100
+    phy_chain_tx_polarity_flip_physical{40}=0x1
+    phy_chain_tx_polarity_flip_physical{23}=0x1
+    phy_chain_rx_lane_map_physical{1.0}=0x1302
+    phy_chain_rx_lane_map_physical{9.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{12}=0x1
+    phy_chain_tx_lane_map_physical{37.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_lane_map_physical{77.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{15}=0x1
+    phy_chain_rx_polarity_flip_physical{79}=0x0
+    phy_chain_rx_polarity_flip_physical{7}=0x1
+    phy_chain_rx_polarity_flip_physical{21}=0x0
+    phy_chain_tx_lane_map_physical{81.0}=0x3210
+    phy_chain_tx_polarity_flip_physical{41}=0x0
+    phy_chain_tx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{5.0}=0x0132
+    phy_chain_rx_lane_map_physical{17.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{30}=0x0
+    phy_chain_rx_polarity_flip_physical{13}=0x0
+    phy_chain_tx_polarity_flip_physical{50}=0x0
+    phy_chain_tx_polarity_flip_physical{33}=0x0
+    phy_chain_tx_polarity_flip_physical{16}=0x1
+    phy_chain_rx_polarity_flip_physical{8}=0x1
+    phy_chain_tx_lane_map_physical{21.0}=0x0213
+    phy_chain_rx_lane_map_physical{61.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{22}=0x0
+    core_clock_frequency=1525
+    phy_chain_tx_lane_map_physical{29.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_lane_map_physical{69.0}=0x0213
+    phy_chain_tx_polarity_flip_physical{25}=0x0
+    phy_chain_rx_polarity_flip_physical{31}=0x1
+    phy_chain_rx_polarity_flip_physical{14}=0x0
+    phy_chain_tx_lane_map_physical{73.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{51}=0x1
+    phy_chain_tx_polarity_flip_physical{34}=0x1
+    phy_chain_tx_polarity_flip_physical{17}=0x0
+    phy_chain_rx_polarity_flip_physical{9}=0x0
+    l2xmsg_mode=1
+    phy_chain_rx_polarity_flip_physical{40}=0x0
+    phy_chain_rx_polarity_flip_physical{23}=0x1
+    phy_chain_tx_polarity_flip_physical{60}=0x1
+    phy_chain_tx_polarity_flip_physical{43}=0x1
+    phy_chain_tx_polarity_flip_physical{26}=0x1
+    phy_chain_tx_lane_map_physical{13.0}=0x0213
+    phy_chain_rx_lane_map_physical{53.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{32}=0x1
+    phy_chain_rx_polarity_flip_physical{15}=0x1
+    portmap_1=1:100
+    phy_chain_tx_polarity_flip_physical{52}=0x1
+    phy_chain_tx_polarity_flip_physical{35}=0x1
+    phy_chain_tx_polarity_flip_physical{18}=0x0
+    phy_chain_rx_polarity_flip_physical{41}=0x1
+    phy_chain_rx_polarity_flip_physical{24}=0x1
+    phy_chain_tx_lane_map_physical{65.0}=0x1302
+    phy_chain_tx_polarity_flip_physical{61}=0x0
+    portmap_2=5:100
+    phy_chain_tx_polarity_flip_physical{44}=0x1
+    phy_chain_tx_polarity_flip_physical{27}=0x1
+    phy_chain_rx_polarity_flip_physical{50}=0x0
+    phy_chain_rx_polarity_flip_physical{33}=0x0
+    phy_chain_rx_polarity_flip_physical{16}=0x1
+    phy_chain_tx_polarity_flip_physical{70}=0x0
+    phy_chain_tx_polarity_flip_physical{53}=0x0
+    portmap_3=9:100
+    phy_chain_tx_polarity_flip_physical{36}=0x1
+    phy_chain_tx_polarity_flip_physical{19}=0x1
+    phy_chain_rx_lane_map_physical{45.0}=0x0213
+    phy_chain_rx_polarity_flip_physical{42}=0x1
+    phy_chain_rx_polarity_flip_physical{25}=0x0
+    phy_chain_tx_polarity_flip_physical{62}=0x1
+    phy_chain_tx_polarity_flip_physical{45}=0x0
+    portmap_4=13:100
+    phy_chain_tx_polarity_flip_physical{28}=0x1
+    l3_mem_entries=16384
+    phy_chain_rx_polarity_flip_physical{51}=0x1
+    phy_chain_rx_polarity_flip_physical{34}=0x0
+    phy_chain_tx_lane_map_physical{57.0}=0x1302
+    phy_chain_rx_polarity_flip_physical{17}=0x1
+    phy_chain_tx_polarity_flip_physical{71}=0x1
+    phy_chain_tx_polarity_flip_physical{54}=0x0
+    phy_chain_tx_polarity_flip_physical{37}=0x0
+    portmap_5=17:100
+    phy_chain_rx_polarity_flip_physical{60}=0x1
+    phy_chain_rx_polarity_flip_physical{43}=0x0
+    phy_chain_rx_polarity_flip_physical{26}=0x0
+    phy_chain_tx_polarity_flip_physical{80}=0x1
+    phy_chain_tx_polarity_flip_physical{63}=0x1
+    phy_chain_tx_polarity_flip_physical{46}=0x0
+    phy_chain_tx_polarity_flip_physical{29}=0x0
+    portmap_6=21:100
+    phy_chain_rx_lane_map_physical{37.0}=0x3120
+    phy_chain_rx_polarity_flip_physical{52}=0x1
+    phy_chain_rx_polarity_flip_physical{35}=0x1
+    phy_chain_rx_polarity_flip_physical{18}=0x1
+    phy_chain_tx_polarity_flip_physical{72}=0x1
+    phy_chain_tx_polarity_flip_physical{55}=0x1
+    phy_chain_tx_polarity_flip_physical{38}=0x0
+    portmap_7=25:100
+    phy_chain_tx_polarity_flip_physical{1}=0x0
+    phy_chain_tx_lane_map_physical{41.0}=0x1302
+    phy_chain_rx_lane_map_physical{81.0}=0x3210
+Attach: Unit 0 (BCM56770_A0): attached (current unit)
+Broadcom Command Monitor: Copyright (c) 1998-2018 Broadcom
+Release: sdk-6.5.15 built 20180915 (Sat Sep 15 08:14:04 2018)
+From root@lc-sj1-3916:/projects/ntsw_sw14_scratch/sdkrel/regress/sdk-master/src/sdk.dpart.56770
+Platform: X86
+OS: Unix (Posix)
+Chips:
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       BCM56770_A0
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5324/FE, BCM5348/FE,
+    BCM53242/FE, BCM53262/FE, BCM53101/FE, BCM53280/FE,
+    BCM53600/FE, BCM5400, BCM5401, BCM5402,
+    BCM5404, BCM5424/34, BCM5411, BCM5461,
+    BCM5464, BCM5466, BCM5478, BCM5488,
+    BCM54980, BCM54980, BCM54980, BCM54980,
+    BCM53314, BCM5482/801x, BCM54684, BCM54640,
+    BCM54682E, BCM54684E, BCM54685, BCM54616,
+    BCM54618E, BCM54618SE, BCM84707, BCM84073,
+    BCM84074, BCM84728, BCM84748, BCM84727,
+    BCM84747, BCM84762, BCM84764, BCM84042,
+    BCM84044, BCM8806X, BCM54182, BCM54185,
+    BCM54180, BCM54140, BCM54192, BCM54195,
+    BCM54190, BCM54194, BCM54210, BCM54220,
+    BCM54280, BCM54282, BCM54240, BCM54285
+    BCM5428X, BCM54290, BCM54292, BCM54294,
+    BCM54295, BCM54296, BCM5421S, BCM54680,
+    BCM53324, BCM53125, BCM53128, BCM53010,
+    BCM53018, BCM5302X, BCM53134, BCM56160-GPHY,
+    BCM53540-GPHY, BCM54880, BCM54881, BCM54810,
+    BCM54811, BCM89500, BCM54640E, BCM54880E,
+    BCM54680E, BCM52681E, BCM8703, BCM8704,
+    BCM8705/24/25, BCM8706/8726, BCM8727, BCM8728/8747,
+    BCM8072, BCM8073, BCM8074, BCM8040,
+    BCM8481X, BCM84812, BCM84821, BCM84822,
+    BCM84823, BCM84833, BCM84834, BCM84835,
+    BCM84836, BCM84844, BCM84846, BCM84848,
+    BCM84858, BCM84856, BCM84860, BCM84861,
+    BCM84864, BCM84868, BCM84888, BCM84884,
+    BCM84888E, BCM84884E, BCM84881, BCM84880,
+    BCM84888S, BCM84887, BCM84886, BCM84885
+    BCM8750, BCM8752, BCM8754, BCM84740,
+    BCM84164, BCM84758, BCM84780, BCM84784,
+    BCM84318, BCM84328, BCM84793, BCM82328,
+    Furia, Huracan, Sesto, Madura,
+    BCM82780, copper sfp
+   
+UNIT0 CANCUN: 
+	CIH: LOADED
+	Ver: 03.00.00
+
+	CMH: LOADED
+	Ver: 03.00.00
+	SDK Ver: 06.05.15
+
+	CCH: LOADED
+	Ver: 03.00.00
+	SDK Ver: 06.05.15
+
+	CEH: LOADED
+	Ver: 03.00.00
+	SDK Ver: 06.05.15
+
+Using port number:1 as access_port
+Using port number:2 as net_port_0
+Using port number:3 as net_port_1
+Current header mode for unit 0 is now Ieee (0).
+ 
+ **************TEST 1  Multicast initiation access_port:(1)  to net_port_2:(3)**************
+mac=01:00:5e:01:01:01 vlan=28688 GPORT=0x0 modid=0 port=0/cpu0 Static CPU MCast=0
+Packet from data=<>, length=68
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[1]: data[0000]: {01005e010101} {0000000011bb} 8100 0015
+[bcmPW.0]Packet[1]: data[0010]: 0800 4500 002e 0000 0000 40ff 84c4 0a0a 
+[bcmPW.0]Packet[1]: data[0020]: 0a01 e001 0114 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[1]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[1]: data[0040]: 1a5c 3e45 
+[bcmPW.0]Packet[1]: length 68 (68). rx-port 1. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[1]: dest-port 2. dest-mod 80. src-gport -2147483647. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[1]: reasons: FilterMatch
+[bcmPW.0]Packet[1]: 
+Packet[1]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:11:bb> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[1]:   IP: V(4) src<10.10.10.1> dst<224.1.1.20> hl<5> service-type<0> tl<46> id<0> frg-off<0> ttl<64> > chk-sum<0x84c4>
+[bcmPW.0]
+[bcmPW.0]Packet[2]: data[0000]: {01005e010114} {000000003333} 8100 0017
+[bcmPW.0]Packet[2]: data[0010]: 0800 4500 0060 0000 0000 1011 ab6c 0a0a 
+[bcmPW.0]Packet[2]: data[0020]: 1402 e001 0114 ffff 2118 004c 0000 0800 
+[bcmPW.0]Packet[2]: data[0030]: 0000 0123 4500 0100 5e01 0101 0000 0000 
+[bcmPW.0]Packet[2]: data[0040]: 11bb 0800 4500 002e 0000 0000 40ff 84c4 
+[bcmPW.0]Packet[2]: data[0050]: 0a0a 0a01 e001 0114 0001 0203 0405 0607 
+[bcmPW.0]Packet[2]: data[0060]: 0809 0a0b 0c0d 0e0f 1011 1213 1415 1617 
+[bcmPW.0]Packet[2]: data[0070]: 1819 34fc 96c3 
+[bcmPW.0]Packet[2]: length 118 (118). rx-port 3. cos 0. prio_int 0. vlan 23. reason 0x80000001. Outer tagged.
+[bcmPW.0]Packet[2]: dest-port 0. dest-mod 0. src-port 3. src-mod 0. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[2]: reasons: FilterMatch
+[bcmPW.0]Packet[2]: reasons: TunnelObjectValidationFail
+[bcmPW.0]Packet[2]: 
+Packet[2]:   Ethernet: dst<01:00:5e:01:01:14> src<00:00:00:00:33:33> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[2]:   IP: V(4) src<10.10.20.2> dst<224.1.1.20> hl<5> service-type<0> tl<96> id<0> frg-off<0> ttl<16> > chk-sum<0xab6c>
+mac=01:00:5e:01:01:01 vlan=28688 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU MCast=0
+mac=00:00:00:00:11:bb vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+MC_PERQ_PKT(0).cpu0	    :			  2		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			186		   +186 	    183/s
+IMRP4_64.ce0		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  1		     +1 	      1/s
+TDBGC3_64.ce0		    :			  1		     +1 	      1/s
+CLMIB_R127.ce0		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce0		    :			  1		     +1 	      1/s
+CLMIB_RMCA.ce0		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce0		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce0		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce0		    :			 68		    +68 	     67/s
+CLMIB_T127.ce0		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce0		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce0		    :			  1		     +1 	      1/s
+CLMIB_TMCA.ce0		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce0		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce0		    :			 68		    +68 	     67/s
+CLMIB_RPROG0.ce0	    :			  1		     +1 	      1/s
+UC_PERQ_PKT(0).ce0	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce0	    :			 68		    +68 	     67/s
+ING_NIV_RX_FRAMES_VL.ce2    :			  1		     +1 	      1/s
+CLMIB_R127.ce2		    :			  1		     +1 	      1/s
+CLMIB_RPKT.ce2		    :			  1		     +1 	      1/s
+CLMIB_RMCA.ce2		    :			  1		     +1 	      1/s
+CLMIB_RVLN.ce2		    :			  1		     +1 	      1/s
+CLMIB_RPOK.ce2		    :			  1		     +1 	      1/s
+CLMIB_RBYT.ce2		    :			118		   +118 	    116/s
+CLMIB_T127.ce2		    :			  1		     +1 	      1/s
+CLMIB_TPOK.ce2		    :			  1		     +1 	      1/s
+CLMIB_TPKT.ce2		    :			  1		     +1 	      1/s
+CLMIB_TMCA.ce2		    :			  1		     +1 	      1/s
+CLMIB_TVLN.ce2		    :			  1		     +1 	      1/s
+CLMIB_TBYT.ce2		    :			118		   +118 	    116/s
+CLMIB_RPROG3.ce2	    :			  1		     +1 	      1/s
+MC_PERQ_PKT(0).ce2	    :			  1		     +1 	      1/s
+MC_PERQ_BYTE(0).ce2	    :			118		   +118 	    116/s
+ 
+ **************TEST 2  Multicast termination net_port_2:(3) to  access_port:(1) **************
+Packet from data=<>, length=121
+Sleeping for 1 second
+[bcmPW.0]
+[bcmPW.0]Packet[3]: data[0000]: {01005e010114} {000000000003} 8100 0017
+[bcmPW.0]Packet[3]: data[0010]: 0800 4500 0063 0001 0000 4011 d6c9 c0a8 
+[bcmPW.0]Packet[3]: data[0020]: 0202 e001 0114 ffff 2118 004f 0000 0800 
+[bcmPW.0]Packet[3]: data[0030]: 0000 0123 4500 0100 5e01 0101 0000 0000 
+[bcmPW.0]Packet[3]: data[0040]: 11cc 0800 4500 0031 0001 0000 4000 d820 
+[bcmPW.0]Packet[3]: data[0050]: c0a8 0101 e001 0101 0001 0203 0405 0607 
+[bcmPW.0]Packet[3]: data[0060]: 0809 0a0b 0c0d 0e0f 1011 1213 1415 1617 
+[bcmPW.0]Packet[3]: data[0070]: 1819 2021 22f9 4760 35
+[bcmPW.0]Packet[3]: length 121 (121). rx-port 3. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[3]: dest-port 2. dest-mod 80. src-gport -2147483645. opcode 4.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[3]: reasons: FilterMatch
+[bcmPW.0]Packet[3]: 
+Packet[3]:   Ethernet: dst<01:00:5e:01:01:14> src<00:00:00:00:00:03> Tagged Packet ProtID<0x8100> Ctrl<0x0017> Internet Protocol (IP)
+Packet[3]:   IP: V(4) src<192.168.2.2> dst<224.1.1.20> hl<5> service-type<0> tl<99> id<1> frg-off<0> ttl<64> > chk-sum<0xd6c9>
+[bcmPW.0]
+[bcmPW.0]Packet[4]: data[0000]: {01005e010101} {0000000011cc} 8100 0015
+[bcmPW.0]Packet[4]: data[0010]: 0800 4500 0031 0001 0000 4000 d820 c0a8 
+[bcmPW.0]Packet[4]: data[0020]: 0101 e001 0101 0001 0203 0405 0607 0809 
+[bcmPW.0]Packet[4]: data[0030]: 0a0b 0c0d 0e0f 1011 1213 1415 1617 1819 
+[bcmPW.0]Packet[4]: data[0040]: 2021 2270 4d38 c1
+[bcmPW.0]Packet[4]: length 71 (71). rx-port 1. cos 0. prio_int 0. vlan 28688. reason 0x1. Outer tagged.
+[bcmPW.0]Packet[4]: dest-port 0. dest-mod 0. src-gport -2147483647. opcode 0.  matched 0. classification-tag 0.
+[bcmPW.0]Packet[4]: reasons: FilterMatch
+[bcmPW.0]Packet[4]: 
+Packet[4]:   Ethernet: dst<01:00:5e:01:01:01> src<00:00:00:00:11:cc> Tagged Packet ProtID<0x8100> Ctrl<0x0015> Internet Protocol (IP)
+Packet[4]:   IP: V(4) src<192.168.1.1> dst<224.1.1.1> hl<5> service-type<0> tl<49> id<1> frg-off<0> ttl<64> > chk-sum<0xd820>
+mac=01:00:5e:01:01:01 vlan=28688 GPORT=0x0 modid=0 port=0/cpu0 Static Hit CPU MCast=0
+mac=00:00:00:00:11:bb vlan=28688 GPORT=0x80000001 port=0x80000001(vxlan) Hit
+mac=00:00:00:00:11:cc vlan=28688 GPORT=0x80000003 port=0x80000003(vxlan) Hit
+MC_PERQ_PKT(0).cpu0	    :			  4		     +2 	      2/s
+MC_PERQ_BYTE(0).cpu0	    :			378		   +192 	    189/s
+ING_NIV_RX_FRAMES_VL.ce0    :			  2		     +1 	      1/s
+CLMIB_R127.ce0		    :			  2		     +1 	      1/s
+CLMIB_RPKT.ce0		    :			  2		     +1 	      1/s
+CLMIB_RMCA.ce0		    :			  2		     +1 	      1/s
+CLMIB_RVLN.ce0		    :			  2		     +1 	      1/s
+CLMIB_RPOK.ce0		    :			  2		     +1 	      1/s
+CLMIB_RBYT.ce0		    :			139		    +71 	     70/s
+CLMIB_T127.ce0		    :			  2		     +1 	      1/s
+CLMIB_TPOK.ce0		    :			  2		     +1 	      1/s
+CLMIB_TPKT.ce0		    :			  2		     +1 	      1/s
+CLMIB_TMCA.ce0		    :			  2		     +1 	      1/s
+CLMIB_TVLN.ce0		    :			  2		     +1 	      1/s
+CLMIB_TBYT.ce0		    :			139		    +71 	     70/s
+CLMIB_RPROG0.ce0	    :			  2		     +1 	      1/s
+MC_PERQ_PKT(0).ce0	    :			  1		     +1 	      1/s
+MC_PERQ_BYTE(0).ce0	    :			 71		    +71 	     70/s
+IMRP4_64.ce2		    :			  1		     +1 	      1/s
+RTUN.ce2		    :			  1		     +1 	      1/s
+ING_NIV_RX_FRAMES_VL.ce2    :			  2		     +1 	      1/s
+TDBGC3_64.ce2		    :			  1		     +1 	      1/s
+CLMIB_R127.ce2		    :			  2		     +1 	      1/s
+CLMIB_RPKT.ce2		    :			  2		     +1 	      1/s
+CLMIB_RMCA.ce2		    :			  2		     +1 	      1/s
+CLMIB_RVLN.ce2		    :			  2		     +1 	      1/s
+CLMIB_RPOK.ce2		    :			  2		     +1 	      1/s
+CLMIB_RBYT.ce2		    :			239		   +121 	    119/s
+CLMIB_T127.ce2		    :			  2		     +1 	      1/s
+CLMIB_TPOK.ce2		    :			  2		     +1 	      1/s
+CLMIB_TPKT.ce2		    :			  2		     +1 	      1/s
+CLMIB_TMCA.ce2		    :			  2		     +1 	      1/s
+CLMIB_TVLN.ce2		    :			  2		     +1 	      1/s
+CLMIB_TBYT.ce2		    :			239		   +121 	    119/s
+CLMIB_RPROG3.ce2	    :			  2		     +1 	      1/s
+UC_PERQ_PKT(0).ce2	    :			  1		     +1 	      1/s
+UC_PERQ_BYTE(0).ce2	    :			121		   +121 	    119/s
+bcm_error_t $$ = BCM_E_NONE (0)
+BCM.0> 
+Script done on Mon 17 Sep 2018 03:02:21 PM IST

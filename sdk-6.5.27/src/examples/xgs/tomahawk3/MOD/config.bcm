@@ -1,0 +1,521 @@
+#This is for a 128x100G configuration PAM4 mode (2 lanes per 100G)
+
+pbmp_xport_xe.0=0x8ffff8ffffcffff8ffff8ffff8ffffcffff9fffe
+ccm_dma_enable=0
+ccmdma_intr_enable=0
+ctr_evict_enable=0
+mem_cache_enable=0
+#parity_correction=0
+#parity_enable=0
+phy_enable=0
+phy_null=1
+
+#init_all_modules=0
+
+#pipe 0
+portmap_1=1:10
+portmap_2=2:10
+portmap_3=3:10
+portmap_4=4:10
+portmap_5=5:10
+portmap_6=6:10
+portmap_7=7:10
+portmap_8=8:10
+
+portmap_9=9:10
+portmap_10=10:10
+portmap_11=11:10
+portmap_12=12:10
+portmap_13=13:10
+portmap_14=14:10
+portmap_15=15:10
+portmap_16=16:10
+
+#loopback port
+portmap_19=259:10
+
+#pipe 1
+portmap_20=33:10
+portmap_21=34:10
+portmap_22=35:10
+portmap_23=36:10
+portmap_24=37:10
+portmap_25=38:10
+portmap_26=39:10
+portmap_27=40:10
+
+portmap_28=41:10
+portmap_29=42:10
+portmap_30=43:10
+portmap_31=44:10
+portmap_32=45:10
+portmap_33=46:10
+portmap_34=47:10
+portmap_35=48:10
+
+#management port
+portmap_38=257:10
+
+#loopback port
+portmap_39=260:10
+
+#pipe 2
+portmap_40=65:10
+portmap_41=66:10
+portmap_42=67:10
+portmap_43=68:10
+portmap_44=69:10
+portmap_45=70:10
+portmap_46=71:10
+portmap_47=72:10
+
+portmap_48=73:10
+portmap_49=74:10
+portmap_50=75:10
+portmap_51=76:10
+portmap_52=77:10
+portmap_53=78:10
+portmap_54=79:10
+portmap_55=80:10
+
+#loopback port
+portmap_59=261:10
+
+#pipe 3 
+portmap_60=97:10
+portmap_61=98:10
+portmap_62=99:10
+portmap_63=100:10
+portmap_64=101:10
+portmap_65=102:10
+portmap_66=103:10
+portmap_67=104:10
+
+portmap_68=105:10
+portmap_69=106:10
+portmap_70=107:10
+portmap_71=108:10
+portmap_72=109:10
+portmap_73=110:10
+portmap_74=111:10
+portmap_75=112:10
+
+#loopback port
+portmap_79=262:10
+
+#pipe 4
+portmap_80=129:10
+portmap_81=130:10
+portmap_82=131:10
+portmap_83=132:10
+portmap_84=133:10
+portmap_85=134:10
+portmap_86=135:10
+portmap_87=136:10
+
+portmap_88=137:10
+portmap_89=138:10
+portmap_90=139:10
+portmap_91=140:10
+portmap_92=141:10
+portmap_93=142:10
+portmap_94=143:10
+portmap_95=144:10
+
+#loopback port
+portmap_99=263:10
+
+#pipe 5
+portmap_100=161:10
+portmap_101=162:10
+portmap_102=163:10
+portmap_103=164:10
+portmap_104=165:10
+portmap_105=166:10
+portmap_106=167:10
+portmap_107=168:10
+
+portmap_108=169:10
+portmap_109=170:10
+portmap_110=171:10
+portmap_111=172:10
+portmap_112=173:10
+portmap_113=174:10
+portmap_114=175:10
+portmap_115=176:10
+
+#management port
+portmap_118=258:10
+
+#loopback port
+portmap_119=264:10
+
+#pipe 6
+portmap_120=193:10
+portmap_121=194:10
+portmap_122=195:10
+portmap_123=196:10
+portmap_124=197:10
+portmap_125=198:10
+portmap_126=199:10
+portmap_127=200:10
+
+portmap_128=201:10
+portmap_129=202:10
+portmap_130=203:10
+portmap_131=204:10
+portmap_132=205:10
+portmap_133=206:10
+portmap_134=207:10
+portmap_135=208:10
+
+#loopback port
+portmap_139=265:10
+
+#pipe 7
+portmap_140=225:10
+portmap_141=226:10
+portmap_142=227:10
+portmap_143=228:10
+portmap_144=229:10
+portmap_145=230:10
+portmap_146=231:10
+portmap_147=232:10
+
+portmap_148=233:10
+portmap_149=234:10
+portmap_150=235:10
+portmap_151=236:10
+portmap_152=237:10
+portmap_153=238:10
+portmap_154=239:10
+portmap_155=240:10
+
+#loopback port
+portmap_159=266:10
+
+#lane map and polarity - S0000
+#phy_chain_rx_lane_map_physical{57.0} = 0x04152736
+#serdes_core_rx_polarity_flip_physical{57} = 0x63
+#phy_chain_tx_lane_map_physical{57.0} = 0x43516270
+#serdes_core_tx_polarity_flip_physical{57} = 0x59
+#phy_chain_rx_lane_map_physical{73.0} = 0x45230617
+#serdes_core_rx_polarity_flip_physical{73} = 0x96
+#phy_chain_tx_lane_map_physical{73.0} = 0x64753210
+#serdes_core_tx_polarity_flip_physical{73} = 0xcb
+#phy_chain_rx_lane_map_physical{89.0} = 0x02134657
+#serdes_core_rx_polarity_flip_physical{89} = 0x3c
+#phy_chain_tx_lane_map_physical{89.0} = 0x35147260
+#serdes_core_tx_polarity_flip_physical{89} = 0xa1
+#phy_chain_rx_lane_map_physical{105.0} = 0x16073425
+#serdes_core_rx_polarity_flip_physical{105} = 0x98
+#phy_chain_tx_lane_map_physical{105.0} = 0x57463210
+#serdes_core_tx_polarity_flip_physical{105} = 0x30
+#phy_chain_rx_lane_map_physical{145.0} = 0x71604352
+#serdes_core_rx_polarity_flip_physical{145} = 0x96
+#phy_chain_tx_lane_map_physical{145.0} = 0x57463012
+#serdes_core_tx_polarity_flip_physical{145} = 0x6f
+#phy_chain_rx_lane_map_physical{161.0} = 0x02475316
+#serdes_core_rx_polarity_flip_physical{161} = 0x14
+#phy_chain_tx_lane_map_physical{161.0} = 0x34567210
+#serdes_core_tx_polarity_flip_physical{161} = 0xc2
+#phy_chain_rx_lane_map_physical{177.0} = 0x50142376
+#serdes_core_rx_polarity_flip_physical{177} = 0x46
+#phy_chain_tx_lane_map_physical{177.0} = 0x74615230
+#serdes_core_tx_polarity_flip_physical{177} = 0x86
+#phy_chain_rx_lane_map_physical{193.0} = 0x25713064
+#serdes_core_rx_polarity_flip_physical{193} = 0x2c
+#phy_chain_tx_lane_map_physical{193.0} = 0x71435260
+#serdes_core_tx_polarity_flip_physical{193} = 0xdc
+
+#lane map and polarity - SVK0000
+#phy_chain_rx_lane_map_physical{1.0} = 0x45217630
+#serdes_core_rx_polarity_flip_physical{1} = 0x96
+#phy_chain_tx_lane_map_physical{1.0} = 0x13742560
+#serdes_core_tx_polarity_flip_physical{1} = 0xd3
+#phy_chain_rx_lane_map_physical{9.0} = 0x37260514
+#serdes_core_rx_polarity_flip_physical{9} = 0x6c
+#phy_chain_tx_lane_map_physical{9.0} = 0x75326410
+#serdes_core_tx_polarity_flip_physical{9} = 0x33
+#phy_chain_rx_lane_map_physical{17.0} = 0x10764253
+#serdes_core_rx_polarity_flip_physical{17} = 0x66
+#phy_chain_tx_lane_map_physical{17.0} = 0x64307521
+#serdes_core_tx_polarity_flip_physical{17} = 0x1a
+#phy_chain_rx_lane_map_physical{25.0} = 0x73102654
+#serdes_core_rx_polarity_flip_physical{25} = 0x58
+#phy_chain_tx_lane_map_physical{25.0} = 0x75016432
+#serdes_core_tx_polarity_flip_physical{25} = 0xa9
+#phy_chain_rx_lane_map_physical{33.0} = 0x01543267
+#serdes_core_rx_polarity_flip_physical{33} = 0xa5
+#phy_chain_tx_lane_map_physical{33.0} = 0x56047231
+#serdes_core_tx_polarity_flip_physical{33} = 0xad
+#phy_chain_rx_lane_map_physical{41.0} = 0x02561347
+#serdes_core_rx_polarity_flip_physical{41} = 0xe1
+#phy_chain_tx_lane_map_physical{41.0} = 0x65347120
+#serdes_core_tx_polarity_flip_physical{41} = 0x4a
+#phy_chain_rx_lane_map_physical{49.0} = 0x12570346
+#serdes_core_rx_polarity_flip_physical{49} = 0x78
+#phy_chain_tx_lane_map_physical{49.0} = 0x56327410
+#serdes_core_tx_polarity_flip_physical{49} = 0x81
+#phy_chain_rx_lane_map_physical{57.0} = 0x02561347
+#serdes_core_rx_polarity_flip_physical{57} = 0xe1
+#phy_chain_tx_lane_map_physical{57.0} = 0x65347120
+#serdes_core_tx_polarity_flip_physical{57} = 0x4a
+#phy_chain_rx_lane_map_physical{65.0} = 0x12460357
+#serdes_core_rx_polarity_flip_physical{65} = 0x4b
+#phy_chain_tx_lane_map_physical{65.0} = 0x70625413
+#serdes_core_tx_polarity_flip_physical{65} = 0xc8
+#phy_chain_rx_lane_map_physical{73.0} = 0x02571346
+#serdes_core_rx_polarity_flip_physical{73} = 0xf0
+#phy_chain_tx_lane_map_physical{73.0} = 0x65347120
+#serdes_core_tx_polarity_flip_physical{73} = 0x4a
+#phy_chain_rx_lane_map_physical{81.0} = 0x12460357
+#serdes_core_rx_polarity_flip_physical{81} = 0x4b
+#phy_chain_tx_lane_map_physical{81.0} = 0x70625413
+#serdes_core_tx_polarity_flip_physical{81} = 0x48
+#phy_chain_rx_lane_map_physical{89.0} = 0x12740365
+#serdes_core_rx_polarity_flip_physical{89} = 0x69
+#phy_chain_tx_lane_map_physical{89.0} = 0x65347120
+#serdes_core_tx_polarity_flip_physical{89} = 0x4a
+#phy_chain_rx_lane_map_physical{97.0} = 0x14635027
+#serdes_core_rx_polarity_flip_physical{97} = 0x0f
+#phy_chain_tx_lane_map_physical{97.0} = 0x50126734
+#serdes_core_tx_polarity_flip_physical{97} = 0xc0
+#phy_chain_rx_lane_map_physical{105.0} = 0x75126403
+#serdes_core_rx_polarity_flip_physical{105} = 0xd2
+#phy_chain_tx_lane_map_physical{105.0} = 0x74306521
+#serdes_core_tx_polarity_flip_physical{105} = 0x96
+#phy_chain_rx_lane_map_physical{113.0} = 0x21643075
+#serdes_core_rx_polarity_flip_physical{113} = 0x87
+#phy_chain_tx_lane_map_physical{113.0} = 0x74016253
+#serdes_core_tx_polarity_flip_physical{113} = 0x75
+#phy_chain_rx_lane_map_physical{121.0} = 0x25341706
+#serdes_core_rx_polarity_flip_physical{121} = 0x39
+#phy_chain_tx_lane_map_physical{121.0} = 0x03456172
+#serdes_core_tx_polarity_flip_physical{121} = 0xee
+#phy_chain_rx_lane_map_physical{129.0} = 0x04372615
+#serdes_core_rx_polarity_flip_physical{129} = 0x66
+#phy_chain_tx_lane_map_physical{129.0} = 0x63740251
+#serdes_core_tx_polarity_flip_physical{129} = 0xbb
+#phy_chain_rx_lane_map_physical{137.0} = 0x15043627
+#serdes_core_rx_polarity_flip_physical{137} = 0x63
+#phy_chain_tx_lane_map_physical{137.0} = 0x74105263
+#serdes_core_tx_polarity_flip_physical{137} = 0xdd
+#phy_chain_rx_lane_map_physical{145.0} = 0x01563247
+#phy_chain_tx_lane_map_physical{145.0} = 0x42136750
+#serdes_core_tx_polarity_flip_physical{145} = 0xf3
+#phy_chain_rx_lane_map_physical{153.0} = 0x40261357
+#serdes_core_rx_polarity_flip_physical{153} = 0xf0
+#phy_chain_tx_lane_map_physical{153.0} = 0x47326510
+#serdes_core_tx_polarity_flip_physical{153} = 0x5c
+#phy_chain_rx_lane_map_physical{161.0} = 0x02451367
+#serdes_core_rx_polarity_flip_physical{161} = 0xd1
+#phy_chain_tx_lane_map_physical{161.0} = 0x76023415
+#serdes_core_tx_polarity_flip_physical{161} = 0x1a
+#phy_chain_rx_lane_map_physical{169.0} = 0x12560347
+#serdes_core_rx_polarity_flip_physical{169} = 0x69
+#phy_chain_tx_lane_map_physical{169.0} = 0x60541372
+#serdes_core_tx_polarity_flip_physical{169} = 0x22
+#phy_chain_rx_lane_map_physical{177.0} = 0x02571346
+#serdes_core_rx_polarity_flip_physical{177} = 0xf0
+#phy_chain_tx_lane_map_physical{177.0} = 0x67023415
+#serdes_core_tx_polarity_flip_physical{177} = 0x1a
+#phy_chain_rx_lane_map_physical{185.0} = 0x12560347
+#serdes_core_rx_polarity_flip_physical{185} = 0x69
+#phy_chain_tx_lane_map_physical{185.0} = 0x76341520
+#serdes_core_tx_polarity_flip_physical{185} = 0x84
+#phy_chain_rx_lane_map_physical{193.0} = 0x02451367
+#serdes_core_rx_polarity_flip_physical{193} = 0xd1
+#phy_chain_tx_lane_map_physical{193.0} = 0x67023415
+#serdes_core_tx_polarity_flip_physical{193} = 0x1a
+#phy_chain_rx_lane_map_physical{201.0} = 0x12560347
+#serdes_core_rx_polarity_flip_physical{201} = 0x69
+#phy_chain_tx_lane_map_physical{201.0} = 0x76341520
+#serdes_core_tx_polarity_flip_physical{201} = 0x84
+#phy_chain_rx_lane_map_physical{209.0} = 0x02561347
+#serdes_core_rx_polarity_flip_physical{209} = 0xe1
+#phy_chain_tx_lane_map_physical{209.0} = 0x67023415
+#serdes_core_tx_polarity_flip_physical{209} = 0x1a
+#phy_chain_rx_lane_map_physical{217.0} = 0x01653274
+#serdes_core_rx_polarity_flip_physical{217} = 0x96
+#phy_chain_tx_lane_map_physical{217.0} = 0x65127034
+#serdes_core_tx_polarity_flip_physical{217} = 0x78
+#phy_chain_rx_lane_map_physical{225.0} = 0x12740365
+#serdes_core_rx_polarity_flip_physical{225} = 0x5a
+#phy_chain_tx_lane_map_physical{225.0} = 0x75160342
+#serdes_core_tx_polarity_flip_physical{225} = 0x28
+#phy_chain_rx_lane_map_physical{233.0} = 0x24675310
+#serdes_core_rx_polarity_flip_physical{233} = 0xb8
+#phy_chain_tx_lane_map_physical{233.0} = 0x67305421
+#serdes_core_tx_polarity_flip_physical{233} = 0x5e
+#phy_chain_rx_lane_map_physical{241.0} = 0x12670354
+#serdes_core_rx_polarity_flip_physical{241} = 0x5a
+#phy_chain_tx_lane_map_physical{241.0} = 0x74025136
+#serdes_core_tx_polarity_flip_physical{241} = 0x8a
+#phy_chain_rx_lane_map_physical{249.0} = 0x46215730
+#serdes_core_rx_polarity_flip_physical{249} = 0xd2
+#phy_chain_tx_lane_map_physical{249.0} = 0x32651074
+#serdes_core_tx_polarity_flip_physical{249} = 0xa9
+
+
+
+#lane map and polarity - SVK0010
+phy_chain_rx_lane_map_physical{1.0} = 0x34152706
+serdes_core_rx_polarity_flip_physical{1} = 0x4b
+phy_chain_tx_lane_map_physical{1.0} = 0x23461570
+serdes_core_tx_polarity_flip_physical{1} = 0x7a
+phy_chain_rx_lane_map_physical{9.0} = 0x54172360
+serdes_core_rx_polarity_flip_physical{9} = 0x0e
+phy_chain_tx_lane_map_physical{9.0} = 0x04715362
+serdes_core_tx_polarity_flip_physical{9} = 0xe5
+phy_chain_rx_lane_map_physical{17.0} = 0x54017362
+serdes_core_rx_polarity_flip_physical{17} = 0x56
+phy_chain_tx_lane_map_physical{17.0} = 0x47206531
+serdes_core_tx_polarity_flip_physical{17} = 0x32
+phy_chain_rx_lane_map_physical{25.0} = 0x10572346
+serdes_core_rx_polarity_flip_physical{25} = 0x79
+phy_chain_tx_lane_map_physical{25.0} = 0x67123405
+serdes_core_tx_polarity_flip_physical{25} = 0x83
+phy_chain_rx_lane_map_physical{33.0} = 0x03641275
+serdes_core_rx_polarity_flip_physical{33} = 0xd2
+phy_chain_tx_lane_map_physical{33.0} = 0x75206431
+serdes_core_tx_polarity_flip_physical{33} = 0xdb
+phy_chain_rx_lane_map_physical{41.0} = 0x40675123
+serdes_core_rx_polarity_flip_physical{41} = 0x3f
+phy_chain_tx_lane_map_physical{41.0} = 0x64307521
+serdes_core_tx_polarity_flip_physical{41} = 0x74
+phy_chain_rx_lane_map_physical{49.0} = 0x03561274
+serdes_core_rx_polarity_flip_physical{49} = 0xf3
+phy_chain_tx_lane_map_physical{49.0} = 0x65327410
+serdes_core_tx_polarity_flip_physical{49} = 0xcb
+phy_chain_rx_lane_map_physical{57.0} = 0x02573146
+serdes_core_rx_polarity_flip_physical{57} = 0xa5
+phy_chain_tx_lane_map_physical{57.0} = 0x75216430
+serdes_core_tx_polarity_flip_physical{57} = 0x5a
+phy_chain_rx_lane_map_physical{65.0} = 0x03471265
+serdes_core_rx_polarity_flip_physical{65} = 0xc0
+phy_chain_tx_lane_map_physical{65.0} = 0x65327410
+serdes_core_tx_polarity_flip_physical{65} = 0xcb
+phy_chain_rx_lane_map_physical{73.0} = 0x13460257
+serdes_core_rx_polarity_flip_physical{73} = 0x5a
+phy_chain_tx_lane_map_physical{73.0} = 0x74306521
+serdes_core_tx_polarity_flip_physical{73} = 0x7c
+phy_chain_rx_lane_map_physical{81.0} = 0x03471265
+serdes_core_rx_polarity_flip_physical{81} = 0xc0
+phy_chain_tx_lane_map_physical{81.0} = 0x65327410
+serdes_core_tx_polarity_flip_physical{81} = 0xcb
+phy_chain_rx_lane_map_physical{89.0} = 0x23047615
+serdes_core_rx_polarity_flip_physical{89} = 0x3c
+phy_chain_tx_lane_map_physical{89.0} = 0x74306521
+serdes_core_tx_polarity_flip_physical{89} = 0x7c
+phy_chain_rx_lane_map_physical{97.0} = 0x10675423
+serdes_core_rx_polarity_flip_physical{97} = 0x0f
+phy_chain_tx_lane_map_physical{97.0} = 0x50126734
+serdes_core_tx_polarity_flip_physical{97} = 0xc0
+phy_chain_rx_lane_map_physical{105.0} = 0x04371526
+serdes_core_rx_polarity_flip_physical{105} = 0x96
+phy_chain_tx_lane_map_physical{105.0} = 0x74306521
+serdes_core_tx_polarity_flip_physical{105} = 0x96
+phy_chain_rx_lane_map_physical{113.0} = 0x21453076
+serdes_core_rx_polarity_flip_physical{113} = 0x96
+phy_chain_tx_lane_map_physical{113.0} = 0x60125743
+serdes_core_tx_polarity_flip_physical{113} = 0xd9
+phy_chain_rx_lane_map_physical{121.0} = 0x65207431
+serdes_core_rx_polarity_flip_physical{121} = 0xd2
+phy_chain_tx_lane_map_physical{121.0} = 0x23641570
+serdes_core_tx_polarity_flip_physical{121} = 0x7b
+phy_chain_rx_lane_map_physical{129.0} = 0x57206431
+serdes_core_rx_polarity_flip_physical{129} = 0x5a
+phy_chain_tx_lane_map_physical{129.0} = 0x02763154
+serdes_core_tx_polarity_flip_physical{129} = 0x39
+phy_chain_rx_lane_map_physical{137.0} = 0x12560347
+serdes_core_rx_polarity_flip_physical{137} = 0x69
+phy_chain_tx_lane_map_physical{137.0} = 0x57306412
+serdes_core_tx_polarity_flip_physical{137} = 0x59
+phy_chain_rx_lane_map_physical{145.0} = 0x14675023
+serdes_core_rx_polarity_flip_physical{145} = 0x3f
+phy_chain_tx_lane_map_physical{145.0} = 0x75136420
+serdes_core_tx_polarity_flip_physical{145} = 0xed
+phy_chain_rx_lane_map_physical{153.0} = 0x10675423
+serdes_core_rx_polarity_flip_physical{153} = 0x0f
+phy_chain_tx_lane_map_physical{153.0} = 0x17356420
+serdes_core_tx_polarity_flip_physical{153} = 0x5e
+phy_chain_rx_lane_map_physical{161.0} = 0x23047615
+serdes_core_rx_polarity_flip_physical{161} = 0x3c
+phy_chain_tx_lane_map_physical{161.0} = 0x57326014
+serdes_core_tx_polarity_flip_physical{161} = 0x5c
+phy_chain_rx_lane_map_physical{169.0} = 0x03572146
+serdes_core_rx_polarity_flip_physical{169} = 0xed
+phy_chain_tx_lane_map_physical{169.0} = 0x76135024
+serdes_core_tx_polarity_flip_physical{169} = 0xa8
+phy_chain_rx_lane_map_physical{177.0} = 0x13460257
+serdes_core_rx_polarity_flip_physical{177} = 0x5a
+phy_chain_tx_lane_map_physical{177.0} = 0x57316024
+serdes_core_tx_polarity_flip_physical{177} = 0x5c
+phy_chain_rx_lane_map_physical{185.0} = 0x03572146
+serdes_core_rx_polarity_flip_physical{185} = 0xed
+phy_chain_tx_lane_map_physical{185.0} = 0x76135024
+serdes_core_tx_polarity_flip_physical{185} = 0xa8
+phy_chain_rx_lane_map_physical{193.0} = 0x21563047
+serdes_core_rx_polarity_flip_physical{193} = 0xf0
+phy_chain_tx_lane_map_physical{193.0} = 0x57316420
+serdes_core_tx_polarity_flip_physical{193} = 0x59
+phy_chain_rx_lane_map_physical{201.0} = 0x03572146
+serdes_core_rx_polarity_flip_physical{201} = 0xed
+phy_chain_tx_lane_map_physical{201.0} = 0x76135024
+serdes_core_tx_polarity_flip_physical{201} = 0xa8
+phy_chain_rx_lane_map_physical{209.0} = 0x40675123
+serdes_core_rx_polarity_flip_physical{209} = 0x3f
+phy_chain_tx_lane_map_physical{209.0} = 0x57316024
+serdes_core_tx_polarity_flip_physical{209} = 0x4e
+phy_chain_rx_lane_map_physical{217.0} = 0x03572164
+serdes_core_rx_polarity_flip_physical{217} = 0xed
+phy_chain_tx_lane_map_physical{217.0} = 0x75326014
+serdes_core_tx_polarity_flip_physical{217} = 0xba
+phy_chain_rx_lane_map_physical{225.0} = 0x76124053
+serdes_core_rx_polarity_flip_physical{225} = 0x96
+phy_chain_tx_lane_map_physical{225.0} = 0x65214730
+serdes_core_tx_polarity_flip_physical{225} = 0x45
+phy_chain_rx_lane_map_physical{233.0} = 0x34725061
+serdes_core_rx_polarity_flip_physical{233} = 0xc3
+phy_chain_tx_lane_map_physical{233.0} = 0x76035421
+serdes_core_tx_polarity_flip_physical{233} = 0xa8
+phy_chain_rx_lane_map_physical{241.0} = 0x12570346
+serdes_core_rx_polarity_flip_physical{241} = 0x78
+phy_chain_tx_lane_map_physical{241.0} = 0x27510436
+serdes_core_tx_polarity_flip_physical{241} = 0xb5
+phy_chain_rx_lane_map_physical{249.0} = 0x34072516
+serdes_core_rx_polarity_flip_physical{249} = 0xc3
+phy_chain_tx_lane_map_physical{249.0} = 0x13647250
+serdes_core_tx_polarity_flip_physical{249} = 0x27
+
+
+#dpr_clock_frequency=1325
+core_clock_frequency=1325
+dpr_clock_frequency=1000
+device_clock_frequency=1325
+
+load_firmware=0x2
+port_flex_enable=1
+
+scache_filename=/tmp/scache
+fw_core_0=BCM56980_0_mod.srec
+fw_core_1=BCM56980_1_ifa.srec
+fpem_mem_entries=65536
+flowtracker_enable=2
+#flowtracker_max_flows=10000
+#flowtracker_max_flows_pipe0=10000
+flowtracker_max_flows_pipe1=10000
+flowtracker_drop_monitor_enable=1
+flowtracker_export_interval_usecs=1000000
+flowtracker_max_export_pkt_length=1500
+num_queues_pci=47
+num_queues_uc0=1
+flow_init_mode=1
+ifa_enable=1
+flowtracker_scan_interval_usecs=100000
+telemetry_max_ports_monitor=0
+irq_adaptive_poll_enable=1
+mcs_uart_bmp_uc0=1
+flowtracker_max_collectors=4
+flowtracker_export_ipfix_enable=1

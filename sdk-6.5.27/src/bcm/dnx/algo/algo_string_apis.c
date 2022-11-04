@@ -1,0 +1,106 @@
+/*
+ * 
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ *
+ */
+
+#ifdef BSL_LOG_MODULE
+#error "BSL_LOG_MODULE redefined"
+#endif
+#define BSL_LOG_MODULE BSL_LS_BCMDNX_RESMNGR
+
+#include <soc/sand/shrextend/shrextend_debug.h>
+#include <soc/dnx/dbal/dbal.h>
+#include <soc/dnx/mdb.h>
+#include <bcm_int/dnx/l3/l3_fec.h>
+#include <bcm_int/dnx/algo/swstate/auto_generated/access/algo_l3_access.h>
+#include <sal/appl/sal.h>
+#include <soc/sand/sand_signals.h>
+#include "src/soc/dnx/dbal/dbal_internal.h"
+
+shr_error_e
+dnx_cint_algo_l3_rif_allocate_generic(
+    int unit,
+    int rif_id,
+    char *rif_result_type_name,
+    char *table_name)
+{
+    dbal_result_type_t rif_result_type;
+    dbal_tables_e table_id;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    SHR_IF_ERR_EXIT(dbal_logical_table_string_to_id(unit, table_name, &table_id));
+    SHR_IF_ERR_EXIT(dbal_result_type_string_to_id(unit, table_id, rif_result_type_name, (uint32 *) (&rif_result_type)));
+    SHR_IF_ERR_EXIT(dnx_algo_l3_rif_allocate_generic(unit, rif_id, rif_result_type, table_id));
+
+exit:
+    SHR_FUNC_EXIT;
+}
+
+shr_error_e
+dnx_cint_algo_l3_fec_allocate(
+    int unit,
+    int *fec_index,
+    uint32 flags,
+    char *hierarchy_name,
+    char *fec_resource_type_name)
+{
+    mdb_physical_table_e db;
+    dbal_field_types_basic_info_t *field_info;
+    algo_dnx_l3_fec_data_t fec_alloc_data;
+
+    dbal_enum_value_field_hierarchy_level_e hierarchy = DBAL_NOF_ENUM_HIERARCHY_LEVEL_VALUES;
+    dbal_enum_value_field_fec_resource_type_e fec_resource_type = DBAL_NOF_ENUM_FEC_RESOURCE_TYPE_VALUES;
+    uint8 enum_index;
+
+    SHR_FUNC_INIT_VARS(unit);
+
+    sal_memset(&fec_alloc_data, 0, sizeof(fec_alloc_data));
+
+    SHR_IF_ERR_EXIT(dbal_fields_field_types_info_get(unit, DBAL_FIELD_HIERARCHY_LEVEL, &field_info));
+
+    for (enum_index = 0; enum_index < field_info->nof_enum_values; enum_index++)
+    {
+        if (sal_strncasecmp
+            (hierarchy_name, field_info->enum_val_info[enum_index].name,
+             sizeof(field_info->enum_val_info[enum_index].name)) == 0)
+        {
+            hierarchy = enum_index;
+            break;
+        }
+    }
+    if (enum_index == field_info->nof_enum_values)
+    {
+        SHR_ERR_EXIT(_SHR_E_PARAM, "%s field %s enum val wasn't found \n", field_info->name, hierarchy_name);
+    }
+
+    SHR_IF_ERR_EXIT(dbal_field_types_info_get
+                    (unit, DBAL_FIELD_TYPE_DEF_FEC_RESOURCE_TYPE,
+                     (const dbal_field_types_basic_info_t **) &field_info));
+
+    for (enum_index = 0; enum_index < field_info->nof_enum_values; enum_index++)
+    {
+        if (sal_strncasecmp
+            (fec_resource_type_name, field_info->enum_val_info[enum_index].name,
+             sizeof(field_info->enum_val_info[enum_index].name)) == 0)
+        {
+            fec_resource_type = enum_index;
+            break;
+        }
+    }
+    if (enum_index == field_info->nof_enum_values)
+    {
+        SHR_ERR_EXIT(_SHR_E_PARAM, "%s field %s enum val wasn't found \n", field_info->name, fec_resource_type_name);
+    }
+
+    SHR_IF_ERR_EXIT(algo_l3_db.fec_db_info.fec_db.get(unit, 0, hierarchy, &db));
+
+    fec_alloc_data.super_fec_type_tag = fec_resource_type;
+    SHR_IF_ERR_EXIT(dnx_algo_l3_fec_allocate(unit, fec_index, flags, db, &fec_alloc_data));
+
+exit:
+    SHR_FUNC_EXIT;
+}

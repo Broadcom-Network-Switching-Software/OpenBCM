@@ -1,0 +1,801 @@
+
+/* *INDENT-OFF* */
+/*
+ * This license is set out in https://raw.githubusercontent.com/Broadcom-Network-Switching-Software/OpenBCM/master/Legal/LICENSE file.
+ * 
+ * Copyright 2007-2022 Broadcom Inc. All rights reserved.
+ */
+#ifndef _DNX_DATA_FC_H_
+
+#define _DNX_DATA_FC_H_
+
+#include <sal/limits.h>
+#include <shared/utilex/utilex_framework.h>
+#include <soc/property.h>
+#include <soc/sand/shrextend/shrextend_debug.h>
+#include <soc/dnxc/dnxc_data/dnxc_data_utils.h>
+#include <soc/dnxc/dnxc_data/dnxc_data_mgmt.h>
+#include <soc/dnx/dnx_data/auto_generated/dnx_data_max_fc.h>
+
+
+
+#ifndef BCM_DNX_SUPPORT
+#error "This file is for use by DNX family only!"
+#endif
+
+
+
+shr_error_e dnx_data_if_fc_init(
+    int unit);
+
+
+
+
+
+
+
+typedef enum
+{
+    dnx_data_fc_general_fc_to_nif_status,
+    dnx_data_fc_general_ilu_fc_status,
+    dnx_data_fc_general_ilu_fc_status_per_tdm,
+    dnx_data_fc_general_inb_ilkn_rx_status,
+    dnx_data_fc_general_glb_res_lp_to_llfc,
+    dnx_data_fc_general_vsqd_to_llfc_pfc,
+    dnx_data_fc_general_vsq_thr_en,
+    dnx_data_fc_general_oob_tx_reset,
+    dnx_data_fc_general_additional_enablers,
+    dnx_data_fc_general_ilkn_inb_llfc,
+    dnx_data_fc_general_flexe_flow_control,
+    dnx_data_fc_general_glb_rsc_oob_en,
+    dnx_data_fc_general_cat2_oob_en,
+    dnx_data_fc_general_pfc_rec_cdu_shift,
+    dnx_data_fc_general_pfc_status_regs_double_read,
+    dnx_data_fc_general_ilkn_oob_fast_llfc,
+    dnx_data_fc_general_pp_inb_enable,
+    dnx_data_fc_general_fc_from_llfc_vsq_status_sel,
+    dnx_data_fc_general_if_2_cfc_enablers,
+    dnx_data_fc_general_ilkn_oob_en,
+    dnx_data_fc_general_ilkn_polarity_set,
+    dnx_data_fc_general_additional_rx_pfc_bmp_types,
+    dnx_data_fc_general_disable_pfc_mask_on_link_fail,
+    dnx_data_fc_general_gen_pfc_from_llfc_bitmap_per_type,
+    dnx_data_fc_general_llfc_handled_in_cfc,
+    dnx_data_fc_general_coe_vid_mapping,
+    dnx_data_fc_general_ilkn_inband_support,
+    dnx_data_fc_general_oob_support,
+    dnx_data_fc_general_coe_support,
+    dnx_data_fc_general_nif_pfc_bitmaps_e_f_support,
+    dnx_data_fc_general_qmlf_fc_high_and_low_rmcs_support,
+    dnx_data_fc_general_qmlf_rmcs_thresholds_per_profile_support,
+    dnx_data_fc_general_is_used,
+    dnx_data_fc_general_power_down_supported,
+    dnx_data_fc_general_pass_control_frames_support,
+    dnx_data_fc_general_only_nif_rmc_for_fc,
+    dnx_data_fc_general_pfc_remapping,
+    dnx_data_fc_general_pfc_to_stop_pm_support,
+
+    
+    _dnx_data_fc_general_feature_nof
+} dnx_data_fc_general_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_general_feature_get_f) (
+    int unit,
+    dnx_data_fc_general_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_glb_rsc_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_gen_bmps_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_gen_bmp_first_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_af_nif_indications_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_cal_llfcs_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_entries_qmlf_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_bits_in_pfc_status_select_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_rmc_thresholds_profiles_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_rmc_pfc_set_threshold_default_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_rmc_pfc_clear_threshold_default_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_rmc_llfc_set_threshold_default_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_rmc_llfc_clear_threshold_default_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_nof_bits_in_nif_eth_rmc_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_general_bcm_cos_count_get_f) (
+    int unit);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_general_feature_get_f feature_get;
+    
+    dnx_data_fc_general_nof_glb_rsc_get_f nof_glb_rsc_get;
+    
+    dnx_data_fc_general_nof_gen_bmps_get_f nof_gen_bmps_get;
+    
+    dnx_data_fc_general_gen_bmp_first_id_get_f gen_bmp_first_id_get;
+    
+    dnx_data_fc_general_nof_af_nif_indications_get_f nof_af_nif_indications_get;
+    
+    dnx_data_fc_general_nof_cal_llfcs_get_f nof_cal_llfcs_get;
+    
+    dnx_data_fc_general_nof_entries_qmlf_get_f nof_entries_qmlf_get;
+    
+    dnx_data_fc_general_nof_bits_in_pfc_status_select_get_f nof_bits_in_pfc_status_select_get;
+    
+    dnx_data_fc_general_nof_rmc_thresholds_profiles_get_f nof_rmc_thresholds_profiles_get;
+    
+    dnx_data_fc_general_rmc_pfc_set_threshold_default_get_f rmc_pfc_set_threshold_default_get;
+    
+    dnx_data_fc_general_rmc_pfc_clear_threshold_default_get_f rmc_pfc_clear_threshold_default_get;
+    
+    dnx_data_fc_general_rmc_llfc_set_threshold_default_get_f rmc_llfc_set_threshold_default_get;
+    
+    dnx_data_fc_general_rmc_llfc_clear_threshold_default_get_f rmc_llfc_clear_threshold_default_get;
+    
+    dnx_data_fc_general_nof_bits_in_nif_eth_rmc_id_get_f nof_bits_in_nif_eth_rmc_id_get;
+    
+    dnx_data_fc_general_bcm_cos_count_get_f bcm_cos_count_get;
+} dnx_data_if_fc_general_t;
+
+
+
+
+
+
+
+typedef enum
+{
+
+    
+    _dnx_data_fc_calendar_common_feature_nof
+} dnx_data_fc_calendar_common_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_calendar_common_feature_get_f) (
+    int unit,
+    dnx_data_fc_calendar_common_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_pfc_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_nif_llfc_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_port_2_prio_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_port_4_prio_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_port_8_prio_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_pfc_generic_bmp_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_rx_dest_empty_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_vsq_a_b_c_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_vsq_d_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_llfc_vsq_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_pfc_vsq_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_glb_rsc_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_nif_llfc_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_calendar_common_tx_src_empty_get_f) (
+    int unit);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_calendar_common_feature_get_f feature_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_pfc_get_f rx_dest_pfc_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_nif_llfc_get_f rx_dest_nif_llfc_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_port_2_prio_get_f rx_dest_port_2_prio_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_port_4_prio_get_f rx_dest_port_4_prio_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_port_8_prio_get_f rx_dest_port_8_prio_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_pfc_generic_bmp_get_f rx_dest_pfc_generic_bmp_get;
+    
+    dnx_data_fc_calendar_common_rx_dest_empty_get_f rx_dest_empty_get;
+    
+    dnx_data_fc_calendar_common_tx_src_vsq_a_b_c_get_f tx_src_vsq_a_b_c_get;
+    
+    dnx_data_fc_calendar_common_tx_src_vsq_d_get_f tx_src_vsq_d_get;
+    
+    dnx_data_fc_calendar_common_tx_src_llfc_vsq_get_f tx_src_llfc_vsq_get;
+    
+    dnx_data_fc_calendar_common_tx_src_pfc_vsq_get_f tx_src_pfc_vsq_get;
+    
+    dnx_data_fc_calendar_common_tx_src_glb_rsc_get_f tx_src_glb_rsc_get;
+    
+    dnx_data_fc_calendar_common_tx_src_nif_llfc_get_f tx_src_nif_llfc_get;
+    
+    dnx_data_fc_calendar_common_tx_src_empty_get_f tx_src_empty_get;
+} dnx_data_if_fc_calendar_common_t;
+
+
+
+
+
+
+typedef struct
+{
+    int mode;
+} dnx_data_fc_coe_calendar_mode_t;
+
+
+typedef struct
+{
+    uint8 mac[6];
+} dnx_data_fc_coe_mac_address_t;
+
+
+typedef struct
+{
+    int len;
+} dnx_data_fc_coe_calender_length_t;
+
+
+
+typedef enum
+{
+    dnx_data_fc_coe_both_modes_support,
+
+    
+    _dnx_data_fc_coe_feature_nof
+} dnx_data_fc_coe_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_coe_feature_get_f) (
+    int unit,
+    dnx_data_fc_coe_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_coe_cal_instances_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_supported_chan_ids_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_coe_vid_mask_width_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_coe_vid_right_shift_width_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_coe_ptc_mask_width_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_nof_coe_ptc_left_shift_width_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_max_coe_ticks_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_fc_support_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_map_value_size_in_bits_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_calendar_pause_resolution_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_data_offset_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_ethertype_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_control_opcode_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_coe_vid_offset_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_coe_vid_mask_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_coe_vid_right_shift_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_coe_ptc_mask_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_coe_coe_ptc_left_shift_get_f) (
+    int unit);
+
+
+typedef const dnx_data_fc_coe_calendar_mode_t *(
+    *dnx_data_fc_coe_calendar_mode_get_f) (
+    int unit);
+
+
+typedef const dnx_data_fc_coe_mac_address_t *(
+    *dnx_data_fc_coe_mac_address_get_f) (
+    int unit);
+
+
+typedef const dnx_data_fc_coe_calender_length_t *(
+    *dnx_data_fc_coe_calender_length_get_f) (
+    int unit,
+    int cal_id);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_coe_feature_get_f feature_get;
+    
+    dnx_data_fc_coe_nof_coe_cal_instances_get_f nof_coe_cal_instances_get;
+    
+    dnx_data_fc_coe_nof_supported_chan_ids_get_f nof_supported_chan_ids_get;
+    
+    dnx_data_fc_coe_nof_coe_vid_mask_width_get_f nof_coe_vid_mask_width_get;
+    
+    dnx_data_fc_coe_nof_coe_vid_right_shift_width_get_f nof_coe_vid_right_shift_width_get;
+    
+    dnx_data_fc_coe_nof_coe_ptc_mask_width_get_f nof_coe_ptc_mask_width_get;
+    
+    dnx_data_fc_coe_nof_coe_ptc_left_shift_width_get_f nof_coe_ptc_left_shift_width_get;
+    
+    dnx_data_fc_coe_max_coe_ticks_get_f max_coe_ticks_get;
+    
+    dnx_data_fc_coe_fc_support_get_f fc_support_get;
+    
+    dnx_data_fc_coe_map_value_size_in_bits_get_f map_value_size_in_bits_get;
+    
+    dnx_data_fc_coe_calendar_pause_resolution_get_f calendar_pause_resolution_get;
+    
+    dnx_data_fc_coe_data_offset_get_f data_offset_get;
+    
+    dnx_data_fc_coe_ethertype_get_f ethertype_get;
+    
+    dnx_data_fc_coe_control_opcode_get_f control_opcode_get;
+    
+    dnx_data_fc_coe_coe_vid_offset_get_f coe_vid_offset_get;
+    
+    dnx_data_fc_coe_coe_vid_mask_get_f coe_vid_mask_get;
+    
+    dnx_data_fc_coe_coe_vid_right_shift_get_f coe_vid_right_shift_get;
+    
+    dnx_data_fc_coe_coe_ptc_mask_get_f coe_ptc_mask_get;
+    
+    dnx_data_fc_coe_coe_ptc_left_shift_get_f coe_ptc_left_shift_get;
+    
+    dnx_data_fc_coe_calendar_mode_get_f calendar_mode_get;
+    
+    dnxc_data_table_info_get_f calendar_mode_info_get;
+    
+    dnx_data_fc_coe_mac_address_get_f mac_address_get;
+    
+    dnxc_data_table_info_get_f mac_address_info_get;
+    
+    dnx_data_fc_coe_calender_length_get_f calender_length_get;
+    
+    dnxc_data_table_info_get_f calender_length_info_get;
+} dnx_data_if_fc_coe_t;
+
+
+
+
+
+
+typedef struct
+{
+    int tx;
+    int rx;
+} dnx_data_fc_oob_calender_length_t;
+
+
+typedef struct
+{
+    int tx;
+    int rx;
+} dnx_data_fc_oob_calender_rep_count_t;
+
+
+typedef struct
+{
+    int ratio;
+} dnx_data_fc_oob_tx_freq_t;
+
+
+typedef struct
+{
+    int type;
+    int mode;
+} dnx_data_fc_oob_port_t;
+
+
+typedef struct
+{
+    int ilkn_tx;
+    int ilkn_rx;
+    int spi;
+} dnx_data_fc_oob_indication_invert_t;
+
+
+
+typedef enum
+{
+
+    
+    _dnx_data_fc_oob_feature_nof
+} dnx_data_fc_oob_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_oob_feature_get_f) (
+    int unit,
+    dnx_data_fc_oob_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_oob_nof_oob_ids_get_f) (
+    int unit);
+
+
+typedef const dnx_data_fc_oob_calender_length_t *(
+    *dnx_data_fc_oob_calender_length_get_f) (
+    int unit,
+    int oob_id);
+
+
+typedef const dnx_data_fc_oob_calender_rep_count_t *(
+    *dnx_data_fc_oob_calender_rep_count_get_f) (
+    int unit,
+    int oob_id);
+
+
+typedef const dnx_data_fc_oob_tx_freq_t *(
+    *dnx_data_fc_oob_tx_freq_get_f) (
+    int unit,
+    int oob_id);
+
+
+typedef const dnx_data_fc_oob_port_t *(
+    *dnx_data_fc_oob_port_get_f) (
+    int unit,
+    int oob_id);
+
+
+typedef const dnx_data_fc_oob_indication_invert_t *(
+    *dnx_data_fc_oob_indication_invert_get_f) (
+    int unit,
+    int oob_id);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_oob_feature_get_f feature_get;
+    
+    dnx_data_fc_oob_nof_oob_ids_get_f nof_oob_ids_get;
+    
+    dnx_data_fc_oob_calender_length_get_f calender_length_get;
+    
+    dnxc_data_table_info_get_f calender_length_info_get;
+    
+    dnx_data_fc_oob_calender_rep_count_get_f calender_rep_count_get;
+    
+    dnxc_data_table_info_get_f calender_rep_count_info_get;
+    
+    dnx_data_fc_oob_tx_freq_get_f tx_freq_get;
+    
+    dnxc_data_table_info_get_f tx_freq_info_get;
+    
+    dnx_data_fc_oob_port_get_f port_get;
+    
+    dnxc_data_table_info_get_f port_info_get;
+    
+    dnx_data_fc_oob_indication_invert_get_f indication_invert_get;
+    
+    dnxc_data_table_info_get_f indication_invert_info_get;
+} dnx_data_if_fc_oob_t;
+
+
+
+
+
+
+typedef struct
+{
+    int tx;
+    int rx;
+} dnx_data_fc_inband_calender_length_t;
+
+
+typedef struct
+{
+    int mode;
+    int llfc_mode;
+} dnx_data_fc_inband_port_t;
+
+
+
+typedef enum
+{
+
+    
+    _dnx_data_fc_inband_feature_nof
+} dnx_data_fc_inband_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_inband_feature_get_f) (
+    int unit,
+    dnx_data_fc_inband_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_inband_nof_inband_intlkn_cal_instances_get_f) (
+    int unit);
+
+
+typedef const dnx_data_fc_inband_calender_length_t *(
+    *dnx_data_fc_inband_calender_length_get_f) (
+    int unit,
+    int ilkn_id);
+
+
+typedef const dnx_data_fc_inband_port_t *(
+    *dnx_data_fc_inband_port_get_f) (
+    int unit,
+    int ilkn_id);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_inband_feature_get_f feature_get;
+    
+    dnx_data_fc_inband_nof_inband_intlkn_cal_instances_get_f nof_inband_intlkn_cal_instances_get;
+    
+    dnx_data_fc_inband_calender_length_get_f calender_length_get;
+    
+    dnxc_data_table_info_get_f calender_length_info_get;
+    
+    dnx_data_fc_inband_port_get_f port_get;
+    
+    dnxc_data_table_info_get_f port_info_get;
+} dnx_data_if_fc_inband_t;
+
+
+
+
+
+
+
+typedef enum
+{
+
+    
+    _dnx_data_fc_pfc_deadlock_feature_nof
+} dnx_data_fc_pfc_deadlock_feature_e;
+
+
+
+typedef int(
+    *dnx_data_fc_pfc_deadlock_feature_get_f) (
+    int unit,
+    dnx_data_fc_pfc_deadlock_feature_e feature);
+
+
+typedef uint32(
+    *dnx_data_fc_pfc_deadlock_cdum_intr_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_pfc_deadlock_cdu_intr_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_pfc_deadlock_clu_intr_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_pfc_deadlock_nbu_intr_id_get_f) (
+    int unit);
+
+
+typedef uint32(
+    *dnx_data_fc_pfc_deadlock_nof_bits_in_port_num_get_f) (
+    int unit);
+
+
+
+typedef struct
+{
+    
+    dnx_data_fc_pfc_deadlock_feature_get_f feature_get;
+    
+    dnx_data_fc_pfc_deadlock_cdum_intr_id_get_f cdum_intr_id_get;
+    
+    dnx_data_fc_pfc_deadlock_cdu_intr_id_get_f cdu_intr_id_get;
+    
+    dnx_data_fc_pfc_deadlock_clu_intr_id_get_f clu_intr_id_get;
+    
+    dnx_data_fc_pfc_deadlock_nbu_intr_id_get_f nbu_intr_id_get;
+    
+    dnx_data_fc_pfc_deadlock_nof_bits_in_port_num_get_f nof_bits_in_port_num_get;
+} dnx_data_if_fc_pfc_deadlock_t;
+
+
+
+
+
+typedef struct
+{
+    
+    dnx_data_if_fc_general_t general;
+    
+    dnx_data_if_fc_calendar_common_t calendar_common;
+    
+    dnx_data_if_fc_coe_t coe;
+    
+    dnx_data_if_fc_oob_t oob;
+    
+    dnx_data_if_fc_inband_t inband;
+    
+    dnx_data_if_fc_pfc_deadlock_t pfc_deadlock;
+} dnx_data_if_fc_t;
+
+
+
+
+extern dnx_data_if_fc_t dnx_data_fc;
+
+
+#endif 
+
