@@ -1,0 +1,246 @@
+PCIe Firmware Loader Introduction
+===================================
+
+Broadcom CMICx based devices have a PCIe SerDes embedded. A special
+firmware provided by the Broadcom SerDes team should be loaded into the
+SerDes core to configure and bring up the PCIe SeDes link up to Gen3. A PCIe
+firmware loader is designed for running on a CMICx embedded CPU, M0 core 2, to
+load the PCIe firmware and bring-up the PCIe SerDes with taking care of PCIe
+standard timing requirements.
+
+Sometimes, PCIe Gen2 or Gen1 also requests PCIe firmware to handle some
+SerDes hardware WARs and/or get better timing for performance.
+
+The loader is also used for some switch hardware WARs, which should be taken
+care of at a very earlier stage of system boot up, but those could be not
+PCIe related.
+
+In applications, there could have some interoperation issues, such as special
+clock configurations required,  on a customer's board design.
+
+PCIe firmware loader provides an approach for customers to define some
+customizing settings attached at the end of the loader image and PCIe loader
+firmware will take care of those configurations. There are three classes of
+customizing settings: controls, pre-configs, and post-configs. The controls
+are used for control PCIe firmware loader running flow (such as ignore PERST
+timing for the first loading) or common settings (such as the number of lanes
+and PCIe generation). Normally, controls are used for debugging purposes or
+temporary workarounds. The pre-configs and post-configs are used for
+configuring PCIe MAC and/or PHY registers before (pre-configs) loader boot-up
+PCIe SerDes or shortly after (post-configs) the boot-up. Mostly, the
+configurations are the customer board special requested.   (Refer to "How to
+apply custom/user settings" section for format and usage)
+
+There are four PCIe firmware loader images currently supported for different
+switch classes. (vXpY is version number, e.g. v2p10 means version 2.10)
+a) pciefw-m0_vXpY.bin: Include 16-nm SerDes firmware, boot from M0 CPU core 0
+(for switches without R5 CPU(s) embedded).  E.g. Helix5.
+b) pciefw-r5_vXpY.bin: Include 16-nm SerDes firmware, boot from R5 CPU core 0.
+E.g. Tomahawk3.
+c) pciefw-r5-m7_vXpY.bin: Include 7-nm SerDes firmware, boot from R5 CPU core 0.
+E.g. Tomahawk4.
+d) pciefw-d5-m0_vXpY.bin: Include 5-nm SerDes firmware, boot from M0 CPU core 3.
+E.g. Tomahawk5.
+
+The following sections will elaborate on how to install a PCIe firmware loader,
+check running status, and add custom settings for CMICx based XGS devices.
+
+Install PCIe Firmware Loader
+===================================
+There are a couple of ways to program a PCIe firmware loader into a serial
+flash for PCIe link bring-up. The user may choose one of below approaches:
+
+Approach 1: Using flash/gang programmer
+The user may use a standalone flash programmer or a gang programmer to burn
+a PCIe firmware loader image into a serial flash by following the programmer's
+instruction. To program the flash, it should be inserted on the flash bed of
+the programmer. So, the programming should be done before soldering it onto a
+hardware board or uninstall it from the board.
+
+Approach 2: Using ARM DS-5 ARM DSTREAM
+A small tool was designed to run on an internal R5 CPU core in Broadcom switch
+for programming a PCIe firmware loader into the serial flash on the board. The
+user needs to connect an ARM DSTREAM onto the board through a JTAG interface,
+run ARM DS-5, load the tool with the loader image onto R5 workspace, and run
+the tool on the R5 through DS-5. The tool will program the loader image into
+the flash device.  This method works only for the switch which has R5 CPU
+embedded. (Refer to tools/flashwrite/ARM_DS-5 for details.)
+
+Approach 3: Using SDK diag command
+This approach uses SDK "PCIEPHY" diag command to load a PCIe firmware loader
+image into the flash on the board. It requests PCIe link has already
+established stably and SDK may access the flash. In case PCIe link could not
+be established stably, that may be triggered by an abnormal PCIe firmware
+loader (or blank flash), the customer may use board hardware switches to
+configure PCIe generation force to Gen2 (or Gen1), which may get link up
+without PCIe firmware loader supported.  (About how to force PCIe Gen2
+(or Gen 1), please refer to the corresponding device datasheet. ) After PCIe
+firmware loaded, restore the force setting to enable PCIe firmware to select
+the best link speed, and reboot the board run the loader.
+
+SDK6 PCIEPHY command format:
+  pciephy fw load <Firmware file>
+  e.g. "pciephy fw load pciefw-r5_vXpY.bin"
+
+SDKLT PCIEPHY command format:
+  pciephy fwload <Firmware file>
+  e.g. "pciephy fwload pciefw-r5-m7_vXpY.bin"
+
+Notes: Refer to the "Instruction" section and make sure to select a correct
+loader image for the device.
+
+The flash driver in SDK is based on MT25QL256. If the mounted flash part is
+compatible with MT25QL256's instruction set but unrecognized by the driver,
+the user may use SoC property "pcie_flash_mem_params" to specify the
+parameters of the flash device in SDK6.
+  pcie_flash_mem_params=<id>,<sector_size>,<page_size>
+  <id>: Manufacturer ID.
+  <sector_size>: The smallest erase unit in bytes.
+  <page_size>: The smallest access unit in bytes.
+For SDKLT, please use below command instead:
+  spi flashdev id=<id> size=<total_size> pagesize=<page_size>
+               sectorsize=<sector_size>
+  e.g.
+  "spi flashdev id=0x9d size=0x8000000 pagesize=256 sectorsize=0x10000"
+
+Boot and verify PCIe Firmware Loader
+===================================
+1. Ensure that strap signals are set to load the firmware:
+  a. Mhost should boot from QSPI
+    (e.g. BOOT_DEV[2:0] (if available) is pulled {low, low, low})
+  b. Mhost should be brought out of reset
+    (e.g. MHOST0_BOOT_DEV (if available) is pulled high)
+  c. PCIE force generation should be clear
+     (e.g. PCIE_FORCE_GENTYPE[1:0] (if available) is pulled {low, low})
+  The signals/registers names could vary among switch devices. Please refer
+  to the switch's datasheet for the appropriate signal names.
+
+2. Power On the system
+
+3. Load and run linux
+   a) At a linux prompt run
+      lspci -d 0x14e4: -vvv
+
+   b) The Broadcom switch device should have enumerated and should show
+      something similar as the following:
+      "05:00.0 Ethernet controller: Broadcom Limited Device b870 (rev 01)"
+
+   c) In the lspci output, check that the link status register field shows
+      link-up speed matches your expection.
+        32GT/s - PCIe Gen5
+        16GT/s - PCIe Gen4
+        8GT/s - PCIe Gen3
+        5GT/s - PCIe Gen2
+        2.5GT/s - PCIe Gen1
+
+   d) check that link capability register shows "ASPM not supported" and
+      link control register shows "ASPM disabled"
+
+   e) Run SDK and verify that "pciephy fw info" ("pciephy fwinfo" in SDKLT)
+      shows firmware loaded and both loader version and firmware version
+      match your expectation.
+      e.g.  PCIe FW loader version: 2.8
+            PCIe FW version: D102_0B
+            PCIe FW loader built date: 20200706
+            Firmware was loaded! (version: 0xd20b)
+
+   f) Run "tr 502" in SDK and get pass.
+
+Apply custom/user settings
+===================================
+It is anticipated that some of MAC/PHY settings, like TX FIR etc, may be tuned
+by customer based on customer system requirements. PCIe Gen3 firmware loader
+offers provision for such cases. This provision offers optional custom settings
+programming before or after loading SerDes firmware. This provision requires
+custom or system specific PCIe MAC/PHY register settings to be programmed at
+30K offset of QSPI flash in the format described below i.e
+{type, address, value} triplets.
+
+              -----------------------  __
+              |     0x50434945      |    |
+              |     0x41524753      |    |__ Header, fixed, 4x32-bit words
+              |     0x00000000      |    |
+              |     0x00000000      |  __|
+              -----------------------  __
+              |     0x4354524C      |    |   Optional controls for FW load
+              |     controls_0      |    |__ Must have 0x4354524C as first word
+              |     controls_1      |  __|   followed be two controls words
+              -----------------------  __
+              |     0x5052454c      |    |
+              |  {type, addr, val}  |    |
+              |  {type, addr, val}  |    |   Optional pre FW load settings
+              |         :           |    |   Must have 0x5052454c as first word
+              |         :           |    |__ followed by {type, addr, val}
+              |         :           |    |   triplets (triplet - 3x32bit words)
+              |         :           |    |   type: 0 - MAC address, 1 - PHY addr
+              |         :           |    |   addr: MAC/PHY register address
+              |  {type, addr, val}  |  __|   Val: Value to be programmed
+              -----------------------  __
+              |     0x504f5354      |    |
+              |  {type, addr, val}  |    |   Optional post FW load settings
+              |         :           |    |   Must have 0x504f5354 as first word
+              |         :           |    |__ followed by {type, addr, val}
+              |         :           |    |   triplets (triplet - 3x32bit words).
+              |         :           |    |   type: 0 - MAC address, 1 - PHY addr
+              |         :           |    |   addr: MAC/PHY register address
+              |  {type, addr, val}  |  __|   Val: Value to be programmed
+              -----------------------  __
+              |     0x00454E44      |    |__Footer, fixed, 2x32-bit words
+              |     0x41524753      |  __|
+              -----------------------
+
+User can program up to maximum 168 triplets (i.e 504x32-bit words).
+There is no restriction on number of triplets for pre FW load settings or post
+FW load settings, provided total number of triplets do not exceed max limit
+of 168.
+
+Control section is used for optionally disable some loader feature or change
+basic settings. Currently support below controls:
+control_0[0:0] - Ignore enabling hotswap
+control_0[1:1] - Ignore PERST status initial check
+control_0[7:4] - Link Speed (PCIE generation) override,
+                 1 - 2.5G, 2 - 5G, 3 - 8G, 4 - 16G, 5 - 32G, 0 - unconfigured
+control_0[11:8] - Link width override, 1, 2 or 4 lanes are valid
+Other fields are reserved for future.
+
+Each type customer settings are optional, and total support up to 168 settings.
+The settings should be organized as the below sequence.
+[Controls] -> [Pre] -> [Post]
+
+The address[26:16] of lane based PHY registers is used for lane number
+assignment. 0 ~ 3 are used for selecting lane 1 ~ 4, and 0x1ff means
+broadcast configuration to all PCIE lanes.
+
+A sample format file in text format (custom.txt) and perl based text to binary
+conversion utility provided under tools/flashwrite/custom/ directory of this
+release package to help customer to generate customer settings in binary format.
+
+Customer settings in text format may have comments with '#' at the begining of
+the line and also blank lines which will be ignored by text to binary conversion
+tool.
+
+Syntax of text to binary conversion tool:
+perl custom_ascii2bin.pl <input text file> <output file>
+
+Example: Conversion of sample custom.txt file
+
+linux#: perl custom_ascii2bin.pl custom.txt custom.bin
+454943505347524100000000000000004C52544330040000000000004c45525000000000381800000040088254534f5001000000b0d001008024000001000000b1d0ff0107000000444E450053475241
+
+Hexdump of generated file should look like the following:
+linux#: hexdump -C custom.bin
+00000000  45 49 43 50 53 47 52 41  00 00 00 00 00 00 00 00  |EICPSGRA........|
+00000010  4c 52 54 43 30 04 00 00  00 00 00 00 4c 45 52 50  |LRTC0.......LERP|
+00000020  00 00 00 00 38 18 00 00  00 40 08 82 54 53 4f 50  |....8....@..TSOP|
+00000030  01 00 00 00 b0 d0 01 00  80 24 00 00 01 00 00 00  |....°Ð...$......|
+00000040  b1 d0 ff 01 07 00 00 00  44 4e 45 00 53 47 52 41  |±Ðÿ.....DNE.SGRA|
+00000050
+Notes: The "hexdump" command shows data in 4-byte little endian format, while the data
+is 4-byte big endian, e.g. "0x50434945" shows "45 49 43 50".
+
+Installing custom settings binary file:
+1) Append binary file to PCIe Gen3 FW file (pciefw-*.bin)
+   e.g.,
+   cat pciefw-r5_vXpY.bin custom.bin >custom_pciefw-r5_vXpY.bin
+2) Install the appended binary into QSPI flash at offset 0x0 using one of the
+   FW installation methods mentioned above.

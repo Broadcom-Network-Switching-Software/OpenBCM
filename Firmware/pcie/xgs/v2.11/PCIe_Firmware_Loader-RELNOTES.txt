@@ -1,0 +1,39 @@
+Release Notes for PCIe Firmware Loader for Broadcom Network Switch devices
+
+===============
+Release 2.11
+===============
+
+Release Date: Jan 2023
+
+FW loader version: v2.11
+SerDes FW version (Merlin16): D102_0B
+SerDes FW version (Merlin7): D000_05
+SerDes FW version (D5): 0000_00
+
+Devices supported at GA level quality in this release:
+
+    BCM56070 (Firelight) family
+    BCM56770 (Trident3-X5) family
+    BCM56870 (Trident3-X7) family
+    BCM56980 (Tomahawk3) family
+
+Important Notes:
+    - This release supports XGS devices only. Device families listed are at GA level quality.
+
+Known Issues:
+    None.
+
+Documentation:
+    pciefw_Loader_install.txt
+
+Release contents:
+    PCIe Firmware Loader in binary and srec formats (e.g. v2p11 is for version 2.11)
+     * pciefw_merlin16_r5_vXpY.* - For BCM56070, BCM56470, BCM56770, BCM56870 and BCM56980 family devices
+
+    ARM DS-5 based serial flash programming tool
+    Custom bin tool and example file:
+        Custom_ascii2bin.pl
+        custom.txt
+
+
